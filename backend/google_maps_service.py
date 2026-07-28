@@ -7,12 +7,69 @@ import math
 import os
 import time
 from typing import Any, Dict, List, Optional
+from urllib.parse import quote
 
 import requests
 
 
 class GoogleMapsServiceError(RuntimeError):
     """Raised when Google Maps APIs cannot satisfy a request."""
+
+
+RESTAURANT_LIKE_TYPES = {
+    "bar",
+    "cafe",
+    "bakery",
+    "meal_takeaway",
+    "meal_delivery",
+    "coffee_shop",
+    "ice_cream_shop",
+    "juice_shop",
+    "sandwich_shop",
+    "deli",
+    "diner",
+}
+
+RESTAURANT_LIKE_NAME_TERMS = {
+    "restaurant",
+    "bar",
+    "cafe",
+    "coffee",
+    "bakery",
+    "bistro",
+    "brasserie",
+    "cantina",
+    "deli",
+    "diner",
+    "eatery",
+    "grill",
+    "kitchen",
+    "pub",
+    "ramen",
+    "steakhouse",
+    "sushi",
+    "taqueria",
+    "tavern",
+    "trattoria",
+}
+
+LODGING_NAME_TERMS = {
+    "hotel",
+    "hostel",
+    "inn",
+    "motel",
+    "resort",
+    "suites",
+    "crowne plaza",
+    "fairmont",
+    "hilton",
+    "hyatt",
+    "ihg",
+    "intercontinental",
+    "marriott",
+    "sonesta",
+    "swissotel",
+}
 
 
 class GoogleMapsService:
@@ -101,7 +158,11 @@ class GoogleMapsService:
             if status not in {"OK", "ZERO_RESULTS"}:
                 raise GoogleMapsServiceError(self._google_error("Google Places Nearby Search", payload))
 
-            raw_places.extend(payload.get("results", []))
+            raw_places.extend(
+                place
+                for place in payload.get("results", [])
+                if self._should_keep_nearby_result(place)
+            )
             if len(raw_places) >= limit:
                 break
 
@@ -150,6 +211,7 @@ class GoogleMapsService:
         )
         cuisine = self._infer_cuisine(place)
         atmosphere = self._infer_atmosphere(place, price_level)
+        photo_reference = self._photo_reference(place)
 
         return {
             "id": place.get("place_id"),
@@ -168,21 +230,91 @@ class GoogleMapsService:
             "longitude": longitude,
             "distance_meters": distance_meters,
             "distance_label": self._format_distance(distance_meters),
-            "photo_url": self._photo_url(place),
+            "photo_reference": photo_reference,
+            "photo_url": self._photo_url(photo_reference),
             "quality_score": rating * math.log(review_count + 1),
             "types": place.get("types", []),
         }
 
-    def _photo_url(self, place: Dict[str, Any]) -> str:
+    def fetch_place_photo(
+        self, photo_reference: str, max_width: int = 800
+    ) -> tuple[bytes, str]:
+        reference = photo_reference.strip()
+        if not reference:
+            raise GoogleMapsServiceError("Photo reference cannot be empty.")
+
+        width = min(max(int(max_width or 800), 1), 1600)
+        try:
+            response = requests.get(
+                "https://maps.googleapis.com/maps/api/place/photo",
+                params={
+                    "maxwidth": width,
+                    "photo_reference": reference,
+                    "key": self.api_key,
+                },
+                timeout=12,
+            )
+        except requests.RequestException as exc:
+            raise GoogleMapsServiceError("Google Place Photo request failed.") from exc
+
+        self._raise_for_http(response, "Google Place Photo")
+        content_type = response.headers.get("content-type", "image/jpeg").split(";")[0]
+        if not content_type.lower().startswith("image/"):
+            raise GoogleMapsServiceError("Google Place Photo did not return image content.")
+        return response.content, content_type
+
+    def _photo_reference(self, place: Dict[str, Any]) -> str:
         photos = place.get("photos") or []
         if photos:
             reference = photos[0].get("photo_reference")
             if reference:
-                return (
-                    "https://maps.googleapis.com/maps/api/place/photo"
-                    f"?maxwidth=800&photo_reference={reference}&key={self.api_key}"
-                )
+                return str(reference)
         return ""
+
+    def _photo_url(self, photo_reference: str) -> str:
+        if not photo_reference:
+            return ""
+        encoded_reference = quote(photo_reference, safe="")
+        path = f"/api/places/photo/{encoded_reference}?maxwidth=800"
+        return f"{self._photo_proxy_base_url()}{path}"
+
+    def _photo_proxy_base_url(self) -> str:
+        # Keep photo_url directly usable by frontend img tags without exposing the Google key.
+        for key in ("BACKEND_PUBLIC_URL", "TABLEUS_API_BASE_URL", "NEXT_PUBLIC_API_URL"):
+            base_url = (os.getenv(key) or "").strip().strip("'\"")
+            if base_url:
+                return base_url.rstrip("/")
+        return "http://localhost:8000"
+
+    def _should_keep_nearby_result(self, place: Dict[str, Any]) -> bool:
+        """Drop pure lodging hits; keep hotel venues only with a clear dining signal."""
+        types = set(place.get("types") or [])
+        if "lodging" not in types:
+            return True
+        if self._has_lodging_name(place) and not self._has_restaurant_name_signal(place):
+            return False
+        if self._has_restaurant_signal(place):
+            return True
+        return False
+
+    def _has_lodging_name(self, place: Dict[str, Any]) -> bool:
+        name = str(place.get("name") or "").lower()
+        return any(term in name for term in LODGING_NAME_TERMS)
+
+    def _has_restaurant_name_signal(self, place: Dict[str, Any]) -> bool:
+        name = str(place.get("name") or "").lower()
+        return any(term in name for term in RESTAURANT_LIKE_NAME_TERMS)
+
+    def _has_restaurant_signal(self, place: Dict[str, Any]) -> bool:
+        types = set(place.get("types") or [])
+        if types & RESTAURANT_LIKE_TYPES:
+            return True
+        if any(item.endswith("_restaurant") for item in types):
+            return True
+
+        if self._has_restaurant_name_signal(place):
+            return True
+        return False
 
     def _infer_cuisine(self, place: Dict[str, Any]) -> str:
         types = place.get("types", [])

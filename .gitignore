@@ -15,4 +15,6 @@ build/
 coverage/
 .idea/
 .vscode/
+*.tsbuildinfo
+CHAT_CONTEXT_COMPACT.md
 

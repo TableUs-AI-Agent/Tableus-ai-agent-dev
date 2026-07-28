@@ -8,6 +8,12 @@ import { api, apiFormData } from "../lib/api";
 
 type FoodAnalysis = { dish: string; cuisine: string; description: string; flavor_tags?: string[] };
 
+function getErrorMessage(error: unknown) {
+  return error instanceof Error && error.message
+    ? error.message
+    : "Review could not be submitted. Please try again.";
+}
+
 export default function ReviewPage() {
   const { currentUser } = useUser();
   const fileRef = useRef<HTMLInputElement>(null);
@@ -21,6 +27,7 @@ export default function ReviewPage() {
   const [submitting, setSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [updatedProfile, setUpdatedProfile] = useState("");
+  const [submitError, setSubmitError] = useState("");
 
   const handleFileSelect = async (file: File) => {
     setImagePreview(URL.createObjectURL(file));
@@ -50,6 +57,7 @@ export default function ReviewPage() {
   const handleSubmit = async () => {
     if (!currentUser || !reviewText.trim()) return;
     setSubmitting(true);
+    setSubmitError("");
     try {
       const result = await api<{ review: unknown; updated_taste_profile: string }>("/api/reviews/submit", {
         method: "POST",
@@ -64,8 +72,8 @@ export default function ReviewPage() {
       });
       setUpdatedProfile(result.updated_taste_profile);
       setSubmitted(true);
-    } catch {
-      // ignore in local demo mode
+    } catch (err) {
+      setSubmitError(getErrorMessage(err));
     } finally {
       setSubmitting(false);
     }
@@ -79,6 +87,7 @@ export default function ReviewPage() {
     setRating(4);
     setSubmitted(false);
     setUpdatedProfile("");
+    setSubmitError("");
   };
 
   return (
@@ -242,6 +251,15 @@ export default function ReviewPage() {
                   {submitting ? <Loader2 className="h-4 w-4 animate-spin" /> : <Sparkles className="h-4 w-4" />}
                   {submitting ? "Refreshing summary..." : "Submit & Refresh Summary"}
                 </button>
+
+                {submitError && (
+                  <div
+                    role="alert"
+                    className="rounded-xl border border-red-300/70 bg-red-50/90 px-4 py-3 text-sm text-red-700"
+                  >
+                    {submitError}
+                  </div>
+                )}
               </div>
             </motion.div>
           )}

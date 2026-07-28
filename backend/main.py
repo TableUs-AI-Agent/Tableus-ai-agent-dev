@@ -17,6 +17,7 @@ from contextlib import asynccontextmanager
 from difflib import get_close_matches
 from pathlib import Path
 from typing import List, Optional
+from urllib.parse import parse_qs, quote, urlparse
 
 from dotenv import load_dotenv
 
@@ -24,7 +25,7 @@ _BACKEND_ROOT = Path(__file__).resolve().parent
 load_dotenv(_BACKEND_ROOT / ".env", override=True)
 
 import google.generativeai as genai
-from fastapi import FastAPI, File, HTTPException, UploadFile
+from fastapi import FastAPI, File, HTTPException, Query, Response, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
 from google.api_core.exceptions import InvalidArgument, NotFound, ResourceExhausted
 from pydantic import BaseModel
@@ -209,6 +210,55 @@ def sort_by_quality(restaurants: list) -> list:
         reverse=True,
     )
     return restaurants
+
+
+def _photo_proxy_base_url() -> str:
+    for key in ("BACKEND_PUBLIC_URL", "TABLEUS_API_BASE_URL", "NEXT_PUBLIC_API_URL"):
+        base_url = (os.getenv(key) or "").strip().strip("'\"")
+        if base_url:
+            return base_url.rstrip("/")
+    return "http://localhost:8000"
+
+
+def _photo_proxy_url(photo_reference: str) -> str:
+    reference = (photo_reference or "").strip()
+    if not reference:
+        return ""
+    return (
+        f"{_photo_proxy_base_url()}/api/places/photo/"
+        f"{quote(reference, safe='')}?maxwidth=800"
+    )
+
+
+def _photo_reference_from_google_url(photo_url: str) -> str:
+    try:
+        parsed = urlparse(photo_url)
+    except ValueError:
+        return ""
+    if parsed.netloc != "maps.googleapis.com" or parsed.path != "/maps/api/place/photo":
+        return ""
+    values = parse_qs(parsed.query).get("photo_reference") or []
+    return values[0] if values else ""
+
+
+def sanitize_restaurant_media(restaurant: dict) -> dict:
+    """Never return Google photo URLs with API keys to clients."""
+    sanitized = dict(restaurant)
+    photo_url = str(sanitized.get("photo_url") or "")
+    exposes_google_key = (
+        "key=" in photo_url
+        or "maps.googleapis.com/maps/api/place/photo" in photo_url
+    )
+    if exposes_google_key:
+        photo_reference = str(sanitized.get("photo_reference") or "")
+        if not photo_reference:
+            photo_reference = _photo_reference_from_google_url(photo_url)
+        sanitized["photo_url"] = _photo_proxy_url(photo_reference)
+    return sanitized
+
+
+def sanitize_restaurant_list(restaurants: list) -> list:
+    return [sanitize_restaurant_media(restaurant) for restaurant in restaurants]
 
 
 def fetch_nearby_candidates(
@@ -587,13 +637,34 @@ async def get_nearby_restaurants(req: NearbyRequest):
         radius_meters=req.radius_meters,
         limit=cap,
     )
-    sliced = nearby_pool[:cap]
+    sliced = sanitize_restaurant_list(nearby_pool[:cap])
     return {
         "status": "success",
         "restaurants": sliced,
         "radius_meters": radius_used,
         "count": len(sliced),
     }
+
+
+@app.get("/api/places/photo/{photo_reference:path}")
+def proxy_place_photo(
+    photo_reference: str,
+    maxwidth: int = Query(800, ge=1, le=1600),
+):
+    maps_service = get_maps_service()
+    try:
+        content, media_type = maps_service.fetch_place_photo(
+            photo_reference=photo_reference,
+            max_width=maxwidth,
+        )
+    except GoogleMapsServiceError as exc:
+        raise HTTPException(status_code=502, detail=str(exc)) from exc
+
+    return Response(
+        content=content,
+        media_type=media_type,
+        headers={"Cache-Control": "public, max-age=86400"},
+    )
 
 
 @app.post("/api/restaurants/search")
@@ -682,8 +753,8 @@ Return exactly 4 restaurants. Use exact names from the list."""
         "status": "success",
         "query": req.query,
         "search_summary": summary,
-        "top_restaurants": enriched[:4],
-        "nearby_restaurants": orbit_pool,
+        "top_restaurants": sanitize_restaurant_list(enriched[:4]),
+        "nearby_restaurants": sanitize_restaurant_list(orbit_pool),
         "user_preferences": prefs_text,
         "location": {
             "label": req.location_label,
@@ -824,8 +895,8 @@ Return exactly 4 restaurants."""
         "status": "success",
         "query": req.query,
         "search_summary": summary,
-        "top_restaurants": enriched[:4],
-        "nearby_restaurants": orbit_pool,
+        "top_restaurants": sanitize_restaurant_list(enriched[:4]),
+        "nearby_restaurants": sanitize_restaurant_list(orbit_pool),
         "merged_preferences": merged_prefs,
         "user_count": len(req.user_ids),
         "location": {

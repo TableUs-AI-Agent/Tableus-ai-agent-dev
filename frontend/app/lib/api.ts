@@ -7,12 +7,14 @@ export async function api<T = unknown>(path: string, init?: RequestInit): Promis
   });
   if (!res.ok) {
     const text = await res.text();
+    let detail = "";
     try {
       const parsed = JSON.parse(text) as { detail?: string };
-      throw new Error(parsed.detail || `API ${res.status}`);
+      detail = parsed.detail || "";
     } catch {
-      throw new Error(text || `API ${res.status}`);
+      // Use the raw body below when the response is not JSON.
     }
+    throw new Error(detail || text || `API ${res.status}`);
   }
   return res.json();
 }
@@ -23,4 +25,3 @@ export function apiFormData<T = unknown>(path: string, body: FormData): Promise<
     return r.json();
   });
 }
-

@@ -13,6 +13,16 @@ import {
 } from "lucide-react";
 import { useUser } from "../context/user-context";
 import { api } from "../lib/api";
+import { ProfilePlushPreview3D } from "../components/discover-tabletop-scene";
+import {
+  defaultLookFor,
+  OUTFIT_SPECS,
+  PLUSH_OUTFIT_OPTIONS,
+  PLUSH_SPECIES_OPTIONS,
+  plushStorageKey,
+  SPECIES_SPECS,
+  type PlushLook,
+} from "../lib/plush-avatar";
 
 type TasteProfile = {
   preferences_text: string;
@@ -70,6 +80,7 @@ export default function ProfilePage() {
   const [profile, setProfile] = useState<TasteProfile | null>(null);
   const [reviews, setReviews] = useState<Review[]>([]);
   const [loading, setLoading] = useState(false);
+  const [plushLook, setPlushLook] = useState<PlushLook | null>(null);
 
   useEffect(() => {
     const userId = currentUser?.id;
@@ -96,6 +107,47 @@ export default function ProfilePage() {
     };
   }, [currentUser?.id]);
 
+  useEffect(() => {
+    let cancelled = false;
+    window.queueMicrotask(() => {
+      if (cancelled) return;
+      if (!currentUser?.id) {
+        setPlushLook(null);
+        return;
+      }
+
+      try {
+        const raw = window.localStorage.getItem(plushStorageKey(currentUser.id));
+        if (raw) {
+          const parsed = JSON.parse(raw) as PlushLook;
+          if (parsed && SPECIES_SPECS[parsed.species] && OUTFIT_SPECS[parsed.outfit]) {
+            setPlushLook(parsed);
+            return;
+          }
+        }
+      } catch {
+        // fall through to default
+      }
+      setPlushLook(defaultLookFor(currentUser.id));
+    });
+    return () => {
+      cancelled = true;
+    };
+  }, [currentUser]);
+
+  const updatePlushLook = (patch: Partial<PlushLook>) => {
+    if (!currentUser) return;
+    setPlushLook((previous) => {
+      const next = { ...(previous ?? defaultLookFor(currentUser.id)), ...patch };
+      try {
+        window.localStorage.setItem(plushStorageKey(currentUser.id), JSON.stringify(next));
+      } catch {
+        // keep the in-memory selection if storage is unavailable
+      }
+      return next;
+    });
+  };
+
   if (!currentUser) {
     return (
       <div className="flex h-full items-center justify-center px-8">
@@ -120,6 +172,7 @@ export default function ProfilePage() {
     price_hints: [],
     flavor_tags: [],
   };
+  const activePlushLook = plushLook ?? defaultLookFor(currentUser.id);
 
   return (
     <div className="min-h-full px-6 py-8 lg:px-10">
@@ -144,6 +197,86 @@ export default function ProfilePage() {
               <p className="mt-2 text-base text-[var(--muted-foreground)]">
                 {reviews.length} reviews contributing to this summary.
               </p>
+            </div>
+          </div>
+        </motion.section>
+
+        <motion.section
+          initial={{ opacity: 0, y: 12 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="glass rounded-[36px] p-6 sm:p-8"
+        >
+          <div className="grid gap-7 lg:grid-cols-[260px_minmax(0,1fr)] lg:items-center">
+            <div className="flex justify-center">
+              <ProfilePlushPreview3D
+                look={activePlushLook}
+                userId={currentUser.id}
+                className="h-64 w-60 sm:h-72 sm:w-64"
+              />
+            </div>
+            <div className="space-y-5">
+              <div>
+                <div className="inline-flex rounded-full bg-[rgba(17,181,164,0.1)] px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.24em] text-[var(--muted-foreground)]">
+                  Avatar Plushie
+                </div>
+                <h2 className="mt-3 text-2xl font-semibold text-[var(--foreground)]">
+                  Choose your tabletop character
+                </h2>
+              </div>
+
+              <div>
+                <p className="mb-2 text-xs font-semibold uppercase tracking-[0.2em] text-[var(--muted-foreground)]">
+                  Type
+                </p>
+                <div className="grid grid-cols-4 gap-2 sm:grid-cols-8">
+                  {PLUSH_SPECIES_OPTIONS.map((option) => (
+                    <button
+                      key={option.id}
+                      type="button"
+                      onClick={() => updatePlushLook({ species: option.id })}
+                      aria-pressed={activePlushLook.species === option.id}
+                      className={`rounded-[18px] border bg-white/72 p-2 text-center text-[11px] font-semibold text-[var(--foreground)] transition ${
+                        activePlushLook.species === option.id
+                          ? "border-[rgba(17,181,164,0.55)] shadow-[0_10px_24px_rgba(17,181,164,0.16)]"
+                          : "border-white/70 hover:border-[rgba(17,181,164,0.25)]"
+                      }`}
+                    >
+                      <span
+                        className="mx-auto mb-1 block h-5 w-5 rounded-full border border-black/10"
+                        style={{ backgroundColor: option.swatch }}
+                      />
+                      {option.label}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              <div>
+                <p className="mb-2 text-xs font-semibold uppercase tracking-[0.2em] text-[var(--muted-foreground)]">
+                  Outfit
+                </p>
+                <div className="grid grid-cols-4 gap-2 sm:grid-cols-8">
+                  {PLUSH_OUTFIT_OPTIONS.map((option) => (
+                    <button
+                      key={option.id}
+                      type="button"
+                      onClick={() => updatePlushLook({ outfit: option.id })}
+                      aria-pressed={activePlushLook.outfit === option.id}
+                      className={`rounded-[18px] border bg-white/72 p-2 text-center text-[11px] font-semibold text-[var(--foreground)] transition ${
+                        activePlushLook.outfit === option.id
+                          ? "border-[rgba(145,94,255,0.45)] shadow-[0_10px_24px_rgba(145,94,255,0.14)]"
+                          : "border-white/70 hover:border-[rgba(145,94,255,0.24)]"
+                      }`}
+                    >
+                      <span
+                        className="mx-auto mb-1 block h-5 w-5 rounded-full border border-black/10"
+                        style={{ backgroundColor: option.swatch }}
+                      />
+                      {option.label}
+                    </button>
+                  ))}
+                </div>
+              </div>
             </div>
           </div>
         </motion.section>
