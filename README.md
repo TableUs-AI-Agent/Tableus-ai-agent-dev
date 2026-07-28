@@ -1,84 +1,181 @@
-# TableUs
+<div align="center">
 
-🏆 **2nd place — Cursor Hackathon 2026**
+# 🍽️ TableUs
+### *The Location-Aware AI Group Dining Planner*
 
-TableUs is a location-aware restaurant planning demo for small groups.
+[![Cursor Hackathon](https://img.shields.io/badge/Cursor%20Hackathon%202026-🏆%202nd%20Place-FFD700?style=for-the-badge&logo=cursor)](https://cursor.com)
+[![Gemini AI](https://img.shields.io/badge/Powered%20By-Google%20Gemini%202.5-4285F4?style=for-the-badge&logo=google)](https://deepmind.google/technologies/gemini/)
+[![Next.js 16](https://img.shields.io/badge/Frontend-Next.js%2016%20%7C%20React%2019-000000?style=for-the-badge&logo=nextdotjs)](https://nextjs.org/)
+[![FastAPI](https://img.shields.io/badge/Backend-FastAPI%20%7C%20Python-009688?style=for-the-badge&logo=fastapi)](https://fastapi.tiangolo.com/)
+[![Google Maps](https://img.shields.io/badge/Maps-Google%20Places%20API-4285F4?style=for-the-badge&logo=googlemaps)](https://developers.google.com/maps)
 
-The project centers on a straightforward flow: choose a location, describe what the group wants in plain language, and turn a nearby restaurant pool into a short ranked list with concise reasoning. The app uses demo users, in-memory data, Google Maps, and Gemini to prototype that decision-making loop.
+<br />
 
----
+**TableUs solves the endless group chat debate of *"Where should we eat?"***
 
-## What TableUs focuses on
+By fusing **real-time Google Maps geocoding**, **Google Places candidate pools**, and **Google Gemini multi-person taste synthesis**, TableUs transforms complex group preferences into ranked, explainable restaurant recommendations in seconds.
 
-- Small-group meal planning rather than long-term social networking
-- Nearby restaurant discovery grounded in real geocoding and Places data
-- Natural-language search with explainable recommendations
-- Demo-friendly preference summaries that make solo and multi-person search easier to test
-- Fast local setup with no database required
+[Explore Features](#-core-product-experience) • [Main Workflow](#-main-planning-flow) • [Tech Stack](#-technology-stack) • [Quick Start](#-quick-start)
 
-## Current demo scope
+<br />
 
-The repository includes lightweight user connections, demo profiles, and review-derived preference text, but those pieces exist to support the planning flow in a no-login prototype. The main product question in this repo is simple: how can a group narrow choices faster when location, cuisine, price, and atmosphere all matter at once?
+![TableUs Discovery Platform](docs/images/banner_discover_hero.png)
 
----
-
-## Main flow
-
-1. Pick a demo user from the sidebar.
-2. Set a location by searching for a place name.
-3. Browse nearby restaurants pulled from Google Places.
-4. Enter a natural-language search such as `casual ramen near downtown` or `quiet dinner spot for three`.
-5. Optionally include additional demo users to run a multi-person search across several preference summaries.
-6. Review the ranked results and the short AI reasoning attached to each result.
-
-You can also submit a natural-language review or upload a food photo to test the supporting profile and analysis flows.
+</div>
 
 ---
 
-## Features in the current build
+## ⚡ What TableUs Focuses On
 
-- Location resolve via geocoding before search
-- Nearby restaurant candidate pool from Google Places
-- Solo restaurant ranking from query plus taste summary
-- Group ranking from combined demo-user preferences
-- Natural-language reviews that refresh stored preference text
-- Food photo analysis through Gemini Vision
-- Demo friends management for testing group scenarios
-- In-memory demo data so the app runs without a database
+- **🎯 Small-Group Meal Planning**: Rapid decision-making for 1-5 people without long-term social network bloat.
+- **📍 Grounded Location Intelligence**: Dynamic nearby restaurant discovery rooted in live Google Geocoding & Places APIs.
+- **🤖 Explainable AI Reasoning**: Transparent match percentages and natural-language justifications for every venue.
+- **👥 Multi-Person Taste Synthesis**: `@` tag friends to instantly merge distinct dietary needs, budget constraints, and craving profiles.
+- **📷 Multimodal Taste Learning**: Submit natural language reviews or food photos to continuously evolve user preference models via Gemini Vision.
+- **🚀 Zero-Database Setup**: Instant in-memory demo dataset designed for frictionless local testing and prototyping.
 
 ---
 
-## Product shape
+## 🌐 Core Product Experience
 
-TableUs is best understood as a planning tool prototype.
+### 1. 3D Spatial Discovery & Location-Aware Search
+Set your target location or resolve current coordinates to fetch a real-time pool of nearby restaurants from Google Places. Search using natural language queries like `"casual ramen near downtown with outdoor seating"` or `"romantic quiet Italian spot"`.
 
-- It is location-first: recommendations are tied to a real place and a live nearby pool.
-- It is decision-oriented: the goal is to narrow options, not build a permanent foodie identity layer.
-- It is explainable: each top result comes back with short reasoning rather than a black-box score alone.
-- It is intentionally lightweight: demo users and in-memory state keep the build easy to run and easy to iterate on.
+![Spatial Discovery & Orbit View](docs/images/banner_discover_hero.png)
 
 ---
 
-## Tech stack
+### 2. Multi-Person Group Consensus Engine
+Planning dinner with friends? Tag demo connections directly in your query (e.g. `@Bob Martinez @Carol Washington`) or combine notes on the social hub. TableUs merges all participant preference summaries to rank venues by joint satisfaction.
 
-| Layer | Choice |
-|-------|--------|
-| Frontend | Next.js 16, React 19, Tailwind CSS 4, Framer Motion |
-| Backend | FastAPI, Python |
-| AI | Google Gemini for vision, ranking, and preference merging |
-| Maps | Google Maps Geocoding API and Places Nearby Search |
+![Group Search & Consensus Engine](docs/images/banner_group_search.png)
 
 ---
 
-## Repo structure
+### 3. Deep Match Rationale & Restaurant Briefs
+Click on any candidate card to open the AI Brief Modal. View match percentages, walking distance, price tier, detailed reasoning based on group preferences, and direct Google Maps navigation.
 
-- `frontend/` - Next.js app for discover, connections, review, and profile flows
-- `backend/` - FastAPI API for maps lookup, search, reviews, food analysis, and demo data access
+![Friends & Preference Overlap Hub](docs/images/banner_friends.png)
 
-Main frontend routes:
+---
 
-- `/discover` - location-aware restaurant search
-- `/friends` - demo connections and combined planning state
-- `/review` - natural-language review submission
-- `/profile` - current demo user's preference summary
+### 4. Multimodal Reviews & Taste Profile Evolution
+Keep dining preferences fresh without tedious forms. Upload dish photos processed by **Gemini Vision** or write casual reviews. The AI extracts taste notes, dietary restrictions, and venue preferences to automatically update stored profiles.
 
+<div align="center">
+
+| 📝 Natural Language Review & Photo Analysis | 👤 Adaptive Taste Profile Summary |
+|---|---|
+| ![Review Submission](docs/images/banner_review.png) | ![Profile Summary](docs/images/banner_profile.png) |
+
+</div>
+
+---
+
+## 🔄 Main Planning Flow
+
+```mermaid
+flowchart LR
+    A[📍 Pick Location] --> B[🔍 Enter Query / @Tag Friends]
+    B --> C[🌐 Google Places Nearby Pool]
+    C --> D[🤖 Gemini Taste Synthesis]
+    D --> E[🏆 Ranked Venues + Match Rationale]
+```
+
+1. **Select Demo User**: Choose a starting profile from the sidebar.
+2. **Set Location**: Search any city or landmark to center the search pool via Google Maps Geocoding.
+3. **Natural-Language Query**: Type cravings, atmosphere, or price constraints into the search field.
+4. **Group Integration**: Optionally `@` tag friends to include their taste profiles in the recommendation engine.
+5. **Review AI Briefs**: Inspect match percentages, dietary compatibility, and concise reasoning for each option.
+6. **Submit & Evolve**: Share reviews or dish photos to continuously refine personal taste models.
+
+---
+
+## 🛠️ Technology Stack
+
+| Layer | Technology | Key Function |
+|---|---|---|
+| **Frontend** | Next.js 16, React 19, Tailwind CSS 4, Framer Motion | Modern responsive UI, 3D Orbit visualizations, fluid animations |
+| **Backend** | FastAPI, Python 3.10+ | Lightweight REST API, prompt orchestration, in-memory state management |
+| **AI Engine** | Google Gemini 2.5 / 2.0 Flash | Multimodal vision, multi-person preference synthesis, explainable ranking |
+| **Location Services** | Google Maps Geocoding & Places APIs | Real-world coordinate resolution and live venue candidate retrieval |
+
+---
+
+## 📂 Repository Structure
+
+```text
+Tableus-ai-agent/
+├── frontend/             # Next.js 16 application
+│   ├── app/              # App router pages (/discover, /friends, /review, /profile)
+│   ├── components/       # UI components (Orbit, Candidate Cards, Brief Modals)
+│   └── lib/              # API client and client state helpers
+├── backend/              # FastAPI server
+│   ├── main.py           # Endpoint definitions & Gemini prompt pipelines
+│   ├── google_maps_service.py # Maps API wrapper & fallback geocoders
+│   └── data.py           # Demo user profiles, reviews & preference datasets
+├── docs/                 # Documentation assets & product banners
+│   ├── images/           # Formatted product mockups
+│   └── screenshots/      # Raw application captures
+└── generate_product_banners.py # Banner generation utility
+```
+
+### Main Application Routes
+
+- `/discover` — Location-aware spatial search & 3D venue ranking
+- `/friends` — Demo social connections, preference overlap, and group setup
+- `/review` — Multimodal review submission & Gemini Vision dish analysis
+- `/profile` — Personal taste profile summary and dietary preferences
+
+---
+
+## 🚀 Quick Start
+
+### Prerequisites
+- Node.js 18+ and `npm`
+- Python 3.9+ (Python 3.10+ recommended)
+- Google Gemini API Key and Google Maps API Key
+
+### 1. Clone the Repository
+```bash
+git clone https://github.com/samkwak/Tableus-ai-agent.git
+cd Tableus-ai-agent
+```
+
+### 2. Set Up Backend
+```bash
+cd backend
+python3 -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
+```
+
+Create a `backend/.env` file with your credentials:
+```env
+GEMINI_API_KEY=your_gemini_api_key
+GOOGLE_MAPS_API_KEY=your_google_maps_api_key
+```
+
+Run the backend server:
+```bash
+uvicorn main:app --host 127.0.0.1 --port 8000 --reload
+```
+
+### 3. Set Up Frontend
+In a separate terminal window:
+```bash
+cd frontend
+npm install
+npm run dev
+```
+
+Open [http://localhost:3000](http://localhost:3000) in your browser to experience TableUs.
+
+---
+
+<div align="center">
+
+**Built for Cursor Hackathon 2026 🏆 2nd Place Winner**  
+*Empowering small groups to spend less time deciding and more time dining.*
+
+</div>
