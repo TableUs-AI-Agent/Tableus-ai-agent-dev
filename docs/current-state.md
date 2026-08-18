@@ -27,7 +27,9 @@
 
 - Supabase staging database roles, migration, Auth hook, custom SMTP, and client
   environment wiring. The `TableUs Staging` project is provisioned in East US,
-  linked locally, and its database owner password is stored in macOS Keychain.
+  linked locally, and the least-privilege `tableus_runtime` role exists. The
+  database owner password must be rotated before the first remote migration;
+  owner and runtime credentials are stored separately in macOS Keychain.
 - Railway service and deploy credentials.
 - Vercel staging environment values and first exact-SHA preview deployment. The
   `tableus-staging` project is provisioned, linked locally, and configured for
@@ -37,7 +39,7 @@
 
 ## Release gates still requiring an owner or external system
 
-- Create staging resources and roles, configure Supabase custom SMTP, enable the
+- Rotate the Supabase staging owner password, configure custom SMTP, enable the
   `app.hook_restrict_signup_to_validated_invite` Before User Created hook, and
   apply Alembic migrations with the privileged migration credential.
 - Supply the Apple Team ID, final bundle/package identifiers, and SHA-256

@@ -4,9 +4,10 @@
 
 In progress as of 2026-08-17. Local release hardening is committed. The dedicated
 Vercel and Supabase staging projects are provisioned and linked; Vercel has no
-secrets or deployment, while the Supabase database owner password exists only in
-macOS Keychain. Runtime-role creation, remote migration, Auth/SMTP configuration,
-Railway, and EAS remain gated; follow `docs/release-runbook.md`.
+secrets or deployment, while Supabase has a separately credentialed,
+least-privilege `tableus_runtime` role. The owner password must be rotated before
+the first remote migration. Migration, Auth/SMTP configuration, Railway, and EAS
+remain gated; follow `docs/release-runbook.md`.
 
 ## Objective
 
