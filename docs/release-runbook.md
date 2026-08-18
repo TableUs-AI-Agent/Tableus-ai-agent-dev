@@ -40,6 +40,9 @@ After cloud-resource and secret approval:
    migration credential separate. Set `DATABASE_URL` to the runtime connection,
    `MIGRATION_DATABASE_URL` to the migration connection, and
    `TABLEUS_RUNTIME_DB_ROLE` to the quoted-safe role name.
+   `backend/scripts/provision_runtime_role.py` performs the role creation or
+   credential update when those variables plus the process-only
+   `TABLEUS_RUNTIME_DB_PASSWORD` are present; it never prints the password.
 3. Keep the `app` schema private; do not expose it through the Supabase Data API.
 4. With explicit staging-migration approval, run from `backend/`:
 
