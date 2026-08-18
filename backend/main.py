@@ -9,6 +9,7 @@ This service powers:
 """
 import io
 import json
+import logging
 import math
 import os
 import re
@@ -22,13 +23,17 @@ from urllib.parse import parse_qs, quote, urlparse
 from dotenv import load_dotenv
 
 _BACKEND_ROOT = Path(__file__).resolve().parent
-load_dotenv(_BACKEND_ROOT / ".env", override=True)
+load_dotenv(_BACKEND_ROOT / ".env", override=False)
 
-import google.generativeai as genai
-from fastapi import FastAPI, File, HTTPException, Query, Response, UploadFile
+from google import genai
+from google.genai import types as genai_types
+from google.genai.errors import ClientError, ServerError
+from fastapi import FastAPI, File, HTTPException, Query, Request, Response, UploadFile
+from fastapi.exceptions import RequestValidationError
 from fastapi.middleware.cors import CORSMiddleware
-from google.api_core.exceptions import InvalidArgument, NotFound, ResourceExhausted
+from fastapi.responses import JSONResponse
 from pydantic import BaseModel
+import sentry_sdk
 
 import data
 from google_maps_service import GoogleMapsServiceError, get_google_maps_service
@@ -44,7 +49,6 @@ ALLOWED_CUISINES = {
 }
 
 _PRIMARY = "gemini-2.5-flash-lite"
-_FALLBACKS = ["gemini-2.5-flash", "gemini-2.0-flash-lite", "gemini-2.0-flash"]
 
 # Max Places candidates fetched and max venues returned for the orbit UI.
 MAX_RESTAURANT_CANDIDATES = 20
@@ -59,8 +63,7 @@ def _build_model(name: str):
     api_key = _get_gemini_api_key()
     if not api_key:
         raise RuntimeError("GEMINI_API_KEY not set")
-    genai.configure(api_key=api_key)
-    return genai.GenerativeModel(name)
+    return genai.Client(api_key=api_key)
 
 
 def _response_text(response) -> str:
@@ -89,45 +92,30 @@ def _response_text(response) -> str:
 
 
 def _call_with_fallback(prompt, image=None) -> str:
-    models_to_try = [_PRIMARY] + _FALLBACKS
-    last_empty = False
-    for model_name in models_to_try:
-        if model_name not in _models:
-            _models[model_name] = _build_model(model_name)
-        try:
-            model = _models[model_name]
-            response = model.generate_content([prompt, image]) if image is not None else model.generate_content(prompt)
-            raw = _response_text(response)
-            if raw:
-                return raw
-            last_empty = True
-            continue
-        except InvalidArgument as exc:
-            message = str(exc).lower()
-            if "api key" in message or "api_key_invalid" in message:
-                raise HTTPException(
-                    status_code=401,
-                    detail=(
-                        "Gemini rejected GEMINI_API_KEY. Create a valid key in Google AI Studio, "
-                        "store it in backend/.env, and restart the backend."
-                    ),
-                ) from exc
-            raise
-        except (ResourceExhausted, NotFound):
-            continue
-
-    if last_empty:
-        raise HTTPException(
-            status_code=503,
-            detail=(
-                "Gemini returned an empty response for all tried models "
-                "(often safety filters or blocked output). Try a different query or check API settings."
-            ),
+    if _PRIMARY not in _models:
+        _models[_PRIMARY] = _build_model(_PRIMARY)
+    contents = prompt
+    if image is not None:
+        buffer = io.BytesIO()
+        image.convert("RGB").save(buffer, format="JPEG")
+        contents = [
+            prompt,
+            genai_types.Part.from_bytes(data=buffer.getvalue(), mime_type="image/jpeg"),
+        ]
+    try:
+        response = _models[_PRIMARY].models.generate_content(
+            model=_PRIMARY,
+            contents=contents,
         )
-    raise HTTPException(
-        status_code=429,
-        detail="Gemini API quota is currently exhausted for all configured models.",
-    )
+    except ClientError as exc:
+        status = 401 if "api key" in str(exc).lower() else 400
+        raise HTTPException(status_code=status, detail="Gemini rejected the request.") from exc
+    except ServerError as exc:
+        raise HTTPException(status_code=503, detail="Gemini is temporarily unavailable.") from exc
+    raw = _response_text(response)
+    if not raw:
+        raise HTTPException(status_code=503, detail="Gemini returned no usable response.")
+    return raw
 
 
 def get_model():
@@ -331,22 +319,165 @@ def parse_preferences_locally(preferences_text: str) -> dict:
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    try:
+    from tableus.db import init_database
+
+    await init_database()
+    if _get_gemini_api_key():
         get_model()
-        print("[STARTUP] Gemini model ready")
-    except Exception as exc:
-        print(f"[STARTUP] Gemini not configured yet: {exc}")
     yield
 
 
-app = FastAPI(title="TableUs", lifespan=lifespan)
+from tableus.config import get_settings
+
+settings = get_settings()
+if settings.sentry_dsn:
+    sentry_sdk.init(
+        dsn=settings.sentry_dsn,
+        environment=settings.environment,
+        send_default_pii=False,
+    )
+
+app = FastAPI(title="TableUs", version="0.2.0", lifespan=lifespan)
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=settings.cors_origins,
     allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
+    allow_methods=["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
+    allow_headers=[
+        "Authorization",
+        "Content-Type",
+        "Idempotency-Key",
+        "X-Demo-User-ID",
+        "X-Request-ID",
+    ],
 )
+
+
+@app.middleware("http")
+async def request_context(request: Request, call_next):
+    import uuid
+
+    from tableus.security import hash_value
+
+    request_id = request.headers.get("X-Request-ID") or str(uuid.uuid4())
+    request.state.request_id = request_id
+    is_legacy = request.url.path.startswith("/api/") and not request.url.path.startswith("/api/v1")
+    if is_legacy and not settings.tableus_demo_mode:
+        return JSONResponse(
+            status_code=404,
+            content={
+                "error": {"code": "not_found", "message": "Not found"},
+                "request_id": request_id,
+            },
+        )
+    if (
+        request.url.path.startswith("/api/v1/plans")
+        and not settings.tableus_shared_plans_enabled
+    ):
+        return JSONResponse(
+            status_code=404,
+            content={
+                "error": {"code": "feature_disabled", "message": "Shared plans are disabled"},
+                "request_id": request_id,
+            },
+        )
+    now = time.time()
+    actor = request.headers.get("Authorization") or request.headers.get("X-Demo-User-ID")
+    actor_key = hash_value(actor or (request.client.host if request.client else "unknown"))
+    rate_key = (actor_key, int(now // 60))
+    rate_counts = getattr(app.state, "rate_counts", {})
+    rate_counts[rate_key] = rate_counts.get(rate_key, 0) + 1
+    app.state.rate_counts = {
+        key: value for key, value in rate_counts.items() if key[1] >= int(now // 60) - 1
+    }
+    if rate_counts[rate_key] > 120:
+        return JSONResponse(
+            status_code=429,
+            content={
+                "error": {"code": "rate_limited", "message": "Too many requests"},
+                "request_id": request_id,
+            },
+        )
+
+    idempotency_key = request.headers.get("Idempotency-Key")
+    cache_key = (actor_key, request.method, request.url.path, idempotency_key)
+    idempotency_cache = getattr(app.state, "idempotency_cache", {})
+    cached = idempotency_cache.get(cache_key) if idempotency_key else None
+    if cached and cached[0] > now:
+        return Response(
+            content=cached[2],
+            status_code=cached[1],
+            media_type=cached[3],
+            headers={"X-Request-ID": request_id, "X-Idempotent-Replay": "true"},
+        )
+    started = time.perf_counter()
+    response = await call_next(request)
+    if idempotency_key and request.method in {"POST", "PUT", "PATCH", "DELETE"}:
+        body = b"".join([chunk async for chunk in response.body_iterator])
+        if response.status_code < 500:
+            idempotency_cache[cache_key] = (
+                now + 86400,
+                response.status_code,
+                body,
+                response.media_type or "application/json",
+            )
+            app.state.idempotency_cache = {
+                key: value for key, value in idempotency_cache.items() if value[0] > now
+            }
+        response = Response(
+            content=body,
+            status_code=response.status_code,
+            media_type=response.media_type,
+            headers=dict(response.headers),
+        )
+    response.headers["X-Request-ID"] = request_id
+    logging.getLogger("tableus.request").info(
+        json.dumps(
+            {
+                "request_id": request_id,
+                "method": request.method,
+                "path": request.url.path,
+                "status": response.status_code,
+                "latency_ms": int((time.perf_counter() - started) * 1000),
+            }
+        )
+    )
+    return response
+
+
+@app.exception_handler(HTTPException)
+async def api_http_error(request: Request, exc: HTTPException):
+    if request.url.path.startswith("/api/v1"):
+        return JSONResponse(
+            status_code=exc.status_code,
+            content={
+                "error": {"code": f"http_{exc.status_code}", "message": str(exc.detail)},
+                "request_id": getattr(request.state, "request_id", "unknown"),
+            },
+        )
+    return JSONResponse(status_code=exc.status_code, content={"detail": exc.detail})
+
+
+@app.exception_handler(RequestValidationError)
+async def api_validation_error(request: Request, exc: RequestValidationError):
+    if request.url.path.startswith("/api/v1"):
+        return JSONResponse(
+            status_code=422,
+            content={
+                "error": {
+                    "code": "validation_error",
+                    "message": "Request validation failed",
+                    "fields": exc.errors(),
+                },
+                "request_id": getattr(request.state, "request_id", "unknown"),
+            },
+        )
+    return JSONResponse(status_code=422, content={"detail": exc.errors()})
+
+
+from tableus.api import router as v1_router
+
+app.include_router(v1_router)
 
 
 class ReviewSubmitRequest(BaseModel):
@@ -1018,6 +1149,27 @@ async def health():
         "google_maps_configured": has_maps_key,
         "restaurants": len(data.RESTAURANTS),
         "users": len(data.DEMO_USERS),
+    }
+
+
+@app.get("/health/live")
+async def health_live():
+    return {"status": "live"}
+
+
+@app.get("/health/ready")
+async def health_ready():
+    from sqlalchemy import select
+
+    from tableus.db import SessionFactory
+    from tableus.models import Profile
+
+    async with SessionFactory() as session:
+        await session.execute(select(Profile.id).limit(1))
+    return {
+        "status": "ready",
+        "provider_mode": settings.tableus_provider_mode,
+        "auth_mode": settings.tableus_auth_mode,
     }
 
 

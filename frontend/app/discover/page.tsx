@@ -1,6 +1,7 @@
 ﻿"use client";
 
 import { useEffect, useRef, useState } from "react";
+import dynamic from "next/dynamic";
 import {
   ChevronRight,
   Compass,
@@ -16,11 +17,22 @@ import {
 import { AnimatePresence, motion } from "framer-motion";
 import { useUser } from "../context/user-context";
 import { api } from "../lib/api";
-import { DiscoverTabletopScene } from "../components/discover-tabletop-scene";
 import { MentionInput } from "../components/mention-input";
 import { Restaurant } from "../components/restaurant-card";
 
 type DemoUser = { id: string; name: string; avatar: string };
+
+const DiscoverTabletopScene = dynamic(
+  () => import("../components/discover-tabletop-scene").then((module) => module.DiscoverTabletopScene),
+  {
+    ssr: false,
+    loading: () => (
+      <div className="flex min-h-[420px] items-center justify-center rounded-[2rem] bg-stone-100 text-sm text-stone-600">
+        Preparing the tabletop…
+      </div>
+    ),
+  },
+);
 
 type ActiveLocation = {
   label: string;

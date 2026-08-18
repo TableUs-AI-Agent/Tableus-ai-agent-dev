@@ -35,4 +35,24 @@ This is the state of the repo **as submitted for judging** (Cursor Hackathon 202
 
 - **Spoke lines** from the orbit center to top restaurant cards were implemented, iterated (thickness), then **removed**; restaurant orbit went back to a **single radius** (45%) for all venues.
 
+# 2026-08-16 — Closed-beta foundation
 
+- Added Expo Router mobile development for iOS and Android.
+- Added the persistent authenticated `/api/v1` shared-plan API and ranked voting.
+- Added deterministic providers, generated contracts, CI/EAS workflows, tests,
+  privacy/telemetry controls, and Vercel/Railway deployment configuration.
+- Split the web Three.js scene into a client-only dynamic chunk and upgraded
+  Next.js to the patched 16.3.1 release.
+
+# 2026-08-17 — Release hardening
+
+- Separated privileged Alembic and least-privilege runtime database credentials,
+  moved application data into a private schema, and added an invite-only
+  Supabase pre-signup hook plus hashed invite administration commands.
+- Bound OTP invite validation to the authenticated email and made verified-link
+  manifests fail closed until real Apple and Android identifiers are supplied.
+- Added Railway port handling, Expo verified-link/update configuration, live
+  Google Maps attribution, expanded beta privacy/terms disclosures, and a
+  staging-aware closed-beta browser journey.
+- Added an operator runbook that preserves explicit approval gates for external
+  resources, secrets, migrations, paid providers, deployments, and submissions.

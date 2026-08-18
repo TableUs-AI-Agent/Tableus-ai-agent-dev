@@ -1,0 +1,40 @@
+name: Mobile production submission
+
+on:
+  workflow_dispatch: {}
+
+jobs:
+  build_ios:
+    name: Build iOS production
+    type: build
+    params:
+      platform: ios
+      profile: production
+
+  build_android:
+    name: Build Android production
+    type: build
+    params:
+      platform: android
+      profile: production
+
+  approval:
+    name: Approve store submission
+    needs: [build_ios, build_android]
+    type: require-approval
+
+  submit_ios:
+    name: Submit to TestFlight
+    needs: [approval]
+    type: submit
+    params:
+      build_id: ${{ needs.build_ios.outputs.build_id }}
+      profile: production
+
+  submit_android:
+    name: Submit to Google Play internal
+    needs: [approval]
+    type: submit
+    params:
+      build_id: ${{ needs.build_android.outputs.build_id }}
+      profile: production

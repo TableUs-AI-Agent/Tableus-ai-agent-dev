@@ -1,0 +1,31 @@
+name: Mobile deterministic journeys
+
+on:
+  workflow_dispatch: {}
+
+jobs:
+  build_ios:
+    type: build
+    params:
+      platform: ios
+      profile: test-ios
+
+  test_ios:
+    needs: [build_ios]
+    type: maestro
+    params:
+      build_id: ${{ needs.build_ios.outputs.build_id }}
+      flow_path: [".maestro/smoke.yml"]
+
+  build_android:
+    type: build
+    params:
+      platform: android
+      profile: test-android
+
+  test_android:
+    needs: [build_android]
+    type: maestro
+    params:
+      build_id: ${{ needs.build_android.outputs.build_id }}
+      flow_path: [".maestro/smoke.yml"]

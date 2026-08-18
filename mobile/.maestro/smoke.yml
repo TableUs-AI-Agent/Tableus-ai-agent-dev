@@ -1,0 +1,9 @@
+appId: com.tableus.app
+---
+- launchApp:
+    clearState: true
+- assertVisible: "Plans"
+- tapOn: "Friday dinner"
+- inputText: "Beta dinner"
+- tapOn: "Create shared plan"
+- assertVisible: "Beta dinner"

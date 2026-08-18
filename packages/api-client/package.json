@@ -1,0 +1,15 @@
+{
+  "name": "@tableus/api-client",
+  "version": "0.2.0",
+  "private": true,
+  "type": "module",
+  "exports": "./src/index.ts",
+  "scripts": {
+    "generate": "openapi-typescript ../../docs/openapi.json -o src/schema.ts",
+    "check": "npm run generate && git diff --exit-code -- src/schema.ts ../../docs/openapi.json",
+    "typecheck": "tsc --noEmit",
+    "test": "node --test --experimental-strip-types src/*.test.ts",
+    "build": "tsc --noEmit"
+  },
+  "devDependencies": { "typescript": "^6.0.3" }
+}

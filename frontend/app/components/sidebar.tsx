@@ -2,11 +2,12 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { ChevronDown, PenSquare, Search, User, Users } from "lucide-react";
+import { CalendarDays, ChevronDown, PenSquare, Search, User, Users } from "lucide-react";
 import { useState } from "react";
 import { useUser } from "../context/user-context";
 
 const NAV = [
+  { href: "/plans", label: "Plans", icon: CalendarDays },
   { href: "/discover", label: "Discover", icon: Search },
   { href: "/friends", label: "Friends", icon: Users },
   { href: "/review", label: "Review", icon: PenSquare },
