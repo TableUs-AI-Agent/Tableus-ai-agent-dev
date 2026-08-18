@@ -63,8 +63,12 @@ This is the state of the repo **as submitted for judging** (Cursor Hackathon 202
   for Node 22, Next.js, frozen npm installs, and the web workspace output. No
   environment secrets or deployment were added.
 - Created and linked the isolated `TableUs Staging` Supabase project in East US.
-  Created its separately credentialed, least-privilege `tableus_runtime` role;
-  no remote migration, Auth hook, SMTP, or client environment was configured.
+  Created its separately credentialed, least-privilege `tableus_runtime` role
+  and applied the closed-beta foundation through Alembic revision
+  `5c9a1d7e2b3f`; Auth-hook activation, SMTP, and client environment wiring are
+  not yet configured.
 - Escaped URL-encoded database credentials before passing migration URLs through
-  Alembic's interpolating configuration layer. The staging owner password must
-  be rotated before the first remote migration.
+  Alembic's interpolating configuration layer. Rotated the staging owner
+  password and updated its macOS Keychain entry without exposing the replacement.
+- Enabled RLS on Alembic's public version table. Supabase's linked security and
+  performance advisors report no warning-or-higher issues after migration.
