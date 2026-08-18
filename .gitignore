@@ -32,3 +32,4 @@ backend/.artifacts/
 CHAT_CONTEXT_COMPACT.md
 .vercel/
 .env*.local
+supabase/.temp/

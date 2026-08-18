@@ -25,7 +25,9 @@
 
 ## External dependencies not provisioned in source
 
-- Supabase project, Postgres URL, and Auth keys.
+- Supabase staging database roles, migration, Auth hook, custom SMTP, and client
+  environment wiring. The `TableUs Staging` project is provisioned in East US,
+  linked locally, and its database owner password is stored in macOS Keychain.
 - Railway service and deploy credentials.
 - Vercel staging environment values and first exact-SHA preview deployment. The
   `tableus-staging` project is provisioned, linked locally, and configured for

@@ -62,3 +62,6 @@ This is the state of the repo **as submitted for judging** (Cursor Hackathon 202
 - Created and linked the isolated `tableus-staging` Vercel project, configured
   for Node 22, Next.js, frozen npm installs, and the web workspace output. No
   environment secrets or deployment were added.
+- Created and linked the isolated `TableUs Staging` Supabase project in East US.
+  Its database owner password is stored in macOS Keychain; no remote migration,
+  runtime role, Auth hook, SMTP, or client environment was configured.

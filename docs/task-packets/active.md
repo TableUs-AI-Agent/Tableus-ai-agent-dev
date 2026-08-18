@@ -2,10 +2,11 @@
 
 ## Status
 
-In progress as of 2026-08-17. Local release hardening is committed and the
-dedicated `tableus-staging` Vercel project is provisioned, linked, and configured
-without secrets or a deployment. Supabase and EAS authentication are the next
-owner-interactive gates; follow `docs/release-runbook.md`.
+In progress as of 2026-08-17. Local release hardening is committed. The dedicated
+Vercel and Supabase staging projects are provisioned and linked; Vercel has no
+secrets or deployment, while the Supabase database owner password exists only in
+macOS Keychain. Runtime-role creation, remote migration, Auth/SMTP configuration,
+Railway, and EAS remain gated; follow `docs/release-runbook.md`.
 
 ## Objective
 

@@ -24,3 +24,6 @@
 - **2026-08-17:** Pre-production web evidence uses the dedicated Vercel project
   `tableus-staging`; production remains a separate approval and configuration
   gate.
+- **2026-08-17:** Supabase staging uses the isolated `TableUs Staging` project in
+  East US. Its owner credential is stored outside the repository in macOS
+  Keychain; runtime credentials and migrations remain separate gates.
