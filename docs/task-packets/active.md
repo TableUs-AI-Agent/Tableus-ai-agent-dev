@@ -1,32 +1,32 @@
-# Active packet: release hardening
+# Active packet: staging bootstrap
 
 ## Status
 
-Local acceptance is complete as of 2026-08-17. Deterministic `make ready`, the
-closed-beta Playwright lifecycle, Expo configuration resolution, and an Alembic
-upgrade/downgrade/upgrade cycle pass. The next packet begins only after approval
-to provision staging resources and secrets; follow `docs/release-runbook.md`.
+In progress as of 2026-08-17. Local release hardening is committed and the
+dedicated `tableus-staging` Vercel project is provisioned, linked, and configured
+without secrets or a deployment. Supabase and EAS authentication are the next
+owner-interactive gates; follow `docs/release-runbook.md`.
 
 ## Objective
 
-Close source-level release gaps before any staging resources, credentials, paid
-provider calls, or store accounts are provisioned.
+Provision a deterministic, isolated staging environment from one exact commit
+without enabling paid providers or taking any production/store action.
 
 ## Deliverables
 
-- Separate migration and runtime database credentials and document the
-  least-privilege role boundary.
-- Bind invite redemption to the email validated before OTP and add local invite
-  administration tooling.
-- Make Railway port handling, verified web links, EAS Update configuration, and
-  staging browser evidence production-shaped without requiring live resources.
-- Surface Google attribution for live Places results and expand privacy, terms,
-  deletion, and beta-safety disclosures on web and mobile.
-- Record exact external inputs still required for AASA, Android asset links,
-  Supabase hooks, deployment evidence, and store submission.
+- Provision and configure the Vercel staging project without deploying it.
+- Authenticate and provision Supabase staging with separate migration/runtime
+  roles, private `app` schema, Auth hook, custom SMTP, and deterministic mode.
+- Authenticate and link an Expo/EAS project, then configure preview-only
+  environment values without building or submitting an application.
+- Provision or connect a Railway staging API and add only the approved staging
+  secrets required by deterministic web/mobile evidence.
+- Deploy one exact SHA after a separate deployment approval and capture sanitized
+  browser, iOS, and Android evidence.
 
 ## Acceptance
 
-Focused security and configuration tests plus `make ready` pass without external
-credentials. No cloud resource, secret, paid live-AI run, remote migration,
-deployment, or store action occurs in this packet.
+All staging resources are isolated from production and reference one exact SHA.
+Deterministic auth/planning journeys pass across web, iOS, and Android. Paid Maps
+or AI, production migrations/deployments, and store submissions remain separate
+approval gates.

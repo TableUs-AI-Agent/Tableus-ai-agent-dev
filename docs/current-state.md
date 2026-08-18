@@ -27,7 +27,9 @@
 
 - Supabase project, Postgres URL, and Auth keys.
 - Railway service and deploy credentials.
-- Vercel project and deploy credentials.
+- Vercel staging environment values and first exact-SHA preview deployment. The
+  `tableus-staging` project is provisioned, linked locally, and configured for
+  Node 22 and the root npm workspace build.
 - Expo/EAS project, Apple, and Google Play credentials.
 - Google Maps, Gemini, Sentry, and PostHog credentials.
 

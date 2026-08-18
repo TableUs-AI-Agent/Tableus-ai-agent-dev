@@ -30,3 +30,5 @@ backend/.artifacts/
 .vscode/
 *.tsbuildinfo
 CHAT_CONTEXT_COMPACT.md
+.vercel/
+.env*.local

@@ -21,3 +21,6 @@
   Supabase Auth hooks and rate limits are an additional staging control.
 - **2026-08-17:** Verified HTTPS links cover `/join/*` and `/auth*`. Association
   manifests fail closed until real Apple and Android signing identifiers exist.
+- **2026-08-17:** Pre-production web evidence uses the dedicated Vercel project
+  `tableus-staging`; production remains a separate approval and configuration
+  gate.

@@ -56,3 +56,9 @@ This is the state of the repo **as submitted for judging** (Cursor Hackathon 202
   staging-aware closed-beta browser journey.
 - Added an operator runbook that preserves explicit approval gates for external
   resources, secrets, migrations, paid providers, deployments, and submissions.
+
+# 2026-08-17 — Staging bootstrap
+
+- Created and linked the isolated `tableus-staging` Vercel project, configured
+  for Node 22, Next.js, frozen npm installs, and the web workspace output. No
+  environment secrets or deployment were added.
