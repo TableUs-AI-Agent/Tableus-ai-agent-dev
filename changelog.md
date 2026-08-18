@@ -72,3 +72,6 @@ This is the state of the repo **as submitted for judging** (Cursor Hackathon 202
   password and updated its macOS Keychain entry without exposing the replacement.
 - Enabled RLS on Alembic's public version table. Supabase's linked security and
   performance advisors report no warning-or-higher issues after migration.
+- Enabled the staging Before User Created Auth hook against the private,
+  security-invoker invite-validation function. Verified its unvalidated 403
+  path, scoped `supabase_auth_admin` grants, and a clean advisor result.

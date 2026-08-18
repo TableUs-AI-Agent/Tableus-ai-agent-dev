@@ -25,12 +25,12 @@
 
 ## External dependencies not provisioned in source
 
-- Supabase staging Auth-hook activation, custom SMTP, and client environment
-  wiring. The `TableUs Staging` project is provisioned in East US and linked
-  locally. Its owner credential has been rotated, the least-privilege
-  `tableus_runtime` role is active, and Alembic revision `5c9a1d7e2b3f` is
-  applied. Owner and runtime credentials are stored separately in macOS
-  Keychain.
+- Supabase staging custom SMTP and client environment wiring. The `TableUs
+  Staging` project is provisioned in East US and linked locally. Its owner
+  credential has been rotated, the least-privilege `tableus_runtime` role is
+  active, Alembic revision `5c9a1d7e2b3f` is applied, and the Before User
+  Created hook is enabled against `app.hook_restrict_signup_to_validated_invite`.
+  Owner and runtime credentials are stored separately in macOS Keychain.
 - Railway service and deploy credentials.
 - Vercel staging environment values and first exact-SHA preview deployment. The
   `tableus-staging` project is provisioned, linked locally, and configured for
@@ -40,8 +40,8 @@
 
 ## Release gates still requiring an owner or external system
 
-- Configure Supabase custom SMTP and enable the existing
-  `app.hook_restrict_signup_to_validated_invite` Before User Created hook.
+- Configure Supabase custom SMTP and complete an authenticated invite-redemption
+  journey against staging Auth.
 - Supply the Apple Team ID, final bundle/package identifiers, and SHA-256
   fingerprints for every Android signing certificate; then verify the HTTPS
   association files against real builds.
