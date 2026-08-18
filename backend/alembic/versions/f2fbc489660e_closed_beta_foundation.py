@@ -276,7 +276,6 @@ def upgrade() -> None:
                 CREATE OR REPLACE FUNCTION app.hook_restrict_signup_to_validated_invite(event jsonb)
                 RETURNS jsonb
                 LANGUAGE plpgsql
-                SECURITY DEFINER
                 SET search_path = ''
                 AS $$
                 DECLARE
@@ -323,6 +322,8 @@ def upgrade() -> None:
                         GRANT USAGE ON SCHEMA app TO supabase_auth_admin;
                         GRANT EXECUTE ON FUNCTION
                             app.hook_restrict_signup_to_validated_invite(jsonb)
+                            TO supabase_auth_admin;
+                        GRANT SELECT ON TABLE app.pending_auth_validations
                             TO supabase_auth_admin;
                     END IF;
                 END

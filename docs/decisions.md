@@ -27,3 +27,7 @@
 - **2026-08-17:** Supabase staging uses the isolated `TableUs Staging` project in
   East US. Its owner credential is stored outside the repository in macOS
   Keychain; runtime credentials and migrations remain separate gates.
+- **2026-08-17:** The invite-only Before User Created hook is security-invoker.
+  `supabase_auth_admin` receives only private-schema usage, hook execution, and
+  read access to pending validation hashes; no client Data API role receives
+  access to the application schema.
