@@ -82,7 +82,7 @@ uv run python scripts/invites.py revoke <invite-id>
 Set the backend variables from `backend/.env.example`, with at least:
 
 - `ENVIRONMENT=staging`
-- `DATABASE_URL`, `MIGRATION_DATABASE_URL`, `TABLEUS_RUNTIME_DB_ROLE`
+- `DATABASE_URL`, `TABLEUS_RUNTIME_DB_ROLE`
 - `TABLEUS_AUTH_MODE=supabase`
 - `TABLEUS_PROVIDER_MODE=deterministic` initially
 - `TABLEUS_DEMO_MODE=false`
@@ -90,6 +90,9 @@ Set the backend variables from `backend/.env.example`, with at least:
 - `SUPABASE_URL`, `SUPABASE_JWT_AUDIENCE=authenticated`
 - exact `ALLOWED_ORIGINS` and `BACKEND_PUBLIC_URL`
 
+Do not store `MIGRATION_DATABASE_URL` in Railway. Apply each approved migration
+from the trusted operator environment with the owner credential held outside the
+service, then deploy the runtime with only the least-privilege application role.
 Railway supplies `PORT`; the container reads it automatically. Confirm
 `/health/live` and `/health/ready` after an approved staging deployment.
 

@@ -8,6 +8,9 @@
 - Converted the Supabase staging Confirm signup and Magic Link templates to
   six-digit token delivery and verified a full invite, OTP, redemption, profile,
   and authenticated `/plans` journey with sanitized database counts.
+- Removed Railway's automatic Alembic pre-deploy command so the hosted runtime
+  never needs the privileged migration credential; migrations remain a separate
+  approved operator action.
 
 ## Hackathon submission (baseline)
 

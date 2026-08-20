@@ -37,3 +37,7 @@
   addition or rotation, paid live-AI evaluation, production migrations,
   deployments, store submissions, destructive cleanup, and significant product
   or architecture decisions.
+- **2026-08-19:** Railway receives only the least-privilege runtime database
+  credential. The privileged migration credential remains in the trusted
+  operator environment; approved migrations run separately before deployment
+  rather than through Railway's pre-deploy container.

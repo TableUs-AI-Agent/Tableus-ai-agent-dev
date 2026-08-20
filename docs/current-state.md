@@ -18,6 +18,8 @@
 - Separate migration/runtime database credentials, a private application schema,
   an invite-only Supabase pre-signup hook, email-bound invite redemption, and a
   hashed invite administration CLI.
+- Railway configuration keeps the privileged migration credential outside the
+  hosted service; approved migrations run separately before runtime deployment.
 - Fail-closed Apple/Android association manifests, production-shaped Expo link
   configuration, Railway port handling, expanded beta disclosures, and visible
   attribution on live Google Maps candidates.
