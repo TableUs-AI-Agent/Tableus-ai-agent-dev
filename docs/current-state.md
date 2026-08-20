@@ -30,16 +30,18 @@
 - Supabase staging client environment wiring. The `TableUs Staging` project is
   provisioned in East US and linked locally. Resend-backed custom SMTP is
   configured with the required `resend` username and a verified `table-us.com`
-  sending domain. A real invite-approved OTP request passed the Auth hook and
-  completed with HTTP 200 and no SMTP error. The staging Confirm signup template
-  sent `ConfirmationURL` instead of the six-digit `Token` expected by the app;
-  following that one-time link confirmed the Supabase account but did not redeem
-  the TableUs invite. Both Confirm signup and Magic Link templates still need to
-  be converted to code-based content. Alembic revision `57a2a71fa443` is applied
-  and verified against staging. Its owner credential has been rotated, the
-  least-privilege `tableus_runtime` role is active, and the Before User Created
-  hook is enabled against `app.hook_restrict_signup_to_validated_invite`.
-  Owner and runtime credentials are stored separately in macOS Keychain.
+  sending domain. Confirm signup and Magic Link now present the six-digit
+  `Token`. A real invite-approved OTP completed the Auth hook, email delivery,
+  code verification, invite redemption, profile creation, and authenticated
+  redirect to `/plans`. Sanitized staging evidence showed exactly one profile,
+  one redemption, one consumed pending validation, and one used invite. Alembic
+  revision `57a2a71fa443` is applied and verified against staging. Its owner
+  credential has been rotated, the least-privilege `tableus_runtime` role is
+  active, and the Before User Created hook is enabled against
+  `app.hook_restrict_signup_to_validated_invite`. Owner and runtime credentials
+  are stored separately in macOS Keychain. One superseded unused invite remains
+  active until 2026-08-27; its plaintext is unavailable and it should be revoked
+  or allowed to expire before external beta access.
 - Railway service and deploy credentials.
 - Vercel staging environment values and first exact-SHA preview deployment. The
   `tableus-staging` project is provisioned, linked locally, and configured for
@@ -49,8 +51,6 @@
 
 ## Release gates still requiring an owner or external system
 
-- Convert the staging Confirm signup and Magic Link templates to use
-  `{{ .Token }}`, then complete the authenticated invite-redemption journey.
 - Supply the Apple Team ID, final bundle/package identifiers, and SHA-256
   fingerprints for every Android signing certificate; then verify the HTTPS
   association files against real builds.

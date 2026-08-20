@@ -5,6 +5,9 @@
 - Stopped pre-filling the demo-only `tableus-beta` invite when the web client is
   configured for Supabase Auth, preventing a misleading invalid-invite failure
   in the staging OTP flow.
+- Converted the Supabase staging Confirm signup and Magic Link templates to
+  six-digit token delivery and verified a full invite, OTP, redemption, profile,
+  and authenticated `/plans` journey with sanitized database counts.
 
 ## Hackathon submission (baseline)
 

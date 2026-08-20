@@ -8,19 +8,21 @@ secrets or deployment, while Supabase has a separately credentialed,
 least-privilege `tableus_runtime` role and the database is migrated through
 revision `5c9a1d7e2b3f`. The owner password is rotated and stored separately from
 the runtime credential. The Before User Created invite hook is enabled and
-verified, and Resend-backed custom SMTP is configured. Auth delivery evidence,
-client Auth wiring, Railway, and EAS remain gated. Revision `57a2a71fa443` is
+verified, and Resend-backed custom SMTP is configured. Confirm signup and Magic
+Link now deliver six-digit codes, and a real invite completed OTP verification,
+redemption, profile creation, and the authenticated `/plans` redirect. Railway
+and EAS remain gated. Revision `57a2a71fa443` is
 applied and verified against staging, replacing the Auth hook's inaccessible
 `extensions.digest` dependency with PostgreSQL's built-in SHA-256 function. The
 next OTP request passed the hook but Resend rejected the configured SMTP username;
 the username is now corrected to `resend`. The subsequent retry reached Resend,
 which rejected the unverified `table-us.com` sending domain. The domain is now
 verified, and a fresh OTP request passed the hook and completed with HTTP 200 and
-no SMTP error. The delivered Confirm signup email used a confirmation link rather
-than the six-digit token expected by the client. Its one-time link confirmed the
-Supabase account, but the application invite remains unredeemed and unused.
-Convert both Confirm signup and Magic Link templates to token-based content before
-the next request. Follow `docs/release-runbook.md`.
+no SMTP error. The initial Confirm signup email used a confirmation link rather
+than the six-digit token expected by the client; both templates are now
+token-based and the subsequent journey succeeded. One earlier unused invite
+remains active until 2026-08-27 with no recoverable plaintext; revoke it or allow
+it to expire before external beta access. Follow `docs/release-runbook.md`.
 
 ## Objective
 
