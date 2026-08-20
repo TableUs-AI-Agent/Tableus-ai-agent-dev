@@ -60,6 +60,10 @@ After cloud-resource and secret approval:
 7. Configure short OTP expiry and platform rate limits, then verify that an
    unvalidated email cannot create an Auth user.
 
+Joining and returning sign-in are distinct. A new account validates and redeems
+one invite before product access. A returning account requests OTP without a new
+invite, then must pass the authenticated `/api/v1/me` profile check.
+
 Create an invite only after the migration and hook are active:
 
 ```bash

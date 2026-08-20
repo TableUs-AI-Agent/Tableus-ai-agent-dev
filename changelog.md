@@ -124,3 +124,6 @@ This is the state of the repo **as submitted for judging** (Cursor Hackathon 202
   Supabase account; the TableUs invite remains unredeemed with zero uses. Both
   Confirm signup and Magic Link templates must render `{{ .Token }}` before the
   next authentication request.
+- Added separate returning-user email-OTP sign-in states on web and mobile.
+  Returning users now prove their existing invite-approved profile through
+  `/api/v1/me` instead of validating and consuming a new invite.

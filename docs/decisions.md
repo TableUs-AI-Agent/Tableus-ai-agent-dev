@@ -41,3 +41,7 @@
   credential. The privileged migration credential remains in the trusted
   operator environment; approved migrations run separately before deployment
   rather than through Railway's pre-deploy container.
+- **2026-08-19:** Invite validation is required only when joining the beta.
+  Returning users authenticate by email OTP and must prove an existing
+  invite-approved application profile through `/api/v1/me`; signing in never
+  consumes another invite.

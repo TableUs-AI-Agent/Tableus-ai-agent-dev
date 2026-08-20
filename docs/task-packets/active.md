@@ -30,6 +30,10 @@ Vercel as deployment `dpl_GAiLZdCQEJGHx1yw5Bvaxtjwcm26`. Railway liveness,
 readiness, deterministic/Supabase modes, and Vercel CORS passed. Vercel public
 routes passed and verified-link manifests failed closed as designed. A fresh
 single-use invite is prepared for the remaining hosted authenticated journey.
+Local browser review then identified that returning users had no sign-in path
+without consuming a new invite. Web and mobile now separate invite-backed join
+from returning OTP sign-in and verify the existing profile through `/api/v1/me`;
+the next exact-SHA deployment remains an explicit gate.
 
 ## Objective
 

@@ -13,6 +13,9 @@
 - Next.js plan/invite surfaces and an Expo Router iOS/Android application.
 - The web invite form only pre-fills the deterministic demo invite in demo
   mode; Supabase-backed staging requires an explicit issued invite code.
+- Web and mobile keep account creation behind validated invites while giving
+  returning invite-approved users a separate email-OTP sign-in path that checks
+  `/api/v1/me` without consuming another invite.
 - Generated OpenAPI TypeScript contract, GitHub CI, EAS workflows, browser/API
   smoke journeys, privacy controls, telemetry hooks, and deployment templates.
 - Separate migration/runtime database credentials, a private application schema,
@@ -67,7 +70,9 @@
   the beta notices, and validate Google Maps attribution against the production
   presentation and current brand requirements.
 - Run exact-SHA authenticated staging browser evidence and iOS/Android Maestro
-  journeys. Maps staging and the budgeted pinned-model Gemini evaluation follow
-  only after deterministic staging is green.
+  journeys. The currently deployed SHA predates the returning-user sign-in fix;
+  deploy the next approved exact SHA before completing that browser evidence.
+  Maps staging and the budgeted pinned-model Gemini evaluation follow only after
+  deterministic staging is green.
 - Obtain explicit approval before any production migration, deployment, EAS
   build/submission, paid live-AI evaluation, or cohort invitation.
