@@ -11,6 +11,8 @@
 - Versioned `/api/v1`, persistence models, migrations, deterministic/live provider
   adapters, invite access, connections, reviews, and ranked shared plans.
 - Next.js plan/invite surfaces and an Expo Router iOS/Android application.
+- The web invite form only pre-fills the deterministic demo invite in demo
+  mode; Supabase-backed staging requires an explicit issued invite code.
 - Generated OpenAPI TypeScript contract, GitHub CI, EAS workflows, browser/API
   smoke journeys, privacy controls, telemetry hooks, and deployment templates.
 - Separate migration/runtime database credentials, a private application schema,

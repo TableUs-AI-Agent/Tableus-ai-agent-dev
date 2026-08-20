@@ -8,7 +8,7 @@ import { v1Api } from "../lib/v1-api";
 
 export default function InvitePage() {
   const router = useRouter();
-  const [invite, setInvite] = useState("tableus-beta");
+  const [invite, setInvite] = useState(isSupabaseConfigured ? "" : "tableus-beta");
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [otp, setOtp] = useState("");

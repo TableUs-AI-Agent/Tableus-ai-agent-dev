@@ -1,5 +1,11 @@
 # Changelog
 
+## 2026-08-19
+
+- Stopped pre-filling the demo-only `tableus-beta` invite when the web client is
+  configured for Supabase Auth, preventing a misleading invalid-invite failure
+  in the staging OTP flow.
+
 ## Hackathon submission (baseline)
 
 This is the state of the repo **as submitted for judging** (Cursor Hackathon 2026). Everything below was done **after** judging finished.
