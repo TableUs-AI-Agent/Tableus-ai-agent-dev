@@ -169,3 +169,13 @@ This is the state of the repo **as submitted for judging** (Cursor Hackathon 202
   config resolves to `com.tableus.app`, but the EAS project ID/update URL is
   absent and the CLI is unauthenticated, blocking project/build inspection and
   workflow-schema validation until an approved Expo login and project link.
+- Deployed exact SHA `6487200af62646299df0109715840f02bbe75b6b` to Railway
+  deployment `2ad41e97-7e5a-46e0-b046-f0c62510fa17` and Vercel deployment
+  `dpl_824mqRVZdCtE8GRS5pULLTdw6cJ6`; verified the public branch, API health,
+  Vercel readiness, and alias promotion.
+- Created the correctly branded `@tableus/tableus` EAS project, configured five
+  preview-only public client values, added explicit EAS environments to every
+  build profile, and added deterministic demo mode for simulator/APK test builds.
+  Preview/auth builds continue to use Supabase. Replaced paid EAS-hosted Maestro
+  jobs with build-artifact jobs for local Maestro execution; all workflow schemas
+  now validate without activating billing.

@@ -154,10 +154,13 @@ Confirm manually or with captured test evidence:
   mutation errors behave as disclosed;
 - AASA and asset links open the installed iOS/Android app and fall back to web.
 
-Run the checked-in EAS Maestro workflow on both preview platforms only after an
-approved build. Store sanitized screenshots/logs with the candidate SHA and
-deployment/build IDs; do not retain OTPs, invite codes, emails, full share
-tokens, precise locations, photos, prompts, or provider responses.
+Run the checked-in EAS build-artifact workflow on both test profiles only after
+an approved build. Install the resulting iOS simulator `.app` and Android `.apk`
+locally, then run `.maestro/smoke.yml` against each platform. EAS-hosted Maestro
+jobs require a paid plan and are not part of the default closed-beta workflow.
+Store sanitized screenshots/logs with the candidate SHA and deployment/build
+IDs; do not retain OTPs, invite codes, emails, full share tokens, precise
+locations, photos, prompts, or provider responses.
 
 ## 6. Enable providers incrementally
 

@@ -55,13 +55,13 @@
   active until 2026-08-27; its plaintext is unavailable and it should be revoked
   or allowed to expire before external beta access.
 - Railway staging project `tableus-staging`, environment `staging`, and service
-  `api` are provisioned. Deployment `9a1e1f92-424d-4156-82ce-01ff995e3b3c`
+  `api` are provisioned. Deployment `2ad41e97-7e5a-46e0-b046-f0c62510fa17`
   serves `https://api-staging-3795.up.railway.app` from exact SHA
-  `90e8dc86bb77ff432f967ccca0918933e0fec550`; liveness, readiness,
+  `6487200af62646299df0109715840f02bbe75b6b`; liveness, readiness,
   deterministic-provider mode, Supabase Auth mode, and Vercel CORS passed.
   Railway holds only the runtime database credential and application secret.
 - Vercel staging client variables and the returning-sign-in deployment are live.
-  Deployment `dpl_3QK4Tq2drGx25RFotVcXCq7D8d23` is `READY` at
+  Deployment `dpl_824mqRVZdCtE8GRS5pULLTdw6cJ6` is `READY` at
   `https://tableus-staging.vercel.app` from the same clean SHA. An authenticated
   Browser session showed the active `Jung` profile after the Supabase session
   changed, verifying the deployed identity-refresh fix. The hosted two-user
@@ -70,11 +70,14 @@
   only finalization, deterministic tie resolution, reopening, and refinalization.
   Public invite and privacy routes return 200; Apple and Android association
   manifests correctly return 503 until real signing identifiers are supplied.
-- Expo/EAS project, Apple, and Google Play credentials. The local Expo config
-  resolves to bundle/package `com.tableus.app` and link host `tableus.app`, but
-  `EXPO_PUBLIC_EAS_PROJECT_ID` is unset, so no update URL is emitted. The local
-  EAS CLI is unauthenticated; project/build inspection and all three checked-in
-  workflow schema validations are blocked until Expo authentication.
+- Expo project `@tableus/tableus` is provisioned as
+  `0601c3b9-0082-454c-b636-45a1fe377f7b`. Its preview environment contains only
+  the staging API URL, Supabase URL/publishable client key, EAS project ID, and
+  staging link host. Preview profiles remain Supabase-authenticated; the two test
+  profiles explicitly enable deterministic demo mode. All checked-in workflows
+  validate after replacing paid EAS-hosted Maestro jobs with build-artifact jobs
+  for local Maestro execution. The supplied `@tableus/brian` project remains
+  untouched and unused. Apple and Google Play credentials remain unprovisioned.
 - Google Maps, Gemini, Sentry, and PostHog credentials.
 
 ## Release gates still requiring an owner or external system

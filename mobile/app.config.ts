@@ -1,12 +1,13 @@
 import type { ExpoConfig, ConfigContext } from "expo/config";
 
 export default ({ config }: ConfigContext): ExpoConfig => {
-  const projectId = process.env.EXPO_PUBLIC_EAS_PROJECT_ID;
+  const projectId = process.env.EXPO_PUBLIC_EAS_PROJECT_ID ?? "0601c3b9-0082-454c-b636-45a1fe377f7b";
   const linkHost = process.env.EXPO_PUBLIC_LINK_HOST ?? "tableus.app";
   return {
     ...config,
     name: "TableUs",
     slug: "tableus",
+    owner: "tableus",
     scheme: "tableus",
     version: "0.2.0",
     orientation: "portrait",

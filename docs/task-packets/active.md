@@ -45,13 +45,14 @@ controls are implemented locally with typed destructive confirmation; exact-SHA
 hosted/device evidence remains, and no staging account was deleted. Other
 privacy/failure-state checks and iOS/Android evidence remain.
 
-The local Expo configuration resolves without native project generation, but no
-EAS project ID/update URL is configured. `eas whoami`, project/build inspection,
-and validation of the preview, test, and production workflow YAML are blocked by
-an unauthenticated EAS CLI. The next external action is to authenticate, link or
-create the isolated EAS project, configure preview-only public environment
-values, validate the workflows, and run the approved iOS-simulator/Android-APK
-test workflow. No EAS project or build was created during this audit.
+Expo authentication is complete and the correctly branded `@tableus/tableus`
+project is provisioned as `0601c3b9-0082-454c-b636-45a1fe377f7b`. Five
+preview-only public client values are configured. The preview build remains
+Supabase-authenticated while `test-ios` and `test-android` explicitly select
+deterministic demo mode. Preview, build-artifact test, and production workflow
+schemas validate. EAS-hosted Maestro requires a paid plan, so the test workflow
+produces an iOS simulator app and Android APK for local Maestro execution instead.
+No EAS build or store action has run yet.
 
 ## Objective
 
