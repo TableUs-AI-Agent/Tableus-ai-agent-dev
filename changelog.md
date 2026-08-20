@@ -93,3 +93,7 @@ This is the state of the repo **as submitted for judging** (Cursor Hackathon 202
   ran the Auth hook, but Resend rejected the configured SMTP username with a 535
   response. No OTP was delivered; staging SMTP must use Resend's fixed `resend`
   username before the next attempt.
+- Verified the SMTP username correction with one fresh OTP request. The request
+  passed invite validation and the Auth hook, but Resend rejected the unverified
+  `table-us.com` sender domain with a 550 response. No OTP was delivered, no Auth
+  user was left behind, and the invite remains usable.

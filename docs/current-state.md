@@ -27,12 +27,13 @@
 
 - Supabase staging client environment wiring. The `TableUs Staging` project is
   provisioned in East US and linked locally. Resend-backed custom SMTP is
-  configured, but end-to-end Auth email delivery is not yet verified: after the
-  Auth-hook fix, the SMTP server rejected the configured username with `535
-  "Invalid username"`. Alembic revision `57a2a71fa443` is applied and verified
-  against staging. Its owner credential has been rotated, the least-privilege
-  `tableus_runtime` role is active, and the Before User Created hook is enabled
-  against `app.hook_restrict_signup_to_validated_invite`.
+  configured, but end-to-end Auth email delivery is not yet verified. The SMTP
+  username is corrected to Resend's required `resend` value; the next delivery
+  attempt reached Resend and was rejected because `table-us.com` is not yet a
+  verified sending domain. Alembic revision `57a2a71fa443` is applied and
+  verified against staging. Its owner credential has been rotated, the
+  least-privilege `tableus_runtime` role is active, and the Before User Created
+  hook is enabled against `app.hook_restrict_signup_to_validated_invite`.
   Owner and runtime credentials are stored separately in macOS Keychain.
 - Railway service and deploy credentials.
 - Vercel staging environment values and first exact-SHA preview deployment. The
@@ -43,8 +44,8 @@
 
 ## Release gates still requiring an owner or external system
 
-- Correct the staging Resend SMTP username to `resend`, verify delivery, and
-  complete an authenticated invite-redemption journey against staging Auth.
+- Verify the `table-us.com` sending domain in Resend, verify Auth email delivery,
+  and complete an authenticated invite-redemption journey against staging Auth.
 - Supply the Apple Team ID, final bundle/package identifiers, and SHA-256
   fingerprints for every Android signing certificate; then verify the HTTPS
   association files against real builds.

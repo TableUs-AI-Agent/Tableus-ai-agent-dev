@@ -13,7 +13,9 @@ client Auth wiring, Railway, and EAS remain gated. Revision `57a2a71fa443` is
 applied and verified against staging, replacing the Auth hook's inaccessible
 `extensions.digest` dependency with PostgreSQL's built-in SHA-256 function. The
 next OTP request passed the hook but Resend rejected the configured SMTP username;
-correct it to `resend` before the delivery retry. Follow `docs/release-runbook.md`.
+the username is now corrected to `resend`. The subsequent retry reached Resend,
+which rejected the unverified `table-us.com` sending domain. Verify that domain
+before the delivery retry. Follow `docs/release-runbook.md`.
 
 ## Objective
 
