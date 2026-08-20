@@ -14,8 +14,10 @@ applied and verified against staging, replacing the Auth hook's inaccessible
 `extensions.digest` dependency with PostgreSQL's built-in SHA-256 function. The
 next OTP request passed the hook but Resend rejected the configured SMTP username;
 the username is now corrected to `resend`. The subsequent retry reached Resend,
-which rejected the unverified `table-us.com` sending domain. Verify that domain
-before the delivery retry. Follow `docs/release-runbook.md`.
+which rejected the unverified `table-us.com` sending domain. The domain is now
+verified, and a fresh OTP request passed the hook and completed with HTTP 200 and
+no SMTP error. Recipient confirmation and invite redemption remain pending.
+Follow `docs/release-runbook.md`.
 
 ## Objective
 

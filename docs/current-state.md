@@ -27,10 +27,10 @@
 
 - Supabase staging client environment wiring. The `TableUs Staging` project is
   provisioned in East US and linked locally. Resend-backed custom SMTP is
-  configured, but end-to-end Auth email delivery is not yet verified. The SMTP
-  username is corrected to Resend's required `resend` value; the next delivery
-  attempt reached Resend and was rejected because `table-us.com` is not yet a
-  verified sending domain. Alembic revision `57a2a71fa443` is applied and
+  configured with the required `resend` username and a verified `table-us.com`
+  sending domain. A real invite-approved OTP request passed the Auth hook and
+  completed with HTTP 200 and no SMTP error; recipient confirmation and invite
+  redemption remain pending. Alembic revision `57a2a71fa443` is applied and
   verified against staging. Its owner credential has been rotated, the
   least-privilege `tableus_runtime` role is active, and the Before User Created
   hook is enabled against `app.hook_restrict_signup_to_validated_invite`.
@@ -44,8 +44,8 @@
 
 ## Release gates still requiring an owner or external system
 
-- Verify the `table-us.com` sending domain in Resend, verify Auth email delivery,
-  and complete an authenticated invite-redemption journey against staging Auth.
+- Confirm receipt of the accepted Auth email and complete the authenticated
+  invite-redemption journey against staging Auth.
 - Supply the Apple Team ID, final bundle/package identifiers, and SHA-256
   fingerprints for every Android signing certificate; then verify the HTTPS
   association files against real builds.

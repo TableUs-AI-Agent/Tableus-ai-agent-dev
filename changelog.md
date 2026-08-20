@@ -97,3 +97,8 @@ This is the state of the repo **as submitted for judging** (Cursor Hackathon 202
   passed invite validation and the Auth hook, but Resend rejected the unverified
   `table-us.com` sender domain with a 550 response. No OTP was delivered, no Auth
   user was left behind, and the invite remains usable.
+- Verified the public DKIM, SPF, and return-path MX records after the Resend domain
+  was marked verified, then sent one fresh OTP request. Supabase Auth ran the
+  invite hook and completed `/otp` with HTTP 200 and no SMTP error. The expected
+  Auth user exists, while the application invite remains unredeemed until the
+  recipient enters the code.
