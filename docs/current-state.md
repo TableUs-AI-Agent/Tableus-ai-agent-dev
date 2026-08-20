@@ -50,16 +50,18 @@
   active until 2026-08-27; its plaintext is unavailable and it should be revoked
   or allowed to expire before external beta access.
 - Railway staging project `tableus-staging`, environment `staging`, and service
-  `api` are provisioned. Deployment `b02006e2-847f-4e4e-bb7a-c962a8ea4dbc`
+  `api` are provisioned. Deployment `f15cc1d9-9df7-4a47-be4a-71a04c7c6bed`
   serves `https://api-staging-3795.up.railway.app` from exact SHA
-  `ec1635d2d5bf458c584d14bd59beb9a520f7541d`; liveness, readiness,
+  `b6d308e00e9591fdc708b943fa86d3bce12101db`; liveness, readiness,
   deterministic-provider mode, Supabase Auth mode, and Vercel CORS passed.
   Railway holds only the runtime database credential and application secret.
 - Vercel staging client variables and the returning-sign-in deployment are live.
-  Deployment `dpl_6Hg4k2muRDPRMT3BNQdYeJhTPUEa` is `READY` at
-  `https://tableus-staging.vercel.app` from the same clean SHA. Public invite and
-  privacy routes return 200; Apple and Android association manifests correctly
-  return 503 until real signing identifiers are supplied.
+  Deployment `dpl_C2n8j5ovo9gK3XNgvwmE9Xo5YgB9` is `READY` at
+  `https://tableus-staging.vercel.app` from the same clean SHA. An authenticated
+  Browser session showed the real `Brian` profile, no legacy demo-user switcher,
+  and working account navigation to `/profile`. Public invite and privacy routes
+  return 200; Apple and Android association manifests correctly return 503 until
+  real signing identifiers are supplied.
 - Expo/EAS project, Apple, and Google Play credentials.
 - Google Maps, Gemini, Sentry, and PostHog credentials.
 
@@ -72,10 +74,10 @@
   the beta notices, and validate Google Maps attribution against the production
   presentation and current brand requirements.
 - Run exact-SHA authenticated staging browser evidence and iOS/Android Maestro
-  journeys. Returning-user OTP verification reached `/plans` with no console
-  errors, and read-only staging evidence remained at one profile, one redemption,
-  and one invite use. Deploy the authenticated-identity UI fix before completing
-  the remaining product journey.
+  journeys. Exact-SHA returning-user OTP and authenticated-identity evidence is
+  green, and read-only staging evidence remained at one profile, one redemption,
+  and one invite use. The full two-user planning journey, link rotation/expiry,
+  privacy operations, and failure-state checks remain.
   Maps staging and the budgeted pinned-model Gemini evaluation follow only after
   deterministic staging is green.
 - Obtain explicit approval before any production migration, deployment, EAS

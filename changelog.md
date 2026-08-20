@@ -133,3 +133,13 @@ This is the state of the repo **as submitted for judging** (Cursor Hackathon 202
 - Completed hosted returning-user OTP verification without another invite use.
   Updated the Supabase-backed web user context to load the authenticated profile
   and connections through `/api/v1` instead of showing legacy fallback people.
+
+# 2026-08-20 — Authenticated identity staging evidence
+
+- Deployed exact SHA `b6d308e00e9591fdc708b943fa86d3bce12101db` to Railway
+  deployment `f15cc1d9-9df7-4a47-be4a-71a04c7c6bed` and Vercel deployment
+  `dpl_C2n8j5ovo9gK3XNgvwmE9Xo5YgB9`.
+- Verified Railway liveness/readiness in deterministic-provider and Supabase Auth
+  modes, Vercel alias promotion, the exact remote branch SHA, authenticated
+  `Brian` identity on `/plans`, absence of the demo switcher, and account
+  navigation to `/profile`.

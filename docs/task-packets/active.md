@@ -2,7 +2,7 @@
 
 ## Status
 
-In progress as of 2026-08-19. Local release hardening is committed. The dedicated
+In progress as of 2026-08-20. Local release hardening is committed. The dedicated
 Vercel, Railway, and Supabase staging projects are provisioned and linked.
 Supabase has a separately credentialed,
 least-privilege `tableus_runtime` role and the database is migrated through
@@ -24,18 +24,16 @@ token-based and the subsequent journey succeeded. One earlier unused invite
 remains active until 2026-08-27 with no recoverable plaintext; revoke it or allow
 it to expire before external beta access. Follow `docs/release-runbook.md`.
 
-Exact SHA `ec1635d2d5bf458c584d14bd59beb9a520f7541d` passed `make ready` and is
-deployed to Railway as deployment `b02006e2-847f-4e4e-bb7a-c962a8ea4dbc` and
-Vercel as deployment `dpl_6Hg4k2muRDPRMT3BNQdYeJhTPUEa`. Railway liveness,
-readiness, deterministic/Supabase modes, and Vercel CORS passed. Vercel promoted
-the production alias, and hosted Browser verification confirmed the returning
-OTP sign-in UI with no console errors. One returning-user OTP request succeeded
-without validating or consuming the fresh single-use evidence invite; code
-verification reached `/plans`. Read-only staging aggregates remained at one
-profile, one redemption, and one total invite use. The journey exposed a legacy
-demo-identity fallback in the global web user context; the local fix now sources
-the authenticated profile and connections from `/api/v1` and requires a new
-exact-SHA deployment before the remaining product evidence.
+Exact SHA `b6d308e00e9591fdc708b943fa86d3bce12101db` passed `make ready` and is
+deployed to Railway as deployment `f15cc1d9-9df7-4a47-be4a-71a04c7c6bed` and
+Vercel as deployment `dpl_C2n8j5ovo9gK3XNgvwmE9Xo5YgB9`. Railway liveness,
+readiness, deterministic/Supabase modes, and the public branch SHA passed.
+Vercel promoted the production alias. A hosted authenticated Browser session
+showed the real `Brian` profile on `/plans`, no legacy demo-user switcher, and
+working account navigation to `/profile`. The earlier returning-user OTP did not
+consume another invite; read-only staging aggregates remained at one profile,
+one redemption, and one total invite use. The full two-user deterministic plan
+journey and iOS/Android evidence remain.
 
 ## Objective
 
