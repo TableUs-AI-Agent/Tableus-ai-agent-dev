@@ -24,16 +24,14 @@ token-based and the subsequent journey succeeded. One earlier unused invite
 remains active until 2026-08-27 with no recoverable plaintext; revoke it or allow
 it to expire before external beta access. Follow `docs/release-runbook.md`.
 
-Exact SHA `ab2d374d3c8917ba8b4af18a56675751d095924a` passed `make ready` and is
-deployed to Railway as deployment `90dff841-ddbb-49e7-bd7c-2187f65c062a` and
-Vercel as deployment `dpl_GAiLZdCQEJGHx1yw5Bvaxtjwcm26`. Railway liveness,
-readiness, deterministic/Supabase modes, and Vercel CORS passed. Vercel public
-routes passed and verified-link manifests failed closed as designed. A fresh
-single-use invite is prepared for the remaining hosted authenticated journey.
-Local browser review then identified that returning users had no sign-in path
-without consuming a new invite. Web and mobile now separate invite-backed join
-from returning OTP sign-in and verify the existing profile through `/api/v1/me`;
-the next exact-SHA deployment remains an explicit gate.
+Exact SHA `ec1635d2d5bf458c584d14bd59beb9a520f7541d` passed `make ready` and is
+deployed to Railway as deployment `b02006e2-847f-4e4e-bb7a-c962a8ea4dbc` and
+Vercel as deployment `dpl_6Hg4k2muRDPRMT3BNQdYeJhTPUEa`. Railway liveness,
+readiness, deterministic/Supabase modes, and Vercel CORS passed. Vercel promoted
+the production alias, and hosted Browser verification confirmed the returning
+OTP sign-in UI with no console errors. One returning-user OTP request succeeded
+without validating or consuming the fresh single-use evidence invite; code
+verification and the authenticated product journey remain.
 
 ## Objective
 

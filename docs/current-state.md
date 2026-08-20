@@ -48,13 +48,13 @@
   active until 2026-08-27; its plaintext is unavailable and it should be revoked
   or allowed to expire before external beta access.
 - Railway staging project `tableus-staging`, environment `staging`, and service
-  `api` are provisioned. Deployment `90dff841-ddbb-49e7-bd7c-2187f65c062a`
+  `api` are provisioned. Deployment `b02006e2-847f-4e4e-bb7a-c962a8ea4dbc`
   serves `https://api-staging-3795.up.railway.app` from exact SHA
-  `ab2d374d3c8917ba8b4af18a56675751d095924a`; liveness, readiness,
+  `ec1635d2d5bf458c584d14bd59beb9a520f7541d`; liveness, readiness,
   deterministic-provider mode, Supabase Auth mode, and Vercel CORS passed.
   Railway holds only the runtime database credential and application secret.
-- Vercel staging client variables and the first exact-SHA deployment are live.
-  Deployment `dpl_GAiLZdCQEJGHx1yw5Bvaxtjwcm26` is `READY` at
+- Vercel staging client variables and the returning-sign-in deployment are live.
+  Deployment `dpl_6Hg4k2muRDPRMT3BNQdYeJhTPUEa` is `READY` at
   `https://tableus-staging.vercel.app` from the same clean SHA. Public invite and
   privacy routes return 200; Apple and Android association manifests correctly
   return 503 until real signing identifiers are supplied.
@@ -70,8 +70,8 @@
   the beta notices, and validate Google Maps attribution against the production
   presentation and current brand requirements.
 - Run exact-SHA authenticated staging browser evidence and iOS/Android Maestro
-  journeys. The currently deployed SHA predates the returning-user sign-in fix;
-  deploy the next approved exact SHA before completing that browser evidence.
+  journeys. The returning-user sign-in UI is deployed and its hosted OTP request
+  succeeded; code verification and the authenticated product journey remain.
   Maps staging and the budgeted pinned-model Gemini evaluation follow only after
   deterministic staging is green.
 - Obtain explicit approval before any production migration, deployment, EAS

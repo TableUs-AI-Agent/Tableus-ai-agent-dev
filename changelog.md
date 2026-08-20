@@ -127,3 +127,6 @@ This is the state of the repo **as submitted for judging** (Cursor Hackathon 202
 - Added separate returning-user email-OTP sign-in states on web and mobile.
   Returning users now prove their existing invite-approved profile through
   `/api/v1/me` instead of validating and consuming a new invite.
+- Deployed the returning-sign-in candidate to isolated Railway and Vercel
+  staging from exact SHA `ec1635d2d5bf458c584d14bd59beb9a520f7541d` and
+  verified API health, CORS, alias promotion, hosted UI state, and OTP request.
