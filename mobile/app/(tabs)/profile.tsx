@@ -30,6 +30,7 @@ export default function ProfileScreen() {
         </View>
         {profile.error ? <ErrorText message={profile.error.message} /> : null}
       </Card>
+      <Link href="/account" style={{ color: colors.accent }}>Account and data</Link>
       <Link href="/privacy" style={{ color: colors.accent }}>Privacy</Link>
       <Link href="/terms" style={{ color: colors.accent }}>Terms</Link>
     </ScrollView>

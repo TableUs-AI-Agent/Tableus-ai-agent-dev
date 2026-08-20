@@ -39,8 +39,11 @@ deterministic plan journey is green: Jung created the plan, Brian joined through
 the private link, both saved constraints, the provider returned exactly four
 candidates, both submitted 3/2/1 votes, the 5–5 tie resolved deterministically
 to Garden Mezze, Brian had no finalization control, and Jung finalized, reopened,
-and refinalized the plan. Link rotation/expiry, privacy/failure-state checks, and
-iOS/Android evidence remain.
+and refinalized the plan. Rotating the share token made the prior private link
+fail with an explicit rotated-link message. Web and Expo account export/deletion
+controls are implemented locally with typed destructive confirmation; exact-SHA
+hosted/device evidence remains, and no staging account was deleted. Other
+privacy/failure-state checks and iOS/Android evidence remain.
 
 ## Objective
 

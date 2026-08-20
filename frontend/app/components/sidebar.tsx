@@ -59,7 +59,7 @@ export function Sidebar() {
 
         <div className="border-t border-[var(--border)] p-4">
           <button
-            onClick={() => canSwitchUser ? setOpen((value) => !value) : router.push("/profile")}
+            onClick={() => canSwitchUser ? setOpen((value) => !value) : router.push("/account")}
             className="flex w-full items-center gap-3 rounded-3xl bg-white/80 px-4 py-3 shadow-[0_12px_30px_rgba(244,186,114,0.12)] transition-colors hover:bg-white"
             aria-expanded={open}
           >
@@ -163,7 +163,7 @@ export function Sidebar() {
 
           <button
             type="button"
-            onClick={() => canSwitchUser ? setOpen((value) => !value) : router.push("/profile")}
+            onClick={() => canSwitchUser ? setOpen((value) => !value) : router.push("/account")}
             className={`flex min-w-0 flex-1 flex-col items-center gap-1 rounded-2xl px-1.5 py-1.5 text-[10px] font-semibold transition ${
               open
                 ? "text-[var(--accent)]"

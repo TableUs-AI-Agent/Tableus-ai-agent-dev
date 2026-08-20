@@ -19,6 +19,10 @@
 - Supabase-backed web sessions load the authenticated profile and connections
   from `/api/v1`, including after Supabase replaces the active session; legacy
   demo identity switching remains demo-only.
+- Web and Expo account settings expose application-data export and typed-
+  confirmation deletion controls. Export stays user-initiated, deletion explains
+  the organized-plan prerequisite, and neither client silently deletes the
+  Supabase Auth record.
 - Generated OpenAPI TypeScript contract, GitHub CI, EAS workflows, browser/API
   smoke journeys, privacy controls, telemetry hooks, and deployment templates.
 - Separate migration/runtime database credentials, a private application schema,
@@ -83,7 +87,10 @@
   sanitized staging evidence to two profiles, two redemptions, and two invite
   uses. The stale global identity cache exposed by that session change is fixed
   and verified on staging. The full two-user deterministic planning journey is
-  green. Link rotation/expiry, privacy operations, and failure-state checks remain.
+  green. Share-token rotation invalidated the prior private link with an explicit
+  failure state. Account export/deletion controls are implemented locally but
+  still require exact-SHA hosted/device evidence; privacy deletion itself remains
+  intentionally unexecuted. Other failure-state checks remain.
   Maps staging and the budgeted pinned-model Gemini evaluation follow only after
   deterministic staging is green.
 - Obtain explicit approval before any production migration, deployment, EAS

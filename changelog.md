@@ -159,3 +159,9 @@ This is the state of the repo **as submitted for judging** (Cursor Hackathon 202
   produced a 5–5 tie between Garden Mezze and Trattoria Together, which resolved
   deterministically to Garden Mezze. Brian had no finalization control; Jung
   finalized, reopened with vote totals preserved, and refinalized the plan.
+- Rotated the organizer-controlled share token and verified the previously
+  retained private link fails with an explicit invalid-or-rotated message.
+- Added web and Expo account-data controls backed by `/api/v1/me/export` and
+  `/api/v1/me`: user-initiated JSON export, typed `DELETE` confirmation, clear
+  organized-plan blocking guidance, post-deletion sign-out, and links from the
+  existing account/profile navigation. No staging account was deleted.
