@@ -75,3 +75,6 @@ This is the state of the repo **as submitted for judging** (Cursor Hackathon 202
 - Enabled the staging Before User Created Auth hook against the private,
   security-invoker invite-validation function. Verified its unvalidated 403
   path, scoped `supabase_auth_admin` grants, and a clean advisor result.
+- Configured Resend-backed custom SMTP for staging Supabase Auth without placing
+  credentials in the repository. A real OTP delivery test remains pending
+  recipient confirmation.

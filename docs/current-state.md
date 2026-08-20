@@ -25,8 +25,9 @@
 
 ## External dependencies not provisioned in source
 
-- Supabase staging custom SMTP and client environment wiring. The `TableUs
-  Staging` project is provisioned in East US and linked locally. Its owner
+- Supabase staging client environment wiring. The `TableUs Staging` project is
+  provisioned in East US and linked locally. Resend-backed custom SMTP is
+  configured; end-to-end Auth email delivery is not yet verified. Its owner
   credential has been rotated, the least-privilege `tableus_runtime` role is
   active, Alembic revision `5c9a1d7e2b3f` is applied, and the Before User
   Created hook is enabled against `app.hook_restrict_signup_to_validated_invite`.
@@ -40,8 +41,8 @@
 
 ## Release gates still requiring an owner or external system
 
-- Configure Supabase custom SMTP and complete an authenticated invite-redemption
-  journey against staging Auth.
+- Verify Resend delivery and complete an authenticated invite-redemption journey
+  against staging Auth.
 - Supply the Apple Team ID, final bundle/package identifiers, and SHA-256
   fingerprints for every Android signing certificate; then verify the HTTPS
   association files against real builds.

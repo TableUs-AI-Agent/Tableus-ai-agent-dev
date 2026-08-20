@@ -2,14 +2,14 @@
 
 ## Status
 
-In progress as of 2026-08-18. Local release hardening is committed. The dedicated
+In progress as of 2026-08-19. Local release hardening is committed. The dedicated
 Vercel and Supabase staging projects are provisioned and linked; Vercel has no
 secrets or deployment, while Supabase has a separately credentialed,
 least-privilege `tableus_runtime` role and the database is migrated through
 revision `5c9a1d7e2b3f`. The owner password is rotated and stored separately from
 the runtime credential. The Before User Created invite hook is enabled and
-verified; custom SMTP, client Auth wiring, Railway, and EAS remain gated. Follow
-`docs/release-runbook.md`.
+verified, and Resend-backed custom SMTP is configured. Auth delivery evidence,
+client Auth wiring, Railway, and EAS remain gated. Follow `docs/release-runbook.md`.
 
 ## Objective
 
