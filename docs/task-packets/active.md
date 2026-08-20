@@ -24,20 +24,18 @@ token-based and the subsequent journey succeeded. One earlier unused invite
 remains active until 2026-08-27 with no recoverable plaintext; revoke it or allow
 it to expire before external beta access. Follow `docs/release-runbook.md`.
 
-Exact SHA `b6d308e00e9591fdc708b943fa86d3bce12101db` passed `make ready` and is
-deployed to Railway as deployment `f15cc1d9-9df7-4a47-be4a-71a04c7c6bed` and
-Vercel as deployment `dpl_C2n8j5ovo9gK3XNgvwmE9Xo5YgB9`. Railway liveness,
+Exact SHA `90e8dc86bb77ff432f967ccca0918933e0fec550` passed `make ready` and is
+deployed to Railway as deployment `9a1e1f92-424d-4156-82ce-01ff995e3b3c` and
+Vercel as deployment `dpl_3QK4Tq2drGx25RFotVcXCq7D8d23`. Railway liveness,
 readiness, deterministic/Supabase modes, and the public branch SHA passed.
 Vercel promoted the production alias. A hosted authenticated Browser session
-showed the real `Brian` profile on `/plans`, no legacy demo-user switcher, and
-working account navigation to `/profile`. The earlier returning-user OTP did not
-consume another invite; read-only staging aggregates remained at one profile,
-one redemption, and one total invite use. A second invite-approved account then
-redeemed successfully as `Jung`, bringing the sanitized aggregates to two
-profiles, two redemptions, and two invite uses. Switching the Supabase session
-exposed a stale global web identity cache; the local auth-state refresh fix must
-be deployed before the full two-user deterministic plan journey continues.
-iOS/Android evidence remains.
+showed the active `Jung` profile after the Supabase browser session changed,
+verifying the deployed auth-state identity refresh. The earlier returning-user
+OTP did not consume another invite; read-only staging aggregates remained at
+one profile, one redemption, and one total invite use. A second invite-approved
+account then redeemed successfully as `Jung`, bringing the sanitized aggregates
+to two profiles, two redemptions, and two invite uses. The full two-user
+deterministic plan journey and iOS/Android evidence remain.
 
 ## Objective
 

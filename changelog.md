@@ -147,3 +147,9 @@ This is the state of the repo **as submitted for judging** (Cursor Hackathon 202
   profiles, two redemptions, and two invite uses. Added a Supabase auth-state
   listener so replacing the browser session reloads the authenticated profile
   and connections instead of retaining the prior user's identity.
+- Deployed the identity-refresh candidate from exact SHA
+  `90e8dc86bb77ff432f967ccca0918933e0fec550` to Railway deployment
+  `9a1e1f92-424d-4156-82ce-01ff995e3b3c` and Vercel deployment
+  `dpl_3QK4Tq2drGx25RFotVcXCq7D8d23`; verified Railway liveness/readiness,
+  Vercel `READY` alias promotion, the public branch SHA, and the active `Jung`
+  identity on the hosted `/profile` route.

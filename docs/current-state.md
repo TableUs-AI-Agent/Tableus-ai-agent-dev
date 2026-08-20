@@ -51,18 +51,18 @@
   active until 2026-08-27; its plaintext is unavailable and it should be revoked
   or allowed to expire before external beta access.
 - Railway staging project `tableus-staging`, environment `staging`, and service
-  `api` are provisioned. Deployment `f15cc1d9-9df7-4a47-be4a-71a04c7c6bed`
+  `api` are provisioned. Deployment `9a1e1f92-424d-4156-82ce-01ff995e3b3c`
   serves `https://api-staging-3795.up.railway.app` from exact SHA
-  `b6d308e00e9591fdc708b943fa86d3bce12101db`; liveness, readiness,
+  `90e8dc86bb77ff432f967ccca0918933e0fec550`; liveness, readiness,
   deterministic-provider mode, Supabase Auth mode, and Vercel CORS passed.
   Railway holds only the runtime database credential and application secret.
 - Vercel staging client variables and the returning-sign-in deployment are live.
-  Deployment `dpl_C2n8j5ovo9gK3XNgvwmE9Xo5YgB9` is `READY` at
+  Deployment `dpl_3QK4Tq2drGx25RFotVcXCq7D8d23` is `READY` at
   `https://tableus-staging.vercel.app` from the same clean SHA. An authenticated
-  Browser session showed the real `Brian` profile, no legacy demo-user switcher,
-  and working account navigation to `/profile`. Public invite and privacy routes
-  return 200; Apple and Android association manifests correctly return 503 until
-  real signing identifiers are supplied.
+  Browser session showed the active `Jung` profile after the Supabase session
+  changed, verifying the deployed identity-refresh fix. Public invite and privacy
+  routes return 200; Apple and Android association manifests correctly return
+  503 until real signing identifiers are supplied.
 - Expo/EAS project, Apple, and Google Play credentials.
 - Google Maps, Gemini, Sentry, and PostHog credentials.
 
@@ -78,8 +78,8 @@
   journeys. Exact-SHA returning-user OTP and authenticated-identity evidence is
   green. A second invite-approved account redeemed successfully, bringing
   sanitized staging evidence to two profiles, two redemptions, and two invite
-  uses. That session change exposed a stale global identity cache; its local fix
-  must be deployed before the full two-user planning journey continues. Link
+  uses. The stale global identity cache exposed by that session change is fixed
+  and verified on staging. The full two-user planning journey, link
   rotation/expiry, privacy operations, and failure-state checks remain.
   Maps staging and the budgeted pinned-model Gemini evaluation follow only after
   deterministic staging is green.
