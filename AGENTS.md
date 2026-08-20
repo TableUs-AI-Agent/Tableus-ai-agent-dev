@@ -33,6 +33,11 @@ rotating secrets, paid live-AI evaluation, production migrations, deployments,
 store submissions, and destructive cleanup. Code and local deterministic tests
 may be prepared without those external actions.
 
+Routine, reversible implementation and staging configuration within an approved
+objective do not require repeated approval. Escalate significant product or
+architecture decisions and the explicit gates above; otherwise proceed and
+report the result.
+
 ## Repository conventions
 
 - `backend/` is Python 3.12, FastAPI, async SQLAlchemy, and Alembic.

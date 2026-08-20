@@ -31,3 +31,9 @@
   `supabase_auth_admin` receives only private-schema usage, hook execution, and
   read access to pending validation hashes; no client Data API role receives
   access to the application schema.
+- **2026-08-19:** Routine, reversible implementation and staging configuration
+  within an approved objective proceeds without repeated owner approval. The
+  existing explicit gates remain for merges, cloud-resource creation, secret
+  addition or rotation, paid live-AI evaluation, production migrations,
+  deployments, store submissions, destructive cleanup, and significant product
+  or architecture decisions.
