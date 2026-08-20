@@ -17,7 +17,8 @@
   returning invite-approved users a separate email-OTP sign-in path that checks
   `/api/v1/me` without consuming another invite.
 - Supabase-backed web sessions load the authenticated profile and connections
-  from `/api/v1`; legacy demo identity switching remains demo-only.
+  from `/api/v1`, including after Supabase replaces the active session; legacy
+  demo identity switching remains demo-only.
 - Generated OpenAPI TypeScript contract, GitHub CI, EAS workflows, browser/API
   smoke journeys, privacy controls, telemetry hooks, and deployment templates.
 - Separate migration/runtime database credentials, a private application schema,
@@ -75,9 +76,11 @@
   presentation and current brand requirements.
 - Run exact-SHA authenticated staging browser evidence and iOS/Android Maestro
   journeys. Exact-SHA returning-user OTP and authenticated-identity evidence is
-  green, and read-only staging evidence remained at one profile, one redemption,
-  and one invite use. The full two-user planning journey, link rotation/expiry,
-  privacy operations, and failure-state checks remain.
+  green. A second invite-approved account redeemed successfully, bringing
+  sanitized staging evidence to two profiles, two redemptions, and two invite
+  uses. That session change exposed a stale global identity cache; its local fix
+  must be deployed before the full two-user planning journey continues. Link
+  rotation/expiry, privacy operations, and failure-state checks remain.
   Maps staging and the budgeted pinned-model Gemini evaluation follow only after
   deterministic staging is green.
 - Obtain explicit approval before any production migration, deployment, EAS

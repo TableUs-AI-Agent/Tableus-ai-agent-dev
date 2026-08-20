@@ -32,8 +32,12 @@ Vercel promoted the production alias. A hosted authenticated Browser session
 showed the real `Brian` profile on `/plans`, no legacy demo-user switcher, and
 working account navigation to `/profile`. The earlier returning-user OTP did not
 consume another invite; read-only staging aggregates remained at one profile,
-one redemption, and one total invite use. The full two-user deterministic plan
-journey and iOS/Android evidence remain.
+one redemption, and one total invite use. A second invite-approved account then
+redeemed successfully as `Jung`, bringing the sanitized aggregates to two
+profiles, two redemptions, and two invite uses. Switching the Supabase session
+exposed a stale global web identity cache; the local auth-state refresh fix must
+be deployed before the full two-user deterministic plan journey continues.
+iOS/Android evidence remains.
 
 ## Objective
 

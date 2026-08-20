@@ -2,7 +2,7 @@
 
 import { createContext, useCallback, useContext, useEffect, useState, type ReactNode } from "react";
 import { api } from "../lib/api";
-import { isSupabaseConfigured } from "../lib/supabase-browser";
+import { isSupabaseConfigured, supabase } from "../lib/supabase-browser";
 import { v1Api } from "../lib/v1-api";
 
 type AppUser = { id: string; name: string; avatar: string };
@@ -37,25 +37,46 @@ export function UserProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     let cancelled = false;
     if (isSupabaseConfigured) {
-      Promise.all([
-        v1Api.get<Profile>("/api/v1/me"),
-        v1Api.get<Connection[]>("/api/v1/connections"),
-      ])
-        .then(([profile, connections]) => {
-          if (cancelled) return;
+      let requestVersion = 0;
+      const clearAuthenticatedUser = () => {
+        requestVersion += 1;
+        setCurrentUser(null);
+        setAllUsers([]);
+        setFriends([]);
+      };
+      const loadAuthenticatedUser = async () => {
+        const version = ++requestVersion;
+        try {
+          const [profile, connections] = await Promise.all([
+            v1Api.get<Profile>("/api/v1/me"),
+            v1Api.get<Connection[]>("/api/v1/connections"),
+          ]);
+          if (cancelled || version !== requestVersion) return;
           const authenticatedUser = toAppUser(profile.id, profile.display_name);
           setCurrentUser(authenticatedUser);
           setAllUsers([authenticatedUser]);
           setFriends(connections.map((connection) => toAppUser(connection.profile_id, connection.display_name)));
-        })
-        .catch(() => {
-          if (cancelled) return;
-          setCurrentUser(null);
-          setAllUsers([]);
-          setFriends([]);
-        });
+        } catch {
+          if (cancelled || version !== requestVersion) return;
+          clearAuthenticatedUser();
+        }
+      };
+
+      void loadAuthenticatedUser();
+      const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+        if (!session) {
+          clearAuthenticatedUser();
+          return;
+        }
+        // Run after Supabase releases its auth-state callback lock so the API
+        // client can safely read the newly persisted access token.
+        setTimeout(() => {
+          if (!cancelled) void loadAuthenticatedUser();
+        }, 0);
+      });
       return () => {
         cancelled = true;
+        subscription.unsubscribe();
       };
     }
 

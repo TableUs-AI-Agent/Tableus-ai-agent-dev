@@ -143,3 +143,7 @@ This is the state of the repo **as submitted for judging** (Cursor Hackathon 202
   modes, Vercel alias promotion, the exact remote branch SHA, authenticated
   `Brian` identity on `/plans`, absence of the demo switcher, and account
   navigation to `/profile`.
+- Redeemed a second staging account as `Jung`; sanitized aggregates reached two
+  profiles, two redemptions, and two invite uses. Added a Supabase auth-state
+  listener so replacing the browser session reloads the authenticated profile
+  and connections instead of retaining the prior user's identity.
