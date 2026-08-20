@@ -16,8 +16,11 @@ next OTP request passed the hook but Resend rejected the configured SMTP usernam
 the username is now corrected to `resend`. The subsequent retry reached Resend,
 which rejected the unverified `table-us.com` sending domain. The domain is now
 verified, and a fresh OTP request passed the hook and completed with HTTP 200 and
-no SMTP error. Recipient confirmation and invite redemption remain pending.
-Follow `docs/release-runbook.md`.
+no SMTP error. The delivered Confirm signup email used a confirmation link rather
+than the six-digit token expected by the client. Its one-time link confirmed the
+Supabase account, but the application invite remains unredeemed and unused.
+Convert both Confirm signup and Magic Link templates to token-based content before
+the next request. Follow `docs/release-runbook.md`.
 
 ## Objective
 

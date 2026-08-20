@@ -29,9 +29,12 @@
   provisioned in East US and linked locally. Resend-backed custom SMTP is
   configured with the required `resend` username and a verified `table-us.com`
   sending domain. A real invite-approved OTP request passed the Auth hook and
-  completed with HTTP 200 and no SMTP error; recipient confirmation and invite
-  redemption remain pending. Alembic revision `57a2a71fa443` is applied and
-  verified against staging. Its owner credential has been rotated, the
+  completed with HTTP 200 and no SMTP error. The staging Confirm signup template
+  sent `ConfirmationURL` instead of the six-digit `Token` expected by the app;
+  following that one-time link confirmed the Supabase account but did not redeem
+  the TableUs invite. Both Confirm signup and Magic Link templates still need to
+  be converted to code-based content. Alembic revision `57a2a71fa443` is applied
+  and verified against staging. Its owner credential has been rotated, the
   least-privilege `tableus_runtime` role is active, and the Before User Created
   hook is enabled against `app.hook_restrict_signup_to_validated_invite`.
   Owner and runtime credentials are stored separately in macOS Keychain.
@@ -44,8 +47,8 @@
 
 ## Release gates still requiring an owner or external system
 
-- Confirm receipt of the accepted Auth email and complete the authenticated
-  invite-redemption journey against staging Auth.
+- Convert the staging Confirm signup and Magic Link templates to use
+  `{{ .Token }}`, then complete the authenticated invite-redemption journey.
 - Supply the Apple Team ID, final bundle/package identifiers, and SHA-256
   fingerprints for every Android signing certificate; then verify the HTTPS
   association files against real builds.

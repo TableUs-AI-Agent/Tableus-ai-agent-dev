@@ -102,3 +102,9 @@ This is the state of the repo **as submitted for judging** (Cursor Hackathon 202
   invite hook and completed `/otp` with HTTP 200 and no SMTP error. The expected
   Auth user exists, while the application invite remains unredeemed until the
   recipient enters the code.
+- Confirmed that staging's Confirm signup template still rendered
+  `ConfirmationURL`, so the accepted email contained a link instead of the
+  six-digit token required by the client. The consumed link confirmed the
+  Supabase account; the TableUs invite remains unredeemed with zero uses. Both
+  Confirm signup and Magic Link templates must render `{{ .Token }}` before the
+  next authentication request.
