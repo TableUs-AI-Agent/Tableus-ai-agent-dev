@@ -165,3 +165,7 @@ This is the state of the repo **as submitted for judging** (Cursor Hackathon 202
   `/api/v1/me`: user-initiated JSON export, typed `DELETE` confirmation, clear
   organized-plan blocking guidance, post-deletion sign-out, and links from the
   existing account/profile navigation. No staging account was deleted.
+- Audited the EAS gate without creating cloud resources or builds. Local Expo
+  config resolves to `com.tableus.app`, but the EAS project ID/update URL is
+  absent and the CLI is unauthenticated, blocking project/build inspection and
+  workflow-schema validation until an approved Expo login and project link.

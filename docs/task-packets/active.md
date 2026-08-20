@@ -45,6 +45,14 @@ controls are implemented locally with typed destructive confirmation; exact-SHA
 hosted/device evidence remains, and no staging account was deleted. Other
 privacy/failure-state checks and iOS/Android evidence remain.
 
+The local Expo configuration resolves without native project generation, but no
+EAS project ID/update URL is configured. `eas whoami`, project/build inspection,
+and validation of the preview, test, and production workflow YAML are blocked by
+an unauthenticated EAS CLI. The next external action is to authenticate, link or
+create the isolated EAS project, configure preview-only public environment
+values, validate the workflows, and run the approved iOS-simulator/Android-APK
+test workflow. No EAS project or build was created during this audit.
+
 ## Objective
 
 Provision a deterministic, isolated staging environment from one exact commit

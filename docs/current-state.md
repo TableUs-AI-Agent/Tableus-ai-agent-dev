@@ -70,7 +70,11 @@
   only finalization, deterministic tie resolution, reopening, and refinalization.
   Public invite and privacy routes return 200; Apple and Android association
   manifests correctly return 503 until real signing identifiers are supplied.
-- Expo/EAS project, Apple, and Google Play credentials.
+- Expo/EAS project, Apple, and Google Play credentials. The local Expo config
+  resolves to bundle/package `com.tableus.app` and link host `tableus.app`, but
+  `EXPO_PUBLIC_EAS_PROJECT_ID` is unset, so no update URL is emitted. The local
+  EAS CLI is unauthenticated; project/build inspection and all three checked-in
+  workflow schema validations are blocked until Expo authentication.
 - Google Maps, Gemini, Sentry, and PostHog credentials.
 
 ## Release gates still requiring an owner or external system
