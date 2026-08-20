@@ -55,13 +55,13 @@
   active until 2026-08-27; its plaintext is unavailable and it should be revoked
   or allowed to expire before external beta access.
 - Railway staging project `tableus-staging`, environment `staging`, and service
-  `api` are provisioned. Deployment `2ad41e97-7e5a-46e0-b046-f0c62510fa17`
+  `api` are provisioned. Deployment `e438677b-548e-4dce-ae8e-7f05f086bc29`
   serves `https://api-staging-3795.up.railway.app` from exact SHA
-  `6487200af62646299df0109715840f02bbe75b6b`; liveness, readiness,
+  `bc0d2f3615bf9a07ec08a857e5e1d8980bdd7d28`; liveness, readiness,
   deterministic-provider mode, Supabase Auth mode, and Vercel CORS passed.
   Railway holds only the runtime database credential and application secret.
 - Vercel staging client variables and the returning-sign-in deployment are live.
-  Deployment `dpl_824mqRVZdCtE8GRS5pULLTdw6cJ6` is `READY` at
+  Deployment `dpl_vpVRmbpHXhQPb5AUScD8yJaPHJFD` is `READY` at
   `https://tableus-staging.vercel.app` from the same clean SHA. An authenticated
   Browser session showed the active `Jung` profile after the Supabase session
   changed, verifying the deployed identity-refresh fix. The hosted two-user
@@ -73,11 +73,18 @@
 - Expo project `@tableus/tableus` is provisioned as
   `0601c3b9-0082-454c-b636-45a1fe377f7b`. Its preview environment contains only
   the staging API URL, Supabase URL/publishable client key, EAS project ID, and
-  staging link host. Preview profiles remain Supabase-authenticated; the two test
-  profiles explicitly enable deterministic demo mode. All checked-in workflows
-  validate after replacing paid EAS-hosted Maestro jobs with build-artifact jobs
-  for local Maestro execution. The supplied `@tableus/brian` project remains
-  untouched and unused. Apple and Google Play credentials remain unprovisioned.
+  staging link host, plus the non-secret Sentry native-upload disable flag used
+  when no Sentry project is configured. Preview profiles remain Supabase-
+  authenticated; the two test profiles explicitly enable deterministic demo
+  mode. All checked-in workflows validate after replacing paid EAS-hosted Maestro
+  jobs with build-artifact jobs for local Maestro execution. Exact-SHA EAS build
+  `1bf458de-c223-4301-9e5f-f161a0f54917` produced the iOS simulator app and build
+  `f1b0a632-0587-4d17-8405-b534bff13989` produced the Android APK from
+  `bc0d2f3615bf9a07ec08a857e5e1d8980bdd7d28`. Both downloaded archives passed
+  structural checks and contain the expected `com.tableus.app` identifier,
+  Railway staging endpoint, and deterministic test identity. The supplied
+  `@tableus/brian` project remains untouched and unused. Apple and Google Play
+  store credentials remain unprovisioned.
 - Google Maps, Gemini, Sentry, and PostHog credentials.
 
 ## Release gates still requiring an owner or external system
@@ -88,16 +95,20 @@
 - Confirm the final domain and support/privacy contact, obtain legal review of
   the beta notices, and validate Google Maps attribution against the production
   presentation and current brand requirements.
-- Run exact-SHA authenticated staging browser evidence and iOS/Android Maestro
+- Complete exact-SHA account-control browser evidence and iOS/Android Maestro
   journeys. Exact-SHA returning-user OTP and authenticated-identity evidence is
   green. A second invite-approved account redeemed successfully, bringing
   sanitized staging evidence to two profiles, two redemptions, and two invite
   uses. The stale global identity cache exposed by that session change is fixed
   and verified on staging. The full two-user deterministic planning journey is
   green. Share-token rotation invalidated the prior private link with an explicit
-  failure state. Account export/deletion controls are implemented locally but
-  still require exact-SHA hosted/device evidence; privacy deletion itself remains
-  intentionally unexecuted. Other failure-state checks remain.
+  failure state. Exact-SHA iOS simulator and Android APK builds are green, but
+  local device smoke execution is blocked on this host because Xcode `simctl`,
+  Android `adb`, and Maestro are not installed. Account export/deletion controls
+  are implemented locally but still require exact-SHA hosted/device evidence;
+  privacy deletion itself remains intentionally unexecuted. Before production
+  mobile builds, add `expo-updates` or remove the unused update configuration and
+  declare the iOS export-compliance boolean. Other failure-state checks remain.
   Maps staging and the budgeted pinned-model Gemini evaluation follow only after
   deterministic staging is green.
 - Obtain explicit approval before any production migration, deployment, EAS

@@ -11,8 +11,9 @@ the runtime credential. The Before User Created invite hook is enabled and
 verified, and Resend-backed custom SMTP is configured. Confirm signup and Magic
 Link now deliver six-digit codes, and a real invite completed OTP verification,
 redemption, profile creation, and the authenticated `/plans` redirect. Railway
-and Vercel are deployed; the hosted deterministic browser journey and EAS remain
-gated. Revision `57a2a71fa443` replaced the Auth hook's inaccessible
+and Vercel are deployed; the hosted deterministic browser journey and exact-SHA
+EAS test builds are green, while local native device smoke remains gated.
+Revision `57a2a71fa443` replaced the Auth hook's inaccessible
 `extensions.digest` dependency with PostgreSQL's built-in SHA-256 function. The
 next OTP request passed the hook but Resend rejected the configured SMTP username;
 the username is now corrected to `resend`. The subsequent retry reached Resend,
@@ -24,9 +25,9 @@ token-based and the subsequent journey succeeded. One earlier unused invite
 remains active until 2026-08-27 with no recoverable plaintext; revoke it or allow
 it to expire before external beta access. Follow `docs/release-runbook.md`.
 
-Exact SHA `90e8dc86bb77ff432f967ccca0918933e0fec550` passed `make ready` and is
-deployed to Railway as deployment `9a1e1f92-424d-4156-82ce-01ff995e3b3c` and
-Vercel as deployment `dpl_3QK4Tq2drGx25RFotVcXCq7D8d23`. Railway liveness,
+Exact SHA `bc0d2f3615bf9a07ec08a857e5e1d8980bdd7d28` passed `make ready` and is
+deployed to Railway as deployment `e438677b-548e-4dce-ae8e-7f05f086bc29` and
+Vercel as deployment `dpl_vpVRmbpHXhQPb5AUScD8yJaPHJFD`. Railway liveness,
 readiness, deterministic/Supabase modes, and the public branch SHA passed.
 Vercel promoted the production alias. A hosted authenticated Browser session
 showed the active `Jung` profile after the Supabase browser session changed,
@@ -52,7 +53,11 @@ Supabase-authenticated while `test-ios` and `test-android` explicitly select
 deterministic demo mode. Preview, build-artifact test, and production workflow
 schemas validate. EAS-hosted Maestro requires a paid plan, so the test workflow
 produces an iOS simulator app and Android APK for local Maestro execution instead.
-No EAS build or store action has run yet.
+Exact-SHA builds `1bf458de-c223-4301-9e5f-f161a0f54917` (iOS simulator) and
+`f1b0a632-0587-4d17-8405-b534bff13989` (Android APK) finished successfully. The
+downloaded archives passed structural and embedded-configuration checks. Device
+smoke is still pending because this host lacks `simctl`, `adb`, and Maestro. No
+production build or store action has run.
 
 ## Objective
 

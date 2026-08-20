@@ -179,3 +179,15 @@ This is the state of the repo **as submitted for judging** (Cursor Hackathon 202
   Preview/auth builds continue to use Supabase. Replaced paid EAS-hosted Maestro
   jobs with build-artifact jobs for local Maestro execution; all workflow schemas
   now validate without activating billing.
+- Deployed exact SHA `bc0d2f3615bf9a07ec08a857e5e1d8980bdd7d28` to Railway
+  deployment `e438677b-548e-4dce-ae8e-7f05f086bc29` and Vercel deployment
+  `dpl_vpVRmbpHXhQPb5AUScD8yJaPHJFD`; verified the public branch, Railway health,
+  Vercel readiness, and alias promotion.
+- Disabled Sentry native artifact upload only in the EAS preview environment
+  because no staging Sentry organization/project is configured, then completed
+  exact-SHA iOS simulator build `1bf458de-c223-4301-9e5f-f161a0f54917` and Android
+  APK build `f1b0a632-0587-4d17-8405-b534bff13989`. Downloaded artifacts passed
+  archive integrity and embedded app identifier, staging endpoint, EAS project,
+  and deterministic-profile checks. Local Maestro execution remains pending
+  because this host has no Xcode simulator tools, Android platform tools, or
+  Maestro installation. No store submission or production build was performed.
