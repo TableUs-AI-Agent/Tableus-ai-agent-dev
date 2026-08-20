@@ -191,3 +191,16 @@ This is the state of the repo **as submitted for judging** (Cursor Hackathon 202
   and deterministic-profile checks. Local Maestro execution remains pending
   because this host has no Xcode simulator tools, Android platform tools, or
   Maestro installation. No store submission or production build was performed.
+- Installed and verified the local native QA toolchain: Xcode 26.6 with an iOS
+  26.5 simulator, Android platform tools 37.0.1 with an API 36 ARM64 emulator,
+  and Maestro 2.8.0 with CLI analytics disabled during test runs.
+- Ran both exact-SHA artifacts on devices. The original iOS flow appeared green
+  only because its final selector matched `Beta dinner` in the input while the
+  screen showed `Authentication required`; Android exposed the same underlying
+  state. Tightened the flow to reject authentication errors and require entry
+  into the created plan workspace, which now correctly fails both old artifacts.
+- Isolated deterministic mobile E2E from Supabase staging: test builds now use a
+  localhost in-memory backend, Android uses `adb reverse`, and cleartext/local-
+  network exceptions are compiled only for test profiles. Added Expo Updates,
+  Expo build properties, iOS exempt-encryption configuration, an operator script,
+  and sanitized failure screenshots. New EAS test builds remain approval-gated.

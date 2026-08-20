@@ -55,9 +55,16 @@ schemas validate. EAS-hosted Maestro requires a paid plan, so the test workflow
 produces an iOS simulator app and Android APK for local Maestro execution instead.
 Exact-SHA builds `1bf458de-c223-4301-9e5f-f161a0f54917` (iOS simulator) and
 `f1b0a632-0587-4d17-8405-b534bff13989` (Android APK) finished successfully. The
-downloaded archives passed structural and embedded-configuration checks. Device
-smoke is still pending because this host lacks `simctl`, `adb`, and Maestro. No
-production build or store action has run.
+downloaded archives passed structural and embedded-configuration checks. Xcode,
+an Android API 36 ARM64 emulator, ADB, and Maestro are now available locally.
+Actual device execution exposed that both test builds send their demo identity to
+the Supabase-authenticated Railway service and receive `Authentication required`;
+the original Maestro flow falsely matched title text remaining in the input. The
+flow now rejects authentication errors and navigates into the created workspace.
+Test profiles now use an in-memory localhost demo backend with Android `adb
+reverse`; local network exceptions are test-only. Expo Updates and iOS export-
+compliance configuration are also prepared. New approved exact-SHA test builds
+and passing device reruns remain. No production build or store action has run.
 
 ## Objective
 

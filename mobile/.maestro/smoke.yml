@@ -2,8 +2,18 @@ appId: com.tableus.app
 ---
 - launchApp:
     clearState: true
-- assertVisible: "Plans"
+- extendedWaitUntil:
+    visible: "Plans"
+    timeout: 60000
+- assertNotVisible: "Authentication required"
 - tapOn: "Friday dinner"
 - inputText: "Beta dinner"
 - tapOn: "Create shared plan"
-- assertVisible: "Beta dinner"
+- extendedWaitUntil:
+    visible: "Beta dinner"
+    timeout: 30000
+- assertNotVisible: "Authentication required"
+- tapOn: "Beta dinner"
+- extendedWaitUntil:
+    visible: "Your constraints"
+    timeout: 30000

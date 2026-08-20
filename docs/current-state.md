@@ -82,9 +82,17 @@
   `f1b0a632-0587-4d17-8405-b534bff13989` produced the Android APK from
   `bc0d2f3615bf9a07ec08a857e5e1d8980bdd7d28`. Both downloaded archives passed
   structural checks and contain the expected `com.tableus.app` identifier,
-  Railway staging endpoint, and deterministic test identity. The supplied
-  `@tableus/brian` project remains untouched and unused. Apple and Google Play
-  store credentials remain unprovisioned.
+  Railway staging endpoint, and deterministic test identity. Local device
+  execution then proved that combination is invalid: the Supabase-authenticated
+  staging API correctly rejects the demo identity, and the original Maestro
+  assertion falsely matched text left in the title input. The tightened flow now
+  fails both artifacts on the visible `Authentication required` state. The local
+  correction points test profiles at an in-memory localhost demo API, keeps
+  cleartext/local-network access test-only, navigates into the created workspace,
+  adds the missing Expo Updates integration, and declares exempt standard
+  encryption. It requires new exact-SHA EAS test builds before it can be marked
+  device-green. The supplied `@tableus/brian` project remains untouched and
+  unused. Apple and Google Play store credentials remain unprovisioned.
 - Google Maps, Gemini, Sentry, and PostHog credentials.
 
 ## Release gates still requiring an owner or external system
@@ -102,13 +110,15 @@
   uses. The stale global identity cache exposed by that session change is fixed
   and verified on staging. The full two-user deterministic planning journey is
   green. Share-token rotation invalidated the prior private link with an explicit
-  failure state. Exact-SHA iOS simulator and Android APK builds are green, but
-  local device smoke execution is blocked on this host because Xcode `simctl`,
-  Android `adb`, and Maestro are not installed. Account export/deletion controls
-  are implemented locally but still require exact-SHA hosted/device evidence;
-  privacy deletion itself remains intentionally unexecuted. Before production
-  mobile builds, add `expo-updates` or remove the unused update configuration and
-  declare the iOS export-compliance boolean. Other failure-state checks remain.
+  failure state. Xcode 26.6 with iOS 26.5 simulators, Android platform tools
+  37.0.1 with an API 36 ARM64 emulator, and Maestro 2.8.0 are installed locally.
+  Device execution invalidated the prior mobile evidence because both existing
+  artifacts call the Supabase staging API with a demo identity. A safe local-only
+  correction is implemented and focused checks pass; produce and run new
+  exact-SHA iOS/Android test artifacts next. Account export/deletion controls are
+  implemented locally but still require exact-SHA hosted/device evidence;
+  privacy deletion itself remains intentionally unexecuted. Other failure-state
+  checks remain.
   Maps staging and the budgeted pinned-model Gemini evaluation follow only after
   deterministic staging is green.
 - Obtain explicit approval before any production migration, deployment, EAS

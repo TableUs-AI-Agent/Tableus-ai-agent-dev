@@ -3,6 +3,7 @@ import type { ExpoConfig, ConfigContext } from "expo/config";
 export default ({ config }: ConfigContext): ExpoConfig => {
   const projectId = process.env.EXPO_PUBLIC_EAS_PROJECT_ID ?? "0601c3b9-0082-454c-b636-45a1fe377f7b";
   const linkHost = process.env.EXPO_PUBLIC_LINK_HOST ?? "tableus.app";
+  const localE2E = process.env.TABLEUS_LOCAL_E2E === "true";
   return {
     ...config,
     name: "TableUs",
@@ -18,6 +19,10 @@ export default ({ config }: ConfigContext): ExpoConfig => {
       bundleIdentifier: "com.tableus.app",
       associatedDomains: [`applinks:${linkHost}`],
       supportsTablet: true,
+      config: { usesNonExemptEncryption: false },
+      ...(localE2E
+        ? { infoPlist: { NSAppTransportSecurity: { NSAllowsLocalNetworking: true } } }
+        : {}),
     },
     android: {
       package: "com.tableus.app",
@@ -36,6 +41,7 @@ export default ({ config }: ConfigContext): ExpoConfig => {
     plugins: [
       "expo-router",
       "expo-secure-store",
+      ["expo-build-properties", { android: { usesCleartextTraffic: localE2E } }],
       [
         "expo-image-picker",
         {

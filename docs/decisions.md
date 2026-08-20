@@ -45,3 +45,8 @@
   Returning users authenticate by email OTP and must prove an existing
   invite-approved application profile through `/api/v1/me`; signing in never
   consumes another invite.
+- **2026-08-20:** Deterministic native E2E builds use a localhost-only demo API
+  and never send demo identities to, or enable demo authentication on, the
+  Supabase-authenticated staging service. Android reaches the operator's local
+  API through `adb reverse`; local-network and cleartext allowances are compiled
+  only into the dedicated test profiles.

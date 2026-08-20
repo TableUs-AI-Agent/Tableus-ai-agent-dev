@@ -8,8 +8,10 @@
       "channel": "preview",
       "environment": "preview",
       "env": {
+        "EXPO_PUBLIC_API_URL": "http://127.0.0.1:8000",
         "EXPO_PUBLIC_DEMO_MODE": "true",
-        "EXPO_PUBLIC_DEMO_USER_ID": "demo-organizer"
+        "EXPO_PUBLIC_DEMO_USER_ID": "demo-organizer",
+        "TABLEUS_LOCAL_E2E": "true"
       },
       "ios": { "simulator": true }
     },
@@ -18,8 +20,10 @@
       "channel": "preview",
       "environment": "preview",
       "env": {
+        "EXPO_PUBLIC_API_URL": "http://127.0.0.1:8000",
         "EXPO_PUBLIC_DEMO_MODE": "true",
-        "EXPO_PUBLIC_DEMO_USER_ID": "demo-organizer"
+        "EXPO_PUBLIC_DEMO_USER_ID": "demo-organizer",
+        "TABLEUS_LOCAL_E2E": "true"
       },
       "android": { "buildType": "apk" }
     },
