@@ -8,12 +8,16 @@ appId: com.tableus.app
 - assertNotVisible: "Authentication required"
 - tapOn: "Friday dinner"
 - inputText: "Beta dinner"
+- hideKeyboard
 - tapOn: "Create shared plan"
 - extendedWaitUntil:
-    visible: "Beta dinner"
+    visible: "Friday dinner"
+    timeout: 30000
+- extendedWaitUntil:
+    visible: ".*Beta dinner.*"
     timeout: 30000
 - assertNotVisible: "Authentication required"
-- tapOn: "Beta dinner"
+- tapOn: ".*Beta dinner.*"
 - extendedWaitUntil:
     visible: "Your constraints"
     timeout: 30000

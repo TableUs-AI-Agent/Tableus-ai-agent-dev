@@ -11,8 +11,9 @@ the runtime credential. The Before User Created invite hook is enabled and
 verified, and Resend-backed custom SMTP is configured. Confirm signup and Magic
 Link now deliver six-digit codes, and a real invite completed OTP verification,
 redemption, profile creation, and the authenticated `/plans` redirect. Railway
-and Vercel are deployed; the hosted deterministic browser journey and exact-SHA
-EAS test builds are green, while local native device smoke remains gated.
+and Vercel are deployed; the hosted deterministic browser journey, exact-SHA EAS
+test builds, and tightened local native create/open smoke are green on iOS and
+Android.
 Revision `57a2a71fa443` replaced the Auth hook's inaccessible
 `extensions.digest` dependency with PostgreSQL's built-in SHA-256 function. The
 next OTP request passed the hook but Resend rejected the configured SMTP username;
@@ -53,18 +54,18 @@ Supabase-authenticated while `test-ios` and `test-android` explicitly select
 deterministic demo mode. Preview, build-artifact test, and production workflow
 schemas validate. EAS-hosted Maestro requires a paid plan, so the test workflow
 produces an iOS simulator app and Android APK for local Maestro execution instead.
-Exact-SHA builds `1bf458de-c223-4301-9e5f-f161a0f54917` (iOS simulator) and
-`f1b0a632-0587-4d17-8405-b534bff13989` (Android APK) finished successfully. The
-downloaded archives passed structural and embedded-configuration checks. Xcode,
-an Android API 36 ARM64 emulator, ADB, and Maestro are now available locally.
-Actual device execution exposed that both test builds send their demo identity to
-the Supabase-authenticated Railway service and receive `Authentication required`;
-the original Maestro flow falsely matched title text remaining in the input. The
-flow now rejects authentication errors and navigates into the created workspace.
-Test profiles now use an in-memory localhost demo backend with Android `adb
-reverse`; local network exceptions are test-only. Expo Updates and iOS export-
-compliance configuration are also prepared. New approved exact-SHA test builds
-and passing device reruns remain. No production build or store action has run.
+The original `bc0d2f3` test artifacts remain invalid because they send a demo
+identity to Supabase-authenticated Railway. Replacement exact-SHA builds
+`8d5ffefb-28ad-42a1-966d-426af059046b` (iOS simulator) and
+`41e5ece8-58d9-4d5f-84ff-a67dd2dfa607` (Android APK) finished from
+`9dd39fe9db72c52f96db4cf596401d32493a510f`. Both downloaded artifacts contain
+the localhost deterministic endpoint and no Railway hostname match. Separate
+clean-backend Maestro runs passed plan creation and workspace navigation on an
+iPhone 17 Pro/iOS 26.5 simulator and an Android API 36 ARM64 emulator. The harness
+dismisses the keyboard, requires the input to reset after the successful POST,
+matches the combined accessible plan-card label, rejects authentication errors,
+and requires `Your constraints`. Broader native journeys remain release work. No
+production build, store action, staging redeploy, or paid provider action ran.
 
 ## Objective
 

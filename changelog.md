@@ -204,3 +204,13 @@ This is the state of the repo **as submitted for judging** (Cursor Hackathon 202
   network exceptions are compiled only for test profiles. Added Expo Updates,
   Expo build properties, iOS exempt-encryption configuration, an operator script,
   and sanitized failure screenshots. New EAS test builds remain approval-gated.
+- Pushed exact SHA `9dd39fe9db72c52f96db4cf596401d32493a510f` and completed
+  replacement EAS builds `8d5ffefb-28ad-42a1-966d-426af059046b` (iOS
+  simulator) and `41e5ece8-58d9-4d5f-84ff-a67dd2dfa607` (Android APK). Both
+  artifacts embed the localhost deterministic endpoint and no Railway hostname.
+- Hardened the native Maestro harness after device execution exposed keyboard-
+  consumed input and a combined React Native accessibility label. Separate clean-
+  backend runs now pass real plan creation and navigation to `Your constraints`
+  on iPhone 17 Pro/iOS 26.5 and Android API 36 ARM64. Captured sanitized passing
+  screenshots and artifact checksums. No staging redeployment, production build,
+  store submission, or paid-provider action ran.

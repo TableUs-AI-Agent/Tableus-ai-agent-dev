@@ -77,22 +77,22 @@
   when no Sentry project is configured. Preview profiles remain Supabase-
   authenticated; the two test profiles explicitly enable deterministic demo
   mode. All checked-in workflows validate after replacing paid EAS-hosted Maestro
-  jobs with build-artifact jobs for local Maestro execution. Exact-SHA EAS build
-  `1bf458de-c223-4301-9e5f-f161a0f54917` produced the iOS simulator app and build
-  `f1b0a632-0587-4d17-8405-b534bff13989` produced the Android APK from
-  `bc0d2f3615bf9a07ec08a857e5e1d8980bdd7d28`. Both downloaded archives passed
-  structural checks and contain the expected `com.tableus.app` identifier,
-  Railway staging endpoint, and deterministic test identity. Local device
-  execution then proved that combination is invalid: the Supabase-authenticated
-  staging API correctly rejects the demo identity, and the original Maestro
-  assertion falsely matched text left in the title input. The tightened flow now
-  fails both artifacts on the visible `Authentication required` state. The local
-  correction points test profiles at an in-memory localhost demo API, keeps
-  cleartext/local-network access test-only, navigates into the created workspace,
-  adds the missing Expo Updates integration, and declares exempt standard
-  encryption. It requires new exact-SHA EAS test builds before it can be marked
-  device-green. The supplied `@tableus/brian` project remains untouched and
-  unused. Apple and Google Play store credentials remain unprovisioned.
+  jobs with build-artifact jobs for local Maestro execution. The earlier
+  `bc0d2f3` artifacts remain recorded as invalid because they sent a demo identity
+  to Supabase-authenticated staging. Exact-SHA replacement builds
+  `8d5ffefb-28ad-42a1-966d-426af059046b` (iOS simulator) and
+  `41e5ece8-58d9-4d5f-84ff-a67dd2dfa607` (Android APK) finished from
+  `9dd39fe9db72c52f96db4cf596401d32493a510f`. Their downloaded bundles contain
+  the localhost deterministic endpoint and demo identity with no Railway hostname
+  match. Separate clean-backend Maestro runs passed on iPhone 17 Pro/iOS 26.5 and
+  an API 36 ARM64 Android emulator: no auth error, a real POST-backed plan create,
+  refreshed plan-card selection, and navigation to `Your constraints`. The flow
+  now dismisses the keyboard, requires the title field to reset after creation,
+  and matches React Native's combined accessible card label, eliminating the two
+  remaining false-positive paths. Test-only local networking remains isolated
+  from preview/production builds. The supplied `@tableus/brian` project remains
+  untouched and unused. Apple and Google Play store credentials remain
+  unprovisioned.
 - Google Maps, Gemini, Sentry, and PostHog credentials.
 
 ## Release gates still requiring an owner or external system
@@ -112,11 +112,13 @@
   green. Share-token rotation invalidated the prior private link with an explicit
   failure state. Xcode 26.6 with iOS 26.5 simulators, Android platform tools
   37.0.1 with an API 36 ARM64 emulator, and Maestro 2.8.0 are installed locally.
-  Device execution invalidated the prior mobile evidence because both existing
-  artifacts call the Supabase staging API with a demo identity. A safe local-only
-  correction is implemented and focused checks pass; produce and run new
-  exact-SHA iOS/Android test artifacts next. Account export/deletion controls are
-  implemented locally but still require exact-SHA hosted/device evidence;
+  Device execution invalidated the prior mobile evidence because both old
+  artifacts called the Supabase staging API with a demo identity. Replacement
+  exact-SHA iOS/Android artifacts now pass the tightened local deterministic plan
+  create/open smoke on both platforms. The broader mobile invite, join, voting,
+  finalization, reopening, link-expiry/rotation, offline-retry, and account-control
+  journeys remain to be automated and evidenced. Account export/deletion controls
+  are implemented locally but still require exact-SHA hosted/device evidence;
   privacy deletion itself remains intentionally unexecuted. Other failure-state
   checks remain.
   Maps staging and the budgeted pinned-model Gemini evaluation follow only after

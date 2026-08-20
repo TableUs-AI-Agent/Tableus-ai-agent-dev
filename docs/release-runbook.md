@@ -172,11 +172,13 @@ same address from the selected emulator:
 adb -s <emulator-serial> reverse tcp:8000 tcp:8000
 ```
 
-Run `.maestro/smoke.yml` against each platform. A passing flow must navigate
-into the created plan workspace and must explicitly reject any authentication
-error; a build-completion status or text left in the title input is not product
-evidence. EAS-hosted Maestro jobs require a paid plan and are not part of the
-default closed-beta workflow.
+Run `.maestro/smoke.yml` against each platform from separate clean backend
+processes. A passing flow must dismiss the keyboard, require the title field to
+reset after the create request, select the combined accessible plan-card label,
+navigate into the created plan workspace, and explicitly reject any
+authentication error. A build-completion status, a completed tap command, or
+text left in the title input is not product evidence. EAS-hosted Maestro jobs
+require a paid plan and are not part of the default closed-beta workflow.
 Store sanitized screenshots/logs with the candidate SHA and deployment/build
 IDs; do not retain OTPs, invite codes, emails, full share tokens, precise
 locations, photos, prompts, or provider responses.
