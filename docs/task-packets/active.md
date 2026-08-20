@@ -34,8 +34,13 @@ verifying the deployed auth-state identity refresh. The earlier returning-user
 OTP did not consume another invite; read-only staging aggregates remained at
 one profile, one redemption, and one total invite use. A second invite-approved
 account then redeemed successfully as `Jung`, bringing the sanitized aggregates
-to two profiles, two redemptions, and two invite uses. The full two-user
-deterministic plan journey and iOS/Android evidence remain.
+to two profiles, two redemptions, and two invite uses. The hosted two-user
+deterministic plan journey is green: Jung created the plan, Brian joined through
+the private link, both saved constraints, the provider returned exactly four
+candidates, both submitted 3/2/1 votes, the 5–5 tie resolved deterministically
+to Garden Mezze, Brian had no finalization control, and Jung finalized, reopened,
+and refinalized the plan. Link rotation/expiry, privacy/failure-state checks, and
+iOS/Android evidence remain.
 
 ## Objective
 

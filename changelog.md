@@ -153,3 +153,9 @@ This is the state of the repo **as submitted for judging** (Cursor Hackathon 202
   `dpl_3QK4Tq2drGx25RFotVcXCq7D8d23`; verified Railway liveness/readiness,
   Vercel `READY` alias promotion, the public branch SHA, and the active `Jung`
   identity on the hosted `/profile` route.
+- Completed the hosted two-user deterministic plan journey. `Jung` created the
+  plan and acted as organizer; `Brian` joined by private link; both saved
+  constraints and ranked three of exactly four candidates. Combined Borda totals
+  produced a 5–5 tie between Garden Mezze and Trattoria Together, which resolved
+  deterministically to Garden Mezze. Brian had no finalization control; Jung
+  finalized, reopened with vote totals preserved, and refinalized the plan.

@@ -60,9 +60,12 @@
   Deployment `dpl_3QK4Tq2drGx25RFotVcXCq7D8d23` is `READY` at
   `https://tableus-staging.vercel.app` from the same clean SHA. An authenticated
   Browser session showed the active `Jung` profile after the Supabase session
-  changed, verifying the deployed identity-refresh fix. Public invite and privacy
-  routes return 200; Apple and Android association manifests correctly return
-  503 until real signing identifiers are supplied.
+  changed, verifying the deployed identity-refresh fix. The hosted two-user
+  journey then covered plan creation, private-link joining, per-user constraints,
+  exactly four deterministic candidates, two persisted 3/2/1 votes, organizer-
+  only finalization, deterministic tie resolution, reopening, and refinalization.
+  Public invite and privacy routes return 200; Apple and Android association
+  manifests correctly return 503 until real signing identifiers are supplied.
 - Expo/EAS project, Apple, and Google Play credentials.
 - Google Maps, Gemini, Sentry, and PostHog credentials.
 
@@ -79,8 +82,8 @@
   green. A second invite-approved account redeemed successfully, bringing
   sanitized staging evidence to two profiles, two redemptions, and two invite
   uses. The stale global identity cache exposed by that session change is fixed
-  and verified on staging. The full two-user planning journey, link
-  rotation/expiry, privacy operations, and failure-state checks remain.
+  and verified on staging. The full two-user deterministic planning journey is
+  green. Link rotation/expiry, privacy operations, and failure-state checks remain.
   Maps staging and the budgeted pinned-model Gemini evaluation follow only after
   deterministic staging is green.
 - Obtain explicit approval before any production migration, deployment, EAS
