@@ -3,16 +3,16 @@
 ## Status
 
 In progress as of 2026-08-19. Local release hardening is committed. The dedicated
-Vercel and Supabase staging projects are provisioned and linked; Vercel has no
-secrets or deployment, while Supabase has a separately credentialed,
+Vercel, Railway, and Supabase staging projects are provisioned and linked.
+Supabase has a separately credentialed,
 least-privilege `tableus_runtime` role and the database is migrated through
-revision `5c9a1d7e2b3f`. The owner password is rotated and stored separately from
+revision `57a2a71fa443`. The owner password is rotated and stored separately from
 the runtime credential. The Before User Created invite hook is enabled and
 verified, and Resend-backed custom SMTP is configured. Confirm signup and Magic
 Link now deliver six-digit codes, and a real invite completed OTP verification,
 redemption, profile creation, and the authenticated `/plans` redirect. Railway
-and EAS remain gated. Revision `57a2a71fa443` is
-applied and verified against staging, replacing the Auth hook's inaccessible
+and Vercel are deployed; the hosted deterministic browser journey and EAS remain
+gated. Revision `57a2a71fa443` replaced the Auth hook's inaccessible
 `extensions.digest` dependency with PostgreSQL's built-in SHA-256 function. The
 next OTP request passed the hook but Resend rejected the configured SMTP username;
 the username is now corrected to `resend`. The subsequent retry reached Resend,
@@ -24,6 +24,13 @@ token-based and the subsequent journey succeeded. One earlier unused invite
 remains active until 2026-08-27 with no recoverable plaintext; revoke it or allow
 it to expire before external beta access. Follow `docs/release-runbook.md`.
 
+Exact SHA `ab2d374d3c8917ba8b4af18a56675751d095924a` passed `make ready` and is
+deployed to Railway as deployment `90dff841-ddbb-49e7-bd7c-2187f65c062a` and
+Vercel as deployment `dpl_GAiLZdCQEJGHx1yw5Bvaxtjwcm26`. Railway liveness,
+readiness, deterministic/Supabase modes, and Vercel CORS passed. Vercel public
+routes passed and verified-link manifests failed closed as designed. A fresh
+single-use invite is prepared for the remaining hosted authenticated journey.
+
 ## Objective
 
 Provision a deterministic, isolated staging environment from one exact commit
@@ -31,7 +38,8 @@ without enabling paid providers or taking any production/store action.
 
 ## Deliverables
 
-- Provision and configure the Vercel staging project without deploying it.
+- Provision, configure, and deploy the Vercel staging project from the exact
+  candidate SHA.
 - Authenticate and provision Supabase staging with separate migration/runtime
   roles, private `app` schema, Auth hook, custom SMTP, and deterministic mode.
 - Authenticate and link an Expo/EAS project, then configure preview-only

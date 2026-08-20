@@ -44,10 +44,17 @@
   are stored separately in macOS Keychain. One superseded unused invite remains
   active until 2026-08-27; its plaintext is unavailable and it should be revoked
   or allowed to expire before external beta access.
-- Railway service and deploy credentials.
-- Vercel staging environment values and first exact-SHA preview deployment. The
-  `tableus-staging` project is provisioned, linked locally, and configured for
-  Node 22 and the root npm workspace build.
+- Railway staging project `tableus-staging`, environment `staging`, and service
+  `api` are provisioned. Deployment `90dff841-ddbb-49e7-bd7c-2187f65c062a`
+  serves `https://api-staging-3795.up.railway.app` from exact SHA
+  `ab2d374d3c8917ba8b4af18a56675751d095924a`; liveness, readiness,
+  deterministic-provider mode, Supabase Auth mode, and Vercel CORS passed.
+  Railway holds only the runtime database credential and application secret.
+- Vercel staging client variables and the first exact-SHA deployment are live.
+  Deployment `dpl_GAiLZdCQEJGHx1yw5Bvaxtjwcm26` is `READY` at
+  `https://tableus-staging.vercel.app` from the same clean SHA. Public invite and
+  privacy routes return 200; Apple and Android association manifests correctly
+  return 503 until real signing identifiers are supplied.
 - Expo/EAS project, Apple, and Google Play credentials.
 - Google Maps, Gemini, Sentry, and PostHog credentials.
 

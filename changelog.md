@@ -11,6 +11,10 @@
 - Removed Railway's automatic Alembic pre-deploy command so the hosted runtime
   never needs the privileged migration credential; migrations remain a separate
   approved operator action.
+- Deployed Railway and Vercel staging from exact SHA
+  `ab2d374d3c8917ba8b4af18a56675751d095924a`. Railway health/CORS and Vercel
+  public routes passed; mobile association endpoints remained fail-closed until
+  real signing identifiers are configured.
 
 ## Hackathon submission (baseline)
 
