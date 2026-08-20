@@ -31,7 +31,11 @@ readiness, deterministic/Supabase modes, and Vercel CORS passed. Vercel promoted
 the production alias, and hosted Browser verification confirmed the returning
 OTP sign-in UI with no console errors. One returning-user OTP request succeeded
 without validating or consuming the fresh single-use evidence invite; code
-verification and the authenticated product journey remain.
+verification reached `/plans`. Read-only staging aggregates remained at one
+profile, one redemption, and one total invite use. The journey exposed a legacy
+demo-identity fallback in the global web user context; the local fix now sources
+the authenticated profile and connections from `/api/v1` and requires a new
+exact-SHA deployment before the remaining product evidence.
 
 ## Objective
 

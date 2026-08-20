@@ -130,3 +130,6 @@ This is the state of the repo **as submitted for judging** (Cursor Hackathon 202
 - Deployed the returning-sign-in candidate to isolated Railway and Vercel
   staging from exact SHA `ec1635d2d5bf458c584d14bd59beb9a520f7541d` and
   verified API health, CORS, alias promotion, hosted UI state, and OTP request.
+- Completed hosted returning-user OTP verification without another invite use.
+  Updated the Supabase-backed web user context to load the authenticated profile
+  and connections through `/api/v1` instead of showing legacy fallback people.

@@ -2,13 +2,18 @@
 
 import { createContext, useCallback, useContext, useEffect, useState, type ReactNode } from "react";
 import { api } from "../lib/api";
+import { isSupabaseConfigured } from "../lib/supabase-browser";
+import { v1Api } from "../lib/v1-api";
 
-type DemoUser = { id: string; name: string; avatar: string };
+type AppUser = { id: string; name: string; avatar: string };
+type Profile = { id: string; display_name: string };
+type Connection = { profile_id: string; display_name: string };
 
 type UserContextValue = {
-  currentUser: DemoUser | null;
-  allUsers: DemoUser[];
-  friends: DemoUser[];
+  currentUser: AppUser | null;
+  allUsers: AppUser[];
+  friends: AppUser[];
+  canSwitchUser: boolean;
   switchUser: (id: string) => void;
   refreshFriends: () => void;
 };
@@ -17,23 +22,52 @@ const UserContext = createContext<UserContextValue>({
   currentUser: null,
   allUsers: [],
   friends: [],
+  canSwitchUser: false,
   switchUser: () => {},
   refreshFriends: () => {},
 });
 
+const toAppUser = (id: string, name: string): AppUser => ({ id, name, avatar: "/icon.svg" });
+
 export function UserProvider({ children }: { children: ReactNode }) {
-  const [allUsers, setAllUsers] = useState<DemoUser[]>([]);
-  const [currentUser, setCurrentUser] = useState<DemoUser | null>(null);
-  const [friends, setFriends] = useState<DemoUser[]>([]);
+  const [allUsers, setAllUsers] = useState<AppUser[]>([]);
+  const [currentUser, setCurrentUser] = useState<AppUser | null>(null);
+  const [friends, setFriends] = useState<AppUser[]>([]);
 
   useEffect(() => {
-    api<DemoUser[]>("/api/users")
+    let cancelled = false;
+    if (isSupabaseConfigured) {
+      Promise.all([
+        v1Api.get<Profile>("/api/v1/me"),
+        v1Api.get<Connection[]>("/api/v1/connections"),
+      ])
+        .then(([profile, connections]) => {
+          if (cancelled) return;
+          const authenticatedUser = toAppUser(profile.id, profile.display_name);
+          setCurrentUser(authenticatedUser);
+          setAllUsers([authenticatedUser]);
+          setFriends(connections.map((connection) => toAppUser(connection.profile_id, connection.display_name)));
+        })
+        .catch(() => {
+          if (cancelled) return;
+          setCurrentUser(null);
+          setAllUsers([]);
+          setFriends([]);
+        });
+      return () => {
+        cancelled = true;
+      };
+    }
+
+    api<AppUser[]>("/api/users")
       .then((users) => {
+        if (cancelled) return;
         setAllUsers(users);
         if (users.length > 0) setCurrentUser(users[0]);
       })
       .catch(() => {
-        const fallback: DemoUser[] = [
+        if (cancelled) return;
+        const fallback: AppUser[] = [
           { id: "user-sam", name: "Sam Kwak", avatar: "https://randomuser.me/api/portraits/men/32.jpg" },
           { id: "user-bob", name: "Bob Martinez", avatar: "https://randomuser.me/api/portraits/men/41.jpg" },
           { id: "user-carol", name: "Carol Washington", avatar: "https://randomuser.me/api/portraits/women/52.jpg" },
@@ -44,33 +78,42 @@ export function UserProvider({ children }: { children: ReactNode }) {
         setAllUsers(fallback);
         setCurrentUser(fallback[0]);
       });
+    return () => {
+      cancelled = true;
+    };
   }, []);
 
   const loadFriends = useCallback((userId: string) => {
-    api<DemoUser[]>(`/api/friends/${userId}`)
+    api<AppUser[]>(`/api/friends/${userId}`)
       .then(setFriends)
       .catch(() => setFriends([]));
   }, []);
 
   useEffect(() => {
-    if (currentUser) loadFriends(currentUser.id);
+    if (currentUser && !isSupabaseConfigured) loadFriends(currentUser.id);
   }, [currentUser, loadFriends]);
 
   const switchUser = (id: string) => {
+    if (isSupabaseConfigured) return;
     const user = allUsers.find((item) => item.id === id);
     if (user) setCurrentUser(user);
   };
 
   const refreshFriends = () => {
-    if (currentUser) loadFriends(currentUser.id);
+    if (isSupabaseConfigured) {
+      v1Api.get<Connection[]>("/api/v1/connections")
+        .then((connections) => setFriends(connections.map((connection) => toAppUser(connection.profile_id, connection.display_name))))
+        .catch(() => setFriends([]));
+    } else if (currentUser) {
+      loadFriends(currentUser.id);
+    }
   };
 
   return (
-    <UserContext.Provider value={{ currentUser, allUsers, friends, switchUser, refreshFriends }}>
+    <UserContext.Provider value={{ currentUser, allUsers, friends, canSwitchUser: !isSupabaseConfigured, switchUser, refreshFriends }}>
       {children}
     </UserContext.Provider>
   );
 }
 
 export const useUser = () => useContext(UserContext);
-
