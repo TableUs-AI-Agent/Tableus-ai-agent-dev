@@ -9,7 +9,10 @@ least-privilege `tableus_runtime` role and the database is migrated through
 revision `5c9a1d7e2b3f`. The owner password is rotated and stored separately from
 the runtime credential. The Before User Created invite hook is enabled and
 verified, and Resend-backed custom SMTP is configured. Auth delivery evidence,
-client Auth wiring, Railway, and EAS remain gated. Follow `docs/release-runbook.md`.
+client Auth wiring, Railway, and EAS remain gated. The first OTP attempt found
+that the Auth hook could not access its `extensions.digest` dependency; revision
+`57a2a71fa443` replaces it with PostgreSQL's built-in SHA-256 function and awaits
+explicit staging-migration approval. Follow `docs/release-runbook.md`.
 
 ## Objective
 

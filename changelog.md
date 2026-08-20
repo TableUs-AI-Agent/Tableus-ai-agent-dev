@@ -78,3 +78,12 @@ This is the state of the repo **as submitted for judging** (Cursor Hackathon 202
 - Configured Resend-backed custom SMTP for staging Supabase Auth without placing
   credentials in the repository. A real OTP delivery test remains pending
   recipient confirmation.
+
+# 2026-08-19 — Staging Auth validation
+
+- Reproduced the first invite-approved OTP request and traced its failure to the
+  Auth hook's inaccessible `extensions.digest` dependency; no email was sent and
+  no Auth user was created.
+- Added Alembic revision `57a2a71fa443` to replace that dependency with
+  PostgreSQL's built-in SHA-256 function, plus a Postgres migration regression
+  assertion. Staging application remains gated on explicit migration approval.
