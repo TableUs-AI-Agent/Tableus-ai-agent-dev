@@ -27,12 +27,12 @@
 
 - Supabase staging client environment wiring. The `TableUs Staging` project is
   provisioned in East US and linked locally. Resend-backed custom SMTP is
-  configured; end-to-end Auth email delivery is not yet verified. The first
-  OTP attempt exposed a missing Auth-hook dependency permission. Alembic revision
-  `57a2a71fa443` is prepared locally but not yet applied to staging. Its owner
-  credential has been rotated, the least-privilege `tableus_runtime` role is active,
-  Alembic revision `5c9a1d7e2b3f` is applied, and the Before User Created hook is
-  enabled against `app.hook_restrict_signup_to_validated_invite`.
+  configured, but end-to-end Auth email delivery is not yet verified: after the
+  Auth-hook fix, the SMTP server rejected the configured username with `535
+  "Invalid username"`. Alembic revision `57a2a71fa443` is applied and verified
+  against staging. Its owner credential has been rotated, the least-privilege
+  `tableus_runtime` role is active, and the Before User Created hook is enabled
+  against `app.hook_restrict_signup_to_validated_invite`.
   Owner and runtime credentials are stored separately in macOS Keychain.
 - Railway service and deploy credentials.
 - Vercel staging environment values and first exact-SHA preview deployment. The
@@ -43,7 +43,7 @@
 
 ## Release gates still requiring an owner or external system
 
-- Apply Alembic revision `57a2a71fa443` to staging, verify Resend delivery, and
+- Correct the staging Resend SMTP username to `resend`, verify delivery, and
   complete an authenticated invite-redemption journey against staging Auth.
 - Supply the Apple Team ID, final bundle/package identifiers, and SHA-256
   fingerprints for every Android signing certificate; then verify the HTTPS

@@ -86,4 +86,10 @@ This is the state of the repo **as submitted for judging** (Cursor Hackathon 202
   no Auth user was created.
 - Added Alembic revision `57a2a71fa443` to replace that dependency with
   PostgreSQL's built-in SHA-256 function, plus a Postgres migration regression
-  assertion. Staging application remains gated on explicit migration approval.
+  assertion. Applied and verified the revision against staging; the hook now runs
+  successfully under the intended invoker privileges and Supabase's security
+  advisor reports no errors.
+- Retried the approved OTP request. Supabase accepted the invite validation and
+  ran the Auth hook, but Resend rejected the configured SMTP username with a 535
+  response. No OTP was delivered; staging SMTP must use Resend's fixed `resend`
+  username before the next attempt.
