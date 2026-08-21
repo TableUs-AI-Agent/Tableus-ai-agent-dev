@@ -11,6 +11,12 @@ sanitized operator tooling. Exact-SHA EAS artifacts and real Supabase evidence
 remain gated external work; this packet is not release-complete until both
 platform journeys pass from the forthcoming exact candidate SHA.
 
+The first candidate `88a6d3bcf00c9342765cf17d9bade16b7ddfced0` was pushed,
+but EAS rejected the build request before creating an artifact because its
+current schema disallows empty-string environment values. The auth profiles now
+omit demo identity variables entirely. This correction requires a replacement
+candidate and renewed exact-SHA approval; the rejected request is not evidence.
+
 The deployed staging baseline remains Railway deployment
 `e438677b-548e-4dce-ae8e-7f05f086bc29` and Vercel deployment
 `dpl_vpVRmbpHXhQPb5AUScD8yJaPHJFD`, both from

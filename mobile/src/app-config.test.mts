@@ -86,8 +86,8 @@ test("auth test EAS profiles explicitly disable demo and local E2E configuration
     const env = eas.build[profile].env;
     assert.equal(eas.build[profile].environment, "preview");
     assert.equal(env.EXPO_PUBLIC_DEMO_MODE, "false");
-    assert.equal(env.EXPO_PUBLIC_DEMO_USER_ID, "");
-    assert.equal(env.EXPO_PUBLIC_DEMO_IDENTITIES, "");
+    assert.equal(env.EXPO_PUBLIC_DEMO_USER_ID, undefined);
+    assert.equal(env.EXPO_PUBLIC_DEMO_IDENTITIES, undefined);
     assert.equal(env.TABLEUS_LOCAL_E2E, "false");
     assert.equal(env.TABLEUS_AUTH_E2E, "true");
     assert.equal(env.EXPO_PUBLIC_API_URL, undefined);

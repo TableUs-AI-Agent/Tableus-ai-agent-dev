@@ -35,8 +35,6 @@
       "environment": "preview",
       "env": {
         "EXPO_PUBLIC_DEMO_MODE": "false",
-        "EXPO_PUBLIC_DEMO_USER_ID": "",
-        "EXPO_PUBLIC_DEMO_IDENTITIES": "",
         "TABLEUS_LOCAL_E2E": "false",
         "TABLEUS_AUTH_E2E": "true"
       },
@@ -48,8 +46,6 @@
       "environment": "preview",
       "env": {
         "EXPO_PUBLIC_DEMO_MODE": "false",
-        "EXPO_PUBLIC_DEMO_USER_ID": "",
-        "EXPO_PUBLIC_DEMO_IDENTITIES": "",
         "TABLEUS_LOCAL_E2E": "false",
         "TABLEUS_AUTH_E2E": "true"
       },
