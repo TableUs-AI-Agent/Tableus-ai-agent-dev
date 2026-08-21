@@ -17,6 +17,15 @@ current schema disallows empty-string environment values. The auth profiles now
 omit demo identity variables entirely. This correction requires a replacement
 candidate and renewed exact-SHA approval; the rejected request is not evidence.
 
+Replacement candidate `9477a8ede5047df45d7cdca634dab5c9f7fb3e2a` produced
+iOS build `253b72be-e7a2-4f69-90f1-37b23ee06d17`; its first artifact inspection
+then exposed an overbroad operator assertion that rejected localhost strings
+embedded by Expo/Sentry even though the TableUs `:8000` API endpoint was absent.
+Android build `181c2a41-7282-4d6a-b2ac-ac79fcba3d65` was cancelled before
+completion. The inspector now rejects the actual TableUs loopback API origins.
+Per the packet, that iOS artifact and cancelled Android job are invalid and a
+new candidate plus two new builds are required.
+
 The deployed staging baseline remains Railway deployment
 `e438677b-548e-4dce-ae8e-7f05f086bc29` and Vercel deployment
 `dpl_vpVRmbpHXhQPb5AUScD8yJaPHJFD`, both from

@@ -51,8 +51,9 @@ for (const required of [args.sha, args["api-url"], args["supabase-url"], "authE2
 const forbidden = [
   "demo-organizer",
   "demo-guest",
-  "http://127.0.0.1",
-  "http://localhost",
+  "http://127.0.0.1:8000",
+  "http://localhost:8000",
+  "http://[::1]:8000",
   "service_role",
   "SUPABASE_SERVICE_ROLE",
   ...(args["forbidden-origins"] ?? "").split(",").filter(Boolean),
