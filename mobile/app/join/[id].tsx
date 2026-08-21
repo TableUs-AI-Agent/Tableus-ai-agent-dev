@@ -19,7 +19,7 @@ export default function JoinPlanScreen() {
         <Text selectable style={{ color: colors.ink, fontSize: 24, fontWeight: "800" }}>Join this TableUs plan?</Text>
         <Text selectable style={{ color: colors.muted }}>Only authenticated, invite-approved users with the current private link can join.</Text>
         {join.error ? <ErrorText message={join.error.message} /> : null}
-        <Button label="Join plan" onPress={() => join.mutate()} loading={join.isPending} disabled={!token} />
+        <Button label="Join this plan" onPress={() => join.mutate()} loading={join.isPending} disabled={!token} />
       </Card>
     </ScrollView>
   );

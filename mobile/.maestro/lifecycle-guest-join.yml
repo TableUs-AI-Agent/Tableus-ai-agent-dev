@@ -19,7 +19,7 @@ appId: com.tableus.app
 - extendedWaitUntil:
     visible: "Join this TableUs plan?"
     timeout: 30000
-- tapOn: "Join plan"
+- tapOn: "Join this plan"
 - extendedWaitUntil:
     visible: "Your constraints"
     timeout: 30000

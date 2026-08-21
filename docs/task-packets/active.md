@@ -7,8 +7,12 @@ iOS and Android. The local implementation now supports a test-profile-only
 organizer/guest identity switch, accessible ranking actions, visible constraint
 and vote success states, constraint revision during voting, and a host runner
 for the complete deterministic lifecycle. The cumulative `make ready` gate and
-focused Expo-config/Maestro validation pass. New simulator/APK artifacts and
-device execution remain approval-gated.
+focused Expo-config/Maestro validation pass. The first exact-SHA iOS device run
+exposed an ambiguous `Join plan` header/button selector before any join request;
+the button and flows now use the unique `Join this plan` action. Per the packet,
+both first artifacts are invalidated and replacement artifacts are required.
+The invalidated builds are iOS `e4082fb9-9cfa-42ae-b241-5839f9bbbdb5` and
+Android `17509b90-fd47-425e-96bb-5ee212ca7438`; neither is release evidence.
 
 The deployed staging baseline remains Railway deployment
 `e438677b-548e-4dce-ae8e-7f05f086bc29` and Vercel deployment

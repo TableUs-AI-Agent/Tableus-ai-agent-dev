@@ -225,3 +225,7 @@ This is the state of the repo **as submitted for judging** (Cursor Hackathon 202
   for joining, constraints, four candidates, two votes, organizer authorization,
   deterministic finalization, reopening, rotated links, and stale-run cleanup.
   New exact-SHA EAS artifacts remain approval-gated.
+- The first exact-SHA lifecycle run proved creation and identity switching but
+  found that Maestro selected the `Join plan` navigation title instead of the
+  identically named button, producing no join request. Renamed the action to
+  `Join this plan`; both first artifacts are invalidated and must be replaced.
