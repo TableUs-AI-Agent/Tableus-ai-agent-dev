@@ -2,7 +2,7 @@
 
 ## Status
 
-In progress as of 2026-08-21. Exact-SHA mobile create/open smoke is green on
+Completed as of 2026-08-21. Exact-SHA mobile create/open smoke is green on
 iOS and Android. The local implementation now supports a test-profile-only
 organizer/guest identity switch, accessible ranking actions, visible constraint
 and vote success states, constraint revision during voting, and a host runner
@@ -51,7 +51,12 @@ does not change, matching the guarded ranking interactions.
 After those corrections, the complete lifecycle passed independently on the API
 36 ARM64 Android emulator and iPhone 17 Pro/iOS 26.5 using the invalidated
 replacement artifacts as diagnostics. A new exact-SHA candidate and fresh EAS
-artifacts are still required before either pass can become release evidence.
+artifacts were then created from
+`a78a6d27229bc464d4998bdf3c3593f4167a831b`: iOS simulator build
+`d192d04a-73e8-401c-98ac-b6c7a3a9c551` and Android APK build
+`6dba0079-72fe-4c23-aa03-95028a7506c4`. Both passed bundle inspection and the
+complete lifecycle independently. Sanitized evidence is recorded in
+`docs/evidence/a78a6d2/`.
 
 The deployed staging baseline remains Railway deployment
 `e438677b-548e-4dce-ae8e-7f05f086bc29` and Vercel deployment

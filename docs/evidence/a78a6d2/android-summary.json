@@ -1,0 +1,26 @@
+{
+  "platform": "android",
+  "device": "emulator-5554",
+  "build_id": "6dba0079-72fe-4c23-aa03-95028a7506c4",
+  "git_sha": "a78a6d27229bc464d4998bdf3c3593f4167a831b",
+  "app": "tableus-android.apk",
+  "artifact_sha256": "fba659cbda21a7a01c9541922c3c51e6b3efc1ebf2f52c92844487c88affe2e2",
+  "app_id": "com.tableus.app",
+  "provider_mode": "deterministic",
+  "auth_mode": "demo",
+  "participants": 2,
+  "candidate_count": 4,
+  "scores": {
+    "Sakura Table": 5,
+    "Garden Mezze": 5,
+    "Noodle Assembly": 2
+  },
+  "finalized_winner": "Sakura Table",
+  "reopened": true,
+  "rotated_link_rejected": true,
+  "stale_run_cleared": true,
+  "screenshots": [
+    "android-finalized-plan.png",
+    "android-rotated-link.png"
+  ]
+}

@@ -129,10 +129,13 @@
   exact-SHA iOS/Android artifacts now pass the tightened local deterministic plan
   create/open smoke on both platforms. The local two-user join, constraint,
   recommendation, voting, authorization, finalization, reopening, token-rotation,
-  and stale-run suite is implemented and awaits a frozen exact-SHA build and
-  device run. Diagnostic runs using the invalidated replacement artifacts now
-  pass that entire suite independently on iPhone 17 Pro/iOS 26.5 and the API 36
-  ARM64 Android emulator; fresh artifacts are required for release evidence.
+  and stale-run suite now passes from exact SHA
+  `a78a6d27229bc464d4998bdf3c3593f4167a831b` on iOS simulator build
+  `d192d04a-73e8-401c-98ac-b6c7a3a9c551` and Android APK build
+  `6dba0079-72fe-4c23-aa03-95028a7506c4`. Both bundles passed loopback/demo
+  inspection with no Railway hostname, and both full journeys passed
+  independently on iPhone 17 Pro/iOS 26.5 and the API 36 ARM64 emulator.
+  Sanitized summaries and screenshots are in `docs/evidence/a78a6d2/`.
   Mobile OTP/invite, offline-retry, and account-control journeys remain
   to be automated and evidenced. Account export/deletion controls
   are implemented locally but still require exact-SHA hosted/device evidence;

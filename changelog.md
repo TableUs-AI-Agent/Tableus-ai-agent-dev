@@ -253,3 +253,11 @@ This is the state of the repo **as submitted for judging** (Cursor Hackathon 202
   Android proved the state transition while rerendering it below the viewport.
 - Guarded local identity continuation against iOS ghost taps by retrying only
   when the identity screen does not transition to Plans.
+- Pushed exact SHA `a78a6d27229bc464d4998bdf3c3593f4167a831b` and completed
+  deterministic iOS simulator build `d192d04a-73e8-401c-98ac-b6c7a3a9c551`
+  and Android APK build `6dba0079-72fe-4c23-aa03-95028a7506c4`. Both bundles
+  contain loopback/demo test support with no Railway hostname, and both passed
+  the complete two-user lifecycle independently. Recorded token-free summaries,
+  checksums, commands, and final/rotated-link screenshots in
+  `docs/evidence/a78a6d2/`. No staging deployment, production build, store
+  submission, paid-provider activation, or account deletion occurred.
