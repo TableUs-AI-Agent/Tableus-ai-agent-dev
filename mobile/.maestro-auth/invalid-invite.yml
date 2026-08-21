@@ -11,7 +11,7 @@ appId: com.tableus.app
 - inputText: "${DISPLAY_NAME}"
 - tapOn: "Email address"
 - inputText: "${EMAIL}"
-- hideKeyboard
+- tapOn: "A better answer than.*"
 - tapOn: "Email me a code"
 - extendedWaitUntil:
     visible: ".*Invite is invalid, expired, or fully redeemed.*"

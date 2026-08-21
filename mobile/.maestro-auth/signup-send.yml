@@ -21,7 +21,7 @@ appId: com.tableus.app
 - inputText: "${DISPLAY_NAME}"
 - tapOn: "Email address"
 - inputText: "${EMAIL}"
-- hideKeyboard
+- tapOn: "A better answer than.*"
 - tapOn: "Email me a code"
 - extendedWaitUntil:
     visible: "Email verification code"

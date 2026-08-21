@@ -2,7 +2,7 @@ appId: com.tableus.app
 ---
 - tapOn: "Email verification code"
 - inputText: "${OTP}"
-- hideKeyboard
+- tapOn: "Verification email"
 - tapOn: "Verify and continue"
 - extendedWaitUntil:
     visible: "Plans"

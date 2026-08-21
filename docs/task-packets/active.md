@@ -26,6 +26,15 @@ completion. The inspector now rejects the actual TableUs loopback API origins.
 Per the packet, that iOS artifact and cancelled Android job are invalid and a
 new candidate plus two new builds are required.
 
+Candidate `ac60838bae1617d5b91b34f63c8077d1a5dab2c5` produced iOS build
+`05451027-bb24-4ded-b810-c6ea6c78f5f7` and Android build
+`74ed8a66-9a9f-462b-88f5-2f1c87bdd05d`. Both artifacts passed exact-SHA and
+configuration inspection. The first iOS evidence phase then reproducibly failed
+before signup because Maestro could not hide an already-unavailable keyboard.
+The flow now dismisses keyboards by tapping stable static text. Per the packet,
+both otherwise-valid artifacts are invalidated; the two created one-use invites
+remain unused and no OTP was sent.
+
 The deployed staging baseline remains Railway deployment
 `e438677b-548e-4dce-ae8e-7f05f086bc29` and Vercel deployment
 `dpl_vpVRmbpHXhQPb5AUScD8yJaPHJFD`, both from
