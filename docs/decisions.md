@@ -50,3 +50,8 @@
   Supabase-authenticated staging service. Android reaches the operator's local
   API through `adb reverse`; local-network and cleartext allowances are compiled
   only into the dedicated test profiles.
+- **2026-08-21:** One deterministic mobile artifact switches between the seeded
+  organizer and guest through SecureStore only when the Expo test flag, demo
+  mode, and loopback API URL are all active. The hidden deep link accepts no
+  arbitrary subject, clears query caches on change, and is inert in preview and
+  production builds.

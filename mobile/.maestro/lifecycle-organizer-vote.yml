@@ -1,0 +1,60 @@
+appId: com.tableus.app
+---
+- openLink: "tableus://e2e/identity?user=demo-organizer"
+- runFlow:
+    when:
+      visible: ".*Open in.*TableUs.*"
+    commands:
+      - tapOn: "Open"
+- extendedWaitUntil:
+    visible: "Active test identity: Demo Organizer"
+    timeout: 30000
+- tapOn: "Continue to plans"
+- openLink: "tableus://plans/${PLAN_ID}"
+- runFlow:
+    when:
+      visible: ".*Open in.*TableUs.*"
+    commands:
+      - tapOn: "Open"
+- extendedWaitUntil:
+    visible: "Your constraints"
+    timeout: 30000
+- tapOn: "Budget, vibe, dietary notes…"
+- inputText: "Organizer wants a group friendly dinner"
+- hideKeyboard
+- tapOn: "Save constraints"
+- extendedWaitUntil:
+    visible: "Constraints saved."
+    timeout: 30000
+- scrollUntilVisible:
+    element: "Find four options"
+    direction: DOWN
+    timeout: 30000
+- tapOn: "Find four options"
+- extendedWaitUntil:
+    visible: "Sakura Table"
+    timeout: 30000
+- scrollUntilVisible:
+    element: "Rank Sakura Table"
+    direction: DOWN
+- tapOn: "Rank Sakura Table"
+- scrollUntilVisible:
+    element: "Rank Garden Mezze"
+    direction: DOWN
+- tapOn: "Rank Garden Mezze"
+- scrollUntilVisible:
+    element: "Rank Noodle Assembly"
+    direction: DOWN
+- tapOn: "Rank Noodle Assembly"
+- scrollUntilVisible:
+    element: "Trattoria Together"
+    direction: DOWN
+- assertVisible: "Trattoria Together"
+- scrollUntilVisible:
+    element: "Submit ranked vote"
+    direction: DOWN
+- tapOn: "Submit ranked vote"
+- extendedWaitUntil:
+    visible: "Ranked vote saved."
+    timeout: 30000
+- assertVisible: "Finalize current winner"

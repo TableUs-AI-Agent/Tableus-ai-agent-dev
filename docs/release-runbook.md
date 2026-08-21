@@ -179,6 +179,21 @@ navigate into the created plan workspace, and explicitly reject any
 authentication error. A build-completion status, a completed tap command, or
 text left in the title input is not product evidence. EAS-hosted Maestro jobs
 require a paid plan and are not part of the default closed-beta workflow.
+
+For the two-user lifecycle, boot the target device and run the root orchestrator
+against the downloaded exact-SHA artifact:
+
+```bash
+make mobile-e2e PLATFORM=ios DEVICE=<simulator-udid> APP=<path-to-TableUs.app> BUILD_ID=<eas-build-id> EVIDENCE=<sanitized-evidence-dir>
+make mobile-e2e PLATFORM=android DEVICE=<emulator-serial> APP=<path-to-tableus.apk> BUILD_ID=<eas-build-id> EVIDENCE=<sanitized-evidence-dir>
+```
+
+The command refuses an occupied backend port or non-loopback API, verifies
+deterministic/demo readiness, installs the artifact, configures Android port
+reversal, switches only between the two seeded test identities, and cleans up
+the backend, port reversal, temporary Maestro workspace, and ephemeral share
+tokens. Do not replace this with demo authentication on Railway or retain the
+raw Maestro workspace.
 Store sanitized screenshots/logs with the candidate SHA and deployment/build
 IDs; do not retain OTPs, invite codes, emails, full share tokens, precise
 locations, photos, prompts, or provider responses.

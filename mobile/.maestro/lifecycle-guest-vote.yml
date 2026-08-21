@@ -1,0 +1,54 @@
+appId: com.tableus.app
+---
+- openLink: "tableus://e2e/identity?user=demo-guest"
+- runFlow:
+    when:
+      visible: ".*Open in.*TableUs.*"
+    commands:
+      - tapOn: "Open"
+- extendedWaitUntil:
+    visible: "Active test identity: Demo Guest"
+    timeout: 30000
+- tapOn: "Continue to plans"
+- openLink: "tableus://plans/${PLAN_ID}"
+- runFlow:
+    when:
+      visible: ".*Open in.*TableUs.*"
+    commands:
+      - tapOn: "Open"
+- extendedWaitUntil:
+    visible: "Your constraints"
+    timeout: 30000
+- scrollUntilVisible:
+    element: "Rank Garden Mezze"
+    direction: DOWN
+    timeout: 30000
+- tapOn: "Rank Garden Mezze"
+- scrollUntilVisible:
+    element: "Rank Sakura Table"
+    direction: UP
+- tapOn: "Rank Sakura Table"
+- scrollUntilVisible:
+    element: "Rank Noodle Assembly"
+    direction: DOWN
+- tapOn: "Rank Noodle Assembly"
+- scrollUntilVisible:
+    element: "Submit ranked vote"
+    direction: DOWN
+- tapOn: "Submit ranked vote"
+- extendedWaitUntil:
+    visible: "Ranked vote saved."
+    timeout: 30000
+- assertNotVisible: "Finalize current winner"
+- scrollUntilVisible:
+    element: "Noodle Assembly score 2 points, rank 3"
+    direction: UP
+- assertVisible: "Noodle Assembly score 2 points, rank 3"
+- scrollUntilVisible:
+    element: "Garden Mezze score 5 points, rank 1"
+    direction: UP
+- assertVisible: "Garden Mezze score 5 points, rank 1"
+- scrollUntilVisible:
+    element: "Sakura Table score 5 points, rank 2"
+    direction: UP
+- assertVisible: "Sakura Table score 5 points, rank 2"

@@ -9,7 +9,7 @@
     "android": "expo start --android",
     "lint": "expo lint",
     "typecheck": "tsc --noEmit",
-    "test": "node --test",
+    "test": "node --test --experimental-strip-types src/*.test.mts src/**/*.test.mts",
     "build": "expo export --platform web"
   },
   "dependencies": {

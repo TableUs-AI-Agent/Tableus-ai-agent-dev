@@ -14,20 +14,15 @@ appId: com.tableus.app
 - tapOn: "Continue to plans"
 - extendedWaitUntil:
     visible: "Plans"
-    timeout: 60000
-- assertNotVisible: "Authentication required"
+    timeout: 30000
 - tapOn: "Friday dinner"
-- inputText: "Beta dinner"
+- inputText: "Mobile lifecycle dinner"
 - hideKeyboard
 - tapOn: "Create shared plan"
 - extendedWaitUntil:
     visible: "Friday dinner"
     timeout: 30000
 - extendedWaitUntil:
-    visible: ".*Beta dinner.*"
+    visible: ".*Mobile lifecycle dinner.*"
     timeout: 30000
 - assertNotVisible: "Authentication required"
-- tapOn: ".*Beta dinner.*"
-- extendedWaitUntil:
-    visible: "Your constraints"
-    timeout: 30000

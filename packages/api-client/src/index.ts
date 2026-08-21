@@ -29,16 +29,19 @@ type ClientOptions = {
   baseUrl: string;
   getAccessToken?: () => Promise<string | null>;
   demoUserId?: string;
+  getDemoUserId?: () => Promise<string | null>;
   fetchImpl?: typeof fetch;
 };
 
 export function createApiClient(options: ClientOptions) {
   const request = async <T>(path: string, init: RequestInit = {}): Promise<T> => {
     const token = await options.getAccessToken?.();
+    const dynamicDemoUserId = await options.getDemoUserId?.();
+    const demoUserId = dynamicDemoUserId ?? options.demoUserId;
     const headers = new Headers(init.headers);
     if (!(init.body instanceof FormData)) headers.set("Content-Type", "application/json");
     if (token) headers.set("Authorization", `Bearer ${token}`);
-    if (options.demoUserId) headers.set("X-Demo-User-ID", options.demoUserId);
+    if (demoUserId) headers.set("X-Demo-User-ID", demoUserId);
     if (init.method && init.method !== "GET") {
       headers.set("Idempotency-Key", `${Date.now()}-${Math.random().toString(36).slice(2)}`);
     }

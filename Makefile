@@ -1,6 +1,6 @@
 SHELL := /bin/bash
 
-.PHONY: setup dev lint typecheck test build smoke ready perf ai-eval ai-eval-live contract
+.PHONY: setup dev lint typecheck test build smoke mobile-e2e ready perf ai-eval ai-eval-live contract
 
 setup:
 	npm ci
@@ -32,6 +32,12 @@ contract:
 
 smoke:
 	./scripts/smoke.sh
+
+mobile-e2e:
+	@test -n "$(PLATFORM)" || (echo "PLATFORM=ios or PLATFORM=android is required" && exit 2)
+	@test -n "$(DEVICE)" || (echo "DEVICE=<simulator-or-emulator-id> is required" && exit 2)
+	@test -n "$(APP)" || (echo "APP=<path-to-app-or-apk> is required" && exit 2)
+	node scripts/mobile-e2e.mjs --platform "$(PLATFORM)" --device "$(DEVICE)" --app "$(APP)" $(if $(BUILD_ID),--build-id "$(BUILD_ID)",) $(if $(EVIDENCE),--evidence "$(EVIDENCE)",)
 
 perf:
 	./scripts/perf-budget.sh

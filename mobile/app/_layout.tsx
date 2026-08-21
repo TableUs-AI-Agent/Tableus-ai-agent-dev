@@ -19,6 +19,7 @@ function RootLayout() {
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
         <Stack.Screen name="plans/[id]" options={{ title: "Dinner plan" }} />
         <Stack.Screen name="join/[id]" options={{ title: "Join plan" }} />
+        <Stack.Screen name="e2e/identity" options={{ title: "Local E2E identity" }} />
         <Stack.Screen name="account" options={{ title: "Account and data" }} />
         <Stack.Screen name="privacy" options={{ title: "Privacy" }} />
         <Stack.Screen name="terms" options={{ title: "Terms" }} />

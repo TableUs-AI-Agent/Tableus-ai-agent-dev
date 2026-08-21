@@ -1,0 +1,26 @@
+appId: com.tableus.app
+---
+- openLink: "tableus://e2e/identity?user=demo-guest"
+- runFlow:
+    when:
+      visible: ".*Open in.*TableUs.*"
+    commands:
+      - tapOn: "Open"
+- extendedWaitUntil:
+    visible: "Active test identity: Demo Guest"
+    timeout: 30000
+- tapOn: "Continue to plans"
+- openLink: "tableus://join/${PLAN_ID}?token=${SHARE_TOKEN}"
+- runFlow:
+    when:
+      visible: ".*Open in.*TableUs.*"
+    commands:
+      - tapOn: "Open"
+- extendedWaitUntil:
+    visible: "Join this TableUs plan?"
+    timeout: 30000
+- tapOn: "Join plan"
+- extendedWaitUntil:
+    visible: "Share link is invalid or has been rotated"
+    timeout: 30000
+- takeScreenshot: "rotated-link"

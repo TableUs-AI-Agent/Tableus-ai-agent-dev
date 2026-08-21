@@ -25,6 +25,18 @@
   Supabase Auth record.
 - Generated OpenAPI TypeScript contract, GitHub CI, EAS workflows, browser/API
   smoke journeys, privacy controls, telemetry hooks, and deployment templates.
+- The shared TypeScript client can resolve a demo identity per request. Expo
+  uses that capability only in local-E2E builds, where a hidden deep link selects
+  one of the two seeded profiles in SecureStore and clears query caches. Demo
+  mode, the Expo test flag, and a loopback API URL are all required.
+- Mobile plan workspaces use explicit accessible ranking controls, restore the
+  viewer's persisted vote, show saved constraint/vote states, and permit
+  constraint revision during voting with a warning that recommendations and
+  votes will be invalidated.
+- A root `mobile-e2e` runner installs one simulator/APK artifact, starts a clean
+  deterministic backend, drives organizer and guest Maestro phases, checks 5/5/2
+  scoring and stale-run cleanup through the UI, and deletes raw token-bearing
+  output. Host API access is limited to plan discovery and share-token rotation.
 - Separate migration/runtime database credentials, a private application schema,
   an invite-only Supabase pre-signup hook, email-bound invite redemption, and a
   hashed invite administration CLI.
@@ -115,9 +127,11 @@
   Device execution invalidated the prior mobile evidence because both old
   artifacts called the Supabase staging API with a demo identity. Replacement
   exact-SHA iOS/Android artifacts now pass the tightened local deterministic plan
-  create/open smoke on both platforms. The broader mobile invite, join, voting,
-  finalization, reopening, link-expiry/rotation, offline-retry, and account-control
-  journeys remain to be automated and evidenced. Account export/deletion controls
+  create/open smoke on both platforms. The local two-user join, constraint,
+  recommendation, voting, authorization, finalization, reopening, token-rotation,
+  and stale-run suite is implemented and awaits a frozen exact-SHA build and
+  device run. Mobile OTP/invite, offline-retry, and account-control journeys remain
+  to be automated and evidenced. Account export/deletion controls
   are implemented locally but still require exact-SHA hosted/device evidence;
   privacy deletion itself remains intentionally unexecuted. Other failure-state
   checks remain.

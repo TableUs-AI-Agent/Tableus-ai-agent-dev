@@ -214,3 +214,14 @@ This is the state of the repo **as submitted for judging** (Cursor Hackathon 202
   on iPhone 17 Pro/iOS 26.5 and Android API 36 ARM64. Captured sanitized passing
   screenshots and artifact checksums. No staging redeployment, production build,
   store submission, or paid-provider action ran.
+- Added a test-profile-only Expo identity route for switching between the seeded
+  organizer and guest. It requires demo mode, a loopback API, and the Expo local-
+  E2E flag; rejects arbitrary identities; stores the selection in SecureStore;
+  and clears TanStack Query state before continuing.
+- Added per-request demo identity resolution to the shared API client, explicit
+  accessible candidate-ranking controls, persisted vote restoration, saved-state
+  feedback, and constraint revision during voting with stale-run disclosure.
+- Added a token-sanitizing `make mobile-e2e` runner and phased Maestro journeys
+  for joining, constraints, four candidates, two votes, organizer authorization,
+  deterministic finalization, reopening, rotated links, and stale-run cleanup.
+  New exact-SHA EAS artifacts remain approval-gated.
