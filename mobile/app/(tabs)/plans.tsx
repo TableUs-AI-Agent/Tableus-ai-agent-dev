@@ -21,7 +21,13 @@ export default function PlansScreen() {
     <ScrollView contentInsetAdjustmentBehavior="automatic" contentContainerStyle={{ padding: 16, gap: 14 }} refreshControl={<RefreshControl refreshing={plans.isRefetching} onRefresh={plans.refetch} />}>
       <Card>
         <Text selectable style={{ color: colors.ink, fontSize: 20, fontWeight: "800" }}>Start a dinner decision</Text>
-        <Field value={title} onChangeText={setTitle} placeholder="Friday dinner" returnKeyType="done" />
+        <Field
+          accessibilityLabel="Plan title"
+          value={title}
+          onChangeText={setTitle}
+          placeholder="Friday dinner"
+          returnKeyType="done"
+        />
         {create.error ? <ErrorText message={create.error.message} /> : null}
         <Button label="Create shared plan" onPress={() => create.mutate()} disabled={!title.trim()} loading={create.isPending} />
       </Card>

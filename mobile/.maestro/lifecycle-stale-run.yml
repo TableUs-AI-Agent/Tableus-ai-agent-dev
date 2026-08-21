@@ -11,7 +11,7 @@ appId: com.tableus.app
     timeout: 30000
 - tapOn: "Budget, vibe, dietary notes…"
 - inputText: "Guest now needs a quieter table"
-- hideKeyboard
+- tapOn: "Your constraints"
 - tapOn: "Save constraints"
 - extendedWaitUntil:
     visible: "Find four options"

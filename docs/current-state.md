@@ -130,7 +130,10 @@
   create/open smoke on both platforms. The local two-user join, constraint,
   recommendation, voting, authorization, finalization, reopening, token-rotation,
   and stale-run suite is implemented and awaits a frozen exact-SHA build and
-  device run. Mobile OTP/invite, offline-retry, and account-control journeys remain
+  device run. Diagnostic runs using the invalidated replacement artifacts now
+  pass that entire suite independently on iPhone 17 Pro/iOS 26.5 and the API 36
+  ARM64 Android emulator; fresh artifacts are required for release evidence.
+  Mobile OTP/invite, offline-retry, and account-control journeys remain
   to be automated and evidenced. Account export/deletion controls
   are implemented locally but still require exact-SHA hosted/device evidence;
   privacy deletion itself remains intentionally unexecuted. Other failure-state

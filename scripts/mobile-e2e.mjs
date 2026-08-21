@@ -151,6 +151,7 @@ const maestroEnv = {
   MAESTRO_CLI_NO_ANALYTICS: "1",
   MAESTRO_CLI_ANALYSIS_NOTIFICATION_DISABLED: "true",
   MAESTRO_DISABLE_UPDATE_CHECK: "true",
+  MAESTRO_DRIVER_STARTUP_TIMEOUT: process.env.MAESTRO_DRIVER_STARTUP_TIMEOUT || "300000",
 };
 const developerDir = process.env.DEVELOPER_DIR || "/Applications/Xcode.app/Contents/Developer";
 const knownAdb = "/opt/homebrew/share/android-commandlinetools/platform-tools/adb";

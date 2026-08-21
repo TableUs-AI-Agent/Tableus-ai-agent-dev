@@ -9,7 +9,9 @@ appId: com.tableus.app
 - extendedWaitUntil:
     visible: "Active test identity: Demo Guest"
     timeout: 30000
-- tapOn: "Continue to plans"
+- tapOn:
+    text: "Continue to plans"
+    retryTapIfNoChange: true
 - openLink: "tableus://join/${PLAN_ID}?token=${SHARE_TOKEN}"
 - runFlow:
     when:

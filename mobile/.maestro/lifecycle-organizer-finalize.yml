@@ -9,7 +9,9 @@ appId: com.tableus.app
 - extendedWaitUntil:
     visible: "Active test identity: Demo Organizer"
     timeout: 30000
-- tapOn: "Continue to plans"
+- tapOn:
+    text: "Continue to plans"
+    retryTapIfNoChange: true
 - openLink: "tableus://plans/${PLAN_ID}"
 - runFlow:
     when:
@@ -17,9 +19,16 @@ appId: com.tableus.app
     commands:
       - tapOn: "Open"
 - scrollUntilVisible:
-    element: "Finalize current winner"
+    element: "Sakura Table score 5 points, rank 1"
     direction: DOWN
     timeout: 30000
+- assertVisible: "Sakura Table score 5 points, rank 1"
+- scrollUntilVisible:
+    element: "Finalize current winner"
+    direction: DOWN
+    timeout: 60000
+    speed: 80
+    visibilityPercentage: 50
 - tapOn: "Finalize current winner"
 - extendedWaitUntil:
     visible: "Reopen voting"
@@ -33,6 +42,7 @@ appId: com.tableus.app
     element: "Reopen voting"
     direction: DOWN
 - tapOn: "Reopen voting"
-- extendedWaitUntil:
-    visible: "Submit ranked vote"
+- scrollUntilVisible:
+    element: "Submit ranked vote"
+    direction: DOWN
     timeout: 30000

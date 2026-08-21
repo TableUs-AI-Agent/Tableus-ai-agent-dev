@@ -9,7 +9,9 @@ appId: com.tableus.app
 - extendedWaitUntil:
     visible: "Active test identity: Demo Guest"
     timeout: 30000
-- tapOn: "Continue to plans"
+- tapOn:
+    text: "Continue to plans"
+    retryTapIfNoChange: true
 - openLink: "tableus://plans/${PLAN_ID}"
 - runFlow:
     when:
@@ -23,21 +25,39 @@ appId: com.tableus.app
     element: "Rank Garden Mezze"
     direction: DOWN
     timeout: 30000
-- tapOn: "Rank Garden Mezze"
+- tapOn:
+    text: "Rank Garden Mezze"
+    retryTapIfNoChange: true
+- extendedWaitUntil:
+    visible: "Remove Garden Mezze from rank 1"
+    timeout: 10000
 - scrollUntilVisible:
     element: "Rank Sakura Table"
     direction: UP
-- tapOn: "Rank Sakura Table"
+- tapOn:
+    text: "Rank Sakura Table"
+    retryTapIfNoChange: true
+- extendedWaitUntil:
+    visible: "Remove Sakura Table from rank 2"
+    timeout: 10000
 - scrollUntilVisible:
     element: "Rank Noodle Assembly"
     direction: DOWN
-- tapOn: "Rank Noodle Assembly"
+- tapOn:
+    text: "Rank Noodle Assembly"
+    retryTapIfNoChange: true
+- extendedWaitUntil:
+    visible: "Remove Noodle Assembly from rank 3"
+    timeout: 10000
 - scrollUntilVisible:
     element: "Submit ranked vote"
     direction: DOWN
-- tapOn: "Submit ranked vote"
-- extendedWaitUntil:
-    visible: "Ranked vote saved."
+- tapOn:
+    text: "Submit ranked vote"
+    retryTapIfNoChange: true
+- scrollUntilVisible:
+    element: "Ranked vote saved."
+    direction: DOWN
     timeout: 30000
 - assertNotVisible: "Finalize current winner"
 - scrollUntilVisible:

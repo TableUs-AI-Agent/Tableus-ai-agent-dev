@@ -11,7 +11,9 @@ appId: com.tableus.app
 - extendedWaitUntil:
     visible: "Active test identity: Demo Organizer"
     timeout: 30000
-- tapOn: "Continue to plans"
+- tapOn:
+    text: "Continue to plans"
+    retryTapIfNoChange: true
 - extendedWaitUntil:
     visible: "Plans"
     timeout: 60000

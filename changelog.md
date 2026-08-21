@@ -229,3 +229,27 @@ This is the state of the repo **as submitted for judging** (Cursor Hackathon 202
   found that Maestro selected the `Join plan` navigation title instead of the
   identically named button, producing no join request. Renamed the action to
   `Join this plan`; both first artifacts are invalidated and must be replaced.
+- The replacement iOS run proved guest joining and workspace navigation, then
+  found that Maestro's `hideKeyboard` command is unreliable for the multiline
+  constraint input. Updated all constraint phases to dismiss the keyboard by
+  tapping the static `Your constraints` heading; the replacement artifacts are
+  invalidated under the exact-SHA evidence policy.
+- Tightened both ranked-vote flows after a diagnostic run caught a Maestro ghost
+  tap on the third candidate. Ranking actions now retry only when the UI does not
+  change and assert the resulting rank after every tap before submission.
+- Set a bounded five-minute Maestro driver startup timeout after an iOS XCTest
+  driver initialization exceeded the CLI default before any app command ran.
+- Added an Android cold-start readiness assertion before the first identity deep
+  link after direct adb delivery proved the route worked but Maestro could race
+  Expo Router startup immediately after clearing application state.
+- Made ranked-vote saved-state assertions viewport-independent after Android
+  showed the vote had persisted while the confirmation text sat below the fold.
+- Hardened organizer finalization on tall mobile content by asserting the
+  organizer's restored vote first, then using a faster bounded scroll that can
+  target a partially visible finalization control below all four candidates.
+- Gave the plan-title field an explicit accessible label and targeted it in the
+  lifecycle flow after Android exposed an intermittent placeholder-focus race.
+- Made the post-reopen assertion scroll to the restored voting control after
+  Android proved the state transition while rerendering it below the viewport.
+- Guarded local identity continuation against iOS ghost taps by retrying only
+  when the identity screen does not transition to Plans.
