@@ -1,0 +1,11 @@
+appId: com.tableus.app
+---
+- tapOn: "Email verification code"
+- inputText: "${OTP}"
+- hideKeyboard
+- tapOn: "Verify and continue"
+- extendedWaitUntil:
+    visible: "Plans"
+    timeout: 60000
+- assertNotVisible: "Invite access"
+- takeScreenshot: "returning-session"

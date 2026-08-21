@@ -11,6 +11,7 @@
         "EXPO_PUBLIC_API_URL": "http://127.0.0.1:8000",
         "EXPO_PUBLIC_DEMO_MODE": "true",
         "EXPO_PUBLIC_DEMO_USER_ID": "demo-organizer",
+        "EXPO_PUBLIC_DEMO_IDENTITIES": "demo-organizer,demo-guest",
         "TABLEUS_LOCAL_E2E": "true"
       },
       "ios": { "simulator": true }
@@ -23,7 +24,34 @@
         "EXPO_PUBLIC_API_URL": "http://127.0.0.1:8000",
         "EXPO_PUBLIC_DEMO_MODE": "true",
         "EXPO_PUBLIC_DEMO_USER_ID": "demo-organizer",
+        "EXPO_PUBLIC_DEMO_IDENTITIES": "demo-organizer,demo-guest",
         "TABLEUS_LOCAL_E2E": "true"
+      },
+      "android": { "buildType": "apk" }
+    },
+    "auth-test-ios": {
+      "distribution": "internal",
+      "channel": "preview",
+      "environment": "preview",
+      "env": {
+        "EXPO_PUBLIC_DEMO_MODE": "false",
+        "EXPO_PUBLIC_DEMO_USER_ID": "",
+        "EXPO_PUBLIC_DEMO_IDENTITIES": "",
+        "TABLEUS_LOCAL_E2E": "false",
+        "TABLEUS_AUTH_E2E": "true"
+      },
+      "ios": { "simulator": true }
+    },
+    "auth-test-android": {
+      "distribution": "internal",
+      "channel": "preview",
+      "environment": "preview",
+      "env": {
+        "EXPO_PUBLIC_DEMO_MODE": "false",
+        "EXPO_PUBLIC_DEMO_USER_ID": "",
+        "EXPO_PUBLIC_DEMO_IDENTITIES": "",
+        "TABLEUS_LOCAL_E2E": "false",
+        "TABLEUS_AUTH_E2E": "true"
       },
       "android": { "buildType": "apk" }
     },

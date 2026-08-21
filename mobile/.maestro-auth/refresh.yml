@@ -1,0 +1,15 @@
+appId: com.tableus.app
+---
+- openLink: "tableus://e2e/auth"
+- runFlow:
+    when:
+      visible: ".*Open in.*TableUs.*"
+    commands:
+      - tapOn: "Open"
+- extendedWaitUntil:
+    visible: "Authenticated session check"
+    timeout: 30000
+- tapOn: "Refresh authenticated session"
+- extendedWaitUntil:
+    visible: "Session refresh passed"
+    timeout: 30000

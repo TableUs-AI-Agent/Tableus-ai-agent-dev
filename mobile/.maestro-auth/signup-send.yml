@@ -1,0 +1,28 @@
+appId: com.tableus.app
+---
+- launchApp:
+    clearState: true
+- openLink: "tableus://join/auth-e2e-intent?token=${JOIN_TOKEN}"
+- runFlow:
+    when:
+      visible: ".*Open in.*TableUs.*"
+    commands:
+      - tapOn: "Open"
+- extendedWaitUntil:
+    visible: "Sign in to join"
+    timeout: 30000
+- tapOn: "Sign in to join"
+- extendedWaitUntil:
+    visible: "Invite access"
+    timeout: 30000
+- tapOn: "Invite code"
+- inputText: "${INVITE}"
+- tapOn: "Display name"
+- inputText: "${DISPLAY_NAME}"
+- tapOn: "Email address"
+- inputText: "${EMAIL}"
+- hideKeyboard
+- tapOn: "Email me a code"
+- extendedWaitUntil:
+    visible: "Email verification code"
+    timeout: 30000

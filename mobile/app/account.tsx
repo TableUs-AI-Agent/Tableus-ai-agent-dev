@@ -1,11 +1,10 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { router } from "expo-router";
 import { useState } from "react";
 import { Pressable, ScrollView, Share, Text, View } from "react-native";
 
 import { Button, Card, ErrorText, Field } from "@/components/ui";
 import { api } from "@/lib/api";
-import { supabase } from "@/lib/supabase";
+import { useAuth } from "@/providers/auth-provider";
 import { colors } from "@/theme";
 
 type Profile = { display_name: string; share_taste: boolean };
@@ -14,6 +13,7 @@ type DeleteResult = { deleted: boolean };
 const DELETE_CONFIRMATION = "DELETE";
 
 export default function AccountScreen() {
+  const auth = useAuth();
   const [confirmation, setConfirmation] = useState("");
   const [message, setMessage] = useState("");
   const profile = useQuery({ queryKey: ["me"], queryFn: () => api.get<Profile>("/api/v1/me") });
@@ -30,8 +30,7 @@ export default function AccountScreen() {
   const deleteAccount = useMutation({
     mutationFn: () => api.delete<DeleteResult>("/api/v1/me"),
     onSuccess: async () => {
-      await supabase.auth.signOut();
-      router.replace("/auth");
+      await auth.signOut();
     },
   });
   const error = profile.error ?? exportData.error ?? deleteAccount.error;
@@ -45,6 +44,14 @@ export default function AccountScreen() {
         <Text selectable style={{ color: colors.muted, lineHeight: 22 }}>
           Taste-profile sharing is currently {profile.data?.share_taste ? "on" : "off"}. Change it from your profile screen.
         </Text>
+      </Card>
+
+      <Card>
+        <Text selectable style={{ color: colors.ink, fontSize: 18, fontWeight: "800" }}>Session</Text>
+        <Text selectable style={{ color: colors.muted, lineHeight: 22 }}>
+          Sign out on this device and clear its cached TableUs data.
+        </Text>
+        <Button label="Sign out" onPress={() => void auth.signOut()} loading={auth.busy} />
       </Card>
 
       <Card>

@@ -1,9 +1,11 @@
-export const localE2EIdentities = ["demo-organizer", "demo-guest"] as const;
+export type LocalE2EIdentity = string;
 
-export type LocalE2EIdentity = (typeof localE2EIdentities)[number];
+export function parseLocalE2EIdentities(value: string | undefined): readonly string[] {
+  return (value ?? "").split(",").map((identity) => identity.trim()).filter(Boolean);
+}
 
-export function isLocalE2EIdentity(value: unknown): value is LocalE2EIdentity {
-  return typeof value === "string" && localE2EIdentities.includes(value as LocalE2EIdentity);
+export function isAllowedLocalE2EIdentity(value: unknown, identities: readonly string[]): value is LocalE2EIdentity {
+  return typeof value === "string" && identities.includes(value);
 }
 
 export function isLoopbackApiUrl(value: string | undefined): boolean {
@@ -16,14 +18,6 @@ export function isLoopbackApiUrl(value: string | undefined): boolean {
   }
 }
 
-export function canUseLocalE2E({
-  configEnabled,
-  demoMode,
-  apiUrl,
-}: {
-  configEnabled: boolean;
-  demoMode: boolean;
-  apiUrl: string | undefined;
-}): boolean {
+export function canUseLocalE2E({ configEnabled, demoMode, apiUrl }: { configEnabled: boolean; demoMode: boolean; apiUrl: string | undefined }): boolean {
   return configEnabled && demoMode && isLoopbackApiUrl(apiUrl);
 }

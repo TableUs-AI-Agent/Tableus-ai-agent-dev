@@ -1,0 +1,8 @@
+appId: com.tableus.app
+---
+- stopApp
+- launchApp
+- extendedWaitUntil:
+    visible: "Plans"
+    timeout: 60000
+- assertNotVisible: "Invite access"

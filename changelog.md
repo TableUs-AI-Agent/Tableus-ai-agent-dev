@@ -1,5 +1,18 @@
 # Changelog
 
+## 2026-08-21 — Mobile staging authentication
+
+- Replaced mobile screen-local OTP handling with an app-level Supabase session
+  coordinator, expiring SecureStore transaction recovery, approved-profile route
+  protection, retained join intent, foreground refresh, and explicit sign-out.
+- Added one-time API token refresh after `401` with idempotency preservation and
+  fail-closed `403` behavior.
+- Added isolated Supabase `auth-test-ios`/`auth-test-android` profiles, a gated
+  pass/fail refresh route, redacted interactive Maestro orchestration, and a
+  read-only sanitized invite-evidence report.
+- Removed shared mobile loopback and demo-identity defaults so real auth artifacts
+  can be inspected for the absence of deterministic test configuration.
+
 ## 2026-08-19
 
 - Stopped pre-filling the demo-only `tableus-beta` invite when the web client is

@@ -7,7 +7,7 @@ const supabaseUrl = process.env.EXPO_PUBLIC_SUPABASE_URL;
 const supabaseAnonKey = process.env.EXPO_PUBLIC_SUPABASE_ANON_KEY;
 const demoMode = process.env.EXPO_PUBLIC_DEMO_MODE === "true";
 
-const storage = {
+export const secureAuthStorage = {
   getItem: (key: string) => SecureStore.getItemAsync(key),
   setItem: (key: string, value: string) => SecureStore.setItemAsync(key, value),
   removeItem: (key: string) => SecureStore.deleteItemAsync(key),
@@ -19,10 +19,23 @@ export const supabase = createClient(
   supabaseAnonKey || "not-configured",
   {
     auth: {
-      storage,
+      storage: secureAuthStorage,
       autoRefreshToken: true,
       persistSession: true,
       detectSessionInUrl: false,
     },
   },
 );
+
+export async function getSupabaseAccessToken() {
+  return (await supabase.auth.getSession()).data.session?.access_token ?? null;
+}
+
+export async function refreshSupabaseAccessToken() {
+  const { data, error } = await supabase.auth.refreshSession();
+  if (error || !data.session) {
+    await supabase.auth.signOut({ scope: "local" });
+    return null;
+  }
+  return data.session.access_token;
+}

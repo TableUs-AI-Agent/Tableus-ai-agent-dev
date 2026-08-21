@@ -4,8 +4,8 @@ import { useEffect, useState } from "react";
 import { ScrollView, Text } from "react-native";
 
 import { Button, Card, ErrorText } from "@/components/ui";
-import { isLocalE2EIdentity, type LocalE2EIdentity } from "@/lib/e2e-config";
-import { localE2EEnabled, localE2EIdentityName, setLocalE2EIdentity } from "@/lib/e2e-identity";
+import { isAllowedLocalE2EIdentity, type LocalE2EIdentity } from "@/lib/e2e-config";
+import { localE2EEnabled, localE2EIdentities, localE2EIdentityName, setLocalE2EIdentity } from "@/lib/e2e-identity";
 import { colors } from "@/theme";
 
 export default function LocalE2EIdentityScreen() {
@@ -14,7 +14,7 @@ export default function LocalE2EIdentityScreen() {
   const [active, setActive] = useState<LocalE2EIdentity | null>(null);
   const [error, setError] = useState("");
   const requested = Array.isArray(user) ? user[0] : user;
-  const validRequested = isLocalE2EIdentity(requested) ? requested : null;
+  const validRequested = isAllowedLocalE2EIdentity(requested, localE2EIdentities) ? requested : null;
 
   useEffect(() => {
     if (!localE2EEnabled || !validRequested) return;

@@ -198,6 +198,38 @@ Store sanitized screenshots/logs with the candidate SHA and deployment/build
 IDs; do not retain OTPs, invite codes, emails, full share tokens, precise
 locations, photos, prompts, or provider responses.
 
+For real mobile authentication evidence, use the separately approved
+`auth-test-ios` and `auth-test-android` artifacts. Verify their EAS metadata and
+bundles first, then run each with a fresh one-use invite and a distinct
+owner-controlled email:
+
+```bash
+make inspect-mobile-auth APP=<artifact> SHA=<candidate-sha> API_URL=https://<staging-api> SUPABASE_URL=https://<staging-supabase> FORBIDDEN_ORIGINS=<comma-separated-production-origins>
+```
+
+This first verifies the embedded exact SHA and staging origins and rejects demo
+identities, loopback endpoints, service-role markers, local-E2E enablement, and
+the explicitly listed production origins. Then run the lifecycle:
+
+```bash
+make mobile-auth-e2e PLATFORM=ios DEVICE=<simulator-udid> APP=<path-to-TableUs.app> BUILD_ID=<eas-build-id> EVIDENCE=<sanitized-dir> API_URL=https://<staging-api>
+make mobile-auth-e2e PLATFORM=android DEVICE=<emulator-serial> APP=<path-to-tableus.apk> BUILD_ID=<eas-build-id> EVIDENCE=<sanitized-dir> API_URL=https://<staging-api>
+```
+
+The runner requires Supabase/deterministic readiness, prompts interactively for
+the email, display name, one-use invite, and both OTPs, and removes its raw
+Maestro workspace. It must prove invalid-invite rejection, invite signup,
+join-intent return, relaunch persistence, explicit refresh, foreground recovery,
+sign-out, and returning sign-in. Report sanitized database aggregates afterward:
+
+```bash
+cd backend
+uv run python scripts/auth_evidence.py --invite-id <ios-invite-id> --invite-id <android-invite-id>
+```
+
+Never redirect auth-test artifacts to loopback or enable demo identity variables.
+Never retain the interactive inputs or raw Maestro results.
+
 ## 6. Enable providers incrementally
 
 Keep deterministic providers green while each integration is added:

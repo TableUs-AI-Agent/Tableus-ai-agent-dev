@@ -28,6 +28,7 @@ export class ApiError extends Error {
 type ClientOptions = {
   baseUrl: string;
   getAccessToken?: () => Promise<string | null>;
+  refreshAccessToken?: () => Promise<string | null>;
   demoUserId?: string;
   getDemoUserId?: () => Promise<string | null>;
   fetchImpl?: typeof fetch;
@@ -35,21 +36,33 @@ type ClientOptions = {
 
 export function createApiClient(options: ClientOptions) {
   const request = async <T>(path: string, init: RequestInit = {}): Promise<T> => {
-    const token = await options.getAccessToken?.();
+    let token = await options.getAccessToken?.();
     const dynamicDemoUserId = await options.getDemoUserId?.();
     const demoUserId = dynamicDemoUserId ?? options.demoUserId;
     const headers = new Headers(init.headers);
     if (!(init.body instanceof FormData)) headers.set("Content-Type", "application/json");
-    if (token) headers.set("Authorization", `Bearer ${token}`);
     if (demoUserId) headers.set("X-Demo-User-ID", demoUserId);
     if (init.method && init.method !== "GET") {
       headers.set("Idempotency-Key", `${Date.now()}-${Math.random().toString(36).slice(2)}`);
     }
-    let response: Response;
-    try {
-      response = await (options.fetchImpl ?? fetch)(`${options.baseUrl}${path}`, { ...init, headers });
-    } catch {
-      throw new ApiError("Network unavailable. Reconnect and try again.", 0, "network_error");
+    const send = async () => {
+      const requestHeaders = new Headers(headers);
+      if (token) requestHeaders.set("Authorization", `Bearer ${token}`);
+      else requestHeaders.delete("Authorization");
+      try {
+        return await (options.fetchImpl ?? fetch)(`${options.baseUrl}${path}`, { ...init, headers: requestHeaders });
+      } catch {
+        throw new ApiError("Network unavailable. Reconnect and try again.", 0, "network_error");
+      }
+    };
+    let response = await send();
+    if (response.status === 401 && token && options.refreshAccessToken) {
+      try {
+        token = await options.refreshAccessToken();
+      } catch {
+        token = null;
+      }
+      if (token) response = await send();
     }
     const payload = (await response.json().catch(() => null)) as ApiEnvelope<T> | ApiFailure | null;
     if (!response.ok) {

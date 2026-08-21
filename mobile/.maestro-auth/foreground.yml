@@ -1,0 +1,8 @@
+appId: com.tableus.app
+---
+- stopApp
+- launchApp
+- extendedWaitUntil:
+    visible: "Authenticated session check"
+    timeout: 60000
+- assertVisible: "Session refresh not run|Session refresh passed"

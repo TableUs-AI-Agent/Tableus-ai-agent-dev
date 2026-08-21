@@ -1,0 +1,10 @@
+appId: com.tableus.app
+---
+- tapOn: "Already joined? Sign in"
+- tapOn: "Email address"
+- inputText: "${EMAIL}"
+- hideKeyboard
+- tapOn: "Email me a code"
+- extendedWaitUntil:
+    visible: "Email verification code"
+    timeout: 30000

@@ -37,6 +37,26 @@
   deterministic backend, drives organizer and guest Maestro phases, checks 5/5/2
   scoring and stale-run cleanup through the UI, and deletes raw token-bearing
   output. Host API access is limited to plan discovery and share-token rotation.
+- Mobile Supabase authentication is coordinated above the router with explicit
+  loading, signed-out, verification, retryable redemption, and approved states.
+  Its versioned SecureStore transaction retains only normalized email, display
+  name, redemption grant, mode, and expiry; invite codes and email OTPs remain
+  memory-only. Restored sessions are checked through `/api/v1/me`, product routes
+  require approval, and signed-out private-plan links return to their in-memory
+  join intent after authentication.
+- Supabase session refresh follows React Native foreground state, account changes
+  and sign-out clear TanStack Query state, and the shared API client performs at
+  most one explicit refresh/retry after `401` while preserving idempotency keys.
+  It never retries `403` or switches authentication modes.
+- Dedicated `auth-test-ios` and `auth-test-android` EAS profiles use the preview
+  environment with Supabase auth and deterministic staging providers. They
+  compile without demo identity configuration, loopback API defaults, cleartext
+  networking, or local-E2E enablement. A separate gated refresh screen exposes
+  only pass/fail status.
+- `make mobile-auth-e2e` provides redacted interactive Maestro phases for invalid
+  invite, signup, join-intent return, persistence, explicit/foreground refresh,
+  sign-out, and returning sign-in. A read-only operator script reports invite
+  usage/redemption/validation counts by invite ID without personal or secret data.
 - Separate migration/runtime database credentials, a private application schema,
   an invite-only Supabase pre-signup hook, email-bound invite redemption, and a
   hashed invite administration CLI.
@@ -136,8 +156,10 @@
   inspection with no Railway hostname, and both full journeys passed
   independently on iPhone 17 Pro/iOS 26.5 and the API 36 ARM64 emulator.
   Sanitized summaries and screenshots are in `docs/evidence/a78a6d2/`.
-  Mobile OTP/invite, offline-retry, and account-control journeys remain
-  to be automated and evidenced. Account export/deletion controls
+  Mobile OTP/invite automation is implemented locally but still requires fresh
+  exact-SHA auth-test artifacts, two owner-controlled emails, two one-use invites,
+  and four operator-entered OTPs for iOS/Android evidence. Offline-retry and
+  account-control journeys remain to be evidenced. Account export/deletion controls
   are implemented locally but still require exact-SHA hosted/device evidence;
   privacy deletion itself remains intentionally unexecuted. Other failure-state
   checks remain.

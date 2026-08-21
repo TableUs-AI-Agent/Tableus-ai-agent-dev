@@ -1,0 +1,18 @@
+appId: com.tableus.app
+---
+- launchApp:
+    clearState: true
+- extendedWaitUntil:
+    visible: "Invite access"
+    timeout: 30000
+- tapOn: "Invite code"
+- inputText: "${INVALID_INVITE}"
+- tapOn: "Display name"
+- inputText: "${DISPLAY_NAME}"
+- tapOn: "Email address"
+- inputText: "${EMAIL}"
+- hideKeyboard
+- tapOn: "Email me a code"
+- extendedWaitUntil:
+    visible: ".*Invite is invalid, expired, or fully redeemed.*"
+    timeout: 30000

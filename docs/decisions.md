@@ -55,3 +55,12 @@
   mode, and loopback API URL are all active. The hidden deep link accepts no
   arbitrary subject, clears query caches on change, and is inert in preview and
   production builds.
+- **2026-08-21:** Mobile Supabase authentication is owned by one app-level
+  coordinator. Pending signup state may retain only an expiring redemption
+  transaction in SecureStore; invite codes and OTPs are never persisted. Product
+  navigation is authorized by the FastAPI approved profile, not merely by the
+  presence of a Supabase session.
+- **2026-08-21:** Real mobile auth evidence uses separate auth-test artifacts
+  pointed at HTTPS staging with deterministic providers. Demo identities,
+  loopback defaults, local networking exceptions, and local identity controls
+  remain exclusive to deterministic test profiles.
