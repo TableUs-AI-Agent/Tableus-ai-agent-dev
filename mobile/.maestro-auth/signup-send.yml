@@ -2,7 +2,20 @@ appId: com.tableus.app
 ---
 - launchApp:
     clearState: true
-- openLink: "tableus://join/auth-e2e-intent?token=${JOIN_TOKEN}"
+- extendedWaitUntil:
+    visible: "Invite access|.*isn't responding"
+    timeout: 60000
+- runFlow:
+    when:
+      visible: ".*isn't responding"
+    commands:
+      - tapOn: "Wait"
+- extendedWaitUntil:
+    visible: "Invite access"
+    timeout: 60000
+- openLink:
+    link: "tableus:///join/auth-e2e-intent?token=${MAESTRO_JOIN_TOKEN}"
+    autoVerify: true
 - runFlow:
     when:
       visible: ".*Open in.*TableUs.*"
@@ -10,17 +23,17 @@ appId: com.tableus.app
       - tapOn: "Open"
 - extendedWaitUntil:
     visible: "Sign in to join"
-    timeout: 30000
+    timeout: 60000
 - tapOn: "Sign in to join"
 - extendedWaitUntil:
     visible: "Invite access"
     timeout: 30000
 - tapOn: "Invite code"
-- inputText: "${INVITE}"
+- inputText: "${MAESTRO_INVITE}"
 - tapOn: "Display name"
-- inputText: "${DISPLAY_NAME}"
+- inputText: "${MAESTRO_DISPLAY_NAME}"
 - tapOn: "Email address"
-- inputText: "${EMAIL}"
+- inputText: "${MAESTRO_EMAIL}"
 - tapOn: "A better answer than.*"
 - tapOn: "Email me a code"
 - extendedWaitUntil:

@@ -1,9 +1,15 @@
 appId: com.tableus.app
 ---
 - tapOn: "Email verification code"
-- inputText: "${OTP}"
+- inputText: "${MAESTRO_OTP}"
 - tapOn: "Verification email"
 - tapOn: "Verify and continue"
+- openLink: "tableus:///"
+- runFlow:
+    when:
+      visible: ".*Open in.*TableUs.*"
+    commands:
+      - tapOn: "Open"
 - extendedWaitUntil:
     visible: "Plans"
     timeout: 60000

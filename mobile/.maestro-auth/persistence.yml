@@ -3,6 +3,14 @@ appId: com.tableus.app
 - stopApp
 - launchApp
 - extendedWaitUntil:
+    visible: "Plans|.*isn't responding"
+    timeout: 60000
+- runFlow:
+    when:
+      visible: ".*isn't responding"
+    commands:
+      - tapOn: "Wait"
+- extendedWaitUntil:
     visible: "Plans"
     timeout: 60000
 - assertNotVisible: "Invite access"

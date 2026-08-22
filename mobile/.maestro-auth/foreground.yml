@@ -3,6 +3,24 @@ appId: com.tableus.app
 - stopApp
 - launchApp
 - extendedWaitUntil:
-    visible: "Authenticated session check"
+    visible: "Plans|.*isn't responding"
     timeout: 60000
-- assertVisible: "Session refresh not run|Session refresh passed"
+- runFlow:
+    when:
+      visible: ".*isn't responding"
+    commands:
+      - tapOn: "Wait"
+- extendedWaitUntil:
+    visible: "Plans"
+    timeout: 60000
+- assertNotVisible: "Invite access"
+- openLink: "tableus:///e2e/auth"
+- runFlow:
+    when:
+      visible: ".*Open in.*TableUs.*"
+    commands:
+      - tapOn: "Open"
+- extendedWaitUntil:
+    visible: "Authenticated session check"
+    timeout: 30000
+- assertVisible: "Session refresh idle"

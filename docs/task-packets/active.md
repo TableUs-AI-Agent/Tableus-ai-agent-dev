@@ -43,6 +43,30 @@ alert now has the distinct accessible text "Authentication required" while the
 button retains the required product copy. No invite was consumed and no OTP was
 sent; artifacts from this candidate are invalidated.
 
+Candidate `b3691bd8df821467db363b6861e14ca0a3ca69f6` completed iOS
+invite signup, OTP verification, redemption, join-intent return, relaunch
+persistence, and explicit refresh. The foreground phase then restored the
+approved user to protected Plans as designed, while the flow incorrectly
+expected the test-only refresh route to persist across app termination. The flow
+now asserts protected Plans first and explicitly reopens the gated refresh route
+before checking session status. The corrected iOS phases then passed foreground
+recovery, sign-out, and returning sign-in.
+
+The same `b3691bd8` artifacts were used only to stabilize Android before freezing
+the replacement candidate. An API 36 ARM64 run passed invalid-invite rejection,
+signup, redemption, join-intent return, persistence, explicit refresh,
+foreground recovery, sign-out, and returning sign-in across redacted resumable
+segments. The flow now waits for React Native readiness before Android deep
+links, uses Maestro's supported long-form `openLink`, waits for sign-out cleanup,
+and makes returning sign-in self-contained. Host GPU acceleration removed the
+emulator system-process stalls seen with software rendering; bounded recovery
+for a startup ANR remains in the flows. Maestro parameters now use its supported
+`MAESTRO_` shell variables so invite and OTP values do not appear in process
+arguments. Both one-use invites are redeemed and both test accounts are retained.
+Because these corrections occurred after `b3691bd8`, neither artifact is final
+evidence: a new clean candidate, two new builds, two fresh identities/invites,
+and four new operator-entered codes are still required.
+
 The deployed staging baseline remains Railway deployment
 `e438677b-548e-4dce-ae8e-7f05f086bc29` and Vercel deployment
 `dpl_vpVRmbpHXhQPb5AUScD8yJaPHJFD`, both from

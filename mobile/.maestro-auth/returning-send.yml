@@ -1,8 +1,18 @@
 appId: com.tableus.app
 ---
+- launchApp
+- openLink: "tableus:///auth"
+- runFlow:
+    when:
+      visible: ".*Open in.*TableUs.*"
+    commands:
+      - tapOn: "Open"
+- extendedWaitUntil:
+    visible: "Invite access"
+    timeout: 60000
 - tapOn: "Already joined? Sign in"
 - tapOn: "Email address"
-- inputText: "${EMAIL}"
+- inputText: "${MAESTRO_EMAIL}"
 - tapOn: "Welcome back."
 - tapOn: "Email me a code"
 - extendedWaitUntil:

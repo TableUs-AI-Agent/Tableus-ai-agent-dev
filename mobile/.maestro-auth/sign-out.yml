@@ -1,6 +1,6 @@
 appId: com.tableus.app
 ---
-- openLink: "tableus://account"
+- openLink: "tableus:///account"
 - runFlow:
     when:
       visible: ".*Open in.*TableUs.*"
@@ -10,6 +10,15 @@ appId: com.tableus.app
     visible: "Account and data"
     timeout: 30000
 - tapOn: "Sign out"
+- extendedWaitUntil:
+    notVisible: "Account and data"
+    timeout: 60000
+- openLink: "tableus:///auth"
+- runFlow:
+    when:
+      visible: ".*Open in.*TableUs.*"
+    commands:
+      - tapOn: "Open"
 - extendedWaitUntil:
     visible: "Invite access"
     timeout: 30000

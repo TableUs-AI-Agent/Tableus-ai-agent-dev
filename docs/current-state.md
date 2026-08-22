@@ -55,8 +55,11 @@
   only pass/fail status.
 - `make mobile-auth-e2e` provides redacted interactive Maestro phases for invalid
   invite, signup, join-intent return, persistence, explicit/foreground refresh,
-  sign-out, and returning sign-in. A read-only operator script reports invite
-  usage/redemption/validation counts by invite ID without personal or secret data.
+  sign-out, and returning sign-in. Sensitive flow values use Maestro's supported
+  prefixed shell variables rather than command arguments, and an optional phase
+  resume records skipped checks honestly for local stabilization. A read-only
+  operator script reports invite usage/redemption/validation counts by invite ID
+  without personal or secret data.
 - Separate migration/runtime database credentials, a private application schema,
   an invite-only Supabase pre-signup hook, email-bound invite redemption, and a
   hashed invite administration CLI.
@@ -74,8 +77,10 @@
 - Supabase staging client environment wiring. The `TableUs Staging` project is
   provisioned in East US and linked locally. Resend-backed custom SMTP is
   configured with the required `resend` username and a verified `table-us.com`
-  sending domain. Confirm signup and Magic Link now present the six-digit
-  `Token`. A real invite-approved OTP completed the Auth hook, email delivery,
+  sending domain. Confirm signup and Magic Link present Supabase's `Token` as the
+  verification code. Supabase currently emits eight digits while the custom
+  template still says "six-digit"; that copy must be corrected before beta. A
+  real invite-approved OTP completed the Auth hook, email delivery,
   code verification, invite redemption, profile creation, and authenticated
   redirect to `/plans`. Sanitized staging evidence showed exactly one profile,
   one redemption, one consumed pending validation, and one used invite. Alembic
@@ -156,9 +161,13 @@
   inspection with no Railway hostname, and both full journeys passed
   independently on iPhone 17 Pro/iOS 26.5 and the API 36 ARM64 emulator.
   Sanitized summaries and screenshots are in `docs/evidence/a78a6d2/`.
-  Mobile OTP/invite automation is implemented locally but still requires fresh
-  exact-SHA auth-test artifacts, two owner-controlled emails, two one-use invites,
-  and four operator-entered OTPs for iOS/Android evidence. Offline-retry and
+  Mobile OTP/invite automation is implemented and provisionally passed every
+  phase on both platforms using the invalidated `b3691bd8` artifacts. Those runs
+  created and retained one approved account per platform and consumed their two
+  one-use invites. Post-candidate flow corrections mean final evidence still
+  requires a new exact SHA, two new auth-test artifacts, two fresh deliverable
+  email aliases, two fresh one-use invites, and four operator-entered OTPs.
+  Offline-retry and
   account-control journeys remain to be evidenced. Account export/deletion controls
   are implemented locally but still require exact-SHA hosted/device evidence;
   privacy deletion itself remains intentionally unexecuted. Other failure-state

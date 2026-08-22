@@ -1,6 +1,6 @@
 appId: com.tableus.app
 ---
-- openLink: "tableus://e2e/auth"
+- openLink: "tableus:///e2e/auth"
 - runFlow:
     when:
       visible: ".*Open in.*TableUs.*"
