@@ -6,10 +6,15 @@ Implementation and deterministic verification are complete on
 `codex/account-controls` from the completed mobile-auth evidence baseline
 `5ff55f82c6c0db21fec77a148d9f93f2a4931a02`. Exact candidate
 `8cde19309fa43787b04d2792d96c1cfc11c21317` is publicly pushed; staging is
-migrated and deployed from that SHA, and the inspected iOS/Android auth-test
-artifacts are ready. The packet is awaiting the separately approved, read-only
-returning-sign-in OTP and account-control Maestro journey on each platform. No
-application profile or Supabase Auth identity has been deleted.
+migrated and deployed from that SHA, and inspected iOS/Android auth-test
+artifacts were exercised. Android completed returning sign-in and the read-only
+account check. iOS completed returning sign-in and displayed a successful
+account check, but the harness asserted rendered copy instead of the semantic
+accessibility label. The run also exposed stale-session preparation and file
+checksum defects in the harness. Local corrections are being frozen as a new
+candidate; per the packet's exact-SHA rule, both replacement artifacts and both
+read-only account journeys are required. No application profile or Supabase
+Auth identity has been deleted.
 
 ## Objective
 

@@ -1,11 +1,13 @@
 #!/usr/bin/env node
 
-import { createHash, randomUUID } from "node:crypto";
-import { copyFileSync, cpSync, existsSync, mkdirSync, mkdtempSync, readFileSync, readdirSync, rmSync, statSync, writeFileSync } from "node:fs";
+import { randomUUID } from "node:crypto";
+import { copyFileSync, cpSync, existsSync, mkdirSync, mkdtempSync, readdirSync, rmSync, statSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { basename, dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { spawn, spawnSync } from "node:child_process";
+
+import { artifactChecksum } from "./evidence-utils.mjs";
 
 const repoRoot = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const apiUrl = "http://127.0.0.1:8000";
@@ -48,22 +50,6 @@ function commandOutput(command, args) {
   if (result.error) throw result.error;
   if (result.status !== 0) throw new Error(`${command} exited with status ${result.status}`);
   return result.stdout.trim();
-}
-
-function artifactChecksum(path) {
-  const hash = createHash("sha256");
-  const visit = (current, relative = "") => {
-    const stat = statSync(current);
-    if (stat.isDirectory()) {
-      for (const entry of readdirSync(current).sort()) visit(join(current, entry), join(relative, entry));
-      return;
-    }
-    hash.update(relative);
-    hash.update("\0");
-    hash.update(readFileSync(current));
-  };
-  visit(path);
-  return hash.digest("hex");
 }
 
 async function api(path, { user = "demo-organizer", method = "GET", body } = {}) {

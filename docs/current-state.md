@@ -195,9 +195,14 @@
   Offline-retry and account-control device journeys remain to be evidenced.
   Account export/deletion controls are deployed at the exact SHA, the staging
   migration is verified, and both inspected auth-test artifacts are ready. The
-  remaining account-control gate is one read-only returning-sign-in OTP journey
-  per platform using retained approved accounts; no OTP has been requested for
-  this packet yet.
+  first read-only evidence attempt completed Android returning sign-in and
+  aggregate account validation. iOS returning sign-in and the product-side
+  account validation succeeded, but Maestro targeted rendered copy rather than
+  the explicit semantic accessibility label. A pre-existing Android session and
+  a nonstandard runner file checksum exposed two additional harness defects.
+  Local corrections normalize sign-out, assert the semantic label, and record
+  standard file SHA-256. The packet's exact-SHA rule therefore requires new
+  iOS/Android artifacts and replacement read-only journeys before acceptance.
   privacy deletion itself remains intentionally unexecuted. Other failure-state
   checks remain.
   Maps staging and the budgeted pinned-model Gemini evaluation follow only after

@@ -13,6 +13,6 @@ appId: com.tableus.app
     timeout: 30000
 - tapOn: "Validate account controls"
 - extendedWaitUntil:
-    visible: "Account control validation passed"
+    visible: "Account control passed"
     timeout: 30000
 - takeScreenshot: "account-controls"

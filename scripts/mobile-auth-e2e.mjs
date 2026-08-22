@@ -1,12 +1,14 @@
 #!/usr/bin/env node
 
-import { createHash, randomBytes } from "node:crypto";
-import { copyFileSync, cpSync, existsSync, mkdirSync, mkdtempSync, readFileSync, readdirSync, rmSync, statSync, writeFileSync } from "node:fs";
+import { randomBytes } from "node:crypto";
+import { copyFileSync, cpSync, existsSync, mkdirSync, mkdtempSync, readdirSync, rmSync, statSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { basename, dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { createInterface } from "node:readline/promises";
 import { spawnSync } from "node:child_process";
+
+import { artifactChecksum } from "./evidence-utils.mjs";
 
 const repoRoot = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const flowSource = join(repoRoot, "mobile", ".maestro-auth");
@@ -35,22 +37,6 @@ function run(command, args, { cwd = repoRoot, env = {}, secrets = [] } = {}) {
   if (output.trim()) process.stdout.write(output);
   if (result.error) throw result.error;
   if (result.status !== 0) throw new Error(`${command} exited with status ${result.status}`);
-}
-
-function checksum(path) {
-  const hash = createHash("sha256");
-  const visit = (current, relative = "") => {
-    const stat = statSync(current);
-    if (stat.isDirectory()) {
-      for (const entry of readdirSync(current).sort()) visit(join(current, entry), join(relative, entry));
-    } else {
-      hash.update(relative);
-      hash.update("\0");
-      hash.update(readFileSync(current));
-    }
-  };
-  visit(path);
-  return hash.digest("hex");
 }
 
 async function preflight(apiUrl) {
@@ -156,7 +142,10 @@ try {
   if (shouldRun("refresh")) flow("refresh.yml");
   if (shouldRun("foreground")) flow("foreground.yml");
   if (shouldRun("sign-out")) flow("sign-out.yml");
-  if (shouldRun("returning-send")) flow("returning-send.yml", { EMAIL: email });
+  if (shouldRun("returning-send")) {
+    flow("returning-prepare.yml");
+    flow("returning-send.yml", { EMAIL: email });
+  }
   if (shouldRun("returning-verify")) {
     const returningOtp = (await terminal.question("Returning sign-in OTP from the newest email: ")).trim();
     if (!returningOtp) throw new Error("Returning sign-in OTP is required.");
@@ -174,7 +163,7 @@ try {
     build_id: buildId,
     git_sha: gitResult.stdout.trim(),
     artifact: basename(appPath),
-    artifact_sha256: checksum(appPath),
+    artifact_sha256: artifactChecksum(appPath),
     api_origin: new URL(apiUrl).origin,
     app_id: appId,
     provider_mode: "deterministic",

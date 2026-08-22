@@ -38,15 +38,30 @@ production endpoints.
 
 ## Remaining evidence
 
-No OTP was requested, no account-control Maestro journey was run, and no
-application profile or Supabase Auth identity was deleted in this external
-package. After the owner supplies one retained approved email per platform and
-explicitly approves the two OTP emails, run:
+The approved evidence run subsequently requested one returning-sign-in OTP per
+platform. Android completed returning sign-in and the aggregate-only account
+control check on `emulator-5554`; its sanitized summary and screenshots are in
+`account-controls/`.
+
+The iOS returning sign-in also passed, and the product displayed a successful
+aggregate account check, but Maestro asserted the rendered copy instead of the
+screen's explicit `Account control passed` accessibility label. The Android
+preflight also exposed that the returning-sign-in segment did not normalize a
+previously authenticated device. The runner's file checksum included a leading
+separator byte instead of recording a standard file SHA-256. These are evidence
+harness defects, so the packet's exact-SHA rule invalidates the partial evidence
+despite the product responses being green.
+
+A replacement candidate now uses the semantic accessibility label, prepares a
+known signed-out state through the normal Account action, and emits standard
+SHA-256 for file artifacts. It requires replacement builds and fresh evidence
+before this gate can close. No application profile or Supabase Auth identity was
+deleted. Run the replacement artifacts with:
 
 ```bash
-make mobile-account-e2e PLATFORM=ios DEVICE=<simulator-udid> APP=<path-to-TableUs.app> BUILD_ID=13b30209-50a4-4101-a63a-053abf8b5c79 EVIDENCE=<sanitized-dir> API_URL=https://api-staging-3795.up.railway.app
-make mobile-account-e2e PLATFORM=android DEVICE=<emulator-serial> APP=<path-to-tableus.apk> BUILD_ID=cd1be5d0-4c0a-4037-9c16-15f95e2633cc EVIDENCE=<sanitized-dir> API_URL=https://api-staging-3795.up.railway.app
+make mobile-account-e2e PLATFORM=ios DEVICE=<simulator-udid> APP=<replacement-TableUs.app> BUILD_ID=<replacement-ios-build-id> EVIDENCE=<sanitized-dir> API_URL=https://api-staging-3795.up.railway.app
+make mobile-account-e2e PLATFORM=android DEVICE=<emulator-serial> APP=<replacement-tableus.apk> BUILD_ID=<replacement-android-build-id> EVIDENCE=<sanitized-dir> API_URL=https://api-staging-3795.up.railway.app
 ```
 
-The evidence run must remain read-only: do not type `DELETE`, invoke the delete
-endpoint, or remove either retained Supabase identity.
+The replacement evidence must remain read-only: do not type `DELETE`, invoke the
+delete endpoint, or remove either retained Supabase identity.
