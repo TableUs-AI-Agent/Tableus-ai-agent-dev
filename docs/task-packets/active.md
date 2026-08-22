@@ -4,9 +4,14 @@
 
 Implementation and local deterministic verification are complete on
 `codex/mobile-offline-resilience`, branched from local evidence commit
-`c4df4eb0880e2ee8a4f7cec0f615111af02c8dcd`. Focused checks and the cumulative
-`make ready` gate pass. Public push and new `test-ios` and `test-android` EAS
-artifacts remain explicit approval gates; device evidence is not yet claimed.
+`c4df4eb0880e2ee8a4f7cec0f615111af02c8dcd`. Device diagnostics hardened the
+Android cold-start wait and gave the global offline alert an explicit semantic
+label; the complete Android fault journey then passed diagnostically with only
+the old artifact's missing label assertion omitted. Focused checks and the
+cumulative `make ready` gate pass at the corrected branch tip. New exact-SHA
+`test-ios` and `test-android` artifacts remain explicit approval gates, and
+device evidence is not yet claimed. The Expo free-plan iOS build allowance is
+currently exhausted and reports a September 1, 2026 reset.
 
 ## Objective
 

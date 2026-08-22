@@ -2,6 +2,9 @@ appId: com.tableus.app
 ---
 - launchApp:
     clearState: true
+- extendedWaitUntil:
+    visible: "Plans"
+    timeout: 30000
 - openLink: "tableus://e2e/identity?user=demo-organizer"
 - runFlow:
     when:

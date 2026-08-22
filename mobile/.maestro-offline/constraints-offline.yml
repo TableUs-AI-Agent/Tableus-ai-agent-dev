@@ -18,7 +18,9 @@ appId: com.tableus.app
 - extendedWaitUntil:
     visible: "Connectivity override: offline"
     timeout: 30000
-- assertVisible: "Offline. Changes are not sent or queued."
+- extendedWaitUntil:
+    visible: "Offline. Changes are not sent or queued."
+    timeout: 30000
 - tapOn: "Return to previous screen"
 - extendedWaitUntil:
     visible: "Your constraints"

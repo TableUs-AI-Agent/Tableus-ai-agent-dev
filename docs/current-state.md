@@ -211,8 +211,15 @@
   foreground refresh, sign-out, and returning sign-in. Both one-use invites
   show one use, one redemption, and no active pending validation. Sanitized
   summaries and screenshots are in `docs/evidence/d6d1b3a/`.
-  Offline-retry implementation is complete locally; exact-SHA iOS and Android
-  artifact inspection and device evidence remain. Account export/deletion controls are deployed,
+  Offline-retry implementation is complete locally. The first device attempt
+  exposed and fixed Android cold-start flow timing plus a missing explicit
+  semantic label on the otherwise visible global offline banner. With only the
+  old APK's label assertion omitted, the complete Android fault journey passed
+  diagnostically, including zero-request offline constraints and same-key
+  create/finalization replays. Replacement exact-SHA iOS and Android artifact
+  inspection and release evidence remain; Expo currently reports the free-plan
+  iOS build allowance exhausted until September 1, 2026. Account
+  export/deletion controls are deployed,
   the staging migration is verified, and replacement read-only account-control
   journeys passed from exact SHA
   `119171a2d9370b0929bc8d19da819538864745f0` on iOS simulator build

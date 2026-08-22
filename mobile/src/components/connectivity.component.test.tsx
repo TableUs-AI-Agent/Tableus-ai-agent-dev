@@ -15,6 +15,7 @@ test("offline banner is globally accessible and explicitly says writes are not q
   const result = await render(<ConnectivityBanner />);
   const alert = result.getByRole("alert");
   expect(alert.props.accessibilityLiveRegion).toBe("assertive");
+  expect(result.getByLabelText("Offline. Changes are not sent or queued.")).toBe(alert);
   expect(result.getByText("Offline. Changes are not sent or queued.")).not.toBeNull();
 });
 
