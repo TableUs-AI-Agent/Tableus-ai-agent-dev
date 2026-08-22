@@ -1,7 +1,9 @@
 import * as Sentry from "@sentry/react-native";
 import { Stack } from "expo-router/stack";
 import { StatusBar } from "expo-status-bar";
+import { View } from "react-native";
 
+import { ConnectivityBanner } from "@/components/connectivity-banner";
 import { AppProviders } from "@/providers/app-providers";
 import { AuthProvider, useAuth } from "@/providers/auth-provider";
 import { colors } from "@/theme";
@@ -14,8 +16,9 @@ function RootNavigator() {
   const auth = useAuth();
   const signedOut = auth.phase !== "loading" && !auth.approved;
   return (
-    <>
+    <View style={{ flex: 1 }}>
       <StatusBar style="dark" />
+      <ConnectivityBanner />
       <Stack screenOptions={{ headerBackButtonDisplayMode: "minimal", contentStyle: { backgroundColor: colors.background } }}>
         <Stack.Screen name="index" options={{ headerShown: false }} />
         <Stack.Protected guard={signedOut}>
@@ -23,6 +26,7 @@ function RootNavigator() {
         </Stack.Protected>
         <Stack.Screen name="join/[id]" options={{ title: "Join plan" }} />
         <Stack.Screen name="e2e/identity" options={{ title: "Local E2E identity" }} />
+        <Stack.Screen name="e2e/connectivity" options={{ title: "Local connectivity" }} />
         <Stack.Screen name="e2e/auth" options={{ title: "Session check" }} />
         <Stack.Screen name="privacy" options={{ title: "Privacy" }} />
         <Stack.Screen name="terms" options={{ title: "Terms" }} />
@@ -33,7 +37,7 @@ function RootNavigator() {
           <Stack.Screen name="e2e/account" options={{ title: "Account check" }} />
         </Stack.Protected>
       </Stack>
-    </>
+    </View>
   );
 }
 

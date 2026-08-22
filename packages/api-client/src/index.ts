@@ -6,6 +6,10 @@ export type ApiFailure = {
   request_id: string;
 };
 
+export type ApiRequestOptions = {
+  idempotencyKey?: string;
+};
+
 export class ApiError extends Error {
   readonly status: number;
   readonly code: string;
@@ -34,8 +38,12 @@ type ClientOptions = {
   fetchImpl?: typeof fetch;
 };
 
+export function createIdempotencyKey() {
+  return `${Date.now()}-${Math.random().toString(36).slice(2)}-${Math.random().toString(36).slice(2)}`;
+}
+
 export function createApiClient(options: ClientOptions) {
-  const request = async <T>(path: string, init: RequestInit = {}): Promise<T> => {
+  const request = async <T>(path: string, init: RequestInit = {}, requestOptions: ApiRequestOptions = {}): Promise<T> => {
     let token = await options.getAccessToken?.();
     const dynamicDemoUserId = await options.getDemoUserId?.();
     const demoUserId = dynamicDemoUserId ?? options.demoUserId;
@@ -43,7 +51,7 @@ export function createApiClient(options: ClientOptions) {
     if (!(init.body instanceof FormData)) headers.set("Content-Type", "application/json");
     if (demoUserId) headers.set("X-Demo-User-ID", demoUserId);
     if (init.method && init.method !== "GET") {
-      headers.set("Idempotency-Key", `${Date.now()}-${Math.random().toString(36).slice(2)}`);
+      headers.set("Idempotency-Key", requestOptions.idempotencyKey ?? createIdempotencyKey());
     }
     const send = async () => {
       const requestHeaders = new Headers(headers);
@@ -79,11 +87,13 @@ export function createApiClient(options: ClientOptions) {
 
   return {
     get: <T>(path: string) => request<T>(path),
-    post: <T>(path: string, body?: unknown) =>
-      request<T>(path, { method: "POST", body: body instanceof FormData ? body : JSON.stringify(body ?? {}) }),
-    put: <T>(path: string, body: unknown) => request<T>(path, { method: "PUT", body: JSON.stringify(body) }),
-    patch: <T>(path: string, body: unknown) => request<T>(path, { method: "PATCH", body: JSON.stringify(body) }),
-    delete: <T>(path: string, body?: unknown) =>
-      request<T>(path, { method: "DELETE", body: body === undefined ? undefined : JSON.stringify(body) }),
+    post: <T>(path: string, body?: unknown, requestOptions?: ApiRequestOptions) =>
+      request<T>(path, { method: "POST", body: body instanceof FormData ? body : JSON.stringify(body ?? {}) }, requestOptions),
+    put: <T>(path: string, body: unknown, requestOptions?: ApiRequestOptions) =>
+      request<T>(path, { method: "PUT", body: JSON.stringify(body) }, requestOptions),
+    patch: <T>(path: string, body: unknown, requestOptions?: ApiRequestOptions) =>
+      request<T>(path, { method: "PATCH", body: JSON.stringify(body) }, requestOptions),
+    delete: <T>(path: string, body?: unknown, requestOptions?: ApiRequestOptions) =>
+      request<T>(path, { method: "DELETE", body: body === undefined ? undefined : JSON.stringify(body) }, requestOptions),
   };
 }

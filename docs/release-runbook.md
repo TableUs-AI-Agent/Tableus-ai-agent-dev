@@ -198,6 +198,29 @@ Store sanitized screenshots/logs with the candidate SHA and deployment/build
 IDs; do not retain OTPs, invite codes, emails, full share tokens, precise
 locations, photos, prompts, or provider responses.
 
+For offline mutation resilience, inspect each new deterministic artifact before
+device execution:
+
+```bash
+make inspect-mobile-local-e2e APP=<artifact> SHA=<candidate-sha> FORBIDDEN_ORIGINS=<railway-and-production-origins>
+```
+
+Then run each platform independently against a clean in-memory backend:
+
+```bash
+make mobile-offline-e2e PLATFORM=ios DEVICE=<simulator-udid> APP=<path-to-TableUs.app> BUILD_ID=<eas-build-id> EVIDENCE=<sanitized-dir>
+make mobile-offline-e2e PLATFORM=android DEVICE=<emulator-serial> APP=<path-to-tableus.apk> BUILD_ID=<eas-build-id> EVIDENCE=<sanitized-dir>
+```
+
+The runner owns ports 7999–8001, installs the artifact, configures Android port
+reversal, and removes its proxy/Maestro workspace. It records only artifact
+checksums, booleans, counts, and named screenshots. It must prove no automatic
+retry, no request while known offline, same-key successful replay after a
+dropped committed response, exactly one plan, and exactly one finalized event.
+Never retain raw proxy output or idempotency keys. The API idempotency cache is
+process-local; restart or multi-instance replay evidence is intentionally not
+claimed.
+
 For real mobile authentication evidence, use the separately approved
 `auth-test-ios` and `auth-test-android` artifacts. Verify their EAS metadata and
 bundles first, then run each with a fresh one-use invite and a distinct

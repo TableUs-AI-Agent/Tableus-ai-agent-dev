@@ -1,6 +1,7 @@
 from datetime import UTC, datetime, timedelta
 
 import pytest
+from fastapi.responses import JSONResponse
 from httpx import ASGITransport, AsyncClient
 from sqlalchemy import select
 
@@ -19,6 +20,16 @@ from tableus.models import (
     Vote,
 )
 from tableus.security import hash_value, issue_redemption_token
+
+_idempotency_500_calls = {"count": 0}
+
+
+@app.post("/__test/idempotency-500")
+async def idempotency_500_fixture():
+    _idempotency_500_calls["count"] += 1
+    if _idempotency_500_calls["count"] == 1:
+        return JSONResponse(status_code=503, content={"error": "temporary"})
+    return {"data": {"ok": True}, "meta": {}}
 
 
 @pytest.fixture(scope="module", autouse=True)
@@ -145,6 +156,53 @@ async def test_complete_shared_plan_flow(client: AsyncClient) -> None:
     assert stale.status_code == 200
     assert stale.json()["data"]["status"] == "collecting"
     assert stale.json()["data"]["candidates"] == []
+
+
+@pytest.mark.asyncio
+async def test_idempotency_replay_conflict_actor_isolation_and_5xx(client: AsyncClient) -> None:
+    app.state.idempotency_cache = {}
+    create_headers = {**headers("demo-organizer"), "Idempotency-Key": "create-replay-key"}
+    body = {
+        "title": "Idempotent dinner",
+        "location_label": "Boston, MA",
+        "latitude": 42.3601,
+        "longitude": -71.0589,
+    }
+
+    first = await client.post("/api/v1/plans", headers=create_headers, json=body)
+    replay = await client.post("/api/v1/plans", headers=create_headers, json=body)
+    assert first.status_code == 200
+    assert replay.status_code == 200
+    assert replay.headers["X-Idempotent-Replay"] == "true"
+    assert replay.json()["data"]["plan"]["id"] == first.json()["data"]["plan"]["id"]
+
+    async with SessionFactory() as session:
+        matching = list((await session.scalars(select(Plan).where(Plan.title == body["title"]))).all())
+        assert len(matching) == 1
+
+    conflict = await client.post(
+        "/api/v1/plans",
+        headers=create_headers,
+        json={**body, "title": "Changed payload"},
+    )
+    assert conflict.status_code == 409
+    assert conflict.json()["error"]["code"] == "idempotency_conflict"
+
+    isolated = await client.post(
+        "/api/v1/plans",
+        headers={**headers("demo-guest"), "Idempotency-Key": "create-replay-key"},
+        json={**body, "title": "Guest payload"},
+    )
+    assert isolated.status_code == 200
+
+    _idempotency_500_calls["count"] = 0
+    failure_headers = {"Idempotency-Key": "five-hundred-key"}
+    failed = await client.post("/__test/idempotency-500", headers=failure_headers, json={})
+    recovered = await client.post("/__test/idempotency-500", headers=failure_headers, json={})
+    assert failed.status_code == 503
+    assert recovered.status_code == 200
+    assert "X-Idempotent-Replay" not in recovered.headers
+    assert _idempotency_500_calls["count"] == 2
 
 
 @pytest.mark.asyncio

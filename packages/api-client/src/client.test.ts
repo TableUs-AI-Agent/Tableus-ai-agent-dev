@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 
-import { ApiError, createApiClient } from "./index.ts";
+import { ApiError, createApiClient, createIdempotencyKey } from "./index.ts";
 
 test("client unwraps a successful envelope", async () => {
   const client = createApiClient({
@@ -162,4 +162,35 @@ test("client sends an explicit JSON body with DELETE requests", async () => {
 
   assert.equal(request?.method, "DELETE");
   assert.equal(request?.body, JSON.stringify({ confirmation: "DELETE" }));
+});
+
+test("client sends explicit idempotency keys for every write method", async () => {
+  const observed: Array<[string | undefined, string | null]> = [];
+  const client = createApiClient({
+    baseUrl: "https://api.example.test",
+    fetchImpl: async (_input, init) => {
+      observed.push([init?.method, new Headers(init?.headers).get("Idempotency-Key")]);
+      return new Response(JSON.stringify({ data: { ok: true }, meta: {} }));
+    },
+  });
+
+  await client.post("/post", {}, { idempotencyKey: "post-key" });
+  await client.put("/put", {}, { idempotencyKey: "put-key" });
+  await client.patch("/patch", {}, { idempotencyKey: "patch-key" });
+  await client.delete("/delete", {}, { idempotencyKey: "delete-key" });
+
+  assert.deepEqual(observed, [
+    ["POST", "post-key"],
+    ["PUT", "put-key"],
+    ["PATCH", "patch-key"],
+    ["DELETE", "delete-key"],
+  ]);
+});
+
+test("client generates distinct non-empty idempotency keys", () => {
+  const first = createIdempotencyKey();
+  const second = createIdempotencyKey();
+  assert.ok(first);
+  assert.ok(second);
+  assert.notEqual(first, second);
 });

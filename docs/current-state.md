@@ -52,6 +52,24 @@
   and sign-out clear TanStack Query state, and the shared API client performs at
   most one explicit refresh/retry after `401` while preserving idempotency keys.
   It never retries `403` or switches authentication modes.
+- Mobile product reads remain in TanStack Query memory for the current process
+  only. NetInfo drives an accessible global offline banner and explicit read
+  refetch on reconnect/foreground; offline refresh leaves cached data visible.
+  Product writes are never queued or automatically replayed. Known-offline and
+  ambiguous network failures preserve form intent in memory and require an
+  accessible Retry or Dismiss action; retry reuses one payload and idempotency
+  key, while editing discards the attempt. Authentication retains its separate
+  session coordinator, and photo retry requires choosing the image again.
+- Every shared client write carries an idempotency key, including through the
+  one-time `401` refresh path. The closed-beta API caches successful responses
+  for 24 hours in one process and rejects a same-actor/key request whose body
+  fingerprint differs with `409 idempotency_conflict`. This ledger is not yet
+  durable across API restarts or shared across horizontally scaled instances.
+- `make mobile-offline-e2e` starts a clean backend on loopback port 8001 and a
+  fault proxy on 8000, then proves dropped-after-commit create/finalize replay,
+  zero-request known-offline constraints, and explicit recovery on one exact-SHA
+  test artifact per platform. The test-only connectivity deep link is triple-
+  gated by local-E2E, demo mode, and loopback API configuration and is memory-only.
 - Dedicated `auth-test-ios` and `auth-test-android` EAS profiles use the preview
   environment with Supabase auth and deterministic staging providers. They
   compile without demo identity configuration, loopback API defaults, cleartext
@@ -193,7 +211,8 @@
   foreground refresh, sign-out, and returning sign-in. Both one-use invites
   show one use, one redemption, and no active pending validation. Sanitized
   summaries and screenshots are in `docs/evidence/d6d1b3a/`.
-  Offline-retry evidence remains. Account export/deletion controls are deployed,
+  Offline-retry implementation is complete locally; exact-SHA iOS and Android
+  artifact inspection and device evidence remain. Account export/deletion controls are deployed,
   the staging migration is verified, and replacement read-only account-control
   journeys passed from exact SHA
   `119171a2d9370b0929bc8d19da819538864745f0` on iOS simulator build

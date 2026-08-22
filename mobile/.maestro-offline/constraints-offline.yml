@@ -1,0 +1,34 @@
+appId: com.tableus.app
+---
+- openLink: "tableus://plans/${PLAN_ID}"
+- runFlow:
+    when:
+      visible: ".*Open in.*TableUs.*"
+    commands:
+      - tapOn: "Open"
+- extendedWaitUntil:
+    visible: "Offline resilience dinner"
+    timeout: 30000
+- openLink: "tableus://e2e/connectivity?state=offline"
+- runFlow:
+    when:
+      visible: ".*Open in.*TableUs.*"
+    commands:
+      - tapOn: "Open"
+- extendedWaitUntil:
+    visible: "Connectivity override: offline"
+    timeout: 30000
+- assertVisible: "Offline. Changes are not sent or queued."
+- tapOn: "Return to previous screen"
+- extendedWaitUntil:
+    visible: "Your constraints"
+    timeout: 30000
+- tapOn: "Budget, vibe, dietary notes…"
+- inputText: "Quiet patio and accessible seating"
+- hideKeyboard
+- tapOn: "Save constraints"
+- extendedWaitUntil:
+    visible: ".*not sent or queued.*"
+    timeout: 10000
+- assertVisible: "Quiet patio and accessible seating"
+- assertVisible: "Retry saving constraints"

@@ -1,0 +1,21 @@
+appId: com.tableus.app
+---
+- openLink: "tableus://e2e/connectivity?state=online"
+- runFlow:
+    when:
+      visible: ".*Open in.*TableUs.*"
+    commands:
+      - tapOn: "Open"
+- extendedWaitUntil:
+    visible: "Connectivity override: online"
+    timeout: 30000
+- tapOn: "Return to previous screen"
+- extendedWaitUntil:
+    visible: "Retry saving constraints"
+    timeout: 30000
+- assertVisible: "Quiet patio and accessible seating"
+- tapOn: "Retry saving constraints"
+- extendedWaitUntil:
+    visible: "Constraints saved."
+    timeout: 30000
+- assertNotVisible: "Retry saving constraints"

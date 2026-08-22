@@ -9,7 +9,9 @@
     "android": "expo start --android",
     "lint": "expo lint",
     "typecheck": "tsc --noEmit",
-    "test": "node --test --experimental-strip-types src/*.test.mts src/**/*.test.mts",
+    "test": "npm run test:unit && npm run test:components",
+    "test:unit": "node --test --experimental-strip-types src/*.test.mts src/**/*.test.mts",
+    "test:components": "jest --runInBand",
     "build": "expo export --platform web"
   },
   "dependencies": {
@@ -44,9 +46,14 @@
     "react-native-worklets": "0.10.1"
   },
   "devDependencies": {
+    "@testing-library/react-native": "14.0.1",
     "@types/react": "~19.2.2",
     "eslint": "^9.39.2",
     "eslint-config-expo": "~57.0.1",
+    "jest": "30.4.2",
+    "jest-environment-node": "30.4.1",
+    "jest-expo": "57.0.4",
+    "test-renderer": "1.2.0",
     "typescript": "~6.0.3"
   }
 }

@@ -1,12 +1,9 @@
-import NetInfo from "@react-native-community/netinfo";
-import { focusManager, onlineManager, QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { focusManager, QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { type PropsWithChildren, useEffect, useState } from "react";
 import { AppState } from "react-native";
 import { PostHogProvider, usePostHog } from "posthog-react-native";
 
-onlineManager.setEventListener((setOnline) =>
-  NetInfo.addEventListener((state) => setOnline(Boolean(state.isConnected))),
-);
+import { ConnectivityProvider } from "@/providers/connectivity-provider";
 
 function TelemetryBootstrap({ children }: PropsWithChildren) {
   const posthog = usePostHog();
@@ -21,7 +18,14 @@ export function AppProviders({ children }: PropsWithChildren) {
     () =>
       new QueryClient({
         defaultOptions: {
-          queries: { staleTime: 30_000, retry: 2, networkMode: "online" },
+          queries: {
+            staleTime: 30_000,
+            gcTime: Infinity,
+            retry: 2,
+            networkMode: "online",
+            refetchOnReconnect: true,
+            refetchOnWindowFocus: true,
+          },
           mutations: { retry: 0, networkMode: "always" },
         },
       }),
@@ -32,7 +36,11 @@ export function AppProviders({ children }: PropsWithChildren) {
     [],
   );
 
-  const content = <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>;
+  const content = (
+    <ConnectivityProvider>
+      <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
+    </ConnectivityProvider>
+  );
   const posthogKey = process.env.EXPO_PUBLIC_POSTHOG_KEY;
   if (!posthogKey) return content;
   return (

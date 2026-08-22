@@ -1,18 +1,19 @@
 import type { Plan } from "@tableus/domain";
-import { useMutation } from "@tanstack/react-query";
 import { router, useLocalSearchParams } from "expo-router";
 import { ScrollView, Text } from "react-native";
 
-import { Button, Card, ErrorText } from "@/components/ui";
+import { Button, Card } from "@/components/ui";
+import { MutationFeedback } from "@/components/mutation-feedback";
 import { api } from "@/lib/api";
+import { useRecoverableMutation } from "@/lib/recoverable-mutation";
 import { useAuth } from "@/providers/auth-provider";
 import { colors } from "@/theme";
 
 export default function JoinPlanScreen() {
   const { id, token } = useLocalSearchParams<{ id: string; token?: string }>();
   const auth = useAuth();
-  const join = useMutation({
-    mutationFn: () => api.post<Plan>(`/api/v1/plans/${id}/join`, { share_token: token }),
+  const join = useRecoverableMutation({
+    mutationFn: (shareToken: string, idempotencyKey) => api.post<Plan>(`/api/v1/plans/${id}/join`, { share_token: shareToken }, { idempotencyKey }),
     onSuccess: () => router.replace({ pathname: "/plans/[id]", params: { id } }),
   });
   return (
@@ -27,8 +28,8 @@ export default function JoinPlanScreen() {
           </>
         ) : (
           <>
-            {join.error ? <ErrorText message={join.error.message} /> : null}
-            <Button label="Join this plan" onPress={() => join.mutate()} loading={join.isPending} disabled={!token} />
+            <MutationFeedback failure={join.failure} canRetry={join.canRetry} retryLabel="Retry joining plan" onRetry={join.retry} onDismiss={join.reset} />
+            <Button label="Join this plan" onPress={() => token && join.submit(token)} loading={join.isPending} disabled={!token || join.canRetry} />
           </>
         )}
       </Card>

@@ -70,3 +70,12 @@
   while the user organizes a plan. Eligible deletion nulls the actor on retained
   plan audit events. Supabase Auth removal remains a separate trusted-operator
   action, and hosted evidence never exercises deletion against retained accounts.
+- **2026-08-22:** Mobile private query data is session-only and is never written
+  to a disk persister. Product mutations are not queued, optimistically applied,
+  or automatically replayed after reconnection. Known-offline and ambiguous
+  failures require an explicit user retry using the original in-memory payload
+  and idempotency key; editing or dismissal abandons that operation.
+- **2026-08-22:** The closed-beta idempotency ledger remains a 24-hour,
+  process-local response cache. Request-body fingerprints prevent one actor from
+  reusing a key with a different body, but restart and horizontal-scaling replay
+  safety require a later persistent-ledger migration.

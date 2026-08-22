@@ -1,12 +1,16 @@
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
-import { Pressable, ScrollView, Text, View } from "react-native";
+import { Pressable, RefreshControl, ScrollView, Text, View } from "react-native";
 
 import { Button, Card, ErrorText, Field } from "@/components/ui";
+import { MutationFeedback } from "@/components/mutation-feedback";
 import type { AccountControl } from "@/lib/account-controls";
 import { shareAccountExport } from "@/lib/account-export-file";
 import { api } from "@/lib/api";
+import { OFFLINE_REFRESH_MESSAGE, refreshWhenOnline } from "@/lib/offline-refresh";
+import { useRecoverableMutation } from "@/lib/recoverable-mutation";
 import { useAuth } from "@/providers/auth-provider";
+import { useConnectivity } from "@/providers/connectivity-provider";
 import { colors } from "@/theme";
 
 type Profile = { display_name: string; share_taste: boolean };
@@ -16,15 +20,17 @@ const DELETE_CONFIRMATION = "DELETE";
 
 export default function AccountScreen() {
   const auth = useAuth();
+  const { isOnline } = useConnectivity();
   const [confirmation, setConfirmation] = useState("");
   const [message, setMessage] = useState("");
+  const [refreshMessage, setRefreshMessage] = useState("");
   const profile = useQuery({ queryKey: ["me"], queryFn: () => api.get<Profile>("/api/v1/me") });
   const control = useQuery({
     queryKey: ["account-control"],
     queryFn: () => api.get<AccountControl>("/api/v1/me/account-control"),
   });
-  const exportData = useMutation({
-    mutationFn: async () => {
+  const exportData = useRecoverableMutation({
+    mutationFn: async (_variables: undefined, _idempotencyKey: string) => {
       const data = await api.get<unknown>("/api/v1/me/export");
       await shareAccountExport(data);
     },
@@ -32,16 +38,20 @@ export default function AccountScreen() {
       setMessage("Your TableUs application data export was prepared as a JSON file.");
     },
   });
-  const deleteAccount = useMutation({
-    mutationFn: () => api.delete<DeleteResult>("/api/v1/me", { confirmation: DELETE_CONFIRMATION }),
+  const deleteAccount = useRecoverableMutation({
+    mutationFn: (_variables: undefined, idempotencyKey: string) => api.delete<DeleteResult>("/api/v1/me", { confirmation: DELETE_CONFIRMATION }, { idempotencyKey }),
     onSuccess: async () => {
       await auth.signOut();
     },
   });
-  const error = profile.error ?? control.error ?? exportData.error ?? deleteAccount.error;
+  const error = profile.error ?? control.error;
+  const refresh = async () => {
+    const refreshed = await refreshWhenOnline(isOnline, () => Promise.all([profile.refetch(), control.refetch()]));
+    setRefreshMessage(refreshed ? "" : OFFLINE_REFRESH_MESSAGE);
+  };
 
   return (
-    <ScrollView contentInsetAdjustmentBehavior="automatic" contentContainerStyle={{ padding: 16, gap: 14 }}>
+    <ScrollView contentInsetAdjustmentBehavior="automatic" contentContainerStyle={{ padding: 16, gap: 14 }} refreshControl={<RefreshControl refreshing={profile.isRefetching || control.isRefetching} onRefresh={() => void refresh()} />}>
       <Card>
         <Text selectable style={{ color: colors.ink, fontSize: 22, fontWeight: "800" }}>
           {profile.data?.display_name ?? "Your account"}
@@ -64,7 +74,8 @@ export default function AccountScreen() {
         <Text selectable style={{ color: colors.muted, lineHeight: 22 }}>
           Share a JSON copy of your profile, reviews, and participating plan identifiers using the system share sheet.
         </Text>
-        <Button label="Export my data" onPress={() => exportData.mutate()} loading={exportData.isPending} />
+        <MutationFeedback failure={exportData.failure} canRetry={exportData.canRetry} retryLabel="Retry account export" onRetry={exportData.retry} onDismiss={exportData.reset} />
+        <Button label="Export my data" onPress={() => exportData.submit(undefined)} loading={exportData.isPending} disabled={exportData.canRetry} />
       </Card>
 
       <View style={{ gap: 12, padding: 16, borderRadius: 20, borderCurve: "continuous", backgroundColor: "#fff1f2", borderWidth: 1, borderColor: "#fecdd3" }}>
@@ -85,13 +96,13 @@ export default function AccountScreen() {
           autoCapitalize="characters"
           autoComplete="off"
           value={confirmation}
-          onChangeText={setConfirmation}
+          onChangeText={(value) => { deleteAccount.reset(); setConfirmation(value); }}
         />
         <Pressable
           accessibilityRole="button"
           accessibilityLabel="Delete my application data"
-          disabled={confirmation !== DELETE_CONFIRMATION || deleteAccount.isPending || !control.data?.can_delete}
-          onPress={() => deleteAccount.mutate()}
+          disabled={confirmation !== DELETE_CONFIRMATION || deleteAccount.isPending || deleteAccount.canRetry || !control.data?.can_delete}
+          onPress={() => deleteAccount.submit(undefined)}
           style={({ pressed }) => ({
             minHeight: 48,
             alignItems: "center",
@@ -99,16 +110,18 @@ export default function AccountScreen() {
             borderRadius: 16,
             borderCurve: "continuous",
             backgroundColor: colors.danger,
-            opacity: confirmation !== DELETE_CONFIRMATION || deleteAccount.isPending || !control.data?.can_delete ? 0.4 : pressed ? 0.75 : 1,
+            opacity: confirmation !== DELETE_CONFIRMATION || deleteAccount.isPending || deleteAccount.canRetry || !control.data?.can_delete ? 0.4 : pressed ? 0.75 : 1,
           })}
         >
           <Text selectable style={{ color: "#fff", fontSize: 16, fontWeight: "700" }}>
             {deleteAccount.isPending ? "Deleting…" : "Delete my application data"}
           </Text>
         </Pressable>
+        <MutationFeedback failure={deleteAccount.failure} canRetry={deleteAccount.canRetry} retryLabel="Retry deleting application data" onRetry={deleteAccount.retry} onDismiss={deleteAccount.reset} />
       </View>
 
       {message ? <Text selectable accessibilityRole="alert" style={{ color: colors.accent }}>{message}</Text> : null}
+      {refreshMessage ? <Text selectable accessibilityRole="alert" style={{ color: colors.muted }}>{refreshMessage}</Text> : null}
       {error ? <ErrorText message={error.message} /> : null}
     </ScrollView>
   );

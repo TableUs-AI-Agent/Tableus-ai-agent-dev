@@ -1,6 +1,6 @@
 SHELL := /bin/bash
 
-.PHONY: setup dev lint typecheck test build smoke mobile-e2e mobile-auth-e2e inspect-mobile-auth ready perf ai-eval ai-eval-live contract
+.PHONY: setup dev lint typecheck test build smoke mobile-e2e mobile-auth-e2e mobile-offline-e2e inspect-mobile-auth inspect-mobile-local-e2e ready perf ai-eval ai-eval-live contract
 
 setup:
 	npm ci
@@ -48,6 +48,14 @@ mobile-auth-e2e:
 	@test -n "$(API_URL)" || (echo "API_URL=<HTTPS-staging-api> is required" && exit 2)
 	node scripts/mobile-auth-e2e.mjs --platform "$(PLATFORM)" --device "$(DEVICE)" --app "$(APP)" --build-id "$(BUILD_ID)" --evidence "$(EVIDENCE)" --api-url "$(API_URL)" $(if $(START_PHASE),--start-phase "$(START_PHASE)",)
 
+mobile-offline-e2e:
+	@test -n "$(PLATFORM)" || (echo "PLATFORM=ios or PLATFORM=android is required" && exit 2)
+	@test -n "$(DEVICE)" || (echo "DEVICE=<simulator-or-emulator-id> is required" && exit 2)
+	@test -n "$(APP)" || (echo "APP=<path-to-app-or-apk> is required" && exit 2)
+	@test -n "$(BUILD_ID)" || (echo "BUILD_ID=<EAS-build-id> is required" && exit 2)
+	@test -n "$(EVIDENCE)" || (echo "EVIDENCE=<sanitized-output-directory> is required" && exit 2)
+	node scripts/mobile-offline-e2e.mjs --platform "$(PLATFORM)" --device "$(DEVICE)" --app "$(APP)" --build-id "$(BUILD_ID)" --evidence "$(EVIDENCE)"
+
 mobile-account-e2e:
 	@test -n "$(PLATFORM)" || (echo "PLATFORM=ios or PLATFORM=android is required" && exit 2)
 	@test -n "$(DEVICE)" || (echo "DEVICE=<simulator-or-emulator-id> is required" && exit 2)
@@ -63,6 +71,11 @@ inspect-mobile-auth:
 	@test -n "$(API_URL)" || (echo "API_URL=<HTTPS-staging-api> is required" && exit 2)
 	@test -n "$(SUPABASE_URL)" || (echo "SUPABASE_URL=<HTTPS-staging-supabase> is required" && exit 2)
 	node scripts/inspect-mobile-auth-artifact.mjs --artifact "$(APP)" --sha "$(SHA)" --api-url "$(API_URL)" --supabase-url "$(SUPABASE_URL)" $(if $(FORBIDDEN_ORIGINS),--forbidden-origins "$(FORBIDDEN_ORIGINS)",)
+
+inspect-mobile-local-e2e:
+	@test -n "$(APP)" || (echo "APP=<path-to-app-or-apk> is required" && exit 2)
+	@test -n "$(SHA)" || (echo "SHA=<exact-candidate-sha> is required" && exit 2)
+	node scripts/inspect-mobile-local-e2e-artifact.mjs --artifact "$(APP)" --sha "$(SHA)" $(if $(FORBIDDEN_ORIGINS),--forbidden-origins "$(FORBIDDEN_ORIGINS)",)
 
 perf:
 	./scripts/perf-budget.sh

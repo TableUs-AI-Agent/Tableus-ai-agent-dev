@@ -7,6 +7,7 @@ This service powers:
   3. Restaurant search over nearby candidates
   4. Multi-person search using combined preference summaries
 """
+import hashlib
 import io
 import json
 import logging
@@ -400,10 +401,25 @@ async def request_context(request: Request, call_next):
         )
 
     idempotency_key = request.headers.get("Idempotency-Key")
+    request_fingerprint = None
+    if idempotency_key and request.method in {"POST", "PUT", "PATCH", "DELETE"}:
+        request_fingerprint = hashlib.sha256(await request.body()).hexdigest()
     cache_key = (actor_key, request.method, request.url.path, idempotency_key)
     idempotency_cache = getattr(app.state, "idempotency_cache", {})
     cached = idempotency_cache.get(cache_key) if idempotency_key else None
     if cached and cached[0] > now:
+        if cached[4] != request_fingerprint:
+            return JSONResponse(
+                status_code=409,
+                content={
+                    "error": {
+                        "code": "idempotency_conflict",
+                        "message": "This idempotency key was already used with a different request body",
+                    },
+                    "request_id": request_id,
+                },
+                headers={"X-Request-ID": request_id},
+            )
         return Response(
             content=cached[2],
             status_code=cached[1],
@@ -420,6 +436,7 @@ async def request_context(request: Request, call_next):
                 response.status_code,
                 body,
                 response.media_type or "application/json",
+                request_fingerprint,
             )
             app.state.idempotency_cache = {
                 key: value for key, value in idempotency_cache.items() if value[0] > now

@@ -1,76 +1,55 @@
-# Active packet: account export and deletion readiness
+# Active packet: mobile offline mutation resilience and replay safety
 
 ## Status
 
-Complete. Implementation and deterministic verification are complete on
-`codex/account-controls` from the completed mobile-auth evidence baseline
-`5ff55f82c6c0db21fec77a148d9f93f2a4931a02`. The staging migration and runtime
-remain deployed from `8cde19309fa43787b04d2792d96c1cfc11c21317`. Harness fixes are
-publicly pushed at exact candidate
-`119171a2d9370b0929bc8d19da819538864745f0`; replacement iOS simulator and
-Android APK auth-test artifacts are finished and passed exact-SHA bundle
-inspection. The superseded run exposed semantic-label, stale-session preparation,
-and file-checksum defects. Replacement read-only OTP journeys passed on iPhone
-17 Pro/iOS 26.5 and the API 36 ARM64 Android emulator. Both retained approved
-accounts remain intact; no application profile or Supabase Auth identity was
-deleted.
+Implementation and local deterministic verification are complete on
+`codex/mobile-offline-resilience`, branched from local evidence commit
+`c4df4eb0880e2ee8a4f7cec0f615111af02c8dcd`. Focused checks and the cumulative
+`make ready` gate pass. Public push and new `test-ios` and `test-android` EAS
+artifacts remain explicit approval gates; device evidence is not yet claimed.
 
 ## Objective
 
-Make application-data export complete and machine-verifiable, make deletion
-eligibility explicit before any destructive request, and harden application
-profile deletion without deleting either retained staging test account or its
-Supabase Auth identity.
+Keep private reads in memory, queue no mobile product writes, require explicit
+recovery after offline or ambiguous failures, and prove that a retry cannot
+duplicate a committed create, constraint update, or finalization.
 
 ## Deliverables
 
-- Replace the ad hoc export payload with a typed, versioned export containing
-  the profile, connections, reviews, invite-redemption timestamps, plan
-  memberships and the user's constraints, the user's votes, and plan events
-  authored by the user. Exclude email hashes, invite codes/hashes, share-token
-  hashes, provider payloads, access tokens, and other participants' private data.
-- Add a read-only account-control endpoint that reports whether application
-  profile deletion is currently allowed, organized-plan blockers, the deletion
-  scope, and the separate operator-assisted Supabase Auth removal requirement.
-- Require the exact `DELETE` confirmation at the API boundary. Continue to
-  reject deletion while the user organizes any plan.
-- Allow an otherwise eligible participant profile to be removed while retaining
-  plan audit history with a null actor. Implement and test the corresponding
-  Alembic migration, but do not apply it to staging without a separate gate.
-- Update web and Expo account screens to show deletion readiness and export
-  scope. Mobile export must share a JSON file rather than placing the full export
-  body in share-sheet text.
-- Add an auth-test-only mobile account verification surface that validates the
-  export schema and deletion-readiness response but exposes only pass/fail and
-  aggregate counts.
-- Add deterministic backend and client tests plus operator commands for local
-  web/mobile account-control evidence. Retain only sanitized summaries and
-  screenshots.
+- NetInfo-backed connectivity state, an accessible global offline banner,
+  foreground/reconnect refetch, and cached-data-preserving offline refresh.
+- One in-memory recoverable attempt per mobile product mutation, with explicit
+  Retry and Dismiss, stable payload/key replay, edit-to-reset semantics, and no
+  automatic dispatch after reconnection.
+- Shared API-client options and generated keys for every write method, preserving
+  explicit keys through the existing single `401` refresh retry.
+- Backend request-body fingerprinting with actor isolation, successful replay
+  headers, structured conflicts, and no `5xx` caching.
+- Triple-gated in-memory connectivity controls, a loopback fault proxy, sanitized
+  Maestro orchestration, artifact inspection, and exact-SHA iOS/Android evidence.
+- Exact pinned React Native component-test dependencies and focused tests for
+  offline messaging, preserved drafts, explicit recovery, and terminal errors.
 
 ## Acceptance
 
-- Export output is versioned, deterministic in ordering, typed in OpenAPI, and
-  contains all in-scope application data with no restricted secret fields.
-- Deletion readiness and deletion use the same blocker calculation; API deletion
-  refuses a missing/incorrect confirmation and organized-plan accounts.
-- A disposable local non-organizer account with authored plan events can be
-  deleted without removing the shared plan or its audit events; the actor becomes
-  null. Organizer deletion remains blocked.
-- Web and mobile expose accessible success, blocker, failure, and retry states.
-- The mobile test surface is enabled only in auth-test artifacts and returns no
-  raw export records, identifiers, tokens, hashes, reviews, constraints, or
-  locations.
-- Focused checks and `make ready` pass before an exact candidate is frozen.
-- Public push, staging migration/deployment, new EAS builds, OTP delivery, and
-  hosted evidence each require their existing explicit gates.
+- No API call occurs while connectivity is known offline, and reconnection alone
+  dispatches nothing.
+- Status `0`, `408`, `429`, and `5xx` failures are recoverable; `401`, `403`,
+  `404`, `409`, and `422` are terminal product responses.
+- Explicit retry uses the original payload and key; editing or dismissal creates
+  a new logical operation. Photo bytes/FormData are never retained for retry.
+- A dropped create response yields exactly one plan after retry, offline
+  constraints yield zero proxy requests before retry, and a dropped finalization
+  yields exactly one transition/event plus an idempotent replay.
+- Focused checks and `make ready` pass before an exact candidate SHA is frozen.
+- Both built artifacts embed that SHA, loopback/demo configuration and local
+  connectivity control, while excluding Railway and production origins.
 
 ## Boundaries
 
-- Do not delete either retained application profile or Supabase Auth user.
-- Do not add a service-role or secret key to Railway, Vercel, web, or mobile.
-- Supabase Auth deletion remains a separate trusted-operator action after
-  application profile deletion; the product continues to deny product access
-  once the application profile is absent.
-- Plan ownership transfer/removal, legal-review approval, verified links,
-  offline mutation evidence, paid providers, production builds, store
-  submissions, and production deployment are outside this packet.
+- No persistent query cache, background write queue, optimistic mutation,
+  idempotency database migration, staging change, OTP, account deletion, paid
+  provider, production build, store submission, or deployment.
+- Pending attempts disappear when dismissed, edited, unmounted, or terminated.
+- Process restart and multi-instance idempotency are accepted closed-beta risks
+  until a separately approved persistent ledger is justified.
