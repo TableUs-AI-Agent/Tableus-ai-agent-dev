@@ -1,0 +1,23 @@
+{
+  "read_only": true,
+  "invites": [
+    {
+      "invite_id": "4b654cd6-c535-4613-bf95-e9fa5d65dca8",
+      "use_count": 1,
+      "max_uses": 1,
+      "redemption_count": 1,
+      "validation_count": 1,
+      "redeemed_validation_count": 1,
+      "active_pending_validation_count": 0
+    },
+    {
+      "invite_id": "be615ac3-3171-4f40-9fd0-ad207004ca92",
+      "use_count": 1,
+      "max_uses": 1,
+      "redemption_count": 1,
+      "validation_count": 3,
+      "redeemed_validation_count": 1,
+      "active_pending_validation_count": 0
+    }
+  ]
+}

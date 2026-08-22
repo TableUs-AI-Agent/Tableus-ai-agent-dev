@@ -1,0 +1,24 @@
+{
+  "platform": "android",
+  "device": "emulator-5554",
+  "build_id": "3d6d40ad-43ed-45c6-ab8c-ad254c076322",
+  "git_sha": "d6d1b3a99318aff5c904029328e6395a6e4236e4",
+  "artifact": "android.apk",
+  "artifact_sha256": "bb1e6d0c410e9244e678bac26dd8d619a84df9a643c1eea7ff8da19106701856",
+  "api_origin": "https://api-staging-3795.up.railway.app",
+  "app_id": "com.tableus.app",
+  "provider_mode": "deterministic",
+  "auth_mode": "supabase",
+  "invalid_invite_rejected": true,
+  "signup_approved": true,
+  "join_intent_restored": true,
+  "relaunch_persistence": true,
+  "explicit_refresh": true,
+  "foreground_recovery": true,
+  "sign_out": true,
+  "returning_sign_in": true,
+  "screenshots": [
+    "android-returning-session.png"
+  ],
+  "started_at_phase": "invalid-invite"
+}

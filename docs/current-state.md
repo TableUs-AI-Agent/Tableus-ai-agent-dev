@@ -161,12 +161,15 @@
   inspection with no Railway hostname, and both full journeys passed
   independently on iPhone 17 Pro/iOS 26.5 and the API 36 ARM64 emulator.
   Sanitized summaries and screenshots are in `docs/evidence/a78a6d2/`.
-  Mobile OTP/invite automation is implemented and provisionally passed every
-  phase on both platforms using the invalidated `b3691bd8` artifacts. Those runs
-  created and retained one approved account per platform and consumed their two
-  one-use invites. Post-candidate flow corrections mean final evidence still
-  requires a new exact SHA, two new auth-test artifacts, two fresh deliverable
-  email aliases, two fresh one-use invites, and four operator-entered OTPs.
+  Mobile OTP/invite automation is final from exact SHA
+  `d6d1b3a99318aff5c904029328e6395a6e4236e4`. iOS simulator build
+  `8bbf7822-ffa7-4a61-9670-2ebc6e16cad7` and Android APK build
+  `3d6d40ad-43ed-45c6-ab8c-ad254c076322` passed artifact inspection and full
+  real Supabase journeys covering invalid-invite rejection, signup, protected
+  routing, join-intent restoration, relaunch persistence, explicit and
+  foreground refresh, sign-out, and returning sign-in. Both one-use invites
+  show one use, one redemption, and no active pending validation. Sanitized
+  summaries and screenshots are in `docs/evidence/d6d1b3a/`.
   Offline-retry and
   account-control journeys remain to be evidenced. Account export/deletion controls
   are implemented locally but still require exact-SHA hosted/device evidence;

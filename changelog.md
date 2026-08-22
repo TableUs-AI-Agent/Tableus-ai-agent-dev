@@ -12,6 +12,10 @@
   read-only sanitized invite-evidence report.
 - Removed shared mobile loopback and demo-identity defaults so real auth artifacts
   can be inspected for the absence of deterministic test configuration.
+- Completed exact-SHA iOS and Android staging evidence for invite signup,
+  join-intent restoration, session persistence and refresh, sign-out, and
+  returning sign-in; retained only sanitized summaries, screenshots, and
+  read-only invite aggregates.
 
 ## 2026-08-19
 

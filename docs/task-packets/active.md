@@ -2,14 +2,12 @@
 
 ## Status
 
-Implementation is complete locally on `codex/mobile-staging-auth`. The
-cumulative `make ready` gate passes. Source and focused tests cover the durable
-auth transaction, approved-profile gate,
-foreground refresh lifecycle, one-retry API token refresh, protected navigation,
-join-intent restoration, explicit sign-out, isolated auth-test profiles, and
-sanitized operator tooling. Exact-SHA EAS artifacts and real Supabase evidence
-remain gated external work; this packet is not release-complete until both
-platform journeys pass from the forthcoming exact candidate SHA.
+This packet is release-complete on `codex/mobile-staging-auth` from exact
+candidate `d6d1b3a99318aff5c904029328e6395a6e4236e4`. The cumulative
+`make ready` gate passes. Exact-SHA auth-test artifacts passed bundle inspection
+and the complete real Supabase lifecycle on both platforms. Sanitized summaries,
+returning-session screenshots, commands, checksums, and read-only invite
+aggregates are retained in `docs/evidence/d6d1b3a/`.
 
 The first candidate `88a6d3bcf00c9342765cf17d9bade16b7ddfced0` was pushed,
 but EAS rejected the build request before creating an artifact because its
@@ -63,9 +61,21 @@ emulator system-process stalls seen with software rendering; bounded recovery
 for a startup ANR remains in the flows. Maestro parameters now use its supported
 `MAESTRO_` shell variables so invite and OTP values do not appear in process
 arguments. Both one-use invites are redeemed and both test accounts are retained.
-Because these corrections occurred after `b3691bd8`, neither artifact is final
+Because these corrections occurred after `b3691bd8`, neither artifact was final
 evidence: a new clean candidate, two new builds, two fresh identities/invites,
-and four new operator-entered codes are still required.
+and four new operator-entered codes were then required.
+
+Final candidate `d6d1b3a99318aff5c904029328e6395a6e4236e4` produced iOS
+simulator build `8bbf7822-ffa7-4a61-9670-2ebc6e16cad7` and Android APK build
+`3d6d40ad-43ed-45c6-ab8c-ad254c076322`. Both artifacts matched the exact SHA,
+used HTTPS Supabase-authenticated Railway staging with deterministic providers,
+and passed the required forbidden-marker inspection. Clean full journeys passed
+on iPhone 17 Pro/iOS 26.5 and an API 36 ARM64 Android emulator. Each fresh
+one-use invite has one use and one redemption, and neither has an active pending
+validation. The Android invite has three historical validations because an
+operator destination correction required a cooldown retry; only one validation
+was redeemed. No interactive authentication value or raw Maestro workspace is
+retained.
 
 The deployed staging baseline remains Railway deployment
 `e438677b-548e-4dce-ae8e-7f05f086bc29` and Vercel deployment
