@@ -144,14 +144,15 @@
   from preview/production builds. The supplied `@tableus/brian` project remains
   untouched and unused. Apple and Google Play store credentials remain
   unprovisioned.
-- Account-control auth-test artifacts were built from exact SHA
-  `8cde19309fa43787b04d2792d96c1cfc11c21317`: iOS simulator build
-  `13b30209-50a4-4101-a63a-053abf8b5c79` and Android APK build
-  `cd1be5d0-4c0a-4037-9c16-15f95e2633cc`. Both passed bundle inspection for the
+- Replacement account-control auth-test artifacts were built from exact SHA
+  `119171a2d9370b0929bc8d19da819538864745f0`: iOS simulator build
+  `e64bb9a4-0fff-48f7-abae-235ec860b7af` and Android APK build
+  `5dd01949-47bd-4485-874b-1cd19a1c7c39`. Both passed bundle inspection for the
   HTTPS Railway staging API, Supabase staging configuration, and
   `authE2E=true`, with no demo identities, loopback endpoints, local-E2E mode,
-  service-role markers, or production endpoints. Checksums and deployment
-  evidence are recorded in `docs/evidence/8cde193/`.
+  service-role markers, or production endpoints. Standard artifact SHA-256
+  checksums and build evidence are recorded in `docs/evidence/119171a/`. The
+  superseded partial evidence remains documented in `docs/evidence/8cde193/`.
 - Google Maps, Gemini, Sentry, and PostHog credentials.
 
 ## Release gates still requiring an owner or external system
@@ -201,9 +202,10 @@
   the explicit semantic accessibility label. A pre-existing Android session and
   a nonstandard runner file checksum exposed two additional harness defects.
   Local corrections normalize sign-out, assert the semantic label, and record
-  standard file SHA-256. The packet's exact-SHA rule therefore requires new
-  iOS/Android artifacts and replacement read-only journeys before acceptance.
-  privacy deletion itself remains intentionally unexecuted. Other failure-state
+  standard file SHA-256. Replacement iOS/Android artifacts from exact SHA
+  `119171a2d9370b0929bc8d19da819538864745f0` are built and inspected; replacement
+  read-only OTP journeys on both platforms remain before acceptance.
+  Privacy deletion itself remains intentionally unexecuted. Other failure-state
   checks remain.
   Maps staging and the budgeted pinned-model Gemini evaluation follow only after
   deterministic staging is green.
