@@ -11,7 +11,11 @@ the old artifact's missing label assertion omitted. Focused checks and the
 cumulative `make ready` gate pass at the corrected branch tip. New exact-SHA
 `test-ios` and `test-android` artifacts remain explicit approval gates, and
 device evidence is not yet claimed. The Expo free-plan iOS build allowance is
-currently exhausted and reports a September 1, 2026 reset.
+currently exhausted and reports a September 1, 2026 reset. Local EAS artifacts
+are now the approved deterministic-evidence fallback, with sanitized receipts;
+an iOS diagnostic exposed a merged plan-card accessibility label, and the
+cross-platform Maestro selector now matches that label without weakening the
+visible title/status assertions.
 
 ## Objective
 

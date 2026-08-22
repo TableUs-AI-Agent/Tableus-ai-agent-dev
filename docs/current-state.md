@@ -70,6 +70,11 @@
   zero-request known-offline constraints, and explicit recovery on one exact-SHA
   test artifact per platform. The test-only connectivity deep link is triple-
   gated by local-E2E, demo mode, and loopback API configuration and is memory-only.
+- Deterministic simulator/emulator evidence may use `eas build --local` when
+  hosted EAS test-build allowance is unavailable. `make local-mobile-build-receipt`
+  records only the exact candidate SHA, sanitized local build ID/profile, artifact
+  checksum, EAS CLI version, host OS/architecture, and artifact-inspection result.
+  Local receipts do not replace hosted EAS metadata for production or store builds.
 - Dedicated `auth-test-ios` and `auth-test-android` EAS profiles use the preview
   environment with Supabase auth and deterministic staging providers. They
   compile without demo identity configuration, loopback API defaults, cleartext

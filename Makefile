@@ -1,6 +1,6 @@
 SHELL := /bin/bash
 
-.PHONY: setup dev lint typecheck test build smoke mobile-e2e mobile-auth-e2e mobile-offline-e2e inspect-mobile-auth inspect-mobile-local-e2e ready perf ai-eval ai-eval-live contract
+.PHONY: setup dev lint typecheck test build smoke mobile-e2e mobile-auth-e2e mobile-offline-e2e local-mobile-build-receipt inspect-mobile-auth inspect-mobile-local-e2e ready perf ai-eval ai-eval-live contract
 
 setup:
 	npm ci
@@ -55,6 +55,16 @@ mobile-offline-e2e:
 	@test -n "$(BUILD_ID)" || (echo "BUILD_ID=<EAS-build-id> is required" && exit 2)
 	@test -n "$(EVIDENCE)" || (echo "EVIDENCE=<sanitized-output-directory> is required" && exit 2)
 	node scripts/mobile-offline-e2e.mjs --platform "$(PLATFORM)" --device "$(DEVICE)" --app "$(APP)" --build-id "$(BUILD_ID)" --evidence "$(EVIDENCE)"
+
+local-mobile-build-receipt:
+	@test -n "$(PLATFORM)" || (echo "PLATFORM=ios or PLATFORM=android is required" && exit 2)
+	@test -n "$(PROFILE)" || (echo "PROFILE=<EAS-profile> is required" && exit 2)
+	@test -n "$(APP)" || (echo "APP=<path-to-app-or-apk> is required" && exit 2)
+	@test -n "$(SHA)" || (echo "SHA=<exact-candidate-sha> is required" && exit 2)
+	@test -n "$(BUILD_ID)" || (echo "BUILD_ID=<sanitized-local-build-id> is required" && exit 2)
+	@test -n "$(EVIDENCE)" || (echo "EVIDENCE=<receipt-json-path> is required" && exit 2)
+	@test -n "$(EAS_VERSION)" || (echo "EAS_VERSION=<eas-cli-version> is required" && exit 2)
+	node scripts/local-mobile-build-receipt.mjs --platform "$(PLATFORM)" --profile "$(PROFILE)" --artifact "$(APP)" --sha "$(SHA)" --build-id "$(BUILD_ID)" --output "$(EVIDENCE)" --eas-cli-version "$(EAS_VERSION)" --inspection-passed "$(INSPECTION_PASSED)"
 
 mobile-account-e2e:
 	@test -n "$(PLATFORM)" || (echo "PLATFORM=ios or PLATFORM=android is required" && exit 2)

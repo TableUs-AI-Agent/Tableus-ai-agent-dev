@@ -7,7 +7,7 @@ appId: com.tableus.app
     commands:
       - tapOn: "Open"
 - extendedWaitUntil:
-    visible: "Offline resilience dinner"
+    visible: ".*Offline resilience dinner.*"
     timeout: 30000
 - openLink: "tableus://e2e/connectivity?state=offline"
 - runFlow:
