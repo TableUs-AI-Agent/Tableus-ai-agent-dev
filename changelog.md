@@ -1,5 +1,17 @@
 # Changelog
 
+## 2026-08-21 — Account control hardening
+
+- Expanded application-data export into a typed, versioned contract covering
+  user-provided reviews, connections, plan constraints, votes, authored events,
+  and invite-redemption timestamps without credential or provider secrets.
+- Added deletion readiness, exact server-side confirmation, and audit-event
+  anonymization so eligible participant profiles can be removed without erasing
+  shared plan history; organizer deletion remains blocked.
+- Changed Expo export to share a temporary JSON file and added aggregate-only
+  auth-test verification plus deterministic browser/backend coverage. No staging
+  profile or Supabase Auth user is deleted by the evidence flow.
+
 ## 2026-08-21 — Mobile staging authentication
 
 - Replaced mobile screen-local OTP handling with an app-level Supabase session

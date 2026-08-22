@@ -19,10 +19,14 @@
 - Supabase-backed web sessions load the authenticated profile and connections
   from `/api/v1`, including after Supabase replaces the active session; legacy
   demo identity switching remains demo-only.
-- Web and Expo account settings expose application-data export and typed-
-  confirmation deletion controls. Export stays user-initiated, deletion explains
-  the organized-plan prerequisite, and neither client silently deletes the
-  Supabase Auth record.
+- Web and Expo account settings expose a versioned application-data export and
+  server-enforced typed-confirmation deletion controls. The export includes the
+  profile, connections, reviews, invite-redemption timestamps, the user's plan
+  memberships/constraints, votes, and authored plan events while excluding
+  email/invite/share-token hashes and provider/auth secrets. A shared read-only
+  readiness response reports organized-plan blockers. Eligible profile deletion
+  anonymizes retained plan-event actors; neither client silently deletes the
+  separate Supabase Auth record.
 - Generated OpenAPI TypeScript contract, GitHub CI, EAS workflows, browser/API
   smoke journeys, privacy controls, telemetry hooks, and deployment templates.
 - The shared TypeScript client can resolve a demo identity per request. Expo
@@ -60,6 +64,10 @@
   resume records skipped checks honestly for local stabilization. A read-only
   operator script reports invite usage/redemption/validation counts by invite ID
   without personal or secret data.
+- The auth-test-only mobile account check validates export structure and deletion
+  readiness while displaying aggregate counts only. `make mobile-account-e2e`
+  signs an existing approved user in and records sanitized iOS/Android evidence
+  without issuing a deletion request.
 - Separate migration/runtime database credentials, a private application schema,
   an invite-only Supabase pre-signup hook, email-bound invite redemption, and a
   hashed invite administration CLI.

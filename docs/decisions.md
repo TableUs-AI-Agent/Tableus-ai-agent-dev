@@ -64,3 +64,9 @@
   pointed at HTTPS staging with deterministic providers. Demo identities,
   loopback defaults, local networking exceptions, and local identity controls
   remain exclusive to deterministic test profiles.
+- **2026-08-21:** Account export is a versioned application-data contract and
+  excludes credential, invite, share-token, and provider secrets. Application
+  profile deletion requires exact server-side confirmation and remains blocked
+  while the user organizes a plan. Eligible deletion nulls the actor on retained
+  plan audit events. Supabase Auth removal remains a separate trusted-operator
+  action, and hosted evidence never exercises deletion against retained accounts.

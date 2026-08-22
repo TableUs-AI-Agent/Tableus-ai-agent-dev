@@ -147,3 +147,19 @@ test("client never refreshes or retries a 403", async () => {
   assert.equal(calls, 1);
   assert.equal(refreshes, 0);
 });
+
+test("client sends an explicit JSON body with DELETE requests", async () => {
+  let request: RequestInit | undefined;
+  const client = createApiClient({
+    baseUrl: "https://api.example.test",
+    fetchImpl: async (_input, init) => {
+      request = init;
+      return new Response(JSON.stringify({ data: { deleted: true }, meta: {} }));
+    },
+  });
+
+  await client.delete("/api/v1/me", { confirmation: "DELETE" });
+
+  assert.equal(request?.method, "DELETE");
+  assert.equal(request?.body, JSON.stringify({ confirmation: "DELETE" }));
+});

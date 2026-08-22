@@ -164,7 +164,9 @@ class PlanEvent(Base):
     __tablename__ = "plan_events"
     id: Mapped[str] = mapped_column(String(36), primary_key=True, default=new_id)
     plan_id: Mapped[str] = mapped_column(ForeignKey("plans.id", ondelete="CASCADE"), index=True)
-    actor_id: Mapped[str] = mapped_column(ForeignKey("profiles.id", ondelete="RESTRICT"))
+    actor_id: Mapped[str | None] = mapped_column(
+        ForeignKey("profiles.id", ondelete="SET NULL"), nullable=True
+    )
     event_type: Mapped[str] = mapped_column(String(60))
     payload: Mapped[dict] = mapped_column(JSON, default=dict)
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=now_utc)

@@ -70,12 +70,12 @@ function collectScreenshot(root, evidenceDir, platform) {
     for (const entry of readdirSync(directory)) {
       const path = join(directory, entry);
       if (statSync(path).isDirectory()) visit(path);
-      else if (entry === "returning-session.png") matches.push(path);
+      else if (entry === "returning-session.png" || entry === "account-controls.png") matches.push(path);
     }
   };
   visit(root);
   return matches.map((source) => {
-    const destination = join(evidenceDir, `${platform}-returning-session.png`);
+    const destination = join(evidenceDir, `${platform}-${basename(source)}`);
     copyFileSync(source, destination);
     return basename(destination);
   });
@@ -88,7 +88,7 @@ const appPath = resolve(args.app ?? "");
 const apiUrl = args["api-url"] ?? process.env.EXPO_PUBLIC_API_URL ?? "";
 const buildId = args["build-id"];
 const evidenceDir = resolve(args.evidence ?? "");
-const phases = ["invalid-invite", "signup-send", "verify-signup", "persistence", "refresh", "foreground", "sign-out", "returning-send", "returning-verify"];
+const phases = ["invalid-invite", "signup-send", "verify-signup", "persistence", "refresh", "foreground", "sign-out", "returning-send", "returning-verify", "account-controls"];
 const startPhase = args["start-phase"] ?? phases[0];
 if (!new Set(["ios", "android"]).has(platform)) throw new Error("--platform must be ios or android");
 if (!device || !existsSync(appPath) || !buildId || !args.evidence) throw new Error("--device, --app, --build-id, and --evidence are required");
@@ -163,6 +163,7 @@ try {
     secrets.push(returningOtp);
     flow("returning-verify.yml", { OTP: returningOtp });
   }
+  if (shouldRun("account-controls")) flow("account-controls.yml");
 
   const screenshots = collectScreenshot(temporaryRoot, evidenceDir, platform);
   const gitResult = spawnSync("git", ["rev-parse", "HEAD"], { cwd: repoRoot, encoding: "utf8" });
@@ -186,10 +187,12 @@ try {
     foreground_recovery: shouldRun("foreground"),
     sign_out: shouldRun("sign-out"),
     returning_sign_in: shouldRun("returning-verify"),
+    account_controls_validated: shouldRun("account-controls"),
     screenshots,
     started_at_phase: startPhase,
   };
-  writeFileSync(join(evidenceDir, `${platform}-auth-summary.json`), `${JSON.stringify(summary, null, 2)}\n`);
+  const summaryKind = startPhase === "returning-send" ? "account" : "auth";
+  writeFileSync(join(evidenceDir, `${platform}-${summaryKind}-summary.json`), `${JSON.stringify(summary, null, 2)}\n`);
   process.stdout.write(startPhaseIndex === 0
     ? `TableUs ${platform} staging authentication lifecycle passed.\n`
     : `TableUs ${platform} staging authentication segment from ${startPhase} passed.\n`);

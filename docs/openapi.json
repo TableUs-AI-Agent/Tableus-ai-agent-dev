@@ -1,6 +1,245 @@
 {
   "components": {
     "schemas": {
+      "AccountControlOut": {
+        "properties": {
+          "blockers": {
+            "items": {
+              "const": "organized_plans",
+              "type": "string"
+            },
+            "title": "Blockers",
+            "type": "array"
+          },
+          "can_delete": {
+            "title": "Can Delete",
+            "type": "boolean"
+          },
+          "deletion_scope": {
+            "const": "application_profile",
+            "default": "application_profile",
+            "title": "Deletion Scope",
+            "type": "string"
+          },
+          "organized_plan_count": {
+            "title": "Organized Plan Count",
+            "type": "integer"
+          },
+          "supabase_auth_removal": {
+            "const": "operator_required",
+            "default": "operator_required",
+            "title": "Supabase Auth Removal",
+            "type": "string"
+          }
+        },
+        "required": [
+          "can_delete",
+          "blockers",
+          "organized_plan_count"
+        ],
+        "title": "AccountControlOut",
+        "type": "object"
+      },
+      "AccountExportConnection": {
+        "properties": {
+          "connected_profile_id": {
+            "title": "Connected Profile Id",
+            "type": "string"
+          }
+        },
+        "required": [
+          "connected_profile_id"
+        ],
+        "title": "AccountExportConnection",
+        "type": "object"
+      },
+      "AccountExportEvent": {
+        "properties": {
+          "created_at": {
+            "format": "date-time",
+            "title": "Created At",
+            "type": "string"
+          },
+          "event_type": {
+            "title": "Event Type",
+            "type": "string"
+          },
+          "payload": {
+            "additionalProperties": true,
+            "title": "Payload",
+            "type": "object"
+          },
+          "plan_id": {
+            "title": "Plan Id",
+            "type": "string"
+          }
+        },
+        "required": [
+          "plan_id",
+          "event_type",
+          "payload",
+          "created_at"
+        ],
+        "title": "AccountExportEvent",
+        "type": "object"
+      },
+      "AccountExportMembership": {
+        "properties": {
+          "constraints": {
+            "additionalProperties": true,
+            "title": "Constraints",
+            "type": "object"
+          },
+          "is_organizer": {
+            "title": "Is Organizer",
+            "type": "boolean"
+          },
+          "plan_id": {
+            "title": "Plan Id",
+            "type": "string"
+          },
+          "status": {
+            "enum": [
+              "collecting",
+              "voting",
+              "finalized"
+            ],
+            "title": "Status",
+            "type": "string"
+          },
+          "title": {
+            "title": "Title",
+            "type": "string"
+          }
+        },
+        "required": [
+          "plan_id",
+          "title",
+          "status",
+          "is_organizer",
+          "constraints"
+        ],
+        "title": "AccountExportMembership",
+        "type": "object"
+      },
+      "AccountExportOut": {
+        "properties": {
+          "authored_plan_events": {
+            "items": {
+              "$ref": "#/components/schemas/AccountExportEvent"
+            },
+            "title": "Authored Plan Events",
+            "type": "array"
+          },
+          "connections": {
+            "items": {
+              "$ref": "#/components/schemas/AccountExportConnection"
+            },
+            "title": "Connections",
+            "type": "array"
+          },
+          "exported_at": {
+            "format": "date-time",
+            "title": "Exported At",
+            "type": "string"
+          },
+          "invite_redemptions": {
+            "items": {
+              "$ref": "#/components/schemas/AccountExportRedemption"
+            },
+            "title": "Invite Redemptions",
+            "type": "array"
+          },
+          "plan_memberships": {
+            "items": {
+              "$ref": "#/components/schemas/AccountExportMembership"
+            },
+            "title": "Plan Memberships",
+            "type": "array"
+          },
+          "profile": {
+            "$ref": "#/components/schemas/ProfileOut"
+          },
+          "reviews": {
+            "items": {
+              "$ref": "#/components/schemas/ReviewOut"
+            },
+            "title": "Reviews",
+            "type": "array"
+          },
+          "schema_version": {
+            "const": "1",
+            "default": "1",
+            "title": "Schema Version",
+            "type": "string"
+          },
+          "votes": {
+            "items": {
+              "$ref": "#/components/schemas/AccountExportVote"
+            },
+            "title": "Votes",
+            "type": "array"
+          }
+        },
+        "required": [
+          "exported_at",
+          "profile",
+          "connections",
+          "reviews",
+          "invite_redemptions",
+          "plan_memberships",
+          "votes",
+          "authored_plan_events"
+        ],
+        "title": "AccountExportOut",
+        "type": "object"
+      },
+      "AccountExportRedemption": {
+        "properties": {
+          "redeemed_at": {
+            "format": "date-time",
+            "title": "Redeemed At",
+            "type": "string"
+          }
+        },
+        "required": [
+          "redeemed_at"
+        ],
+        "title": "AccountExportRedemption",
+        "type": "object"
+      },
+      "AccountExportVote": {
+        "properties": {
+          "created_at": {
+            "format": "date-time",
+            "title": "Created At",
+            "type": "string"
+          },
+          "plan_id": {
+            "title": "Plan Id",
+            "type": "string"
+          },
+          "ranking": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Ranking",
+            "type": "array"
+          },
+          "run_id": {
+            "title": "Run Id",
+            "type": "string"
+          }
+        },
+        "required": [
+          "plan_id",
+          "run_id",
+          "ranking",
+          "created_at"
+        ],
+        "title": "AccountExportVote",
+        "type": "object"
+      },
       "BlendRequest": {
         "properties": {
           "user_ids": {
@@ -168,6 +407,20 @@
         "title": "ConstraintsIn",
         "type": "object"
       },
+      "DeleteAccountIn": {
+        "properties": {
+          "confirmation": {
+            "const": "DELETE",
+            "title": "Confirmation",
+            "type": "string"
+          }
+        },
+        "required": [
+          "confirmation"
+        ],
+        "title": "DeleteAccountIn",
+        "type": "object"
+      },
       "DeleteAccountOut": {
         "properties": {
           "deleted": {
@@ -214,6 +467,40 @@
           "longitude"
         ],
         "title": "DiscoverIn",
+        "type": "object"
+      },
+      "Envelope_AccountControlOut_": {
+        "properties": {
+          "data": {
+            "$ref": "#/components/schemas/AccountControlOut"
+          },
+          "meta": {
+            "additionalProperties": true,
+            "title": "Meta",
+            "type": "object"
+          }
+        },
+        "required": [
+          "data"
+        ],
+        "title": "Envelope[AccountControlOut]",
+        "type": "object"
+      },
+      "Envelope_AccountExportOut_": {
+        "properties": {
+          "data": {
+            "$ref": "#/components/schemas/AccountExportOut"
+          },
+          "meta": {
+            "additionalProperties": true,
+            "title": "Meta",
+            "type": "object"
+          }
+        },
+        "required": [
+          "data"
+        ],
+        "title": "Envelope[AccountExportOut]",
         "type": "object"
       },
       "Envelope_ConnectionOut_": {
@@ -2531,6 +2818,16 @@
             }
           }
         ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DeleteAccountIn"
+              }
+            }
+          },
+          "required": true
+        },
         "responses": {
           "200": {
             "content": {
@@ -2695,6 +2992,71 @@
         ]
       }
     },
+    "/api/v1/me/account-control": {
+      "get": {
+        "operationId": "account_control_api_v1_me_account_control_get",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "authorization",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Authorization"
+            }
+          },
+          {
+            "in": "header",
+            "name": "x-demo-user-id",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "X-Demo-User-Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_AccountControlOut_"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Account Control",
+        "tags": [
+          "v1"
+        ]
+      }
+    },
     "/api/v1/me/export": {
       "get": {
         "operationId": "export_me_api_v1_me_export_get",
@@ -2736,7 +3098,9 @@
           "200": {
             "content": {
               "application/json": {
-                "schema": {}
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_AccountExportOut_"
+                }
               }
             },
             "description": "Successful Response"

@@ -415,6 +415,23 @@ export interface paths {
         patch: operations["patch_me_api_v1_me_patch"];
         trace?: never;
     };
+    "/api/v1/me/account-control": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Account Control */
+        get: operations["account_control_api_v1_me_account_control_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v1/me/export": {
         parameters: {
             query?: never;
@@ -693,6 +710,115 @@ export interface paths {
 export type webhooks = Record<string, never>;
 export interface components {
     schemas: {
+        /** AccountControlOut */
+        AccountControlOut: {
+            /** Blockers */
+            blockers: "organized_plans"[];
+            /** Can Delete */
+            can_delete: boolean;
+            /**
+             * Deletion Scope
+             * @default application_profile
+             * @constant
+             */
+            deletion_scope: "application_profile";
+            /** Organized Plan Count */
+            organized_plan_count: number;
+            /**
+             * Supabase Auth Removal
+             * @default operator_required
+             * @constant
+             */
+            supabase_auth_removal: "operator_required";
+        };
+        /** AccountExportConnection */
+        AccountExportConnection: {
+            /** Connected Profile Id */
+            connected_profile_id: string;
+        };
+        /** AccountExportEvent */
+        AccountExportEvent: {
+            /**
+             * Created At
+             * Format: date-time
+             */
+            created_at: string;
+            /** Event Type */
+            event_type: string;
+            /** Payload */
+            payload: {
+                [key: string]: unknown;
+            };
+            /** Plan Id */
+            plan_id: string;
+        };
+        /** AccountExportMembership */
+        AccountExportMembership: {
+            /** Constraints */
+            constraints: {
+                [key: string]: unknown;
+            };
+            /** Is Organizer */
+            is_organizer: boolean;
+            /** Plan Id */
+            plan_id: string;
+            /**
+             * Status
+             * @enum {string}
+             */
+            status: "collecting" | "voting" | "finalized";
+            /** Title */
+            title: string;
+        };
+        /** AccountExportOut */
+        AccountExportOut: {
+            /** Authored Plan Events */
+            authored_plan_events: components["schemas"]["AccountExportEvent"][];
+            /** Connections */
+            connections: components["schemas"]["AccountExportConnection"][];
+            /**
+             * Exported At
+             * Format: date-time
+             */
+            exported_at: string;
+            /** Invite Redemptions */
+            invite_redemptions: components["schemas"]["AccountExportRedemption"][];
+            /** Plan Memberships */
+            plan_memberships: components["schemas"]["AccountExportMembership"][];
+            profile: components["schemas"]["ProfileOut"];
+            /** Reviews */
+            reviews: components["schemas"]["ReviewOut"][];
+            /**
+             * Schema Version
+             * @default 1
+             * @constant
+             */
+            schema_version: "1";
+            /** Votes */
+            votes: components["schemas"]["AccountExportVote"][];
+        };
+        /** AccountExportRedemption */
+        AccountExportRedemption: {
+            /**
+             * Redeemed At
+             * Format: date-time
+             */
+            redeemed_at: string;
+        };
+        /** AccountExportVote */
+        AccountExportVote: {
+            /**
+             * Created At
+             * Format: date-time
+             */
+            created_at: string;
+            /** Plan Id */
+            plan_id: string;
+            /** Ranking */
+            ranking: string[];
+            /** Run Id */
+            run_id: string;
+        };
         /** BlendRequest */
         BlendRequest: {
             /** User Ids */
@@ -753,6 +879,14 @@ export interface components {
              */
             notes: string;
         };
+        /** DeleteAccountIn */
+        DeleteAccountIn: {
+            /**
+             * Confirmation
+             * @constant
+             */
+            confirmation: "DELETE";
+        };
         /** DeleteAccountOut */
         DeleteAccountOut: {
             /** Deleted */
@@ -774,6 +908,22 @@ export interface components {
              * @default
              */
             query: string;
+        };
+        /** Envelope[AccountControlOut] */
+        Envelope_AccountControlOut_: {
+            data: components["schemas"]["AccountControlOut"];
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+        };
+        /** Envelope[AccountExportOut] */
+        Envelope_AccountExportOut_: {
+            data: components["schemas"]["AccountExportOut"];
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
         };
         /** Envelope[ConnectionOut] */
         Envelope_ConnectionOut_: {
@@ -2047,7 +2197,11 @@ export interface operations {
             path?: never;
             cookie?: never;
         };
-        requestBody?: never;
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["DeleteAccountIn"];
+            };
+        };
         responses: {
             /** @description Successful Response */
             200: {
@@ -2105,6 +2259,38 @@ export interface operations {
             };
         };
     };
+    account_control_api_v1_me_account_control_get: {
+        parameters: {
+            query?: never;
+            header?: {
+                authorization?: string | null;
+                "x-demo-user-id"?: string | null;
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_AccountControlOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
     export_me_api_v1_me_export_get: {
         parameters: {
             query?: never;
@@ -2123,7 +2309,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": unknown;
+                    "application/json": components["schemas"]["Envelope_AccountExportOut_"];
                 };
             };
             /** @description Validation Error */

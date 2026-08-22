@@ -48,6 +48,15 @@ mobile-auth-e2e:
 	@test -n "$(API_URL)" || (echo "API_URL=<HTTPS-staging-api> is required" && exit 2)
 	node scripts/mobile-auth-e2e.mjs --platform "$(PLATFORM)" --device "$(DEVICE)" --app "$(APP)" --build-id "$(BUILD_ID)" --evidence "$(EVIDENCE)" --api-url "$(API_URL)" $(if $(START_PHASE),--start-phase "$(START_PHASE)",)
 
+mobile-account-e2e:
+	@test -n "$(PLATFORM)" || (echo "PLATFORM=ios or PLATFORM=android is required" && exit 2)
+	@test -n "$(DEVICE)" || (echo "DEVICE=<simulator-or-emulator-id> is required" && exit 2)
+	@test -n "$(APP)" || (echo "APP=<path-to-app-or-apk> is required" && exit 2)
+	@test -n "$(BUILD_ID)" || (echo "BUILD_ID=<EAS-build-id> is required" && exit 2)
+	@test -n "$(EVIDENCE)" || (echo "EVIDENCE=<sanitized-output-directory> is required" && exit 2)
+	@test -n "$(API_URL)" || (echo "API_URL=<HTTPS-staging-api> is required" && exit 2)
+	node scripts/mobile-auth-e2e.mjs --platform "$(PLATFORM)" --device "$(DEVICE)" --app "$(APP)" --build-id "$(BUILD_ID)" --evidence "$(EVIDENCE)" --api-url "$(API_URL)" --start-phase "returning-send"
+
 inspect-mobile-auth:
 	@test -n "$(APP)" || (echo "APP=<path-to-app-or-apk> is required" && exit 2)
 	@test -n "$(SHA)" || (echo "SHA=<exact-candidate-sha> is required" && exit 2)

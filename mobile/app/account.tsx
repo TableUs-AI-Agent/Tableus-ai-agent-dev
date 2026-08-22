@@ -1,8 +1,10 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { useState } from "react";
-import { Pressable, ScrollView, Share, Text, View } from "react-native";
+import { Pressable, ScrollView, Text, View } from "react-native";
 
 import { Button, Card, ErrorText, Field } from "@/components/ui";
+import type { AccountControl } from "@/lib/account-controls";
+import { shareAccountExport } from "@/lib/account-export-file";
 import { api } from "@/lib/api";
 import { useAuth } from "@/providers/auth-provider";
 import { colors } from "@/theme";
@@ -17,23 +19,26 @@ export default function AccountScreen() {
   const [confirmation, setConfirmation] = useState("");
   const [message, setMessage] = useState("");
   const profile = useQuery({ queryKey: ["me"], queryFn: () => api.get<Profile>("/api/v1/me") });
+  const control = useQuery({
+    queryKey: ["account-control"],
+    queryFn: () => api.get<AccountControl>("/api/v1/me/account-control"),
+  });
   const exportData = useMutation({
-    mutationFn: () => api.get<unknown>("/api/v1/me/export"),
-    onSuccess: async (data) => {
-      await Share.share({
-        title: "TableUs data export",
-        message: JSON.stringify(data, null, 2),
-      });
-      setMessage("Your TableUs application data export is ready in the share sheet.");
+    mutationFn: async () => {
+      const data = await api.get<unknown>("/api/v1/me/export");
+      await shareAccountExport(data);
+    },
+    onSuccess: () => {
+      setMessage("Your TableUs application data export was prepared as a JSON file.");
     },
   });
   const deleteAccount = useMutation({
-    mutationFn: () => api.delete<DeleteResult>("/api/v1/me"),
+    mutationFn: () => api.delete<DeleteResult>("/api/v1/me", { confirmation: DELETE_CONFIRMATION }),
     onSuccess: async () => {
       await auth.signOut();
     },
   });
-  const error = profile.error ?? exportData.error ?? deleteAccount.error;
+  const error = profile.error ?? control.error ?? exportData.error ?? deleteAccount.error;
 
   return (
     <ScrollView contentInsetAdjustmentBehavior="automatic" contentContainerStyle={{ padding: 16, gap: 14 }}>
@@ -67,6 +72,13 @@ export default function AccountScreen() {
         <Text selectable style={{ color: colors.danger, lineHeight: 22 }}>
           This permanently removes your TableUs application profile. Organized plans must be transferred or removed first. Authentication records may require separate closed-beta operator removal.
         </Text>
+        <Text selectable accessibilityLiveRegion="polite" style={{ color: colors.danger, fontWeight: "700" }}>
+          {control.isPending
+            ? "Checking deletion readiness…"
+            : control.data?.can_delete
+              ? "Application profile deletion is available. Supabase Auth removal remains operator-assisted."
+              : `${control.data?.organized_plan_count ?? 0} organized plan${control.data?.organized_plan_count === 1 ? "" : "s"} must be transferred or removed first.`}
+        </Text>
         <Text selectable style={{ color: colors.danger, fontWeight: "700" }}>Type DELETE to confirm</Text>
         <Field
           accessibilityLabel="Type DELETE to confirm account deletion"
@@ -78,7 +90,7 @@ export default function AccountScreen() {
         <Pressable
           accessibilityRole="button"
           accessibilityLabel="Delete my application data"
-          disabled={confirmation !== DELETE_CONFIRMATION || deleteAccount.isPending}
+          disabled={confirmation !== DELETE_CONFIRMATION || deleteAccount.isPending || !control.data?.can_delete}
           onPress={() => deleteAccount.mutate()}
           style={({ pressed }) => ({
             minHeight: 48,
@@ -87,7 +99,7 @@ export default function AccountScreen() {
             borderRadius: 16,
             borderCurve: "continuous",
             backgroundColor: colors.danger,
-            opacity: confirmation !== DELETE_CONFIRMATION || deleteAccount.isPending ? 0.4 : pressed ? 0.75 : 1,
+            opacity: confirmation !== DELETE_CONFIRMATION || deleteAccount.isPending || !control.data?.can_delete ? 0.4 : pressed ? 0.75 : 1,
           })}
         >
           <Text selectable style={{ color: "#fff", fontSize: 16, fontWeight: "700" }}>

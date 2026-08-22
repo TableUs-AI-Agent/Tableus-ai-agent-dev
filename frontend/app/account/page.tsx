@@ -14,11 +14,20 @@ type Profile = {
   share_taste: boolean;
 };
 
+type AccountControl = {
+  can_delete: boolean;
+  blockers: Array<"organized_plans">;
+  organized_plan_count: number;
+  deletion_scope: "application_profile";
+  supabase_auth_removal: "operator_required";
+};
+
 const DELETE_CONFIRMATION = "DELETE";
 
 export default function AccountPage() {
   const router = useRouter();
   const [profile, setProfile] = useState<Profile | null>(null);
+  const [control, setControl] = useState<AccountControl | null>(null);
   const [confirmation, setConfirmation] = useState("");
   const [loading, setLoading] = useState(true);
   const [exporting, setExporting] = useState(false);
@@ -28,10 +37,15 @@ export default function AccountPage() {
 
   useEffect(() => {
     let active = true;
-    v1Api
-      .get<Profile>("/api/v1/me")
-      .then((result) => {
-        if (active) setProfile(result);
+    Promise.all([
+      v1Api.get<Profile>("/api/v1/me"),
+      v1Api.get<AccountControl>("/api/v1/me/account-control"),
+    ])
+      .then(([profileResult, controlResult]) => {
+        if (active) {
+          setProfile(profileResult);
+          setControl(controlResult);
+        }
       })
       .catch((loadError: unknown) => {
         if (active) setError(loadError instanceof Error ? loadError.message : "Unable to load account settings.");
@@ -74,7 +88,7 @@ export default function AccountPage() {
     setError("");
     setMessage("");
     try {
-      await v1Api.delete<{ deleted: boolean }>("/api/v1/me");
+      await v1Api.delete<{ deleted: boolean }>("/api/v1/me", { confirmation: DELETE_CONFIRMATION });
       await supabase.auth.signOut();
       router.replace("/invite");
     } catch (deleteError: unknown) {
@@ -139,6 +153,11 @@ export default function AccountPage() {
             This permanently removes your TableUs application profile. Organized plans must be transferred or removed first.
             Supabase authentication records may require separate operator removal during the closed beta.
           </p>
+          <p role="status" className="mt-3 text-sm font-semibold text-red-900">
+            {control?.can_delete
+              ? "Application profile deletion is available. Supabase Auth removal remains operator-assisted."
+              : `${control?.organized_plan_count ?? 0} organized plan${control?.organized_plan_count === 1 ? "" : "s"} must be transferred or removed first.`}
+          </p>
           <label className="mt-5 block text-sm font-semibold text-red-900" htmlFor="delete-confirmation">
             Type DELETE to confirm
           </label>
@@ -152,7 +171,7 @@ export default function AccountPage() {
           <button
             type="button"
             onClick={deleteAccount}
-            disabled={confirmation !== DELETE_CONFIRMATION || deleting}
+            disabled={confirmation !== DELETE_CONFIRMATION || deleting || !control?.can_delete}
             className="mt-4 inline-flex min-h-11 items-center justify-center gap-2 rounded-2xl bg-red-700 px-5 py-3 text-sm font-semibold text-white disabled:cursor-not-allowed disabled:opacity-45"
           >
             {deleting ? <Loader2 className="h-4 w-4 animate-spin" /> : <Trash2 className="h-4 w-4" />}

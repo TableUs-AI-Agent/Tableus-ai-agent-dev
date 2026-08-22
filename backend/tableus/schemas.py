@@ -49,6 +49,48 @@ class ProfilePatch(BaseModel):
     share_taste: bool | None = None
 
 
+class DeleteAccountIn(BaseModel):
+    confirmation: Literal["DELETE"]
+
+
+class AccountControlOut(BaseModel):
+    can_delete: bool
+    blockers: list[Literal["organized_plans"]]
+    organized_plan_count: int
+    deletion_scope: Literal["application_profile"] = "application_profile"
+    supabase_auth_removal: Literal["operator_required"] = "operator_required"
+
+
+class AccountExportConnection(BaseModel):
+    connected_profile_id: str
+
+
+class AccountExportRedemption(BaseModel):
+    redeemed_at: datetime
+
+
+class AccountExportMembership(BaseModel):
+    plan_id: str
+    title: str
+    status: Literal["collecting", "voting", "finalized"]
+    is_organizer: bool
+    constraints: dict
+
+
+class AccountExportVote(BaseModel):
+    plan_id: str
+    run_id: str
+    ranking: list[str]
+    created_at: datetime
+
+
+class AccountExportEvent(BaseModel):
+    plan_id: str
+    event_type: str
+    payload: dict
+    created_at: datetime
+
+
 class ConnectionIn(BaseModel):
     profile_id: str = Field(min_length=1, max_length=64)
 
@@ -71,6 +113,18 @@ class ReviewOut(ReviewIn):
     model_config = ConfigDict(from_attributes=True)
     id: str
     created_at: datetime
+
+
+class AccountExportOut(BaseModel):
+    schema_version: Literal["1"] = "1"
+    exported_at: datetime
+    profile: ProfileOut
+    connections: list[AccountExportConnection]
+    reviews: list[ReviewOut]
+    invite_redemptions: list[AccountExportRedemption]
+    plan_memberships: list[AccountExportMembership]
+    votes: list[AccountExportVote]
+    authored_plan_events: list[AccountExportEvent]
 
 
 class TasteProfileOut(BaseModel):

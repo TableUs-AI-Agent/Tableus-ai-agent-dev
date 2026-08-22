@@ -1,10 +1,24 @@
 import { expect, test } from "@playwright/test";
+import { readFile } from "node:fs/promises";
+
+function nestedKeys(value: unknown): Set<string> {
+  if (Array.isArray(value)) {
+    return value.reduce((keys, item) => new Set([...keys, ...nestedKeys(item)]), new Set<string>());
+  }
+  if (value && typeof value === "object") {
+    return Object.entries(value).reduce(
+      (keys, [key, item]) => new Set([...keys, key, ...nestedKeys(item)]),
+      new Set<string>(),
+    );
+  }
+  return new Set();
+}
 
 test("organizer creates a persistent plan", async ({ page }) => {
   await page.goto("/plans");
   await page.getByPlaceholder("Friday dinner").fill("Playwright dinner");
   await page.getByRole("button", { name: "Create plan" }).click();
-  await expect(page.getByText("Playwright dinner")).toBeVisible();
+  await expect(page.getByText("Playwright dinner").first()).toBeVisible();
   await expect(page.getByText("Private join link")).toBeVisible();
 });
 
@@ -22,6 +36,30 @@ test("publishes release disclosures and verified-link manifests", async ({ page 
   const android = await page.request.get("/.well-known/assetlinks.json");
   expect(android.status()).toBe(200);
   expect((await android.json())[0].target.package_name).toBe("com.tableus.app");
+});
+
+test("downloads a versioned account export and shows deletion blockers", async ({ page }) => {
+  test.skip(Boolean(process.env.PLAYWRIGHT_BASE_URL), "Local deterministic evidence only");
+  await page.goto("/account");
+  await expect(page.getByRole("heading", { name: "Demo Organizer" })).toBeVisible();
+  await expect(page.getByText(/organized plans? must be transferred or removed first/)).toBeVisible();
+  await expect(page.getByRole("button", { name: "Delete my application data" })).toBeDisabled();
+
+  const downloadPromise = page.waitForEvent("download");
+  await page.getByRole("button", { name: "Download my data" }).click();
+  const download = await downloadPromise;
+  const path = await download.path();
+  expect(path).toBeTruthy();
+  const exported = JSON.parse(await readFile(path!, "utf8")) as Record<string, unknown>;
+  expect(exported.schema_version).toBe("1");
+  expect(exported.profile).toBeTruthy();
+  for (const field of ["reviews", "connections", "invite_redemptions", "plan_memberships", "votes", "authored_plan_events"]) {
+    expect(Array.isArray(exported[field])).toBeTruthy();
+  }
+  const exportedKeys = nestedKeys(exported);
+  for (const forbidden of ["email_hash", "code_hash", "share_token", "access_token"]) {
+    expect(exportedKeys.has(forbidden)).toBeFalsy();
+  }
 });
 
 test("completes the deterministic two-person voting lifecycle", async ({ page }) => {

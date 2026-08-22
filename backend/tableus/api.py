@@ -6,7 +6,7 @@ from typing import Annotated, Literal, cast
 import jwt
 from fastapi import APIRouter, File, HTTPException, UploadFile
 from PIL import Image
-from sqlalchemy import func, select
+from sqlalchemy import func, select, update
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from .auth import CurrentIdentity, CurrentProfile, DbSession
@@ -28,10 +28,18 @@ from .models import (
 from .providers import get_ai_provider, get_places_provider
 from .ranking import borda_scores, ordered_candidates
 from .schemas import (
+    AccountControlOut,
+    AccountExportConnection,
+    AccountExportEvent,
+    AccountExportMembership,
+    AccountExportOut,
+    AccountExportRedemption,
+    AccountExportVote,
     CandidateOut,
     ConnectionIn,
     ConnectionOut,
     ConstraintsIn,
+    DeleteAccountIn,
     DeleteAccountOut,
     DiscoverIn,
     Envelope,
@@ -172,6 +180,23 @@ async def _event(
     )
 
 
+async def _account_control(session: AsyncSession, profile_id: str) -> AccountControlOut:
+    organized_plan_count = (
+        await session.scalar(
+            select(func.count()).select_from(Plan).where(Plan.organizer_id == profile_id)
+        )
+        or 0
+    )
+    blockers: list[Literal["organized_plans"]] = (
+        ["organized_plans"] if organized_plan_count else []
+    )
+    return AccountControlOut(
+        can_delete=not blockers,
+        blockers=blockers,
+        organized_plan_count=organized_plan_count,
+    )
+
+
 def _require_organizer(plan: Plan, profile: Profile) -> None:
     if plan.organizer_id != profile.id:
         raise HTTPException(status_code=403, detail="Only the organizer can perform this action")
@@ -279,15 +304,21 @@ async def patch_me(body: ProfilePatch, profile: CurrentProfile, session: DbSessi
     return ok(ProfileOut.model_validate(profile))
 
 
+@router.get("/me/account-control", response_model=Envelope[AccountControlOut])
+async def account_control(profile: CurrentProfile, session: DbSession):
+    return ok(await _account_control(session, profile.id))
+
+
 @router.delete("/me", response_model=Envelope[DeleteAccountOut])
-async def delete_me(profile: CurrentProfile, session: DbSession):
-    organized = await session.scalar(
-        select(func.count()).select_from(Plan).where(Plan.organizer_id == profile.id)
-    )
-    if organized:
+async def delete_me(body: DeleteAccountIn, profile: CurrentProfile, session: DbSession):
+    control = await _account_control(session, profile.id)
+    if not control.can_delete:
         raise HTTPException(
             status_code=409, detail="Transfer or delete organized plans before deleting the account"
         )
+    await session.execute(
+        update(PlanEvent).where(PlanEvent.actor_id == profile.id).values(actor_id=None)
+    )
     await session.delete(profile)
     await session.commit()
     return ok(DeleteAccountOut(deleted=True))
@@ -354,26 +385,105 @@ async def delete_connection(connected_profile_id: str, profile: CurrentProfile, 
     return ok(DeleteAccountOut(deleted=True))
 
 
-@router.get("/me/export")
+@router.get("/me/export", response_model=Envelope[AccountExportOut])
 async def export_me(profile: CurrentProfile, session: DbSession):
     reviews = list(
-        (await session.scalars(select(Review).where(Review.profile_id == profile.id))).all()
-    )
-    plans = list(
         (
             await session.scalars(
-                select(Plan).join(PlanParticipant).where(PlanParticipant.profile_id == profile.id)
+                select(Review)
+                .where(Review.profile_id == profile.id)
+                .order_by(Review.created_at, Review.id)
+            )
+        ).all()
+    )
+    connections = list(
+        (
+            await session.scalars(
+                select(Connection)
+                .where(Connection.profile_id == profile.id)
+                .order_by(Connection.connected_profile_id)
+            )
+        ).all()
+    )
+    redemptions = list(
+        (
+            await session.scalars(
+                select(InviteRedemption)
+                .where(InviteRedemption.profile_id == profile.id)
+                .order_by(InviteRedemption.redeemed_at, InviteRedemption.id)
+            )
+        ).all()
+    )
+    memberships = list(
+        (
+            await session.execute(
+                select(PlanParticipant, Plan)
+                .join(Plan, Plan.id == PlanParticipant.plan_id)
+                .where(PlanParticipant.profile_id == profile.id)
+                .order_by(Plan.created_at, Plan.id)
+            )
+        ).all()
+    )
+    votes = list(
+        (
+            await session.scalars(
+                select(Vote)
+                .where(Vote.profile_id == profile.id)
+                .order_by(Vote.created_at, Vote.id)
+            )
+        ).all()
+    )
+    events = list(
+        (
+            await session.scalars(
+                select(PlanEvent)
+                .where(PlanEvent.actor_id == profile.id)
+                .order_by(PlanEvent.created_at, PlanEvent.id)
             )
         ).all()
     )
     return ok(
-        {
-            "profile": ProfileOut.model_validate(profile).model_dump(),
-            "reviews": [
-                ReviewOut.model_validate(review).model_dump(mode="json") for review in reviews
+        AccountExportOut(
+            exported_at=datetime.now(UTC),
+            profile=ProfileOut.model_validate(profile),
+            connections=[
+                AccountExportConnection(connected_profile_id=connection.connected_profile_id)
+                for connection in connections
             ],
-            "plan_ids": [plan.id for plan in plans],
-        }
+            reviews=[ReviewOut.model_validate(review) for review in reviews],
+            invite_redemptions=[
+                AccountExportRedemption(redeemed_at=redemption.redeemed_at)
+                for redemption in redemptions
+            ],
+            plan_memberships=[
+                AccountExportMembership(
+                    plan_id=plan.id,
+                    title=plan.title,
+                    status=cast(Literal["collecting", "voting", "finalized"], plan.status),
+                    is_organizer=plan.organizer_id == profile.id,
+                    constraints=participant.constraints or {},
+                )
+                for participant, plan in memberships
+            ],
+            votes=[
+                AccountExportVote(
+                    plan_id=vote.plan_id,
+                    run_id=vote.run_id,
+                    ranking=vote.ranking,
+                    created_at=vote.created_at,
+                )
+                for vote in votes
+            ],
+            authored_plan_events=[
+                AccountExportEvent(
+                    plan_id=event.plan_id,
+                    event_type=event.event_type,
+                    payload=event.payload or {},
+                    created_at=event.created_at,
+                )
+                for event in events
+            ],
+        )
     )
 
 

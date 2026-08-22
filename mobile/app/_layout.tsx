@@ -30,6 +30,7 @@ function RootNavigator() {
           <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
           <Stack.Screen name="plans/[id]" options={{ title: "Dinner plan" }} />
           <Stack.Screen name="account" options={{ title: "Account and data" }} />
+          <Stack.Screen name="e2e/account" options={{ title: "Account check" }} />
         </Stack.Protected>
       </Stack>
     </>

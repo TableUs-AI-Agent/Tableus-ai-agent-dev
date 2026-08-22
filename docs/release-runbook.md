@@ -230,6 +230,24 @@ uv run python scripts/auth_evidence.py --invite-id <ios-invite-id> --invite-id <
 Never redirect auth-test artifacts to loopback or enable demo identity variables.
 Never retain the interactive inputs or raw Maestro results.
 
+For account-control evidence, first apply the approved
+`161b86fcb7f4` migration and deploy the exact candidate to staging. Reuse the
+auth-test profiles so the build contains the aggregate-only account verification
+surface without demo or local-E2E controls. Sign in an existing approved account
+and run:
+
+```bash
+make mobile-account-e2e PLATFORM=ios DEVICE=<simulator-udid> APP=<path-to-TableUs.app> BUILD_ID=<eas-build-id> EVIDENCE=<sanitized-dir> API_URL=https://<staging-api>
+make mobile-account-e2e PLATFORM=android DEVICE=<emulator-serial> APP=<path-to-tableus.apk> BUILD_ID=<eas-build-id> EVIDENCE=<sanitized-dir> API_URL=https://<staging-api>
+```
+
+The command requests one returning-sign-in OTP, validates only the versioned
+export shape and deletion-readiness response, and retains aggregate counts plus
+the authenticated account-check screenshot. Do not type `DELETE`, call
+`DELETE /api/v1/me`, remove the application profile, or remove the Supabase Auth
+user during evidence collection. Verify actual deletion only with disposable
+local/Postgres fixtures.
+
 ## 6. Enable providers incrementally
 
 Keep deterministic providers green while each integration is added:
