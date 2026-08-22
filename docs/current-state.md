@@ -92,7 +92,10 @@
   code verification, invite redemption, profile creation, and authenticated
   redirect to `/plans`. Sanitized staging evidence showed exactly one profile,
   one redemption, one consumed pending validation, and one used invite. Alembic
-  revision `57a2a71fa443` is applied and verified against staging. Its owner
+  revision `161b86fcb7f4` is applied and verified against staging. The
+  `plan_events.actor_id` column is nullable and its profile foreign key uses
+  `ON DELETE SET NULL`, preserving audit history when an eligible application
+  profile is removed. The project's owner
   credential has been rotated, the least-privilege `tableus_runtime` role is
   active, and the Before User Created hook is enabled against
   `app.hook_restrict_signup_to_validated_invite`. Owner and runtime credentials
@@ -100,14 +103,17 @@
   active until 2026-08-27; its plaintext is unavailable and it should be revoked
   or allowed to expire before external beta access.
 - Railway staging project `tableus-staging`, environment `staging`, and service
-  `api` are provisioned. Deployment `e438677b-548e-4dce-ae8e-7f05f086bc29`
+  `api` are provisioned. Deployment `fb204f7d-5b7a-4117-a4c8-ac620e659098`
   serves `https://api-staging-3795.up.railway.app` from exact SHA
-  `bc0d2f3615bf9a07ec08a857e5e1d8980bdd7d28`; liveness, readiness,
+  `8cde19309fa43787b04d2792d96c1cfc11c21317`; liveness, readiness,
   deterministic-provider mode, Supabase Auth mode, and Vercel CORS passed.
   Railway holds only the runtime database credential and application secret.
 - Vercel staging client variables and the returning-sign-in deployment are live.
-  Deployment `dpl_vpVRmbpHXhQPb5AUScD8yJaPHJFD` is `READY` at
-  `https://tableus-staging.vercel.app` from the same clean SHA. An authenticated
+  Deployment `dpl_4U6nTGJ5WXar7b3q3TomYnwpSTuJ` is `READY` at
+  `https://tableus-staging.vercel.app` from the same exact SHA. The dedicated
+  staging project also retained its pre-existing `table-us.com` and
+  `www.table-us.com` aliases; this packet did not change domain configuration.
+  An authenticated
   Browser session showed the active `Jung` profile after the Supabase session
   changed, verifying the deployed identity-refresh fix. The hosted two-user
   journey then covered plan creation, private-link joining, per-user constraints,
@@ -138,6 +144,14 @@
   from preview/production builds. The supplied `@tableus/brian` project remains
   untouched and unused. Apple and Google Play store credentials remain
   unprovisioned.
+- Account-control auth-test artifacts were built from exact SHA
+  `8cde19309fa43787b04d2792d96c1cfc11c21317`: iOS simulator build
+  `13b30209-50a4-4101-a63a-053abf8b5c79` and Android APK build
+  `cd1be5d0-4c0a-4037-9c16-15f95e2633cc`. Both passed bundle inspection for the
+  HTTPS Railway staging API, Supabase staging configuration, and
+  `authE2E=true`, with no demo identities, loopback endpoints, local-E2E mode,
+  service-role markers, or production endpoints. Checksums and deployment
+  evidence are recorded in `docs/evidence/8cde193/`.
 - Google Maps, Gemini, Sentry, and PostHog credentials.
 
 ## Release gates still requiring an owner or external system
@@ -178,9 +192,12 @@
   foreground refresh, sign-out, and returning sign-in. Both one-use invites
   show one use, one redemption, and no active pending validation. Sanitized
   summaries and screenshots are in `docs/evidence/d6d1b3a/`.
-  Offline-retry and
-  account-control journeys remain to be evidenced. Account export/deletion controls
-  are implemented locally but still require exact-SHA hosted/device evidence;
+  Offline-retry and account-control device journeys remain to be evidenced.
+  Account export/deletion controls are deployed at the exact SHA, the staging
+  migration is verified, and both inspected auth-test artifacts are ready. The
+  remaining account-control gate is one read-only returning-sign-in OTP journey
+  per platform using retained approved accounts; no OTP has been requested for
+  this packet yet.
   privacy deletion itself remains intentionally unexecuted. Other failure-state
   checks remain.
   Maps staging and the budgeted pinned-model Gemini evaluation follow only after

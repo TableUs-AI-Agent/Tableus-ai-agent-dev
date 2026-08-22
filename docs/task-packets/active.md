@@ -2,11 +2,14 @@
 
 ## Status
 
-Local implementation and deterministic verification are complete on
+Implementation and deterministic verification are complete on
 `codex/account-controls` from the completed mobile-auth evidence baseline
-`5ff55f82c6c0db21fec77a148d9f93f2a4931a02`. The packet is awaiting an exact
-candidate commit and the existing approval gates for public push, staging
-migration/deployment, EAS builds, and hosted evidence.
+`5ff55f82c6c0db21fec77a148d9f93f2a4931a02`. Exact candidate
+`8cde19309fa43787b04d2792d96c1cfc11c21317` is publicly pushed; staging is
+migrated and deployed from that SHA, and the inspected iOS/Android auth-test
+artifacts are ready. The packet is awaiting the separately approved, read-only
+returning-sign-in OTP and account-control Maestro journey on each platform. No
+application profile or Supabase Auth identity has been deleted.
 
 ## Objective
 
