@@ -163,8 +163,8 @@
 - Confirm the final domain and support/privacy contact, obtain legal review of
   the beta notices, and validate Google Maps attribution against the production
   presentation and current brand requirements.
-- Complete exact-SHA account-control browser evidence and iOS/Android Maestro
-  journeys. Exact-SHA returning-user OTP and authenticated-identity evidence is
+- Complete the remaining exact-SHA failure-state evidence. Exact-SHA
+  returning-user OTP and authenticated-identity evidence is
   green. A second invite-approved account redeemed successfully, bringing
   sanitized staging evidence to two profiles, two redemptions, and two invite
   uses. The stale global identity cache exposed by that session change is fixed
@@ -193,20 +193,17 @@
   foreground refresh, sign-out, and returning sign-in. Both one-use invites
   show one use, one redemption, and no active pending validation. Sanitized
   summaries and screenshots are in `docs/evidence/d6d1b3a/`.
-  Offline-retry and account-control device journeys remain to be evidenced.
-  Account export/deletion controls are deployed at the exact SHA, the staging
-  migration is verified, and both inspected auth-test artifacts are ready. The
-  first read-only evidence attempt completed Android returning sign-in and
-  aggregate account validation. iOS returning sign-in and the product-side
-  account validation succeeded, but Maestro targeted rendered copy rather than
-  the explicit semantic accessibility label. A pre-existing Android session and
-  a nonstandard runner file checksum exposed two additional harness defects.
-  Local corrections normalize sign-out, assert the semantic label, and record
-  standard file SHA-256. Replacement iOS/Android artifacts from exact SHA
-  `119171a2d9370b0929bc8d19da819538864745f0` are built and inspected; replacement
-  read-only OTP journeys on both platforms remain before acceptance.
-  Privacy deletion itself remains intentionally unexecuted. Other failure-state
-  checks remain.
+  Offline-retry evidence remains. Account export/deletion controls are deployed,
+  the staging migration is verified, and replacement read-only account-control
+  journeys passed from exact SHA
+  `119171a2d9370b0929bc8d19da819538864745f0` on iOS simulator build
+  `e64bb9a4-0fff-48f7-abae-235ec860b7af` and Android APK build
+  `5dd01949-47bd-4485-874b-1cd19a1c7c39`. Both journeys proved returning sign-in
+  and aggregate-only export/deletion-readiness validation with the corrected
+  semantic accessibility label, stale-session normalization, and standard
+  evidence checksums. Sanitized summaries and screenshots are in
+  `docs/evidence/119171a/account-controls/`. No application profile or Supabase
+  Auth identity was deleted. Other failure-state checks remain.
   Maps staging and the budgeted pinned-model Gemini evaluation follow only after
   deterministic staging is green.
 - Obtain explicit approval before any production migration, deployment, EAS

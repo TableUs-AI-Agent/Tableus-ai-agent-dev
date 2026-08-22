@@ -2,7 +2,7 @@
 
 ## Status
 
-Implementation and deterministic verification are complete on
+Complete. Implementation and deterministic verification are complete on
 `codex/account-controls` from the completed mobile-auth evidence baseline
 `5ff55f82c6c0db21fec77a148d9f93f2a4931a02`. The staging migration and runtime
 remain deployed from `8cde19309fa43787b04d2792d96c1cfc11c21317`. Harness fixes are
@@ -10,8 +10,10 @@ publicly pushed at exact candidate
 `119171a2d9370b0929bc8d19da819538864745f0`; replacement iOS simulator and
 Android APK auth-test artifacts are finished and passed exact-SHA bundle
 inspection. The superseded run exposed semantic-label, stale-session preparation,
-and file-checksum defects; replacement read-only OTP journeys on both platforms
-remain. No application profile or Supabase Auth identity has been deleted.
+and file-checksum defects. Replacement read-only OTP journeys passed on iPhone
+17 Pro/iOS 26.5 and the API 36 ARM64 Android emulator. Both retained approved
+accounts remain intact; no application profile or Supabase Auth identity was
+deleted.
 
 ## Objective
 

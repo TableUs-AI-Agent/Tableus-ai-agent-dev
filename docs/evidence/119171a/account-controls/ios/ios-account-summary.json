@@ -1,0 +1,26 @@
+{
+  "platform": "ios",
+  "device": "FE2B33EB-D5F9-427D-98D9-3E7FB4A975E8",
+  "build_id": "e64bb9a4-0fff-48f7-abae-235ec860b7af",
+  "git_sha": "119171a2d9370b0929bc8d19da819538864745f0",
+  "artifact": "TableUs.app",
+  "artifact_sha256": "f2d5a44e5d10a68c86ca085adfaf2bb477351a8dbe46a1f21138acd288d45592",
+  "api_origin": "https://api-staging-3795.up.railway.app",
+  "app_id": "com.tableus.app",
+  "provider_mode": "deterministic",
+  "auth_mode": "supabase",
+  "invalid_invite_rejected": false,
+  "signup_approved": false,
+  "join_intent_restored": false,
+  "relaunch_persistence": false,
+  "explicit_refresh": false,
+  "foreground_recovery": false,
+  "sign_out": false,
+  "returning_sign_in": true,
+  "account_controls_validated": true,
+  "screenshots": [
+    "ios-returning-session.png",
+    "ios-account-controls.png"
+  ],
+  "started_at_phase": "returning-send"
+}
