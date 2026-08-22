@@ -35,6 +35,14 @@ The flow now dismisses keyboards by tapping stable static text. Per the packet,
 both otherwise-valid artifacts are invalidated; the two created one-use invites
 remain unused and no OTP was sent.
 
+Candidate `ff4f7e2f3f3d299862ffefa452d161605bfb1978` fixed keyboard
+dismissal and passed the invalid-invite phase. Its iOS join-intent phase then
+showed that the static auth alert and the navigation button exposed the same
+"Sign in to join" accessibility text, allowing Maestro to tap the alert. The
+alert now has the distinct accessible text "Authentication required" while the
+button retains the required product copy. No invite was consumed and no OTP was
+sent; artifacts from this candidate are invalidated.
+
 The deployed staging baseline remains Railway deployment
 `e438677b-548e-4dce-ae8e-7f05f086bc29` and Vercel deployment
 `dpl_vpVRmbpHXhQPb5AUScD8yJaPHJFD`, both from

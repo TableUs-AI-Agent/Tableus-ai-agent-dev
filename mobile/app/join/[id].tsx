@@ -22,7 +22,7 @@ export default function JoinPlanScreen() {
         <Text selectable style={{ color: colors.muted }}>Only authenticated, invite-approved users with the current private link can join.</Text>
         {!auth.approved ? (
           <>
-            <Text selectable accessibilityRole="alert" style={{ color: colors.ink, fontWeight: "700" }}>Sign in to join</Text>
+            <Text selectable accessibilityRole="alert" style={{ color: colors.ink, fontWeight: "700" }}>Authentication required</Text>
             <Button label="Sign in to join" onPress={() => router.push("/auth")} />
           </>
         ) : (
