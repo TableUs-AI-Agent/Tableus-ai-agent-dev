@@ -1,0 +1,24 @@
+{
+  "platform": "ios",
+  "device": "CBA2F87D-A080-4898-83A2-748B600225D6",
+  "build_id": "8bbf7822-ffa7-4a61-9670-2ebc6e16cad7",
+  "git_sha": "d6d1b3a99318aff5c904029328e6395a6e4236e4",
+  "artifact": "TableUs.app",
+  "artifact_sha256": "88bc6f242459f7c3499ec8df97c08bc23d2ebbf38591df2d0dbd9c8162467808",
+  "api_origin": "https://api-staging-3795.up.railway.app",
+  "app_id": "com.tableus.app",
+  "provider_mode": "deterministic",
+  "auth_mode": "supabase",
+  "invalid_invite_rejected": true,
+  "signup_approved": true,
+  "join_intent_restored": true,
+  "relaunch_persistence": true,
+  "explicit_refresh": true,
+  "foreground_recovery": true,
+  "sign_out": true,
+  "returning_sign_in": true,
+  "screenshots": [
+    "ios-returning-session.png"
+  ],
+  "started_at_phase": "invalid-invite"
+}

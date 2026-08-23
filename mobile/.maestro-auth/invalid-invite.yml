@@ -1,0 +1,26 @@
+appId: com.tableus.app
+---
+- launchApp:
+    clearState: true
+- extendedWaitUntil:
+    visible: "Invite access|.*isn't responding"
+    timeout: 60000
+- runFlow:
+    when:
+      visible: ".*isn't responding"
+    commands:
+      - tapOn: "Wait"
+- extendedWaitUntil:
+    visible: "Invite access"
+    timeout: 60000
+- tapOn: "Invite code"
+- inputText: "${MAESTRO_INVALID_INVITE}"
+- tapOn: "Display name"
+- inputText: "${MAESTRO_DISPLAY_NAME}"
+- tapOn: "Email address"
+- inputText: "${MAESTRO_EMAIL}"
+- tapOn: "A better answer than.*"
+- tapOn: "Email me a code"
+- extendedWaitUntil:
+    visible: ".*Invite is invalid, expired, or fully redeemed.*"
+    timeout: 30000

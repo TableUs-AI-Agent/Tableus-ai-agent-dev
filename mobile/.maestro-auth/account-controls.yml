@@ -1,0 +1,18 @@
+appId: com.tableus.app
+---
+- openLink:
+    link: "tableus:///e2e/account"
+    autoVerify: true
+- runFlow:
+    when:
+      visible: ".*Open in.*TableUs.*"
+    commands:
+      - tapOn: "Open"
+- extendedWaitUntil:
+    visible: "Account export check"
+    timeout: 30000
+- tapOn: "Validate account controls"
+- extendedWaitUntil:
+    visible: "Account control passed"
+    timeout: 30000
+- takeScreenshot: "account-controls"

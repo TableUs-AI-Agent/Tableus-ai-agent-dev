@@ -1,0 +1,10 @@
+appId: com.tableus.app
+---
+- assertVisible: ".*may have completed.*"
+- assertVisible: "Offline resilience dinner"
+- tapOn: "Retry creating plan"
+- extendedWaitUntil:
+    visible: ".*Offline resilience dinner.*"
+    timeout: 30000
+- assertVisible: "(?i).*collecting.*"
+- assertNotVisible: "Retry creating plan"

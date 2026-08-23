@@ -1,0 +1,35 @@
+appId: com.tableus.app
+---
+- launchApp:
+    clearState: true
+- openLink: "tableus://e2e/identity?user=demo-organizer"
+- runFlow:
+    when:
+      visible: ".*Open in.*TableUs.*"
+    commands:
+      - tapOn: "Open"
+- extendedWaitUntil:
+    visible: "Active test identity: Demo Organizer"
+    timeout: 30000
+- tapOn:
+    text: "Continue to plans"
+    retryTapIfNoChange: true
+- extendedWaitUntil:
+    visible: "Plans"
+    timeout: 60000
+- assertNotVisible: "Authentication required"
+- tapOn: "Friday dinner"
+- inputText: "Beta dinner"
+- hideKeyboard
+- tapOn: "Create shared plan"
+- extendedWaitUntil:
+    visible: "Friday dinner"
+    timeout: 30000
+- extendedWaitUntil:
+    visible: ".*Beta dinner.*"
+    timeout: 30000
+- assertNotVisible: "Authentication required"
+- tapOn: ".*Beta dinner.*"
+- extendedWaitUntil:
+    visible: "Your constraints"
+    timeout: 30000

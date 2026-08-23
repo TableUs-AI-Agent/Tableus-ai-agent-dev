@@ -1,0 +1,74 @@
+appId: com.tableus.app
+---
+- openLink: "tableus://e2e/identity?user=demo-guest"
+- runFlow:
+    when:
+      visible: ".*Open in.*TableUs.*"
+    commands:
+      - tapOn: "Open"
+- extendedWaitUntil:
+    visible: "Active test identity: Demo Guest"
+    timeout: 30000
+- tapOn:
+    text: "Continue to plans"
+    retryTapIfNoChange: true
+- openLink: "tableus://plans/${PLAN_ID}"
+- runFlow:
+    when:
+      visible: ".*Open in.*TableUs.*"
+    commands:
+      - tapOn: "Open"
+- extendedWaitUntil:
+    visible: "Your constraints"
+    timeout: 30000
+- scrollUntilVisible:
+    element: "Rank Garden Mezze"
+    direction: DOWN
+    timeout: 30000
+- tapOn:
+    text: "Rank Garden Mezze"
+    retryTapIfNoChange: true
+- extendedWaitUntil:
+    visible: "Remove Garden Mezze from rank 1"
+    timeout: 10000
+- scrollUntilVisible:
+    element: "Rank Sakura Table"
+    direction: UP
+- tapOn:
+    text: "Rank Sakura Table"
+    retryTapIfNoChange: true
+- extendedWaitUntil:
+    visible: "Remove Sakura Table from rank 2"
+    timeout: 10000
+- scrollUntilVisible:
+    element: "Rank Noodle Assembly"
+    direction: DOWN
+- tapOn:
+    text: "Rank Noodle Assembly"
+    retryTapIfNoChange: true
+- extendedWaitUntil:
+    visible: "Remove Noodle Assembly from rank 3"
+    timeout: 10000
+- scrollUntilVisible:
+    element: "Submit ranked vote"
+    direction: DOWN
+- tapOn:
+    text: "Submit ranked vote"
+    retryTapIfNoChange: true
+- scrollUntilVisible:
+    element: "Ranked vote saved."
+    direction: DOWN
+    timeout: 30000
+- assertNotVisible: "Finalize current winner"
+- scrollUntilVisible:
+    element: "Noodle Assembly score 2 points, rank 3"
+    direction: UP
+- assertVisible: "Noodle Assembly score 2 points, rank 3"
+- scrollUntilVisible:
+    element: "Garden Mezze score 5 points, rank 1"
+    direction: UP
+- assertVisible: "Garden Mezze score 5 points, rank 1"
+- scrollUntilVisible:
+    element: "Sakura Table score 5 points, rank 2"
+    direction: UP
+- assertVisible: "Sakura Table score 5 points, rank 2"

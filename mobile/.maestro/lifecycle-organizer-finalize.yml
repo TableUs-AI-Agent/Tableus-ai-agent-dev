@@ -1,0 +1,48 @@
+appId: com.tableus.app
+---
+- openLink: "tableus://e2e/identity?user=demo-organizer"
+- runFlow:
+    when:
+      visible: ".*Open in.*TableUs.*"
+    commands:
+      - tapOn: "Open"
+- extendedWaitUntil:
+    visible: "Active test identity: Demo Organizer"
+    timeout: 30000
+- tapOn:
+    text: "Continue to plans"
+    retryTapIfNoChange: true
+- openLink: "tableus://plans/${PLAN_ID}"
+- runFlow:
+    when:
+      visible: ".*Open in.*TableUs.*"
+    commands:
+      - tapOn: "Open"
+- scrollUntilVisible:
+    element: "Sakura Table score 5 points, rank 1"
+    direction: DOWN
+    timeout: 30000
+- assertVisible: "Sakura Table score 5 points, rank 1"
+- scrollUntilVisible:
+    element: "Finalize current winner"
+    direction: DOWN
+    timeout: 60000
+    speed: 80
+    visibilityPercentage: 50
+- tapOn: "Finalize current winner"
+- extendedWaitUntil:
+    visible: "Reopen voting"
+    timeout: 30000
+- scrollUntilVisible:
+    element: "Sakura Table score 5 points, chosen"
+    direction: UP
+- assertVisible: "Sakura Table score 5 points, chosen"
+- takeScreenshot: "finalized-plan"
+- scrollUntilVisible:
+    element: "Reopen voting"
+    direction: DOWN
+- tapOn: "Reopen voting"
+- scrollUntilVisible:
+    element: "Submit ranked vote"
+    direction: DOWN
+    timeout: 30000

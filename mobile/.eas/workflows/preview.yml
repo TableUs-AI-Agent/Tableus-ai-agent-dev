@@ -1,0 +1,19 @@
+name: Mobile preview builds
+
+on:
+  workflow_dispatch: {}
+
+jobs:
+  build_ios:
+    name: Build iOS preview
+    type: build
+    params:
+      platform: ios
+      profile: preview
+
+  build_android:
+    name: Build Android preview
+    type: build
+    params:
+      platform: android
+      profile: preview

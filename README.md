@@ -5,7 +5,7 @@
 
 [![Cursor Hackathon](https://img.shields.io/badge/Cursor%20Hackathon%202026-🏆%202nd%20Place-FFD700?style=for-the-badge&logo=cursor)](https://cursor.com)
 [![Gemini AI](https://img.shields.io/badge/Powered%20By-Google%20Gemini%202.5-4285F4?style=for-the-badge&logo=google)](https://deepmind.google/technologies/gemini/)
-[![Next.js 16](https://img.shields.io/badge/Frontend-Next.js%2016%20%7C%20React%2019-000000?style=for-the-badge&logo=nextdotjs)](https://nextjs.org/)
+[![Clients](https://img.shields.io/badge/Clients-Next.js%20%7C%20Expo-000000?style=for-the-badge&logo=expo)](https://expo.dev/)
 [![FastAPI](https://img.shields.io/badge/Backend-FastAPI%20%7C%20Python-009688?style=for-the-badge&logo=fastapi)](https://fastapi.tiangolo.com/)
 [![Google Maps](https://img.shields.io/badge/Maps-Google%20Places%20API-4285F4?style=for-the-badge&logo=googlemaps)](https://developers.google.com/maps)
 
@@ -32,7 +32,7 @@ By fusing **real-time Google Maps geocoding**, **Google Places candidate pools**
 - **🤖 Explainable AI Reasoning**: Transparent match percentages and natural-language justifications for every venue.
 - **👥 Multi-Person Taste Synthesis**: `@` tag friends to instantly merge distinct dietary needs, budget constraints, and craving profiles.
 - **📷 Multimodal Taste Learning**: Submit natural language reviews or food photos to continuously evolve user preference models via Gemini Vision.
-- **🚀 Zero-Database Setup**: Instant in-memory demo dataset designed for frictionless local testing and prototyping.
+- **🚀 Deterministic Local Mode**: Credential-free Maps/AI fixtures, SQLite persistence, and demo authentication for reliable development and CI.
 
 ---
 
@@ -95,10 +95,11 @@ flowchart LR
 
 | Layer | Technology | Key Function |
 |---|---|---|
-| **Frontend** | Next.js 16, React 19, Tailwind CSS 4, Framer Motion | Modern responsive UI, 3D Orbit visualizations, fluid animations |
-| **Backend** | FastAPI, Python 3.10+ | Lightweight REST API, prompt orchestration, in-memory state management |
-| **AI Engine** | Google Gemini 2.5 / 2.0 Flash | Multimodal vision, multi-person preference synthesis, explainable ranking |
-| **Location Services** | Google Maps Geocoding & Places APIs | Real-world coordinate resolution and live venue candidate retrieval |
+| **Web** | Next.js 16, React 19, Tailwind CSS 4, Three.js | Responsive planning plus optional 3D discovery |
+| **Mobile** | Expo Router, React Native | One managed iOS/Android application with native 2D planning flows |
+| **Backend** | FastAPI, Python 3.12, async SQLAlchemy, Alembic | Versioned API, persistence, invite access, and ranked shared plans |
+| **Data & Auth** | Supabase Postgres and Auth | Email OTP, invite approval, and durable beta data |
+| **AI & Maps** | Gemini 2.5 Flash Lite, Places API New | Provider-neutral recommendation and location services |
 
 ---
 
@@ -106,12 +107,15 @@ flowchart LR
 
 ```text
 Tableus-ai-agent/
+├── mobile/               # Expo Router iOS and Android application
+├── packages/             # Generated API client and shared domain logic
 ├── frontend/             # Next.js 16 application
 │   ├── app/              # App router pages (/discover, /friends, /review, /profile)
 │   ├── components/       # UI components (Orbit, Candidate Cards, Brief Modals)
 │   └── lib/              # API client and client state helpers
 ├── backend/              # FastAPI server
-│   ├── main.py           # Endpoint definitions & Gemini prompt pipelines
+│   ├── tableus/          # Versioned API, persistence, auth, providers, ranking
+│   ├── main.py           # App assembly and legacy demo compatibility
 │   ├── google_maps_service.py # Maps API wrapper & fallback geocoders
 │   └── data.py           # Demo user profiles, reviews & preference datasets
 ├── docs/                 # Documentation assets & product banners
@@ -132,9 +136,10 @@ Tableus-ai-agent/
 ## 🚀 Quick Start
 
 ### Prerequisites
-- Node.js 18+ and `npm`
-- Python 3.9+ (Python 3.10+ recommended)
-- Google Gemini API Key and Google Maps API Key
+- Node.js 22 and `npm`
+- Python 3.12
+- Expo Go for the fastest iOS/Android development loop
+- Google, Supabase, and telemetry credentials only when enabling live mode
 
 ### 1. Clone the Repository
 ```bash
@@ -142,34 +147,36 @@ git clone https://github.com/samkwak/Tableus-ai-agent.git
 cd Tableus-ai-agent
 ```
 
-### 2. Set Up Backend
+### 2. Install all workspaces and the backend
 ```bash
-cd backend
-python3 -m venv .venv
-source .venv/bin/activate
-pip install -r requirements.txt
+make setup
+cp backend/.env.example backend/.env
 ```
-
-Create a `backend/.env` file with your credentials:
-```env
-GEMINI_API_KEY=your_gemini_api_key
-GOOGLE_MAPS_API_KEY=your_google_maps_api_key
-```
-
-Run the backend server:
 ```bash
-uvicorn main:app --host 127.0.0.1 --port 8000 --reload
+cp frontend/.env.local.example frontend/.env.local
+cp mobile/.env.example mobile/.env
 ```
 
-### 3. Set Up Frontend
-In a separate terminal window:
+The defaults use deterministic providers, demo access, and local SQLite, so no
+credentials are needed. To run all three development processes:
+
 ```bash
-cd frontend
-npm install
-npm run dev
+make dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) in your browser to experience TableUs.
+Or run them independently with `npm run dev:web`, `npm run dev:mobile`, and
+`cd backend && .venv/bin/uvicorn main:app --reload`. Open
+[http://localhost:3000](http://localhost:3000) for web or scan Expo's QR code.
+
+### 3. Validate readiness
+
+```bash
+make ready
+```
+
+See `docs/current-state.md`, `docs/roadmap.md`, and `docs/decisions.md` for the
+closed-beta source of truth. Follow `docs/release-runbook.md` for the exact
+staging and release-gate sequence.
 
 ---
 

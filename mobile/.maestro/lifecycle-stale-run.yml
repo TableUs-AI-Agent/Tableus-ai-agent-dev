@@ -1,0 +1,20 @@
+appId: com.tableus.app
+---
+- openLink: "tableus://plans/${PLAN_ID}"
+- runFlow:
+    when:
+      visible: ".*Open in.*TableUs.*"
+    commands:
+      - tapOn: "Open"
+- extendedWaitUntil:
+    visible: "Saving changed constraints returns the plan to collecting and clears the current recommendations and votes."
+    timeout: 30000
+- tapOn: "Budget, vibe, dietary notes…"
+- inputText: "Guest now needs a quieter table"
+- tapOn: "Your constraints"
+- tapOn: "Save constraints"
+- extendedWaitUntil:
+    visible: "Find four options"
+    timeout: 30000
+- assertNotVisible: "Sakura Table"
+- assertNotVisible: "Submit ranked vote"

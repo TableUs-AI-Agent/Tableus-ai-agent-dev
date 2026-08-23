@@ -1,12 +1,13 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
-import { ChevronDown, PenSquare, Search, User, Users } from "lucide-react";
+import { usePathname, useRouter } from "next/navigation";
+import { CalendarDays, ChevronDown, PenSquare, Search, User, Users } from "lucide-react";
 import { useState } from "react";
 import { useUser } from "../context/user-context";
 
 const NAV = [
+  { href: "/plans", label: "Plans", icon: CalendarDays },
   { href: "/discover", label: "Discover", icon: Search },
   { href: "/friends", label: "Friends", icon: Users },
   { href: "/review", label: "Review", icon: PenSquare },
@@ -15,7 +16,8 @@ const NAV = [
 
 export function Sidebar() {
   const pathname = usePathname();
-  const { currentUser, allUsers, switchUser } = useUser();
+  const router = useRouter();
+  const { currentUser, allUsers, canSwitchUser, switchUser } = useUser();
   const [open, setOpen] = useState(false);
 
   return (
@@ -57,7 +59,7 @@ export function Sidebar() {
 
         <div className="border-t border-[var(--border)] p-4">
           <button
-            onClick={() => setOpen((value) => !value)}
+            onClick={() => canSwitchUser ? setOpen((value) => !value) : router.push("/account")}
             className="flex w-full items-center gap-3 rounded-3xl bg-white/80 px-4 py-3 shadow-[0_12px_30px_rgba(244,186,114,0.12)] transition-colors hover:bg-white"
             aria-expanded={open}
           >
@@ -69,10 +71,10 @@ export function Sidebar() {
               <p className="truncate text-sm font-medium">{currentUser?.name ?? "Loading..."}</p>
               <p className="text-xs text-[var(--muted-foreground)]">Manage my account</p>
             </div>
-            <ChevronDown className={`h-4 w-4 text-[var(--muted-foreground)] transition-transform ${open ? "rotate-180" : ""}`} />
+            {canSwitchUser ? <ChevronDown className={`h-4 w-4 text-[var(--muted-foreground)] transition-transform ${open ? "rotate-180" : ""}`} /> : null}
           </button>
 
-          {open && (
+          {open && canSwitchUser ? (
             <div className="mt-2 space-y-1 rounded-3xl bg-white/72 p-2">
               {allUsers.map((user) => (
                 <button
@@ -93,11 +95,11 @@ export function Sidebar() {
                 </button>
               ))}
             </div>
-          )}
+          ) : null}
         </div>
       </aside>
 
-      {open && (
+      {open && canSwitchUser ? (
         <div className="fixed inset-x-3 bottom-[calc(5.5rem+env(safe-area-inset-bottom))] z-[72] rounded-[28px] border border-white/75 bg-white/95 p-3 shadow-[0_22px_70px_rgba(145,94,255,0.14)] backdrop-blur-2xl lg:hidden">
           <div className="mb-2 flex items-center gap-3 px-2">
             {currentUser && (
@@ -130,7 +132,7 @@ export function Sidebar() {
             ))}
           </div>
         </div>
-      )}
+      ) : null}
 
       <nav className="fixed inset-x-0 bottom-0 z-[70] border-t border-white/75 bg-white/92 px-2 pb-[calc(0.45rem+env(safe-area-inset-bottom))] pt-2 shadow-[0_-14px_40px_rgba(145,94,255,0.1)] backdrop-blur-2xl lg:hidden">
         <div className="mx-auto flex max-w-xl items-center gap-1">
@@ -161,13 +163,13 @@ export function Sidebar() {
 
           <button
             type="button"
-            onClick={() => setOpen((value) => !value)}
+            onClick={() => canSwitchUser ? setOpen((value) => !value) : router.push("/account")}
             className={`flex min-w-0 flex-1 flex-col items-center gap-1 rounded-2xl px-1.5 py-1.5 text-[10px] font-semibold transition ${
               open
                 ? "text-[var(--accent)]"
                 : "text-[var(--muted-foreground)] hover:bg-white/80 hover:text-[var(--foreground)]"
             }`}
-            aria-label="Switch user"
+            aria-label={canSwitchUser ? "Switch user" : "Manage account"}
             aria-expanded={open}
           >
             <span className="flex h-8 w-8 items-center justify-center rounded-full bg-[var(--muted)]/70">
@@ -178,7 +180,7 @@ export function Sidebar() {
                 <User className="h-4 w-4" />
               )}
             </span>
-            <span className="w-full truncate text-center">User</span>
+            <span className="w-full truncate text-center">{canSwitchUser ? "User" : "Account"}</span>
           </button>
         </div>
       </nav>

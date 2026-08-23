@@ -1,0 +1,9 @@
+appId: com.tableus.app
+---
+- tapOn: "Email address"
+- inputText: "${MAESTRO_EMAIL}"
+- tapOn: "Welcome back."
+- tapOn: "Email me a code"
+- extendedWaitUntil:
+    visible: "Email verification code"
+    timeout: 30000

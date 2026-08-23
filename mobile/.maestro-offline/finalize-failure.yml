@@ -1,0 +1,32 @@
+appId: com.tableus.app
+---
+- openLink: "tableus://e2e/identity?user=demo-organizer"
+- runFlow:
+    when:
+      visible: ".*Open in.*TableUs.*"
+    commands:
+      - tapOn: "Open"
+- extendedWaitUntil:
+    visible: "Active test identity: Demo Organizer"
+    timeout: 30000
+- tapOn: "Continue to plans"
+- openLink: "tableus://plans/${PLAN_ID}"
+- runFlow:
+    when:
+      visible: ".*Open in.*TableUs.*"
+    commands:
+      - tapOn: "Open"
+- scrollUntilVisible:
+    element: "Sakura Table"
+    direction: DOWN
+    timeout: 30000
+- scrollUntilVisible:
+    element: "Finalize current winner"
+    direction: DOWN
+    visibilityPercentage: 60
+    timeout: 30000
+- tapOn: "Finalize current winner"
+- extendedWaitUntil:
+    visible: ".*may have completed.*"
+    timeout: 30000
+- assertVisible: "Retry finalizing plan"

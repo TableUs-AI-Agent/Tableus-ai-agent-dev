@@ -1,0 +1,13 @@
+appId: com.tableus.app
+---
+- assertVisible: ".*may have completed.*"
+- tapOn: "Retry finalizing plan"
+- extendedWaitUntil:
+    visible: "Reopen voting"
+    timeout: 30000
+- scrollUntilVisible:
+    element: "Sakura Table score 0 points, chosen"
+    direction: UP
+    timeout: 30000
+- assertVisible: "Sakura Table score 0 points, chosen"
+- takeScreenshot: "recovered-finalized"

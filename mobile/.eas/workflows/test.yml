@@ -1,0 +1,17 @@
+name: Mobile deterministic build artifacts
+
+on:
+  workflow_dispatch: {}
+
+jobs:
+  build_ios:
+    type: build
+    params:
+      platform: ios
+      profile: test-ios
+
+  build_android:
+    type: build
+    params:
+      platform: android
+      profile: test-android

@@ -1,0 +1,19 @@
+appId: com.tableus.app
+---
+- tapOn: "Email verification code"
+- inputText: "${MAESTRO_OTP}"
+- tapOn: "Verification email"
+- tapOn: "Verify and continue"
+- extendedWaitUntil:
+    visible: "Join this TableUs plan?"
+    timeout: 60000
+- assertNotVisible: "Sign in to join"
+- openLink: "tableus:///"
+- runFlow:
+    when:
+      visible: ".*Open in.*TableUs.*"
+    commands:
+      - tapOn: "Open"
+- extendedWaitUntil:
+    visible: "Plans"
+    timeout: 30000

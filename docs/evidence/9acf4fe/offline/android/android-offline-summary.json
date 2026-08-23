@@ -1,0 +1,24 @@
+{
+  "platform": "android",
+  "device": "emulator-5554",
+  "build_id": "local-android-9acf4fe-20260822",
+  "git_sha": "9acf4fe2a648d4226be028d947ca8d08d7fc7029",
+  "app": "tableus.apk",
+  "artifact_sha256": "59f6c9d2e770155fc1df90867bb54b6037962fef3ab0e08df263157ff07f1154",
+  "app_id": "com.tableus.app",
+  "provider_mode": "deterministic",
+  "auth_mode": "demo",
+  "create_request_count": 2,
+  "create_same_key_replay": true,
+  "plan_count": 1,
+  "offline_constraint_request_count": 0,
+  "recovered_constraint_request_count": 1,
+  "candidate_count": 4,
+  "finalize_request_count": 2,
+  "finalize_same_key_replay": true,
+  "finalized_event_count": 1,
+  "screenshots": [
+    "android-offline-retry.png",
+    "android-recovered-finalized.png"
+  ]
+}

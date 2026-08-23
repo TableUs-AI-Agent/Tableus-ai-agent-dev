@@ -1,0 +1,26 @@
+{
+  "platform": "ios",
+  "device": "FE2B33EB-D5F9-427D-98D9-3E7FB4A975E8",
+  "build_id": "d192d04a-73e8-401c-98ac-b6c7a3a9c551",
+  "git_sha": "a78a6d27229bc464d4998bdf3c3593f4167a831b",
+  "app": "TableUs.app",
+  "artifact_sha256": "3bae9f23e3481b6782e4859efd1d425bdcea1bee5f7398958f7db3f5248c1acd",
+  "app_id": "com.tableus.app",
+  "provider_mode": "deterministic",
+  "auth_mode": "demo",
+  "participants": 2,
+  "candidate_count": 4,
+  "scores": {
+    "Sakura Table": 5,
+    "Garden Mezze": 5,
+    "Noodle Assembly": 2
+  },
+  "finalized_winner": "Sakura Table",
+  "reopened": true,
+  "rotated_link_rejected": true,
+  "stale_run_cleared": true,
+  "screenshots": [
+    "ios-finalized-plan.png",
+    "ios-rotated-link.png"
+  ]
+}

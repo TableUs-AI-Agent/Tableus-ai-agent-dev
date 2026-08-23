@@ -1,0 +1,23 @@
+{
+  "name": "tableus",
+  "private": true,
+  "version": "0.2.0",
+  "workspaces": ["frontend", "mobile", "packages/*"],
+  "scripts": {
+    "dev:web": "npm run dev --workspace @tableus/web",
+    "dev:mobile": "npm run start --workspace @tableus/mobile",
+    "lint": "npm run lint --workspaces --if-present",
+    "typecheck": "npm run typecheck --workspaces --if-present",
+    "test": "node --test scripts/*.test.mjs && npm run test --workspaces --if-present",
+    "test:e2e": "playwright test",
+    "build": "npm run build --workspaces --if-present",
+    "contract:generate": "npm run generate --workspace @tableus/api-client",
+    "contract:check": "npm run check --workspace @tableus/api-client"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.55.0",
+    "@types/node": "^22.19.0",
+    "openapi-typescript": "^7.10.1"
+  },
+  "engines": { "node": ">=22 <23" }
+}
