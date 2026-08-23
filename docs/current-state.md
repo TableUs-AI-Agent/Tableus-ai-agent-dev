@@ -103,10 +103,12 @@
   `links.table-us.com`. Shared domain helpers generate every web/mobile auth and
   private-plan URL, reject unsafe origins, and replace custom-scheme or
   current-origin sharing. Expo matches `/join/*` and exact `/auth` while leaving
-  `/auth/confirm` on the web. Web join auth renders inline and mobile auth is
-  presented over the retained join route, so neither client persists the share
-  token outside the current navigation process. Both expose an accessible
-  invalid/expired/rotated state.
+  `/auth/confirm` on the web. A native-intent rewrite normalizes cold-start HTTPS
+  paths, retains only the allowlisted auth mode or join token, and leaves other
+  origins plus the development scheme unchanged. Web join auth renders inline
+  and mobile auth is presented over the retained join route, so neither client
+  persists the share token outside the current navigation process. Both expose
+  an accessible invalid/expired/rotated state.
 - `links-test-ios` and `links-test-android` inherit the Supabase-authenticated
   preview environment without demo or local/auth-E2E controls. Signed-artifact
   inspection verifies exact SHA, HTTPS staging markers, native associations,
@@ -114,10 +116,11 @@
   `make mobile-links-e2e` runner verifies hosted manifests, native routing,
   returning OTP, retained join intent, and rotated-link handling while deleting
   raw private URLs and Maestro output.
-- The verified-link local readiness gate passes, including focused domain, web,
-  mobile, configuration, artifact-tooling, deterministic Playwright, build,
-  smoke, and performance checks. Only the exact-SHA external association and
-  signed-device evidence gate remains.
+- Verified-link DNS, TLS, Vercel preview deployment, signing identifiers, and
+  both direct association endpoints are configured. Android device execution
+  exposed and drove a native cold-start query-normalization correction; the
+  corrected cumulative readiness gate passes and replacement exact-SHA signed
+  artifacts plus device evidence remain.
 - Next.js is pinned to 16.3.1 to resolve direct security advisories. npm still
   reports Expo/React Native build-tool advisories whose proposed remediation is
   an unsupported SDK downgrade; track upstream SDK 57 patches before release.

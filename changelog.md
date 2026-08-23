@@ -10,8 +10,13 @@
 - Added inline web join authentication, mobile auth-mode allowlisting, retained
   protected join routing, and accessible rotated-link failures.
 - Added Supabase preview link-test profiles, signed entitlement/certificate
-  inspection, and redacted physical-iOS/Android evidence orchestration. External
-  DNS, deployment, signing, build, and OTP gates remain pending.
+  inspection, and redacted physical-iOS/Android evidence orchestration. Canonical
+  DNS, TLS, Vercel preview deployment, and public signing identifiers are live;
+  replacement signed artifacts and OTP journeys remain pending.
+- Added fail-closed native-intent normalization after physical Android execution
+  showed that Expo Router can lose an HTTPS auth query on a cold start. Only the
+  allowlisted auth mode or join token survives rewriting; other URL fields are
+  discarded before the route renders.
 
 ## 2026-08-21 — Account control hardening
 

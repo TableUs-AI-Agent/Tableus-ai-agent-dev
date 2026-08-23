@@ -98,4 +98,6 @@
   invite, auth, and private-plan links. The dedicated host avoids same-origin
   browser navigation behavior and serves the same Next.js fallback when the app
   is unavailable. Share tokens stay in the current join URL and navigation
-  process; auth UI receives no token and evidence retains no private URL.
+  process; auth UI receives no token and evidence retains no private URL. Native
+  cold starts normalize the canonical host through Expo Router's
+  `+native-intent`, retaining only the allowlisted auth mode or join token.

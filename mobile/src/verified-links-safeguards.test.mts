@@ -3,12 +3,14 @@ import { readFileSync } from "node:fs";
 import test from "node:test";
 
 const authRoute = readFileSync(new URL("../app/auth.tsx", import.meta.url), "utf8");
+const nativeIntent = readFileSync(new URL("../app/+native-intent.tsx", import.meta.url), "utf8");
 const joinRoute = readFileSync(new URL("../app/join/[id].tsx", import.meta.url), "utf8");
 const planRoute = readFileSync(new URL("../app/plans/[id].tsx", import.meta.url), "utf8");
 
 test("public auth links select mode without accepting private auth fields", () => {
   assert.match(authRoute, /parseAuthLinkMode\(requestedMode\)/);
   assert.doesNotMatch(authRoute, /useLocalSearchParams<[^>]*(email|invite|otp|token)/s);
+  assert.match(nativeIntent, /rewriteCanonicalSystemPath/);
 });
 
 test("signed-out join routes present auth over the retained route", () => {

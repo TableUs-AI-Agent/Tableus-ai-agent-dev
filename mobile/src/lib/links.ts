@@ -13,3 +13,20 @@ export function createCanonicalAuthUrl(mode: AuthLinkMode): string {
 export function parseAuthLinkMode(value: string | string[] | undefined): AuthLinkMode {
   return value === "sign-in" ? "sign-in" : "join";
 }
+
+export function rewriteCanonicalSystemPath(path: string): string {
+  try {
+    const url = new URL(path, `${linkOrigin}/`);
+    if (url.origin !== linkOrigin) return path;
+    if (url.pathname === "/auth") {
+      return `/auth?mode=${parseAuthLinkMode(url.searchParams.get("mode") ?? undefined)}`;
+    }
+    if (/^\/join\/[^/]+$/.test(url.pathname)) {
+      const token = url.searchParams.get("token");
+      return token ? `${url.pathname}?token=${encodeURIComponent(token)}` : url.pathname;
+    }
+    return path;
+  } catch {
+    return "/auth?mode=join";
+  }
+}

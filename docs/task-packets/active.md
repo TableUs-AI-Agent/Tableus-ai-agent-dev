@@ -2,12 +2,13 @@
 
 ## Status
 
-Local implementation and readiness verification are complete on
-`codex/verified-links`, branched from offline evidence commit
-`e1e9b2263541346db19f535c90c4f985b6b34d97`. DNS/Vercel configuration,
-signing-identifier publication, Apple device registration, staging deployment,
-signed local EAS builds, and two returning-sign-in OTP emails remain one
-explicit owner gate against the frozen candidate SHA.
+Implementation continues on `codex/verified-links`, branched from offline
+evidence commit `e1e9b2263541346db19f535c90c4f985b6b34d97`. DNS, TLS, Vercel
+preview deployment, and public signing identifiers are live. Android device
+execution exposed a cold-start HTTPS query-normalization gap; the native-intent
+correction and cumulative readiness gate are complete locally. A replacement
+exact-SHA artifact approval is required next. Apple device registration, signed
+artifacts, and two returning-sign-in OTP journeys remain external evidence work.
 
 ## Objective
 
