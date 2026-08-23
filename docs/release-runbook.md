@@ -221,6 +221,14 @@ Never retain raw proxy output or idempotency keys. The API idempotency cache is
 process-local; restart or multi-instance replay evidence is intentionally not
 claimed.
 
+Run iOS and Android evidence sequentially and shut down the first simulator
+before starting the second. Local Android artifacts target `arm64-v8a` only;
+cap Gradle and CMake worker concurrency. Redirect verbose build and Maestro
+output to temporary files, inspect only compact phase summaries, and delete the
+raw logs after sanitized evidence is retained. These controls protect both host
+memory and the Codex desktop task from multi-gigabyte native and tool-output
+retention.
+
 For real mobile authentication evidence, use the separately approved
 `auth-test-ios` and `auth-test-android` artifacts. Verify their EAS metadata and
 bundles first, then run each with a fresh one-use invite and a distinct

@@ -11,11 +11,12 @@
 Every milestone must be deterministic and credential-free in CI before the next
 external integration is enabled.
 
-The current evidence objective is exact-SHA mobile offline mutation resilience:
-artifact inspection plus clean iOS and Android fault-proxy journeys must prove
-no queued writes, stable-key replay after ambiguous commit responses, and one
-backend transition per logical operation. Verified Universal/App Links, live
-Maps, and budgeted Gemini validation remain subsequent packets.
+Exact-SHA mobile offline mutation resilience is complete from candidate
+`9acf4fe2a648d4226be028d947ca8d08d7fc7029`: inspected local artifacts and clean
+iOS/Android fault-proxy journeys prove no queued writes, stable-key replay after
+ambiguous committed responses, and one backend transition per logical
+operation. Verified Universal/App Links are the next evidence objective; live
+Maps and budgeted Gemini validation remain subsequent packets.
 
 The active gate sequence and required owner inputs are maintained in
 `docs/release-runbook.md`.

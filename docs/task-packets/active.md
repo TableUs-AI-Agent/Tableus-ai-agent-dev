@@ -4,23 +4,17 @@
 
 Implementation and local deterministic verification are complete on
 `codex/mobile-offline-resilience`, branched from local evidence commit
-`c4df4eb0880e2ee8a4f7cec0f615111af02c8dcd`. Candidate `96588f3` passed
-`make ready`; its locally built iOS and ARM64 Android artifacts passed exact-SHA,
-loopback/demo, and forbidden-origin inspection. The iOS fault journey passed in
-full. Android device evidence then exposed that the global offline alert rendered
-inside the status-bar inset, so Maestro correctly treated it as inaccessible.
-The root now owns an explicit safe-area provider and the banner consumes the top
-inset, with a component regression test. Candidate `c9a0149` incorporated that
-fix; both replacement artifacts passed inspection, but iOS 26.5 repeatedly
-failed Maestro's known-flaky `hideKeyboard` command while the standard keyboard
-and visible Save action remained healthy. The flow now follows Maestro's
-documented workaround by tapping the non-interactive constraints heading before
-the Save action, and a source regression test excludes `hideKeyboard` from that
-phase. Candidates `96588f3` and `c9a0149` plus their artifacts are superseded.
-A final exact-SHA candidate, both replacement local artifacts, and both clean
-device journeys remain the only incomplete evidence. Local Android builds are
-ARM64-only and cap Gradle/CMake concurrency to prevent the prior four-ABI
-host-memory spike.
+`c4df4eb0880e2ee8a4f7cec0f615111af02c8dcd`. Final candidate
+`9acf4fe2a648d4226be028d947ca8d08d7fc7029` passed `make ready`, exact-SHA
+artifact inspection, and clean iOS 26.5 and Android API 36 ARM64 fault-proxy
+journeys. Both platforms proved one-plan and one-finalized-event same-key
+replays, zero known-offline constraint requests, one explicit recovered
+constraint request, and four deterministic candidates. Sanitized receipts,
+summaries, and screenshots are in `docs/evidence/9acf4fe/`. Superseded
+candidates `96588f3` and `c9a0149` are retained only in the history. Local Android
+builds are ARM64-only and cap Gradle/CMake concurrency; simulators run
+sequentially and verbose native/Maestro output is file-backed to bound host and
+Codex desktop memory.
 
 ## Objective
 

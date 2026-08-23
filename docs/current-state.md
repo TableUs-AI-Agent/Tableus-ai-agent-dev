@@ -216,22 +216,21 @@
   foreground refresh, sign-out, and returning sign-in. Both one-use invites
   show one use, one redemption, and no active pending validation. Sanitized
   summaries and screenshots are in `docs/evidence/d6d1b3a/`.
-  Offline-retry implementation is complete locally. Candidate `96588f3` passed
-  the cumulative readiness gate, and its local iOS and ARM64 Android artifacts
-  passed exact-SHA, loopback/demo, and forbidden-origin inspection. The iOS fault
-  journey passed with one-plan/single-transition same-key replays and zero offline
-  constraint requests. Android then exposed that the global offline alert occupied
-  the system status-bar inset and was not accessibility-visible. The root now
-  provides safe-area context and the banner consumes the top inset; a component
-  regression test locks that behavior. Candidate `c9a0149` incorporated the fix
-  and both local artifacts passed inspection, but iOS 26.5 repeatedly failed
-  Maestro's known-flaky `hideKeyboard` command while the keyboard and visible
-  Save action remained functional. The constraints flow now taps its
-  non-interactive heading, Maestro's documented dismissal workaround, before
-  saving. Candidates `96588f3` and `c9a0149` are superseded, so final exact-SHA
-  artifacts and both clean device journeys remain. Local Android builds use the target ARM64 ABI, bounded
-  Gradle/CMake concurrency, and file-backed temporary logs after a four-ABI build
-  caused severe host memory pressure. Expo currently reports the free-plan iOS
+  Offline-retry implementation and device evidence are complete from exact SHA
+  `9acf4fe2a648d4226be028d947ca8d08d7fc7029`. Local iOS simulator build
+  `local-ios-9acf4fe-20260822` and ARM64 Android APK build
+  `local-android-9acf4fe-20260822` passed exact-SHA, loopback/demo, and
+  forbidden-origin inspection. Clean iPhone 17 Pro/iOS 26.5 and API 36 ARM64
+  journeys each proved two create attempts yield one plan, known-offline
+  constraints yield zero requests until explicit retry, four candidates are
+  generated, and two finalization attempts yield one finalized event through
+  same-key replay. The root safe-area fix keeps the connectivity alert below the
+  system status bar, and the iOS flow uses Maestro's documented stable-header tap
+  instead of its flaky `hideKeyboard` gesture. Sanitized evidence is in
+  `docs/evidence/9acf4fe/`. Local Android builds use the target ARM64 ABI, bounded
+  Gradle/CMake concurrency, sequential simulators, and file-backed temporary logs
+  after a four-ABI build and a very long tool transcript caused severe host and
+  Codex desktop memory pressure. Expo currently reports the free-plan iOS
   build allowance exhausted until September 1, 2026. Account
   export/deletion controls are deployed,
   the staging migration is verified, and replacement read-only account-control

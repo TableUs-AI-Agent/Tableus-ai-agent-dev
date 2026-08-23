@@ -87,3 +87,8 @@
 - **2026-08-22:** Deterministic iOS Maestro flows dismiss keyboards by tapping a
   stable non-interactive heading when the next action remains visible. The
   platform driver's flaky `hideKeyboard` gesture is not an acceptance signal.
+- **2026-08-22:** Resource-intensive local mobile evidence runs are sequential.
+  Android test artifacts target ARM64 only and cap Gradle/CMake workers; verbose
+  build and Maestro output is written to temporary files and summarized only at
+  phase boundaries. This bounds native-worker memory and avoids retaining large
+  tool streams in the Codex desktop task.
