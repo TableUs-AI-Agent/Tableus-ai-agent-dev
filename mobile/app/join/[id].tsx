@@ -1,4 +1,5 @@
 import type { Plan } from "@tableus/domain";
+import { ApiError } from "@tableus/api-client";
 import { router, useLocalSearchParams } from "expo-router";
 import { ScrollView, Text } from "react-native";
 
@@ -16,6 +17,7 @@ export default function JoinPlanScreen() {
     mutationFn: (shareToken: string, idempotencyKey) => api.post<Plan>(`/api/v1/plans/${id}/join`, { share_token: shareToken }, { idempotencyKey }),
     onSuccess: () => router.replace({ pathname: "/plans/[id]", params: { id } }),
   });
+  const invalidLink = !token || (join.failure?.error instanceof ApiError && join.failure.error.status === 404);
   return (
     <ScrollView contentInsetAdjustmentBehavior="automatic" contentContainerStyle={{ padding: 20, gap: 16 }}>
       <Card>
@@ -24,12 +26,12 @@ export default function JoinPlanScreen() {
         {!auth.approved ? (
           <>
             <Text selectable accessibilityRole="alert" style={{ color: colors.ink, fontWeight: "700" }}>Authentication required</Text>
-            <Button label="Sign in to join" onPress={() => router.push("/auth")} />
+            <Button label="Sign in to join" onPress={() => router.push({ pathname: "/auth", params: { mode: "sign-in" } })} />
           </>
         ) : (
           <>
-            <MutationFeedback failure={join.failure} canRetry={join.canRetry} retryLabel="Retry joining plan" onRetry={join.retry} onDismiss={join.reset} />
-            <Button label="Join this plan" onPress={() => token && join.submit(token)} loading={join.isPending} disabled={!token || join.canRetry} />
+            {invalidLink ? <Text selectable accessibilityRole="alert" accessibilityLiveRegion="assertive" style={{ color: colors.danger }}>This private link is invalid, expired, or has been rotated.</Text> : <MutationFeedback failure={join.failure} canRetry={join.canRetry} retryLabel="Retry joining plan" onRetry={join.retry} onDismiss={join.reset} />}
+            <Button label="Join this plan" onPress={() => token && join.submit(token)} loading={join.isPending} disabled={invalidLink || join.canRetry} />
           </>
         )}
       </Card>

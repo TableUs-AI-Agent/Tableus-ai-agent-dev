@@ -2,7 +2,7 @@ import type { ExpoConfig, ConfigContext } from "expo/config";
 
 export default ({ config }: ConfigContext): ExpoConfig => {
   const projectId = process.env.EXPO_PUBLIC_EAS_PROJECT_ID ?? "0601c3b9-0082-454c-b636-45a1fe377f7b";
-  const linkHost = process.env.EXPO_PUBLIC_LINK_HOST ?? "tableus.app";
+  const linkHost = process.env.EXPO_PUBLIC_LINK_HOST ?? "links.table-us.com";
   const testBuildProfile = process.env.EAS_BUILD_PROFILE === "test-ios" || process.env.EAS_BUILD_PROFILE === "test-android";
   const authTestProfile = process.env.EAS_BUILD_PROFILE === "auth-test-ios" || process.env.EAS_BUILD_PROFILE === "auth-test-android";
   const localE2E = testBuildProfile && process.env.TABLEUS_LOCAL_E2E === "true";
@@ -38,10 +38,13 @@ export default ({ config }: ConfigContext): ExpoConfig => {
         {
           action: "VIEW",
           autoVerify: true,
-          data: [
-            { scheme: "https", host: linkHost, pathPrefix: "/join" },
-            { scheme: "https", host: linkHost, pathPrefix: "/auth" },
-          ],
+          data: [{ scheme: "https", host: linkHost, pathPrefix: "/join/" }],
+          category: ["BROWSABLE", "DEFAULT"],
+        },
+        {
+          action: "VIEW",
+          autoVerify: true,
+          data: [{ scheme: "https", host: linkHost, path: "/auth" }],
           category: ["BROWSABLE", "DEFAULT"],
         },
       ],

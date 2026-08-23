@@ -21,7 +21,7 @@ export function buildAppleAssociation(teamId: string, bundleId: string) {
       details: [
         {
           appIDs: [appId],
-          components: [{ "/": "/join/*" }, { "/": "/auth*" }],
+          components: [{ "/": "/join/*" }, { "/": "/auth" }],
         },
       ],
     },

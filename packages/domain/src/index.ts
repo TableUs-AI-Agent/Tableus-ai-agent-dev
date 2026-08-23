@@ -1,4 +1,5 @@
 export type PlanStatus = "collecting" | "voting" | "finalized";
+export type AuthLinkMode = "join" | "sign-in";
 
 export type Place = {
   place_id: string;
@@ -54,4 +55,38 @@ export function bordaScores(rankings: string[][]): Record<string, number> {
     });
   }
   return scores;
+}
+
+export function normalizeHttpsOrigin(value: string): string {
+  let parsed: URL;
+  try {
+    parsed = new URL(value);
+  } catch {
+    throw new Error("Link origin must be a valid HTTPS origin");
+  }
+  if (
+    parsed.protocol !== "https:"
+    || parsed.username
+    || parsed.password
+    || parsed.port
+    || parsed.pathname !== "/"
+    || parsed.search
+    || parsed.hash
+  ) {
+    throw new Error("Link origin must be HTTPS with no credentials, port, path, query, or fragment");
+  }
+  return parsed.origin;
+}
+
+export function buildJoinUrl(origin: string, planId: string, shareToken: string): string {
+  if (!planId.trim() || !shareToken.trim()) throw new Error("Plan ID and share token are required");
+  const url = new URL(`/join/${encodeURIComponent(planId.trim())}`, normalizeHttpsOrigin(origin));
+  url.searchParams.set("token", shareToken.trim());
+  return url.toString();
+}
+
+export function buildAuthUrl(origin: string, mode: AuthLinkMode): string {
+  const url = new URL("/auth", normalizeHttpsOrigin(origin));
+  url.searchParams.set("mode", mode);
+  return url.toString();
 }

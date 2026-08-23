@@ -6,6 +6,7 @@ import Link from "next/link";
 import { useState } from "react";
 
 import { v1Api } from "../lib/v1-api";
+import { createCanonicalJoinUrl } from "../lib/links";
 
 export default function PlansPage() {
   const queryClient = useQueryClient();
@@ -16,7 +17,7 @@ export default function PlansPage() {
     mutationFn: () => v1Api.post<{ plan: Plan; share_token: string }>("/api/v1/plans", { title, location_label: "Boston, MA", latitude: 42.3601, longitude: -71.0589 }),
     onSuccess: ({ plan, share_token }) => {
       setTitle("");
-      setShareUrl(`${window.location.origin}/join/${plan.id}?token=${encodeURIComponent(share_token)}`);
+      setShareUrl(createCanonicalJoinUrl(plan.id, share_token));
       void queryClient.invalidateQueries({ queryKey: ["plans"] });
     },
   });

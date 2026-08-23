@@ -127,6 +127,47 @@ preview build. EAS Update is only for JavaScript-compatible changes whose
 runtime version matches; native dependency or configuration changes require a
 new store build.
 
+### Canonical verified links
+
+Use only `https://links.table-us.com` for shared auth and private-plan URLs. Add
+that hostname to the existing Vercel staging project and create its Squarespace
+DNS record without redirecting through the apex or `www` host. Set
+`NEXT_PUBLIC_LINK_ORIGIN` and `EXPO_PUBLIC_LINK_HOST` to the canonical value.
+Keep `/auth/confirm` browser-only; native associations cover `/join/*` and exact
+`/auth`.
+
+After an exact-SHA candidate passes `make ready`, one explicit owner gate covers
+DNS/Vercel changes, public signing identifiers, the web deployment, EAS device
+registration/capability sync, signed local builds, and one returning OTP per
+platform. Build the physical-iOS and ARM64-Android `links-test-*` profiles
+sequentially with file-backed logs and bounded native workers.
+
+Extract the Apple Team ID and Android SHA-256 certificate from those signed
+artifacts, configure the association endpoint environment, deploy the exact SHA,
+and verify both files return JSON `200` with no redirect before installing the
+apps. Then inspect each artifact:
+
+```bash
+make inspect-mobile-links PLATFORM=ios APP=<signed-app-or-ipa> SHA=<candidate-sha> API_URL=<staging-api> SUPABASE_URL=<supabase-url> LINK_HOST=links.table-us.com APPLE_TEAM_ID=<team-id>
+make inspect-mobile-links PLATFORM=android APP=<signed-apk> SHA=<candidate-sha> API_URL=<staging-api> SUPABASE_URL=<supabase-url> LINK_HOST=links.table-us.com ANDROID_FINGERPRINT=<sha256-fingerprint>
+```
+
+Confirm the web fallback before app installation. On iOS, require Apple
+Associated Domains Diagnostics approval and a tap from Notes or Messages; a
+Safari address-bar navigation is not evidence. On Android, reset and reverify
+App Links and require `pm get-app-links com.tableus.app` to report the host as
+`verified`. Run the sanitized journey once per platform:
+
+```bash
+make mobile-links-e2e PLATFORM=ios DEVICE=<physical-device-id> APP=<signed-app-or-ipa> BUILD_ID=<local-build-id> ORIGIN=https://links.table-us.com EVIDENCE=<sanitized-dir>
+make mobile-links-e2e PLATFORM=android DEVICE=<emulator-serial> APP=<signed-apk> BUILD_ID=<local-build-id> ORIGIN=https://links.table-us.com EVIDENCE=<sanitized-dir>
+```
+
+The runner accepts one rotated private URL and one returning account/OTP in the
+interactive terminal, retains none of them in evidence, and deletes new raw
+Maestro output. Store only exact SHA, build IDs, artifact checksums, public
+association identifiers, verification booleans, and sanitized screenshots.
+
 ## 5. Produce exact-SHA staging evidence
 
 Deploy all three deliverables from the same candidate SHA. Record deployment/build

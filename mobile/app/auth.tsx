@@ -1,15 +1,18 @@
 import { useState } from "react";
+import { useLocalSearchParams } from "expo-router";
 import { Pressable, ScrollView, Text } from "react-native";
 
 import { Button, Card, ErrorText, Field } from "@/components/ui";
 import { maskEmail, type AuthMode } from "@/lib/auth-transaction";
 import { isSupabaseConfigured } from "@/lib/supabase";
+import { parseAuthLinkMode } from "@/lib/links";
 import { useAuth } from "@/providers/auth-provider";
 import { colors } from "@/theme";
 
 export default function AuthScreen() {
   const auth = useAuth();
-  const [mode, setMode] = useState<AuthMode>("join");
+  const { mode: requestedMode } = useLocalSearchParams<{ mode?: string | string[] }>();
+  const [selectedMode, setSelectedMode] = useState<AuthMode | null>(null);
   const [invite, setInvite] = useState("");
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
@@ -17,7 +20,7 @@ export default function AuthScreen() {
 
   const awaitingCode = auth.phase === "pending_verification";
   const awaitingRedemption = auth.phase === "redeem_pending";
-  const effectiveMode = auth.pending?.mode ?? mode;
+  const effectiveMode = auth.pending?.mode ?? selectedMode ?? parseAuthLinkMode(requestedMode);
   const joinMode = effectiveMode === "join";
 
   const begin = async () => {
@@ -27,7 +30,7 @@ export default function AuthScreen() {
 
   const switchMode = async () => {
     if (auth.pending) await auth.cancelPending();
-    setMode(joinMode ? "sign-in" : "join");
+    setSelectedMode(joinMode ? "sign-in" : "join");
     setInvite("");
     setEmail("");
     setName("");

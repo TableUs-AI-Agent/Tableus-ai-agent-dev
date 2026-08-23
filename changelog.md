@@ -1,5 +1,18 @@
 # Changelog
 
+## 2026-08-23 — Verified HTTPS link foundation
+
+- Standardized web and mobile auth/private-plan sharing on
+  `https://links.table-us.com`, with shared fail-closed URL construction and no
+  persisted join token.
+- Tightened AASA and Android filters to `/join/*` plus exact `/auth`, leaving the
+  code-based Supabase `/auth/confirm` callback on the web.
+- Added inline web join authentication, mobile auth-mode allowlisting, retained
+  protected join routing, and accessible rotated-link failures.
+- Added Supabase preview link-test profiles, signed entitlement/certificate
+  inspection, and redacted physical-iOS/Android evidence orchestration. External
+  DNS, deployment, signing, build, and OTP gates remain pending.
+
 ## 2026-08-21 — Account control hardening
 
 - Expanded application-data export into a typed, versioned contract covering

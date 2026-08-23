@@ -51,6 +51,26 @@
       },
       "android": { "buildType": "apk" }
     },
+    "links-test-ios": {
+      "extends": "preview",
+      "env": {
+        "EXPO_PUBLIC_LINK_HOST": "links.table-us.com",
+        "EXPO_PUBLIC_DEMO_MODE": "false",
+        "TABLEUS_LOCAL_E2E": "false",
+        "TABLEUS_AUTH_E2E": "false"
+      }
+    },
+    "links-test-android": {
+      "extends": "preview",
+      "env": {
+        "EXPO_PUBLIC_LINK_HOST": "links.table-us.com",
+        "EXPO_PUBLIC_DEMO_MODE": "false",
+        "TABLEUS_LOCAL_E2E": "false",
+        "TABLEUS_AUTH_E2E": "false",
+        "ORG_GRADLE_PROJECT_reactNativeArchitectures": "arm64-v8a"
+      },
+      "android": { "buildType": "apk" }
+    },
     "production": { "autoIncrement": true, "channel": "production", "environment": "production" }
   },
   "submit": {

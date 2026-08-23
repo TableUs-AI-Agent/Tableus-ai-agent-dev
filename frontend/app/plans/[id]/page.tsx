@@ -6,6 +6,7 @@ import { useParams } from "next/navigation";
 import { useState } from "react";
 
 import { v1Api } from "../../lib/v1-api";
+import { createCanonicalJoinUrl } from "../../lib/links";
 
 export default function PlanPage() {
   const { id } = useParams<{ id: string }>();
@@ -26,7 +27,7 @@ export default function PlanPage() {
   const reopen = useMutation(mutation("reopen", {}));
   const rotate = useMutation({
     mutationFn: () => v1Api.post<{ share_token: string }>(`/api/v1/plans/${id}/share-token/rotate`, {}),
-    onSuccess: ({ share_token }) => navigator.clipboard.writeText(`${window.location.origin}/join/${id}?token=${encodeURIComponent(share_token)}`),
+    onSuccess: ({ share_token }) => navigator.clipboard.writeText(createCanonicalJoinUrl(id, share_token)),
   });
   const current = plan.data;
   const error = plan.error || constraints.error || recommend.error || vote.error || finalize.error || reopen.error;
