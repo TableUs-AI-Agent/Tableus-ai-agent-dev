@@ -81,3 +81,6 @@
   process-local response cache. Request-body fingerprints prevent one actor from
   reusing a key with a different body, but restart and horizontal-scaling replay
   safety require a later persistent-ledger migration.
+- **2026-08-22:** Global mobile status banners render inside an explicit root
+  safe-area provider and consume the top inset. Semantic alert labels do not
+  substitute for visible bounds outside the system status bar.

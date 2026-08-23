@@ -216,19 +216,19 @@
   foreground refresh, sign-out, and returning sign-in. Both one-use invites
   show one use, one redemption, and no active pending validation. Sanitized
   summaries and screenshots are in `docs/evidence/d6d1b3a/`.
-  Offline-retry implementation is complete locally. The first device attempt
-  exposed and fixed Android cold-start flow timing plus a missing explicit
-  semantic label on the otherwise visible global offline banner. With only the
-  old APK's label assertion omitted, the complete Android fault journey passed
-  diagnostically, including zero-request offline constraints and same-key
-  create/finalization replays. Candidate `0b08859` local artifacts passed binary
-  inspection, then iOS evidence exposed a finalization safe-area selector issue,
-  retained simulator app state, and an ambiguous-finalization retry hidden after
-  foreground read refresh. The evidence runner now clears app data before install,
-  accepts a tappable control threshold, and preserves the same-key Retry action
-  after the read model reports `finalized`. Replacement exact-SHA iOS and Android
-  artifact inspection and release evidence remain; Expo currently reports the free-plan
-  iOS build allowance exhausted until September 1, 2026. Account
+  Offline-retry implementation is complete locally. Candidate `96588f3` passed
+  the cumulative readiness gate, and its local iOS and ARM64 Android artifacts
+  passed exact-SHA, loopback/demo, and forbidden-origin inspection. The iOS fault
+  journey passed with one-plan/single-transition same-key replays and zero offline
+  constraint requests. Android then exposed that the global offline alert occupied
+  the system status-bar inset and was not accessibility-visible. The root now
+  provides safe-area context and the banner consumes the top inset; a component
+  regression test locks that behavior. Candidate `96588f3` and both local
+  artifacts are superseded, so replacement exact-SHA artifacts and both clean
+  device journeys remain. Local Android builds use the target ARM64 ABI, bounded
+  Gradle/CMake concurrency, and file-backed temporary logs after a four-ABI build
+  caused severe host memory pressure. Expo currently reports the free-plan iOS
+  build allowance exhausted until September 1, 2026. Account
   export/deletion controls are deployed,
   the staging migration is verified, and replacement read-only account-control
   journeys passed from exact SHA

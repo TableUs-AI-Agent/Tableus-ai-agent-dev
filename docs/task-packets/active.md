@@ -4,26 +4,18 @@
 
 Implementation and local deterministic verification are complete on
 `codex/mobile-offline-resilience`, branched from local evidence commit
-`c4df4eb0880e2ee8a4f7cec0f615111af02c8dcd`. Device diagnostics hardened the
-Android cold-start wait and gave the global offline alert an explicit semantic
-label; the complete Android fault journey then passed diagnostically with only
-the old artifact's missing label assertion omitted. Focused checks and the
-cumulative `make ready` gate pass at the corrected branch tip. New exact-SHA
-`test-ios` and `test-android` artifacts remain explicit approval gates, and
-device evidence is not yet claimed. The Expo free-plan iOS build allowance is
-currently exhausted and reports a September 1, 2026 reset. Local EAS artifacts
-are now the approved deterministic-evidence fallback, with sanitized receipts;
-an iOS diagnostic exposed a merged plan-card accessibility label, and the
-cross-platform Maestro selector now matches that label without weakening the
-visible title/status assertions. Local artifacts from candidate `0b08859`
-passed binary inspection, but the iOS evidence run exposed two more deterministic
-runner/UI gaps: a fully visible finalization control is impossible at the bottom
-safe area, and foreground refetch can reveal a committed finalization while
-hiding its ambiguous-failure retry. The runner now starts from clean app data,
-uses a tappable visibility threshold, and keeps the same-key finalization retry
-available after the read model reports `finalized`. Candidate `0b08859` and both
-of its local artifacts are superseded; replacement exact-SHA artifacts and both
-device journeys remain the only incomplete acceptance evidence.
+`c4df4eb0880e2ee8a4f7cec0f615111af02c8dcd`. Candidate `96588f3` passed
+`make ready`; its locally built iOS and ARM64 Android artifacts passed exact-SHA,
+loopback/demo, and forbidden-origin inspection. The iOS fault journey passed in
+full. Android device evidence then exposed that the global offline alert rendered
+inside the status-bar inset, so Maestro correctly treated it as inaccessible.
+The root now owns an explicit safe-area provider and the banner consumes the top
+inset, with a component regression test. Candidate `96588f3` and both artifacts
+are superseded by this post-candidate correction. A new exact-SHA candidate,
+both replacement local artifacts, and both clean device journeys remain the only
+incomplete acceptance evidence. Focused checks and the cumulative `make ready`
+gate pass at the corrected branch tip. Local Android builds are ARM64-only and cap
+Gradle/CMake concurrency to prevent the prior four-ABI host-memory spike.
 
 ## Objective
 

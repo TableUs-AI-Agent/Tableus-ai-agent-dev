@@ -2,6 +2,7 @@ import * as Sentry from "@sentry/react-native";
 import { Stack } from "expo-router/stack";
 import { StatusBar } from "expo-status-bar";
 import { View } from "react-native";
+import { SafeAreaProvider } from "react-native-safe-area-context";
 
 import { ConnectivityBanner } from "@/components/connectivity-banner";
 import { AppProviders } from "@/providers/app-providers";
@@ -43,11 +44,13 @@ function RootNavigator() {
 
 function RootLayout() {
   return (
-    <AppProviders>
-      <AuthProvider>
-        <RootNavigator />
-      </AuthProvider>
-    </AppProviders>
+    <SafeAreaProvider>
+      <AppProviders>
+        <AuthProvider>
+          <RootNavigator />
+        </AuthProvider>
+      </AppProviders>
+    </SafeAreaProvider>
   );
 }
 
