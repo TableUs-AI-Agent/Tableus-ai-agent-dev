@@ -28,6 +28,7 @@ export default defineConfig({
       reuseExistingServer: !process.env.CI,
       env: {
         ...process.env,
+        TABLEUS_API_ORIGIN: "http://127.0.0.1:8000",
         APPLE_TEAM_ID: "ABCDE12345",
         IOS_BUNDLE_IDENTIFIER: "com.tableus.app",
         ANDROID_PACKAGE_NAME: "com.tableus.app",
