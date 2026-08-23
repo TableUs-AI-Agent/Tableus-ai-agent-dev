@@ -56,4 +56,4 @@ async def test_plan_event_actor_is_nullable_and_cleared_on_profile_deletion() ->
         await engine.dispose()
 
     assert nullable == "YES"
-    assert delete_action == "n"
+    assert delete_action in {"n", b"n"}
