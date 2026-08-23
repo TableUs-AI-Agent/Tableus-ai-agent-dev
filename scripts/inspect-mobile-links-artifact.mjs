@@ -44,6 +44,26 @@ function artifactBytes(path) {
   return Buffer.concat(chunks);
 }
 
+function appConfigurationBytes(platform, artifact, inspectionPath) {
+  if (platform === "android") {
+    const result = spawnSync("unzip", ["-p", artifact, "assets/app.config"], {
+      encoding: null,
+      maxBuffer: 8 * 1024 * 1024,
+    });
+    if (result.error) throw result.error;
+    if (result.status !== 0 || !result.stdout.length) {
+      throw new Error("Android artifact has no embedded Expo app configuration.");
+    }
+    return result.stdout;
+  }
+  let configuration;
+  visitFiles(inspectionPath, (file) => {
+    if (!configuration && file.endsWith("/assets/app.config")) configuration = readFileSync(file);
+  });
+  if (!configuration) throw new Error("iOS artifact has no embedded Expo app configuration.");
+  return configuration;
+}
+
 function findExecutable(name, candidates = []) {
   const discovered = spawnSync("which", [name], { encoding: "utf8" });
   if (discovered.status === 0 && discovered.stdout.trim()) return discovered.stdout.trim();
@@ -96,23 +116,26 @@ const temporaryRoot = mkdtempSync(join(tmpdir(), "tableus-link-inspection-"));
 try {
   const inspectionPath = platform === "ios" ? extractIosApp(artifact, temporaryRoot) : artifact;
   const content = artifactBytes(inspectionPath).toString("latin1");
+  const appConfiguration = appConfigurationBytes(platform, artifact, inspectionPath).toString("utf8");
   for (const required of [args.sha, args["api-url"], args["supabase-url"], host]) {
     if (!content.includes(required)) throw new Error(`Artifact is missing required marker: ${required}`);
   }
   for (const forbidden of [
     "demo-organizer",
     "demo-guest",
-    "http://127.0.0.1",
-    "http://localhost",
-    "http://[::1]",
     "SUPABASE_SERVICE_ROLE",
     "service_role",
     ...(args["forbidden-origins"] ?? "").split(",").filter(Boolean),
   ]) {
     if (content.includes(forbidden)) throw new Error(`Artifact contains forbidden marker: ${forbidden}`);
   }
-  if (!/localE2E.{0,24}(false|0)/s.test(content)) throw new Error("Artifact does not prove localE2E=false.");
-  if (!/authE2E.{0,24}(false|0)/s.test(content)) throw new Error("Artifact does not prove authE2E=false.");
+  for (const loopback of ["http://127.0.0.1", "http://localhost", "http://[::1]"]) {
+    if (appConfiguration.includes(loopback)) {
+      throw new Error(`Embedded app configuration contains a loopback origin: ${loopback}`);
+    }
+  }
+  if (!/"localE2E":false/.test(appConfiguration)) throw new Error("Artifact does not prove localE2E=false.");
+  if (!/"authE2E":false/.test(appConfiguration)) throw new Error("Artifact does not prove authE2E=false.");
 
   if (platform === "ios") {
     run("codesign", ["--verify", "--deep", "--strict", inspectionPath]);

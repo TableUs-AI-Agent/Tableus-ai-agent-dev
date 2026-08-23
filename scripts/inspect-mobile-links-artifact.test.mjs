@@ -14,8 +14,8 @@ test("verified-link inspection requires exact signed native associations", () =>
   ]) assert.equal(source.includes(marker), true);
 });
 
-test("verified-link inspection rejects private test and credential markers", () => {
-  for (const marker of ["demo-organizer", "http://127.0.0.1", "SUPABASE_SERVICE_ROLE", "localE2E=false", "authE2E=false"]) {
+test("verified-link inspection rejects private test and credential markers from active configuration", () => {
+  for (const marker of ["appConfigurationBytes", "demo-organizer", "http://127.0.0.1", "SUPABASE_SERVICE_ROLE", '"localE2E":false', '"authE2E":false']) {
     assert.equal(source.includes(marker), true);
   }
 });
