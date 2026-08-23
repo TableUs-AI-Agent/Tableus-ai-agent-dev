@@ -33,6 +33,10 @@ function run(command, args, { cwd = repoRoot, env = {} } = {}) {
   if (result.status !== 0) throw new Error(`${command} exited with status ${result.status}`);
 }
 
+function runBestEffort(command, args, { cwd = repoRoot, env = {} } = {}) {
+  spawnSync(command, args, { cwd, env: { ...process.env, ...env }, stdio: "ignore" });
+}
+
 function commandOutput(command, args) {
   const result = spawnSync(command, args, { cwd: repoRoot, encoding: "utf8" });
   if (result.error) throw result.error;
@@ -155,8 +159,12 @@ try {
   if (readiness.provider_mode !== "deterministic" || readiness.auth_mode !== "demo") throw new Error("Backend readiness is not deterministic/demo.");
   await waitFor(`${controlUrl}/health`, [backend, proxy]);
 
-  if (platform === "ios") run("xcrun", ["simctl", "install", device, appPath], { env: { DEVELOPER_DIR: developerDir } });
+  if (platform === "ios") {
+    runBestEffort("xcrun", ["simctl", "uninstall", device, appId], { env: { DEVELOPER_DIR: developerDir } });
+    run("xcrun", ["simctl", "install", device, appPath], { env: { DEVELOPER_DIR: developerDir } });
+  }
   else {
+    runBestEffort(adb, ["-s", device, "uninstall", appId]);
     run(adb, ["-s", device, "install", "-r", appPath]);
     run(adb, ["-s", device, "reverse", "tcp:8000", "tcp:8000"]);
   }

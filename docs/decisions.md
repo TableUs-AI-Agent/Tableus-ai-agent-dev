@@ -74,7 +74,9 @@
   to a disk persister. Product mutations are not queued, optimistically applied,
   or automatically replayed after reconnection. Known-offline and ambiguous
   failures require an explicit user retry using the original in-memory payload
-  and idempotency key; editing or dismissal abandons that operation.
+  and idempotency key; editing or dismissal abandons that operation. If a read
+  refresh observes the committed server state before an ambiguous retry, the
+  retry/dismiss control remains available until the user resolves that attempt.
 - **2026-08-22:** The closed-beta idempotency ledger remains a 24-hour,
   process-local response cache. Request-body fingerprints prevent one actor from
   reusing a key with a different body, but restart and horizontal-scaling replay

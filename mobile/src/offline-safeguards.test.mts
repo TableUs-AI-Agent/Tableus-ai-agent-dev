@@ -15,6 +15,20 @@ test("every plan workspace write uses the recoverable controller and an explicit
   assert.match(plan, /setRankingDraft\(null\)/);
 });
 
+test("ambiguous finalization remains retryable after a finalized-state refresh", () => {
+  const plan = source("../app/plans/[id].tsx");
+  const finalizedOrganizer = plan.slice(plan.indexOf('current.status === "finalized"'));
+  assert.match(finalizedOrganizer, /failure=\{finalize\.failure\}[\s\S]*retryLabel="Retry finalizing plan"/);
+});
+
+test("device evidence starts from clean app state and accepts a tappable finalization control", () => {
+  const runner = source("../../scripts/mobile-offline-e2e.mjs");
+  const finalizeFlow = source("../.maestro-offline/finalize-failure.yml");
+  assert.match(runner, /runBestEffort\("xcrun", \["simctl", "uninstall", device, appId\]/);
+  assert.match(runner, /\["-s", device, "uninstall", appId\]/);
+  assert.match(finalizeFlow, /visibilityPercentage: 60/);
+});
+
 test("photo retries retain no image state and must open the picker again", () => {
   const review = source("../app/(tabs)/review.tsx");
   const analyze = review.slice(review.indexOf("const analyze"), review.indexOf("\n  return (", review.indexOf("const analyze")));

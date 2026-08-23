@@ -221,8 +221,13 @@
   semantic label on the otherwise visible global offline banner. With only the
   old APK's label assertion omitted, the complete Android fault journey passed
   diagnostically, including zero-request offline constraints and same-key
-  create/finalization replays. Replacement exact-SHA iOS and Android artifact
-  inspection and release evidence remain; Expo currently reports the free-plan
+  create/finalization replays. Candidate `0b08859` local artifacts passed binary
+  inspection, then iOS evidence exposed a finalization safe-area selector issue,
+  retained simulator app state, and an ambiguous-finalization retry hidden after
+  foreground read refresh. The evidence runner now clears app data before install,
+  accepts a tappable control threshold, and preserves the same-key Retry action
+  after the read model reports `finalized`. Replacement exact-SHA iOS and Android
+  artifact inspection and release evidence remain; Expo currently reports the free-plan
   iOS build allowance exhausted until September 1, 2026. Account
   export/deletion controls are deployed,
   the staging migration is verified, and replacement read-only account-control

@@ -23,6 +23,7 @@ appId: com.tableus.app
 - scrollUntilVisible:
     element: "Finalize current winner"
     direction: DOWN
+    visibilityPercentage: 60
     timeout: 30000
 - tapOn: "Finalize current winner"
 - extendedWaitUntil:

@@ -15,7 +15,15 @@ currently exhausted and reports a September 1, 2026 reset. Local EAS artifacts
 are now the approved deterministic-evidence fallback, with sanitized receipts;
 an iOS diagnostic exposed a merged plan-card accessibility label, and the
 cross-platform Maestro selector now matches that label without weakening the
-visible title/status assertions.
+visible title/status assertions. Local artifacts from candidate `0b08859`
+passed binary inspection, but the iOS evidence run exposed two more deterministic
+runner/UI gaps: a fully visible finalization control is impossible at the bottom
+safe area, and foreground refetch can reveal a committed finalization while
+hiding its ambiguous-failure retry. The runner now starts from clean app data,
+uses a tappable visibility threshold, and keeps the same-key finalization retry
+available after the read model reports `finalized`. Candidate `0b08859` and both
+of its local artifacts are superseded; replacement exact-SHA artifacts and both
+device journeys remain the only incomplete acceptance evidence.
 
 ## Objective
 

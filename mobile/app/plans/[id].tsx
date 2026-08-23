@@ -144,6 +144,7 @@ export default function PlanScreen() {
           ) : null}
           {current.status === "finalized" && current.viewer_is_organizer ? (
             <>
+              <MutationFeedback failure={finalize.failure} canRetry={finalize.canRetry} retryLabel="Retry finalizing plan" onRetry={finalize.retry} onDismiss={finalize.reset} />
               <MutationFeedback failure={reopen.failure} canRetry={reopen.canRetry} retryLabel="Retry reopening voting" onRetry={reopen.retry} onDismiss={reopen.reset} />
               <Button label="Reopen voting" onPress={() => reopen.submit(undefined)} loading={reopen.isPending} disabled={reopen.canRetry} />
             </>
