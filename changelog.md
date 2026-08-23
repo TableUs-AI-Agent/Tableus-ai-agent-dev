@@ -17,6 +17,10 @@
   showed that Expo Router can lose an HTTPS auth query on a cold start. Only the
   allowlisted auth mode or join token survives rewriting; other URL fields are
   discarded before the route renders.
+- Merged the completed foundation-through-offline milestones to `main`, then
+  synchronized the verified-link branch with that recovered baseline. The
+  memory-bounded cumulative readiness gate passes; replacement exact-SHA signed
+  artifacts and device journeys remain approval-gated.
 
 ## 2026-08-21 — Account control hardening
 

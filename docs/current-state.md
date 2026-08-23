@@ -119,8 +119,9 @@
 - Verified-link DNS, TLS, Vercel preview deployment, signing identifiers, and
   both direct association endpoints are configured. Android device execution
   exposed and drove a native cold-start query-normalization correction; the
-  corrected cumulative readiness gate passes and replacement exact-SHA signed
-  artifacts plus device evidence remain.
+  corrected branch is synchronized with recovered `main` and its memory-bounded
+  cumulative readiness gate passes. A replacement exact-SHA staging deployment,
+  signed artifacts, and device evidence remain.
 - Next.js is pinned to 16.3.1 to resolve direct security advisories. npm still
   reports Expo/React Native build-tool advisories whose proposed remediation is
   an unsupported SDK downgrade; track upstream SDK 57 patches before release.
@@ -202,12 +203,11 @@
 
 ## Release gates still requiring an owner or external system
 
-- Add `links.table-us.com` to the existing Vercel staging project and Squarespace
-  DNS, then supply the Apple Team ID and preview Android SHA-256 certificate.
-  Deploy the fail-closed association endpoints from the frozen candidate,
-  register the physical iPhone, create signed local link-test artifacts, and run
-  one redacted returning-OTP/rotated-link journey per platform. Production Play
-  App Signing remains a later additive fingerprint.
+- Push and deploy the synchronized verified-link candidate, register the
+  physical iPhone, create signed local link-test artifacts, and run one redacted
+  returning-OTP/rotated-link journey per platform. Canonical DNS, TLS, Apple Team
+  ID, and preview Android SHA-256 certificate configuration are already live.
+  Production Play App Signing remains a later additive fingerprint.
 - Confirm the final domain and support/privacy contact, obtain legal review of
   the beta notices, and validate Google Maps attribution against the production
   presentation and current brand requirements.

@@ -13,10 +13,11 @@ external integration is enabled.
 
 Exact-SHA mobile offline mutation resilience is complete from candidate
 `9acf4fe2a648d4226be028d947ca8d08d7fc7029`. Verified HTTPS routing through
-`links.table-us.com` has passed its local readiness gate; its remaining active
-work is exact-SHA DNS/deployment, signed iOS/Android association, retained
-in-memory join-intent, and rotated-link device evidence. Live Maps and budgeted
-Gemini validation remain subsequent packets.
+`links.table-us.com` is synchronized with recovered `main` and has passed its
+local readiness gate. DNS, TLS, and public signing identifiers are live; the
+remaining active work is the replacement exact-SHA deployment, signed
+iOS/Android association, retained in-memory join-intent, and rotated-link device
+evidence. Live Maps and budgeted Gemini validation remain subsequent packets.
 
 The active gate sequence and required owner inputs are maintained in
 `docs/release-runbook.md`.

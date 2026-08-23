@@ -2,13 +2,14 @@
 
 ## Status
 
-Implementation continues on `codex/verified-links`, branched from offline
-evidence commit `e1e9b2263541346db19f535c90c4f985b6b34d97`. DNS, TLS, Vercel
-preview deployment, and public signing identifiers are live. Android device
-execution exposed a cold-start HTTPS query-normalization gap; the native-intent
-correction and cumulative readiness gate are complete locally. A replacement
-exact-SHA artifact approval is required next. Apple device registration, signed
-artifacts, and two returning-sign-in OTP journeys remain external evidence work.
+Implementation continues on `codex/verified-links`, synchronized with recovered
+`main` at merge commit `3d27231eb7712273dd251ca0bd6bcf376333098a`.
+DNS, TLS, Vercel preview deployment, and public signing identifiers are live.
+Android device execution exposed a cold-start HTTPS query-normalization gap; the
+native-intent correction and cumulative readiness gate pass locally after the
+integration recovery. A replacement exact-SHA public push, deployment, and
+artifact approval is required next. Apple device registration, signed artifacts,
+and two returning-sign-in OTP journeys remain external evidence work.
 
 ## Objective
 
