@@ -223,9 +223,13 @@
   constraint requests. Android then exposed that the global offline alert occupied
   the system status-bar inset and was not accessibility-visible. The root now
   provides safe-area context and the banner consumes the top inset; a component
-  regression test locks that behavior. Candidate `96588f3` and both local
-  artifacts are superseded, so replacement exact-SHA artifacts and both clean
-  device journeys remain. Local Android builds use the target ARM64 ABI, bounded
+  regression test locks that behavior. Candidate `c9a0149` incorporated the fix
+  and both local artifacts passed inspection, but iOS 26.5 repeatedly failed
+  Maestro's known-flaky `hideKeyboard` command while the keyboard and visible
+  Save action remained functional. The constraints flow now taps its
+  non-interactive heading, Maestro's documented dismissal workaround, before
+  saving. Candidates `96588f3` and `c9a0149` are superseded, so final exact-SHA
+  artifacts and both clean device journeys remain. Local Android builds use the target ARM64 ABI, bounded
   Gradle/CMake concurrency, and file-backed temporary logs after a four-ABI build
   caused severe host memory pressure. Expo currently reports the free-plan iOS
   build allowance exhausted until September 1, 2026. Account

@@ -24,9 +24,12 @@ test("ambiguous finalization remains retryable after a finalized-state refresh",
 test("device evidence starts from clean app state and accepts a tappable finalization control", () => {
   const runner = source("../../scripts/mobile-offline-e2e.mjs");
   const finalizeFlow = source("../.maestro-offline/finalize-failure.yml");
+  const constraintsFlow = source("../.maestro-offline/constraints-offline.yml");
   assert.match(runner, /runBestEffort\("xcrun", \["simctl", "uninstall", device, appId\]/);
   assert.match(runner, /\["-s", device, "uninstall", appId\]/);
   assert.match(finalizeFlow, /visibilityPercentage: 60/);
+  assert.match(constraintsFlow, /inputText: "Quiet patio and accessible seating"[\s\S]*tapOn: "Your constraints"[\s\S]*tapOn: "Save constraints"/);
+  assert.doesNotMatch(constraintsFlow, /hideKeyboard/);
 });
 
 test("photo retries retain no image state and must open the picker again", () => {

@@ -84,3 +84,6 @@
 - **2026-08-22:** Global mobile status banners render inside an explicit root
   safe-area provider and consume the top inset. Semantic alert labels do not
   substitute for visible bounds outside the system status bar.
+- **2026-08-22:** Deterministic iOS Maestro flows dismiss keyboards by tapping a
+  stable non-interactive heading when the next action remains visible. The
+  platform driver's flaky `hideKeyboard` gesture is not an acceptance signal.

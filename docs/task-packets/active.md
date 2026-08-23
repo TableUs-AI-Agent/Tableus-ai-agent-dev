@@ -10,12 +10,17 @@ loopback/demo, and forbidden-origin inspection. The iOS fault journey passed in
 full. Android device evidence then exposed that the global offline alert rendered
 inside the status-bar inset, so Maestro correctly treated it as inaccessible.
 The root now owns an explicit safe-area provider and the banner consumes the top
-inset, with a component regression test. Candidate `96588f3` and both artifacts
-are superseded by this post-candidate correction. A new exact-SHA candidate,
-both replacement local artifacts, and both clean device journeys remain the only
-incomplete acceptance evidence. Focused checks and the cumulative `make ready`
-gate pass at the corrected branch tip. Local Android builds are ARM64-only and cap
-Gradle/CMake concurrency to prevent the prior four-ABI host-memory spike.
+inset, with a component regression test. Candidate `c9a0149` incorporated that
+fix; both replacement artifacts passed inspection, but iOS 26.5 repeatedly
+failed Maestro's known-flaky `hideKeyboard` command while the standard keyboard
+and visible Save action remained healthy. The flow now follows Maestro's
+documented workaround by tapping the non-interactive constraints heading before
+the Save action, and a source regression test excludes `hideKeyboard` from that
+phase. Candidates `96588f3` and `c9a0149` plus their artifacts are superseded.
+A final exact-SHA candidate, both replacement local artifacts, and both clean
+device journeys remain the only incomplete evidence. Local Android builds are
+ARM64-only and cap Gradle/CMake concurrency to prevent the prior four-ABI
+host-memory spike.
 
 ## Objective
 
