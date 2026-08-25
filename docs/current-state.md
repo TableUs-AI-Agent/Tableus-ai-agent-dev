@@ -154,8 +154,8 @@
   evidence proves two approved users, live location resolution, one persistent
   joined plan, four distinct candidates, refreshed Google details, aggregate
   provider usage, null stored coordinates, and a candidate schema with no Google
-  display fields. Evidence is in `docs/evidence/4a790b4/maps-staging/`; pull
-  request #3 remains unmerged pending explicit approval.
+  display fields. Evidence is in `docs/evidence/4a790b4/maps-staging/`. Pull
+  request #3 was merged to `main` as `7109cdcde86bd125c86c38980e823ab0a07abdc9`.
 
 ## External dependencies not provisioned in source
 
@@ -312,8 +312,8 @@
   `4a790b4ee40a12cdba8540fb12da586b3373a895`. The first attempt stopped on a
   city result without `postalAddress.regionCode`; Google aggregate telemetry
   confirmed a populated `200`, and no raw artifact was retained. The corrected
-  rerun passed end to end with policy-safe persistence and sanitized evidence.
-  Pull request #3 still requires explicit merge approval. The budgeted
-  pinned-model Gemini evaluation is the next provider objective after merge.
+  rerun passed end to end with policy-safe persistence and sanitized evidence,
+  and pull request #3 is merged. The budgeted pinned-model Gemini evaluation is
+  the next provider objective and remains an explicit paid-live-evaluation gate.
 - Obtain explicit approval before any production migration, deployment, EAS
   build/submission, paid live-AI evaluation, or cohort invitation.
