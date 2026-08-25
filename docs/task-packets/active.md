@@ -2,30 +2,31 @@
 
 ## Status
 
-Implementation correction is complete locally on `codex/gemini-staging-validation`,
-branched from merged `origin/main` at
-`6606771383b2a991f3a787dbc612ecc710d31195`. Focused provider/API checks, the
-full backend and workspace suites, deterministic AI evaluation, generated
-contract, builds, smoke checks, performance report, and cumulative `make ready`
-passed for the first candidate. Exact SHA
-`90691b1c53812fc140da465e1b5e362c781f1139` passed public CI, and the approved
-AI project, budget, and restricted authorization key are provisioned. Its paid
-evaluation stopped before inference with six `400` schema failures, zero tokens,
-and `$0` reported cost. The local correction removes only unsupported Gemini
-wire-schema keywords while retaining strict post-parse validation. Cumulative
-`make ready` has passed, so the correction is ready to freeze as a replacement
-SHA before any new public push, paid call, or deployment. Staging AI remains
-deterministic.
+Implementation continues locally on `codex/gemini-staging-validation`, branched
+from merged `origin/main` at `6606771383b2a991f3a787dbc612ecc710d31195`.
+Candidates `90691b1c53812fc140da465e1b5e362c781f1139` and
+`e89d5c4f1664ab0ec0e7d5bec3dd196439283aeb` passed public CI. Their approved
+live checks consumed zero reported tokens and `$0`: the first exposed unsupported
+wire-schema keywords, while the second proved the restricted credential,
+billing tier, project import, and model catalog but received `404` because
+Google no longer grants new projects generation access to Gemini 2.5
+Flash-Lite. The owner approved Google's recommended stable replacement,
+`gemini-3.1-flash-lite`, with its current token pricing and minimal-thinking
+configuration. The replacement implementation, focused backend checks, frozen
+deterministic evaluator, contract regeneration, and cumulative `make ready`
+now pass locally. It is ready to freeze as a new exact-SHA candidate. Staging AI
+remains deterministic, and no deployment or returning code was sent.
 
 ## Objective
 
 Harden recommendation, ephemeral food-photo analysis, and taste-summary
-generation around pinned `gemini-2.5-flash-lite`, then prove them with a frozen,
+generation around pinned `gemini-3.1-flash-lite`, then prove them with a frozen,
 budgeted, sanitized live evaluation before enabling Gemini on staging.
 
 ## Deliverables
 
-- Exact `google-genai==1.75.0` dependency and pinned model configuration.
+- Exact `google-genai==1.75.0` dependency, pinned model configuration, current
+  token-cost accounting, and minimal Gemini 3 thinking level.
 - Strict structured outputs, request-local candidate aliases, bounded inputs,
   output privacy/safety guards, 12-second timeouts, typed errors, and at most
   three TableUs-owned attempts with no provider fallback.
@@ -57,13 +58,12 @@ budgeted, sanitized live evaluation before enabling Gemini on staging.
 
 ## External gate
 
-After the candidate passes `make ready`, request one explicit approval covering
-the exact-SHA public push; isolated `TableUs Staging AI` project and billing;
-Gemini-only IP-restricted authorization key; `$5` 50/80/100-percent budget
-alerts; paid live evaluation; Railway secret/configuration and deployment;
-Vercel deployment; and one returning code for each of two existing approved
-accounts. Leave staging live only if the sanitized evaluation and two-user
-journey pass.
+The isolated project, billing, budget alerts, and Gemini-only Railway-restricted
+authorization key are already provisioned. After the replacement candidate
+passes `make ready`, request one explicit approval covering its exact-SHA public
+push, the paid live evaluation, Railway/Vercel deployment, and one returning
+code for each of two existing approved accounts. Leave staging live only if the
+sanitized evaluation and two-user journey pass.
 
 ## Boundaries
 

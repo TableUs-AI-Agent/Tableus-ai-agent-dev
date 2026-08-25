@@ -302,7 +302,7 @@ async def test_live_ai_rolling_budget_rejects_before_provider_call(monkeypatch) 
             ProviderUsage(
                 provider="gemini",
                 operation="recommend",
-                model="gemini-2.5-flash-lite",
+                model="gemini-3.1-flash-lite",
                 latency_ms=10,
                 estimated_cost_usd=3.99,
             )
@@ -336,7 +336,7 @@ async def test_ai_failure_does_not_commit_recommendations_or_taste(
 
     class FailingAi:
         name = "gemini"
-        model = "gemini-2.5-flash-lite"
+        model = "gemini-3.1-flash-lite"
 
         async def _fail(self, operation, usage):
             if usage:

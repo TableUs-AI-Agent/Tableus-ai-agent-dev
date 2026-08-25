@@ -412,9 +412,9 @@ class LivePlacesProvider:
 
 class LiveGeminiProvider:
     name = "gemini"
-    pinned_model = "gemini-2.5-flash-lite"
-    input_usd_per_million = 0.10
-    output_usd_per_million = 0.40
+    pinned_model = "gemini-3.1-flash-lite"
+    input_usd_per_million = 0.25
+    output_usd_per_million = 1.50
     ambiguous_call_reservation_usd = 0.02
     _sensitive_output = re.compile(
         r"(?:https?://|\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}\b|"
@@ -564,7 +564,10 @@ class LiveGeminiProvider:
             seed=0,
             candidate_count=1,
             max_output_tokens=max_output_tokens,
-            thinking_config=types.ThinkingConfig(thinking_budget=0),
+            # Gemini 3 cannot disable thinking completely. Its documented
+            # minimal level is the closest bounded equivalent and is the
+            # default for 3.1 Flash-Lite.
+            thinking_config=types.ThinkingConfig(thinking_level="minimal"),
         )
 
     @staticmethod

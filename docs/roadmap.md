@@ -23,11 +23,14 @@ retained in-memory join intent, and rotated-link rejection passed on Android and
   deployment, restricted egress/key configuration, fail-closed US location
   resolution, policy-safe persistence, and sanitized two-user evidence.
   Pull request #3 is merged. Budgeted Gemini hardening is implemented on
-  `codex/gemini-staging-validation`. The first public candidate passed CI, but
-  its live evaluator exposed unsupported generated string-schema keywords before
-  inference and spent `$0`; a replacement candidate keeps strict post-parse
-  validation while sending only Gemini's supported JSON Schema subset. The new
-  exact-SHA paid evaluation and staging deployment remain explicit gates.
+  `codex/gemini-staging-validation`. Two public candidates passed CI, and their
+  live checks stopped before inference with zero reported tokens and `$0`: the
+  first exposed unsupported generated string-schema keywords, while the second
+  proved the cloud configuration but found that new projects cannot generate
+  with Gemini 2.5 Flash-Lite. The owner approved Google's stable replacement,
+  pinned `gemini-3.1-flash-lite`, including its current cost accounting and
+  minimal-thinking behavior. The replacement exact-SHA paid evaluation and
+  staging deployment remain explicit gates.
 
 The active gate sequence and required owner inputs are maintained in
 `docs/release-runbook.md`.

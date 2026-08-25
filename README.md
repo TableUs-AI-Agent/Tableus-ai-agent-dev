@@ -99,7 +99,7 @@ flowchart LR
 | **Mobile** | Expo Router, React Native | One managed iOS/Android application with native 2D planning flows |
 | **Backend** | FastAPI, Python 3.12, async SQLAlchemy, Alembic | Versioned API, persistence, invite access, and ranked shared plans |
 | **Data & Auth** | Supabase Postgres and Auth | Email OTP, invite approval, and durable beta data |
-| **AI & Maps** | Gemini 2.5 Flash Lite, Places API New | Provider-neutral recommendation and location services |
+| **AI & Maps** | Gemini 3.1 Flash-Lite, Places API New | Provider-neutral recommendation and location services |
 
 ---
 

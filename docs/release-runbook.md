@@ -405,7 +405,7 @@ Keep deterministic providers green while each integration is added:
    outputs, images, reviews, provider responses, Place IDs, or credentials. Do
    not raise the budget or weaken output validation to make a failure pass.
 5. Only after the live evaluator passes, set Railway staging to live AI with
-   `GEMINI_MODEL=gemini-2.5-flash-lite`,
+   `GEMINI_MODEL=gemini-3.1-flash-lite`,
    `AI_RUNTIME_MAX_USD_30D=4.00`, and `LIVE_AI_MAX_USD=0.25`, deploy Railway and
    Vercel from the same SHA, and run:
 

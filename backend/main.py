@@ -49,7 +49,7 @@ ALLOWED_CUISINES = {
     "Malaysian", "Indonesian", "Mediterranean", "Seafood",
 }
 
-_PRIMARY = "gemini-2.5-flash-lite"
+_PRIMARY = "gemini-3.1-flash-lite"
 
 # Max Places candidates fetched and max venues returned for the orbit UI.
 MAX_RESTAURANT_CANDIDATES = 20

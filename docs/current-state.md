@@ -156,13 +156,13 @@
   provider usage, null stored coordinates, and a candidate schema with no Google
   display fields. Evidence is in `docs/evidence/4a790b4/maps-staging/`. Pull
   request #3 was merged to `main` as `7109cdcde86bd125c86c38980e823ab0a07abdc9`.
-- Gemini staging hardening is implemented around pinned
-  `gemini-2.5-flash-lite` and `google-genai==1.75.0`. Recommendation prompts use
+- Gemini staging hardening is implemented around `google-genai==1.75.0` and
+  pinned `gemini-3.1-flash-lite`. Recommendation prompts use
   request-local aliases and normalized TableUs fields instead of Place IDs,
   names, addresses, coordinates, or Google response bodies. Recommendation,
   photo, and taste outputs use strict bounded schemas, privacy/safety guards,
-  no tools or grounding, disabled thinking, 12-second timeouts, and at most
-  three explicitly classified attempts without silent fallback. Photos are
+  no tools or grounding, minimal Gemini 3 thinking, 12-second timeouts, and at
+  most three explicitly classified attempts without silent fallback. Photos are
   resized to a maximum 1600-pixel edge after metadata stripping; taste inputs
   are bounded to 25 reviews and 12,000 characters. Every API AI call records
   aggregate token/cost totals and error outcomes, is limited to five operations
@@ -171,15 +171,21 @@
   are reused, so no migration is required. The frozen deterministic evaluator,
   checkpointed `$0.25` live evaluator, exact-SHA two-user staging runner,
   privacy disclosures, and generated client contract are updated. Exact SHA
-  `90691b1c53812fc140da465e1b5e362c781f1139` passed public CI. Its first paid
-  evaluator attempt failed all six cases before inference with provider `400`
-  schema errors, consuming zero reported tokens and `$0`. Google accepts
-  `additionalProperties`, array bounds, and numeric bounds but not the generated
-  `minLength`, `maxLength`, or `pattern` wire keywords; the provider now removes
-  only those unsupported wire keywords and retains strict Pydantic validation
-  after parsing. This correction requires a replacement exact-SHA candidate and
-  paid-evaluation namespace before deployment. Staging remains on deterministic
-  AI and no returning-sign-in messages were sent.
+  `90691b1c53812fc140da465e1b5e362c781f1139` and
+  `e89d5c4f1664ab0ec0e7d5bec3dd196439283aeb` passed public CI. Live validation
+  against both candidates stopped before inference and consumed zero reported
+  tokens and `$0`. The first exposed unsupported generated `minLength`,
+  `maxLength`, and `pattern` wire keywords; the provider removes only those
+  keywords and retains strict Pydantic validation after parsing. The second
+  proved project import, Tier 1 billing, credential authorization, IP
+  restrictions, and catalog visibility, but new-project generation returned
+  `404` for Gemini 2.5 Flash-Lite. Google identifies Gemini 3.1 Flash-Lite as the
+  stable replacement. The owner approved that model at `$0.25` per million input
+  tokens and `$1.50` per million output/thinking tokens. A new exact-SHA candidate
+  and paid-evaluation namespace are required before deployment. Focused backend
+  checks, the frozen deterministic evaluator, contract regeneration, and
+  cumulative `make ready` pass locally for the replacement. Staging remains on
+  deterministic AI and no returning-sign-in messages were sent.
 
 ## External dependencies not provisioned in source
 

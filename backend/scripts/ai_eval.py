@@ -18,7 +18,7 @@ from tableus.providers.google_live import LiveGeminiProvider
 
 ROOT = Path(__file__).resolve().parents[1]
 REPOSITORY_ROOT = ROOT.parent
-PINNED_MODEL = "gemini-2.5-flash-lite"
+PINNED_MODEL = "gemini-3.1-flash-lite"
 LIVE_CASE_IDS = {
     "recommend-balanced",
     "recommend-constraints",

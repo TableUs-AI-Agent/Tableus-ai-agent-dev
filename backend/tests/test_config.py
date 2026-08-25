@@ -74,11 +74,11 @@ def test_production_rejects_mixed_provider_modes() -> None:
 
 def test_gemini_model_and_spend_ceilings_are_pinned() -> None:
     settings = Settings(_env_file=None)
-    assert settings.gemini_model == "gemini-2.5-flash-lite"
+    assert settings.gemini_model == "gemini-3.1-flash-lite"
     assert settings.live_ai_max_usd == 0.25
     assert settings.ai_runtime_max_usd_30d == 4.0
 
-    with pytest.raises(ValidationError, match="gemini-2.5-flash-lite"):
+    with pytest.raises(ValidationError, match="gemini-3.1-flash-lite"):
         Settings(_env_file=None, gemini_model="gemini-latest")
     with pytest.raises(ValidationError):
         Settings(_env_file=None, live_ai_max_usd=0.26)

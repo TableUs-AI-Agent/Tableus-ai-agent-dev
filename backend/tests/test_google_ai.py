@@ -40,7 +40,7 @@ class ScriptedModels:
 
 
 def provider_with(events):
-    provider = LiveGeminiProvider("secret", "gemini-2.5-flash-lite")
+    provider = LiveGeminiProvider("secret", "gemini-3.1-flash-lite")
     models = ScriptedModels(events)
     provider.client = SimpleNamespace(aio=SimpleNamespace(models=models))
     return provider, models
@@ -92,7 +92,8 @@ async def test_recommendations_alias_places_and_record_token_cost() -> None:
     assert config.max_output_tokens == 700
     assert config.temperature == 0
     assert config.seed == 0
-    assert config.thinking_config.thinking_budget == 0
+    assert config.thinking_config.thinking_level.value == "MINIMAL"
+    assert config.thinking_config.thinking_budget is None
     wire_schema = json.dumps(config.response_schema)
     assert '"pattern"' not in wire_schema
     assert '"minLength"' not in wire_schema
@@ -104,7 +105,7 @@ async def test_recommendations_alias_places_and_record_token_cost() -> None:
             attempts=1,
             input_tokens=100,
             output_tokens=40,
-            estimated_cost_usd=0.000026,
+            estimated_cost_usd=0.000085,
             failed=False,
         )
     ]
@@ -222,7 +223,7 @@ def test_live_provider_rejects_unapproved_model_or_missing_key() -> None:
     with pytest.raises(AiProviderError, match="not approved"):
         LiveGeminiProvider("secret", "gemini-latest")
     with pytest.raises(AiProviderError, match="not configured"):
-        LiveGeminiProvider("", "gemini-2.5-flash-lite")
+        LiveGeminiProvider("", "gemini-3.1-flash-lite")
 
 
 @pytest.mark.parametrize(

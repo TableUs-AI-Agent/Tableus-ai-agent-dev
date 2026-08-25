@@ -129,7 +129,7 @@
   component and accepts its `US` short code only when the postal region is
   absent. Any missing, conflicting, or non-US country remains fail-closed, and
   address components are never persisted or emitted to evidence or telemetry.
-- **2026-08-25:** Closed-beta Gemini uses only pinned
+- **2026-08-25 (superseded):** Closed-beta Gemini uses only pinned
   `gemini-2.5-flash-lite` through `google-genai==1.75.0`. Restaurant identities
   are replaced with request-local aliases before inference, every AI output is
   schema- and privacy-validated, and there is no silent fallback. Live staging
@@ -143,3 +143,12 @@
   rejects them with `400`; the original strict Pydantic models still validate
   every parsed response locally, so wire compatibility does not weaken domain,
   privacy, or safety enforcement.
+- **2026-08-25:** Closed-beta Gemini is pinned to
+  `gemini-3.1-flash-lite` through `google-genai==1.75.0`. Google lists it as the
+  stable replacement for Gemini 2.5 Flash-Lite, which returned `404` for the
+  newly created staging project despite successful authorization and catalog
+  discovery. Cost accounting uses `$0.25` per million input tokens and `$1.50`
+  per million output/thinking tokens. Gemini 3 thinking cannot be fully
+  disabled, so TableUs requests the documented `minimal` level and continues to
+  include thinking tokens in spend limits. This model change requires a new
+  exact-SHA checkpoint namespace and live evaluation before staging activation.

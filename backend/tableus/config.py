@@ -36,7 +36,7 @@ class Settings(BaseSettings):
     supabase_jwt_audience: str = "authenticated"
     gemini_api_key: str = ""
     google_maps_api_key: str = ""
-    gemini_model: Literal["gemini-2.5-flash-lite"] = "gemini-2.5-flash-lite"
+    gemini_model: Literal["gemini-3.1-flash-lite"] = "gemini-3.1-flash-lite"
     sentry_dsn: str = ""
     posthog_key: str = ""
     posthog_host: str = "https://us.i.posthog.com"
