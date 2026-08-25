@@ -1,9 +1,18 @@
 #!/usr/bin/env node
 
-import { existsSync, mkdtempSync, readFileSync, readdirSync, rmSync, statSync } from "node:fs";
+import { existsSync, mkdtempSync, readFileSync, readdirSync, rmSync, statSync, writeFileSync } from "node:fs";
 import { extname, join, resolve } from "node:path";
 import { tmpdir } from "node:os";
 import { spawnSync } from "node:child_process";
+import {
+  certificateRecordsFromPem,
+  extractCodeSignatureCms,
+  fingerprintDerCertificate,
+  hasAppleProvisioningProfileSigner,
+  isExactTahoeTrustDiagnostic,
+  profileAuthorizesAssociatedDomain,
+  selectProfileAuthorizedSigner,
+} from "./mobile-links-inspection-lib.mjs";
 
 function parseArgs(argv) {
   const result = {};
@@ -20,6 +29,13 @@ function run(command, commandArgs, options = {}) {
   const result = spawnSync(command, commandArgs, { encoding: "utf8", maxBuffer: 64 * 1024 * 1024, ...options });
   if (result.error) throw result.error;
   if (result.status !== 0) throw new Error(`${command} failed: ${(result.stderr || result.stdout).trim()}`);
+  return `${result.stdout ?? ""}${result.stderr ?? ""}`;
+}
+
+function tryRun(command, commandArgs, options = {}) {
+  const result = spawnSync(command, commandArgs, { encoding: "utf8", maxBuffer: 64 * 1024 * 1024, ...options });
+  if (result.error) throw result.error;
+  if (result.status !== 0) return null;
   return `${result.stdout ?? ""}${result.stderr ?? ""}`;
 }
 
@@ -57,8 +73,11 @@ function appConfigurationBytes(platform, artifact, inspectionPath) {
     return result.stdout;
   }
   let configuration;
+  const configurationSuffixes = ["/assets/app.config", "/EXConstants.bundle/app.config"];
   visitFiles(inspectionPath, (file) => {
-    if (!configuration && file.endsWith("/assets/app.config")) configuration = readFileSync(file);
+    if (!configuration && configurationSuffixes.some((suffix) => file.endsWith(suffix))) {
+      configuration = readFileSync(file);
+    }
   });
   if (!configuration) throw new Error("iOS artifact has no embedded Expo app configuration.");
   return configuration;
@@ -89,6 +108,18 @@ function normalizeFingerprint(value) {
   const hex = value.replace(/[^0-9a-f]/gi, "").toUpperCase();
   if (hex.length !== 64) throw new Error("Android SHA-256 fingerprint is invalid.");
   return hex.match(/.{2}/g).join(":");
+}
+
+function verifyIosCodeSignature(app) {
+  const verification = spawnSync("codesign", ["--verify", "--deep", "--strict", app], {
+    encoding: "utf8",
+    maxBuffer: 8 * 1024 * 1024,
+  });
+  if (verification.error) throw verification.error;
+  if (verification.status === 0) return;
+  const diagnostic = `${verification.stderr ?? ""}${verification.stdout ?? ""}`.trim();
+  const macosVersion = run("sw_vers", ["-productVersion"]).trim();
+  if (!isExactTahoeTrustDiagnostic(macosVersion, diagnostic)) throw new Error(`codesign failed: ${diagnostic}`);
 }
 
 function extractIosApp(artifact, temporaryRoot) {
@@ -138,14 +169,68 @@ try {
   if (!/"authE2E":false/.test(appConfiguration)) throw new Error("Artifact does not prove authE2E=false.");
 
   if (platform === "ios") {
-    run("codesign", ["--verify", "--deep", "--strict", inspectionPath]);
-    const entitlements = run("codesign", ["-d", "--entitlements", ":-", inspectionPath]);
-    if (!entitlements.includes(`applinks:${host}`)) throw new Error("iOS associated-domain entitlement is missing.");
+    verifyIosCodeSignature(inspectionPath);
+    const entitlements = run("codesign", ["-d", "--entitlements", "-", inspectionPath]);
+    if (!entitlements.includes(`[String] applinks:${host}`)) throw new Error("iOS associated-domain entitlement is missing.");
     if (entitlements.includes("?mode=developer")) throw new Error("Development associated-domain mode is forbidden.");
-    const teamMatch = entitlements.match(/<key>com\.apple\.developer\.team-identifier<\/key>\s*<string>([A-Z0-9]{10})<\/string>/);
+    const teamMatch = entitlements.match(/\[Key\] com\.apple\.developer\.team-identifier[\s\S]*?\[String\] ([A-Z0-9]{10})/);
     if (!teamMatch) throw new Error("Signed iOS artifact has no Apple Team ID entitlement.");
-    if (args["apple-team-id"] && teamMatch[1] !== args["apple-team-id"]) throw new Error("Apple Team ID does not match the expected association.");
-    process.stdout.write(`${JSON.stringify({ platform, apple_team_id: teamMatch[1], associated_domain: host, inspection_passed: true })}\n`);
+    const teamId = teamMatch[1];
+    if (args["apple-team-id"] && teamId !== args["apple-team-id"]) throw new Error("Apple Team ID does not match the expected association.");
+
+    const bundleId = run("plutil", ["-extract", "CFBundleIdentifier", "raw", join(inspectionPath, "Info.plist")]).trim();
+    const profilePath = join(temporaryRoot, "verified-mobileprovision.plist");
+    const profileSignerPath = join(temporaryRoot, "profile-cms-signer.pem");
+    run("openssl", [
+      "cms", "-inform", "der", "-verify",
+      "-in", join(inspectionPath, "embedded.mobileprovision"),
+      "-signer", profileSignerPath,
+      "-out", profilePath,
+    ]);
+    const plistBuddy = "/usr/libexec/PlistBuddy";
+    const profileTeamId = run(plistBuddy, ["-c", "Print :TeamIdentifier:0", profilePath]).trim();
+    const profileApplicationId = run(plistBuddy, ["-c", "Print :Entitlements:application-identifier", profilePath]).trim();
+    const provisionedDevice = run(plistBuddy, ["-c", "Print :ProvisionedDevices:0", profilePath]).trim();
+    if (profileTeamId !== teamId) throw new Error("Provisioning profile Team ID does not match the signature.");
+    if (profileApplicationId !== `${teamId}.${bundleId}`) {
+      throw new Error("Provisioning profile does not authorize the signed application identifier.");
+    }
+    const profileDomains = [];
+    for (let index = 0; ; index += 1) {
+      const domain = tryRun(plistBuddy, ["-c", `Print :Entitlements:com.apple.developer.associated-domains:${index}`, profilePath]);
+      if (domain === null) break;
+      profileDomains.push(domain.trim());
+    }
+    if (profileDomains.length === 0) {
+      const scalarDomain = tryRun(plistBuddy, ["-c", "Print :Entitlements:com.apple.developer.associated-domains", profilePath]);
+      if (scalarDomain !== null) profileDomains.push(scalarDomain.trim());
+    }
+    if (!profileAuthorizesAssociatedDomain(profileDomains, host)) {
+      throw new Error("Provisioning profile does not authorize the associated domain.");
+    }
+    if (!provisionedDevice) {
+      throw new Error("Internal iOS artifact has no provisioned devices.");
+    }
+
+    const executableName = run("plutil", ["-extract", "CFBundleExecutable", "raw", join(inspectionPath, "Info.plist")]).trim();
+    const cmsPath = join(temporaryRoot, "app-code-signature.cms");
+    writeFileSync(cmsPath, extractCodeSignatureCms(readFileSync(join(inspectionPath, executableName))), { mode: 0o600 });
+    const appSignerPath = join(temporaryRoot, "app-cms-signer.pem");
+    run("openssl", [
+      "cms", "-inform", "der", "-verify", "-noverify", "-no_content_verify",
+      "-in", cmsPath, "-signer", appSignerPath, "-out", "/dev/null",
+    ]);
+    if (!hasAppleProvisioningProfileSigner(certificateRecordsFromPem(readFileSync(profileSignerPath, "utf8")))) {
+      throw new Error("Provisioning profile CMS signer is not an Apple provisioning-profile signer.");
+    }
+    const profileFingerprints = [];
+    for (let index = 0; ; index += 1) {
+      const certificate = tryRun("plutil", ["-extract", `DeveloperCertificates.${index}`, "raw", profilePath]);
+      if (certificate === null) break;
+      profileFingerprints.push(fingerprintDerCertificate(certificate.trim()));
+    }
+    selectProfileAuthorizedSigner(certificateRecordsFromPem(readFileSync(appSignerPath, "utf8")), profileFingerprints, teamId);
+    process.stdout.write(`${JSON.stringify({ platform, apple_team_id: teamId, associated_domain: host, inspection_passed: true })}\n`);
   } else {
     const apksigner = latestBuildTool("apksigner");
     const signature = run(apksigner, ["verify", "--verbose", "--print-certs", artifact]);

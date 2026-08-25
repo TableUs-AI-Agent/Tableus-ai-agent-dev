@@ -3,13 +3,13 @@
 ## Status
 
 Implementation continues on `codex/verified-links`, synchronized with recovered
-`main` at merge commit `3d27231eb7712273dd251ca0bd6bcf376333098a`.
-DNS, TLS, Vercel preview deployment, and public signing identifiers are live.
-Android device execution exposed a cold-start HTTPS query-normalization gap; the
-native-intent correction and cumulative readiness gate pass locally after the
-integration recovery. A replacement exact-SHA public push, deployment, and
-artifact approval is required next. Apple device registration, signed artifacts,
-and two returning-sign-in OTP journeys remain external evidence work.
+`main`. DNS, TLS, the canonical Vercel deployment, the Apple App ID and
+Associated Domains capability, the registered physical iPhone, and the rotated
+preview Android signer are live. Signed local artifacts exposed an Expo SDK 57
+iOS inspection-path gap after candidate `6e9e893c6b4d75758b1f6abd979a8aff8cde460c`;
+that candidate and both artifacts are superseded. A corrected exact-SHA candidate,
+deployment, replacement artifacts, and the two returning-sign-in OTP journeys
+remain external evidence work.
 
 ## Objective
 
@@ -50,7 +50,8 @@ devices without the app continue through the Next.js fallback.
 
 - No backend schema/API change, Railway deployment, new invite, production
   build, store submission, paid provider, account deletion, or magic-link auth.
-- The preview Android certificate is additive; the Google Play App Signing
-  fingerprint is added later before store distribution.
+- The preview Android association contains only the current signer. Superseded
+  local APKs must be uninstalled because the rotated certificate cannot update
+  them in place; Google Play App Signing remains a later separate fingerprint.
 - Apple CDN propagation is awaited and the app is reinstalled when necessary;
   development-mode associated domains are not accepted as final evidence.

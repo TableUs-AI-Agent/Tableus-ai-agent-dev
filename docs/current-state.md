@@ -115,8 +115,11 @@
   Apple Team ID or Android certificate, and forbidden origins. The redacted
   `make mobile-links-e2e` runner verifies hosted manifests, native routing,
   returning OTP, retained join intent, and rotated-link handling while deleting
-  raw private URLs and Maestro output.
-- Verified-link DNS, TLS, Vercel preview deployment, signing identifiers, and
+  raw private URLs and Maestro output. Expo SDK 57 iOS artifacts are inspected
+  through `EXConstants.bundle/app.config`; the legacy config path remains
+  accepted. EAS CLI 22.4.0 is the minimum local-build version, and locally
+  generated credential/keystore files are ignored.
+- Verified-link DNS, TLS, canonical staging deployment, signing identifiers, and
   both direct association endpoints are configured. Android device execution
   exposed and drove a native cold-start query-normalization correction; the
   corrected branch is synchronized with recovered `main` and its memory-bounded
@@ -203,11 +206,11 @@
 
 ## Release gates still requiring an owner or external system
 
-- Push and deploy the synchronized verified-link candidate, register the
-  physical iPhone, create signed local link-test artifacts, and run one redacted
-  returning-OTP/rotated-link journey per platform. Canonical DNS, TLS, Apple Team
-  ID, and preview Android SHA-256 certificate configuration are already live.
-  Production Play App Signing remains a later additive fingerprint.
+- Freeze and deploy the corrected verified-link candidate, rebuild both signed
+  local link-test artifacts, and run one redacted returning-OTP/rotated-link
+  journey per platform. Canonical DNS/TLS, Apple App ID/Associated Domains,
+  physical iPhone registration, and the replacement preview Android SHA-256
+  certificate are already live. Production Play App Signing remains later.
 - Confirm the final domain and support/privacy contact, obtain legal review of
   the beta notices, and validate Google Maps attribution against the production
   presentation and current brand requirements.

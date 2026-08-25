@@ -101,3 +101,12 @@
   process; auth UI receives no token and evidence retains no private URL. Native
   cold starts normalize the canonical host through Expo Router's
   `+native-intent`, retaining only the allowlisted auth mode or join token.
+- **2026-08-24:** Local EAS builds require CLI 22.4.0 or newer so credential
+  payloads use the redacted environment transport. Preview Android association
+  trusts only the current signing certificate after rotation; superseded APKs
+  require uninstall/reinstall. Expo SDK 57 iOS inspection reads
+  `EXConstants.bundle/app.config` while retaining the legacy path and otherwise
+  failing closed. Tahoe's exact trust-only `codesign` diagnostic is accepted only
+  alongside independently validated signed entitlements and Apple provisioning
+  profile authorization. Both CMS checks bind the actual `SignerInfo`
+  certificate rather than accepting an unused certificate from the CMS bag.

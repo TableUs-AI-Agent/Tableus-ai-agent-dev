@@ -140,7 +140,12 @@ After an exact-SHA candidate passes `make ready`, one explicit owner gate covers
 DNS/Vercel changes, public signing identifiers, the web deployment, EAS device
 registration/capability sync, signed local builds, and one returning OTP per
 platform. Build the physical-iOS and ARM64-Android `links-test-*` profiles
-sequentially with file-backed logs and bounded native workers.
+sequentially with file-backed logs and bounded native workers. Use EAS CLI
+22.4.0 or newer so local-build credentials travel through the redacted
+environment transport, never a process argument. On macOS Tahoe 26, the upstream
+temporary-keychain validity bug may require the upstream `find-identity` fix in
+a disposable local-build plugin copy; never modify or retain signing material to
+work around it.
 
 Extract the Apple Team ID and Android SHA-256 certificate from those signed
 artifacts, configure the association endpoint environment, deploy the exact SHA,
@@ -151,6 +156,17 @@ apps. Then inspect each artifact:
 make inspect-mobile-links PLATFORM=ios APP=<signed-app-or-ipa> SHA=<candidate-sha> API_URL=<staging-api> SUPABASE_URL=<supabase-url> LINK_HOST=links.table-us.com APPLE_TEAM_ID=<team-id>
 make inspect-mobile-links PLATFORM=android APP=<signed-apk> SHA=<candidate-sha> API_URL=<staging-api> SUPABASE_URL=<supabase-url> LINK_HOST=links.table-us.com ANDROID_FINGERPRINT=<sha256-fingerprint>
 ```
+
+The iOS inspector accepts Expo configuration from both the legacy
+`assets/app.config` path and the Expo SDK 57 `EXConstants.bundle/app.config`
+path. Any other missing configuration fails closed. On macOS Tahoe 26 only, the
+inspector accepts the exact `CSSMERR_TP_NOT_TRUSTED` verification diagnostic
+after independently validating signed entitlements and cryptographically
+verifying the embedded profile's Apple CMS chain, Team ID, application
+identifier, associated domain, and device list. The actual certificates selected
+by both CMS `SignerInfo` records are validated: the app signer must match the
+profile's `DeveloperCertificates`, and the profile signer must be Apple's
+provisioning-profile signer. All other signature diagnostics remain terminal.
 
 Confirm the web fallback before app installation. On iOS, require Apple
 Associated Domains Diagnostics approval and a tap from Notes or Messages; a

@@ -20,6 +20,10 @@ playwright/.auth/
 .expo/
 mobile/ios/
 mobile/android/
+mobile/credentials.json
+mobile/*.jks
+mobile/*.keystore
+mobile/*.bak.jks
 backend/tableus-dev.db
 backend/.pytest_cache/
 backend/.mypy_cache/
