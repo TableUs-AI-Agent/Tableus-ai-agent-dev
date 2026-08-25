@@ -19,7 +19,8 @@ postal region is absent, while remaining fail-closed for any location not
 conclusively in the US. The rerun passed two-user authentication, location
 resolution, plan creation/joining, four distinct candidates, refreshed details,
 policy-safe persistence, and aggregate usage checks. Sanitized evidence is in
-`docs/evidence/4a790b4/maps-staging/`. Merge remains an explicit owner gate.
+`docs/evidence/4a790b4/maps-staging/`. Pull request #3 was explicitly approved
+and merged to `main` as `7109cdcde86bd125c86c38980e823ab0a07abdc9`.
 
 ## Objective
 
