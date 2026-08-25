@@ -2,14 +2,20 @@
 
 ## Status
 
-Implementation is complete locally on `codex/gemini-staging-validation`,
+Implementation correction is complete locally on `codex/gemini-staging-validation`,
 branched from merged `origin/main` at
 `6606771383b2a991f3a787dbc612ecc710d31195`. Focused provider/API checks, the
 full backend and workspace suites, deterministic AI evaluation, generated
 contract, builds, smoke checks, performance report, and cumulative `make ready`
-pass. The candidate is ready to freeze. No Gemini credential, paid call, cloud
-project, public push, migration, or deployment is authorized by this packet
-status.
+passed for the first candidate. Exact SHA
+`90691b1c53812fc140da465e1b5e362c781f1139` passed public CI, and the approved
+AI project, budget, and restricted authorization key are provisioned. Its paid
+evaluation stopped before inference with six `400` schema failures, zero tokens,
+and `$0` reported cost. The local correction removes only unsupported Gemini
+wire-schema keywords while retaining strict post-parse validation. Cumulative
+`make ready` has passed, so the correction is ready to freeze as a replacement
+SHA before any new public push, paid call, or deployment. Staging AI remains
+deterministic.
 
 ## Objective
 

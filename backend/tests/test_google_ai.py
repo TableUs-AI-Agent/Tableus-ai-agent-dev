@@ -1,3 +1,4 @@
+import json
 from types import SimpleNamespace
 
 import pytest
@@ -5,7 +6,13 @@ from google.genai import errors
 
 from tableus.providers.base import AiCallUsage
 from tableus.providers.deterministic import FIXTURE_PLACES
-from tableus.providers.google_live import AiProviderError, LiveGeminiProvider
+from tableus.providers.google_live import (
+    AiProviderError,
+    FoodAnalysisOutput,
+    LiveGeminiProvider,
+    RecommendationOutput,
+    TasteSummaryOutput,
+)
 
 
 def response(parsed, *, input_tokens=100, output_tokens=40):
@@ -86,6 +93,11 @@ async def test_recommendations_alias_places_and_record_token_cost() -> None:
     assert config.temperature == 0
     assert config.seed == 0
     assert config.thinking_config.thinking_budget == 0
+    wire_schema = json.dumps(config.response_schema)
+    assert '"pattern"' not in wire_schema
+    assert '"minLength"' not in wire_schema
+    assert '"maxLength"' not in wire_schema
+    assert '"additionalProperties": false' in wire_schema
     assert usage == [
         AiCallUsage(
             operation="recommend",
@@ -211,3 +223,34 @@ def test_live_provider_rejects_unapproved_model_or_missing_key() -> None:
         LiveGeminiProvider("secret", "gemini-latest")
     with pytest.raises(AiProviderError, match="not configured"):
         LiveGeminiProvider("", "gemini-2.5-flash-lite")
+
+
+@pytest.mark.parametrize(
+    "output_schema",
+    [RecommendationOutput, FoodAnalysisOutput, TasteSummaryOutput],
+)
+def test_provider_schema_uses_supported_keywords(output_schema) -> None:
+    schema = LiveGeminiProvider._provider_schema(output_schema)
+    serialized = json.dumps(schema)
+    assert '"pattern"' not in serialized
+    assert '"minLength"' not in serialized
+    assert '"maxLength"' not in serialized
+    assert schema["additionalProperties"] is False
+
+
+def test_provider_schema_keeps_strict_local_validation() -> None:
+
+    with pytest.raises(ValueError):
+        RecommendationOutput.model_validate(
+            {
+                "outcome": "recommendations",
+                "restaurants": [
+                    {
+                        "candidate_key": "not-an-allowlisted-key",
+                        "score": 0.5,
+                        "reasoning": "Valid locally bounded text.",
+                    }
+                    for _ in range(4)
+                ],
+            }
+        )

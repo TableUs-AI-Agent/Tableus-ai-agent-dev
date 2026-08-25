@@ -125,6 +125,6 @@ ai-eval:
 ai-eval-live:
 	@test -n "$(SHA)" || (echo "SHA=<exact-candidate-sha> is required" && exit 2)
 	@test -n "$(EVIDENCE)" || (echo "EVIDENCE=<sanitized-output-dir> is required" && exit 2)
-	cd backend && .venv/bin/python scripts/ai_eval.py --live --sha "$(SHA)" --evidence "$(EVIDENCE)"
+	cd backend && .venv/bin/python scripts/ai_eval.py --live --sha "$(SHA)" --evidence "$(abspath $(EVIDENCE))"
 
 ready: lint typecheck test contract build smoke perf

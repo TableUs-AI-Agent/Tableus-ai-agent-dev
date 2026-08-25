@@ -137,3 +137,9 @@
   spend ceiling, and a one-process reservation lock; a future horizontally
   scaled service requires a durable reservation ledger. Paid evaluation is a
   separate explicit gate with an exact-SHA/fixture checkpoint and `$0.25` cap.
+- **2026-08-25:** Gemini wire schemas contain only the provider's documented
+  JSON Schema subset. Generated string `minLength`, `maxLength`, and `pattern`
+  constraints are removed before transmission because the live 2.5 endpoint
+  rejects them with `400`; the original strict Pydantic models still validate
+  every parsed response locally, so wire compatibility does not weaken domain,
+  privacy, or safety enforcement.

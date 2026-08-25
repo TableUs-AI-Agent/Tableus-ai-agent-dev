@@ -23,9 +23,11 @@ retained in-memory join intent, and rotated-link rejection passed on Android and
   deployment, restricted egress/key configuration, fail-closed US location
   resolution, policy-safe persistence, and sanitized two-user evidence.
   Pull request #3 is merged. Budgeted Gemini hardening is implemented on
-  `codex/gemini-staging-validation`; deterministic validation and exact-SHA
-  operator tooling precede the still-explicit paid-live-evaluation and staging
-  deployment gate.
+  `codex/gemini-staging-validation`. The first public candidate passed CI, but
+  its live evaluator exposed unsupported generated string-schema keywords before
+  inference and spent `$0`; a replacement candidate keeps strict post-parse
+  validation while sending only Gemini's supported JSON Schema subset. The new
+  exact-SHA paid evaluation and staging deployment remain explicit gates.
 
 The active gate sequence and required owner inputs are maintained in
 `docs/release-runbook.md`.

@@ -425,6 +425,7 @@ class LiveGeminiProvider:
         r"\b(?:allergy[- ]?safe|guaranteed|free from allergens|medically safe)\b",
         re.IGNORECASE,
     )
+    _unsupported_schema_keywords = frozenset({"minLength", "maxLength", "pattern"})
 
     def __init__(self, api_key: str, model: str):
         if not api_key:
@@ -534,12 +535,31 @@ class LiveGeminiProvider:
             )
         return sanitized
 
-    @staticmethod
-    def _structured_config(schema: type[BaseModel], max_output_tokens: int, instruction: str):
+    @classmethod
+    def _provider_schema(cls, schema: type[BaseModel]) -> dict:
+        """Keep strict local validation while sending only Gemini's supported schema subset."""
+
+        def sanitize(value):
+            if isinstance(value, dict):
+                return {
+                    key: sanitize(item)
+                    for key, item in value.items()
+                    if key not in cls._unsupported_schema_keywords
+                }
+            if isinstance(value, list):
+                return [sanitize(item) for item in value]
+            return value
+
+        return sanitize(schema.model_json_schema())
+
+    @classmethod
+    def _structured_config(
+        cls, schema: type[BaseModel], max_output_tokens: int, instruction: str
+    ):
         return types.GenerateContentConfig(
             system_instruction=instruction,
             response_mime_type="application/json",
-            response_schema=schema,
+            response_schema=cls._provider_schema(schema),
             temperature=0,
             seed=0,
             candidate_count=1,

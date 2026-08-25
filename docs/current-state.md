@@ -156,7 +156,7 @@
   provider usage, null stored coordinates, and a candidate schema with no Google
   display fields. Evidence is in `docs/evidence/4a790b4/maps-staging/`. Pull
   request #3 was merged to `main` as `7109cdcde86bd125c86c38980e823ab0a07abdc9`.
-- Gemini staging hardening is implemented locally around pinned
+- Gemini staging hardening is implemented around pinned
   `gemini-2.5-flash-lite` and `google-genai==1.75.0`. Recommendation prompts use
   request-local aliases and normalized TableUs fields instead of Place IDs,
   names, addresses, coordinates, or Google response bodies. Recommendation,
@@ -170,8 +170,16 @@
   database-backed rolling `$4` staging ceiling. Existing provider-usage columns
   are reused, so no migration is required. The frozen deterministic evaluator,
   checkpointed `$0.25` live evaluator, exact-SHA two-user staging runner,
-  privacy disclosures, and generated client contract are updated. Paid
-  evaluation, credential creation, and deployment have not occurred.
+  privacy disclosures, and generated client contract are updated. Exact SHA
+  `90691b1c53812fc140da465e1b5e362c781f1139` passed public CI. Its first paid
+  evaluator attempt failed all six cases before inference with provider `400`
+  schema errors, consuming zero reported tokens and `$0`. Google accepts
+  `additionalProperties`, array bounds, and numeric bounds but not the generated
+  `minLength`, `maxLength`, or `pattern` wire keywords; the provider now removes
+  only those unsupported wire keywords and retains strict Pydantic validation
+  after parsing. This correction requires a replacement exact-SHA candidate and
+  paid-evaluation namespace before deployment. Staging remains on deterministic
+  AI and no returning-sign-in messages were sent.
 
 ## External dependencies not provisioned in source
 
@@ -254,9 +262,13 @@
 - The isolated `TableUs Staging Maps` Google project has billing attached,
   Places API New enabled as its only product API, a $10 monthly budget with
   50/80/100-percent alerts, and granted 60-request/minute preferences for Text,
-  Nearby, and Details. The separate `TableUs Staging AI` project, Gemini
-  authorization key, and `$5` alert budget remain unprovisioned. Sentry and
-  PostHog credentials also remain unprovisioned.
+  Nearby, and Details. The separate billed `TableUs Staging AI` project has
+  Gemini as its only product API and a `$5` monthly budget with 50/80/100-percent
+  alerts. Its replacement authorization key is service-account-bound,
+  Gemini-only, restricted to Railway's three staging static outbound IPs, and
+  stored only in Railway staging and the operator Keychain. A first key whose
+  value appeared in CLI output was revoked before use or storage. Sentry and
+  PostHog credentials remain unprovisioned.
 
 ## Release gates still requiring an owner or external system
 
@@ -330,9 +342,12 @@
   city result without `postalAddress.regionCode`; Google aggregate telemetry
   confirmed a populated `200`, and no raw artifact was retained. The corrected
   rerun passed end to end with policy-safe persistence and sanitized evidence,
-  and pull request #3 is merged. Pinned-model Gemini hardening and operator
-  tooling are prepared locally; the public candidate, isolated AI project, paid
-  `$0.25` evaluation, exact-SHA Railway/Vercel deployment, and sanitized
-  two-user live-AI evidence remain explicit external gates.
+  and pull request #3 is merged. The first pinned-model Gemini candidate passed
+  public CI, and the isolated billed AI project, budget, and final restricted
+  authorization key are provisioned. Its live evaluator stopped on unsupported
+  provider wire-schema keywords before inference at zero reported cost. A local
+  compatibility correction passes focused checks and cumulative `make ready`
+  locally; its replacement exact-SHA push/evaluation, Railway/Vercel deployment,
+  and sanitized two-user live-AI evidence remain explicit external gates.
 - Obtain explicit approval before any production migration, deployment, EAS
   build/submission, paid live-AI evaluation, or cohort invitation.
