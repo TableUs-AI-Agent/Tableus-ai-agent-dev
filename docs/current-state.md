@@ -279,11 +279,16 @@
 - The isolated `TableUs Staging Maps` Google project has billing attached,
   Places API New enabled as its only product API, a $10 monthly budget with
   50/80/100-percent alerts, and granted 60-request/minute preferences for Text,
-  Nearby, and Details. The separate billed `TableUs Staging AI` project has
-  Gemini as its only product API and a `$5` monthly budget with 50/80/100-percent
-  alerts. Its replacement authorization key is service-account-bound,
-  Gemini-only, restricted to Railway's three staging static outbound IPs, and
-  stored only in Railway staging and the operator Keychain. A first key whose
+  Nearby, and Details. The separate billed `TableUs Staging AI` project has a
+  `$5` monthly budget with 50/80/100-percent alerts. The Agent Platform API is
+  enabled and the bound runtime identity has least-privilege
+  `roles/aiplatform.expressUser`. Its existing authorization key remains
+  service-account-bound, restricted to the standalone Gemini Developer API and
+  Railway's three staging static outbound IPs, and stored only in Railway
+  staging and the operator Keychain. Google denied changing that key's API
+  target to Agent Platform because the managed service-account API-key policy
+  does not currently allow `aiplatform.googleapis.com`; no organization-policy
+  override has been applied. A first key whose
   value appeared in CLI output was revoked before use or storage. Sentry and
   PostHog credentials remain unprovisioned.
 

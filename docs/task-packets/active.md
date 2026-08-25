@@ -20,8 +20,14 @@ platform eligible for new-customer Google Cloud credits, while Welcome credits
 remain ineligible for the standalone Gemini Developer API. The adapter now uses
 the SDK's explicit `enterprise=True` transport and fail-closed readiness reports
 `ai_backend=agent-platform`. Staging AI remains deterministic, no deployment or
-returning code was sent, and a new exact-SHA candidate plus explicit live-
-evaluation gate are required.
+returning code was sent, and candidate
+`4a804bc54330289cafbcfbe1f6f35c9f48f3beea` passes cumulative `make ready`.
+The Agent Platform API and `roles/aiplatform.expressUser` grant are active in the
+isolated project. Retargeting the existing service-account-bound key was denied
+by the managed `disableServiceAccountApiKeyCreation` organization policy; the
+key therefore remains restricted to the standalone Developer API and Railway's
+three addresses. Resolving that policy or choosing a new credential form is the
+remaining cloud-configuration decision before public push and live evaluation.
 
 ## Objective
 
