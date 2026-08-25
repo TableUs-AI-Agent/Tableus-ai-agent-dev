@@ -1505,6 +1505,10 @@
       },
       "ProviderUsageAggregateOut": {
         "properties": {
+          "estimated_cost_usd": {
+            "title": "Estimated Cost Usd",
+            "type": "number"
+          },
           "input_units": {
             "title": "Input Units",
             "type": "integer"
@@ -1531,7 +1535,8 @@
           "operation",
           "operation_count",
           "input_units",
-          "output_units"
+          "output_units",
+          "estimated_cost_usd"
         ],
         "title": "ProviderUsageAggregateOut",
         "type": "object"

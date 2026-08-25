@@ -1,3 +1,4 @@
+import asyncio
 import io
 import time
 from collections import defaultdict, deque
@@ -29,7 +30,8 @@ from .models import (
     Vote,
 )
 from .providers import get_ai_provider, get_places_provider
-from .providers.google_live import PlacesProviderError
+from .providers.base import AiCallUsage
+from .providers.google_live import AiProviderError, PlacesProviderError
 from .ranking import borda_scores, ordered_candidates
 from .schemas import (
     AccountControlOut,
@@ -79,6 +81,11 @@ router = APIRouter(prefix="/api/v1", tags=["v1"])
 
 _places_user_windows: dict[str, deque[float]] = defaultdict(deque)
 _places_global_window: deque[float] = deque()
+_ai_user_windows: dict[str, deque[float]] = defaultdict(deque)
+_ai_global_window: deque[float] = deque()
+_ai_budget_lock = asyncio.Lock()
+_ai_reserved_usd = 0.0
+_ai_reservation_usd = 0.02
 
 
 def ok(data, **meta):
@@ -240,6 +247,105 @@ async def _call_places(profile_id: str, method: str, *args):
         raise HTTPException(status_code=status, detail=str(exc)) from exc
     except ValueError as exc:
         raise HTTPException(status_code=404, detail=str(exc)) from exc
+
+
+def _consume_ai_limit(profile_id: str) -> None:
+    if get_settings().ai_provider_mode != "live":
+        return
+    now = time.monotonic()
+    cutoff = now - 60
+    user_window = _ai_user_windows[profile_id]
+    while user_window and user_window[0] <= cutoff:
+        user_window.popleft()
+    while _ai_global_window and _ai_global_window[0] <= cutoff:
+        _ai_global_window.popleft()
+    if len(user_window) >= 5 or len(_ai_global_window) >= 30:
+        raise HTTPException(status_code=429, detail="AI request limit reached; try again soon")
+    user_window.append(now)
+    _ai_global_window.append(now)
+
+
+async def _reserve_ai_budget() -> bool:
+    global _ai_reserved_usd
+    settings = get_settings()
+    if settings.ai_provider_mode != "live":
+        return False
+    async with _ai_budget_lock:
+        cutoff = datetime.now(UTC) - timedelta(days=30)
+        async with SessionFactory() as budget_session:
+            spent = (
+                await budget_session.scalar(
+                    select(func.coalesce(func.sum(ProviderUsage.estimated_cost_usd), 0.0)).where(
+                        ProviderUsage.provider == "gemini",
+                        ProviderUsage.created_at >= cutoff,
+                    )
+                )
+                or 0.0
+            )
+        if float(spent) + _ai_reserved_usd + _ai_reservation_usd > settings.ai_runtime_max_usd_30d:
+            raise HTTPException(
+                status_code=429,
+                detail="AI staging spend limit reached; try again after the budget window resets",
+            )
+        _ai_reserved_usd += _ai_reservation_usd
+        return True
+
+
+async def _release_ai_budget(reserved: bool) -> None:
+    global _ai_reserved_usd
+    if not reserved:
+        return
+    async with _ai_budget_lock:
+        _ai_reserved_usd = max(0.0, _ai_reserved_usd - _ai_reservation_usd)
+
+
+async def _record_ai_usage(
+    provider_name: str, model: str | None, usage: AiCallUsage, started: float
+) -> None:
+    async with SessionFactory() as usage_session:
+        usage_session.add(
+            ProviderUsage(
+                provider=provider_name,
+                operation=f"{usage.operation}.error" if usage.failed else usage.operation,
+                model=model,
+                latency_ms=int((time.perf_counter() - started) * 1000),
+                input_units=usage.input_tokens,
+                output_units=usage.output_tokens,
+                estimated_cost_usd=usage.estimated_cost_usd,
+            )
+        )
+        await usage_session.commit()
+
+
+async def _call_ai(profile_id: str, method: str, *args):
+    _consume_ai_limit(profile_id)
+    reserved = await _reserve_ai_budget()
+    started = time.perf_counter()
+    recorded = False
+
+    try:
+        provider = get_ai_provider()
+
+        async def usage(event: AiCallUsage) -> None:
+            nonlocal recorded
+            await _record_ai_usage(
+                provider.name, getattr(provider, "model", None), event, started
+            )
+            recorded = True
+
+        result = await getattr(provider, method)(*args, usage=usage)
+        if not recorded:
+            await usage(AiCallUsage(method, 0, 0, 0, 0, False))
+        return result
+    except AiProviderError as exc:
+        status = 422 if exc.kind in {"refused", "no_result"} else 502
+        if exc.kind in {"transient", "configuration"}:
+            status = 503
+        raise HTTPException(status_code=status, detail=str(exc)) from exc
+    except RuntimeError as exc:
+        raise HTTPException(status_code=503, detail="AI provider is not configured") from exc
+    finally:
+        await _release_ai_budget(reserved)
 
 
 async def _event(
@@ -590,13 +696,22 @@ async def taste_profile(profile: CurrentProfile):
 @router.post("/taste-profile/regenerate", response_model=Envelope[TasteProfileOut])
 async def regenerate_taste(profile: CurrentProfile, session: DbSession):
     reviews = list(
-        (await session.scalars(select(Review).where(Review.profile_id == profile.id))).all()
+        (
+            await session.scalars(
+                select(Review)
+                .where(Review.profile_id == profile.id)
+                .order_by(Review.created_at.desc())
+                .limit(25)
+            )
+        ).all()
     )
-    summary = await get_ai_provider().regenerate_taste(
+    summary = await _call_ai(
+        profile.id,
+        "regenerate_taste",
         [
             {"rating": item.rating, "cuisine": item.cuisine, "review_text": item.review_text}
-            for item in reviews
-        ]
+            for item in reversed(reviews)
+        ],
     )
     profile.taste_profile = summary
     await session.commit()
@@ -624,8 +739,12 @@ async def analyze_food(profile: CurrentProfile, image: Annotated[UploadFile, Fil
         raise HTTPException(status_code=422, detail="Image data is invalid") from exc
     with Image.open(io.BytesIO(image_bytes)) as opened:
         sanitized = io.BytesIO()
-        opened.convert("RGB").save(sanitized, format="JPEG", quality=90, optimize=True)
-    result = await get_ai_provider().analyze_food(sanitized.getvalue(), "image/jpeg")
+        converted = opened.convert("RGB")
+        converted.thumbnail((1600, 1600), Image.Resampling.LANCZOS)
+        converted.save(sanitized, format="JPEG", quality=85, optimize=True)
+    result = await _call_ai(
+        profile.id, "analyze_food", sanitized.getvalue(), "image/jpeg"
+    )
     return ok(FoodAnalysisOut.model_validate(result))
 
 
@@ -661,6 +780,9 @@ async def provider_usage_summary(profile: CurrentProfile, session: DbSession):
                 func.count().label("operation_count"),
                 func.coalesce(func.sum(ProviderUsage.input_units), 0).label("input_units"),
                 func.coalesce(func.sum(ProviderUsage.output_units), 0).label("output_units"),
+                func.coalesce(func.sum(ProviderUsage.estimated_cost_usd), 0.0).label(
+                    "estimated_cost_usd"
+                ),
             ).group_by(ProviderUsage.provider, ProviderUsage.operation)
         )
     ).all()
@@ -672,8 +794,16 @@ async def provider_usage_summary(profile: CurrentProfile, session: DbSession):
                 operation_count=operation_count,
                 input_units=input_units,
                 output_units=output_units,
+                estimated_cost_usd=round(float(estimated_cost_usd), 8),
             )
-            for provider, operation, operation_count, input_units, output_units in rows
+            for (
+                provider,
+                operation,
+                operation_count,
+                input_units,
+                output_units,
+                estimated_cost_usd,
+            ) in rows
         ]
     )
 
@@ -812,7 +942,6 @@ async def generate_recommendations(
             status_code=409, detail="At least two participants are required before voting"
         )
 
-    started = time.perf_counter()
     if plan.location_place_id:
         location = await _call_places(profile.id, "get_location", plan.location_place_id)
         latitude, longitude = location.latitude, location.longitude
@@ -839,8 +968,9 @@ async def generate_recommendations(
         if (not cuisine_sets or place.cuisine.lower() in allowed_cuisines)
         and place.price_level <= max_price
     ]
-    ai_provider = get_ai_provider()
-    recommendations = await ai_provider.recommend(
+    recommendations = await _call_ai(
+        profile.id,
+        "recommend",
         body.query,
         [participant.constraints or {} for participant in participant_rows],
         eligible,
@@ -850,6 +980,7 @@ async def generate_recommendations(
             status_code=422,
             detail="No four-place recommendation set satisfies the current constraints",
         )
+    ai_provider = get_ai_provider()
     selected_places = await _call_places(
         profile.id, "get_places", [item.place_id for item in recommendations]
     )
@@ -876,14 +1007,6 @@ async def generate_recommendations(
     plan.status = "voting"
     plan.finalized_candidate_id = None
     _touch(plan)
-    session.add(
-        ProviderUsage(
-            provider=ai_provider.name,
-            operation="recommend",
-            model=getattr(ai_provider, "model", None),
-            latency_ms=int((time.perf_counter() - started) * 1000),
-        )
-    )
     await _event(session, plan, profile, "recommendations.generated", {"run_id": run.id})
     await session.commit()
     await capture_event(

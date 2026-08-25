@@ -6,6 +6,19 @@ PlacesUsageRecorder = Callable[[str, int, int, bool], Awaitable[None]]
 
 
 @dataclass(frozen=True)
+class AiCallUsage:
+    operation: str
+    attempts: int
+    input_tokens: int
+    output_tokens: int
+    estimated_cost_usd: float
+    failed: bool
+
+
+AiUsageRecorder = Callable[[AiCallUsage], Awaitable[None]]
+
+
+@dataclass(frozen=True)
 class Place:
     place_id: str
     name: str
@@ -64,9 +77,17 @@ class AiProvider(Protocol):
     name: str
 
     async def recommend(
-        self, query: str, constraints: list[dict], places: list[Place]
+        self,
+        query: str,
+        constraints: list[dict],
+        places: list[Place],
+        usage: AiUsageRecorder | None = None,
     ) -> list[Recommendation]: ...
 
-    async def analyze_food(self, image_bytes: bytes, media_type: str) -> dict: ...
+    async def analyze_food(
+        self, image_bytes: bytes, media_type: str, usage: AiUsageRecorder | None = None
+    ) -> dict: ...
 
-    async def regenerate_taste(self, reviews: list[dict]) -> str: ...
+    async def regenerate_taste(
+        self, reviews: list[dict], usage: AiUsageRecorder | None = None
+    ) -> str: ...

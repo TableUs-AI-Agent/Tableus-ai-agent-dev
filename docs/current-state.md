@@ -156,6 +156,22 @@
   provider usage, null stored coordinates, and a candidate schema with no Google
   display fields. Evidence is in `docs/evidence/4a790b4/maps-staging/`. Pull
   request #3 was merged to `main` as `7109cdcde86bd125c86c38980e823ab0a07abdc9`.
+- Gemini staging hardening is implemented locally around pinned
+  `gemini-2.5-flash-lite` and `google-genai==1.75.0`. Recommendation prompts use
+  request-local aliases and normalized TableUs fields instead of Place IDs,
+  names, addresses, coordinates, or Google response bodies. Recommendation,
+  photo, and taste outputs use strict bounded schemas, privacy/safety guards,
+  no tools or grounding, disabled thinking, 12-second timeouts, and at most
+  three explicitly classified attempts without silent fallback. Photos are
+  resized to a maximum 1600-pixel edge after metadata stripping; taste inputs
+  are bounded to 25 reviews and 12,000 characters. Every API AI call records
+  aggregate token/cost totals and error outcomes, is limited to five operations
+  per approved user and 30 globally per minute, and reserves against a
+  database-backed rolling `$4` staging ceiling. Existing provider-usage columns
+  are reused, so no migration is required. The frozen deterministic evaluator,
+  checkpointed `$0.25` live evaluator, exact-SHA two-user staging runner,
+  privacy disclosures, and generated client contract are updated. Paid
+  evaluation, credential creation, and deployment have not occurred.
 
 ## External dependencies not provisioned in source
 
@@ -238,8 +254,9 @@
 - The isolated `TableUs Staging Maps` Google project has billing attached,
   Places API New enabled as its only product API, a $10 monthly budget with
   50/80/100-percent alerts, and granted 60-request/minute preferences for Text,
-  Nearby, and Details. Gemini, Sentry, and PostHog credentials remain
-  unprovisioned.
+  Nearby, and Details. The separate `TableUs Staging AI` project, Gemini
+  authorization key, and `$5` alert budget remain unprovisioned. Sentry and
+  PostHog credentials also remain unprovisioned.
 
 ## Release gates still requiring an owner or external system
 
@@ -313,7 +330,9 @@
   city result without `postalAddress.regionCode`; Google aggregate telemetry
   confirmed a populated `200`, and no raw artifact was retained. The corrected
   rerun passed end to end with policy-safe persistence and sanitized evidence,
-  and pull request #3 is merged. The budgeted pinned-model Gemini evaluation is
-  the next provider objective and remains an explicit paid-live-evaluation gate.
+  and pull request #3 is merged. Pinned-model Gemini hardening and operator
+  tooling are prepared locally; the public candidate, isolated AI project, paid
+  `$0.25` evaluation, exact-SHA Railway/Vercel deployment, and sanitized
+  two-user live-AI evidence remain explicit external gates.
 - Obtain explicit approval before any production migration, deployment, EAS
   build/submission, paid live-AI evaluation, or cohort invitation.

@@ -129,3 +129,11 @@
   component and accepts its `US` short code only when the postal region is
   absent. Any missing, conflicting, or non-US country remains fail-closed, and
   address components are never persisted or emitted to evidence or telemetry.
+- **2026-08-25:** Closed-beta Gemini uses only pinned
+  `gemini-2.5-flash-lite` through `google-genai==1.75.0`. Restaurant identities
+  are replaced with request-local aliases before inference, every AI output is
+  schema- and privacy-validated, and there is no silent fallback. Live staging
+  is bounded by per-user/global limits, a database-backed rolling `$4` estimated
+  spend ceiling, and a one-process reservation lock; a future horizontally
+  scaled service requires a durable reservation ledger. Paid evaluation is a
+  separate explicit gate with an exact-SHA/fixture checkpoint and `$0.25` cap.

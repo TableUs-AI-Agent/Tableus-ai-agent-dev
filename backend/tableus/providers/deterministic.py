@@ -1,4 +1,11 @@
-from .base import Place, PlacesUsageRecorder, Recommendation, ResolvedLocation
+from .base import (
+    AiCallUsage,
+    AiUsageRecorder,
+    Place,
+    PlacesUsageRecorder,
+    Recommendation,
+    ResolvedLocation,
+)
 
 FIXTURE_LOCATION_ID = "fixture-location-boston"
 
@@ -120,8 +127,14 @@ class DeterministicAiProvider:
     name = "deterministic"
 
     async def recommend(
-        self, query: str, constraints: list[dict], places: list[Place]
+        self,
+        query: str,
+        constraints: list[dict],
+        places: list[Place],
+        usage: AiUsageRecorder | None = None,
     ) -> list[Recommendation]:
+        if usage:
+            await usage(AiCallUsage("recommend", 0, 0, 0, 0, False))
         if "no result" in query.lower():
             return []
         return [
@@ -133,7 +146,11 @@ class DeterministicAiProvider:
             for index, place in enumerate(places[:4])
         ]
 
-    async def analyze_food(self, image_bytes: bytes, media_type: str) -> dict:
+    async def analyze_food(
+        self, image_bytes: bytes, media_type: str, usage: AiUsageRecorder | None = None
+    ) -> dict:
+        if usage:
+            await usage(AiCallUsage("analyze_food", 0, 0, 0, 0, False))
         return {
             "dish": "Sample dish",
             "cuisine": "Contemporary",
@@ -141,7 +158,11 @@ class DeterministicAiProvider:
             "flavor_tags": ["savory", "fresh"],
         }
 
-    async def regenerate_taste(self, reviews: list[dict]) -> str:
+    async def regenerate_taste(
+        self, reviews: list[dict], usage: AiUsageRecorder | None = None
+    ) -> str:
+        if usage:
+            await usage(AiCallUsage("regenerate_taste", 0, 0, 0, 0, False))
         cuisines = sorted(
             {str(review.get("cuisine")) for review in reviews if review.get("cuisine")}
         )

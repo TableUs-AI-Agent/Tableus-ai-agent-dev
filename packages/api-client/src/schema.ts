@@ -1364,6 +1364,8 @@ export interface components {
         };
         /** ProviderUsageAggregateOut */
         ProviderUsageAggregateOut: {
+            /** Estimated Cost Usd */
+            estimated_cost_usd: number;
             /** Input Units */
             input_units: number;
             /** Operation */

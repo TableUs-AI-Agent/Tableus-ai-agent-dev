@@ -1,76 +1,67 @@
-# Active packet: policy-safe Google Places staging and location flow
+# Active packet: budgeted Gemini staging validation
 
 ## Status
 
-Implementation and exact-SHA staging validation are complete on
-`codex/maps-staging-validation`, branched from merged `main` at
-`2169338d3edc760b9df0d045551745c2b91b45c0`. Focused checks, migration checks,
-API drift checks, `make ready`, and sequential Expo Go iOS/Android location
-smokes passed. Corrected exact candidate
-`4a790b4ee40a12cdba8540fb12da586b3373a895` and pull request #3 are green. The
-isolated Google project, $10 budget alerts,
-60-RPM method quotas, restricted replacement key, staging migration, active
-Railway static egress, and exact-SHA Railway/Vercel deployments are configured.
-The first live journey authenticated both approved users but exposed a real
-city-level response shape: Google returned a populated `200` while omitting
-`postalAddress.regionCode`, which the adapter rejected as non-US. The local
-correction requests the country address component and uses it only when the
-postal region is absent, while remaining fail-closed for any location not
-conclusively in the US. The rerun passed two-user authentication, location
-resolution, plan creation/joining, four distinct candidates, refreshed details,
-policy-safe persistence, and aggregate usage checks. Sanitized evidence is in
-`docs/evidence/4a790b4/maps-staging/`. Pull request #3 was explicitly approved
-and merged to `main` as `7109cdcde86bd125c86c38980e823ab0a07abdc9`.
+Implementation is complete locally on `codex/gemini-staging-validation`,
+branched from merged `origin/main` at
+`6606771383b2a991f3a787dbc612ecc710d31195`. Focused provider/API checks, the
+full backend and workspace suites, deterministic AI evaluation, generated
+contract, builds, smoke checks, performance report, and cumulative `make ready`
+pass. The candidate is ready to freeze. No Gemini credential, paid call, cloud
+project, public push, migration, or deployment is authorized by this packet
+status.
 
 ## Objective
 
-Enable live Places API New on Supabase-authenticated staging while Gemini stays
-deterministic. Replace fixed coordinates with an explicit web/mobile location
-lookup and persist only the user's normalized label, the Google Place ID, and
-TableUs-owned planning metadata.
+Harden recommendation, ephemeral food-photo analysis, and taste-summary
+generation around pinned `gemini-2.5-flash-lite`, then prove them with a frozen,
+budgeted, sanitized live evaluation before enabling Gemini on staging.
 
 ## Deliverables
 
-- Independent Places and AI provider modes with mixed readiness and production
-  fail-closed validation.
-- Text Search New location resolution and query discovery, Nearby Search New for
-  blank discovery, 5 km server-side enforcement, strict field masks, bounded
-  retries, four-way detail concurrency, and typed provider errors. US validation
-  prefers the postal region and permits the country address component only as a
-  transient fallback for city-level results that omit a postal address.
-- Nullable legacy coordinates plus `plans.location_place_id`; new live plans
-  store no Google coordinates or provider display label.
-- Lightweight plan summaries and revision polling that avoid paid Place Details
-  calls until a full plan is actually refreshed.
-- Per-user/global process-local paid-operation limits and aggregate-only provider
-  usage records with outbound-attempt and returned-record counts.
-- Web and Expo location selection, accessible Google Maps attribution, explicit
-  offline retry with no queue, and policy disclosures.
-- Exact-SHA, two-approved-account, sanitized `make maps-staging-e2e` evidence.
+- Exact `google-genai==1.75.0` dependency and pinned model configuration.
+- Strict structured outputs, request-local candidate aliases, bounded inputs,
+  output privacy/safety guards, 12-second timeouts, typed errors, and at most
+  three TableUs-owned attempts with no provider fallback.
+- Shared AI usage recording with token totals, estimated cost, error outcomes,
+  five-per-user/30-global minute limits, and a database-backed rolling `$4`
+  staging ceiling with one-process reservations.
+- Metadata-stripped, maximum-1600-pixel ephemeral food images and a maximum of
+  25/12,000-character review inputs.
+- Frozen deterministic evaluation plus checkpointed `make ai-eval-live` under a
+  `$0.25` ceiling and sanitized `make gemini-staging-e2e` two-user evidence.
+- Updated privacy disclosures, generated API contract, release runbook, current
+  state, roadmap, and durable decision record.
 
 ## Acceptance
 
-- Deterministic CI and local device flows remain credential-free and use both
-  provider modes set to deterministic.
-- Live location resolution accepts US locations only and returns a Place ID,
-  transient provider label, and attribution marker without coordinates.
-- A live-mode plan stores its user-entered label and Place ID with null
-  coordinates; candidate rows contain only Place ID and TableUs metadata.
-- Recommendation generation commits exactly four refreshed distinct Place IDs
-  or returns an honest `422` without a partial run.
-- Exact-SHA staging readiness reports Supabase auth, live Places, deterministic
-  AI, and `mixed`; sanitized evidence contains no account, OTP, query, coordinate,
-  Place ID, Google content, response, key, or session data.
+- Deterministic CI and `make ready` remain credential-free and make no live call.
+- Every live operation either yields schema-valid bounded output or a typed
+  terminal/transient failure; invalid output never changes a plan or taste
+  profile and images are never persisted.
+- Recommendation prompts contain request-local candidate keys and normalized
+  TableUs fields, not Place IDs, names, addresses, coordinates, or Google
+  response bodies.
+- Provider usage exposes aggregate tokens and estimated cost only. Staging
+  rejects calls before Gemini when user/global limits or the rolling ceiling are
+  exhausted.
+- Paid evidence is pinned to one exact SHA, model, fixture hash, and `$0.25`
+  ceiling. Staging readiness then reports Supabase auth, live Places, live AI,
+  and compatibility `live` from that SHA.
 
 ## External gate
 
-Complete. The corrected exact SHA is public, Railway and Vercel are healthy from
-that SHA, both returning-code authentications passed, and sanitized staging
-evidence is retained. No new invite, production resource, Gemini call, or store
-action occurred.
+After the candidate passes `make ready`, request one explicit approval covering
+the exact-SHA public push; isolated `TableUs Staging AI` project and billing;
+Gemini-only IP-restricted authorization key; `$5` 50/80/100-percent budget
+alerts; paid live evaluation; Railway secret/configuration and deployment;
+Vercel deployment; and one returning code for each of two existing approved
+accounts. Leave staging live only if the sanitized evaluation and two-user
+journey pass.
 
 ## Boundaries
 
-No Gemini live call, Sentry/PostHog activation, new invite, production migration
-or build, EAS artifact, store submission, account deletion, photo/review Places
-data, or legacy discovery-page migration is included.
+No database migration, EAS artifact, new invite, production deployment, store
+submission, Sentry/PostHog activation, account deletion, or cohort invitation is
+included. The runtime reservation lock assumes the current single Railway
+process; horizontally scaled reservations require a durable ledger.

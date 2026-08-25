@@ -36,12 +36,13 @@ class Settings(BaseSettings):
     supabase_jwt_audience: str = "authenticated"
     gemini_api_key: str = ""
     google_maps_api_key: str = ""
-    gemini_model: str = "gemini-2.5-flash-lite"
+    gemini_model: Literal["gemini-2.5-flash-lite"] = "gemini-2.5-flash-lite"
     sentry_dsn: str = ""
     posthog_key: str = ""
     posthog_host: str = "https://us.i.posthog.com"
 
-    live_ai_max_usd: float = Field(default=1.0, gt=0, le=25)
+    live_ai_max_usd: float = Field(default=0.25, gt=0, le=0.25)
+    ai_runtime_max_usd_30d: float = Field(default=4.0, gt=0, le=4.0)
 
     @field_validator("tableus_runtime_db_role")
     @classmethod
