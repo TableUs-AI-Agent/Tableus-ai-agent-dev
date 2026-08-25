@@ -6,12 +6,16 @@ Local implementation and validation are complete on
 `codex/maps-staging-validation`, branched from merged `main` at
 `2169338d3edc760b9df0d045551745c2b91b45c0`. Focused checks, migration checks,
 API drift checks, `make ready`, and sequential Expo Go iOS/Android location
-smokes pass. The first pushed candidate exposed one stale Playwright create-plan
-step in pull request #3; the corrected four-journey browser suite and cumulative
-readiness gate now pass locally, and a replacement exact SHA is pending approval.
-Railway static outbound IPs are enabled but require the gated redeploy before
-they become active. Google Cloud, migration, secret, and deployment actions
-remain gated for the replacement candidate.
+smokes passed for candidate `ce8adf60d95d2b0aaf02d2d6101ea7978c8295c5`,
+and pull request #3 is green. The isolated Google project, $10 budget alerts,
+60-RPM method quotas, restricted replacement key, staging migration, active
+Railway static egress, and exact-SHA Railway/Vercel deployments are configured.
+The first live journey authenticated both approved users but exposed a real
+city-level response shape: Google returned a populated `200` while omitting
+`postalAddress.regionCode`, which the adapter rejected as non-US. The local
+correction requests the country address component and uses it only when the
+postal region is absent, while remaining fail-closed for any location not
+conclusively in the US. A new exact-SHA candidate and redeployment are pending.
 
 ## Objective
 
@@ -26,7 +30,9 @@ TableUs-owned planning metadata.
   fail-closed validation.
 - Text Search New location resolution and query discovery, Nearby Search New for
   blank discovery, 5 km server-side enforcement, strict field masks, bounded
-  retries, four-way detail concurrency, and typed provider errors.
+  retries, four-way detail concurrency, and typed provider errors. US validation
+  prefers the postal region and permits the country address component only as a
+  transient fallback for city-level results that omit a postal address.
 - Nullable legacy coordinates plus `plans.location_place_id`; new live plans
   store no Google coordinates or provider display label.
 - Lightweight plan summaries and revision polling that avoid paid Place Details
@@ -53,13 +59,11 @@ TableUs-owned planning metadata.
 
 ## External gate
 
-After candidate approval: create the isolated `TableUs Staging Maps` project,
-attach billing, enable only Places API New, configure a $10 budget with
-50/80/100-percent alerts and 60-request/minute Nearby/Text/Details quotas, enable
-Railway Pro static outbound IPs, restrict the server key to those IPs and API,
-store it only in Railway staging and operator Keychain, apply the approved
-migration, deploy Railway/Vercel from the exact SHA, and send one returning OTP
-to each of two existing approved accounts.
+The infrastructure portion of this gate is complete. After the corrected
+candidate is approved: push that exact SHA, redeploy Railway and Vercel from it,
+then send one new returning OTP to each of the same two existing approved
+accounts and rerun the sanitized staging journey. No new project, budget, quota,
+invite, database migration, static IP, or provider credential is required.
 
 ## Boundaries
 

@@ -143,9 +143,12 @@
   counts. Web and Expo require explicit location selection with Google Maps
   attribution and keep provider display content in memory only. Focused checks,
   empty/previous migration checks, API drift validation, `make ready`, and
-  sequential Expo Go iOS/Android location-create smokes pass locally. External
-  Maps resources, migration, key, and exact-SHA staging evidence are not yet
-  applied.
+  sequential Expo Go iOS/Android location-create smokes pass locally. Live
+  staging proved that a city-level Text Search result can omit the postal
+  address despite returning a populated `200`; location validation now prefers
+  the postal region and uses the transient country address component only when
+  the postal region is absent. It remains fail-closed unless the resulting
+  country is conclusively `US`, and neither field is persisted.
 
 ## External dependencies not provisioned in source
 
@@ -159,7 +162,7 @@
   code verification, invite redemption, profile creation, and authenticated
   redirect to `/plans`. Sanitized staging evidence showed exactly one profile,
   one redemption, one consumed pending validation, and one used invite. Alembic
-  revision `161b86fcb7f4` is applied and verified against staging. The
+  revision `8b1d4a6c2e90` is applied and verified against staging. The
   `plan_events.actor_id` column is nullable and its profile foreign key uses
   `ON DELETE SET NULL`, preserving audit history when an eligible application
   profile is removed. The project's owner
@@ -170,16 +173,18 @@
   active until 2026-08-27; its plaintext is unavailable and it should be revoked
   or allowed to expire before external beta access.
 - Railway staging project `tableus-staging`, environment `staging`, and service
-  `api` are provisioned. Deployment `fb204f7d-5b7a-4117-a4c8-ac620e659098`
+  `api` are provisioned. Deployment `65483244-1830-4317-9a81-2fd1b350030f`
   serves `https://api-staging-3795.up.railway.app` from exact SHA
-  `8cde19309fa43787b04d2792d96c1cfc11c21317`; liveness, readiness,
-  deterministic-provider mode, Supabase Auth mode, and Vercel CORS passed.
-  Railway holds only the runtime database credential and application secret.
-  High-availability static outbound IPs are now enabled for the staging API but
-  are not active until the next approved redeploy. No Maps key has been added.
+  `ce8adf60d95d2b0aaf02d2d6101ea7978c8295c5`; readiness reports Supabase
+  Auth, live Places, deterministic AI, and `mixed`. High-availability static
+  outbound IPs are active. Railway holds the runtime database credential,
+  application secret, and the Places-only server key restricted to those IPs.
+  The first CLI-created key was revoked immediately after its creation response
+  exposed the value; only the non-exposed restricted replacement remains in
+  Railway and the operator Keychain.
 - Vercel staging client variables and the canonical verified-link deployment
   are live from exact SHA
-  `341d67ec73c96f96f19c6e0e2911677e973a7d61` at
+  `ce8adf60d95d2b0aaf02d2d6101ea7978c8295c5` at
   `https://tableus-staging.vercel.app` and `https://links.table-us.com`. The
   dedicated staging project also retains its pre-existing `table-us.com` and
   `www.table-us.com` aliases. An authenticated
@@ -223,7 +228,11 @@
   service-role markers, or production endpoints. Standard artifact SHA-256
   checksums and build evidence are recorded in `docs/evidence/119171a/`. The
   superseded partial evidence remains documented in `docs/evidence/8cde193/`.
-- Google Maps, Gemini, Sentry, and PostHog credentials.
+- The isolated `TableUs Staging Maps` Google project has billing attached,
+  Places API New enabled as its only product API, a $10 monthly budget with
+  50/80/100-percent alerts, and granted 60-request/minute preferences for Text,
+  Nearby, and Details. Gemini, Sentry, and PostHog credentials remain
+  unprovisioned.
 
 ## Release gates still requiring an owner or external system
 
@@ -292,7 +301,14 @@
   evidence checksums. Sanitized summaries and screenshots are in
   `docs/evidence/119171a/account-controls/`. No application profile or Supabase
   Auth identity was deleted. Other failure-state checks remain.
-  Maps staging and the budgeted pinned-model Gemini evaluation follow only after
-  deterministic staging is green.
+  Maps infrastructure and the first exact-SHA mixed-provider deployment are
+  live. Both approved users authenticated during the first staging run, but the
+  run stopped at location resolution because the populated city result omitted
+  `postalAddress.regionCode`. Google aggregate telemetry confirmed one `200`
+  response; no query, response, Place ID, coordinate, session, or provider
+  content was retained. The fail-closed country-component correction must be
+  frozen, approved, redeployed, and rerun with one new returning code per
+  account before Maps evidence is green. The budgeted pinned-model Gemini
+  evaluation follows only after that gate.
 - Obtain explicit approval before any production migration, deployment, EAS
   build/submission, paid live-AI evaluation, or cohort invitation.

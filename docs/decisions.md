@@ -123,3 +123,9 @@
   location and restaurant fields are refreshed on demand, query data stays in
   client memory, and Maps paid-operation limits/usage accounting remain
   process-local for the closed beta.
+- **2026-08-25:** US location validation prefers
+  `postalAddress.regionCode`. Because live Text Search city results can omit the
+  entire postal address, the adapter requests the transient country address
+  component and accepts its `US` short code only when the postal region is
+  absent. Any missing, conflicting, or non-US country remains fail-closed, and
+  address components are never persisted or emitted to evidence or telemetry.

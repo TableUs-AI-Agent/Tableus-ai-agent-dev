@@ -58,6 +58,7 @@ class LivePlacesProvider:
             "places.formattedAddress",
             "places.location",
             "places.postalAddress",
+            "places.addressComponents",
         ]
     )
     location_detail_field_mask = location_search_field_mask.replace("places.", "")
@@ -136,7 +137,9 @@ class LivePlacesProvider:
                 raise PlacesProviderError("Location could not be resolved", kind="not_found")
             resolved = self._normalize_location(results[0])
             if resolved.region_code != "US":
-                raise PlacesProviderError("Only United States locations are supported", kind="not_found")
+                raise PlacesProviderError(
+                    "Only United States locations are supported", kind="not_found"
+                )
             if usage:
                 await usage("location.resolve", attempts, 1, False)
             return resolved
@@ -162,7 +165,9 @@ class LivePlacesProvider:
                 )
             resolved = self._normalize_location(data)
             if resolved.region_code != "US":
-                raise PlacesProviderError("Only United States locations are supported", kind="not_found")
+                raise PlacesProviderError(
+                    "Only United States locations are supported", kind="not_found"
+                )
             if usage:
                 await usage("location.details", attempts, 1, False)
             return resolved
@@ -272,7 +277,9 @@ class LivePlacesProvider:
             by_id = {place.place_id: place for place in normalized}
             places = [by_id[item] for item in unique_ids if item in by_id]
             if len(places) != len(unique_ids):
-                raise PlacesProviderError("A complete place set could not be refreshed", kind="not_found")
+                raise PlacesProviderError(
+                    "A complete place set could not be refreshed", kind="not_found"
+                )
             if usage:
                 await usage("restaurant.details", attempts, len(places), False)
             return places
@@ -284,11 +291,25 @@ class LivePlacesProvider:
     def _normalize_location(self, item: dict) -> ResolvedLocation:
         location = item.get("location") or {}
         region_code = str((item.get("postalAddress") or {}).get("regionCode") or "").upper()
+        if not region_code:
+            country: dict[str, object] = next(
+                (
+                    component
+                    for component in item.get("addressComponents") or []
+                    if "country" in (component.get("types") or [])
+                ),
+                {},
+            )
+            region_code = str(country.get("shortText") or "").upper()
         if not item.get("id") or "latitude" not in location or "longitude" not in location:
-            raise PlacesProviderError("Google Places returned an incomplete location", kind="configuration")
+            raise PlacesProviderError(
+                "Google Places returned an incomplete location", kind="configuration"
+            )
         return ResolvedLocation(
             place_id=str(item["id"]),
-            label=str(item.get("formattedAddress") or (item.get("displayName") or {}).get("text") or ""),
+            label=str(
+                item.get("formattedAddress") or (item.get("displayName") or {}).get("text") or ""
+            ),
             latitude=float(location["latitude"]),
             longitude=float(location["longitude"]),
             region_code=region_code,
@@ -332,7 +353,9 @@ class LivePlacesProvider:
         phi1, phi2 = math.radians(lat1), math.radians(lat2)
         dphi = math.radians(lat2 - lat1)
         dlambda = math.radians(lon2 - lon1)
-        value = math.sin(dphi / 2) ** 2 + math.cos(phi1) * math.cos(phi2) * math.sin(dlambda / 2) ** 2
+        value = (
+            math.sin(dphi / 2) ** 2 + math.cos(phi1) * math.cos(phi2) * math.sin(dlambda / 2) ** 2
+        )
         return radius * 2 * math.atan2(math.sqrt(value), math.sqrt(1 - value))
 
 

@@ -46,7 +46,59 @@ async def test_location_resolution_uses_text_search_and_requires_us() -> None:
     assert requests[0].url.path.endswith("places:searchText")
     assert json.loads(requests[0].content)["pageSize"] == 1
     assert "places.postalAddress" in requests[0].headers["X-Goog-FieldMask"]
+    assert "places.addressComponents" in requests[0].headers["X-Goog-FieldMask"]
     assert "rating" not in requests[0].headers["X-Goog-FieldMask"]
+
+
+@pytest.mark.asyncio
+async def test_location_resolution_uses_country_component_when_city_has_no_postal_address() -> None:
+    def handler(request: httpx.Request) -> httpx.Response:
+        return httpx.Response(
+            200,
+            json={
+                "places": [
+                    {
+                        "id": "city-id",
+                        "displayName": {"text": "Madison"},
+                        "formattedAddress": "Madison, WI, USA",
+                        "location": {"latitude": 43.07, "longitude": -89.4},
+                        "addressComponents": [
+                            {"longText": "United States", "shortText": "US", "types": ["country"]}
+                        ],
+                    }
+                ]
+            },
+        )
+
+    resolved = await LivePlacesProvider("secret", httpx.MockTransport(handler)).resolve_location(
+        "Madison"
+    )
+
+    assert resolved.region_code == "US"
+
+
+@pytest.mark.asyncio
+async def test_location_resolution_still_fails_closed_without_a_us_country() -> None:
+    def handler(request: httpx.Request) -> httpx.Response:
+        return httpx.Response(
+            200,
+            json={
+                "places": [
+                    {
+                        "id": "outside-us",
+                        "displayName": {"text": "Madison"},
+                        "formattedAddress": "Madison",
+                        "location": {"latitude": 1.0, "longitude": 2.0},
+                        "addressComponents": [
+                            {"longText": "Canada", "shortText": "CA", "types": ["country"]}
+                        ],
+                    }
+                ]
+            },
+        )
+
+    with pytest.raises(PlacesProviderError, match="United States"):
+        await LivePlacesProvider("secret", httpx.MockTransport(handler)).resolve_location("Madison")
 
 
 @pytest.mark.asyncio

@@ -359,6 +359,10 @@ Keep deterministic providers green while each integration is added:
 1. Enable staging Google Maps with a restricted server key, Places API New field
    masks, and billing alerts. Confirm four valid Place IDs or the honest
    no-result state, refresh-only display data, and production attribution.
+   Location resolution must prefer `postalAddress.regionCode`; city-level
+   results that omit a postal address may use only the transient country address
+   component as a `US` fallback. Persist neither source field, and reject a
+   missing, conflicting, or non-US result.
    Create an isolated project, enable only Places API New, set the $10 monthly
    budget alerts at 50/80/100 percent, and cap Nearby, Text, and Details at 60
    requests/minute. Activate Railway Pro static outbound IPs before restricting
