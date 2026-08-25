@@ -36,6 +36,7 @@ class Settings(BaseSettings):
     supabase_jwt_audience: str = "authenticated"
     gemini_api_key: str = ""
     google_maps_api_key: str = ""
+    gemini_backend: Literal["agent-platform"] = "agent-platform"
     gemini_model: Literal["gemini-3.1-flash-lite"] = "gemini-3.1-flash-lite"
     sentry_dsn: str = ""
     posthog_key: str = ""
@@ -93,6 +94,12 @@ class Settings(BaseSettings):
         if self.places_provider_mode == self.ai_provider_mode:
             return self.places_provider_mode
         return "mixed"
+
+    @property
+    def ai_backend(self) -> Literal["deterministic", "agent-platform"]:
+        if self.ai_provider_mode == "deterministic":
+            return "deterministic"
+        return self.gemini_backend
 
     @property
     def build_sha(self) -> str:

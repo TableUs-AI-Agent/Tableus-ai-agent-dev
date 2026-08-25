@@ -148,6 +148,8 @@ async def run(live: bool, sha: str | None, evidence: str | None) -> None:
             raise SystemExit("GEMINI_API_KEY is required for live evaluation")
         if settings.gemini_model != PINNED_MODEL:
             raise SystemExit("Live evaluation requires the pinned Gemini model")
+        if settings.gemini_backend != "agent-platform":
+            raise SystemExit("Live evaluation requires Gemini Enterprise Agent Platform")
         if not sha or not evidence:
             raise SystemExit("Live evaluation requires --sha and --evidence")
         if not re.fullmatch(r"[0-9a-f]{40}", sha) or sha != _head_sha():
@@ -156,7 +158,11 @@ async def run(live: bool, sha: str | None, evidence: str | None) -> None:
 
     artifact_dir = ROOT / ".artifacts" / "ai-eval"
     artifact_dir.mkdir(parents=True, exist_ok=True)
-    namespace = f"{sha}-{PINNED_MODEL}-{fixture_hash}" if live else "deterministic"
+    namespace = (
+        f"{sha}-{settings.gemini_backend}-{PINNED_MODEL}-{fixture_hash}"
+        if live
+        else "deterministic"
+    )
     checkpoint_path = artifact_dir / f"checkpoint-{namespace}.json"
     lock_path = artifact_dir / f"live-{sha}.lock" if live else None
     if lock_path:
@@ -199,6 +205,7 @@ async def run(live: bool, sha: str | None, evidence: str | None) -> None:
             "mode": "live" if live else "deterministic",
             "sha": sha if live else _head_sha(),
             "model": settings.gemini_model if live else "fixture-v1",
+            "backend": settings.gemini_backend if live else "deterministic",
             "fixture_sha256": fixture_hash,
             "case_count": len(selected),
             "passed_count": sum(bool(item["passed"]) for item in selected),

@@ -148,6 +148,7 @@ try {
     supabase_auth: true,
     places_live: true,
     ai_live: true,
+    agent_platform_live: true,
     participant_count: refreshed.participants.length,
     candidate_count: candidateCount,
     distinct_candidates: distinctCandidates,

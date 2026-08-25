@@ -189,7 +189,12 @@
   schema 3.1 requests currently reach Google but return generic
   `429 RESOURCE_EXHAUSTED`; billing is confirmed active and linked, and the
   response is not reported as overload or a client rate-limit violation. A new
-  exact-SHA candidate and paid-evaluation namespace are required before another
+  implementation now selects Gemini Enterprise Agent Platform explicitly through
+  `google-genai`'s `enterprise=True` transport, pins readiness/evaluation evidence
+  to `agent-platform`, and retains the same model, privacy guards, schemas, and
+  spend ceilings. The underlying service is `aiplatform.googleapis.com`; Agent
+  Runtime, tools, grounding, and persistent agent state are not introduced. A
+  new exact-SHA candidate and evaluation namespace are required before another
   live attempt or deployment. Staging remains on deterministic AI and no
   returning-sign-in messages were sent.
 

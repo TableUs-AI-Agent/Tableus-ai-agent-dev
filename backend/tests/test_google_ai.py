@@ -227,6 +227,16 @@ def test_live_provider_rejects_unapproved_model_or_missing_key() -> None:
         LiveGeminiProvider("", "gemini-3.1-flash-lite")
 
 
+def test_live_provider_uses_agent_platform_transport() -> None:
+    provider = LiveGeminiProvider("secret", "gemini-3.1-flash-lite")
+
+    assert provider.backend == "agent-platform"
+    assert provider.client._api_client.vertexai is True
+    assert provider.client._api_client._http_options.base_url == (
+        "https://aiplatform.googleapis.com/"
+    )
+
+
 @pytest.mark.parametrize(
     "output_schema",
     [RecommendationOutput, FoodAnalysisOutput, TasteSummaryOutput],

@@ -1,9 +1,9 @@
-# Active packet: budgeted Gemini staging validation
+# Active packet: Gemini Enterprise Agent Platform staging validation
 
 ## Status
 
-Implementation continues locally on `codex/gemini-staging-validation`, branched
-from merged `origin/main` at `6606771383b2a991f3a787dbc612ecc710d31195`.
+Implementation continues locally on `codex/gemini-agent-platform`, based on the
+verified schema-correction commit `0c92aaa0534551cbb0f4f6603e678ee7d87ab3ab`.
 Candidates `90691b1c53812fc140da465e1b5e362c781f1139`,
 `e89d5c4f1664ab0ec0e7d5bec3dd196439283aeb`, and
 `82c1d45f010a686df8802ab4b8a502731aa1be6f` passed public CI. Their approved
@@ -14,21 +14,27 @@ Flash-Lite; and the third isolated an additional Gemini 3.1 rejection of
 Pydantic `additionalProperties` metadata. A sanitized compatibility probe proved
 that removing it and non-semantic titles advances the request past schema
 validation. Plain and corrected-schema generation then returned generic
-`429 RESOURCE_EXHAUSTED` despite active linked billing. The compatibility fix is
-implemented locally and retains strict Pydantic validation after parsing.
-Staging AI remains deterministic, no deployment or returning code was sent, and
-a new exact-SHA candidate plus explicit live-evaluation gate are required.
+`429 RESOURCE_EXHAUSTED` despite active linked billing. Google has since renamed
+Vertex AI to Gemini Enterprise Agent Platform and explicitly makes its Cloud
+platform eligible for new-customer Google Cloud credits, while Welcome credits
+remain ineligible for the standalone Gemini Developer API. The adapter now uses
+the SDK's explicit `enterprise=True` transport and fail-closed readiness reports
+`ai_backend=agent-platform`. Staging AI remains deterministic, no deployment or
+returning code was sent, and a new exact-SHA candidate plus explicit live-
+evaluation gate are required.
 
 ## Objective
 
-Harden recommendation, ephemeral food-photo analysis, and taste-summary
-generation around pinned `gemini-3.1-flash-lite`, then prove them with a frozen,
-budgeted, sanitized live evaluation before enabling Gemini on staging.
+Run recommendation, ephemeral food-photo analysis, and taste-summary generation
+through Gemini Enterprise Agent Platform with pinned `gemini-3.1-flash-lite`,
+then prove them with a frozen, budgeted, sanitized live evaluation before
+enabling Gemini on staging.
 
 ## Deliverables
 
 - Exact `google-genai==1.75.0` dependency, pinned model configuration, current
-  token-cost accounting, and minimal Gemini 3 thinking level.
+  Agent Platform transport, current token-cost accounting, and minimal Gemini 3
+  thinking level.
 - Strict structured outputs, request-local candidate aliases, bounded inputs,
   output privacy/safety guards, 12-second timeouts, typed errors, and at most
   three TableUs-owned attempts with no provider fallback.
@@ -38,7 +44,9 @@ budgeted, sanitized live evaluation before enabling Gemini on staging.
 - Metadata-stripped, maximum-1600-pixel ephemeral food images and a maximum of
   25/12,000-character review inputs.
 - Frozen deterministic evaluation plus checkpointed `make ai-eval-live` under a
-  `$0.25` ceiling and sanitized `make gemini-staging-e2e` two-user evidence.
+  `$0.25` ceiling and sanitized `make gemini-staging-e2e` two-user evidence. The
+  checkpoint and readiness evidence bind `agent-platform`, preventing accidental
+  standalone Developer API validation.
 - Updated privacy disclosures, generated API contract, release runbook, current
   state, roadmap, and durable decision record.
 
@@ -60,11 +68,12 @@ budgeted, sanitized live evaluation before enabling Gemini on staging.
 
 ## External gate
 
-The isolated project, active linked billing, budget alerts, and Gemini-only
-Railway-restricted authorization key are already provisioned. After the
-schema-compatibility replacement candidate passes `make ready`, request one
-explicit approval covering its exact-SHA public push and a later paid live
-evaluation after Google reports usable inference capacity. Railway/Vercel
+The isolated project, active linked billing, budget alerts, and Railway-
+restricted service-account-bound authorization key are already provisioned.
+The approved external gate enables only `aiplatform.googleapis.com`, grants the
+bound identity least-privilege `roles/aiplatform.expressUser`, changes the key's
+API target from the standalone Developer API to Agent Platform, and runs the
+new exact-SHA evaluation under the existing `$0.25` ceiling. Railway/Vercel
 deployment and one returning code for each evidence account remain conditional
 on a fully passing evaluation. Leave staging live only if the sanitized
 evaluation and two-user journey pass.

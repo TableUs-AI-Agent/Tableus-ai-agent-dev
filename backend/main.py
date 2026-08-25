@@ -64,7 +64,7 @@ def _build_model(name: str):
     api_key = _get_gemini_api_key()
     if not api_key:
         raise RuntimeError("GEMINI_API_KEY not set")
-    return genai.Client(api_key=api_key)
+    return genai.Client(enterprise=True, api_key=api_key)
 
 
 def _response_text(response) -> str:
@@ -1188,6 +1188,7 @@ async def health_ready():
         "provider_mode": settings.provider_mode,
         "places_provider_mode": settings.places_provider_mode,
         "ai_provider_mode": settings.ai_provider_mode,
+        "ai_backend": settings.ai_backend,
         "auth_mode": settings.tableus_auth_mode,
         "build_sha": settings.build_sha,
     }

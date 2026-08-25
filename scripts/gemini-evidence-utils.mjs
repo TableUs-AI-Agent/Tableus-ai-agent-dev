@@ -2,6 +2,9 @@ export function validateGeminiReadiness(payload, expectedSha) {
   if (payload?.auth_mode !== "supabase") throw new Error("Staging must use Supabase authentication.");
   if (payload?.places_provider_mode !== "live") throw new Error("Staging must use live Places.");
   if (payload?.ai_provider_mode !== "live") throw new Error("Staging must use live Gemini.");
+  if (payload?.ai_backend !== "agent-platform") {
+    throw new Error("Staging Gemini must use Gemini Enterprise Agent Platform.");
+  }
   if (payload?.provider_mode !== "live") throw new Error("Staging compatibility mode must be live.");
   if (!expectedSha || payload?.build_sha !== expectedSha) {
     throw new Error("Staging readiness is not pinned to the exact candidate SHA.");

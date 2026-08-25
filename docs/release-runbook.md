@@ -411,6 +411,12 @@ Keep deterministic providers green while each integration is added:
    the three Railway addresses, staging stayed deterministic, and no deployment
    or returning code followed. Retry only from a new exact-SHA checkpoint after
    the compatibility fix passes `make ready` and Google inference is usable.
+   The replacement path is Gemini Enterprise Agent Platform: enable only
+   `aiplatform.googleapis.com`, grant the authorization key's bound identity
+   `roles/aiplatform.expressUser`, restrict the key to that API plus Railway's
+   static addresses, and require readiness to report
+   `ai_backend=agent-platform`. Keep the standalone
+   `generativelanguage.googleapis.com` target disabled for the evaluation.
 5. Only after the live evaluator passes, set Railway staging to live AI with
    `GEMINI_MODEL=gemini-3.1-flash-lite`,
    `AI_RUNTIME_MAX_USD_30D=4.00`, and `LIVE_AI_MAX_USD=0.25`, deploy Railway and

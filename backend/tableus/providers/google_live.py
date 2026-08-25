@@ -412,6 +412,7 @@ class LivePlacesProvider:
 
 class LiveGeminiProvider:
     name = "gemini"
+    backend = "agent-platform"
     pinned_model = "gemini-3.1-flash-lite"
     input_usd_per_million = 0.25
     output_usd_per_million = 1.50
@@ -439,6 +440,7 @@ class LiveGeminiProvider:
         if model != self.pinned_model:
             raise AiProviderError("Gemini model is not approved", kind="configuration")
         self.client = genai.Client(
+            enterprise=True,
             api_key=api_key,
             http_options=types.HttpOptions(
                 timeout=12_000,

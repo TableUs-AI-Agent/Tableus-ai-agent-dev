@@ -11,11 +11,13 @@ test("Gemini readiness requires exact-SHA fully live staging", () => {
     auth_mode: "supabase",
     places_provider_mode: "live",
     ai_provider_mode: "live",
+    ai_backend: "agent-platform",
     provider_mode: "live",
     build_sha: "a".repeat(40),
   };
   assert.equal(validateGeminiReadiness(payload, "a".repeat(40)), true);
   assert.throws(() => validateGeminiReadiness({ ...payload, ai_provider_mode: "deterministic" }, "a".repeat(40)));
+  assert.throws(() => validateGeminiReadiness({ ...payload, ai_backend: "developer-api" }, "a".repeat(40)));
   assert.throws(() => validateGeminiReadiness(payload, "b".repeat(40)));
 });
 

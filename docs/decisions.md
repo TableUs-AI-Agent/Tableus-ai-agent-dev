@@ -159,3 +159,13 @@
   billing and no reported client rate-limit or overload signal. Keep staging AI
   deterministic, preserve the Railway-only credential restriction, and require
   a new exact-SHA evaluation after provider capacity becomes usable.
+- **2026-08-25:** TableUs staging uses Gemini Enterprise Agent Platform, Google's
+  evolution of Vertex AI, instead of the standalone Gemini Developer API. Keep
+  `google-genai`, `gemini-3.1-flash-lite`, the global endpoint, strict schemas,
+  and existing spend ceilings; select the SDK's explicit `enterprise=True`
+  transport. Railway authenticates with the existing service-account-bound
+  authorization key restricted to `aiplatform.googleapis.com` and its static
+  egress addresses. The bound identity receives only
+  `roles/aiplatform.expressUser`. This permits eligible Google Cloud credits and
+  avoids depending on AI Studio prepaid billing without adding Agent Runtime,
+  Agent Studio, grounding, tools, or persistent agent state.
