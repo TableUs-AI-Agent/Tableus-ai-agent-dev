@@ -1,5 +1,27 @@
 # Changelog
 
+## 2026-08-23 — Verified HTTPS link foundation
+
+- Standardized web and mobile auth/private-plan sharing on
+  `https://links.table-us.com`, with shared fail-closed URL construction and no
+  persisted join token.
+- Tightened AASA and Android filters to `/join/*` plus exact `/auth`, leaving the
+  code-based Supabase `/auth/confirm` callback on the web.
+- Added inline web join authentication, mobile auth-mode allowlisting, retained
+  protected join routing, and accessible rotated-link failures.
+- Added Supabase preview link-test profiles, signed entitlement/certificate
+  inspection, and redacted physical-iOS/Android evidence orchestration. Canonical
+  DNS, TLS, Vercel preview deployment, and public signing identifiers are live;
+  replacement signed artifacts and OTP journeys remain pending.
+- Added fail-closed native-intent normalization after physical Android execution
+  showed that Expo Router can lose an HTTPS auth query on a cold start. Only the
+  allowlisted auth mode or join token survives rewriting; other URL fields are
+  discarded before the route renders.
+- Merged the completed foundation-through-offline milestones to `main`, then
+  synchronized the verified-link branch with that recovered baseline. The
+  memory-bounded cumulative readiness gate passes; replacement exact-SHA signed
+  artifacts and device journeys remain approval-gated.
+
 ## 2026-08-21 — Account control hardening
 
 - Expanded application-data export into a typed, versioned contract covering

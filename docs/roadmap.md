@@ -12,11 +12,13 @@ Every milestone must be deterministic and credential-free in CI before the next
 external integration is enabled.
 
 Exact-SHA mobile offline mutation resilience is complete from candidate
-`9acf4fe2a648d4226be028d947ca8d08d7fc7029`: inspected local artifacts and clean
-iOS/Android fault-proxy journeys prove no queued writes, stable-key replay after
-ambiguous committed responses, and one backend transition per logical
-operation. Verified Universal/App Links are the next evidence objective; live
-Maps and budgeted Gemini validation remain subsequent packets.
+`9acf4fe2a648d4226be028d947ca8d08d7fc7029`. Verified HTTPS routing through
+`links.table-us.com` is complete from candidate
+`341d67ec73c96f96f19c6e0e2911677e973a7d61`: DNS/TLS, Apple and Android
+associations, signed artifact inspection, browser fallback, native auth/join,
+retained in-memory join intent, and rotated-link rejection passed on Android and
+a physical iPhone. Production Play App Signing remains part of the later store
+gate. Live Maps and budgeted Gemini validation are subsequent packets.
 
 The active gate sequence and required owner inputs are maintained in
 `docs/release-runbook.md`.

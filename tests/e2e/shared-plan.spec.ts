@@ -20,6 +20,7 @@ test("organizer creates a persistent plan", async ({ page }) => {
   await page.getByRole("button", { name: "Create plan" }).click();
   await expect(page.getByText("Playwright dinner").first()).toBeVisible();
   await expect(page.getByText("Private join link")).toBeVisible();
+  await expect(page.getByText(/^https:\/\/links\.table-us\.com\/join\//)).toBeVisible();
 });
 
 test("publishes release disclosures and verified-link manifests", async ({ page }) => {
@@ -32,10 +33,17 @@ test("publishes release disclosures and verified-link manifests", async ({ page 
   expect((await apple.json()).applinks.details[0].appIDs).toContain(
     "ABCDE12345.com.tableus.app",
   );
+  expect((await apple.json()).applinks.details[0].components).toEqual([
+    { "/": "/join/*" },
+    { "/": "/auth" },
+  ]);
 
   const android = await page.request.get("/.well-known/assetlinks.json");
   expect(android.status()).toBe(200);
   expect((await android.json())[0].target.package_name).toBe("com.tableus.app");
+
+  const auth = await page.request.get("/auth?mode=sign-in");
+  expect(auth.url()).toContain("/invite?mode=sign-in");
 });
 
 test("downloads a versioned account export and shows deletion blockers", async ({ page }) => {

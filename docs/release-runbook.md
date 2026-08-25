@@ -127,6 +127,79 @@ preview build. EAS Update is only for JavaScript-compatible changes whose
 runtime version matches; native dependency or configuration changes require a
 new store build.
 
+### Canonical verified links
+
+Use only `https://links.table-us.com` for shared auth and private-plan URLs. Add
+that hostname to the existing Vercel staging project and create its Squarespace
+DNS record without redirecting through the apex or `www` host. Set
+`NEXT_PUBLIC_LINK_ORIGIN` and `EXPO_PUBLIC_LINK_HOST` to the canonical value.
+Keep `/auth/confirm` browser-only; native associations cover `/join/*` and exact
+`/auth`.
+
+After an exact-SHA candidate passes `make ready`, one explicit owner gate covers
+DNS/Vercel changes, public signing identifiers, the web deployment, EAS device
+registration/capability sync, signed local builds, and one returning OTP per
+platform. Build the physical-iOS and ARM64-Android `links-test-*` profiles
+sequentially with file-backed logs and bounded native workers. Use EAS CLI
+22.4.0 or newer so local-build credentials travel through the redacted
+environment transport, never a process argument. On macOS Tahoe 26, the upstream
+temporary-keychain validity bug may require the upstream `find-identity` fix in
+a disposable local-build plugin copy; never modify or retain signing material to
+work around it.
+
+Extract the Apple Team ID and Android SHA-256 certificate from those signed
+artifacts, configure the association endpoint environment, deploy the exact SHA,
+and verify both files return JSON `200` with no redirect before installing the
+apps. Then inspect each artifact:
+
+```bash
+make inspect-mobile-links PLATFORM=ios APP=<signed-app-or-ipa> SHA=<candidate-sha> API_URL=<staging-api> SUPABASE_URL=<supabase-url> LINK_HOST=links.table-us.com APPLE_TEAM_ID=<team-id>
+make inspect-mobile-links PLATFORM=android APP=<signed-apk> SHA=<candidate-sha> API_URL=<staging-api> SUPABASE_URL=<supabase-url> LINK_HOST=links.table-us.com ANDROID_FINGERPRINT=<sha256-fingerprint>
+```
+
+The iOS inspector accepts Expo configuration from both the legacy
+`assets/app.config` path and the Expo SDK 57 `EXConstants.bundle/app.config`
+path. Any other missing configuration fails closed. On macOS Tahoe 26 only, the
+inspector accepts the exact `CSSMERR_TP_NOT_TRUSTED` verification diagnostic
+after independently validating signed entitlements and cryptographically
+verifying the embedded profile's Apple CMS chain, Team ID, application
+identifier, associated domain, and device list. The actual certificates selected
+by both CMS `SignerInfo` records are validated: the app signer must match the
+profile's `DeveloperCertificates`, and the profile signer must be Apple's
+provisioning-profile signer. All other signature diagnostics remain terminal.
+
+Confirm the web fallback before app installation. On iOS, require Apple
+Associated Domains Diagnostics approval and a tap from Notes or Messages; a
+Safari address-bar navigation is not evidence. On Android, reset and reverify
+App Links and require `pm get-app-links com.tableus.app` to report the host as
+`verified`.
+
+Run the Android sanitized journey with the checked-in runner:
+
+```bash
+make mobile-links-e2e PLATFORM=android DEVICE=<emulator-serial> APP=<signed-apk> BUILD_ID=<local-build-id> ORIGIN=https://links.table-us.com EVIDENCE=<sanitized-dir>
+```
+
+The runner accepts one rotated private URL and one returning account/code in the
+interactive terminal, retains none of them in evidence, and deletes new raw
+Maestro output.
+
+Current Maestro releases do not support physical iOS devices reliably. For iOS,
+install the inspected Apple-signed artifact only after AASA is live, approve the
+host in Associated Domains Diagnostics, and tap public `/auth` plus the private
+`/join/*` URL from Notes or Messages. Complete returning code authentication,
+confirm the same join route returns, and capture the accessible terminal state
+for a freshly rotated link. Record this as manual user-observed evidence, never
+as automated Maestro evidence. If future tooling officially supports the target
+physical device, `make mobile-links-e2e PLATFORM=ios ...` may replace the manual
+journey after the runner is revalidated.
+
+Store only exact SHA, build IDs, artifact checksums, public association
+identifiers, verification booleans, and sanitized screenshots. Delete private
+URLs, email addresses, verification codes, native logs, and temporary automation
+workspaces. A simulator does not substitute for signed physical-device
+association evidence.
+
 ## 5. Produce exact-SHA staging evidence
 
 Deploy all three deliverables from the same candidate SHA. Record deployment/build

@@ -1,0 +1,39 @@
+appId: com.tableus.app
+---
+- launchApp:
+    clearState: true
+- openLink:
+    link: "${MAESTRO_AUTH_URL}"
+    autoVerify: true
+- runFlow:
+    when:
+      visible: ".*Open in.*TableUs.*"
+    commands:
+      - tapOn: "Open"
+- extendedWaitUntil:
+    visible: "Welcome back."
+    timeout: 60000
+- openLink:
+    link: "${MAESTRO_JOIN_URL}"
+    autoVerify: true
+- runFlow:
+    when:
+      visible: ".*Open in.*TableUs.*"
+    commands:
+      - tapOn: "Open"
+- extendedWaitUntil:
+    visible: "Join this TableUs plan?"
+    timeout: 60000
+- assertVisible: "Sign in to join"
+- takeScreenshot: "verified-link-route"
+- tapOn: "Sign in to join"
+- extendedWaitUntil:
+    visible: "Welcome back."
+    timeout: 30000
+- tapOn: "Email address"
+- inputText: "${MAESTRO_EMAIL}"
+- tapOn: "Welcome back."
+- tapOn: "Email me a code"
+- extendedWaitUntil:
+    visible: "Email verification code"
+    timeout: 30000

@@ -1,0 +1,15 @@
+appId: com.tableus.app
+---
+- tapOn: "Email verification code"
+- inputText: "${MAESTRO_OTP}"
+- tapOn: "Verification email"
+- tapOn: "Verify and continue"
+- extendedWaitUntil:
+    visible: "Join this TableUs plan?"
+    timeout: 60000
+- assertNotVisible: "Sign in to join"
+- tapOn: "Join this plan"
+- extendedWaitUntil:
+    visible: ".*invalid, expired, or has been rotated.*"
+    timeout: 30000
+- takeScreenshot: "rotated-link"

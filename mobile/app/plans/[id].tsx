@@ -8,6 +8,7 @@ import { RefreshControl, ScrollView, Share, Text, View } from "react-native";
 import { Button, Card, ErrorText, Field } from "@/components/ui";
 import { MutationFeedback } from "@/components/mutation-feedback";
 import { api } from "@/lib/api";
+import { createCanonicalJoinUrl } from "@/lib/links";
 import { OFFLINE_REFRESH_MESSAGE, refreshWhenOnline } from "@/lib/offline-refresh";
 import { useRecoverableMutation } from "@/lib/recoverable-mutation";
 import { useConnectivity } from "@/providers/connectivity-provider";
@@ -46,7 +47,7 @@ export default function PlanScreen() {
   });
   const rotate = useRecoverableMutation({
     mutationFn: (_variables: undefined, idempotencyKey: string) => api.post<{ share_token: string }>(`/api/v1/plans/${id}/share-token/rotate`, {}, { idempotencyKey }),
-    onSuccess: async ({ share_token }) => { await Share.share({ message: Linking.createURL(`/join/${id}`, { queryParams: { token: share_token } }) }); },
+    onSuccess: async ({ share_token }) => { await Share.share({ message: createCanonicalJoinUrl(id, share_token) }); },
   });
   const current = plan.data;
   const ranking = rankingDraft?.planId === id ? rankingDraft.values : current?.my_vote ?? [];

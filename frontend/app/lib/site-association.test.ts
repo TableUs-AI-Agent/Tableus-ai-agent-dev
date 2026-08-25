@@ -14,6 +14,9 @@ const fingerprint = Array.from({ length: 32 }, (_, index) =>
 test("builds fail-closed Apple and Android association payloads", () => {
   const apple = buildAppleAssociation("ABCDE12345", "com.tableus.app");
   assert.deepEqual(apple.applinks.details[0].appIDs, ["ABCDE12345.com.tableus.app"]);
+  assert.deepEqual(apple.applinks.details[0].components, [{ "/": "/join/*" }, { "/": "/auth" }]);
+  assert.equal(JSON.stringify(apple).includes("/auth*"), false);
+  assert.equal(JSON.stringify(apple).includes("/auth/confirm"), false);
 
   const fingerprints = parseAndroidFingerprints(fingerprint);
   const android = buildAndroidAssociation("com.tableus.app", fingerprints);

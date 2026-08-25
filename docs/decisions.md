@@ -19,8 +19,10 @@
 - **2026-08-17:** Invite validation tokens are bound to a normalized email when
   Supabase OTP is used. Backend redemption remains the product-access authority;
   Supabase Auth hooks and rate limits are an additional staging control.
-- **2026-08-17:** Verified HTTPS links cover `/join/*` and `/auth*`. Association
-  manifests fail closed until real Apple and Android signing identifiers exist.
+- **2026-08-17:** Verified HTTPS links cover `/join/*` and exact `/auth` only;
+  the Supabase `/auth/confirm` callback remains web-only while email verification
+  is code-based. Association manifests fail closed until real Apple and Android
+  signing identifiers exist.
 - **2026-08-17:** Pre-production web evidence uses the dedicated Vercel project
   `tableus-staging`; production remains a separate approval and configuration
   gate.
@@ -92,3 +94,25 @@
   build and Maestro output is written to temporary files and summarized only at
   phase boundaries. This bounds native-worker memory and avoids retaining large
   tool streams in the Codex desktop task.
+- **2026-08-23:** `https://links.table-us.com` is the single canonical host for
+  invite, auth, and private-plan links. The dedicated host avoids same-origin
+  browser navigation behavior and serves the same Next.js fallback when the app
+  is unavailable. Share tokens stay in the current join URL and navigation
+  process; auth UI receives no token and evidence retains no private URL. Native
+  cold starts normalize the canonical host through Expo Router's
+  `+native-intent`, retaining only the allowlisted auth mode or join token.
+- **2026-08-24:** Local EAS builds require CLI 22.4.0 or newer so credential
+  payloads use the redacted environment transport. Preview Android association
+  trusts only the current signing certificate after rotation; superseded APKs
+  require uninstall/reinstall. Expo SDK 57 iOS inspection reads
+  `EXConstants.bundle/app.config` while retaining the legacy path and otherwise
+  failing closed. Tahoe's exact trust-only `codesign` diagnostic is accepted only
+  alongside independently validated signed entitlements and Apple provisioning
+  profile authorization. Both CMS checks bind the actual `SignerInfo`
+  certificate rather than accepting an unused certificate from the CMS bag.
+- **2026-08-24:** Verified-link evidence on Android is automated against a signed
+  ARM64 artifact. Until Maestro officially supports physical iOS devices, iOS
+  association evidence uses exact-artifact inspection, Apple Associated Domains
+  Diagnostics, and user-observed taps from Notes or Messages through returning
+  code authentication and rotated-link rejection. A simulator does not replace
+  association verification, and the result must not be labeled automated.

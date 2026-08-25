@@ -99,6 +99,36 @@
 - Fail-closed Apple/Android association manifests, production-shaped Expo link
   configuration, Railway port handling, expanded beta disclosures, and visible
   attribution on live Google Maps candidates.
+- Verified-link implementation now targets the dedicated canonical host
+  `links.table-us.com`. Shared domain helpers generate every web/mobile auth and
+  private-plan URL, reject unsafe origins, and replace custom-scheme or
+  current-origin sharing. Expo matches `/join/*` and exact `/auth` while leaving
+  `/auth/confirm` on the web. A native-intent rewrite normalizes cold-start HTTPS
+  paths, retains only the allowlisted auth mode or join token, and leaves other
+  origins plus the development scheme unchanged. Web join auth renders inline
+  and mobile auth is presented over the retained join route, so neither client
+  persists the share token outside the current navigation process. Both expose
+  an accessible invalid/expired/rotated state.
+- `links-test-ios` and `links-test-android` inherit the Supabase-authenticated
+  preview environment without demo or local/auth-E2E controls. Signed-artifact
+  inspection verifies exact SHA, HTTPS staging markers, native associations,
+  Apple Team ID or Android certificate, and forbidden origins. The redacted
+  `make mobile-links-e2e` runner verifies hosted manifests, native routing,
+  returning OTP, retained join intent, and rotated-link handling while deleting
+  raw private URLs and Maestro output. Expo SDK 57 iOS artifacts are inspected
+  through `EXConstants.bundle/app.config`; the legacy config path remains
+  accepted. EAS CLI 22.4.0 is the minimum local-build version, and locally
+  generated credential/keystore files are ignored.
+- Verified-link DNS, TLS, canonical staging deployment, signing identifiers, and
+  both direct association endpoints are configured. Exact candidate
+  `341d67ec73c96f96f19c6e0e2911677e973a7d61` is deployed to Vercel and produced
+  inspected physical-iOS and ARM64-Android signed artifacts. Android automation
+  and a user-observed physical-iPhone journey proved web fallback, native auth
+  and join routing, returning code authentication with retained join intent,
+  and rotated-link rejection. Apple diagnostics approved the exact signed app
+  identifier and Android reported the canonical host verified. Sanitized
+  evidence is in `docs/evidence/341d67e/`; production Play App Signing remains a
+  later fingerprint and store-release gate.
 - Next.js is pinned to 16.3.1 to resolve direct security advisories. npm still
   reports Expo/React Native build-tool advisories whose proposed remediation is
   an unsupported SDK downgrade; track upstream SDK 57 patches before release.
@@ -131,19 +161,20 @@
   `8cde19309fa43787b04d2792d96c1cfc11c21317`; liveness, readiness,
   deterministic-provider mode, Supabase Auth mode, and Vercel CORS passed.
   Railway holds only the runtime database credential and application secret.
-- Vercel staging client variables and the returning-sign-in deployment are live.
-  Deployment `dpl_4U6nTGJ5WXar7b3q3TomYnwpSTuJ` is `READY` at
-  `https://tableus-staging.vercel.app` from the same exact SHA. The dedicated
-  staging project also retained its pre-existing `table-us.com` and
-  `www.table-us.com` aliases; this packet did not change domain configuration.
-  An authenticated
+- Vercel staging client variables and the canonical verified-link deployment
+  are live from exact SHA
+  `341d67ec73c96f96f19c6e0e2911677e973a7d61` at
+  `https://tableus-staging.vercel.app` and `https://links.table-us.com`. The
+  dedicated staging project also retains its pre-existing `table-us.com` and
+  `www.table-us.com` aliases. An authenticated
   Browser session showed the active `Jung` profile after the Supabase session
   changed, verifying the deployed identity-refresh fix. The hosted two-user
   journey then covered plan creation, private-link joining, per-user constraints,
   exactly four deterministic candidates, two persisted 3/2/1 votes, organizer-
   only finalization, deterministic tie resolution, reopening, and refinalization.
-  Public invite and privacy routes return 200; Apple and Android association
-  manifests correctly return 503 until real signing identifiers are supplied.
+  Public invite and privacy routes return 200. Apple and Android association
+  manifests now return direct JSON 200 responses with the inspected preview
+  signing identifiers and only the allowlisted native routes.
 - Expo project `@tableus/tableus` is provisioned as
   `0601c3b9-0082-454c-b636-45a1fe377f7b`. Its preview environment contains only
   the staging API URL, Supabase URL/publishable client key, EAS project ID, and
@@ -180,9 +211,11 @@
 
 ## Release gates still requiring an owner or external system
 
-- Supply the Apple Team ID, final bundle/package identifiers, and SHA-256
-  fingerprints for every Android signing certificate; then verify the HTTPS
-  association files against real builds.
+- Add the production Google Play App Signing fingerprint alongside the preview
+  signer when production store artifacts are approved. Production/store builds
+  and submission remain separate later gates; they do not invalidate the
+  completed exact-SHA preview verified-link evidence in
+  `docs/evidence/341d67e/`.
 - Confirm the final domain and support/privacy contact, obtain legal review of
   the beta notices, and validate Google Maps attribution against the production
   presentation and current brand requirements.
