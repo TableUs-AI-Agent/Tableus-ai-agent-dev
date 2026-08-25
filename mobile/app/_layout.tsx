@@ -15,14 +15,13 @@ if (process.env.EXPO_PUBLIC_SENTRY_DSN) {
 
 function RootNavigator() {
   const auth = useAuth();
-  const signedOut = auth.phase !== "loading" && !auth.approved;
   return (
     <View style={{ flex: 1 }}>
       <StatusBar style="dark" />
       <ConnectivityBanner />
       <Stack screenOptions={{ headerBackButtonDisplayMode: "minimal", contentStyle: { backgroundColor: colors.background } }}>
         <Stack.Screen name="index" options={{ headerShown: false }} />
-        <Stack.Protected guard={signedOut}>
+        <Stack.Protected guard={!auth.approved}>
           <Stack.Screen name="auth" options={{ title: "Invite access", presentation: "modal" }} />
         </Stack.Protected>
         <Stack.Screen name="join/[id]" options={{ title: "Join plan" }} />
