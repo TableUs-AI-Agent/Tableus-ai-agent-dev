@@ -175,6 +175,8 @@
   `8cde19309fa43787b04d2792d96c1cfc11c21317`; liveness, readiness,
   deterministic-provider mode, Supabase Auth mode, and Vercel CORS passed.
   Railway holds only the runtime database credential and application secret.
+  High-availability static outbound IPs are now enabled for the staging API but
+  are not active until the next approved redeploy. No Maps key has been added.
 - Vercel staging client variables and the canonical verified-link deployment
   are live from exact SHA
   `341d67ec73c96f96f19c6e0e2911677e973a7d61` at

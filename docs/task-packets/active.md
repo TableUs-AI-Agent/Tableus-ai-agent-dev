@@ -6,8 +6,12 @@ Local implementation and validation are complete on
 `codex/maps-staging-validation`, branched from merged `main` at
 `2169338d3edc760b9df0d045551745c2b91b45c0`. Focused checks, migration checks,
 API drift checks, `make ready`, and sequential Expo Go iOS/Android location
-smokes pass. External Google Cloud, Railway, migration, secret, and deployment
-actions remain gated until the exact candidate is approved.
+smokes pass. The first pushed candidate exposed one stale Playwright create-plan
+step in pull request #3; the corrected four-journey browser suite and cumulative
+readiness gate now pass locally, and a replacement exact SHA is pending approval.
+Railway static outbound IPs are enabled but require the gated redeploy before
+they become active. Google Cloud, migration, secret, and deployment actions
+remain gated for the replacement candidate.
 
 ## Objective
 

@@ -17,6 +17,10 @@ function nestedKeys(value: unknown): Set<string> {
 test("organizer creates a persistent plan", async ({ page }) => {
   await page.goto("/plans");
   await page.getByPlaceholder("Friday dinner").fill("Playwright dinner");
+  await page.getByLabel("City, neighborhood, or ZIP code").fill("Boston, MA");
+  await page.getByRole("button", { name: "Find location" }).click();
+  await expect(page.getByText("Boston, MA", { exact: true })).toBeVisible();
+  await expect(page.getByText("Google Maps", { exact: true })).toBeVisible();
   await page.getByRole("button", { name: "Create plan" }).click();
   await expect(page.getByText("Playwright dinner").first()).toBeVisible();
   await expect(page.getByText("Private join link")).toBeVisible();
