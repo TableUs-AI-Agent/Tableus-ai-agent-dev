@@ -1,0 +1,24 @@
+{
+  "platform": "android",
+  "device": "emulator-5554",
+  "build_id": "local-android-341d67e",
+  "git_sha": "341d67ec73c96f96f19c6e0e2911677e973a7d61",
+  "artifact": "tableus-links-android-341d67e.apk",
+  "artifact_sha256": "3c73bf168f0d94788a415c93bb8672d1090323218ced452243679c406dfa72d3",
+  "app_id": "com.tableus.app",
+  "link_origin": "https://links.table-us.com",
+  "association_files_valid": true,
+  "web_auth_fallback": true,
+  "web_join_fallback": true,
+  "native_auth_route_opened": true,
+  "native_join_route_opened": true,
+  "join_intent_restored": true,
+  "rotated_link_rejected": true,
+  "android_domain_verified": true,
+  "apple_diagnostics_approved": null,
+  "ios_notes_or_messages_tap": null,
+  "screenshots": [
+    "android-verified-link-route.png",
+    "android-rotated-link.png"
+  ]
+}

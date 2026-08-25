@@ -110,3 +110,9 @@
   alongside independently validated signed entitlements and Apple provisioning
   profile authorization. Both CMS checks bind the actual `SignerInfo`
   certificate rather than accepting an unused certificate from the CMS bag.
+- **2026-08-24:** Verified-link evidence on Android is automated against a signed
+  ARM64 artifact. Until Maestro officially supports physical iOS devices, iOS
+  association evidence uses exact-artifact inspection, Apple Associated Domains
+  Diagnostics, and user-observed taps from Notes or Messages through returning
+  code authentication and rotated-link rejection. A simulator does not replace
+  association verification, and the result must not be labeled automated.

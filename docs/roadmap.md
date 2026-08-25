@@ -13,12 +13,12 @@ external integration is enabled.
 
 Exact-SHA mobile offline mutation resilience is complete from candidate
 `9acf4fe2a648d4226be028d947ca8d08d7fc7029`. Verified HTTPS routing through
-`links.table-us.com` is synchronized with recovered `main`. DNS, TLS, Apple
-registration/capabilities, and the replacement Android association are live.
-Artifact inspection discovered an Expo SDK 57 iOS configuration-path gap, so the
-remaining active work is a corrected exact-SHA readiness gate, replacement
-iOS/Android artifacts, retained in-memory join-intent, and rotated-link device
-evidence. Live Maps and budgeted Gemini validation remain subsequent packets.
+`links.table-us.com` is complete from candidate
+`341d67ec73c96f96f19c6e0e2911677e973a7d61`: DNS/TLS, Apple and Android
+associations, signed artifact inspection, browser fallback, native auth/join,
+retained in-memory join intent, and rotated-link rejection passed on Android and
+a physical iPhone. Production Play App Signing remains part of the later store
+gate. Live Maps and budgeted Gemini validation are subsequent packets.
 
 The active gate sequence and required owner inputs are maintained in
 `docs/release-runbook.md`.

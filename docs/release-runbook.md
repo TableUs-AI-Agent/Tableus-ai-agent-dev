@@ -172,17 +172,33 @@ Confirm the web fallback before app installation. On iOS, require Apple
 Associated Domains Diagnostics approval and a tap from Notes or Messages; a
 Safari address-bar navigation is not evidence. On Android, reset and reverify
 App Links and require `pm get-app-links com.tableus.app` to report the host as
-`verified`. Run the sanitized journey once per platform:
+`verified`.
+
+Run the Android sanitized journey with the checked-in runner:
 
 ```bash
-make mobile-links-e2e PLATFORM=ios DEVICE=<physical-device-id> APP=<signed-app-or-ipa> BUILD_ID=<local-build-id> ORIGIN=https://links.table-us.com EVIDENCE=<sanitized-dir>
 make mobile-links-e2e PLATFORM=android DEVICE=<emulator-serial> APP=<signed-apk> BUILD_ID=<local-build-id> ORIGIN=https://links.table-us.com EVIDENCE=<sanitized-dir>
 ```
 
-The runner accepts one rotated private URL and one returning account/OTP in the
+The runner accepts one rotated private URL and one returning account/code in the
 interactive terminal, retains none of them in evidence, and deletes new raw
-Maestro output. Store only exact SHA, build IDs, artifact checksums, public
-association identifiers, verification booleans, and sanitized screenshots.
+Maestro output.
+
+Current Maestro releases do not support physical iOS devices reliably. For iOS,
+install the inspected Apple-signed artifact only after AASA is live, approve the
+host in Associated Domains Diagnostics, and tap public `/auth` plus the private
+`/join/*` URL from Notes or Messages. Complete returning code authentication,
+confirm the same join route returns, and capture the accessible terminal state
+for a freshly rotated link. Record this as manual user-observed evidence, never
+as automated Maestro evidence. If future tooling officially supports the target
+physical device, `make mobile-links-e2e PLATFORM=ios ...` may replace the manual
+journey after the runner is revalidated.
+
+Store only exact SHA, build IDs, artifact checksums, public association
+identifiers, verification booleans, and sanitized screenshots. Delete private
+URLs, email addresses, verification codes, native logs, and temporary automation
+workspaces. A simulator does not substitute for signed physical-device
+association evidence.
 
 ## 5. Produce exact-SHA staging evidence
 

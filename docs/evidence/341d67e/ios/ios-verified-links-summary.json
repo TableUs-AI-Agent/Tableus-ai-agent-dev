@@ -1,0 +1,26 @@
+{
+  "platform": "ios",
+  "device": "physical iPhone 17 Pro Max / iOS 26.6",
+  "build_id": "local-ios-341d67e",
+  "git_sha": "341d67ec73c96f96f19c6e0e2911677e973a7d61",
+  "artifact": "tableus-links-ios-341d67e.ipa",
+  "artifact_sha256": "b2e683faefff1b59c5f49c45b7dcb27c3752a5d3dc6e8c3dcdf6846c8165c6ed",
+  "app_id": "com.tableus.app",
+  "apple_team_id": "6MHJN5V9UJ",
+  "link_origin": "https://links.table-us.com",
+  "association_files_valid": true,
+  "web_auth_fallback": true,
+  "web_join_fallback": true,
+  "native_auth_route_opened": true,
+  "native_join_route_opened": true,
+  "join_intent_restored": true,
+  "rotated_link_rejected": true,
+  "android_domain_verified": null,
+  "apple_diagnostics_approved": true,
+  "ios_notes_or_messages_tap": true,
+  "automation": "manual user-observed physical-device validation; Maestro 2.8.0 physical-device driver unsupported and timed out",
+  "screenshots": [
+    "ios-associated-domains-diagnostic.png",
+    "ios-rotated-link.png"
+  ]
+}
