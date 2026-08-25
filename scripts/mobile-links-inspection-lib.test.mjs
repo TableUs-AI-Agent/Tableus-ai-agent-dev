@@ -98,8 +98,8 @@ test("binds the actual CMS SignerInfo instead of a legitimate-looking extra cert
     openssl(["x509", "-req", "-in", authorizedCsr, "-CA", caCert, "-CAkey", caKey, "-CAcreateserial", "-out", authorizedCert, "-days", "1"]);
     openssl(["req", "-x509", "-newkey", "rsa:2048", "-nodes", "-keyout", actualKey, "-out", actualCert, "-subj", "/CN=Other Signer", "-days", "1"]);
     writeFileSync(content, "signed content");
-    openssl(["cms", "-sign", "-binary", "-nodetach", "-in", content, "-signer", actualCert, "-inkey", actualKey, "-certfile", authorizedCert, "-outform", "DER", "-out", cms]);
-    openssl(["cms", "-verify", "-inform", "DER", "-in", cms, "-noverify", "-signer", signerOutput, "-out", "/dev/null"]);
+    openssl(["cms", "-sign", "-binary", "-in", content, "-signer", actualCert, "-inkey", actualKey, "-certfile", authorizedCert, "-outform", "DER", "-out", cms]);
+    openssl(["cms", "-verify", "-inform", "DER", "-in", cms, "-noverify", "-no_content_verify", "-content", "/dev/null", "-signer", signerOutput, "-out", "/dev/null"]);
     openssl(["x509", "-in", authorizedCert, "-outform", "DER", "-out", authorizedDer]);
     const actualSigners = certificateRecordsFromPem(readFileSync(signerOutput, "utf8"));
     const authorizedFingerprint = fingerprintDerCertificate(readFileSync(authorizedDer).toString("base64"));

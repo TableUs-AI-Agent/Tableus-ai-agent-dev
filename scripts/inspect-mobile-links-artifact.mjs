@@ -218,7 +218,7 @@ try {
     const appSignerPath = join(temporaryRoot, "app-cms-signer.pem");
     run("openssl", [
       "cms", "-inform", "der", "-verify", "-noverify", "-no_content_verify",
-      "-in", cmsPath, "-signer", appSignerPath, "-out", "/dev/null",
+      "-content", "/dev/null", "-in", cmsPath, "-signer", appSignerPath, "-out", "/dev/null",
     ]);
     if (!hasAppleProvisioningProfileSigner(certificateRecordsFromPem(readFileSync(profileSignerPath, "utf8")))) {
       throw new Error("Provisioning profile CMS signer is not an Apple provisioning-profile signer.");
