@@ -1185,8 +1185,11 @@ async def health_ready():
         await session.execute(select(Profile.id).limit(1))
     return {
         "status": "ready",
-        "provider_mode": settings.tableus_provider_mode,
+        "provider_mode": settings.provider_mode,
+        "places_provider_mode": settings.places_provider_mode,
+        "ai_provider_mode": settings.ai_provider_mode,
         "auth_mode": settings.tableus_auth_mode,
+        "build_sha": settings.build_sha,
     }
 
 

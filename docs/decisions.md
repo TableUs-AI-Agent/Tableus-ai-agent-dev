@@ -116,3 +116,16 @@
   Diagnostics, and user-observed taps from Notes or Messages through returning
   code authentication and rotated-link rejection. A simulator does not replace
   association verification, and the result must not be labeled automated.
+- **2026-08-24:** Places and AI provider modes are independently configured;
+  their combined readiness may be `mixed` in staging, while production requires
+  both live. Google Places staging persists long-lived Place IDs plus the user's
+  own normalized plan label, never Google coordinates or display fields. Live
+  location and restaurant fields are refreshed on demand, query data stays in
+  client memory, and Maps paid-operation limits/usage accounting remain
+  process-local for the closed beta.
+- **2026-08-25:** US location validation prefers
+  `postalAddress.regionCode`. Because live Text Search city results can omit the
+  entire postal address, the adapter requests the transient country address
+  component and accepts its `US` short code only when the postal region is
+  absent. Any missing, conflicting, or non-US country remains fail-closed, and
+  address components are never persisted or emitted to evidence or telemetry.

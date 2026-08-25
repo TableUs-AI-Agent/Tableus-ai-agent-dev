@@ -132,6 +132,30 @@
 - Next.js is pinned to 16.3.1 to resolve direct security advisories. npm still
   reports Expo/React Native build-tool advisories whose proposed remediation is
   an unsupported SDK downgrade; track upstream SDK 57 patches before release.
+- The Maps staging implementation now splits Places and AI modes, reports mixed
+  readiness, and uses Places API New Text/Nearby/Details calls with explicit
+  field masks, US-only location validation, 5 km filtering, bounded retries,
+  four-way detail concurrency, and no fixture fallback. New resolved plans store
+  the user's normalized label and a Place ID with null coordinates; legacy
+  deterministic coordinate plans remain readable. Plan lists are summary-only,
+  web polls a lightweight revision before refreshing detail, and live logical
+  operations are process-rate-limited and recorded as aggregate attempt/result
+  counts. Web and Expo require explicit location selection with Google Maps
+  attribution and keep provider display content in memory only. Focused checks,
+  empty/previous migration checks, API drift validation, `make ready`, and
+  sequential Expo Go iOS/Android location-create smokes pass locally. Live
+  staging proved that a city-level Text Search result can omit the postal
+  address despite returning a populated `200`; location validation now prefers
+  the postal region and uses the transient country address component only when
+  the postal region is absent. It remains fail-closed unless the resulting
+  country is conclusively `US`, and neither field is persisted.
+  Exact candidate `4a790b4ee40a12cdba8540fb12da586b3373a895`
+  passed public CI and is deployed to Railway and Vercel. Sanitized staging
+  evidence proves two approved users, live location resolution, one persistent
+  joined plan, four distinct candidates, refreshed Google details, aggregate
+  provider usage, null stored coordinates, and a candidate schema with no Google
+  display fields. Evidence is in `docs/evidence/4a790b4/maps-staging/`; pull
+  request #3 remains unmerged pending explicit approval.
 
 ## External dependencies not provisioned in source
 
@@ -145,7 +169,7 @@
   code verification, invite redemption, profile creation, and authenticated
   redirect to `/plans`. Sanitized staging evidence showed exactly one profile,
   one redemption, one consumed pending validation, and one used invite. Alembic
-  revision `161b86fcb7f4` is applied and verified against staging. The
+  revision `8b1d4a6c2e90` is applied and verified against staging. The
   `plan_events.actor_id` column is nullable and its profile foreign key uses
   `ON DELETE SET NULL`, preserving audit history when an eligible application
   profile is removed. The project's owner
@@ -156,14 +180,18 @@
   active until 2026-08-27; its plaintext is unavailable and it should be revoked
   or allowed to expire before external beta access.
 - Railway staging project `tableus-staging`, environment `staging`, and service
-  `api` are provisioned. Deployment `fb204f7d-5b7a-4117-a4c8-ac620e659098`
+  `api` are provisioned. Deployment `d9149f0e-080b-441d-8d17-f6498e0ba030`
   serves `https://api-staging-3795.up.railway.app` from exact SHA
-  `8cde19309fa43787b04d2792d96c1cfc11c21317`; liveness, readiness,
-  deterministic-provider mode, Supabase Auth mode, and Vercel CORS passed.
-  Railway holds only the runtime database credential and application secret.
+  `4a790b4ee40a12cdba8540fb12da586b3373a895`; readiness reports Supabase
+  Auth, live Places, deterministic AI, and `mixed`. High-availability static
+  outbound IPs are active. Railway holds the runtime database credential,
+  application secret, and the Places-only server key restricted to those IPs.
+  The first CLI-created key was revoked immediately after its creation response
+  exposed the value; only the non-exposed restricted replacement remains in
+  Railway and the operator Keychain.
 - Vercel staging client variables and the canonical verified-link deployment
   are live from exact SHA
-  `341d67ec73c96f96f19c6e0e2911677e973a7d61` at
+  `4a790b4ee40a12cdba8540fb12da586b3373a895` at
   `https://tableus-staging.vercel.app` and `https://links.table-us.com`. The
   dedicated staging project also retains its pre-existing `table-us.com` and
   `www.table-us.com` aliases. An authenticated
@@ -207,7 +235,11 @@
   service-role markers, or production endpoints. Standard artifact SHA-256
   checksums and build evidence are recorded in `docs/evidence/119171a/`. The
   superseded partial evidence remains documented in `docs/evidence/8cde193/`.
-- Google Maps, Gemini, Sentry, and PostHog credentials.
+- The isolated `TableUs Staging Maps` Google project has billing attached,
+  Places API New enabled as its only product API, a $10 monthly budget with
+  50/80/100-percent alerts, and granted 60-request/minute preferences for Text,
+  Nearby, and Details. Gemini, Sentry, and PostHog credentials remain
+  unprovisioned.
 
 ## Release gates still requiring an owner or external system
 
@@ -276,7 +308,12 @@
   evidence checksums. Sanitized summaries and screenshots are in
   `docs/evidence/119171a/account-controls/`. No application profile or Supabase
   Auth identity was deleted. Other failure-state checks remain.
-  Maps staging and the budgeted pinned-model Gemini evaluation follow only after
-  deterministic staging is green.
+  Maps staging evidence is green from exact SHA
+  `4a790b4ee40a12cdba8540fb12da586b3373a895`. The first attempt stopped on a
+  city result without `postalAddress.regionCode`; Google aggregate telemetry
+  confirmed a populated `200`, and no raw artifact was retained. The corrected
+  rerun passed end to end with policy-safe persistence and sanitized evidence.
+  Pull request #3 still requires explicit merge approval. The budgeted
+  pinned-model Gemini evaluation is the next provider objective after merge.
 - Obtain explicit approval before any production migration, deployment, EAS
   build/submission, paid live-AI evaluation, or cohort invitation.

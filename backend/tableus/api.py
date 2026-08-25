@@ -1,5 +1,6 @@
 import io
 import time
+from collections import defaultdict, deque
 from datetime import UTC, datetime, timedelta
 from typing import Annotated, Literal, cast
 
@@ -10,6 +11,8 @@ from sqlalchemy import func, select, update
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from .auth import CurrentIdentity, CurrentProfile, DbSession
+from .config import get_settings
+from .db import SessionFactory
 from .models import (
     Candidate,
     Connection,
@@ -26,6 +29,7 @@ from .models import (
     Vote,
 )
 from .providers import get_ai_provider, get_places_provider
+from .providers.google_live import PlacesProviderError
 from .ranking import borda_scores, ordered_candidates
 from .schemas import (
     AccountControlOut,
@@ -56,8 +60,11 @@ from .schemas import (
     PlanCreateIn,
     PlanJoinIn,
     PlanOut,
+    PlanRevisionOut,
+    PlanSummaryOut,
     ProfileOut,
     ProfilePatch,
+    ProviderUsageAggregateOut,
     RecommendationIn,
     ReviewIn,
     ReviewOut,
@@ -69,6 +76,9 @@ from .security import decode_redemption_token, hash_value, issue_redemption_toke
 from .telemetry import capture_event
 
 router = APIRouter(prefix="/api/v1", tags=["v1"])
+
+_places_user_windows: dict[str, deque[float]] = defaultdict(deque)
+_places_global_window: deque[float] = deque()
 
 
 def ok(data, **meta):
@@ -102,7 +112,9 @@ async def _plan(session: AsyncSession, plan_id: str) -> Plan:
     return plan
 
 
-async def _plan_out(session: AsyncSession, plan: Plan, viewer_id: str) -> PlanOut:
+async def _plan_out(
+    session: AsyncSession, plan: Plan, viewer_id: str, hydrated_places: list | None = None
+) -> PlanOut:
     rows = (
         await session.execute(
             select(PlanParticipant, Profile)
@@ -136,7 +148,11 @@ async def _plan_out(session: AsyncSession, plan: Plan, viewer_id: str) -> PlanOu
         )
     scores = borda_scores(votes)
     place_ids = [candidate.place_id for candidate in candidates]
-    places = await get_places_provider().get_places(place_ids)
+    places = (
+        hydrated_places
+        if hydrated_places is not None
+        else (await _call_places(viewer_id, "get_places", place_ids) if place_ids else [])
+    )
     places_by_id = {place.place_id: place for place in places}
     candidate_outputs = []
     for candidate in sorted(candidates, key=lambda item: item.rank):
@@ -170,6 +186,60 @@ async def _plan_out(session: AsyncSession, plan: Plan, viewer_id: str) -> PlanOu
         created_at=plan.created_at,
         updated_at=plan.updated_at,
     )
+
+
+def _touch(plan: Plan) -> None:
+    plan.updated_at = datetime.now(UTC)
+
+
+def _consume_places_limit(profile_id: str) -> None:
+    if get_settings().places_provider_mode != "live":
+        return
+    now = time.monotonic()
+    cutoff = now - 60
+    user_window = _places_user_windows[profile_id]
+    while user_window and user_window[0] <= cutoff:
+        user_window.popleft()
+    while _places_global_window and _places_global_window[0] <= cutoff:
+        _places_global_window.popleft()
+    if len(user_window) >= 10 or len(_places_global_window) >= 60:
+        raise HTTPException(status_code=429, detail="Google Places request limit reached; try again soon")
+    user_window.append(now)
+    _places_global_window.append(now)
+
+
+async def _record_places_usage(
+    operation: str, attempts: int, output_units: int, failed: bool, started: float
+) -> None:
+    async with SessionFactory() as usage_session:
+        usage_session.add(
+            ProviderUsage(
+                provider="google-places-new",
+                operation=f"{operation}.error" if failed else operation,
+                model=None,
+                latency_ms=int((time.perf_counter() - started) * 1000),
+                input_units=attempts,
+                output_units=output_units,
+            )
+        )
+        await usage_session.commit()
+
+
+async def _call_places(profile_id: str, method: str, *args):
+    _consume_places_limit(profile_id)
+    provider = get_places_provider()
+    started = time.perf_counter()
+
+    async def usage(operation: str, attempts: int, output_units: int, failed: bool) -> None:
+        await _record_places_usage(operation, attempts, output_units, failed, started)
+
+    try:
+        return await getattr(provider, method)(*args, usage=usage)
+    except PlacesProviderError as exc:
+        status = 404 if exc.kind == "not_found" else 503
+        raise HTTPException(status_code=status, detail=str(exc)) from exc
+    except ValueError as exc:
+        raise HTTPException(status_code=404, detail=str(exc)) from exc
 
 
 async def _event(
@@ -561,40 +631,104 @@ async def analyze_food(profile: CurrentProfile, image: Annotated[UploadFile, Fil
 
 @router.post("/locations/resolve", response_model=Envelope[LocationOut])
 async def resolve_location(body: LocationIn, profile: CurrentProfile):
-    try:
-        resolved = await get_places_provider().resolve_location(body.query)
-    except ValueError as exc:
-        raise HTTPException(status_code=404, detail=str(exc)) from exc
-    return ok(LocationOut.model_validate(resolved))
+    resolved = await _call_places(profile.id, "resolve_location", body.query)
+    return ok(
+        LocationOut(
+            place_id=resolved.place_id,
+            label=resolved.label,
+            data_provider=resolved.data_provider,
+        )
+    )
 
 
 @router.post("/discover", response_model=Envelope[list[PlaceOut]])
 async def discover(body: DiscoverIn, profile: CurrentProfile):
-    places = await get_places_provider().discover(
-        body.latitude, body.longitude, body.query, body.limit
+    places = await _call_places(
+        profile.id, "discover", body.latitude, body.longitude, body.query, body.limit
     )
     return ok([PlaceOut(**place.__dict__) for place in places], count=len(places))
 
 
-@router.get("/plans", response_model=Envelope[list[PlanOut]])
-async def list_plans(profile: CurrentProfile, session: DbSession):
-    plans = list(
-        (
-            await session.scalars(
-                select(Plan)
-                .join(PlanParticipant)
-                .where(PlanParticipant.profile_id == profile.id)
-                .order_by(Plan.updated_at.desc())
+@router.get(
+    "/provider-usage/summary", response_model=Envelope[list[ProviderUsageAggregateOut]]
+)
+async def provider_usage_summary(profile: CurrentProfile, session: DbSession):
+    rows = (
+        await session.execute(
+            select(
+                ProviderUsage.provider,
+                ProviderUsage.operation,
+                func.count().label("operation_count"),
+                func.coalesce(func.sum(ProviderUsage.input_units), 0).label("input_units"),
+                func.coalesce(func.sum(ProviderUsage.output_units), 0).label("output_units"),
+            ).group_by(ProviderUsage.provider, ProviderUsage.operation)
+        )
+    ).all()
+    return ok(
+        [
+            ProviderUsageAggregateOut(
+                provider=provider,
+                operation=operation,
+                operation_count=operation_count,
+                input_units=input_units,
+                output_units=output_units,
             )
-        ).all()
+            for provider, operation, operation_count, input_units, output_units in rows
+        ]
     )
-    return ok([await _plan_out(session, plan, profile.id) for plan in plans])
+
+
+@router.get("/plans", response_model=Envelope[list[PlanSummaryOut]])
+async def list_plans(profile: CurrentProfile, session: DbSession):
+    participant_counts = (
+        select(PlanParticipant.plan_id, func.count().label("participant_count"))
+        .group_by(PlanParticipant.plan_id)
+        .subquery()
+    )
+    rows = (
+        await session.execute(
+            select(Plan, participant_counts.c.participant_count)
+            .join(PlanParticipant, PlanParticipant.plan_id == Plan.id)
+            .join(participant_counts, participant_counts.c.plan_id == Plan.id)
+            .where(PlanParticipant.profile_id == profile.id)
+            .order_by(Plan.updated_at.desc())
+        )
+    ).all()
+    return ok(
+        [
+            PlanSummaryOut(
+                id=plan.id,
+                title=plan.title,
+                status=cast(Literal["collecting", "voting", "finalized"], plan.status),
+                location_label=plan.location_label,
+                participant_count=count,
+                created_at=plan.created_at,
+                updated_at=plan.updated_at,
+            )
+            for plan, count in rows
+        ]
+    )
 
 
 @router.post("/plans", response_model=Envelope[PlanCreated])
 async def create_plan(body: PlanCreateIn, profile: CurrentProfile, session: DbSession):
+    settings = get_settings()
+    if body.location_place_id:
+        resolved = await _call_places(profile.id, "get_location", body.location_place_id)
+        if resolved.region_code != "US":
+            raise HTTPException(status_code=422, detail="Only United States locations are supported")
+    elif settings.places_provider_mode == "live":
+        raise HTTPException(status_code=422, detail="A resolved Google Place ID is required")
     token = new_share_token()
-    plan = Plan(organizer_id=profile.id, share_token_hash=hash_value(token), **body.model_dump())
+    plan = Plan(
+        organizer_id=profile.id,
+        share_token_hash=hash_value(token),
+        title=body.title,
+        location_label=" ".join(body.location_label.split()),
+        location_place_id=body.location_place_id,
+        latitude=None if body.location_place_id else body.latitude,
+        longitude=None if body.location_place_id else body.longitude,
+    )
     session.add(plan)
     await session.flush()
     session.add(PlanParticipant(plan_id=plan.id, profile_id=profile.id, constraints={}))
@@ -609,6 +743,13 @@ async def get_plan(plan_id: str, profile: CurrentProfile, session: DbSession):
     plan = await _plan(session, plan_id)
     await _participant(session, plan_id, profile.id)
     return ok(await _plan_out(session, plan, profile.id))
+
+
+@router.get("/plans/{plan_id}/revision", response_model=Envelope[PlanRevisionOut])
+async def get_plan_revision(plan_id: str, profile: CurrentProfile, session: DbSession):
+    plan = await _plan(session, plan_id)
+    await _participant(session, plan_id, profile.id)
+    return ok(PlanRevisionOut(updated_at=plan.updated_at))
 
 
 @router.post("/plans/{plan_id}/join", response_model=Envelope[PlanOut])
@@ -633,6 +774,7 @@ async def join_plan(plan_id: str, body: PlanJoinIn, profile: CurrentProfile, ses
         plan.status = "collecting"
         plan.active_run_id = None
         plan.finalized_candidate_id = None
+        _touch(plan)
         await _event(session, plan, profile, "participant.joined")
         await session.commit()
     return ok(await _plan_out(session, plan, profile.id))
@@ -648,6 +790,7 @@ async def update_constraints(
     plan.status = "collecting"
     plan.active_run_id = None
     plan.finalized_candidate_id = None
+    _touch(plan)
     await _event(session, plan, profile, "constraints.updated")
     await session.commit()
     return ok(await _plan_out(session, plan, profile.id), recommendations_stale=True)
@@ -670,7 +813,14 @@ async def generate_recommendations(
         )
 
     started = time.perf_counter()
-    places = await get_places_provider().discover(plan.latitude, plan.longitude, body.query, 20)
+    if plan.location_place_id:
+        location = await _call_places(profile.id, "get_location", plan.location_place_id)
+        latitude, longitude = location.latitude, location.longitude
+    elif plan.latitude is not None and plan.longitude is not None:
+        latitude, longitude = plan.latitude, plan.longitude
+    else:
+        raise HTTPException(status_code=422, detail="Plan location must be resolved again")
+    places = await _call_places(profile.id, "discover", latitude, longitude, body.query, 20)
     cuisine_sets = [
         {str(cuisine).lower() for cuisine in (participant.constraints or {}).get("cuisines", [])}
         for participant in participant_rows
@@ -700,6 +850,14 @@ async def generate_recommendations(
             status_code=422,
             detail="No four-place recommendation set satisfies the current constraints",
         )
+    selected_places = await _call_places(
+        profile.id, "get_places", [item.place_id for item in recommendations]
+    )
+    if len(selected_places) != 4:
+        raise HTTPException(
+            status_code=422,
+            detail="No four-place recommendation set satisfies the current constraints",
+        )
 
     run = RecommendationRun(plan_id=plan.id, query=body.query, provider=ai_provider.name)
     session.add(run)
@@ -717,6 +875,7 @@ async def generate_recommendations(
     plan.active_run_id = run.id
     plan.status = "voting"
     plan.finalized_candidate_id = None
+    _touch(plan)
     session.add(
         ProviderUsage(
             provider=ai_provider.name,
@@ -732,7 +891,7 @@ async def generate_recommendations(
         profile.id,
         {"candidate_count": 4, "provider": ai_provider.name},
     )
-    return ok(await _plan_out(session, plan, profile.id))
+    return ok(await _plan_out(session, plan, profile.id, selected_places))
 
 
 @router.put("/plans/{plan_id}/vote", response_model=Envelope[PlanOut])
@@ -766,6 +925,7 @@ async def vote(plan_id: str, body: VoteIn, profile: CurrentProfile, session: DbS
                 ranking=body.ranking,
             )
         )
+    _touch(plan)
     await _event(session, plan, profile, "vote.updated")
     await session.commit()
     await capture_event("vote_submitted", profile.id)
@@ -792,6 +952,7 @@ async def finalize(plan_id: str, body: FinalizeIn, profile: CurrentProfile, sess
         raise HTTPException(status_code=422, detail="Final candidate must belong to the active run")
     plan.finalized_candidate_id = selected_id
     plan.status = "finalized"
+    _touch(plan)
     await _event(session, plan, profile, "plan.finalized", {"candidate_id": selected_id})
     await session.commit()
     await capture_event("plan_finalized", profile.id, {"vote_count": len(votes)})
@@ -807,6 +968,7 @@ async def reopen(plan_id: str, profile: CurrentProfile, session: DbSession):
     else:
         plan.status = "voting"
     plan.finalized_candidate_id = None
+    _touch(plan)
     await _event(session, plan, profile, "plan.reopened")
     await session.commit()
     return ok(await _plan_out(session, plan, profile.id))

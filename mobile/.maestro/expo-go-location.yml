@@ -1,0 +1,31 @@
+appId: host.exp.Exponent
+---
+- runFlow:
+    when:
+      visible: "Continue"
+    commands:
+      - tapOn: "Continue"
+- runFlow:
+    when:
+      visible: "Reload"
+    commands:
+      - tapOn:
+          point: "90%,37%"
+- extendedWaitUntil:
+    visible: "Plans"
+    timeout: 120000
+- tapOn: "Plan title"
+- inputText: "Expo Go location smoke"
+- tapOn: "Start a dinner decision"
+- tapOn: "City, neighborhood, or ZIP code"
+- inputText: "Boston, MA"
+- tapOn: "Start a dinner decision"
+- tapOn: "Find location"
+- extendedWaitUntil:
+    visible: "Google Maps"
+    timeout: 30000
+- tapOn: "Create shared plan"
+- extendedWaitUntil:
+    visible: ".*Expo Go location smoke.*"
+    timeout: 30000
+- assertVisible: ".*Boston, MA.*1 people.*"

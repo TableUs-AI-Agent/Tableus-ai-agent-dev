@@ -156,7 +156,7 @@ try {
   });
   proxy = spawn(process.execPath, [join(repoRoot, "scripts", "mobile-fault-proxy.mjs")], { cwd: repoRoot, stdio: "ignore" });
   const readiness = await waitFor(`${upstreamUrl}/health/ready`, [backend, proxy]);
-  if (readiness.provider_mode !== "deterministic" || readiness.auth_mode !== "demo") throw new Error("Backend readiness is not deterministic/demo.");
+  if (readiness.places_provider_mode !== "deterministic" || readiness.ai_provider_mode !== "deterministic" || readiness.auth_mode !== "demo") throw new Error("Backend readiness is not deterministic/demo.");
   await waitFor(`${controlUrl}/health`, [backend, proxy]);
 
   if (platform === "ios") {
@@ -223,6 +223,8 @@ try {
     artifact_sha256: artifactChecksum(appPath),
     app_id: appId,
     provider_mode: "deterministic",
+    places_provider_mode: "deterministic",
+    ai_provider_mode: "deterministic",
     auth_mode: "demo",
     create_request_count: createAfterRetry.request_count,
     create_same_key_replay: createAfterRetry.same_idempotency_key,

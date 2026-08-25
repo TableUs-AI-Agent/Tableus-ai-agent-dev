@@ -57,3 +57,31 @@ async def test_plan_event_actor_is_nullable_and_cleared_on_profile_deletion() ->
 
     assert nullable == "YES"
     assert delete_action in {"n", b"n"}
+
+
+@pytest.mark.asyncio
+async def test_plan_locations_support_place_ids_and_nullable_legacy_coordinates() -> None:
+    settings = get_settings()
+    if not settings.sqlalchemy_url.startswith("postgresql+"):
+        pytest.skip("Postgres migration assertion")
+
+    engine = create_async_engine(settings.sqlalchemy_url)
+    try:
+        async with engine.connect() as connection:
+            columns = (
+                await connection.execute(
+                    text(
+                        "select column_name, is_nullable from information_schema.columns "
+                        "where table_schema = 'app' and table_name = 'plans' and column_name in "
+                        "('location_place_id', 'latitude', 'longitude')"
+                    )
+                )
+            ).all()
+    finally:
+        await engine.dispose()
+
+    assert dict(columns) == {
+        "latitude": "YES",
+        "location_place_id": "YES",
+        "longitude": "YES",
+    }

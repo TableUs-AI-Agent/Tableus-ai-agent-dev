@@ -1,6 +1,6 @@
 SHELL := /bin/bash
 
-.PHONY: setup dev lint typecheck test build smoke mobile-e2e mobile-auth-e2e mobile-offline-e2e mobile-links-e2e local-mobile-build-receipt inspect-mobile-auth inspect-mobile-local-e2e inspect-mobile-links ready perf ai-eval ai-eval-live contract
+.PHONY: setup dev lint typecheck test build smoke mobile-e2e mobile-auth-e2e mobile-offline-e2e mobile-links-e2e maps-staging-e2e local-mobile-build-receipt inspect-mobile-auth inspect-mobile-local-e2e inspect-mobile-links ready perf ai-eval ai-eval-live contract
 
 setup:
 	npm ci
@@ -64,6 +64,11 @@ mobile-links-e2e:
 	@test -n "$(ORIGIN)" || (echo "ORIGIN=https://links.table-us.com is required" && exit 2)
 	@test -n "$(EVIDENCE)" || (echo "EVIDENCE=<sanitized-output-directory> is required" && exit 2)
 	node scripts/mobile-links-e2e.mjs --platform "$(PLATFORM)" --device "$(DEVICE)" --app "$(APP)" --build-id "$(BUILD_ID)" --origin "$(ORIGIN)" --evidence "$(EVIDENCE)"
+
+maps-staging-e2e:
+	@test -n "$(API_URL)" || (echo "API_URL=<HTTPS-staging-api> is required" && exit 2)
+	@test -n "$(EVIDENCE)" || (echo "EVIDENCE=<sanitized-output-directory> is required" && exit 2)
+	node scripts/maps-staging-e2e.mjs --api-url "$(API_URL)" --evidence "$(EVIDENCE)" $(if $(RAILWAY_DEPLOYMENT),--railway-deployment "$(RAILWAY_DEPLOYMENT)",) $(if $(VERCEL_DEPLOYMENT),--vercel-deployment "$(VERCEL_DEPLOYMENT)",)
 
 local-mobile-build-receipt:
 	@test -n "$(PLATFORM)" || (echo "PLATFORM=ios or PLATFORM=android is required" && exit 2)

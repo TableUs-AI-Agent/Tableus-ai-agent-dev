@@ -569,6 +569,23 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/plans/{plan_id}/revision": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get Plan Revision */
+        get: operations["get_plan_revision_api_v1_plans__plan_id__revision_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v1/plans/{plan_id}/share-token/rotate": {
         parameters: {
             query?: never;
@@ -596,6 +613,23 @@ export interface paths {
         get?: never;
         /** Vote */
         put: operations["vote_api_v1_plans__plan_id__vote_put"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/provider-usage/summary": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Provider Usage Summary */
+        get: operations["provider_usage_summary_api_v1_provider_usage_summary_get"];
+        put?: never;
         post?: never;
         delete?: never;
         options?: never;
@@ -981,6 +1015,14 @@ export interface components {
                 [key: string]: unknown;
             };
         };
+        /** Envelope[PlanRevisionOut] */
+        Envelope_PlanRevisionOut_: {
+            data: components["schemas"]["PlanRevisionOut"];
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+        };
         /** Envelope[ProfileOut] */
         Envelope_ProfileOut_: {
             data: components["schemas"]["ProfileOut"];
@@ -1031,10 +1073,19 @@ export interface components {
                 [key: string]: unknown;
             };
         };
-        /** Envelope[list[PlanOut]] */
-        Envelope_list_PlanOut__: {
+        /** Envelope[list[PlanSummaryOut]] */
+        Envelope_list_PlanSummaryOut__: {
             /** Data */
-            data: components["schemas"]["PlanOut"][];
+            data: components["schemas"]["PlanSummaryOut"][];
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+        };
+        /** Envelope[list[ProviderUsageAggregateOut]] */
+        Envelope_list_ProviderUsageAggregateOut__: {
+            /** Data */
+            data: components["schemas"]["ProviderUsageAggregateOut"][];
             /** Meta */
             meta?: {
                 [key: string]: unknown;
@@ -1126,12 +1177,15 @@ export interface components {
         };
         /** LocationOut */
         LocationOut: {
+            /**
+             * Data Provider
+             * @enum {string}
+             */
+            data_provider: "fixture" | "google_maps";
             /** Label */
             label: string;
-            /** Latitude */
-            latitude: number;
-            /** Longitude */
-            longitude: number;
+            /** Place Id */
+            place_id: string;
         };
         /** LocationResolveRequest */
         LocationResolveRequest: {
@@ -1195,11 +1249,13 @@ export interface components {
         /** PlanCreateIn */
         PlanCreateIn: {
             /** Latitude */
-            latitude: number;
+            latitude?: number | null;
             /** Location Label */
             location_label: string;
+            /** Location Place Id */
+            location_place_id?: string | null;
             /** Longitude */
-            longitude: number;
+            longitude?: number | null;
             /** Title */
             title: string;
         };
@@ -1228,11 +1284,11 @@ export interface components {
             /** Id */
             id: string;
             /** Latitude */
-            latitude: number;
+            latitude: number | null;
             /** Location Label */
             location_label: string;
             /** Longitude */
-            longitude: number;
+            longitude: number | null;
             /** My Vote */
             my_vote: string[] | null;
             /** Organizer Id */
@@ -1254,6 +1310,40 @@ export interface components {
             /** Viewer Is Organizer */
             viewer_is_organizer: boolean;
         };
+        /** PlanRevisionOut */
+        PlanRevisionOut: {
+            /**
+             * Updated At
+             * Format: date-time
+             */
+            updated_at: string;
+        };
+        /** PlanSummaryOut */
+        PlanSummaryOut: {
+            /**
+             * Created At
+             * Format: date-time
+             */
+            created_at: string;
+            /** Id */
+            id: string;
+            /** Location Label */
+            location_label: string;
+            /** Participant Count */
+            participant_count: number;
+            /**
+             * Status
+             * @enum {string}
+             */
+            status: "collecting" | "voting" | "finalized";
+            /** Title */
+            title: string;
+            /**
+             * Updated At
+             * Format: date-time
+             */
+            updated_at: string;
+        };
         /** ProfileOut */
         ProfileOut: {
             /** Display Name */
@@ -1271,6 +1361,19 @@ export interface components {
             display_name?: string | null;
             /** Share Taste */
             share_taste?: boolean | null;
+        };
+        /** ProviderUsageAggregateOut */
+        ProviderUsageAggregateOut: {
+            /** Input Units */
+            input_units: number;
+            /** Operation */
+            operation: string;
+            /** Operation Count */
+            operation_count: number;
+            /** Output Units */
+            output_units: number;
+            /** Provider */
+            provider: string;
         };
         /** RecommendationIn */
         RecommendationIn: {
@@ -2341,7 +2444,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["Envelope_list_PlanOut__"];
+                    "application/json": components["schemas"]["Envelope_list_PlanSummaryOut__"];
                 };
             };
             /** @description Validation Error */
@@ -2611,6 +2714,40 @@ export interface operations {
             };
         };
     };
+    get_plan_revision_api_v1_plans__plan_id__revision_get: {
+        parameters: {
+            query?: never;
+            header?: {
+                authorization?: string | null;
+                "x-demo-user-id"?: string | null;
+            };
+            path: {
+                plan_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_PlanRevisionOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
     rotate_share_token_api_v1_plans__plan_id__share_token_rotate_post: {
         parameters: {
             query?: never;
@@ -2670,6 +2807,38 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["Envelope_PlanOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    provider_usage_summary_api_v1_provider_usage_summary_get: {
+        parameters: {
+            query?: never;
+            header?: {
+                authorization?: string | null;
+                "x-demo-user-id"?: string | null;
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_ProviderUsageAggregateOut__"];
                 };
             };
             /** @description Validation Error */

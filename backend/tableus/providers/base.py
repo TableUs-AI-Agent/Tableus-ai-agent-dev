@@ -1,5 +1,8 @@
+from collections.abc import Awaitable, Callable
 from dataclasses import dataclass
 from typing import Protocol
+
+PlacesUsageRecorder = Callable[[str, int, int, bool], Awaitable[None]]
 
 
 @dataclass(frozen=True)
@@ -16,6 +19,16 @@ class Place:
 
 
 @dataclass(frozen=True)
+class ResolvedLocation:
+    place_id: str
+    label: str
+    latitude: float
+    longitude: float
+    region_code: str
+    data_provider: str = "fixture"
+
+
+@dataclass(frozen=True)
 class Recommendation:
     place_id: str
     score: float
@@ -25,13 +38,26 @@ class Recommendation:
 class PlacesProvider(Protocol):
     name: str
 
-    async def resolve_location(self, query: str) -> dict: ...
+    async def resolve_location(
+        self, query: str, usage: PlacesUsageRecorder | None = None
+    ) -> ResolvedLocation: ...
+
+    async def get_location(
+        self, place_id: str, usage: PlacesUsageRecorder | None = None
+    ) -> ResolvedLocation: ...
 
     async def discover(
-        self, latitude: float, longitude: float, query: str, limit: int = 20
+        self,
+        latitude: float,
+        longitude: float,
+        query: str,
+        limit: int = 20,
+        usage: PlacesUsageRecorder | None = None,
     ) -> list[Place]: ...
 
-    async def get_places(self, place_ids: list[str]) -> list[Place]: ...
+    async def get_places(
+        self, place_ids: list[str], usage: PlacesUsageRecorder | None = None
+    ) -> list[Place]: ...
 
 
 class AiProvider(Protocol):

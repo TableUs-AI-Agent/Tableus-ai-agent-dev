@@ -22,10 +22,14 @@ class Settings(BaseSettings):
     tableus_runtime_db_role: str = ""
     tableus_auth_mode: Literal["demo", "supabase"] = "demo"
     tableus_provider_mode: Literal["deterministic", "live"] = "deterministic"
+    tableus_places_provider_mode: Literal["deterministic", "live"] | None = None
+    tableus_ai_provider_mode: Literal["deterministic", "live"] | None = None
     tableus_demo_invite: str = "tableus-beta"
     tableus_app_secret: str = "development-only-change-me-at-least-32-bytes"
     tableus_demo_mode: bool = True
     tableus_shared_plans_enabled: bool = True
+    tableus_build_sha: str = ""
+    railway_git_commit_sha: str = ""
     allowed_origins: str = "http://localhost:3000,http://localhost:8081"
 
     supabase_url: str = ""
@@ -52,8 +56,8 @@ class Settings(BaseSettings):
             return self
         if self.tableus_demo_mode or self.tableus_auth_mode != "supabase":
             raise ValueError("Production requires Supabase auth with demo mode disabled")
-        if self.tableus_provider_mode != "live":
-            raise ValueError("Production requires explicitly configured live providers")
+        if self.places_provider_mode != "live" or self.ai_provider_mode != "live":
+            raise ValueError("Production requires explicitly configured live Places and AI providers")
         if not all(
             [
                 self.supabase_url,
@@ -74,6 +78,24 @@ class Settings(BaseSettings):
     @property
     def cors_origins(self) -> list[str]:
         return [item.strip() for item in self.allowed_origins.split(",") if item.strip()]
+
+    @property
+    def places_provider_mode(self) -> Literal["deterministic", "live"]:
+        return self.tableus_places_provider_mode or self.tableus_provider_mode
+
+    @property
+    def ai_provider_mode(self) -> Literal["deterministic", "live"]:
+        return self.tableus_ai_provider_mode or self.tableus_provider_mode
+
+    @property
+    def provider_mode(self) -> Literal["deterministic", "live", "mixed"]:
+        if self.places_provider_mode == self.ai_provider_mode:
+            return self.places_provider_mode
+        return "mixed"
+
+    @property
+    def build_sha(self) -> str:
+        return self.tableus_build_sha or self.railway_git_commit_sha
 
     @property
     def sqlalchemy_url(self) -> str:

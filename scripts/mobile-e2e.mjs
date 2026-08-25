@@ -78,7 +78,7 @@ async function waitForReady(backend) {
     }
     if (response?.ok) {
       const payload = await response.json();
-      if (payload.provider_mode !== "deterministic" || payload.auth_mode !== "demo") {
+      if (payload.places_provider_mode !== "deterministic" || payload.ai_provider_mode !== "deterministic" || payload.auth_mode !== "demo") {
         throw new Error("The local backend is not in deterministic demo mode.");
       }
       return;
@@ -208,6 +208,8 @@ try {
       artifact_sha256: artifactChecksum(appPath),
       app_id: appId,
       provider_mode: "deterministic",
+      places_provider_mode: "deterministic",
+      ai_provider_mode: "deterministic",
       auth_mode: "demo",
       participants: 2,
       candidate_count: 4,

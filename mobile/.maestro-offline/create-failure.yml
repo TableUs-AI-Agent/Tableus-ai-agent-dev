@@ -21,6 +21,13 @@ appId: com.tableus.app
 - tapOn: "Plan title"
 - inputText: "Offline resilience dinner"
 - hideKeyboard
+- tapOn: "City, neighborhood, or ZIP code"
+- inputText: "Boston, MA"
+- hideKeyboard
+- tapOn: "Find location"
+- extendedWaitUntil:
+    visible: "Google Maps"
+    timeout: 30000
 - tapOn: "Create shared plan"
 - extendedWaitUntil:
     visible: ".*may have completed.*"
