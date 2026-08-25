@@ -24,7 +24,14 @@ appId: com.tableus.app
     text: "Plan title|Friday dinner"
     retryTapIfNoChange: true
 - inputText: "Mobile lifecycle dinner"
-- tapOn: "Start a dinner decision"
+- hideKeyboard
+- tapOn: "City, neighborhood, or ZIP code"
+- inputText: "Boston, MA"
+- hideKeyboard
+- tapOn: "Find location"
+- extendedWaitUntil:
+    visible: "Google Maps"
+    timeout: 30000
 - tapOn: "Create shared plan"
 - extendedWaitUntil:
     visible: "Friday dinner"

@@ -1,7 +1,7 @@
 from datetime import datetime
 from typing import Generic, Literal, TypeVar
 
-from pydantic import BaseModel, ConfigDict, Field, field_validator
+from pydantic import BaseModel, ConfigDict, Field, field_validator, model_validator
 
 T = TypeVar("T")
 
@@ -135,11 +135,16 @@ class TasteProfileOut(BaseModel):
 class LocationIn(BaseModel):
     query: str = Field(min_length=2, max_length=200)
 
+    @field_validator("query", mode="before")
+    @classmethod
+    def normalize_query(cls, value: str) -> str:
+        return " ".join(str(value).split())
+
 
 class LocationOut(BaseModel):
+    place_id: str
     label: str
-    latitude: float
-    longitude: float
+    data_provider: Literal["fixture", "google_maps"]
 
 
 class DiscoverIn(BaseModel):
@@ -164,8 +169,24 @@ class PlaceOut(BaseModel):
 class PlanCreateIn(BaseModel):
     title: str = Field(min_length=1, max_length=120)
     location_label: str = Field(min_length=1, max_length=160)
-    latitude: float = Field(ge=24.0, le=50.0)
-    longitude: float = Field(ge=-125.0, le=-66.0)
+    location_place_id: str | None = Field(default=None, min_length=1, max_length=255)
+    latitude: float | None = Field(default=None, ge=24.0, le=50.0)
+    longitude: float | None = Field(default=None, ge=-125.0, le=-66.0)
+
+    @field_validator("location_label", mode="before")
+    @classmethod
+    def normalize_location_label(cls, value: str) -> str:
+        return " ".join(str(value).split())
+
+    @model_validator(mode="after")
+    def one_location_source(self):
+        has_place = self.location_place_id is not None
+        has_coordinates = self.latitude is not None or self.longitude is not None
+        if has_place == has_coordinates:
+            raise ValueError("Provide either a location Place ID or legacy coordinates")
+        if has_coordinates and (self.latitude is None or self.longitude is None):
+            raise ValueError("Latitude and longitude must be provided together")
+        return self
 
 
 class PlanJoinIn(BaseModel):
@@ -221,8 +242,8 @@ class PlanOut(BaseModel):
     viewer_is_organizer: bool
     status: Literal["collecting", "voting", "finalized"]
     location_label: str
-    latitude: float
-    longitude: float
+    latitude: float | None
+    longitude: float | None
     participants: list[ParticipantOut]
     candidates: list[CandidateOut]
     my_vote: list[str] | None
@@ -234,6 +255,28 @@ class PlanOut(BaseModel):
 class PlanCreated(BaseModel):
     plan: PlanOut
     share_token: str
+
+
+class PlanSummaryOut(BaseModel):
+    id: str
+    title: str
+    status: Literal["collecting", "voting", "finalized"]
+    location_label: str
+    participant_count: int
+    created_at: datetime
+    updated_at: datetime
+
+
+class PlanRevisionOut(BaseModel):
+    updated_at: datetime
+
+
+class ProviderUsageAggregateOut(BaseModel):
+    provider: str
+    operation: str
+    operation_count: int
+    input_units: int
+    output_units: int
 
 
 class ShareTokenOut(BaseModel):

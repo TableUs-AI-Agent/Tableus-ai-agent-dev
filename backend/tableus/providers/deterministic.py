@@ -1,4 +1,6 @@
-from .base import Place, Recommendation
+from .base import Place, PlacesUsageRecorder, Recommendation, ResolvedLocation
+
+FIXTURE_LOCATION_ID = "fixture-location-boston"
 
 FIXTURE_PLACES = [
     Place(
@@ -67,11 +69,37 @@ FIXTURE_PLACES = [
 class DeterministicPlacesProvider:
     name = "deterministic"
 
-    async def resolve_location(self, query: str) -> dict:
-        return {"label": query.strip() or "Boston, MA", "latitude": 42.3601, "longitude": -71.0589}
+    async def resolve_location(
+        self, query: str, usage: PlacesUsageRecorder | None = None
+    ) -> ResolvedLocation:
+        return ResolvedLocation(
+            place_id=FIXTURE_LOCATION_ID,
+            label=query.strip() or "Boston, MA",
+            latitude=42.3601,
+            longitude=-71.0589,
+            region_code="US",
+        )
+
+    async def get_location(
+        self, place_id: str, usage: PlacesUsageRecorder | None = None
+    ) -> ResolvedLocation:
+        if place_id != FIXTURE_LOCATION_ID:
+            raise ValueError("Location could not be resolved")
+        return ResolvedLocation(
+            place_id=place_id,
+            label="Boston, MA",
+            latitude=42.3601,
+            longitude=-71.0589,
+            region_code="US",
+        )
 
     async def discover(
-        self, latitude: float, longitude: float, query: str, limit: int = 20
+        self,
+        latitude: float,
+        longitude: float,
+        query: str,
+        limit: int = 20,
+        usage: PlacesUsageRecorder | None = None,
     ) -> list[Place]:
         normalized = query.lower().strip()
         matching = [
@@ -81,7 +109,9 @@ class DeterministicPlacesProvider:
         ]
         return (matching or FIXTURE_PLACES)[: min(max(limit, 1), 20)]
 
-    async def get_places(self, place_ids: list[str]) -> list[Place]:
+    async def get_places(
+        self, place_ids: list[str], usage: PlacesUsageRecorder | None = None
+    ) -> list[Place]:
         by_id = {place.place_id: place for place in FIXTURE_PLACES}
         return [by_id[place_id] for place_id in place_ids if place_id in by_id]
 

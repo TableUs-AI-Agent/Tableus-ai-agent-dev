@@ -622,6 +622,23 @@
         "title": "Envelope[PlanOut]",
         "type": "object"
       },
+      "Envelope_PlanRevisionOut_": {
+        "properties": {
+          "data": {
+            "$ref": "#/components/schemas/PlanRevisionOut"
+          },
+          "meta": {
+            "additionalProperties": true,
+            "title": "Meta",
+            "type": "object"
+          }
+        },
+        "required": [
+          "data"
+        ],
+        "title": "Envelope[PlanRevisionOut]",
+        "type": "object"
+      },
       "Envelope_ProfileOut_": {
         "properties": {
           "data": {
@@ -732,11 +749,11 @@
         "title": "Envelope[list[PlaceOut]]",
         "type": "object"
       },
-      "Envelope_list_PlanOut__": {
+      "Envelope_list_PlanSummaryOut__": {
         "properties": {
           "data": {
             "items": {
-              "$ref": "#/components/schemas/PlanOut"
+              "$ref": "#/components/schemas/PlanSummaryOut"
             },
             "title": "Data",
             "type": "array"
@@ -750,7 +767,28 @@
         "required": [
           "data"
         ],
-        "title": "Envelope[list[PlanOut]]",
+        "title": "Envelope[list[PlanSummaryOut]]",
+        "type": "object"
+      },
+      "Envelope_list_ProviderUsageAggregateOut__": {
+        "properties": {
+          "data": {
+            "items": {
+              "$ref": "#/components/schemas/ProviderUsageAggregateOut"
+            },
+            "title": "Data",
+            "type": "array"
+          },
+          "meta": {
+            "additionalProperties": true,
+            "title": "Meta",
+            "type": "object"
+          }
+        },
+        "required": [
+          "data"
+        ],
+        "title": "Envelope[list[ProviderUsageAggregateOut]]",
         "type": "object"
       },
       "Envelope_list_ReviewOut__": {
@@ -976,23 +1014,27 @@
       },
       "LocationOut": {
         "properties": {
+          "data_provider": {
+            "enum": [
+              "fixture",
+              "google_maps"
+            ],
+            "title": "Data Provider",
+            "type": "string"
+          },
           "label": {
             "title": "Label",
             "type": "string"
           },
-          "latitude": {
-            "title": "Latitude",
-            "type": "number"
-          },
-          "longitude": {
-            "title": "Longitude",
-            "type": "number"
+          "place_id": {
+            "title": "Place Id",
+            "type": "string"
           }
         },
         "required": [
+          "place_id",
           "label",
-          "latitude",
-          "longitude"
+          "data_provider"
         ],
         "title": "LocationOut",
         "type": "object"
@@ -1127,10 +1169,17 @@
       "PlanCreateIn": {
         "properties": {
           "latitude": {
-            "maximum": 50.0,
-            "minimum": 24.0,
-            "title": "Latitude",
-            "type": "number"
+            "anyOf": [
+              {
+                "maximum": 50.0,
+                "minimum": 24.0,
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Latitude"
           },
           "location_label": {
             "maxLength": 160,
@@ -1138,11 +1187,31 @@
             "title": "Location Label",
             "type": "string"
           },
+          "location_place_id": {
+            "anyOf": [
+              {
+                "maxLength": 255,
+                "minLength": 1,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Location Place Id"
+          },
           "longitude": {
-            "maximum": -66.0,
-            "minimum": -125.0,
-            "title": "Longitude",
-            "type": "number"
+            "anyOf": [
+              {
+                "maximum": -66.0,
+                "minimum": -125.0,
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Longitude"
           },
           "title": {
             "maxLength": 120,
@@ -1153,9 +1222,7 @@
         },
         "required": [
           "title",
-          "location_label",
-          "latitude",
-          "longitude"
+          "location_label"
         ],
         "title": "PlanCreateIn",
         "type": "object"
@@ -1222,16 +1289,30 @@
             "type": "string"
           },
           "latitude": {
-            "title": "Latitude",
-            "type": "number"
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Latitude"
           },
           "location_label": {
             "title": "Location Label",
             "type": "string"
           },
           "longitude": {
-            "title": "Longitude",
-            "type": "number"
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Longitude"
           },
           "my_vote": {
             "anyOf": [
@@ -1300,6 +1381,70 @@
         "title": "PlanOut",
         "type": "object"
       },
+      "PlanRevisionOut": {
+        "properties": {
+          "updated_at": {
+            "format": "date-time",
+            "title": "Updated At",
+            "type": "string"
+          }
+        },
+        "required": [
+          "updated_at"
+        ],
+        "title": "PlanRevisionOut",
+        "type": "object"
+      },
+      "PlanSummaryOut": {
+        "properties": {
+          "created_at": {
+            "format": "date-time",
+            "title": "Created At",
+            "type": "string"
+          },
+          "id": {
+            "title": "Id",
+            "type": "string"
+          },
+          "location_label": {
+            "title": "Location Label",
+            "type": "string"
+          },
+          "participant_count": {
+            "title": "Participant Count",
+            "type": "integer"
+          },
+          "status": {
+            "enum": [
+              "collecting",
+              "voting",
+              "finalized"
+            ],
+            "title": "Status",
+            "type": "string"
+          },
+          "title": {
+            "title": "Title",
+            "type": "string"
+          },
+          "updated_at": {
+            "format": "date-time",
+            "title": "Updated At",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "title",
+          "status",
+          "location_label",
+          "participant_count",
+          "created_at",
+          "updated_at"
+        ],
+        "title": "PlanSummaryOut",
+        "type": "object"
+      },
       "ProfileOut": {
         "properties": {
           "display_name": {
@@ -1356,6 +1501,39 @@
           }
         },
         "title": "ProfilePatch",
+        "type": "object"
+      },
+      "ProviderUsageAggregateOut": {
+        "properties": {
+          "input_units": {
+            "title": "Input Units",
+            "type": "integer"
+          },
+          "operation": {
+            "title": "Operation",
+            "type": "string"
+          },
+          "operation_count": {
+            "title": "Operation Count",
+            "type": "integer"
+          },
+          "output_units": {
+            "title": "Output Units",
+            "type": "integer"
+          },
+          "provider": {
+            "title": "Provider",
+            "type": "string"
+          }
+        },
+        "required": [
+          "provider",
+          "operation",
+          "operation_count",
+          "input_units",
+          "output_units"
+        ],
+        "title": "ProviderUsageAggregateOut",
         "type": "object"
       },
       "RecommendationIn": {
@@ -3164,7 +3342,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Envelope_list_PlanOut__"
+                  "$ref": "#/components/schemas/Envelope_list_PlanSummaryOut__"
                 }
               }
             },
@@ -3744,6 +3922,80 @@
         ]
       }
     },
+    "/api/v1/plans/{plan_id}/revision": {
+      "get": {
+        "operationId": "get_plan_revision_api_v1_plans__plan_id__revision_get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "plan_id",
+            "required": true,
+            "schema": {
+              "title": "Plan Id",
+              "type": "string"
+            }
+          },
+          {
+            "in": "header",
+            "name": "authorization",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Authorization"
+            }
+          },
+          {
+            "in": "header",
+            "name": "x-demo-user-id",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "X-Demo-User-Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_PlanRevisionOut_"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Get Plan Revision",
+        "tags": [
+          "v1"
+        ]
+      }
+    },
     "/api/v1/plans/{plan_id}/share-token/rotate": {
       "post": {
         "operationId": "rotate_share_token_api_v1_plans__plan_id__share_token_rotate_post",
@@ -3897,6 +4149,71 @@
           }
         },
         "summary": "Vote",
+        "tags": [
+          "v1"
+        ]
+      }
+    },
+    "/api/v1/provider-usage/summary": {
+      "get": {
+        "operationId": "provider_usage_summary_api_v1_provider_usage_summary_get",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "authorization",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Authorization"
+            }
+          },
+          {
+            "in": "header",
+            "name": "x-demo-user-id",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "X-Demo-User-Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_list_ProviderUsageAggregateOut__"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Provider Usage Summary",
         "tags": [
           "v1"
         ]

@@ -1,11 +1,13 @@
 from datetime import UTC, datetime, timedelta
+from types import SimpleNamespace
 
 import pytest
 from fastapi.responses import JSONResponse
 from httpx import ASGITransport, AsyncClient
-from sqlalchemy import select
+from sqlalchemy import func, select
 
 from main import app
+from tableus import api as tableus_api
 from tableus.db import SessionFactory, init_database
 from tableus.models import (
     Connection,
@@ -15,10 +17,12 @@ from tableus.models import (
     PlanEvent,
     PlanParticipant,
     Profile,
+    ProviderUsage,
     RecommendationRun,
     Review,
     Vote,
 )
+from tableus.providers.deterministic import DeterministicPlacesProvider
 from tableus.security import hash_value, issue_redemption_token
 
 _idempotency_500_calls = {"count": 0}
@@ -103,6 +107,16 @@ async def test_complete_shared_plan_flow(client: AsyncClient) -> None:
     created = created_response.json()["data"]
     plan_id = created["plan"]["id"]
 
+    listed = await client.get("/api/v1/plans", headers=headers("demo-organizer"))
+    assert listed.status_code == 200
+    summary = next(item for item in listed.json()["data"] if item["id"] == plan_id)
+    assert summary["participant_count"] == 1
+    assert "participants" not in summary
+    initial_revision = await client.get(
+        f"/api/v1/plans/{plan_id}/revision", headers=headers("demo-organizer")
+    )
+    assert initial_revision.status_code == 200
+
     joined = await client.post(
         f"/api/v1/plans/{plan_id}/join",
         headers=headers("demo-guest"),
@@ -156,6 +170,136 @@ async def test_complete_shared_plan_flow(client: AsyncClient) -> None:
     assert stale.status_code == 200
     assert stale.json()["data"]["status"] == "collecting"
     assert stale.json()["data"]["candidates"] == []
+
+
+@pytest.mark.asyncio
+async def test_resolved_plan_stores_only_place_id_and_user_label(client: AsyncClient) -> None:
+    resolved = await client.post(
+        "/api/v1/locations/resolve",
+        headers=headers("demo-organizer"),
+        json={"query": "  Madison, Wisconsin  "},
+    )
+    assert resolved.status_code == 200
+    location = resolved.json()["data"]
+    assert set(location) == {"place_id", "label", "data_provider"}
+
+    created = await client.post(
+        "/api/v1/plans",
+        headers=headers("demo-organizer"),
+        json={
+            "title": "Policy safe location",
+            "location_label": "Madison,   Wisconsin",
+            "location_place_id": location["place_id"],
+        },
+    )
+    assert created.status_code == 200, created.text
+    plan_id = created.json()["data"]["plan"]["id"]
+    assert created.json()["data"]["plan"]["latitude"] is None
+    assert created.json()["data"]["plan"]["longitude"] is None
+
+    async with SessionFactory() as session:
+        stored = await session.get(Plan, plan_id)
+        assert stored is not None
+        assert stored.location_label == "Madison, Wisconsin"
+        assert stored.location_place_id == location["place_id"]
+        assert stored.latitude is None
+        assert stored.longitude is None
+
+
+def test_live_places_rate_limits_are_per_user_and_global(monkeypatch) -> None:
+    monkeypatch.setattr(
+        tableus_api, "get_settings", lambda: SimpleNamespace(places_provider_mode="live")
+    )
+    tableus_api._places_user_windows.clear()
+    tableus_api._places_global_window.clear()
+    for _ in range(10):
+        tableus_api._consume_places_limit("rate-user")
+    with pytest.raises(Exception) as per_user:
+        tableus_api._consume_places_limit("rate-user")
+    assert per_user.value.status_code == 429
+
+    tableus_api._places_user_windows.clear()
+    tableus_api._places_global_window.clear()
+    for user_index in range(6):
+        for _ in range(10):
+            tableus_api._consume_places_limit(f"global-user-{user_index}")
+    with pytest.raises(Exception) as global_limit:
+        tableus_api._consume_places_limit("one-more-user")
+    assert global_limit.value.status_code == 429
+
+
+@pytest.mark.asyncio
+async def test_provider_usage_summary_is_aggregate_only(client: AsyncClient) -> None:
+    async with SessionFactory() as session:
+        session.add(
+            ProviderUsage(
+                provider="google-places-new",
+                operation="restaurant.text_search",
+                latency_ms=10,
+                input_units=2,
+                output_units=4,
+            )
+        )
+        await session.commit()
+
+    response = await client.get(
+        "/api/v1/provider-usage/summary", headers=headers("demo-organizer")
+    )
+    assert response.status_code == 200
+    google = next(
+        item for item in response.json()["data"] if item["provider"] == "google-places-new"
+    )
+    assert set(google) == {
+        "provider",
+        "operation",
+        "operation_count",
+        "input_units",
+        "output_units",
+    }
+
+
+@pytest.mark.asyncio
+async def test_incomplete_place_details_do_not_commit_a_recommendation_run(
+    client: AsyncClient, monkeypatch
+) -> None:
+    created = await client.post(
+        "/api/v1/plans",
+        headers=headers("demo-organizer"),
+        json={
+            "title": "Incomplete detail dinner",
+            "location_label": "Boston, MA",
+            "latitude": 42.3601,
+            "longitude": -71.0589,
+        },
+    )
+    plan_id = created.json()["data"]["plan"]["id"]
+    await client.post(
+        f"/api/v1/plans/{plan_id}/join",
+        headers=headers("demo-guest"),
+        json={"share_token": created.json()["data"]["share_token"]},
+    )
+
+    class IncompleteDetails(DeterministicPlacesProvider):
+        async def get_places(self, place_ids, usage=None):
+            return (await super().get_places(place_ids, usage))[:3]
+
+    monkeypatch.setattr(tableus_api, "get_places_provider", lambda: IncompleteDetails())
+    response = await client.post(
+        f"/api/v1/plans/{plan_id}/recommendations",
+        headers=headers("demo-organizer"),
+        json={"query": "group-friendly dinner"},
+    )
+    assert response.status_code == 422
+    async with SessionFactory() as session:
+        stored = await session.get(Plan, plan_id)
+        assert stored is not None
+        assert stored.active_run_id is None
+        run_count = await session.scalar(
+            select(func.count())
+            .select_from(RecommendationRun)
+            .where(RecommendationRun.plan_id == plan_id)
+        )
+        assert run_count == 0
 
 
 @pytest.mark.asyncio

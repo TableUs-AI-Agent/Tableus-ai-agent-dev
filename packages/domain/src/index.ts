@@ -36,14 +36,26 @@ export type Plan = {
   viewer_is_organizer: boolean;
   status: PlanStatus;
   location_label: string;
-  latitude: number;
-  longitude: number;
+  latitude: number | null;
+  longitude: number | null;
   participants: Participant[];
   candidates: Candidate[];
   my_vote: string[] | null;
   finalized_candidate_id: string | null;
   created_at: string;
   updated_at: string;
+};
+
+export type PlanSummary = Pick<Plan, "id" | "title" | "status" | "location_label" | "created_at" | "updated_at"> & {
+  participant_count: number;
+};
+
+export type PlanRevision = { updated_at: string };
+
+export type ResolvedLocation = {
+  place_id: string;
+  label: string;
+  data_provider: "fixture" | "google_maps";
 };
 
 export function bordaScores(rankings: string[][]): Record<string, number> {

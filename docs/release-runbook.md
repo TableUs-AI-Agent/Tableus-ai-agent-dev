@@ -359,6 +359,27 @@ Keep deterministic providers green while each integration is added:
 1. Enable staging Google Maps with a restricted server key, Places API New field
    masks, and billing alerts. Confirm four valid Place IDs or the honest
    no-result state, refresh-only display data, and production attribution.
+   Create an isolated project, enable only Places API New, set the $10 monthly
+   budget alerts at 50/80/100 percent, and cap Nearby, Text, and Details at 60
+   requests/minute. Activate Railway Pro static outbound IPs before restricting
+   the key to those IPs and Places API New. Store the key only in Railway staging
+   and the operator Keychain; rollback restores deterministic Places and the
+   previous deployment rather than silently falling back at runtime.
+   After exact-SHA deployment and migration, run:
+
+   ```bash
+   TABLEUS_SUPABASE_URL=<staging-url> \
+   TABLEUS_SUPABASE_ANON_KEY=<public-key> \
+   TABLEUS_MAPS_BUDGET_CONFIRMED=true \
+   TABLEUS_MAPS_KEY_RESTRICTIONS_CONFIRMED=true \
+   make maps-staging-e2e API_URL=https://<staging-api> EVIDENCE=<sanitized-dir> \
+     RAILWAY_DEPLOYMENT=<id> VERCEL_DEPLOYMENT=<id>
+   ```
+
+   Enter both existing approved account emails and newest returning codes only
+   at the interactive prompts. Retain only the generated aggregate summary; it
+   fails if account data, codes, tokens, queries, coordinates, Place IDs, Google
+   content, responses, or keys are introduced.
 2. Review privacy/terms and Google Maps attribution with the responsible owner
    before external beta use.
 3. With explicit paid-live-evaluation approval, run the pinned Gemini fixture

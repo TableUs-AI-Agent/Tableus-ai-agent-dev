@@ -132,6 +132,20 @@
 - Next.js is pinned to 16.3.1 to resolve direct security advisories. npm still
   reports Expo/React Native build-tool advisories whose proposed remediation is
   an unsupported SDK downgrade; track upstream SDK 57 patches before release.
+- The Maps staging implementation now splits Places and AI modes, reports mixed
+  readiness, and uses Places API New Text/Nearby/Details calls with explicit
+  field masks, US-only location validation, 5 km filtering, bounded retries,
+  four-way detail concurrency, and no fixture fallback. New resolved plans store
+  the user's normalized label and a Place ID with null coordinates; legacy
+  deterministic coordinate plans remain readable. Plan lists are summary-only,
+  web polls a lightweight revision before refreshing detail, and live logical
+  operations are process-rate-limited and recorded as aggregate attempt/result
+  counts. Web and Expo require explicit location selection with Google Maps
+  attribution and keep provider display content in memory only. Focused checks,
+  empty/previous migration checks, API drift validation, `make ready`, and
+  sequential Expo Go iOS/Android location-create smokes pass locally. External
+  Maps resources, migration, key, and exact-SHA staging evidence are not yet
+  applied.
 
 ## External dependencies not provisioned in source
 

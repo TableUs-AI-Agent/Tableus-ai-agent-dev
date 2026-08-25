@@ -21,6 +21,13 @@ appId: com.tableus.app
 - tapOn: "Friday dinner"
 - inputText: "Beta dinner"
 - hideKeyboard
+- tapOn: "City, neighborhood, or ZIP code"
+- inputText: "Boston, MA"
+- hideKeyboard
+- tapOn: "Find location"
+- extendedWaitUntil:
+    visible: "Google Maps"
+    timeout: 30000
 - tapOn: "Create shared plan"
 - extendedWaitUntil:
     visible: "Friday dinner"

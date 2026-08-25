@@ -17,8 +17,9 @@ Exact-SHA mobile offline mutation resilience is complete from candidate
 `341d67ec73c96f96f19c6e0e2911677e973a7d61`: DNS/TLS, Apple and Android
 associations, signed artifact inspection, browser fallback, native auth/join,
 retained in-memory join intent, and rotated-link rejection passed on Android and
-a physical iPhone. Production Play App Signing remains part of the later store
-gate. Live Maps and budgeted Gemini validation are subsequent packets.
+  a physical iPhone. Production Play App Signing remains part of the later store
+  gate. Policy-safe live Maps staging is the active packet; budgeted Gemini
+  validation follows only after its exact-SHA mixed-provider evidence is green.
 
 The active gate sequence and required owner inputs are maintained in
 `docs/release-runbook.md`.

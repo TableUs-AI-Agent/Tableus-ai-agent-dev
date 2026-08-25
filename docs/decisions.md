@@ -116,3 +116,10 @@
   Diagnostics, and user-observed taps from Notes or Messages through returning
   code authentication and rotated-link rejection. A simulator does not replace
   association verification, and the result must not be labeled automated.
+- **2026-08-24:** Places and AI provider modes are independently configured;
+  their combined readiness may be `mixed` in staging, while production requires
+  both live. Google Places staging persists long-lived Place IDs plus the user's
+  own normalized plan label, never Google coordinates or display fields. Live
+  location and restaurant fields are refreshed on demand, query data stays in
+  client memory, and Maps paid-operation limits/usage accounting remain
+  process-local for the closed beta.

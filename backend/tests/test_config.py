@@ -44,3 +44,29 @@ def test_production_rejects_shared_migration_and_runtime_credentials() -> None:
 def test_runtime_role_rejects_sql_identifier_injection() -> None:
     with pytest.raises(ValidationError, match="simple Postgres identifier"):
         production_settings(tableus_runtime_db_role='runtime"; DROP SCHEMA app; --')
+
+
+def test_split_provider_modes_override_deprecated_fallback() -> None:
+    settings = Settings(
+        _env_file=None,
+        tableus_provider_mode="live",
+        tableus_places_provider_mode="live",
+        tableus_ai_provider_mode="deterministic",
+    )
+
+    assert settings.places_provider_mode == "live"
+    assert settings.ai_provider_mode == "deterministic"
+    assert settings.provider_mode == "mixed"
+
+
+def test_deprecated_provider_mode_remains_a_fallback() -> None:
+    settings = Settings(_env_file=None, tableus_provider_mode="live")
+
+    assert settings.places_provider_mode == "live"
+    assert settings.ai_provider_mode == "live"
+    assert settings.provider_mode == "live"
+
+
+def test_production_rejects_mixed_provider_modes() -> None:
+    with pytest.raises(ValidationError, match="live Places and AI"):
+        production_settings(tableus_ai_provider_mode="deterministic")

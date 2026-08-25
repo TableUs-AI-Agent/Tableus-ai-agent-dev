@@ -1,9 +1,9 @@
 "use client";
 
-import type { Plan } from "@tableus/domain";
+import type { Plan, PlanRevision } from "@tableus/domain";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useParams } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { v1Api } from "../../lib/v1-api";
 import { createCanonicalJoinUrl } from "../../lib/links";
@@ -15,10 +15,23 @@ export default function PlanPage() {
   const [notes, setNotes] = useState("");
   const [query, setQuery] = useState("group-friendly dinner");
   const [ranking, setRanking] = useState<string[]>([]);
-  const plan = useQuery({ queryKey: key, queryFn: () => v1Api.get<Plan>(`/api/v1/plans/${id}`), refetchInterval: 30_000 });
+  const plan = useQuery({ queryKey: key, queryFn: () => v1Api.get<Plan>(`/api/v1/plans/${id}`) });
+  const revision = useQuery({
+    queryKey: ["plan-revision", id],
+    queryFn: () => v1Api.get<PlanRevision>(`/api/v1/plans/${id}/revision`),
+    refetchInterval: 30_000,
+  });
+  useEffect(() => {
+    if (revision.data?.updated_at && plan.data?.updated_at && revision.data.updated_at !== plan.data.updated_at) {
+      void queryClient.refetchQueries({ queryKey: ["plan", id], exact: true });
+    }
+  }, [id, plan.data?.updated_at, queryClient, revision.data?.updated_at]);
   const mutation = (path: string, body: unknown, method: "post" | "put" | "patch" = "post") => ({
     mutationFn: () => v1Api[method]<Plan>(`/api/v1/plans/${id}/${path}`, body),
-    onSuccess: (data: Plan) => queryClient.setQueryData(key, data),
+    onSuccess: (data: Plan) => {
+      queryClient.setQueryData(key, data);
+      queryClient.setQueryData<PlanRevision>(["plan-revision", id], { updated_at: data.updated_at });
+    },
   });
   const constraints = useMutation(mutation("constraints", { notes, cuisines: [], dietary_notes: [] }, "patch"));
   const recommend = useMutation(mutation("recommendations", { query }));

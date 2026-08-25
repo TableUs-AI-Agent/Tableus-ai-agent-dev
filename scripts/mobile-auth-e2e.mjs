@@ -45,9 +45,10 @@ async function preflight(apiUrl) {
   const response = await fetch(`${apiUrl.replace(/\/$/, "")}/health/ready`, { signal: AbortSignal.timeout(15_000) });
   if (!response.ok) throw new Error(`Staging readiness failed with ${response.status}.`);
   const payload = await response.json();
-  if (payload.auth_mode !== "supabase" || payload.provider_mode !== "deterministic") {
-    throw new Error("Staging must report Supabase authentication and deterministic providers.");
+  if (payload.auth_mode !== "supabase" || payload.ai_provider_mode !== "deterministic" || !["deterministic", "live"].includes(payload.places_provider_mode)) {
+    throw new Error("Staging must report Supabase authentication, deterministic AI, and an explicit Places mode.");
   }
+  return payload;
 }
 
 function collectScreenshot(root, evidenceDir, platform) {
@@ -80,7 +81,7 @@ if (!new Set(["ios", "android"]).has(platform)) throw new Error("--platform must
 if (!device || !existsSync(appPath) || !buildId || !args.evidence) throw new Error("--device, --app, --build-id, and --evidence are required");
 const startPhaseIndex = phases.indexOf(startPhase);
 if (startPhaseIndex < 0) throw new Error(`--start-phase must be one of: ${phases.join(", ")}`);
-await preflight(apiUrl);
+const readiness = await preflight(apiUrl);
 
 const terminal = createInterface({ input: process.stdin, output: process.stdout });
 const email = (await terminal.question("Test account email: ")).trim().toLowerCase();
@@ -166,7 +167,9 @@ try {
     artifact_sha256: artifactChecksum(appPath),
     api_origin: new URL(apiUrl).origin,
     app_id: appId,
-    provider_mode: "deterministic",
+    provider_mode: readiness.provider_mode,
+    places_provider_mode: readiness.places_provider_mode,
+    ai_provider_mode: readiness.ai_provider_mode,
     auth_mode: "supabase",
     invalid_invite_rejected: shouldRun("invalid-invite"),
     signup_approved: shouldRun("verify-signup"),
