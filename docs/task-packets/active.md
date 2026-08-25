@@ -2,12 +2,13 @@
 
 ## Status
 
-Local implementation and validation are complete on
+Implementation and exact-SHA staging validation are complete on
 `codex/maps-staging-validation`, branched from merged `main` at
 `2169338d3edc760b9df0d045551745c2b91b45c0`. Focused checks, migration checks,
 API drift checks, `make ready`, and sequential Expo Go iOS/Android location
-smokes passed for candidate `ce8adf60d95d2b0aaf02d2d6101ea7978c8295c5`,
-and pull request #3 is green. The isolated Google project, $10 budget alerts,
+smokes passed. Corrected exact candidate
+`4a790b4ee40a12cdba8540fb12da586b3373a895` and pull request #3 are green. The
+isolated Google project, $10 budget alerts,
 60-RPM method quotas, restricted replacement key, staging migration, active
 Railway static egress, and exact-SHA Railway/Vercel deployments are configured.
 The first live journey authenticated both approved users but exposed a real
@@ -15,7 +16,10 @@ city-level response shape: Google returned a populated `200` while omitting
 `postalAddress.regionCode`, which the adapter rejected as non-US. The local
 correction requests the country address component and uses it only when the
 postal region is absent, while remaining fail-closed for any location not
-conclusively in the US. A new exact-SHA candidate and redeployment are pending.
+conclusively in the US. The rerun passed two-user authentication, location
+resolution, plan creation/joining, four distinct candidates, refreshed details,
+policy-safe persistence, and aggregate usage checks. Sanitized evidence is in
+`docs/evidence/4a790b4/maps-staging/`. Merge remains an explicit owner gate.
 
 ## Objective
 
@@ -59,11 +63,10 @@ TableUs-owned planning metadata.
 
 ## External gate
 
-The infrastructure portion of this gate is complete. After the corrected
-candidate is approved: push that exact SHA, redeploy Railway and Vercel from it,
-then send one new returning OTP to each of the same two existing approved
-accounts and rerun the sanitized staging journey. No new project, budget, quota,
-invite, database migration, static IP, or provider credential is required.
+Complete. The corrected exact SHA is public, Railway and Vercel are healthy from
+that SHA, both returning-code authentications passed, and sanitized staging
+evidence is retained. No new invite, production resource, Gemini call, or store
+action occurred.
 
 ## Boundaries
 

@@ -149,6 +149,13 @@
   the postal region and uses the transient country address component only when
   the postal region is absent. It remains fail-closed unless the resulting
   country is conclusively `US`, and neither field is persisted.
+  Exact candidate `4a790b4ee40a12cdba8540fb12da586b3373a895`
+  passed public CI and is deployed to Railway and Vercel. Sanitized staging
+  evidence proves two approved users, live location resolution, one persistent
+  joined plan, four distinct candidates, refreshed Google details, aggregate
+  provider usage, null stored coordinates, and a candidate schema with no Google
+  display fields. Evidence is in `docs/evidence/4a790b4/maps-staging/`; pull
+  request #3 remains unmerged pending explicit approval.
 
 ## External dependencies not provisioned in source
 
@@ -173,9 +180,9 @@
   active until 2026-08-27; its plaintext is unavailable and it should be revoked
   or allowed to expire before external beta access.
 - Railway staging project `tableus-staging`, environment `staging`, and service
-  `api` are provisioned. Deployment `65483244-1830-4317-9a81-2fd1b350030f`
+  `api` are provisioned. Deployment `d9149f0e-080b-441d-8d17-f6498e0ba030`
   serves `https://api-staging-3795.up.railway.app` from exact SHA
-  `ce8adf60d95d2b0aaf02d2d6101ea7978c8295c5`; readiness reports Supabase
+  `4a790b4ee40a12cdba8540fb12da586b3373a895`; readiness reports Supabase
   Auth, live Places, deterministic AI, and `mixed`. High-availability static
   outbound IPs are active. Railway holds the runtime database credential,
   application secret, and the Places-only server key restricted to those IPs.
@@ -184,7 +191,7 @@
   Railway and the operator Keychain.
 - Vercel staging client variables and the canonical verified-link deployment
   are live from exact SHA
-  `ce8adf60d95d2b0aaf02d2d6101ea7978c8295c5` at
+  `4a790b4ee40a12cdba8540fb12da586b3373a895` at
   `https://tableus-staging.vercel.app` and `https://links.table-us.com`. The
   dedicated staging project also retains its pre-existing `table-us.com` and
   `www.table-us.com` aliases. An authenticated
@@ -301,14 +308,12 @@
   evidence checksums. Sanitized summaries and screenshots are in
   `docs/evidence/119171a/account-controls/`. No application profile or Supabase
   Auth identity was deleted. Other failure-state checks remain.
-  Maps infrastructure and the first exact-SHA mixed-provider deployment are
-  live. Both approved users authenticated during the first staging run, but the
-  run stopped at location resolution because the populated city result omitted
-  `postalAddress.regionCode`. Google aggregate telemetry confirmed one `200`
-  response; no query, response, Place ID, coordinate, session, or provider
-  content was retained. The fail-closed country-component correction must be
-  frozen, approved, redeployed, and rerun with one new returning code per
-  account before Maps evidence is green. The budgeted pinned-model Gemini
-  evaluation follows only after that gate.
+  Maps staging evidence is green from exact SHA
+  `4a790b4ee40a12cdba8540fb12da586b3373a895`. The first attempt stopped on a
+  city result without `postalAddress.regionCode`; Google aggregate telemetry
+  confirmed a populated `200`, and no raw artifact was retained. The corrected
+  rerun passed end to end with policy-safe persistence and sanitized evidence.
+  Pull request #3 still requires explicit merge approval. The budgeted
+  pinned-model Gemini evaluation is the next provider objective after merge.
 - Obtain explicit approval before any production migration, deployment, EAS
   build/submission, paid live-AI evaluation, or cohort invitation.

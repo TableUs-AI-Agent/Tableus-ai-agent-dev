@@ -1,0 +1,21 @@
+{
+  "git_sha": "4a790b4ee40a12cdba8540fb12da586b3373a895",
+  "api_origin": "https://api-staging-3795.up.railway.app",
+  "railway_deployment_id": "d9149f0e-080b-441d-8d17-f6498e0ba030",
+  "vercel_deployment_id": "dpl_GRdJeZMAfKc7e4dPJESvaYZVnou6",
+  "readiness_exact_sha": true,
+  "supabase_auth": true,
+  "places_live": true,
+  "ai_deterministic": true,
+  "location_resolved": true,
+  "plan_created": true,
+  "participant_count": 2,
+  "candidate_count": 4,
+  "distinct_candidates": true,
+  "refreshed_google_details": true,
+  "usage_operation_count": 7,
+  "usage_input_units": 13,
+  "usage_output_units": 30,
+  "budget_alerts_confirmed": true,
+  "key_restrictions_confirmed": true
+}
