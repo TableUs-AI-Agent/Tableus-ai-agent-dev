@@ -138,11 +138,12 @@
   scaled service requires a durable reservation ledger. Paid evaluation is a
   separate explicit gate with an exact-SHA/fixture checkpoint and `$0.25` cap.
 - **2026-08-25:** Gemini wire schemas contain only the provider's documented
-  JSON Schema subset. Generated string `minLength`, `maxLength`, and `pattern`
-  constraints are removed before transmission because the live 2.5 endpoint
-  rejects them with `400`; the original strict Pydantic models still validate
-  every parsed response locally, so wire compatibility does not weaken domain,
-  privacy, or safety enforcement.
+  JSON Schema subset. Generated string `minLength`, `maxLength`, `pattern`,
+  `additionalProperties`, and non-semantic `title` metadata are removed before
+  transmission because live endpoints reject those generated forms with `400`;
+  the original strict Pydantic models still validate every parsed response
+  locally, so wire compatibility does not weaken domain, privacy, or safety
+  enforcement.
 - **2026-08-25:** Closed-beta Gemini is pinned to
   `gemini-3.1-flash-lite` through `google-genai==1.75.0`. Google lists it as the
   stable replacement for Gemini 2.5 Flash-Lite, which returned `404` for the
@@ -152,3 +153,9 @@
   disabled, so TableUs requests the documented `minimal` level and continues to
   include thinking tokens in spend limits. This model change requires a new
   exact-SHA checkpoint namespace and live evaluation before staging activation.
+- **2026-08-25:** A public-CI-green Gemini 3.1 candidate may not deploy merely
+  because request validation succeeds. Paid activation remains fail-closed when
+  Google returns generic `429 RESOURCE_EXHAUSTED`, even with active linked
+  billing and no reported client rate-limit or overload signal. Keep staging AI
+  deterministic, preserve the Railway-only credential restriction, and require
+  a new exact-SHA evaluation after provider capacity becomes usable.

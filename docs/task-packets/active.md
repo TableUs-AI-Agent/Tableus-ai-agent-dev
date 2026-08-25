@@ -4,18 +4,20 @@
 
 Implementation continues locally on `codex/gemini-staging-validation`, branched
 from merged `origin/main` at `6606771383b2a991f3a787dbc612ecc710d31195`.
-Candidates `90691b1c53812fc140da465e1b5e362c781f1139` and
-`e89d5c4f1664ab0ec0e7d5bec3dd196439283aeb` passed public CI. Their approved
+Candidates `90691b1c53812fc140da465e1b5e362c781f1139`,
+`e89d5c4f1664ab0ec0e7d5bec3dd196439283aeb`, and
+`82c1d45f010a686df8802ab4b8a502731aa1be6f` passed public CI. Their approved
 live checks consumed zero reported tokens and `$0`: the first exposed unsupported
-wire-schema keywords, while the second proved the restricted credential,
-billing tier, project import, and model catalog but received `404` because
-Google no longer grants new projects generation access to Gemini 2.5
-Flash-Lite. The owner approved Google's recommended stable replacement,
-`gemini-3.1-flash-lite`, with its current token pricing and minimal-thinking
-configuration. The replacement implementation, focused backend checks, frozen
-deterministic evaluator, contract regeneration, and cumulative `make ready`
-now pass locally. It is ready to freeze as a new exact-SHA candidate. Staging AI
-remains deterministic, and no deployment or returning code was sent.
+wire-schema keywords; the second proved the restricted credential, billing
+tier, project import, and model catalog but received `404` for Gemini 2.5
+Flash-Lite; and the third isolated an additional Gemini 3.1 rejection of
+Pydantic `additionalProperties` metadata. A sanitized compatibility probe proved
+that removing it and non-semantic titles advances the request past schema
+validation. Plain and corrected-schema generation then returned generic
+`429 RESOURCE_EXHAUSTED` despite active linked billing. The compatibility fix is
+implemented locally and retains strict Pydantic validation after parsing.
+Staging AI remains deterministic, no deployment or returning code was sent, and
+a new exact-SHA candidate plus explicit live-evaluation gate are required.
 
 ## Objective
 
@@ -58,12 +60,14 @@ budgeted, sanitized live evaluation before enabling Gemini on staging.
 
 ## External gate
 
-The isolated project, billing, budget alerts, and Gemini-only Railway-restricted
-authorization key are already provisioned. After the replacement candidate
-passes `make ready`, request one explicit approval covering its exact-SHA public
-push, the paid live evaluation, Railway/Vercel deployment, and one returning
-code for each of two existing approved accounts. Leave staging live only if the
-sanitized evaluation and two-user journey pass.
+The isolated project, active linked billing, budget alerts, and Gemini-only
+Railway-restricted authorization key are already provisioned. After the
+schema-compatibility replacement candidate passes `make ready`, request one
+explicit approval covering its exact-SHA public push and a later paid live
+evaluation after Google reports usable inference capacity. Railway/Vercel
+deployment and one returning code for each evidence account remain conditional
+on a fully passing evaluation. Leave staging live only if the sanitized
+evaluation and two-user journey pass.
 
 ## Boundaries
 

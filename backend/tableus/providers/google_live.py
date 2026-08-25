@@ -425,7 +425,13 @@ class LiveGeminiProvider:
         r"\b(?:allergy[- ]?safe|guaranteed|free from allergens|medically safe)\b",
         re.IGNORECASE,
     )
-    _unsupported_schema_keywords = frozenset({"minLength", "maxLength", "pattern"})
+    # Gemini's generateContent structured-output endpoint rejects Pydantic's
+    # strict-object metadata even though TableUs still enforces it locally.
+    # Keep the wire schema to the provider-supported subset and validate the
+    # response with the original strict Pydantic model in `_parse`.
+    _unsupported_schema_keywords = frozenset(
+        {"additionalProperties", "maxLength", "minLength", "pattern", "title"}
+    )
 
     def __init__(self, api_key: str, model: str):
         if not api_key:

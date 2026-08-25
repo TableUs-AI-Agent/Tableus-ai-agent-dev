@@ -29,8 +29,12 @@ retained in-memory join intent, and rotated-link rejection passed on Android and
   proved the cloud configuration but found that new projects cannot generate
   with Gemini 2.5 Flash-Lite. The owner approved Google's stable replacement,
   pinned `gemini-3.1-flash-lite`, including its current cost accounting and
-  minimal-thinking behavior. The replacement exact-SHA paid evaluation and
-  staging deployment remain explicit gates.
+  minimal-thinking behavior. Exact candidate
+  `82c1d45f010a686df8802ab4b8a502731aa1be6f` passed public CI, but its live gate
+  exposed unsupported strict-object wire metadata and then a generic Google
+  `429 RESOURCE_EXHAUSTED` before inference. The compatibility fix is local;
+  another exact-SHA paid evaluation remains blocked on usable provider capacity,
+  and staging deployment remains conditional on that evaluation passing.
 
 The active gate sequence and required owner inputs are maintained in
 `docs/release-runbook.md`.

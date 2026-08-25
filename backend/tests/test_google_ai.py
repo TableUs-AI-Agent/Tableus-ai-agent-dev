@@ -98,7 +98,8 @@ async def test_recommendations_alias_places_and_record_token_cost() -> None:
     assert '"pattern"' not in wire_schema
     assert '"minLength"' not in wire_schema
     assert '"maxLength"' not in wire_schema
-    assert '"additionalProperties": false' in wire_schema
+    assert '"additionalProperties"' not in wire_schema
+    assert '"title"' not in wire_schema
     assert usage == [
         AiCallUsage(
             operation="recommend",
@@ -236,7 +237,8 @@ def test_provider_schema_uses_supported_keywords(output_schema) -> None:
     assert '"pattern"' not in serialized
     assert '"minLength"' not in serialized
     assert '"maxLength"' not in serialized
-    assert schema["additionalProperties"] is False
+    assert '"additionalProperties"' not in serialized
+    assert '"title"' not in serialized
 
 
 def test_provider_schema_keeps_strict_local_validation() -> None:

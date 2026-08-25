@@ -170,22 +170,28 @@
   database-backed rolling `$4` staging ceiling. Existing provider-usage columns
   are reused, so no migration is required. The frozen deterministic evaluator,
   checkpointed `$0.25` live evaluator, exact-SHA two-user staging runner,
-  privacy disclosures, and generated client contract are updated. Exact SHA
-  `90691b1c53812fc140da465e1b5e362c781f1139` and
-  `e89d5c4f1664ab0ec0e7d5bec3dd196439283aeb` passed public CI. Live validation
-  against both candidates stopped before inference and consumed zero reported
-  tokens and `$0`. The first exposed unsupported generated `minLength`,
-  `maxLength`, and `pattern` wire keywords; the provider removes only those
-  keywords and retains strict Pydantic validation after parsing. The second
+  privacy disclosures, and generated client contract are updated. Exact SHAs
+  `90691b1c53812fc140da465e1b5e362c781f1139`,
+  `e89d5c4f1664ab0ec0e7d5bec3dd196439283aeb`, and
+  `82c1d45f010a686df8802ab4b8a502731aa1be6f` passed public CI. Live validation
+  against all three candidates stopped before inference and consumed zero
+  reported tokens and `$0`. The first exposed unsupported generated
+  `minLength`, `maxLength`, and `pattern` wire keywords. The third proved that
+  Gemini 3.1 also rejects Pydantic's `additionalProperties` wire metadata;
+  removing it and non-semantic `title` metadata advances the same request from
+  `400` schema rejection to provider quota handling while strict Pydantic
+  validation remains local. The second
   proved project import, Tier 1 billing, credential authorization, IP
   restrictions, and catalog visibility, but new-project generation returned
   `404` for Gemini 2.5 Flash-Lite. Google identifies Gemini 3.1 Flash-Lite as the
   stable replacement. The owner approved that model at `$0.25` per million input
-  tokens and `$1.50` per million output/thinking tokens. A new exact-SHA candidate
-  and paid-evaluation namespace are required before deployment. Focused backend
-  checks, the frozen deterministic evaluator, contract regeneration, and
-  cumulative `make ready` pass locally for the replacement. Staging remains on
-  deterministic AI and no returning-sign-in messages were sent.
+  tokens and `$1.50` per million output/thinking tokens. Plain and corrected-
+  schema 3.1 requests currently reach Google but return generic
+  `429 RESOURCE_EXHAUSTED`; billing is confirmed active and linked, and the
+  response is not reported as overload or a client rate-limit violation. A new
+  exact-SHA candidate and paid-evaluation namespace are required before another
+  live attempt or deployment. Staging remains on deterministic AI and no
+  returning-sign-in messages were sent.
 
 ## External dependencies not provisioned in source
 
@@ -348,12 +354,14 @@
   city result without `postalAddress.regionCode`; Google aggregate telemetry
   confirmed a populated `200`, and no raw artifact was retained. The corrected
   rerun passed end to end with policy-safe persistence and sanitized evidence,
-  and pull request #3 is merged. The first pinned-model Gemini candidate passed
+  and pull request #3 is merged. Three pinned-model Gemini candidates passed
   public CI, and the isolated billed AI project, budget, and final restricted
-  authorization key are provisioned. Its live evaluator stopped on unsupported
-  provider wire-schema keywords before inference at zero reported cost. A local
-  compatibility correction passes focused checks and cumulative `make ready`
-  locally; its replacement exact-SHA push/evaluation, Railway/Vercel deployment,
-  and sanitized two-user live-AI evidence remain explicit external gates.
+  authorization key are provisioned. Their live evaluators stopped before
+  inference at zero reported cost: first on generated schema keywords, then on
+  unavailable Gemini 2.5 generation, and finally on Gemini 3.1 strict-object
+  metadata followed by generic `429 RESOURCE_EXHAUSTED`. The key is restored to
+  Railway-only restrictions and staging AI remains deterministic. A new exact-
+  SHA push/evaluation, Railway/Vercel deployment, and sanitized two-user live-AI
+  evidence remain explicit external gates.
 - Obtain explicit approval before any production migration, deployment, EAS
   build/submission, paid live-AI evaluation, or cohort invitation.

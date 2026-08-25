@@ -404,6 +404,13 @@ Keep deterministic providers green while each integration is added:
    hash. Inspect only the sanitized aggregate report; never retain prompts,
    outputs, images, reviews, provider responses, Place IDs, or credentials. Do
    not raise the budget or weaken output validation to make a failure pass.
+   Candidate `82c1d45f010a686df8802ab4b8a502731aa1be6f` passed public CI but
+   failed this gate before inference: generated `additionalProperties` metadata
+   caused `400`, and a sanitized corrected-schema probe then received generic
+   `429 RESOURCE_EXHAUSTED` with active linked billing. The key was restored to
+   the three Railway addresses, staging stayed deterministic, and no deployment
+   or returning code followed. Retry only from a new exact-SHA checkpoint after
+   the compatibility fix passes `make ready` and Google inference is usable.
 5. Only after the live evaluator passes, set Railway staging to live AI with
    `GEMINI_MODEL=gemini-3.1-flash-lite`,
    `AI_RUNTIME_MAX_USD_30D=4.00`, and `LIVE_AI_MAX_USD=0.25`, deploy Railway and
