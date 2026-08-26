@@ -505,7 +505,76 @@ Keep deterministic providers green while each integration is added:
    payload retained. The preserved approved iOS session was sufficient; no new
    OTP was sent.
 
-## 7. Release decision
+## 7. Cumulative readiness candidate
+
+Before source freeze, the owner must confirm all three human-controlled items:
+
+1. Final terms and privacy text are accepted for closed-beta staging.
+2. Google's official attribution is visually acceptable on web, physical iOS,
+   and Android and remains adjacent to provider content.
+3. Test messages are delivered to both `support@table-us.com` and
+   `privacy@table-us.com`.
+
+Then run the deterministic gate, freeze the source commit, and require public CI
+at that exact SHA. After the single approved external gate, update the Supabase
+template to say “verification code”, deploy Railway and the Vercel staging
+Preview without moving production-facing aliases, and build sequentially:
+
+1. `test-ios`, then shut down and remove raw logs.
+2. ARM64 `test-android`, then shut down and remove raw logs.
+3. Apple-signed physical-device `readiness-ios`, then shut down build workers.
+4. ARM64 signed-APK `readiness-android`.
+
+Inspect production-shaped artifacts before installation:
+
+```bash
+make inspect-mobile-readiness PLATFORM=ios APP=<artifact> SHA=<source-sha> \
+  API_URL=<https-staging-api> SUPABASE_URL=<https-staging-supabase> \
+  LINK_HOST=links.table-us.com APPLE_TEAM_ID=<team-id> \
+  FORBIDDEN_ORIGINS=<production-origins>
+
+make inspect-mobile-readiness PLATFORM=android APP=<artifact> SHA=<source-sha> \
+  API_URL=<https-staging-api> SUPABASE_URL=<https-staging-supabase> \
+  LINK_HOST=links.table-us.com ANDROID_FINGERPRINT=<preview-fingerprint> \
+  FORBIDDEN_ORIGINS=<production-origins>
+```
+
+Run deterministic lifecycle and offline evidence with the existing `mobile-e2e`
+and `mobile-offline-e2e` commands. Run the production-shaped cross-client phases
+with `mobile-readiness-e2e`; use preserved approved sessions where possible and
+send at most one returning code per platform only when installation requires it.
+No email, code, private URL, share token, Place ID, restaurant content,
+coordinate, prompt, provider response, or raw native/Maestro log may survive.
+
+Assemble the already-sanitized summaries and validate one source SHA:
+
+```bash
+make cumulative-readiness-evidence API_URL=<https-staging-api> \
+  SHA=<source-sha> INPUT=<sanitized-input.json> EVIDENCE=<sanitized-output-dir>
+```
+
+The input must bind Railway, Vercel, web, both signed artifacts, deterministic
+mobile evidence, AASA/App Links, security results, policy/contact/legal
+attestations, and telemetry canaries to the source SHA. Commit only the accepted
+summary and sanitized screenshots as an evidence-only descendant. Opening and
+merging that pull request are separate approval gates.
+
+### Rollback matrix
+
+Brian Chei is the accountable rollback owner. Codex may execute approved steps
+but does not replace the human account owner.
+
+| Failure | Immediate action | Restore point |
+| --- | --- | --- |
+| Railway/API readiness, live provider, auth, or telemetry failure | Stop evidence; set the affected provider to deterministic or disable telemetry; redeploy only with approval. | Railway `bed50df4-5ced-465f-8492-a24147e8f663` is the prior observability deployment; use the latest independently validated API deployment recorded with the final candidate if newer. |
+| Vercel web, link manifest, or telemetry failure | Remove the staging alias from the failed Preview and reassign it to the prior validated Preview; do not move production domains. | Vercel `dpl_4M7eSvsht9UNB2wqmCjZ1pVUmHiD`. |
+| Signed mobile regression | Uninstall the readiness artifact and restore the prior inspected internal artifact; do not issue EAS Update across an incompatible runtime. | Latest prior exact-SHA signed link/telemetry artifact receipt in retained evidence. |
+| Credential integrity uncertainty | Disable the affected integration and revoke/rotate only the scoped credential with explicit approval. | Deterministic providers and telemetry disabled. |
+| Restricted data enters evidence or telemetry | Stop collection, disable telemetry if involved, quarantine the material, and request approval before destructive cleanup or credential rotation. | No evidence is accepted until a fresh sanitized run passes. |
+
+No database rollback is part of this packet because it introduces no migration.
+
+## 8. Release decision
 
 The closed beta may advance only when deterministic CI, exact-SHA staging web,
 iOS, and Android evidence are green; the security/privacy checklist is signed;

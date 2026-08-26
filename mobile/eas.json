@@ -94,6 +94,32 @@
       },
       "android": { "buildType": "apk" }
     },
+    "readiness-ios": {
+      "extends": "preview",
+      "env": {
+        "EXPO_PUBLIC_LINK_HOST": "links.table-us.com",
+        "EXPO_PUBLIC_DEMO_MODE": "false",
+        "EXPO_PUBLIC_TELEMETRY_MODE": "staging",
+        "TABLEUS_LOCAL_E2E": "false",
+        "TABLEUS_AUTH_E2E": "false",
+        "TABLEUS_TELEMETRY_E2E": "false",
+        "TABLEUS_READINESS": "true"
+      }
+    },
+    "readiness-android": {
+      "extends": "preview",
+      "env": {
+        "EXPO_PUBLIC_LINK_HOST": "links.table-us.com",
+        "EXPO_PUBLIC_DEMO_MODE": "false",
+        "EXPO_PUBLIC_TELEMETRY_MODE": "staging",
+        "TABLEUS_LOCAL_E2E": "false",
+        "TABLEUS_AUTH_E2E": "false",
+        "TABLEUS_TELEMETRY_E2E": "false",
+        "TABLEUS_READINESS": "true",
+        "ORG_GRADLE_PROJECT_reactNativeArchitectures": "arm64-v8a"
+      },
+      "android": { "buildType": "apk" }
+    },
     "production": { "autoIncrement": true, "channel": "production", "environment": "production" }
   },
   "submit": {

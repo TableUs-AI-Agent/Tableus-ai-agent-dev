@@ -7,6 +7,7 @@ import { RefreshControl, ScrollView, Share, Text, View } from "react-native";
 
 import { Button, Card, ErrorText, Field } from "@/components/ui";
 import { MutationFeedback } from "@/components/mutation-feedback";
+import { GoogleMapsAttribution } from "@/components/google-maps-attribution";
 import { api } from "@/lib/api";
 import { createCanonicalJoinUrl } from "@/lib/links";
 import { OFFLINE_REFRESH_MESSAGE, refreshWhenOnline } from "@/lib/offline-refresh";
@@ -117,7 +118,7 @@ export default function PlanScreen() {
                 </View>
                 <Text selectable style={{ color: colors.muted }}>{candidate.place.cuisine} · {"$".repeat(candidate.place.price_level)} · {candidate.place.rating.toFixed(1)}</Text>
                 <Text selectable style={{ color: colors.muted, lineHeight: 21 }}>{candidate.reasoning}</Text>
-                {candidate.place.data_provider === "google_maps" ? <Text selectable style={{ color: colors.muted, fontSize: 12, fontWeight: "600" }}>Restaurant data provided by Google Maps</Text> : null}
+                {candidate.place.data_provider === "google_maps" ? <GoogleMapsAttribution /> : null}
                 {current.status === "voting" ? (
                   <Button
                     label={selectedIndex >= 0 ? `Remove ${candidate.place.name} from rank ${selectedIndex + 1}` : `Rank ${candidate.place.name}`}

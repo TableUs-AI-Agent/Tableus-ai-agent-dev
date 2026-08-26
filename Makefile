@@ -1,6 +1,6 @@
 SHELL := /bin/bash
 
-.PHONY: setup dev lint typecheck test build smoke mobile-e2e mobile-auth-e2e mobile-offline-e2e mobile-links-e2e maps-staging-e2e gemini-staging-e2e telemetry-staging-e2e local-mobile-build-receipt inspect-mobile-auth inspect-mobile-local-e2e inspect-mobile-links ready perf ai-eval ai-eval-live contract
+.PHONY: setup dev lint typecheck test build smoke mobile-e2e mobile-auth-e2e mobile-offline-e2e mobile-links-e2e mobile-readiness-e2e maps-staging-e2e gemini-staging-e2e telemetry-staging-e2e cumulative-readiness-evidence local-mobile-build-receipt inspect-mobile-auth inspect-mobile-local-e2e inspect-mobile-links inspect-mobile-readiness ready perf ai-eval ai-eval-live contract
 
 setup:
 	npm ci
@@ -65,6 +65,17 @@ mobile-links-e2e:
 	@test -n "$(EVIDENCE)" || (echo "EVIDENCE=<sanitized-output-directory> is required" && exit 2)
 	node scripts/mobile-links-e2e.mjs --platform "$(PLATFORM)" --device "$(DEVICE)" --app "$(APP)" --build-id "$(BUILD_ID)" --origin "$(ORIGIN)" --evidence "$(EVIDENCE)"
 
+mobile-readiness-e2e:
+	@test -n "$(PLATFORM)" || (echo "PLATFORM=ios or PLATFORM=android is required" && exit 2)
+	@test -n "$(DEVICE)" || (echo "DEVICE=<physical-ios-or-emulator-id> is required" && exit 2)
+	@test -n "$(APP)" || (echo "APP=<path-to-app-ipa-or-apk> is required" && exit 2)
+	@test -n "$(BUILD_ID)" || (echo "BUILD_ID=<local-build-id> is required" && exit 2)
+	@test -n "$(API_URL)" || (echo "API_URL=<HTTPS-staging-api> is required" && exit 2)
+	@test -n "$(SUPABASE_URL)" || (echo "SUPABASE_URL=<HTTPS-staging-supabase> is required" && exit 2)
+	@test -n "$(SHA)" || (echo "SHA=<exact-candidate-sha> is required" && exit 2)
+	@test -n "$(EVIDENCE)" || (echo "EVIDENCE=<sanitized-output-directory> is required" && exit 2)
+	node scripts/mobile-readiness-e2e.mjs --platform "$(PLATFORM)" --device "$(DEVICE)" --app "$(APP)" --build-id "$(BUILD_ID)" --api-url "$(API_URL)" --supabase-url "$(SUPABASE_URL)" --sha "$(SHA)" --evidence "$(EVIDENCE)" $(if $(APPLE_TEAM_ID),--apple-team-id "$(APPLE_TEAM_ID)",) $(if $(ANDROID_FINGERPRINT),--android-fingerprint "$(ANDROID_FINGERPRINT)",) $(if $(FORBIDDEN_ORIGINS),--forbidden-origins "$(FORBIDDEN_ORIGINS)",)
+
 maps-staging-e2e:
 	@test -n "$(API_URL)" || (echo "API_URL=<HTTPS-staging-api> is required" && exit 2)
 	@test -n "$(EVIDENCE)" || (echo "EVIDENCE=<sanitized-output-directory> is required" && exit 2)
@@ -81,6 +92,13 @@ telemetry-staging-e2e:
 	@test -n "$(SHA)" || (echo "SHA=<exact-candidate-sha> is required" && exit 2)
 	@test -n "$(EVIDENCE)" || (echo "EVIDENCE=<sanitized-output-directory> is required" && exit 2)
 	node scripts/telemetry-staging-e2e.mjs --api-url "$(API_URL)" --sha "$(SHA)" --evidence "$(EVIDENCE)"
+
+cumulative-readiness-evidence:
+	@test -n "$(API_URL)" || (echo "API_URL=<HTTPS-staging-api> is required" && exit 2)
+	@test -n "$(SHA)" || (echo "SHA=<exact-candidate-sha> is required" && exit 2)
+	@test -n "$(INPUT)" || (echo "INPUT=<sanitized-cumulative-input-json> is required" && exit 2)
+	@test -n "$(EVIDENCE)" || (echo "EVIDENCE=<sanitized-output-directory> is required" && exit 2)
+	node scripts/cumulative-readiness-evidence.mjs --api-url "$(API_URL)" --sha "$(SHA)" --input "$(INPUT)" --evidence "$(EVIDENCE)"
 
 local-mobile-build-receipt:
 	@test -n "$(PLATFORM)" || (echo "PLATFORM=ios or PLATFORM=android is required" && exit 2)
@@ -121,6 +139,15 @@ inspect-mobile-links:
 	@test -n "$(SUPABASE_URL)" || (echo "SUPABASE_URL=<HTTPS-staging-supabase> is required" && exit 2)
 	@test -n "$(LINK_HOST)" || (echo "LINK_HOST=links.table-us.com is required" && exit 2)
 	node scripts/inspect-mobile-links-artifact.mjs --platform "$(PLATFORM)" --artifact "$(APP)" --sha "$(SHA)" --api-url "$(API_URL)" --supabase-url "$(SUPABASE_URL)" --link-host "$(LINK_HOST)" $(if $(APPLE_TEAM_ID),--apple-team-id "$(APPLE_TEAM_ID)",) $(if $(ANDROID_FINGERPRINT),--android-fingerprint "$(ANDROID_FINGERPRINT)",) $(if $(FORBIDDEN_ORIGINS),--forbidden-origins "$(FORBIDDEN_ORIGINS)",)
+
+inspect-mobile-readiness:
+	@test -n "$(PLATFORM)" || (echo "PLATFORM=ios or PLATFORM=android is required" && exit 2)
+	@test -n "$(APP)" || (echo "APP=<path-to-app-ipa-or-apk> is required" && exit 2)
+	@test -n "$(SHA)" || (echo "SHA=<exact-candidate-sha> is required" && exit 2)
+	@test -n "$(API_URL)" || (echo "API_URL=<HTTPS-staging-api> is required" && exit 2)
+	@test -n "$(SUPABASE_URL)" || (echo "SUPABASE_URL=<HTTPS-staging-supabase> is required" && exit 2)
+	@test -n "$(LINK_HOST)" || (echo "LINK_HOST=links.table-us.com is required" && exit 2)
+	node scripts/inspect-mobile-readiness-artifact.mjs --platform "$(PLATFORM)" --artifact "$(APP)" --sha "$(SHA)" --api-url "$(API_URL)" --supabase-url "$(SUPABASE_URL)" --link-host "$(LINK_HOST)" $(if $(APPLE_TEAM_ID),--apple-team-id "$(APPLE_TEAM_ID)",) $(if $(ANDROID_FINGERPRINT),--android-fingerprint "$(ANDROID_FINGERPRINT)",) $(if $(FORBIDDEN_ORIGINS),--forbidden-origins "$(FORBIDDEN_ORIGINS)",)
 
 perf:
 	./scripts/perf-budget.sh

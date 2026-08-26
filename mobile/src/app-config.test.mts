@@ -4,7 +4,7 @@ import test from "node:test";
 
 import resolveExpoConfig from "../app.config.ts";
 
-function configFor(profile: string, flag = "true", authFlag = "false", apiUrl = "http://127.0.0.1:8000", linkHost = "links.table-us.com", telemetryFlag = "false", telemetryMode = "off") {
+function configFor(profile: string, flag = "true", authFlag = "false", apiUrl = "http://127.0.0.1:8000", linkHost = "links.table-us.com", telemetryFlag = "false", telemetryMode = "off", readinessFlag = "false") {
   const previousProfile = process.env.EAS_BUILD_PROFILE;
   const previousFlag = process.env.TABLEUS_LOCAL_E2E;
   const previousAuthFlag = process.env.TABLEUS_AUTH_E2E;
@@ -14,6 +14,7 @@ function configFor(profile: string, flag = "true", authFlag = "false", apiUrl = 
   const previousLinkHost = process.env.EXPO_PUBLIC_LINK_HOST;
   const previousTelemetryFlag = process.env.TABLEUS_TELEMETRY_E2E;
   const previousTelemetryMode = process.env.EXPO_PUBLIC_TELEMETRY_MODE;
+  const previousReadinessFlag = process.env.TABLEUS_READINESS;
   process.env.EAS_BUILD_PROFILE = profile;
   process.env.TABLEUS_LOCAL_E2E = flag;
   process.env.TABLEUS_AUTH_E2E = authFlag;
@@ -23,6 +24,7 @@ function configFor(profile: string, flag = "true", authFlag = "false", apiUrl = 
   process.env.EXPO_PUBLIC_LINK_HOST = linkHost;
   process.env.TABLEUS_TELEMETRY_E2E = telemetryFlag;
   process.env.EXPO_PUBLIC_TELEMETRY_MODE = telemetryMode;
+  process.env.TABLEUS_READINESS = readinessFlag;
   try {
     return resolveExpoConfig({ config: {} } as Parameters<typeof resolveExpoConfig>[0]);
   } finally {
@@ -44,6 +46,8 @@ function configFor(profile: string, flag = "true", authFlag = "false", apiUrl = 
     else process.env.TABLEUS_TELEMETRY_E2E = previousTelemetryFlag;
     if (previousTelemetryMode === undefined) delete process.env.EXPO_PUBLIC_TELEMETRY_MODE;
     else process.env.EXPO_PUBLIC_TELEMETRY_MODE = previousTelemetryMode;
+    if (previousReadinessFlag === undefined) delete process.env.TABLEUS_READINESS;
+    else process.env.TABLEUS_READINESS = previousReadinessFlag;
   }
 }
 
@@ -158,4 +162,42 @@ test("telemetry test profiles inherit preview without demo or local controls", (
     assert.equal(build.env.EXPO_PUBLIC_DEMO_USER_ID, undefined);
     assert.equal(build.env.EXPO_PUBLIC_API_URL, undefined);
   }
+});
+
+test("readiness is enabled only for production-shaped readiness profiles", () => {
+  for (const profile of ["readiness-ios", "readiness-android"]) {
+    const config = configFor(profile, "false", "false", "https://tableus-api-staging.example", "links.table-us.com", "false", "staging", "true");
+    assert.equal(config.extra?.readiness, true);
+    assert.equal(config.extra?.localE2E, false);
+    assert.equal(config.extra?.authE2E, false);
+    assert.equal(config.extra?.telemetryE2E, false);
+    assert.equal(config.ios?.infoPlist, undefined);
+    assert.equal(buildProperties(config)?.android.usesCleartextTraffic, false);
+  }
+  for (const profile of ["development", "preview", "production", "test-ios", "auth-test-ios", "telemetry-test-ios", "links-test-ios"]) {
+    assert.equal(configFor(profile, "false", "false", "https://tableus-api-staging.example", "links.table-us.com", "false", "staging", "true").extra?.readiness, false);
+  }
+  assert.equal(configFor("readiness-ios", "false", "false", "http://127.0.0.1:8000", "links.table-us.com", "false", "staging", "true").extra?.readiness, false);
+  assert.equal(configFor("readiness-ios", "false", "false", "https://tableus-api-staging.example", "links.table-us.com", "false", "off", "true").extra?.readiness, false);
+});
+
+test("readiness profiles inherit preview without any test controls", () => {
+  const eas = JSON.parse(readFileSync(new URL("../eas.json", import.meta.url), "utf8"));
+  for (const profile of ["readiness-ios", "readiness-android"]) {
+    const build = eas.build[profile];
+    assert.equal(build.extends, "preview");
+    assert.equal(build.env.EXPO_PUBLIC_LINK_HOST, "links.table-us.com");
+    assert.equal(build.env.EXPO_PUBLIC_DEMO_MODE, "false");
+    assert.equal(build.env.EXPO_PUBLIC_TELEMETRY_MODE, "staging");
+    assert.equal(build.env.TABLEUS_LOCAL_E2E, "false");
+    assert.equal(build.env.TABLEUS_AUTH_E2E, "false");
+    assert.equal(build.env.TABLEUS_TELEMETRY_E2E, "false");
+    assert.equal(build.env.TABLEUS_READINESS, "true");
+    assert.equal(build.env.EXPO_PUBLIC_DEMO_USER_ID, undefined);
+    assert.equal(build.env.EXPO_PUBLIC_DEMO_IDENTITIES, undefined);
+    assert.equal(build.env.EXPO_PUBLIC_API_URL, undefined);
+  }
+  assert.equal(eas.build["readiness-ios"].ios?.simulator, undefined);
+  assert.equal(eas.build["readiness-android"].android.buildType, "apk");
+  assert.equal(eas.build["readiness-android"].env.ORG_GRADLE_PROJECT_reactNativeArchitectures, "arm64-v8a");
 });

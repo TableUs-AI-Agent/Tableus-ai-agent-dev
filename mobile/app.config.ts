@@ -6,6 +6,7 @@ export default ({ config }: ConfigContext): ExpoConfig => {
   const testBuildProfile = process.env.EAS_BUILD_PROFILE === "test-ios" || process.env.EAS_BUILD_PROFILE === "test-android";
   const authTestProfile = process.env.EAS_BUILD_PROFILE === "auth-test-ios" || process.env.EAS_BUILD_PROFILE === "auth-test-android";
   const telemetryTestProfile = process.env.EAS_BUILD_PROFILE === "telemetry-test-ios" || process.env.EAS_BUILD_PROFILE === "telemetry-test-android";
+  const readinessProfile = process.env.EAS_BUILD_PROFILE === "readiness-ios" || process.env.EAS_BUILD_PROFILE === "readiness-android";
   const localE2E = testBuildProfile && process.env.TABLEUS_LOCAL_E2E === "true";
   const apiUrl = process.env.EXPO_PUBLIC_API_URL ?? "";
   const sourceSha = process.env.EAS_BUILD_GIT_COMMIT_HASH ?? process.env.EXPO_PUBLIC_SOURCE_SHA;
@@ -18,6 +19,14 @@ export default ({ config }: ConfigContext): ExpoConfig => {
     && process.env.EXPO_PUBLIC_TELEMETRY_MODE === "staging"
     && apiUrl.startsWith("https://")
     && process.env.EXPO_PUBLIC_DEMO_MODE !== "true";
+  const readiness = readinessProfile
+    && process.env.TABLEUS_READINESS === "true"
+    && apiUrl.startsWith("https://")
+    && process.env.EXPO_PUBLIC_DEMO_MODE !== "true"
+    && process.env.EXPO_PUBLIC_TELEMETRY_MODE === "staging"
+    && !localE2E
+    && !authE2E
+    && !telemetryE2E;
   return {
     ...config,
     name: "TableUs",
@@ -58,6 +67,7 @@ export default ({ config }: ConfigContext): ExpoConfig => {
     plugins: [
       "expo-router",
       "expo-secure-store",
+      "expo-sharing",
       ["expo-build-properties", { android: { usesCleartextTraffic: localE2E } }],
       [
         "expo-image-picker",
@@ -70,6 +80,15 @@ export default ({ config }: ConfigContext): ExpoConfig => {
       "@sentry/react-native/expo",
     ],
     experiments: { typedRoutes: true, reactCompiler: true },
-    extra: { localE2E, authE2E, telemetryE2E, sourceSha, eas: projectId ? { projectId } : undefined },
+    extra: {
+      localE2E,
+      authE2E,
+      telemetryE2E,
+      readiness,
+      telemetryMode: process.env.EXPO_PUBLIC_TELEMETRY_MODE ?? "off",
+      demoMode: process.env.EXPO_PUBLIC_DEMO_MODE === "true",
+      sourceSha,
+      eas: projectId ? { projectId } : undefined,
+    },
   };
 };

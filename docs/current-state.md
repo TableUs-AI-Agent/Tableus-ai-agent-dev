@@ -224,6 +224,29 @@
   grounded candidates, policy-safe candidate persistence, and aggregate token
   and cost accounting. Staging now runs live Places and live Gemini.
 
+- Closed-beta cumulative readiness implementation is active from merged baseline
+  `e1184eca9b73e1a9f26d1007ab543df9d54c7124`. Shared public configuration now
+  defines `support@table-us.com` and `privacy@table-us.com`; web/mobile terms and
+  privacy notices incorporate the Google Maps Platform Terms and Google Privacy
+  Policy while retaining existing provider, telemetry, retention, export, and
+  deletion disclosures. Live Google content now uses Google's official
+  unmodified attribution SVG with an accessible label in the same content
+  container. The committed files are guarded against modification by SHA-256.
+- Expo remains on SDK 57 and React Native 0.86.2. Compatible Expo core, Router,
+  Metro, build-properties, image-picker, linking, SecureStore, sharing, and
+  Updates patches are applied. React and React DOM 19.2.3 are pinned at the
+  monorepo root to make the native graph deterministic; the Next.js workspace
+  retains 19.2.4 locally. Expo Doctor passes 21/21 and npm reports zero critical
+  or high findings. The remaining 12 moderate findings collapse to Expo build
+  tooling's `xcode -> uuid@7` path and have no shipped runtime call path; the
+  exception expires before production or 2026-09-30, whichever comes first.
+- `readiness-ios` and `readiness-android` are production-shaped staging profiles:
+  Supabase auth, HTTPS staging API, canonical links, live server-side providers,
+  and staging telemetry, with no demo, loopback, cleartext, local/auth/telemetry
+  E2E, service-role, or production configuration. Exact-SHA artifact inspection,
+  guided device evidence, and a cumulative sanitized evidence validator are
+  implemented. External deployments/builds and owner attestations remain gated.
+
 ## External dependencies not provisioned in source
 
 - Supabase staging client environment wiring. The `TableUs Staging` project is

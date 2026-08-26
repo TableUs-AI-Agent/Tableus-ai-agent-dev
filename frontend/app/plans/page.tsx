@@ -7,6 +7,7 @@ import { useState } from "react";
 
 import { v1Api } from "../lib/v1-api";
 import { createCanonicalJoinUrl } from "../lib/links";
+import { GoogleMapsAttribution } from "../components/google-maps-attribution";
 
 export default function PlansPage() {
   const queryClient = useQueryClient();
@@ -46,7 +47,7 @@ export default function PlansPage() {
           <input aria-label="City, neighborhood, or ZIP code" className="min-w-0 flex-1 rounded-2xl border border-[var(--border)] bg-white p-4" value={locationInput} onChange={(event) => { setLocationInput(event.target.value); setSelectedLocation(null); resolve.reset(); }} placeholder="City, neighborhood, or ZIP code" />
           <button className="rounded-2xl border border-[var(--border)] bg-white px-6 py-4 font-semibold disabled:opacity-50" disabled={!locationInput.trim() || resolve.isPending} onClick={() => resolve.mutate()}>{resolve.isPending ? "Finding…" : "Find location"}</button>
         </div>
-        {selectedLocation ? <div aria-live="polite" className="rounded-2xl border border-[var(--border)] bg-white p-4"><p className="font-semibold">{selectedLocation.label}</p><p className="mt-1 text-xs font-semibold text-[var(--muted-foreground)]">Google Maps</p></div> : null}
+        {selectedLocation ? <div aria-live="polite" className="rounded-2xl border border-[var(--border)] bg-white p-4"><p className="font-semibold">{selectedLocation.label}</p><GoogleMapsAttribution className="mt-1" /></div> : null}
         <button className="rounded-2xl bg-[var(--accent)] px-6 py-4 font-semibold text-white disabled:opacity-50" disabled={!title.trim() || !selectedLocation || create.isPending} onClick={() => create.mutate()}>{create.isPending ? "Creating…" : "Create plan"}</button>
       </section>
       {shareUrl ? <section className="glass rounded-[2rem] p-6"><p className="font-semibold">Private join link</p><p className="mt-2 break-all text-sm text-[var(--muted-foreground)]">{shareUrl}</p><button onClick={() => navigator.clipboard.writeText(shareUrl)} className="mt-4 rounded-2xl border border-[var(--border)] bg-white px-5 py-3 font-semibold">Copy link</button></section> : null}

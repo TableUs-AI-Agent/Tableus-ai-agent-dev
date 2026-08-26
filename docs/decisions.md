@@ -222,3 +222,26 @@
   identity or a headed browser and must verify both a successful ingestion
   response and the aggregate exact-release event. Disabling bot filtering or
   injecting a provider event directly is not acceptable product evidence.
+- **2026-08-26:** Closed-beta public support and privacy contacts are
+  `support@table-us.com` and `privacy@table-us.com`, exported from the shared
+  platform-neutral domain package. Google provider content uses Google's
+  unmodified Maps attribution asset in the same visual container. The exact
+  normal-weight `Google Maps` fallback is reserved for genuinely constrained
+  layouts and web fallback text must use `translate="no"`.
+- **2026-08-26:** The cumulative readiness candidate stays on Expo SDK 57 and
+  React Native 0.86.2. Patch releases are resolved with Expo tooling, while the
+  monorepo pins React/React DOM 19.2.3 at the root so native tests and Expo Doctor
+  see one native-compatible copy; the web workspace retains 19.2.4 locally.
+  Unsupported Expo downgrades, forced audit rewrites, and SDK upgrades are not
+  acceptable security remediations inside this packet.
+- **2026-08-26:** Readiness mobile profiles are production-shaped but staging-
+  only. They use Supabase auth, HTTPS staging, canonical verified links, staging
+  telemetry, and live server-side providers; they compile no demo, loopback,
+  cleartext, service-role, or E2E controls. Production/store configuration and
+  signing remain separate gates.
+- **2026-08-26:** Brian Chei, as repository and cloud account owner, is the
+  accountable rollback owner. Codex may execute only explicitly approved
+  rollback actions. Because this packet has no migration, rollback restores the
+  prior validated Railway/Vercel deployments, deterministic provider modes,
+  disabled telemetry when necessary, and prior signed internal artifacts rather
+  than applying a database rollback.

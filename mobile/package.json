@@ -3,6 +3,15 @@
   "version": "0.2.0",
   "private": true,
   "main": "expo-router/entry",
+  "expo": {
+    "install": {
+      "exclude": [
+        "jest",
+        "jest-expo",
+        "react-native"
+      ]
+    }
+  },
   "scripts": {
     "start": "expo start",
     "ios": "expo start --ios",
@@ -21,18 +30,18 @@
     "@tableus/api-client": "*",
     "@tableus/domain": "*",
     "@tanstack/react-query": "^5.101.4",
-    "expo": "~57.0.13",
-    "expo-build-properties": "~57.0.13",
+    "expo": "~57.0.17",
+    "expo-build-properties": "~57.0.15",
     "expo-constants": "~57.0.11",
     "expo-file-system": "~57.0.3",
     "expo-image": "~57.0.3",
-    "expo-image-picker": "~57.0.2",
-    "expo-linking": "~57.0.6",
-    "expo-router": "~57.0.13",
-    "expo-secure-store": "~57.0.1",
-    "expo-sharing": "~57.0.12",
+    "expo-image-picker": "~57.0.14",
+    "expo-linking": "~57.0.8",
+    "expo-router": "~57.0.17",
+    "expo-secure-store": "~57.0.2",
+    "expo-sharing": "~57.0.16",
     "expo-status-bar": "~57.0.1",
-    "expo-updates": "~57.0.16",
+    "expo-updates": "~57.0.18",
     "posthog-react-native": "^4.63.2",
     "react": "19.2.3",
     "react-dom": "19.2.3",
@@ -49,7 +58,7 @@
     "@testing-library/react-native": "14.0.1",
     "@types/react": "~19.2.2",
     "eslint": "^9.39.2",
-    "eslint-config-expo": "~57.0.1",
+    "eslint-config-expo": "~57.0.2",
     "jest": "30.4.2",
     "jest-environment-node": "30.4.1",
     "jest-expo": "57.0.4",
