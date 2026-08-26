@@ -18,6 +18,9 @@ def production_settings(**overrides) -> Settings:
         "gemini_api_key": "gemini-test-key",
         "google_maps_api_key": "maps-test-key",
         "allowed_origins": "https://tableus.app",
+        "tableus_telemetry_mode": "production",
+        "sentry_dsn": "https://public@example.ingest.sentry.io/1",
+        "posthog_key": "phc_test",
     }
     values.update(overrides)
     return Settings(_env_file=None, **values)
@@ -89,3 +92,21 @@ def test_gemini_model_and_spend_ceilings_are_pinned() -> None:
         Settings(_env_file=None, live_ai_max_usd=0.26)
     with pytest.raises(ValidationError):
         Settings(_env_file=None, ai_runtime_max_usd_30d=4.01)
+
+
+def test_telemetry_modes_are_fail_closed_by_environment() -> None:
+    assert Settings(_env_file=None).tableus_telemetry_mode == "off"
+    assert Settings(
+        _env_file=None,
+        environment="staging",
+        tableus_telemetry_mode="staging",
+    ).tableus_telemetry_mode == "staging"
+    with pytest.raises(ValidationError, match="Staging telemetry"):
+        Settings(_env_file=None, tableus_telemetry_mode="staging")
+    with pytest.raises(ValidationError, match="Production telemetry"):
+        Settings(_env_file=None, tableus_telemetry_mode="production")
+
+
+def test_production_requires_telemetry_credentials() -> None:
+    with pytest.raises(ValidationError, match="production error reporting"):
+        production_settings(posthog_key="")

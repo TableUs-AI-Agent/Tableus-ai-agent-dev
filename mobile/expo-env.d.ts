@@ -12,5 +12,8 @@ declare namespace NodeJS {
     EXPO_PUBLIC_SENTRY_DSN?: string;
     EXPO_PUBLIC_POSTHOG_KEY?: string;
     EXPO_PUBLIC_POSTHOG_HOST?: string;
+    EXPO_PUBLIC_TELEMETRY_MODE?: string;
+    EXPO_PUBLIC_SOURCE_SHA?: string;
+    TABLEUS_TELEMETRY_E2E?: string;
   }
 }

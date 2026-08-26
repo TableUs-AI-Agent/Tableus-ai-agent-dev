@@ -8,9 +8,20 @@ import { ConnectivityBanner } from "@/components/connectivity-banner";
 import { AppProviders } from "@/providers/app-providers";
 import { AuthProvider, useAuth } from "@/providers/auth-provider";
 import { colors } from "@/theme";
+import { sanitizeSentryEvent } from "@tableus/domain";
 
-if (process.env.EXPO_PUBLIC_SENTRY_DSN) {
-  Sentry.init({ dsn: process.env.EXPO_PUBLIC_SENTRY_DSN, sendDefaultPii: false });
+const telemetryMode = process.env.EXPO_PUBLIC_TELEMETRY_MODE;
+if ((telemetryMode === "staging" || telemetryMode === "production") && process.env.EXPO_PUBLIC_SENTRY_DSN) {
+  Sentry.init({
+    dsn: process.env.EXPO_PUBLIC_SENTRY_DSN,
+    environment: telemetryMode,
+    release: process.env.EXPO_PUBLIC_SOURCE_SHA,
+    sendDefaultPii: false,
+    tracesSampleRate: 0,
+    profilesSampleRate: 0,
+    maxBreadcrumbs: 0,
+    beforeSend: (event) => sanitizeSentryEvent(event),
+  });
 }
 
 function RootNavigator() {
@@ -28,6 +39,7 @@ function RootNavigator() {
         <Stack.Screen name="e2e/identity" options={{ title: "Local E2E identity" }} />
         <Stack.Screen name="e2e/connectivity" options={{ title: "Local connectivity" }} />
         <Stack.Screen name="e2e/auth" options={{ title: "Session check" }} />
+        <Stack.Screen name="e2e/telemetry" options={{ title: "Telemetry check" }} />
         <Stack.Screen name="privacy" options={{ title: "Privacy" }} />
         <Stack.Screen name="terms" options={{ title: "Terms" }} />
         <Stack.Protected guard={auth.approved}>

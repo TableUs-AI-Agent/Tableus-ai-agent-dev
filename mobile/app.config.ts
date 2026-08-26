@@ -5,11 +5,17 @@ export default ({ config }: ConfigContext): ExpoConfig => {
   const linkHost = process.env.EXPO_PUBLIC_LINK_HOST ?? "links.table-us.com";
   const testBuildProfile = process.env.EAS_BUILD_PROFILE === "test-ios" || process.env.EAS_BUILD_PROFILE === "test-android";
   const authTestProfile = process.env.EAS_BUILD_PROFILE === "auth-test-ios" || process.env.EAS_BUILD_PROFILE === "auth-test-android";
+  const telemetryTestProfile = process.env.EAS_BUILD_PROFILE === "telemetry-test-ios" || process.env.EAS_BUILD_PROFILE === "telemetry-test-android";
   const localE2E = testBuildProfile && process.env.TABLEUS_LOCAL_E2E === "true";
   const apiUrl = process.env.EXPO_PUBLIC_API_URL ?? "";
   const sourceSha = process.env.EAS_BUILD_GIT_COMMIT_HASH ?? process.env.EXPO_PUBLIC_SOURCE_SHA;
   const authE2E = authTestProfile
     && process.env.TABLEUS_AUTH_E2E === "true"
+    && apiUrl.startsWith("https://")
+    && process.env.EXPO_PUBLIC_DEMO_MODE !== "true";
+  const telemetryE2E = telemetryTestProfile
+    && process.env.TABLEUS_TELEMETRY_E2E === "true"
+    && process.env.EXPO_PUBLIC_TELEMETRY_MODE === "staging"
     && apiUrl.startsWith("https://")
     && process.env.EXPO_PUBLIC_DEMO_MODE !== "true";
   return {
@@ -64,6 +70,6 @@ export default ({ config }: ConfigContext): ExpoConfig => {
       "@sentry/react-native/expo",
     ],
     experiments: { typedRoutes: true, reactCompiler: true },
-    extra: { localE2E, authE2E, sourceSha, eas: projectId ? { projectId } : undefined },
+    extra: { localE2E, authE2E, telemetryE2E, sourceSha, eas: projectId ? { projectId } : undefined },
   };
 };

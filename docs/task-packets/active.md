@@ -1,71 +1,66 @@
-# Active packet: Gemini Enterprise Agent Platform staging validation
+# Active packet: privacy-safe observability staging validation
 
 ## Status
 
-Completed on `codex/gemini-agent-platform` at exact candidate
-`2eb428a05913c60dd1af1ae59fdd79fb233c5ede`. Public CI run `32915965276`
-passed. The frozen six-case Agent Platform evaluation passed 6/6 with six total
-attempts for `$0.0018905`. Railway deployment
-`a1030828-a505-417e-8285-c2b49dbbb39c` and Vercel deployment
-`dpl_Ad4H9FqVAQJviSkP2KYTKWMkKxbt` are pinned to the exact SHA. Sanitized
-two-user staging evidence passed with live Places and live Gemini, four distinct
-candidates, policy-safe candidate rows, and aggregate-only usage accounting.
-The active service-account-bound authorization key is limited to
-`aiplatform.googleapis.com` and Railway's three static egress addresses; the
-superseded Developer API key is revoked.
+Complete in staging at exact candidate
+`4920d99b11b06c4e0aa1c4afc3f91763bb53ee1c`. Railway deployment
+`bed50df4-5ced-465f-8492-a24147e8f663` and Vercel deployment
+`dpl_4M7eSvsht9UNB2wqmCjZ1pVUmHiD` are pinned to the candidate. Inspected,
+memory-bounded local iOS and Android telemetry-test artifacts emitted sanitized
+canaries, the preserved approved iOS session exercised the authenticated API
+canary without a new OTP, and aggregate verification found one exact-release
+issue in each Sentry project plus all four PostHog platforms. Sanitized evidence
+is in `docs/evidence/4920d99/observability/`. Earlier candidates and incomplete
+evidence remain superseded. Public merge remains a separate explicit gate.
 
 ## Objective
 
-Run recommendation, ephemeral food-photo analysis, and taste-summary generation
-through Gemini Enterprise Agent Platform with pinned `gemini-3.1-flash-lite`,
-then prove them with a frozen, budgeted, sanitized live evaluation before
-enabling Gemini on staging.
+Make staging failures diagnosable and closed-beta behavior measurable without
+creating telemetry identities or sending private dining data. Use three isolated
+Sentry staging projects (API, web, mobile) for sanitized errors only and one
+isolated US PostHog staging project for anonymous allowlisted events.
 
 ## Deliverables
 
-- Exact `google-genai==1.75.0` dependency, pinned model configuration, current
-  Agent Platform transport, current token-cost accounting, and minimal Gemini 3
-  thinking level.
-- Strict structured outputs, request-local candidate aliases, bounded inputs,
-  output privacy/safety guards, 12-second timeouts, typed errors, and at most
-  three TableUs-owned attempts with no provider fallback.
-- Shared AI usage recording with token totals, estimated cost, error outcomes,
-  five-per-user/30-global minute limits, and a database-backed rolling `$4`
-  staging ceiling with one-process reservations.
-- Metadata-stripped, maximum-1600-pixel ephemeral food images and a maximum of
-  25/12,000-character review inputs.
-- Frozen deterministic evaluation plus checkpointed `make ai-eval-live` under a
-  `$0.25` ceiling and sanitized `make gemini-staging-e2e` two-user evidence. The
-  checkpoint and readiness evidence bind `agent-platform`, preventing accidental
-  standalone Developer API validation.
-- Updated privacy disclosures, generated API contract, release runbook, current
-  state, roadmap, and durable decision record.
+- Random memory-only telemetry session identifiers shared with the API only as
+  request context. They reset with the page/app process, are never account IDs,
+  are not stored, and never create person profiles.
+- PostHog autocapture, lifecycle/page capture, surveys, feature flags, GeoIP,
+  persistence, and session replay disabled behind a strict event/property
+  allowlist.
+- Sentry error capture with private values and request content removed. Tracing,
+  profiling, replay, attachments, and breadcrumbs remain disabled; useful stack,
+  component, request ID, environment, and exact release evidence remain.
+- Exact-SHA readiness, source-map upload with public client-map deletion, gated
+  telemetry-test profiles, synthetic canary surfaces, leakage tests, and an
+  aggregate-only `make telemetry-staging-e2e` verifier.
+- Updated privacy disclosures, current state, roadmap, decisions, and runbook.
 
 ## Acceptance
 
-- Deterministic CI and `make ready` remain credential-free and make no live call.
-- Every live operation either yields schema-valid bounded output or a typed
-  terminal/transient failure; invalid output never changes a plan or taste
-  profile and images are never persisted.
-- Recommendation prompts contain request-local candidate keys and normalized
-  TableUs fields, not Place IDs, names, addresses, coordinates, or Google
-  response bodies.
-- Provider usage exposes aggregate tokens and estimated cost only. Staging
-  rejects calls before Gemini when user/global limits or the rolling ceiling are
-  exhausted.
-- Paid evidence is pinned to one exact SHA, model, fixture hash, and `$0.25`
-  ceiling. Staging readiness then reports Supabase auth, live Places, live AI,
-  and compatibility `live` from that SHA.
+- Deterministic `make ready` is credential-free and produces no live event.
+- Staging readiness is exact-SHA and reports anonymous analytics, error-only
+  reporting, and explicitly gated E2E controls.
+- PostHog receives allowlisted bounded properties, platform, release, and
+  no-person/no-GeoIP flags only. No identifier survives process termination or
+  links to an application profile.
+- PostHog's required `distinct_id` is the random process-memory telemetry UUID;
+  SDK device identifiers and account identifiers are not retained.
+- Sentry receives one sanitized canary per component with usable stack/release
+  evidence and none of the prohibited private fields.
+- Retained evidence contains aggregate counts and booleans only.
 
 ## External gate
 
-The approved external gate is complete. No production deployment, store action,
-new invite, migration, telemetry activation, account deletion, or cohort
-invitation occurred. Merging this objective remains a separate owner gate.
+The approved public push, isolated staging resources, exact-SHA Railway/Vercel
+deployments, memory-bounded local artifacts, and sanitized canaries are complete.
+Merging `codex/privacy-safe-observability` to `main` remains a separate explicit
+approval.
 
 ## Boundaries
 
-No database migration, EAS artifact, new invite, production deployment, store
-submission, Sentry/PostHog activation, account deletion, or cohort invitation is
-included. The runtime reservation lock assumes the current single Railway
-process; horizontally scaled reservations require a durable ledger.
+No migration, production resource/deployment/build, store action, new invite,
+paid provider call, account deletion, cohort invitation, replay, performance
+tracing, profiling, or person analytics is included. Build-time source-map
+tokens never enter client artifacts. A correction after the candidate commit
+requires a new SHA and new deployment/build evidence.

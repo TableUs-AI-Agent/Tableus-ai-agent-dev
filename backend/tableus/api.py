@@ -6,6 +6,7 @@ from datetime import UTC, datetime, timedelta
 from typing import Annotated, Literal, cast
 
 import jwt
+import sentry_sdk
 from fastapi import APIRouter, File, HTTPException, UploadFile
 from PIL import Image
 from sqlalchemy import func, select, update
@@ -90,6 +91,16 @@ _ai_reservation_usd = 0.02
 
 def ok(data, **meta):
     return {"data": data, "meta": meta}
+
+
+@router.post("/e2e/telemetry", include_in_schema=False)
+async def telemetry_e2e(profile: CurrentProfile):
+    del profile
+    if not get_settings().tableus_telemetry_e2e:
+        raise HTTPException(status_code=404, detail="Not found")
+    await capture_event("telemetry_e2e", {"component": "api", "platform": "api"})
+    sentry_sdk.capture_exception(RuntimeError("TableUs sanitized telemetry canary"))
+    return ok({"accepted": True})
 
 
 def _is_expired(expires_at: datetime | None, now: datetime) -> bool:
@@ -462,6 +473,7 @@ async def redeem_access(body: InviteRedeemIn, identity: CurrentIdentity, session
     if pending_validation:
         pending_validation.redeemed_at = datetime.now(UTC)
     await session.commit()
+    await capture_event("auth_approved", {"mode": "signup"})
     return ok(ProfileOut.model_validate(profile))
 
 
@@ -864,7 +876,7 @@ async def create_plan(body: PlanCreateIn, profile: CurrentProfile, session: DbSe
     session.add(PlanParticipant(plan_id=plan.id, profile_id=profile.id, constraints={}))
     await _event(session, plan, profile, "plan.created")
     await session.commit()
-    await capture_event("plan_created", profile.id, {"platform": "api"})
+    await capture_event("plan_created")
     return ok(PlanCreated(plan=await _plan_out(session, plan, profile.id), share_token=token))
 
 
@@ -907,6 +919,7 @@ async def join_plan(plan_id: str, body: PlanJoinIn, profile: CurrentProfile, ses
         _touch(plan)
         await _event(session, plan, profile, "participant.joined")
         await session.commit()
+        await capture_event("plan_joined")
     return ok(await _plan_out(session, plan, profile.id))
 
 
@@ -923,6 +936,7 @@ async def update_constraints(
     _touch(plan)
     await _event(session, plan, profile, "constraints.updated")
     await session.commit()
+    await capture_event("constraints_saved")
     return ok(await _plan_out(session, plan, profile.id), recommendations_stale=True)
 
 
@@ -1011,7 +1025,6 @@ async def generate_recommendations(
     await session.commit()
     await capture_event(
         "recommendations_generated",
-        profile.id,
         {"candidate_count": 4, "provider": ai_provider.name},
     )
     return ok(await _plan_out(session, plan, profile.id, selected_places))
@@ -1051,7 +1064,7 @@ async def vote(plan_id: str, body: VoteIn, profile: CurrentProfile, session: DbS
     _touch(plan)
     await _event(session, plan, profile, "vote.updated")
     await session.commit()
-    await capture_event("vote_submitted", profile.id)
+    await capture_event("vote_submitted", {"ranking_count": len(body.ranking)})
     return ok(await _plan_out(session, plan, profile.id))
 
 
@@ -1078,7 +1091,7 @@ async def finalize(plan_id: str, body: FinalizeIn, profile: CurrentProfile, sess
     _touch(plan)
     await _event(session, plan, profile, "plan.finalized", {"candidate_id": selected_id})
     await session.commit()
-    await capture_event("plan_finalized", profile.id, {"vote_count": len(votes)})
+    await capture_event("plan_finalized", {"vote_count": len(votes)})
     return ok(await _plan_out(session, plan, profile.id))
 
 
@@ -1094,6 +1107,7 @@ async def reopen(plan_id: str, profile: CurrentProfile, session: DbSession):
     _touch(plan)
     await _event(session, plan, profile, "plan.reopened")
     await session.commit()
+    await capture_event("plan_reopened")
     return ok(await _plan_out(session, plan, profile.id))
 
 

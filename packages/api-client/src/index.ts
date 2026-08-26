@@ -10,6 +10,8 @@ export type ApiRequestOptions = {
   idempotencyKey?: string;
 };
 
+export type TelemetryClientPlatform = "web" | "ios" | "android";
+
 export class ApiError extends Error {
   readonly status: number;
   readonly code: string;
@@ -35,6 +37,8 @@ type ClientOptions = {
   refreshAccessToken?: () => Promise<string | null>;
   demoUserId?: string;
   getDemoUserId?: () => Promise<string | null>;
+  getTelemetrySessionId?: () => string | null;
+  telemetryPlatform?: TelemetryClientPlatform;
   fetchImpl?: typeof fetch;
 };
 
@@ -50,6 +54,11 @@ export function createApiClient(options: ClientOptions) {
     const headers = new Headers(init.headers);
     if (!(init.body instanceof FormData)) headers.set("Content-Type", "application/json");
     if (demoUserId) headers.set("X-Demo-User-ID", demoUserId);
+    const telemetrySessionId = options.getTelemetrySessionId?.();
+    if (telemetrySessionId && options.telemetryPlatform) {
+      headers.set("X-TableUs-Telemetry-Session", telemetrySessionId);
+      headers.set("X-TableUs-Client", options.telemetryPlatform);
+    }
     if (init.method && init.method !== "GET") {
       headers.set("Idempotency-Key", requestOptions.idempotencyKey ?? createIdempotencyKey());
     }

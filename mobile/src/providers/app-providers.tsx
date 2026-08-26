@@ -4,11 +4,13 @@ import { AppState } from "react-native";
 import { PostHogProvider, usePostHog } from "posthog-react-native";
 
 import { ConnectivityProvider } from "@/providers/connectivity-provider";
+import { captureTelemetry, registerTelemetryClient, sanitizeMobilePostHogPayload } from "@/lib/telemetry";
 
 function TelemetryBootstrap({ children }: PropsWithChildren) {
   const posthog = usePostHog();
   useEffect(() => {
-    posthog.capture("app_opened", { platform: "mobile" });
+    registerTelemetryClient(posthog);
+    captureTelemetry("app_opened");
   }, [posthog]);
   return children;
 }
@@ -42,7 +44,8 @@ export function AppProviders({ children }: PropsWithChildren) {
     </ConnectivityProvider>
   );
   const posthogKey = process.env.EXPO_PUBLIC_POSTHOG_KEY;
-  if (!posthogKey) return content;
+  const telemetryMode = process.env.EXPO_PUBLIC_TELEMETRY_MODE;
+  if (!posthogKey || (telemetryMode !== "staging" && telemetryMode !== "production")) return content;
   return (
     <PostHogProvider
       apiKey={posthogKey}
@@ -50,9 +53,14 @@ export function AppProviders({ children }: PropsWithChildren) {
       options={{
         host: process.env.EXPO_PUBLIC_POSTHOG_HOST ?? "https://us.i.posthog.com",
         persistence: "memory",
+        personProfiles: "never",
         captureAppLifecycleEvents: false,
         enableSessionReplay: false,
         setDefaultPersonProperties: false,
+        disableGeoip: true,
+        disableRemoteFeatureFlags: true,
+        disableSurveys: true,
+        before_send: ((payload: any) => payload ? sanitizeMobilePostHogPayload(payload) : null) as any,
       }}
     >
       <TelemetryBootstrap>{content}</TelemetryBootstrap>

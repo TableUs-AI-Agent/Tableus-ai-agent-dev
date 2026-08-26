@@ -457,8 +457,53 @@ Keep deterministic providers green while each integration is added:
    target also owns `table-us.com`, `www.table-us.com`, and
    `links.table-us.com`; those production-facing aliases were intentionally
    left on their prior deployment. The superseded Developer API key is revoked.
-6. Enable Sentry/PostHog last and verify that prohibited personal, location,
-   photo, prompt, provider-response, and token data never reaches telemetry.
+6. Enable observability last from an exact-SHA candidate. Create three isolated
+   Sentry staging projects (`api`, `web`, and `mobile`) and one isolated US
+   PostHog staging project. Keep Sentry source-map credentials build-only and use
+   separate read-only API tokens for evidence. Enable staging telemetry/E2E only
+   in Railway, Vercel Preview, and the `telemetry-test-ios` /
+   `telemetry-test-android` profiles. Deploy/build one exact SHA, authenticate
+   existing approved evidence accounts, and trigger only the synthetic canaries.
+   Then run:
+
+   ```bash
+   TABLEUS_SENTRY_READ_TOKEN=<read-only-token> \
+   TABLEUS_SENTRY_ORG=<org> \
+   TABLEUS_SENTRY_API_PROJECT=<api-project> \
+   TABLEUS_SENTRY_WEB_PROJECT=<web-project> \
+   TABLEUS_SENTRY_MOBILE_PROJECT=<mobile-project> \
+   TABLEUS_POSTHOG_READ_TOKEN=<read-only-token> \
+   TABLEUS_POSTHOG_PROJECT_ID=<staging-project-id> \
+   make telemetry-staging-e2e API_URL=https://<staging-api> \
+     SHA=<exact-candidate-sha> EVIDENCE=<sanitized-dir>
+   ```
+
+   Keep each client alive through its analytics flush window. Confirm the web
+   request is not dropped by its `before_send` guard, and confirm the backend
+   canary records platform `api` rather than the caller's platform. Inspect
+   provider dashboards for release/source-map correlation and absence of
+   messages, users, headers, bodies, queries, private URL segments, emails,
+   reviews, location data, photos, prompts, provider responses, and complete
+   share tokens. Retain only the aggregate report and sanitized screenshots.
+   If leakage occurs, disable telemetry/E2E, remove build tokens, roll back both
+   deployments, and rotate a credential only when integrity is uncertain.
+
+   PostHog's browser SDK filters Playwright's default headless identity as a bot
+   before `before_send`; that is not evidence of an application sanitizer
+   failure. Keep bot filtering enabled. Drive the staging web canary with a
+   normal Chrome identity (or a headed real browser), require a successful
+   PostHog ingestion response, and then require the aggregate reader to find the
+   exact release and `web` platform.
+
+   This gate completed at exact SHA
+   `4920d99b11b06c4e0aa1c4afc3f91763bb53ee1c`. Railway deployment
+   `bed50df4-5ced-465f-8492-a24147e8f663` and Vercel deployment
+   `dpl_4M7eSvsht9UNB2wqmCjZ1pVUmHiD` passed exact-SHA readiness. Local build
+   receipts `local-ios-4920d99` and `local-android-4920d99` passed artifact
+   inspection. Aggregate evidence contains one exact-release issue per Sentry
+   project and PostHog platforms `android`, `api`, `ios`, and `web`, with no raw
+   payload retained. The preserved approved iOS session was sufficient; no new
+   OTP was sent.
 
 ## 7. Release decision
 

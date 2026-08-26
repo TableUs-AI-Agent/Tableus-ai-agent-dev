@@ -200,3 +200,25 @@
   production-facing TableUs domains. Moving those domains or using a Production
   deployment requires a separate production gate; a dedicated staging Vercel
   project should be considered before beta release.
+- **2026-08-26:** Closed-beta analytics are default-on but anonymous and
+  aggregate-only. Each web page/app process creates a random memory-only session
+  UUID; TableUs does not persist it, associate it with an account, call PostHog
+  `identify`, create person profiles, use GeoIP, autocapture, surveys, feature
+  flags, or replay. Sentry is error-only: stacks and safe release/component/
+  request identifiers remain while messages, users, request contents, query
+  strings, private URL segments, contexts, breadcrumbs, profiling, tracing,
+  replay, and attachments are excluded. Staging uses three isolated Sentry
+  projects and one isolated US PostHog project; production remains a later gate.
+  PostHog's required `distinct_id` is the same random process-memory UUID, not
+  an SDK device identifier or application user ID; the sanitizer rejects any
+  non-UUID replacement and removes all other automatic identity properties.
+  PostHog JS's validated public `phc_` project token is retained solely as the
+  required ingestion transport field; it is not a secret or an analytics
+  identity. Backend-generated events explicitly report platform `api` rather
+  than inheriting the requesting web or mobile platform.
+- **2026-08-26:** Keep PostHog's browser bot filtering enabled. Its browser SDK
+  drops Playwright's default headless identity before the application
+  `before_send` sanitizer, so an automated web canary must use a normal Chrome
+  identity or a headed browser and must verify both a successful ingestion
+  response and the aggregate exact-release event. Disabling bot filtering or
+  injecting a provider event directly is not acceptable product evidence.

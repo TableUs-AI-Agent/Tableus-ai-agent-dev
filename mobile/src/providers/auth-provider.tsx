@@ -24,6 +24,7 @@ import {
   type PendingAuthTransaction,
 } from "@/lib/auth-transaction";
 import { isSupabaseConfigured, secureAuthStorage, supabase } from "@/lib/supabase";
+import { captureTelemetry } from "@/lib/telemetry";
 
 export type AuthPhase = "loading" | "signed_out" | "pending_verification" | "redeem_pending" | "approved";
 type Profile = { id: string; display_name: string; share_taste: boolean };
@@ -104,6 +105,7 @@ export function AuthProvider({ children }: PropsWithChildren) {
       setProfile(result.profile);
       setError("");
       updatePhase("approved");
+      captureTelemetry("auth_approved", { mode: transaction?.mode === "join" ? "signup" : "sign_in" });
       await queryClient.invalidateQueries();
       return true;
     }

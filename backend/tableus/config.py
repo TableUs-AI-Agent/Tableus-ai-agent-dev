@@ -41,6 +41,8 @@ class Settings(BaseSettings):
     sentry_dsn: str = ""
     posthog_key: str = ""
     posthog_host: str = "https://us.i.posthog.com"
+    tableus_telemetry_mode: Literal["off", "staging", "production"] = "off"
+    tableus_telemetry_e2e: bool = False
 
     live_ai_max_usd: float = Field(default=0.25, gt=0, le=0.25)
     ai_runtime_max_usd_30d: float = Field(default=4.0, gt=0, le=4.0)
@@ -73,8 +75,20 @@ class Settings(BaseSettings):
             raise ValueError("Production credentials are incomplete")
         if self.migration_database_url == self.database_url:
             raise ValueError("Production migration and runtime database credentials must differ")
+        if self.tableus_telemetry_mode != "production" or not self.sentry_dsn or not self.posthog_key:
+            raise ValueError("Production requires production error reporting and anonymous analytics")
         if any("localhost" in origin for origin in self.cors_origins):
             raise ValueError("Production CORS origins cannot include localhost")
+        return self
+
+    @model_validator(mode="after")
+    def telemetry_environment_matches(self):
+        if self.tableus_telemetry_mode == "staging" and self.environment != "staging":
+            raise ValueError("Staging telemetry is allowed only in the staging environment")
+        if self.tableus_telemetry_mode == "production" and self.environment != "production":
+            raise ValueError("Production telemetry is allowed only in the production environment")
+        if self.tableus_telemetry_e2e and self.tableus_telemetry_mode != "staging":
+            raise ValueError("Telemetry E2E controls require staging telemetry")
         return self
 
     @property
