@@ -2,6 +2,7 @@ import asyncio
 import json
 import math
 import re
+from typing import Literal
 from urllib.parse import quote
 
 import httpx
@@ -28,7 +29,7 @@ class RecommendationItem(BaseModel):
 
 class RecommendationOutput(BaseModel):
     model_config = ConfigDict(extra="forbid")
-    outcome: str = Field(pattern=r"^(recommendations|no_result)$")
+    outcome: Literal["recommendations", "no_result"]
     restaurants: list[RecommendationItem] = Field(max_length=4)
 
     @model_validator(mode="after")
@@ -562,12 +563,17 @@ class LiveGeminiProvider:
 
     @classmethod
     def _structured_config(
-        cls, schema: type[BaseModel], max_output_tokens: int, instruction: str
+        cls,
+        schema: type[BaseModel],
+        max_output_tokens: int,
+        instruction: str,
+        *,
+        response_schema: dict | None = None,
     ):
         return types.GenerateContentConfig(
             system_instruction=instruction,
             response_mime_type="application/json",
-            response_schema=cls._provider_schema(schema),
+            response_schema=response_schema or cls._provider_schema(schema),
             temperature=0,
             seed=0,
             candidate_count=1,
@@ -616,6 +622,10 @@ class LiveGeminiProvider:
             await self._record(usage, operation, 0, 0, 0, 0, False)
             return []
         aliases = {f"candidate_{index + 1}": place for index, place in enumerate(places[:20])}
+        response_schema = self._provider_schema(RecommendationOutput)
+        response_schema["$defs"]["RecommendationItem"]["properties"]["candidate_key"][
+            "enum"
+        ] = list(aliases)
         prompt = json.dumps(
             {
                 "request": str(query)[:500],
@@ -646,6 +656,7 @@ class LiveGeminiProvider:
                     "and never invent or reveal private data. Return exactly four distinct candidates "
                     "when four satisfy the constraints; otherwise return outcome no_result with none. "
                     "Do not make allergy, dietary-safety, availability, or reservation guarantees.",
+                    response_schema=response_schema,
                 ),
             )
             input_tokens, output_tokens, cost = self._token_usage(response)
@@ -696,6 +707,7 @@ class LiveGeminiProvider:
             response, attempts = await self._generate(
                 model=self.model,
                 contents=types.Content(
+                    role="user",
                     parts=[
                         types.Part.from_text(
                             text="Analyze only the attached food image under the system instruction."

@@ -2,7 +2,7 @@
 
 ## Status
 
-Implementation is frozen on `codex/gemini-agent-platform` at exact candidate
+Implementation continues on `codex/gemini-agent-platform` after exact candidate
 `0b7de266d4b053d49267b2ac22bd85052ab3ab8f`, based on the verified
 schema-correction commit `0c92aaa0534551cbb0f4f6603e678ee7d87ab3ab`.
 Candidates `90691b1c53812fc140da465e1b5e362c781f1139`,
@@ -28,12 +28,15 @@ The Agent Platform API and `roles/aiplatform.expressUser` grant are active in th
 isolated project. Retargeting the existing service-account-bound key was denied
 by the managed `disableServiceAccountApiKeyCreation` organization policy; the
 key therefore remains restricted to the standalone Developer API and Railway's
-three addresses. The candidate's six-case Agent Platform evaluation stopped
-before inference with `401`, zero tokens, and `$0`; a standard key has no IAM
-principal and cannot authorize Agent Platform. The unused key was revoked, the
-prior Developer API credential was restored without deployment, and staging
-remains deterministic. Resolving that policy or choosing a new credential form
-is the remaining cloud-configuration decision.
+three addresses. The candidate's first Agent Platform evaluation stopped before
+inference with `401`, zero tokens, and `$0`; a standard key has no IAM principal.
+The owner approved a project-only allowlist addition for Agent Platform and a
+new bound, Railway-restricted key. A repeated evaluation reached inference and
+passed two of six cases for `$0.00140175`. Sanitized probes identified an
+unconstrained recommendation outcome and missing multimodal user role. The local
+adapter now emits enum-backed outcomes and request-local candidate keys and sets
+`role="user"` on photo content. Staging remains deterministic pending a new
+exact-SHA candidate and fully passing evaluation.
 
 ## Objective
 
@@ -81,16 +84,11 @@ enabling Gemini on staging.
 ## External gate
 
 The isolated project, active linked billing, budget alerts, Agent Platform API,
-and least-privilege runtime identity are provisioned. Authentication remains
-blocked: Google's managed `disableServiceAccountApiKeyCreation` policy allows
-the existing bound key only for the standalone Developer API, while a standard
-Agent Platform key returns `401`. The owner must choose one significant path
-before a new exact-SHA evaluation: narrowly allow
-`aiplatform.googleapis.com` in that managed policy, move the AI runtime to an
-environment with supported workload identity/ADC, or retain the standalone
-Developer API and its separate billing behavior. Railway/Vercel deployment and
-returning codes remain conditional on a fully passing evaluation and staging
-journey.
+project-only managed-policy allowlist, least-privilege runtime identity, and
+bound Railway-restricted authorization key are provisioned. Freeze a new exact
+candidate only after focused checks and `make ready`, then request the explicit
+public-push and paid-evaluation gate. Railway/Vercel deployment and returning
+codes remain conditional on a fully passing evaluation and staging journey.
 
 ## Boundaries
 

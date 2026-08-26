@@ -100,6 +100,13 @@ async def test_recommendations_alias_places_and_record_token_cost() -> None:
     assert '"maxLength"' not in wire_schema
     assert '"additionalProperties"' not in wire_schema
     assert '"title"' not in wire_schema
+    assert config.response_schema["properties"]["outcome"]["enum"] == [
+        "recommendations",
+        "no_result",
+    ]
+    assert config.response_schema["$defs"]["RecommendationItem"]["properties"][
+        "candidate_key"
+    ]["enum"] == [f"candidate_{index}" for index in range(1, 7)]
     assert usage == [
         AiCallUsage(
             operation="recommend",
@@ -216,6 +223,7 @@ async def test_food_and_taste_outputs_are_strict_and_bounded() -> None:
     assert food["dish"] == "Pizza"
     assert taste.startswith("Enjoys Italian")
     assert models.calls[0]["config"].max_output_tokens == 400
+    assert models.calls[0]["contents"].role == "user"
     assert models.calls[1]["config"].max_output_tokens == 300
     assert len(models.calls[1]["contents"]) < 13_000
 

@@ -202,8 +202,19 @@
   `disableServiceAccountApiKeyCreation` policy unless Agent Platform is
   allowlisted. The unused standard key was revoked, its Railway and Keychain
   values were removed, and Railway's prior Developer API key was restored with
-  deploy suppression. No deployment or returning-sign-in message occurred.
-  Staging remains on live Places and deterministic AI at SHA `4a790b4`.
+  deploy suppression. The owner then approved a project-only policy override
+  that preserves `generativelanguage.googleapis.com` and adds only
+  `aiplatform.googleapis.com`. A new authorization key is bound to the existing
+  least-privilege runtime identity and restricted to Agent Platform plus
+  Railway's three IPs. The repeated exact-SHA evaluation authenticated and
+  reached inference: two taste cases passed, while three recommendation cases
+  failed an unconstrained `outcome` value and the photo request returned `400`.
+  Sanitized probes isolated both defects: recommendation wire output needs enum
+  constraints, and multimodal `Content` needs `role="user"`. The local adapter
+  now adds request-local candidate enums, an outcome enum, and the explicit
+  photo role. No deployment or returning-sign-in message occurred. Staging
+  remains on live Places and deterministic AI at SHA `4a790b4`; a new candidate
+  and fully passing evaluation are required.
 
 ## External dependencies not provisioned in source
 
@@ -292,14 +303,16 @@
   `roles/aiplatform.expressUser`. Its existing authorization key remains
   service-account-bound, restricted to the standalone Gemini Developer API and
   Railway's three staging static outbound IPs, and stored only in Railway
-  staging and the operator Keychain. Google denied changing that key's API
-  target to Agent Platform because the managed service-account API-key policy
-  does not currently allow `aiplatform.googleapis.com`; no organization-policy
-  override has been applied. A standard Agent Platform-only key was then proven
-  insufficient with `401` because it has no bound IAM principal and was revoked
-  before activation. A first standard key whose value appeared in CLI output
-  was also revoked immediately before use or storage. Sentry and PostHog
-  credentials remain unprovisioned.
+  staging and the operator Keychain. A standard Agent Platform-only key was
+  proven insufficient with `401` because it had no bound IAM principal and was
+  revoked before activation. The staging AI project now has a project-only
+  managed-policy override whose complete allowlist is the existing standalone
+  Gemini API plus Agent Platform. A separate Agent Platform authorization key is
+  bound to the same runtime identity, limited to `aiplatform.googleapis.com` and
+  Railway's three addresses, and stored in Railway with deploy suppression plus
+  the operator Keychain. A first standard key whose value appeared in CLI output
+  was revoked immediately before use or storage. Sentry and PostHog credentials
+  remain unprovisioned.
 
 ## Release gates still requiring an owner or external system
 
@@ -380,12 +393,14 @@
   unavailable Gemini 2.5 generation, and finally on Gemini 3.1 strict-object
   metadata followed by generic `429 RESOURCE_EXHAUSTED`. The key is restored to
   Railway-only restrictions. Agent Platform candidate `0b7de266` also passed
-  public CI but its six-case evaluation stopped at `401`, zero tokens, and `$0`:
-  the standard key has no IAM principal, while creating the required bound key
-  is blocked by managed organization policy. Staging AI remains deterministic.
-  Choosing a narrowly scoped policy allowance, a workload-identity-capable
-  runtime, or the standalone Developer API is now an owner architecture gate;
-  deployment and sanitized two-user live-AI evidence remain conditional on a
-  later passing exact-SHA evaluation.
+  public CI; its first evaluation stopped at `401`, zero tokens, and `$0` because
+  a standard key has no IAM principal. The owner approved a project-only policy
+  allowance and a new bound authorization key. The repeated evaluation reached
+  inference and passed two of six cases for `$0.00140175`; sanitized probes then
+  isolated enum-constrained recommendation output and an explicit multimodal
+  user role as the remaining corrections. Those corrections are implemented
+  locally. Staging AI remains deterministic, and deployment plus sanitized
+  two-user evidence remain conditional on a new fully passing exact-SHA
+  evaluation.
 - Obtain explicit approval before any production migration, deployment, EAS
   build/submission, paid live-AI evaluation, or cohort invitation.

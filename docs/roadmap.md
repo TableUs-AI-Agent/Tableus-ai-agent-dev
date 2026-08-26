@@ -36,14 +36,15 @@ retained in-memory join intent, and rotated-link rejection passed on Android and
   TableUs therefore tested the same pinned model and evaluation contract on
   Gemini Enterprise Agent Platform, the renamed evolution of Vertex AI. Exact
   candidate `0b7de266d4b053d49267b2ac22bd85052ab3ab8f` passed public CI, but
-  its six-case Agent Platform evaluation stopped before inference at `401`, zero
-  tokens, and `$0`. Google requires a service-account-bound authorization key;
-  a standard key has no IAM principal, and the managed organization policy
-  blocks creating the bound key for `aiplatform.googleapis.com`. The failed key
-  was revoked and staging remains deterministic. The next staging step is an
-  owner architecture choice among a narrowly scoped policy allowance, a
-  workload-identity-capable runtime, or the standalone Developer API, followed
-  by a new passing exact-SHA evaluation before deployment.
+  its first six-case Agent Platform evaluation stopped before inference at
+  `401`, zero tokens, and `$0`. The owner approved a project-only policy
+  allowance for Agent Platform alongside the existing Gemini API allowance, and
+  a new service-account-bound, Railway-restricted authorization key reached
+  inference. That repeat passed two of six cases for `$0.00140175`. Sanitized
+  probes isolated an unconstrained recommendation outcome and a missing user
+  role on multimodal content; enum-backed recommendation fields and the explicit
+  photo role are now implemented locally. The next staging step is a new
+  exact-SHA candidate and fully passing evaluation before deployment.
 
 The active gate sequence and required owner inputs are maintained in
 `docs/release-runbook.md`.

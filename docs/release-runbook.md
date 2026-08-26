@@ -412,18 +412,15 @@ Keep deterministic providers green while each integration is added:
    or returning code followed. Retry only from a new exact-SHA checkpoint after
    the compatibility fix passes `make ready` and Google inference is usable.
    Agent Platform candidate
-   `0b7de266d4b053d49267b2ac22bd85052ab3ab8f` passed public CI, but its
-   six-case evaluation stopped before inference at `401`, zero tokens, and `$0`.
-   A standard key has no IAM principal; Agent Platform requires a
-   service-account-bound authorization key, whose creation is blocked while the
-   managed `disableServiceAccountApiKeyCreation` policy omits
-   `aiplatform.googleapis.com`. The unused standard key was revoked and the
-   Developer API credential restored without deployment. Before retrying, obtain
-   a new owner architecture gate for exactly one path: narrowly allow Agent
-   Platform in that managed policy, move the AI runtime to an environment with
-   supported workload identity/ADC, or retain the standalone Developer API and
-   its separate billing behavior. Do not deploy or send returning codes until a
-   new exact-SHA evaluator passes.
+   `0b7de266d4b053d49267b2ac22bd85052ab3ab8f` passed public CI. Its first
+   evaluation stopped before inference at `401`, zero tokens, and `$0` because a
+   standard key has no IAM principal. The owner approved a project-only managed
+   policy allowlist containing the existing Gemini API plus Agent Platform. A
+   new service-account-bound authorization key restricted to Agent Platform and
+   Railway reached inference; two of six cases passed for `$0.00140175`.
+   Sanitized probes identified recommendation enum drift and a missing user role
+   on multimodal content. Require both corrections, a new `make ready` candidate,
+   and a fresh fully passing checkpoint before deployment or returning codes.
 5. Only after the live evaluator passes, set Railway staging to live AI with
    `GEMINI_MODEL=gemini-3.1-flash-lite`,
    `AI_RUNTIME_MAX_USD_30D=4.00`, and `LIVE_AI_MAX_USD=0.25`, deploy Railway and

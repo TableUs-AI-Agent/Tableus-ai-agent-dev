@@ -15,6 +15,25 @@
 - Staging after rollback: HTTP 200 readiness from SHA `4a790b4`, Supabase auth,
   live Places, deterministic AI, compatibility mode `mixed`
 
+After owner approval, a project-only managed-policy override preserved the
+existing Gemini API allowance and added only Agent Platform. A new authorization
+key was bound to the least-privilege runtime identity and restricted to Agent
+Platform plus Railway's three IPs. Repeating the same exact-SHA evaluation
+reached inference:
+
+- 2 of 6 cases passed
+- 1,527 input tokens and 680 output/thinking tokens
+- `$0.00140175` estimated cost
+- all three recommendation cases failed local validation on the allowed outcome
+  field
+- the synthetic photo request returned terminal HTTP `400`
+
+Transient sanitized probes then proved that the recommendation outcome requires
+provider enum constraints and that the photo request succeeds when multimodal
+`Content` explicitly declares `role="user"`. The bound key was restored to
+Railway-only restrictions after every run. Staging was not deployed and no
+returning-sign-in email was sent.
+
 No prompts, outputs, images, reviews, Place IDs, API-key values, provider
 responses, emails, OTPs, sessions, or tokens are retained here. Railway/Vercel
 were not deployed and no returning-sign-in email was sent.

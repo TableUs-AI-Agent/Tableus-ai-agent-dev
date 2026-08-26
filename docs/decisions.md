@@ -180,3 +180,12 @@
   until the owner approves either a narrowly scoped policy allowance, a
   workload-identity-capable runtime, or continued standalone Developer API
   billing.
+- **2026-08-25:** For staging validation only, the project-level managed policy
+  allowlist preserves `generativelanguage.googleapis.com` and adds only
+  `aiplatform.googleapis.com`. The Agent Platform key is bound to the existing
+  service account whose sole project role is `roles/aiplatform.expressUser`, and
+  is restricted to Agent Platform plus Railway's three static IPs. Production
+  credential architecture remains a later gate. Live contract failures do not
+  weaken local validation: recommendation outcomes and request-local candidate
+  keys are represented as provider enums, while Pydantic remains authoritative;
+  multimodal content explicitly declares the user role.
