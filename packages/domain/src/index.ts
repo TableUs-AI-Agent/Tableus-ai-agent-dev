@@ -102,3 +102,5 @@ export function buildAuthUrl(origin: string, mode: AuthLinkMode): string {
   url.searchParams.set("mode", mode);
   return url.toString();
 }
+
+export * from "./telemetry.ts";

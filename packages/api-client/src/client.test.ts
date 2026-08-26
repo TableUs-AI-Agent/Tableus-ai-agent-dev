@@ -194,3 +194,38 @@ test("client generates distinct non-empty idempotency keys", () => {
   assert.ok(second);
   assert.notEqual(first, second);
 });
+
+test("client adds anonymous telemetry context without account identity", async () => {
+  const observed: Array<[string | null, string | null]> = [];
+  const client = createApiClient({
+    baseUrl: "https://api.example.test",
+    getTelemetrySessionId: () => "5f6ad44d-42d8-4d11-b5c3-90d137e34b87",
+    telemetryPlatform: "web",
+    fetchImpl: async (_input, init) => {
+      const headers = new Headers(init?.headers);
+      observed.push([
+        headers.get("X-TableUs-Telemetry-Session"),
+        headers.get("X-TableUs-Client"),
+      ]);
+      return new Response(JSON.stringify({ data: { ok: true }, meta: {} }));
+    },
+  });
+  await client.get("/api/v1/me");
+  assert.deepEqual(observed, [["5f6ad44d-42d8-4d11-b5c3-90d137e34b87", "web"]]);
+});
+
+test("client omits incomplete telemetry context", async () => {
+  let observed: Headers | undefined;
+  const client = createApiClient({
+    baseUrl: "https://api.example.test",
+    getTelemetrySessionId: () => null,
+    telemetryPlatform: "ios",
+    fetchImpl: async (_input, init) => {
+      observed = new Headers(init?.headers);
+      return new Response(JSON.stringify({ data: { ok: true }, meta: {} }));
+    },
+  });
+  await client.get("/api/v1/me");
+  assert.equal(observed?.get("X-TableUs-Telemetry-Session"), null);
+  assert.equal(observed?.get("X-TableUs-Client"), null);
+});

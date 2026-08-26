@@ -1,6 +1,6 @@
 SHELL := /bin/bash
 
-.PHONY: setup dev lint typecheck test build smoke mobile-e2e mobile-auth-e2e mobile-offline-e2e mobile-links-e2e maps-staging-e2e gemini-staging-e2e local-mobile-build-receipt inspect-mobile-auth inspect-mobile-local-e2e inspect-mobile-links ready perf ai-eval ai-eval-live contract
+.PHONY: setup dev lint typecheck test build smoke mobile-e2e mobile-auth-e2e mobile-offline-e2e mobile-links-e2e maps-staging-e2e gemini-staging-e2e telemetry-staging-e2e local-mobile-build-receipt inspect-mobile-auth inspect-mobile-local-e2e inspect-mobile-links ready perf ai-eval ai-eval-live contract
 
 setup:
 	npm ci
@@ -75,6 +75,12 @@ gemini-staging-e2e:
 	@test -n "$(SHA)" || (echo "SHA=<exact-candidate-sha> is required" && exit 2)
 	@test -n "$(EVIDENCE)" || (echo "EVIDENCE=<sanitized-output-directory> is required" && exit 2)
 	node scripts/gemini-staging-e2e.mjs --api-url "$(API_URL)" --sha "$(SHA)" --evidence "$(EVIDENCE)" $(if $(RAILWAY_DEPLOYMENT),--railway-deployment "$(RAILWAY_DEPLOYMENT)",) $(if $(VERCEL_DEPLOYMENT),--vercel-deployment "$(VERCEL_DEPLOYMENT)",)
+
+telemetry-staging-e2e:
+	@test -n "$(API_URL)" || (echo "API_URL=<HTTPS-staging-api> is required" && exit 2)
+	@test -n "$(SHA)" || (echo "SHA=<exact-candidate-sha> is required" && exit 2)
+	@test -n "$(EVIDENCE)" || (echo "EVIDENCE=<sanitized-output-directory> is required" && exit 2)
+	node scripts/telemetry-staging-e2e.mjs --api-url "$(API_URL)" --sha "$(SHA)" --evidence "$(EVIDENCE)"
 
 local-mobile-build-receipt:
 	@test -n "$(PLATFORM)" || (echo "PLATFORM=ios or PLATFORM=android is required" && exit 2)

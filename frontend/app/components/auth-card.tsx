@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 import { isSupabaseConfigured, supabase } from "../lib/supabase-browser";
+import { captureTelemetry } from "../lib/telemetry";
 import { v1Api } from "../lib/v1-api";
 
 type AuthCardProps = {
@@ -71,6 +72,7 @@ export function AuthCard({ initialMode = "join", onApproved }: AuthCardProps) {
       } else {
         await v1Api.get("/api/v1/me");
       }
+      captureTelemetry("auth_approved", { mode: mode === "join" ? "signup" : "sign_in" });
       await finish();
     } catch (caught) {
       if (mode === "sign-in" && caught instanceof ApiError && caught.status === 403) {

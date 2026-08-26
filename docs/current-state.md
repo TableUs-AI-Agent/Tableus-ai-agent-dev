@@ -411,3 +411,19 @@
   to Agent Platform and Railway's three static egress addresses.
 - Obtain explicit approval before any production migration, deployment, EAS
   build/submission, paid live-AI evaluation, or cohort invitation.
+
+## Privacy-safe observability candidate
+
+- Web and mobile now use random process-memory telemetry session UUIDs. The API
+  accepts them only as anonymous request context and never derives analytics
+  identity from an account, email hash, access token, or IP address.
+- PostHog is default-on for the intended closed beta but aggregate-only: memory
+  persistence, no person profiles or identify calls, no autocapture, page/app
+  lifecycle capture, GeoIP, feature flags, surveys, or replay.
+- Sentry is error-only with tracing, profiling, replay, attachments, and
+  breadcrumbs disabled. Shared scrubbers retain stack frames and exact-SHA
+  release correlation while removing messages, users, headers, bodies, query
+  strings, private URL segments, and arbitrary context.
+- Telemetry remains off locally and in deterministic CI. Isolated staging
+  resource creation, secret configuration, exact-SHA deployment/builds, and
+  live canary evidence remain an explicit external gate.

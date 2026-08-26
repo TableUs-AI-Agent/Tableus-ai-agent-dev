@@ -329,14 +329,15 @@ async def lifespan(app: FastAPI):
 
 
 from tableus.config import get_settings
+from tableus.telemetry import (
+    configure_sentry,
+    parse_telemetry_context,
+    reset_telemetry_context,
+    set_telemetry_context,
+)
 
 settings = get_settings()
-if settings.sentry_dsn:
-    sentry_sdk.init(
-        dsn=settings.sentry_dsn,
-        environment=settings.environment,
-        send_default_pii=False,
-    )
+configure_sentry()
 
 app = FastAPI(title="TableUs", version="0.2.0", lifespan=lifespan)
 app.add_middleware(
@@ -350,6 +351,8 @@ app.add_middleware(
         "Idempotency-Key",
         "X-Demo-User-ID",
         "X-Request-ID",
+        "X-TableUs-Telemetry-Session",
+        "X-TableUs-Client",
     ],
 )
 
@@ -426,8 +429,20 @@ async def request_context(request: Request, call_next):
             media_type=cached[3],
             headers={"X-Request-ID": request_id, "X-Idempotent-Replay": "true"},
         )
+    telemetry_token = set_telemetry_context(
+        parse_telemetry_context(
+            request.headers.get("X-TableUs-Telemetry-Session"),
+            request.headers.get("X-TableUs-Client"),
+        )
+    )
     started = time.perf_counter()
-    response = await call_next(request)
+    try:
+        with sentry_sdk.isolation_scope() as scope:
+            scope.set_tag("component", "api")
+            scope.set_tag("request_id", request_id)
+            response = await call_next(request)
+    finally:
+        reset_telemetry_context(telemetry_token)
     if idempotency_key and request.method in {"POST", "PUT", "PATCH", "DELETE"}:
         body = b"".join([chunk async for chunk in response.body_iterator])
         if response.status_code < 500:
@@ -1191,6 +1206,10 @@ async def health_ready():
         "ai_backend": settings.ai_backend,
         "auth_mode": settings.tableus_auth_mode,
         "build_sha": settings.build_sha,
+        "telemetry_mode": settings.tableus_telemetry_mode,
+        "analytics_mode": "anonymous" if settings.tableus_telemetry_mode != "off" else "off",
+        "error_reporting_mode": "errors_only" if settings.tableus_telemetry_mode != "off" else "off",
+        "telemetry_e2e": settings.tableus_telemetry_e2e,
     }
 
 

@@ -1,7 +1,9 @@
 import type { NextConfig } from "next";
 import path from "node:path";
+import { withSentryConfig } from "@sentry/nextjs";
 
 const nextConfig: NextConfig = {
+  transpilePackages: ["@tableus/domain", "@tableus/api-client"],
   allowedDevOrigins: ["127.0.0.1"],
   turbopack: {
     root: path.resolve(process.cwd(), ".."),
@@ -36,4 +38,18 @@ const nextConfig: NextConfig = {
   },
 };
 
-export default nextConfig;
+const sentryBuildEnabled = Boolean(
+  process.env.SENTRY_AUTH_TOKEN && process.env.SENTRY_ORG && process.env.SENTRY_PROJECT,
+);
+
+export default sentryBuildEnabled
+  ? withSentryConfig(nextConfig, {
+      authToken: process.env.SENTRY_AUTH_TOKEN,
+      org: process.env.SENTRY_ORG,
+      project: process.env.SENTRY_PROJECT,
+      release: { name: process.env.TABLEUS_BUILD_SHA ?? process.env.VERCEL_GIT_COMMIT_SHA },
+      sourcemaps: { deleteSourcemapsAfterUpload: true },
+      telemetry: false,
+      silent: true,
+    })
+  : nextConfig;

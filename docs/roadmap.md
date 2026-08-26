@@ -28,9 +28,10 @@ retained in-memory join intent, and rotated-link rejection passed on Android and
   paid evaluation, exact-SHA Railway/Vercel deployment, and sanitized two-user
   staging evidence are green. Staging now runs Supabase auth, live Places, and
   live Gemini with the restricted service-account-bound key and application
-  spend ceiling. The next milestone is closed-beta readiness: privacy/security
-  acceptance, telemetry validation, cumulative web/iOS/Android staging smoke
-  evidence, and owner-reviewed release/rollback decisions.
+  spend ceiling. Privacy-safe observability is now the active closed-beta
+  readiness packet: anonymous aggregate PostHog events and error-only Sentry
+  reporting must pass exact-SHA leakage and staging evidence before cumulative
+  web/iOS/Android smoke evidence and owner-reviewed release/rollback decisions.
 
 The active gate sequence and required owner inputs are maintained in
 `docs/release-runbook.md`.

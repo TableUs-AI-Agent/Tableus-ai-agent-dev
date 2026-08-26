@@ -3,6 +3,7 @@ import { createApiClient } from "@tableus/api-client";
 
 import { getSupabaseAccessToken, isSupabaseConfigured, refreshSupabaseAccessToken } from "./supabase";
 import { getLocalE2EIdentity, localE2EEnabled } from "./e2e-identity";
+import { getTelemetryPlatform, getTelemetrySessionId } from "./telemetry";
 
 const baseUrl = process.env.EXPO_PUBLIC_API_URL ?? "https://api.invalid";
 
@@ -12,5 +13,7 @@ export const api = createApiClient({
   getDemoUserId: localE2EEnabled ? getLocalE2EIdentity : undefined,
   getAccessToken: isSupabaseConfigured ? getSupabaseAccessToken : undefined,
   refreshAccessToken: isSupabaseConfigured ? refreshSupabaseAccessToken : undefined,
+  getTelemetrySessionId,
+  telemetryPlatform: getTelemetryPlatform(),
   fetchImpl: expoFetch as typeof fetch,
 });

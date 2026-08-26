@@ -200,3 +200,12 @@
   production-facing TableUs domains. Moving those domains or using a Production
   deployment requires a separate production gate; a dedicated staging Vercel
   project should be considered before beta release.
+- **2026-08-26:** Closed-beta analytics are default-on but anonymous and
+  aggregate-only. Each web page/app process creates a random memory-only session
+  UUID; TableUs does not persist it, associate it with an account, call PostHog
+  `identify`, create person profiles, use GeoIP, autocapture, surveys, feature
+  flags, or replay. Sentry is error-only: stacks and safe release/component/
+  request identifiers remain while messages, users, request contents, query
+  strings, private URL segments, contexts, breadcrumbs, profiling, tracing,
+  replay, and attachments are excluded. Staging uses three isolated Sentry
+  projects and one isolated US PostHog project; production remains a later gate.
