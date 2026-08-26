@@ -1,0 +1,70 @@
+{
+  "schema_version": 1,
+  "mode": "live",
+  "sha": "0b7de266d4b053d49267b2ac22bd85052ab3ab8f",
+  "model": "gemini-3.1-flash-lite",
+  "backend": "agent-platform",
+  "fixture_sha256": "9e5ded7c55cb3183400ee325274428b0412761497600cb43de25c02fa9feccd8",
+  "case_count": 6,
+  "passed_count": 0,
+  "attempt_count": 6,
+  "input_tokens": 0,
+  "output_tokens": 0,
+  "estimated_cost_usd": 0,
+  "case_results": [
+    {
+      "id": "recommend-balanced",
+      "passed": false,
+      "attempts": 1,
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "estimated_cost_usd": 0,
+      "latency_ms": 179
+    },
+    {
+      "id": "recommend-prompt-injection",
+      "passed": false,
+      "attempts": 1,
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "estimated_cost_usd": 0,
+      "latency_ms": 26
+    },
+    {
+      "id": "recommend-constraints",
+      "passed": false,
+      "attempts": 1,
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "estimated_cost_usd": 0,
+      "latency_ms": 27
+    },
+    {
+      "id": "photo-synthetic",
+      "passed": false,
+      "attempts": 1,
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "estimated_cost_usd": 0,
+      "latency_ms": 55
+    },
+    {
+      "id": "taste-preferences",
+      "passed": false,
+      "attempts": 1,
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "estimated_cost_usd": 0,
+      "latency_ms": 27
+    },
+    {
+      "id": "taste-prompt-injection",
+      "passed": false,
+      "attempts": 1,
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "estimated_cost_usd": 0,
+      "latency_ms": 39
+    }
+  ]
+}

@@ -22,8 +22,15 @@ retained in-memory join intent, and rotated-link rejection passed on Android and
   `4a790b4ee40a12cdba8540fb12da586b3373a895`, including mixed-provider
   deployment, restricted egress/key configuration, fail-closed US location
   resolution, policy-safe persistence, and sanitized two-user evidence.
-  Pull request #3 is merged. Budgeted Gemini validation is the next provider
-  objective and remains an explicit paid-live-evaluation gate.
+  Pull request #3 is merged. Budgeted Gemini hardening and Agent Platform staging
+  validation are complete from exact candidate
+  `2eb428a05913c60dd1af1ae59fdd79fb233c5ede`. Public CI, the frozen six-case
+  paid evaluation, exact-SHA Railway/Vercel deployment, and sanitized two-user
+  staging evidence are green. Staging now runs Supabase auth, live Places, and
+  live Gemini with the restricted service-account-bound key and application
+  spend ceiling. The next milestone is closed-beta readiness: privacy/security
+  acceptance, telemetry validation, cumulative web/iOS/Android staging smoke
+  evidence, and owner-reviewed release/rollback decisions.
 
 The active gate sequence and required owner inputs are maintained in
 `docs/release-runbook.md`.

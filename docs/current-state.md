@@ -156,6 +156,73 @@
   provider usage, null stored coordinates, and a candidate schema with no Google
   display fields. Evidence is in `docs/evidence/4a790b4/maps-staging/`. Pull
   request #3 was merged to `main` as `7109cdcde86bd125c86c38980e823ab0a07abdc9`.
+- Gemini staging hardening is implemented around `google-genai==1.75.0` and
+  pinned `gemini-3.1-flash-lite`. Recommendation prompts use
+  request-local aliases and normalized TableUs fields instead of Place IDs,
+  names, addresses, coordinates, or Google response bodies. Recommendation,
+  photo, and taste outputs use strict bounded schemas, privacy/safety guards,
+  no tools or grounding, minimal Gemini 3 thinking, 12-second timeouts, and at
+  most three explicitly classified attempts without silent fallback. Photos are
+  resized to a maximum 1600-pixel edge after metadata stripping; taste inputs
+  are bounded to 25 reviews and 12,000 characters. Every API AI call records
+  aggregate token/cost totals and error outcomes, is limited to five operations
+  per approved user and 30 globally per minute, and reserves against a
+  database-backed rolling `$4` staging ceiling. Existing provider-usage columns
+  are reused, so no migration is required. The frozen deterministic evaluator,
+  checkpointed `$0.25` live evaluator, exact-SHA two-user staging runner,
+  privacy disclosures, and generated client contract are updated. Exact SHAs
+  `90691b1c53812fc140da465e1b5e362c781f1139`,
+  `e89d5c4f1664ab0ec0e7d5bec3dd196439283aeb`, and
+  `82c1d45f010a686df8802ab4b8a502731aa1be6f` passed public CI. Live validation
+  against all three candidates stopped before inference and consumed zero
+  reported tokens and `$0`. The first exposed unsupported generated
+  `minLength`, `maxLength`, and `pattern` wire keywords. The third proved that
+  Gemini 3.1 also rejects Pydantic's `additionalProperties` wire metadata;
+  removing it and non-semantic `title` metadata advances the same request from
+  `400` schema rejection to provider quota handling while strict Pydantic
+  validation remains local. The second
+  proved project import, Tier 1 billing, credential authorization, IP
+  restrictions, and catalog visibility, but new-project generation returned
+  `404` for Gemini 2.5 Flash-Lite. Google identifies Gemini 3.1 Flash-Lite as the
+  stable replacement. The owner approved that model at `$0.25` per million input
+  tokens and `$1.50` per million output/thinking tokens. Plain and corrected-
+  schema 3.1 requests currently reach Google but return generic
+  `429 RESOURCE_EXHAUSTED`; billing is confirmed active and linked, and the
+  response is not reported as overload or a client rate-limit violation. A new
+  implementation now selects Gemini Enterprise Agent Platform explicitly through
+  `google-genai`'s `enterprise=True` transport, pins readiness/evaluation evidence
+  to `agent-platform`, and retains the same model, privacy guards, schemas, and
+  spend ceilings. Exact candidate
+  `0b7de266d4b053d49267b2ac22bd85052ab3ab8f` passed public CI run
+  `32911321560`. Its capped live evaluation stopped before inference with six
+  terminal failures, zero tokens, and `$0`; a minimal sanitized request then
+  isolated `401` authentication. Google documents that standard API keys have
+  no IAM principal and cannot authenticate Agent Platform, while the required
+  service-account-bound authorization key is blocked by the managed
+  `disableServiceAccountApiKeyCreation` policy unless Agent Platform is
+  allowlisted. The unused standard key was revoked, its Railway and Keychain
+  values were removed, and Railway's prior Developer API key was restored with
+  deploy suppression. The owner then approved a project-only policy override
+  that preserves `generativelanguage.googleapis.com` and adds only
+  `aiplatform.googleapis.com`. A new authorization key is bound to the existing
+  least-privilege runtime identity and restricted to Agent Platform plus
+  Railway's three IPs. The repeated exact-SHA evaluation authenticated and
+  reached inference: two taste cases passed, while three recommendation cases
+  failed an unconstrained `outcome` value and the photo request returned `400`.
+  Sanitized probes isolated both defects: recommendation wire output needs enum
+  constraints, and multimodal `Content` needs `role="user"`. The local adapter
+  adds request-local candidate enums, an outcome enum, and the explicit photo
+  role. Exact candidate `2eb428a05913c60dd1af1ae59fdd79fb233c5ede`
+  passed public CI run `32915965276`. Its frozen six-case Agent Platform
+  evaluation passed 6/6 in one attempt per case for `$0.0018905`, including
+  grounded recommendations, prompt injection, constraints, synthetic photo,
+  and synthetic taste cases. Railway deployment
+  `a1030828-a505-417e-8285-c2b49dbbb39c` and Vercel deployment
+  `dpl_Ad4H9FqVAQJviSkP2KYTKWMkKxbt` are pinned to that SHA. Readiness reports
+  Supabase auth, live Places, live AI, `provider_mode=live`, and
+  `ai_backend=agent-platform`. Sanitized two-user evidence proves four distinct
+  grounded candidates, policy-safe candidate persistence, and aggregate token
+  and cost accounting. Staging now runs live Places and live Gemini.
 
 ## External dependencies not provisioned in source
 
@@ -238,8 +305,22 @@
 - The isolated `TableUs Staging Maps` Google project has billing attached,
   Places API New enabled as its only product API, a $10 monthly budget with
   50/80/100-percent alerts, and granted 60-request/minute preferences for Text,
-  Nearby, and Details. Gemini, Sentry, and PostHog credentials remain
-  unprovisioned.
+  Nearby, and Details. The separate billed `TableUs Staging AI` project has a
+  `$5` monthly budget with 50/80/100-percent alerts. The Agent Platform API is
+  enabled and the bound runtime identity has least-privilege
+  `roles/aiplatform.expressUser`. Its existing authorization key remains
+  service-account-bound, restricted to the standalone Gemini Developer API and
+  Railway's three staging static outbound IPs, and stored only in Railway
+  staging and the operator Keychain. A standard Agent Platform-only key was
+  proven insufficient with `401` because it had no bound IAM principal and was
+  revoked before activation. The staging AI project now has a project-only
+  managed-policy override whose complete allowlist is the existing standalone
+  Gemini API plus Agent Platform. A separate Agent Platform authorization key is
+  bound to the same runtime identity, limited to `aiplatform.googleapis.com` and
+  Railway's three addresses, and stored in Railway with deploy suppression plus
+  the operator Keychain. A first standard key whose value appeared in CLI output
+  was revoked immediately before use or storage. Sentry and PostHog credentials
+  remain unprovisioned.
 
 ## Release gates still requiring an owner or external system
 
@@ -313,7 +394,20 @@
   city result without `postalAddress.regionCode`; Google aggregate telemetry
   confirmed a populated `200`, and no raw artifact was retained. The corrected
   rerun passed end to end with policy-safe persistence and sanitized evidence,
-  and pull request #3 is merged. The budgeted pinned-model Gemini evaluation is
-  the next provider objective and remains an explicit paid-live-evaluation gate.
+  and pull request #3 is merged. Three pinned-model Gemini candidates passed
+  public CI, and the isolated billed AI project, budget, and final restricted
+  authorization key are provisioned. Their Developer API live evaluators
+  stopped before inference at zero reported cost: first on generated schema keywords, then on
+  unavailable Gemini 2.5 generation, and finally on Gemini 3.1 strict-object
+  metadata followed by generic `429 RESOURCE_EXHAUSTED`. The key is restored to
+  Railway-only restrictions. Agent Platform candidate `0b7de266` also passed
+  public CI; its first evaluation stopped at `401`, zero tokens, and `$0` because
+  a standard key has no IAM principal. The owner approved a project-only policy
+  allowance and a new bound authorization key. After the enum and multimodal
+  role corrections, exact candidate `2eb428a05913c60dd1af1ae59fdd79fb233c5ede`
+  passed public CI, the six-case paid evaluation, and sanitized two-user staging
+  evidence. Staging now runs live Places and live Agent Platform Gemini. The
+  superseded Developer API key is revoked; the active bound key is restricted
+  to Agent Platform and Railway's three static egress addresses.
 - Obtain explicit approval before any production migration, deployment, EAS
   build/submission, paid live-AI evaluation, or cohort invitation.

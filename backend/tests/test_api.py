@@ -1,9 +1,11 @@
+import io
 from datetime import UTC, datetime, timedelta
 from types import SimpleNamespace
 
 import pytest
 from fastapi.responses import JSONResponse
 from httpx import ASGITransport, AsyncClient
+from PIL import Image
 from sqlalchemy import func, select
 
 from main import app
@@ -22,7 +24,9 @@ from tableus.models import (
     Review,
     Vote,
 )
+from tableus.providers.base import AiCallUsage
 from tableus.providers.deterministic import DeterministicPlacesProvider
+from tableus.providers.google_live import AiProviderError
 from tableus.security import hash_value, issue_redemption_token
 
 _idempotency_500_calls = {"count": 0}
@@ -238,6 +242,7 @@ async def test_provider_usage_summary_is_aggregate_only(client: AsyncClient) -> 
                 latency_ms=10,
                 input_units=2,
                 output_units=4,
+                estimated_cost_usd=0.00001234,
             )
         )
         await session.commit()
@@ -255,7 +260,179 @@ async def test_provider_usage_summary_is_aggregate_only(client: AsyncClient) -> 
         "operation_count",
         "input_units",
         "output_units",
+        "estimated_cost_usd",
     }
+    assert google["estimated_cost_usd"] == pytest.approx(0.00001234)
+
+
+def test_live_ai_rate_limits_are_per_user_and_global(monkeypatch) -> None:
+    monkeypatch.setattr(
+        tableus_api,
+        "get_settings",
+        lambda: SimpleNamespace(ai_provider_mode="live"),
+    )
+    tableus_api._ai_user_windows.clear()
+    tableus_api._ai_global_window.clear()
+    for _ in range(5):
+        tableus_api._consume_ai_limit("ai-rate-user")
+    with pytest.raises(Exception) as per_user:
+        tableus_api._consume_ai_limit("ai-rate-user")
+    assert per_user.value.status_code == 429
+
+    tableus_api._ai_user_windows.clear()
+    tableus_api._ai_global_window.clear()
+    for user_index in range(6):
+        for _ in range(5):
+            tableus_api._consume_ai_limit(f"ai-global-user-{user_index}")
+    with pytest.raises(Exception) as global_limit:
+        tableus_api._consume_ai_limit("ai-one-more-user")
+    assert global_limit.value.status_code == 429
+
+
+@pytest.mark.asyncio
+async def test_live_ai_rolling_budget_rejects_before_provider_call(monkeypatch) -> None:
+    monkeypatch.setattr(
+        tableus_api,
+        "get_settings",
+        lambda: SimpleNamespace(ai_provider_mode="live", ai_runtime_max_usd_30d=4.0),
+    )
+    tableus_api._ai_reserved_usd = 0
+    async with SessionFactory() as session:
+        session.add(
+            ProviderUsage(
+                provider="gemini",
+                operation="recommend",
+                model="gemini-3.1-flash-lite",
+                latency_ms=10,
+                estimated_cost_usd=3.99,
+            )
+        )
+        await session.commit()
+    with pytest.raises(Exception) as captured:
+        await tableus_api._reserve_ai_budget()
+    assert captured.value.status_code == 429
+
+
+@pytest.mark.asyncio
+async def test_ai_failure_does_not_commit_recommendations_or_taste(
+    client: AsyncClient, monkeypatch
+) -> None:
+    created = await client.post(
+        "/api/v1/plans",
+        headers=headers("demo-organizer"),
+        json={
+            "title": "AI failure dinner",
+            "location_label": "Boston, MA",
+            "latitude": 42.3601,
+            "longitude": -71.0589,
+        },
+    )
+    plan_id = created.json()["data"]["plan"]["id"]
+    await client.post(
+        f"/api/v1/plans/{plan_id}/join",
+        headers=headers("demo-guest"),
+        json={"share_token": created.json()["data"]["share_token"]},
+    )
+
+    class FailingAi:
+        name = "gemini"
+        model = "gemini-3.1-flash-lite"
+
+        async def _fail(self, operation, usage):
+            if usage:
+                await usage(AiCallUsage(operation, 1, 20, 0, 0.000002, True))
+            raise AiProviderError(
+                "Gemini returned invalid data",
+                kind="invalid_output",
+                attempts=1,
+                input_tokens=20,
+                estimated_cost_usd=0.000002,
+            )
+
+        async def recommend(self, query, constraints, places, usage=None):
+            return await self._fail("recommend", usage)
+
+        async def regenerate_taste(self, reviews, usage=None):
+            return await self._fail("regenerate_taste", usage)
+
+    monkeypatch.setattr(tableus_api, "get_ai_provider", lambda: FailingAi())
+    recommendation = await client.post(
+        f"/api/v1/plans/{plan_id}/recommendations",
+        headers=headers("demo-organizer"),
+        json={"query": "group-friendly dinner"},
+    )
+    assert recommendation.status_code == 502
+    before = (
+        await client.get("/api/v1/taste-profile", headers=headers("demo-organizer"))
+    ).json()["data"]["preferences_text"]
+    taste = await client.post(
+        "/api/v1/taste-profile/regenerate", headers=headers("demo-organizer"), json={}
+    )
+    assert taste.status_code == 502
+    after = (
+        await client.get("/api/v1/taste-profile", headers=headers("demo-organizer"))
+    ).json()["data"]["preferences_text"]
+    assert after == before
+    async with SessionFactory() as session:
+        run_count = await session.scalar(
+            select(func.count())
+            .select_from(RecommendationRun)
+            .where(RecommendationRun.plan_id == plan_id)
+        )
+        errors = list(
+            (
+                await session.scalars(
+                    select(ProviderUsage).where(
+                        ProviderUsage.provider == "gemini",
+                        ProviderUsage.operation.in_(
+                            ["recommend.error", "regenerate_taste.error"]
+                        ),
+                    )
+                )
+            ).all()
+        )
+    assert run_count == 0
+    assert len(errors) == 2
+
+
+@pytest.mark.asyncio
+async def test_food_analysis_resizes_and_strips_input_before_provider(
+    client: AsyncClient, monkeypatch
+) -> None:
+    observed = {}
+
+    class CapturingAi:
+        name = "deterministic"
+
+        async def analyze_food(self, image_bytes, media_type, usage=None):
+            with Image.open(io.BytesIO(image_bytes)) as sanitized:
+                observed["size"] = sanitized.size
+                observed["format"] = sanitized.format
+                observed["metadata"] = sanitized.getexif()
+            observed["media_type"] = media_type
+            if usage:
+                await usage(AiCallUsage("analyze_food", 0, 0, 0, 0, False))
+            return {
+                "dish": "Sample dish",
+                "cuisine": "Contemporary",
+                "description": "A visible plated dish.",
+                "flavor_tags": ["savory"],
+            }
+
+    source = Image.new("RGB", (2400, 1800), "#c9432d")
+    source_bytes = io.BytesIO()
+    source.save(source_bytes, format="JPEG", exif=Image.Exif())
+    monkeypatch.setattr(tableus_api, "get_ai_provider", lambda: CapturingAi())
+    response = await client.post(
+        "/api/v1/food/analyze",
+        headers=headers("demo-organizer"),
+        files={"image": ("dish.jpg", source_bytes.getvalue(), "image/jpeg")},
+    )
+    assert response.status_code == 200
+    assert max(observed["size"]) == 1600
+    assert observed["format"] == "JPEG"
+    assert len(observed["metadata"]) == 0
+    assert observed["media_type"] == "image/jpeg"
 
 
 @pytest.mark.asyncio

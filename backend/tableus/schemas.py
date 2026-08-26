@@ -277,6 +277,7 @@ class ProviderUsageAggregateOut(BaseModel):
     operation_count: int
     input_units: int
     output_units: int
+    estimated_cost_usd: float
 
 
 class ShareTokenOut(BaseModel):

@@ -386,16 +386,78 @@ Keep deterministic providers green while each integration is added:
    content, responses, or keys are introduced.
 2. Review privacy/terms and Google Maps attribution with the responsible owner
    before external beta use.
-3. With explicit paid-live-evaluation approval, run the pinned Gemini fixture
-   subset under the agreed cost ceiling:
+3. After the exact candidate passes deterministic `make ready`, obtain one
+   explicit gate for the public push, isolated `TableUs Staging AI` project,
+   billing, Gemini-only authorization key, paid evaluation, Railway/Vercel
+   deployments, and two returning-code emails. Configure a `$5` monthly alert
+   budget at 50/80/100 percent. Restrict the key to Gemini and Railway's static
+   outbound IPs, then store it only in Railway and the operator Keychain.
+4. With the key available only through the process environment, run the pinned
+   fixture subset under the hard `$0.25` ceiling:
 
    ```bash
-   make ai-eval-live
+   TABLEUS_LIVE_AI_APPROVED=1 make ai-eval-live \
+     SHA=<exact-candidate-sha> EVIDENCE=<sanitized-dir>
    ```
 
-4. Inspect only the sanitized aggregate report. Do not enable silent fallback or
-   raise the budget to make a failing evaluation pass.
-5. Enable Sentry/PostHog last and verify that prohibited personal, location,
+   The checkpoint namespace binds the SHA, pinned model, and frozen fixture
+   hash. Inspect only the sanitized aggregate report; never retain prompts,
+   outputs, images, reviews, provider responses, Place IDs, or credentials. Do
+   not raise the budget or weaken output validation to make a failure pass.
+   Candidate `82c1d45f010a686df8802ab4b8a502731aa1be6f` passed public CI but
+   failed this gate before inference: generated `additionalProperties` metadata
+   caused `400`, and a sanitized corrected-schema probe then received generic
+   `429 RESOURCE_EXHAUSTED` with active linked billing. The key was restored to
+   the three Railway addresses, staging stayed deterministic, and no deployment
+   or returning code followed. Retry only from a new exact-SHA checkpoint after
+   the compatibility fix passes `make ready` and Google inference is usable.
+   Agent Platform candidate
+   `0b7de266d4b053d49267b2ac22bd85052ab3ab8f` passed public CI. Its first
+   evaluation stopped before inference at `401`, zero tokens, and `$0` because a
+   standard key has no IAM principal. The owner approved a project-only managed
+   policy allowlist containing the existing Gemini API plus Agent Platform. A
+   new service-account-bound authorization key restricted to Agent Platform and
+   Railway reached inference; two of six cases passed for `$0.00140175`.
+   Sanitized probes identified recommendation enum drift and a missing user role
+   on multimodal content. Require both corrections, a new `make ready` candidate,
+   and a fresh fully passing checkpoint before deployment or returning codes.
+5. Only after the live evaluator passes, set Railway staging to live AI with
+   `GEMINI_MODEL=gemini-3.1-flash-lite`,
+   `AI_RUNTIME_MAX_USD_30D=4.00`, and `LIVE_AI_MAX_USD=0.25`, deploy Railway and
+   Vercel from the same SHA, and run:
+
+   ```bash
+   make gemini-staging-e2e API_URL=<https-staging-api> \
+     SHA=<exact-candidate-sha> EVIDENCE=<sanitized-dir> \
+     RAILWAY_DEPLOYMENT=<id> VERCEL_DEPLOYMENT=<id>
+   ```
+
+   Provide Supabase public configuration through the environment and enter the
+   two approved account emails/codes only at interactive prompts. Set the three
+   operator confirmation flags only after independently verifying candidate-row
+   persistence, budget alerts, and key restrictions. With the runtime database
+   credential supplied only through the process environment, the read-only
+   candidate/usage check is:
+
+   ```bash
+   cd backend && .venv/bin/python scripts/gemini_staging_evidence.py
+   ```
+
+   It emits only booleans, counts, token totals, and estimated cost. Readiness must report
+   Supabase auth, live Places, live AI, compatibility `live`, and the exact SHA.
+   Restore deterministic AI without changing Places if any check fails.
+   This gate completed at exact SHA
+   `2eb428a05913c60dd1af1ae59fdd79fb233c5ede`: public CI run
+   `32915965276` passed; the live evaluator passed 6/6 for `$0.0018905`;
+   Railway deployment `a1030828-a505-417e-8285-c2b49dbbb39c` and Vercel
+   deployment `dpl_Ad4H9FqVAQJviSkP2KYTKWMkKxbt` are exact-SHA pinned; and
+   the sanitized two-user journey passed with four distinct candidates and
+   aggregate-only provider usage. `tableus-staging.vercel.app` points to the
+   candidate's Preview deployment because this Vercel project's production
+   target also owns `table-us.com`, `www.table-us.com`, and
+   `links.table-us.com`; those production-facing aliases were intentionally
+   left on their prior deployment. The superseded Developer API key is revoked.
+6. Enable Sentry/PostHog last and verify that prohibited personal, location,
    photo, prompt, provider-response, and token data never reaches telemetry.
 
 ## 7. Release decision

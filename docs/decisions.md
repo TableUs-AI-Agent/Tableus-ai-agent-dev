@@ -129,3 +129,74 @@
   component and accepts its `US` short code only when the postal region is
   absent. Any missing, conflicting, or non-US country remains fail-closed, and
   address components are never persisted or emitted to evidence or telemetry.
+- **2026-08-25 (superseded):** Closed-beta Gemini uses only pinned
+  `gemini-2.5-flash-lite` through `google-genai==1.75.0`. Restaurant identities
+  are replaced with request-local aliases before inference, every AI output is
+  schema- and privacy-validated, and there is no silent fallback. Live staging
+  is bounded by per-user/global limits, a database-backed rolling `$4` estimated
+  spend ceiling, and a one-process reservation lock; a future horizontally
+  scaled service requires a durable reservation ledger. Paid evaluation is a
+  separate explicit gate with an exact-SHA/fixture checkpoint and `$0.25` cap.
+- **2026-08-25:** Gemini wire schemas contain only the provider's documented
+  JSON Schema subset. Generated string `minLength`, `maxLength`, `pattern`,
+  `additionalProperties`, and non-semantic `title` metadata are removed before
+  transmission because live endpoints reject those generated forms with `400`;
+  the original strict Pydantic models still validate every parsed response
+  locally, so wire compatibility does not weaken domain, privacy, or safety
+  enforcement.
+- **2026-08-25:** Closed-beta Gemini is pinned to
+  `gemini-3.1-flash-lite` through `google-genai==1.75.0`. Google lists it as the
+  stable replacement for Gemini 2.5 Flash-Lite, which returned `404` for the
+  newly created staging project despite successful authorization and catalog
+  discovery. Cost accounting uses `$0.25` per million input tokens and `$1.50`
+  per million output/thinking tokens. Gemini 3 thinking cannot be fully
+  disabled, so TableUs requests the documented `minimal` level and continues to
+  include thinking tokens in spend limits. This model change requires a new
+  exact-SHA checkpoint namespace and live evaluation before staging activation.
+- **2026-08-25:** A public-CI-green Gemini 3.1 candidate may not deploy merely
+  because request validation succeeds. Paid activation remains fail-closed when
+  Google returns generic `429 RESOURCE_EXHAUSTED`, even with active linked
+  billing and no reported client rate-limit or overload signal. Keep staging AI
+  deterministic, preserve the Railway-only credential restriction, and require
+  a new exact-SHA evaluation after provider capacity becomes usable.
+- **2026-08-25:** TableUs staging uses Gemini Enterprise Agent Platform, Google's
+  evolution of Vertex AI, instead of the standalone Gemini Developer API. Keep
+  `google-genai`, `gemini-3.1-flash-lite`, the global endpoint, strict schemas,
+  and existing spend ceilings; select the SDK's explicit `enterprise=True`
+  transport. Railway authenticates with the existing service-account-bound
+  authorization key restricted to `aiplatform.googleapis.com` and its static
+  egress addresses. The bound identity receives only
+  `roles/aiplatform.expressUser`. This permits eligible Google Cloud credits and
+  avoids depending on AI Studio prepaid billing without adding Agent Runtime,
+  Agent Studio, grounding, tools, or persistent agent state.
+- **2026-08-25:** A standard API key restricted to
+  `aiplatform.googleapis.com` is not an acceptable Agent Platform runtime
+  credential. Exact-SHA evidence returned `401` with zero tokens because the key
+  has no bound IAM principal, matching Google's current authentication
+  documentation. The required service-account-bound authorization key cannot be
+  created while the managed `disableServiceAccountApiKeyCreation` policy omits
+  Agent Platform. The unused standard key was revoked and the prior Developer
+  API credential restored without deployment. Staging remains deterministic
+  until the owner approves either a narrowly scoped policy allowance, a
+  workload-identity-capable runtime, or continued standalone Developer API
+  billing.
+- **2026-08-25:** For staging validation only, the project-level managed policy
+  allowlist preserves `generativelanguage.googleapis.com` and adds only
+  `aiplatform.googleapis.com`. The Agent Platform key is bound to the existing
+  service account whose sole project role is `roles/aiplatform.expressUser`, and
+  is restricted to Agent Platform plus Railway's three static IPs. Production
+  credential architecture remains a later gate. Live contract failures do not
+  weaken local validation: recommendation outcomes and request-local candidate
+  keys are represented as provider enums, while Pydantic remains authoritative;
+  multimodal content explicitly declares the user role.
+- **2026-08-25:** Exact candidate
+  `2eb428a05913c60dd1af1ae59fdd79fb233c5ede` is the validated live-Gemini
+  staging baseline. It passed public CI, the frozen six-case paid evaluation,
+  and sanitized two-user evidence with live Places and live Agent Platform.
+  The active service-account-bound key remains restricted to
+  `aiplatform.googleapis.com` and Railway's three static IPs; the superseded
+  Developer API key is revoked. The Vercel staging alias uses an exact-SHA
+  Preview deployment because the project's Production target also controls
+  production-facing TableUs domains. Moving those domains or using a Production
+  deployment requires a separate production gate; a dedicated staging Vercel
+  project should be considered before beta release.
