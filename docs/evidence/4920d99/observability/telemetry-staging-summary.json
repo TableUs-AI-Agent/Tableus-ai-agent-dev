@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "sha": "4920d99b11b06c4e0aa1c4afc3f91763bb53ee1c",
+  "readiness_passed": true,
+  "sentry_project_count": 3,
+  "sentry_issue_counts": {
+    "tableus-api-staging": 1,
+    "tableus-web-staging": 1,
+    "tableus-mobile-staging": 1
+  },
+  "posthog_event_count": 4,
+  "posthog_platforms": [
+    "android",
+    "api",
+    "ios",
+    "web"
+  ],
+  "anonymous_mode": true,
+  "error_only_mode": true,
+  "raw_payloads_retained": false
+}

@@ -2,17 +2,16 @@
 
 ## Status
 
-Multiple exact candidates reached the approved staging gate and created the
-isolated resources. Candidate `932ac249421b190f932fc23f6e489593de88fe2a`
-proved exact-SHA Sentry delivery for API, web, and mobile and anonymous iOS and
-Android PostHog delivery, but the cumulative canary exposed two remaining
-fail-closed defects: the web sanitizer removed PostHog JS's required public
-transport token, and the API canary inherited the calling mobile platform.
-Both are corrected with regression tests. A replacement candidate on
-`codex/privacy-safe-observability`, branched from merged `main` at
-`3820297ff3a91a04695a4f7187bd8fc850a234dd`, must pass readiness before fresh
-exact-SHA deployments and mobile artifacts. All earlier candidates and their
-incomplete evidence are superseded.
+Complete in staging at exact candidate
+`4920d99b11b06c4e0aa1c4afc3f91763bb53ee1c`. Railway deployment
+`bed50df4-5ced-465f-8492-a24147e8f663` and Vercel deployment
+`dpl_4M7eSvsht9UNB2wqmCjZ1pVUmHiD` are pinned to the candidate. Inspected,
+memory-bounded local iOS and Android telemetry-test artifacts emitted sanitized
+canaries, the preserved approved iOS session exercised the authenticated API
+canary without a new OTP, and aggregate verification found one exact-release
+issue in each Sentry project plus all four PostHog platforms. Sanitized evidence
+is in `docs/evidence/4920d99/observability/`. Earlier candidates and incomplete
+evidence remain superseded. Public merge remains a separate explicit gate.
 
 ## Objective
 
@@ -53,11 +52,10 @@ isolated US PostHog staging project for anonymous allowlisted events.
 
 ## External gate
 
-After the candidate passes `make ready`, request explicit approval for the public
-push, three free-tier Sentry staging projects, one free-tier US PostHog staging
-project, their runtime/build/read-only secrets, exact-SHA Railway/Vercel
-deployment, and memory-bounded local iOS/Android telemetry-test builds. Merging
-is a separate explicit approval.
+The approved public push, isolated staging resources, exact-SHA Railway/Vercel
+deployments, memory-bounded local artifacts, and sanitized canaries are complete.
+Merging `codex/privacy-safe-observability` to `main` remains a separate explicit
+approval.
 
 ## Boundaries
 

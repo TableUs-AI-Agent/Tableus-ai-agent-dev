@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "build_runner": "eas-local-build-plugin",
+  "platform": "android",
+  "profile": "telemetry-test-android",
+  "candidate_sha": "4920d99b11b06c4e0aa1c4afc3f91763bb53ee1c",
+  "build_id": "local-android-4920d99",
+  "artifact_sha256": "f1ec31c631ec2b06e1ec4d53369b87f78b586822b2fefcb2375ad4da74d131a0",
+  "eas_cli_version": "22.4.0",
+  "host": {
+    "os": "darwin",
+    "architecture": "arm64"
+  },
+  "artifact_inspection_passed": true
+}

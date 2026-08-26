@@ -216,3 +216,9 @@
   required ingestion transport field; it is not a secret or an analytics
   identity. Backend-generated events explicitly report platform `api` rather
   than inheriting the requesting web or mobile platform.
+- **2026-08-26:** Keep PostHog's browser bot filtering enabled. Its browser SDK
+  drops Playwright's default headless identity before the application
+  `before_send` sanitizer, so an automated web canary must use a normal Chrome
+  identity or a headed browser and must verify both a successful ingestion
+  response and the aggregate exact-release event. Disabling bot filtering or
+  injecting a provider event directly is not acceptable product evidence.

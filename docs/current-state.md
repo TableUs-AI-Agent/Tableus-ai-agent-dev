@@ -247,21 +247,23 @@
   active until 2026-08-27; its plaintext is unavailable and it should be revoked
   or allowed to expire before external beta access.
 - Railway staging project `tableus-staging`, environment `staging`, and service
-  `api` are provisioned. Deployment `d9149f0e-080b-441d-8d17-f6498e0ba030`
+  `api` are provisioned. Deployment `bed50df4-5ced-465f-8492-a24147e8f663`
   serves `https://api-staging-3795.up.railway.app` from exact SHA
-  `4a790b4ee40a12cdba8540fb12da586b3373a895`; readiness reports Supabase
-  Auth, live Places, deterministic AI, and `mixed`. High-availability static
+  `4920d99b11b06c4e0aa1c4afc3f91763bb53ee1c`; readiness reports Supabase
+  Auth, live Places, live Agent Platform Gemini, `provider_mode=live`, and the
+  gated staging telemetry configuration. High-availability static
   outbound IPs are active. Railway holds the runtime database credential,
-  application secret, and the Places-only server key restricted to those IPs.
+  application secret, Places-only server key, Agent Platform authorization key,
+  and staging telemetry runtime values restricted to their intended services.
   The first CLI-created key was revoked immediately after its creation response
   exposed the value; only the non-exposed restricted replacement remains in
   Railway and the operator Keychain.
-- Vercel staging client variables and the canonical verified-link deployment
-  are live from exact SHA
-  `4a790b4ee40a12cdba8540fb12da586b3373a895` at
-  `https://tableus-staging.vercel.app` and `https://links.table-us.com`. The
-  dedicated staging project also retains its pre-existing `table-us.com` and
-  `www.table-us.com` aliases. An authenticated
+- Vercel staging client variables and `https://tableus-staging.vercel.app` are
+  live from exact SHA `4920d99b11b06c4e0aa1c4afc3f91763bb53ee1c`
+  through deployment `dpl_4M7eSvsht9UNB2wqmCjZ1pVUmHiD`. The production-facing
+  `https://links.table-us.com`, `table-us.com`, and `www.table-us.com` aliases
+  remain on their prior validated deployment and were not moved by this staging
+  gate. An authenticated
   Browser session showed the active `Jung` profile after the Supabase session
   changed, verifying the deployed identity-refresh fix. The hosted two-user
   journey then covered plan creation, private-link joining, per-user constraints,
@@ -273,10 +275,11 @@
 - Expo project `@tableus/tableus` is provisioned as
   `0601c3b9-0082-454c-b636-45a1fe377f7b`. Its preview environment contains only
   the staging API URL, Supabase URL/publishable client key, EAS project ID, and
-  staging link host, plus the non-secret Sentry native-upload disable flag used
-  when no Sentry project is configured. Preview profiles remain Supabase-
-  authenticated; the two test profiles explicitly enable deterministic demo
-  mode. All checked-in workflows validate after replacing paid EAS-hosted Maestro
+  staging link host, plus the staging-only Sentry/PostHog public client values
+  and source-map upload configuration required by telemetry-test builds. Preview
+  profiles remain Supabase-authenticated; deterministic test profiles explicitly
+  enable demo mode, while telemetry-test profiles do not. All checked-in
+  workflows validate after replacing paid EAS-hosted Maestro
   jobs with build-artifact jobs for local Maestro execution. The earlier
   `bc0d2f3` artifacts remain recorded as invalid because they sent a demo identity
   to Supabase-authenticated staging. Exact-SHA replacement builds
@@ -319,8 +322,10 @@
   bound to the same runtime identity, limited to `aiplatform.googleapis.com` and
   Railway's three addresses, and stored in Railway with deploy suppression plus
   the operator Keychain. A first standard key whose value appeared in CLI output
-  was revoked immediately before use or storage. Sentry and PostHog credentials
-  remain unprovisioned.
+  was revoked immediately before use or storage. Three isolated free-tier Sentry
+  staging projects and one isolated US PostHog staging project are provisioned.
+  Runtime/build credentials remain scoped to staging, and separate read-only
+  evidence credentials remain in the operator Keychain.
 
 ## Release gates still requiring an owner or external system
 
@@ -412,7 +417,7 @@
 - Obtain explicit approval before any production migration, deployment, EAS
   build/submission, paid live-AI evaluation, or cohort invitation.
 
-## Privacy-safe observability candidate
+## Privacy-safe observability staging validation
 
 - Web and mobile now use random process-memory telemetry session UUIDs. The API
   accepts them only as anonymous request context and never derives analytics
@@ -424,18 +429,25 @@
   breadcrumbs disabled. Shared scrubbers retain stack frames and exact-SHA
   release correlation while removing messages, users, headers, bodies, query
   strings, private URL segments, and arbitrary context.
-- Telemetry remains off locally and in deterministic CI. Isolated staging
-  resource creation, secret configuration, exact-SHA deployment/builds, and
-  live canary evidence remain an explicit external gate.
-- The approved staging passes created the isolated resources and candidate
-  `932ac249421b190f932fc23f6e489593de88fe2a` proved exact-SHA Sentry delivery
-  for API, web, and mobile plus anonymous iOS/Android PostHog delivery. Live
-  evidence found and corrected four fail-closed issues before acceptance: a
-  malformed public PostHog key, a missing random anonymous `distinct_id`, web
-  removal of PostHog JS's required public transport token, and an API canary
-  that inherited its caller's platform instead of recording `api`. Regression
-  tests now preserve only the validated public `phc_` transport field, keep the
-  random process-memory UUID as `distinct_id`, and force the backend canary's
-  platform to `api`. The aggregate evidence reader uses read-only HogQL. A new
-  exact-SHA deployment/build gate is required before this packet can close;
-  all earlier candidates and artifacts are superseded.
+- Telemetry remains off locally and in deterministic CI. Staging telemetry is
+  gated explicitly and uses isolated resources; production remains disabled.
+- The approved staging passes found and corrected four fail-closed issues before
+  acceptance: a malformed public PostHog key, a missing random anonymous
+  `distinct_id`, web removal of PostHog JS's required public transport token,
+  and an API canary that inherited its caller's platform instead of recording
+  `api`. Regression tests preserve only the validated public `phc_` transport
+  field, keep the random process-memory UUID as `distinct_id`, and force the
+  backend canary's platform to `api`.
+- Exact candidate `4920d99b11b06c4e0aa1c4afc3f91763bb53ee1c` is deployed on
+  Railway and Vercel and produced inspected, sequential, memory-bounded local
+  iOS and ARM64 Android artifacts. The preserved approved iOS session exercised
+  the authenticated API canary without a new OTP; the signed-out Android client
+  correctly emitted client telemetry while its protected API call failed.
+  Aggregate read-only evidence records one exact-release issue in each of the
+  three Sentry projects and PostHog events for `web`, `ios`, `android`, and
+  `api`, with anonymous/error-only modes and no raw payload retained. PostHog's
+  browser bot filter discarded the first default-headless Playwright attempt
+  before `before_send`; a normal Chrome identity produced direct successful
+  ingestion without weakening the filter or changing application code.
+  Sanitized receipts and screenshots are in
+  `docs/evidence/4920d99/observability/`. Public merge remains an explicit gate.
