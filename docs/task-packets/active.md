@@ -2,41 +2,17 @@
 
 ## Status
 
-Implementation continues on `codex/gemini-agent-platform` after exact candidate
-`0b7de266d4b053d49267b2ac22bd85052ab3ab8f`, based on the verified
-schema-correction commit `0c92aaa0534551cbb0f4f6603e678ee7d87ab3ab`.
-Candidates `90691b1c53812fc140da465e1b5e362c781f1139`,
-`e89d5c4f1664ab0ec0e7d5bec3dd196439283aeb`, and
-`82c1d45f010a686df8802ab4b8a502731aa1be6f` passed public CI. Their approved
-live checks consumed zero reported tokens and `$0`: the first exposed unsupported
-wire-schema keywords; the second proved the restricted credential, billing
-tier, project import, and model catalog but received `404` for Gemini 2.5
-Flash-Lite; and the third isolated an additional Gemini 3.1 rejection of
-Pydantic `additionalProperties` metadata. A sanitized compatibility probe proved
-that removing it and non-semantic titles advances the request past schema
-validation. Plain and corrected-schema generation then returned generic
-`429 RESOURCE_EXHAUSTED` despite active linked billing. Google has since renamed
-Vertex AI to Gemini Enterprise Agent Platform and explicitly makes its Cloud
-platform eligible for new-customer Google Cloud credits, while Welcome credits
-remain ineligible for the standalone Gemini Developer API. The adapter now uses
-the SDK's explicit `enterprise=True` transport and fail-closed readiness reports
-`ai_backend=agent-platform`. Staging AI remains deterministic, no deployment or
-returning code was sent, and candidate
-`0b7de266d4b053d49267b2ac22bd85052ab3ab8f` passes cumulative `make ready`
-and public CI run `32911321560`.
-The Agent Platform API and `roles/aiplatform.expressUser` grant are active in the
-isolated project. Retargeting the existing service-account-bound key was denied
-by the managed `disableServiceAccountApiKeyCreation` organization policy; the
-key therefore remains restricted to the standalone Developer API and Railway's
-three addresses. The candidate's first Agent Platform evaluation stopped before
-inference with `401`, zero tokens, and `$0`; a standard key has no IAM principal.
-The owner approved a project-only allowlist addition for Agent Platform and a
-new bound, Railway-restricted key. A repeated evaluation reached inference and
-passed two of six cases for `$0.00140175`. Sanitized probes identified an
-unconstrained recommendation outcome and missing multimodal user role. The local
-adapter now emits enum-backed outcomes and request-local candidate keys and sets
-`role="user"` on photo content. Staging remains deterministic pending a new
-exact-SHA candidate and fully passing evaluation.
+Completed on `codex/gemini-agent-platform` at exact candidate
+`2eb428a05913c60dd1af1ae59fdd79fb233c5ede`. Public CI run `32915965276`
+passed. The frozen six-case Agent Platform evaluation passed 6/6 with six total
+attempts for `$0.0018905`. Railway deployment
+`a1030828-a505-417e-8285-c2b49dbbb39c` and Vercel deployment
+`dpl_Ad4H9FqVAQJviSkP2KYTKWMkKxbt` are pinned to the exact SHA. Sanitized
+two-user staging evidence passed with live Places and live Gemini, four distinct
+candidates, policy-safe candidate rows, and aggregate-only usage accounting.
+The active service-account-bound authorization key is limited to
+`aiplatform.googleapis.com` and Railway's three static egress addresses; the
+superseded Developer API key is revoked.
 
 ## Objective
 
@@ -83,12 +59,9 @@ enabling Gemini on staging.
 
 ## External gate
 
-The isolated project, active linked billing, budget alerts, Agent Platform API,
-project-only managed-policy allowlist, least-privilege runtime identity, and
-bound Railway-restricted authorization key are provisioned. Freeze a new exact
-candidate only after focused checks and `make ready`, then request the explicit
-public-push and paid-evaluation gate. Railway/Vercel deployment and returning
-codes remain conditional on a fully passing evaluation and staging journey.
+The approved external gate is complete. No production deployment, store action,
+new invite, migration, telemetry activation, account deletion, or cohort
+invitation occurred. Merging this objective remains a separate owner gate.
 
 ## Boundaries
 

@@ -446,6 +446,17 @@ Keep deterministic providers green while each integration is added:
    It emits only booleans, counts, token totals, and estimated cost. Readiness must report
    Supabase auth, live Places, live AI, compatibility `live`, and the exact SHA.
    Restore deterministic AI without changing Places if any check fails.
+   This gate completed at exact SHA
+   `2eb428a05913c60dd1af1ae59fdd79fb233c5ede`: public CI run
+   `32915965276` passed; the live evaluator passed 6/6 for `$0.0018905`;
+   Railway deployment `a1030828-a505-417e-8285-c2b49dbbb39c` and Vercel
+   deployment `dpl_Ad4H9FqVAQJviSkP2KYTKWMkKxbt` are exact-SHA pinned; and
+   the sanitized two-user journey passed with four distinct candidates and
+   aggregate-only provider usage. `tableus-staging.vercel.app` points to the
+   candidate's Preview deployment because this Vercel project's production
+   target also owns `table-us.com`, `www.table-us.com`, and
+   `links.table-us.com`; those production-facing aliases were intentionally
+   left on their prior deployment. The superseded Developer API key is revoked.
 6. Enable Sentry/PostHog last and verify that prohibited personal, location,
    photo, prompt, provider-response, and token data never reaches telemetry.
 

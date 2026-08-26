@@ -189,3 +189,14 @@
   weaken local validation: recommendation outcomes and request-local candidate
   keys are represented as provider enums, while Pydantic remains authoritative;
   multimodal content explicitly declares the user role.
+- **2026-08-25:** Exact candidate
+  `2eb428a05913c60dd1af1ae59fdd79fb233c5ede` is the validated live-Gemini
+  staging baseline. It passed public CI, the frozen six-case paid evaluation,
+  and sanitized two-user evidence with live Places and live Agent Platform.
+  The active service-account-bound key remains restricted to
+  `aiplatform.googleapis.com` and Railway's three static IPs; the superseded
+  Developer API key is revoked. The Vercel staging alias uses an exact-SHA
+  Preview deployment because the project's Production target also controls
+  production-facing TableUs domains. Moving those domains or using a Production
+  deployment requires a separate production gate; a dedicated staging Vercel
+  project should be considered before beta release.

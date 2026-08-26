@@ -22,29 +22,15 @@ retained in-memory join intent, and rotated-link rejection passed on Android and
   `4a790b4ee40a12cdba8540fb12da586b3373a895`, including mixed-provider
   deployment, restricted egress/key configuration, fail-closed US location
   resolution, policy-safe persistence, and sanitized two-user evidence.
-  Pull request #3 is merged. Budgeted Gemini hardening is implemented on
-  `codex/gemini-staging-validation`. Two public candidates passed CI, and their
-  live checks stopped before inference with zero reported tokens and `$0`: the
-  first exposed unsupported generated string-schema keywords, while the second
-  proved the cloud configuration but found that new projects cannot generate
-  with Gemini 2.5 Flash-Lite. The owner approved Google's stable replacement,
-  pinned `gemini-3.1-flash-lite`, including its current cost accounting and
-  minimal-thinking behavior. Exact candidate
-  `82c1d45f010a686df8802ab4b8a502731aa1be6f` passed public CI, but its live gate
-  exposed unsupported strict-object wire metadata and then a generic Google
-  `429 RESOURCE_EXHAUSTED` before inference. The compatibility fix is local;
-  TableUs therefore tested the same pinned model and evaluation contract on
-  Gemini Enterprise Agent Platform, the renamed evolution of Vertex AI. Exact
-  candidate `0b7de266d4b053d49267b2ac22bd85052ab3ab8f` passed public CI, but
-  its first six-case Agent Platform evaluation stopped before inference at
-  `401`, zero tokens, and `$0`. The owner approved a project-only policy
-  allowance for Agent Platform alongside the existing Gemini API allowance, and
-  a new service-account-bound, Railway-restricted authorization key reached
-  inference. That repeat passed two of six cases for `$0.00140175`. Sanitized
-  probes isolated an unconstrained recommendation outcome and a missing user
-  role on multimodal content; enum-backed recommendation fields and the explicit
-  photo role are now implemented locally. The next staging step is a new
-  exact-SHA candidate and fully passing evaluation before deployment.
+  Pull request #3 is merged. Budgeted Gemini hardening and Agent Platform staging
+  validation are complete from exact candidate
+  `2eb428a05913c60dd1af1ae59fdd79fb233c5ede`. Public CI, the frozen six-case
+  paid evaluation, exact-SHA Railway/Vercel deployment, and sanitized two-user
+  staging evidence are green. Staging now runs Supabase auth, live Places, and
+  live Gemini with the restricted service-account-bound key and application
+  spend ceiling. The next milestone is closed-beta readiness: privacy/security
+  acceptance, telemetry validation, cumulative web/iOS/Android staging smoke
+  evidence, and owner-reviewed release/rollback decisions.
 
 The active gate sequence and required owner inputs are maintained in
 `docs/release-runbook.md`.

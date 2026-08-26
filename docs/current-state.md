@@ -211,10 +211,18 @@
   failed an unconstrained `outcome` value and the photo request returned `400`.
   Sanitized probes isolated both defects: recommendation wire output needs enum
   constraints, and multimodal `Content` needs `role="user"`. The local adapter
-  now adds request-local candidate enums, an outcome enum, and the explicit
-  photo role. No deployment or returning-sign-in message occurred. Staging
-  remains on live Places and deterministic AI at SHA `4a790b4`; a new candidate
-  and fully passing evaluation are required.
+  adds request-local candidate enums, an outcome enum, and the explicit photo
+  role. Exact candidate `2eb428a05913c60dd1af1ae59fdd79fb233c5ede`
+  passed public CI run `32915965276`. Its frozen six-case Agent Platform
+  evaluation passed 6/6 in one attempt per case for `$0.0018905`, including
+  grounded recommendations, prompt injection, constraints, synthetic photo,
+  and synthetic taste cases. Railway deployment
+  `a1030828-a505-417e-8285-c2b49dbbb39c` and Vercel deployment
+  `dpl_Ad4H9FqVAQJviSkP2KYTKWMkKxbt` are pinned to that SHA. Readiness reports
+  Supabase auth, live Places, live AI, `provider_mode=live`, and
+  `ai_backend=agent-platform`. Sanitized two-user evidence proves four distinct
+  grounded candidates, policy-safe candidate persistence, and aggregate token
+  and cost accounting. Staging now runs live Places and live Gemini.
 
 ## External dependencies not provisioned in source
 
@@ -395,12 +403,11 @@
   Railway-only restrictions. Agent Platform candidate `0b7de266` also passed
   public CI; its first evaluation stopped at `401`, zero tokens, and `$0` because
   a standard key has no IAM principal. The owner approved a project-only policy
-  allowance and a new bound authorization key. The repeated evaluation reached
-  inference and passed two of six cases for `$0.00140175`; sanitized probes then
-  isolated enum-constrained recommendation output and an explicit multimodal
-  user role as the remaining corrections. Those corrections are implemented
-  locally. Staging AI remains deterministic, and deployment plus sanitized
-  two-user evidence remain conditional on a new fully passing exact-SHA
-  evaluation.
+  allowance and a new bound authorization key. After the enum and multimodal
+  role corrections, exact candidate `2eb428a05913c60dd1af1ae59fdd79fb233c5ede`
+  passed public CI, the six-case paid evaluation, and sanitized two-user staging
+  evidence. Staging now runs live Places and live Agent Platform Gemini. The
+  superseded Developer API key is revoked; the active bound key is restricted
+  to Agent Platform and Railway's three static egress addresses.
 - Obtain explicit approval before any production migration, deployment, EAS
   build/submission, paid live-AI evaluation, or cohort invitation.
