@@ -192,11 +192,18 @@
   implementation now selects Gemini Enterprise Agent Platform explicitly through
   `google-genai`'s `enterprise=True` transport, pins readiness/evaluation evidence
   to `agent-platform`, and retains the same model, privacy guards, schemas, and
-  spend ceilings. The underlying service is `aiplatform.googleapis.com`; Agent
-  Runtime, tools, grounding, and persistent agent state are not introduced. A
-  new exact-SHA candidate and evaluation namespace are required before another
-  live attempt or deployment. Staging remains on deterministic AI and no
-  returning-sign-in messages were sent.
+  spend ceilings. Exact candidate
+  `0b7de266d4b053d49267b2ac22bd85052ab3ab8f` passed public CI run
+  `32911321560`. Its capped live evaluation stopped before inference with six
+  terminal failures, zero tokens, and `$0`; a minimal sanitized request then
+  isolated `401` authentication. Google documents that standard API keys have
+  no IAM principal and cannot authenticate Agent Platform, while the required
+  service-account-bound authorization key is blocked by the managed
+  `disableServiceAccountApiKeyCreation` policy unless Agent Platform is
+  allowlisted. The unused standard key was revoked, its Railway and Keychain
+  values were removed, and Railway's prior Developer API key was restored with
+  deploy suppression. No deployment or returning-sign-in message occurred.
+  Staging remains on live Places and deterministic AI at SHA `4a790b4`.
 
 ## External dependencies not provisioned in source
 
@@ -288,9 +295,11 @@
   staging and the operator Keychain. Google denied changing that key's API
   target to Agent Platform because the managed service-account API-key policy
   does not currently allow `aiplatform.googleapis.com`; no organization-policy
-  override has been applied. A first key whose
-  value appeared in CLI output was revoked before use or storage. Sentry and
-  PostHog credentials remain unprovisioned.
+  override has been applied. A standard Agent Platform-only key was then proven
+  insufficient with `401` because it has no bound IAM principal and was revoked
+  before activation. A first standard key whose value appeared in CLI output
+  was also revoked immediately before use or storage. Sentry and PostHog
+  credentials remain unprovisioned.
 
 ## Release gates still requiring an owner or external system
 
@@ -366,12 +375,17 @@
   rerun passed end to end with policy-safe persistence and sanitized evidence,
   and pull request #3 is merged. Three pinned-model Gemini candidates passed
   public CI, and the isolated billed AI project, budget, and final restricted
-  authorization key are provisioned. Their live evaluators stopped before
-  inference at zero reported cost: first on generated schema keywords, then on
+  authorization key are provisioned. Their Developer API live evaluators
+  stopped before inference at zero reported cost: first on generated schema keywords, then on
   unavailable Gemini 2.5 generation, and finally on Gemini 3.1 strict-object
   metadata followed by generic `429 RESOURCE_EXHAUSTED`. The key is restored to
-  Railway-only restrictions and staging AI remains deterministic. A new exact-
-  SHA push/evaluation, Railway/Vercel deployment, and sanitized two-user live-AI
-  evidence remain explicit external gates.
+  Railway-only restrictions. Agent Platform candidate `0b7de266` also passed
+  public CI but its six-case evaluation stopped at `401`, zero tokens, and `$0`:
+  the standard key has no IAM principal, while creating the required bound key
+  is blocked by managed organization policy. Staging AI remains deterministic.
+  Choosing a narrowly scoped policy allowance, a workload-identity-capable
+  runtime, or the standalone Developer API is now an owner architecture gate;
+  deployment and sanitized two-user live-AI evidence remain conditional on a
+  later passing exact-SHA evaluation.
 - Obtain explicit approval before any production migration, deployment, EAS
   build/submission, paid live-AI evaluation, or cohort invitation.

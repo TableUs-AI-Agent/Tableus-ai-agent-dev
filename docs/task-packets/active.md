@@ -2,8 +2,9 @@
 
 ## Status
 
-Implementation continues locally on `codex/gemini-agent-platform`, based on the
-verified schema-correction commit `0c92aaa0534551cbb0f4f6603e678ee7d87ab3ab`.
+Implementation is frozen on `codex/gemini-agent-platform` at exact candidate
+`0b7de266d4b053d49267b2ac22bd85052ab3ab8f`, based on the verified
+schema-correction commit `0c92aaa0534551cbb0f4f6603e678ee7d87ab3ab`.
 Candidates `90691b1c53812fc140da465e1b5e362c781f1139`,
 `e89d5c4f1664ab0ec0e7d5bec3dd196439283aeb`, and
 `82c1d45f010a686df8802ab4b8a502731aa1be6f` passed public CI. Their approved
@@ -21,13 +22,18 @@ remain ineligible for the standalone Gemini Developer API. The adapter now uses
 the SDK's explicit `enterprise=True` transport and fail-closed readiness reports
 `ai_backend=agent-platform`. Staging AI remains deterministic, no deployment or
 returning code was sent, and candidate
-`4a804bc54330289cafbcfbe1f6f35c9f48f3beea` passes cumulative `make ready`.
+`0b7de266d4b053d49267b2ac22bd85052ab3ab8f` passes cumulative `make ready`
+and public CI run `32911321560`.
 The Agent Platform API and `roles/aiplatform.expressUser` grant are active in the
 isolated project. Retargeting the existing service-account-bound key was denied
 by the managed `disableServiceAccountApiKeyCreation` organization policy; the
 key therefore remains restricted to the standalone Developer API and Railway's
-three addresses. Resolving that policy or choosing a new credential form is the
-remaining cloud-configuration decision before public push and live evaluation.
+three addresses. The candidate's six-case Agent Platform evaluation stopped
+before inference with `401`, zero tokens, and `$0`; a standard key has no IAM
+principal and cannot authorize Agent Platform. The unused key was revoked, the
+prior Developer API credential was restored without deployment, and staging
+remains deterministic. Resolving that policy or choosing a new credential form
+is the remaining cloud-configuration decision.
 
 ## Objective
 
@@ -74,15 +80,17 @@ enabling Gemini on staging.
 
 ## External gate
 
-The isolated project, active linked billing, budget alerts, and Railway-
-restricted service-account-bound authorization key are already provisioned.
-The approved external gate enables only `aiplatform.googleapis.com`, grants the
-bound identity least-privilege `roles/aiplatform.expressUser`, changes the key's
-API target from the standalone Developer API to Agent Platform, and runs the
-new exact-SHA evaluation under the existing `$0.25` ceiling. Railway/Vercel
-deployment and one returning code for each evidence account remain conditional
-on a fully passing evaluation. Leave staging live only if the sanitized
-evaluation and two-user journey pass.
+The isolated project, active linked billing, budget alerts, Agent Platform API,
+and least-privilege runtime identity are provisioned. Authentication remains
+blocked: Google's managed `disableServiceAccountApiKeyCreation` policy allows
+the existing bound key only for the standalone Developer API, while a standard
+Agent Platform key returns `401`. The owner must choose one significant path
+before a new exact-SHA evaluation: narrowly allow
+`aiplatform.googleapis.com` in that managed policy, move the AI runtime to an
+environment with supported workload identity/ADC, or retain the standalone
+Developer API and its separate billing behavior. Railway/Vercel deployment and
+returning codes remain conditional on a fully passing evaluation and staging
+journey.
 
 ## Boundaries
 

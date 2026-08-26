@@ -33,11 +33,17 @@ retained in-memory join intent, and rotated-link rejection passed on Android and
   `82c1d45f010a686df8802ab4b8a502731aa1be6f` passed public CI, but its live gate
   exposed unsupported strict-object wire metadata and then a generic Google
   `429 RESOURCE_EXHAUSTED` before inference. The compatibility fix is local;
-  TableUs is therefore moving the same pinned model and evaluation contract to
-  Gemini Enterprise Agent Platform, the renamed evolution of Vertex AI, using
-  the existing service-account-bound key and eligible Google Cloud credits. A
-  new exact-SHA Agent Platform evaluation and staging deployment remain explicit
-  gates, with deployment conditional on that evaluation passing.
+  TableUs therefore tested the same pinned model and evaluation contract on
+  Gemini Enterprise Agent Platform, the renamed evolution of Vertex AI. Exact
+  candidate `0b7de266d4b053d49267b2ac22bd85052ab3ab8f` passed public CI, but
+  its six-case Agent Platform evaluation stopped before inference at `401`, zero
+  tokens, and `$0`. Google requires a service-account-bound authorization key;
+  a standard key has no IAM principal, and the managed organization policy
+  blocks creating the bound key for `aiplatform.googleapis.com`. The failed key
+  was revoked and staging remains deterministic. The next staging step is an
+  owner architecture choice among a narrowly scoped policy allowance, a
+  workload-identity-capable runtime, or the standalone Developer API, followed
+  by a new passing exact-SHA evaluation before deployment.
 
 The active gate sequence and required owner inputs are maintained in
 `docs/release-runbook.md`.

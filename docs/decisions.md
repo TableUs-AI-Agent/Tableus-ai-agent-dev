@@ -169,3 +169,14 @@
   `roles/aiplatform.expressUser`. This permits eligible Google Cloud credits and
   avoids depending on AI Studio prepaid billing without adding Agent Runtime,
   Agent Studio, grounding, tools, or persistent agent state.
+- **2026-08-25:** A standard API key restricted to
+  `aiplatform.googleapis.com` is not an acceptable Agent Platform runtime
+  credential. Exact-SHA evidence returned `401` with zero tokens because the key
+  has no bound IAM principal, matching Google's current authentication
+  documentation. The required service-account-bound authorization key cannot be
+  created while the managed `disableServiceAccountApiKeyCreation` policy omits
+  Agent Platform. The unused standard key was revoked and the prior Developer
+  API credential restored without deployment. Staging remains deterministic
+  until the owner approves either a narrowly scoped policy allowance, a
+  workload-identity-capable runtime, or continued standalone Developer API
+  billing.
