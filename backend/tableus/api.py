@@ -98,7 +98,7 @@ async def telemetry_e2e(profile: CurrentProfile):
     del profile
     if not get_settings().tableus_telemetry_e2e:
         raise HTTPException(status_code=404, detail="Not found")
-    await capture_event("telemetry_e2e", {"component": "api"})
+    await capture_event("telemetry_e2e", {"component": "api", "platform": "api"})
     sentry_sdk.capture_exception(RuntimeError("TableUs sanitized telemetry canary"))
     return ok({"accepted": True})
 

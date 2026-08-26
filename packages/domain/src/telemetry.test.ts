@@ -24,12 +24,18 @@ test("PostHog payloads discard automatic and sensitive properties", () => {
   const distinctId = "123e4567-e89b-42d3-a456-426614174000";
   const result = sanitizePostHogPayload({
     event: "plan_created",
-    properties: { platform: "web", email: "person@example.test", $current_url: "https://secret" },
+    properties: {
+      platform: "web",
+      token: "phc_publicTransport123",
+      email: "person@example.test",
+      $current_url: "https://secret",
+    },
   }, "abc123", distinctId);
   assert.deepEqual(result, {
     event: "plan_created",
     properties: {
       platform: "web",
+      token: "phc_publicTransport123",
       distinct_id: distinctId,
       $process_person_profile: false,
       $geoip_disable: true,
@@ -40,6 +46,10 @@ test("PostHog payloads discard automatic and sensitive properties", () => {
     event: "plan_created",
     properties: { platform: "web" },
   }, "abc123", "persistent-user-id"), null);
+  assert.equal(sanitizePostHogPayload({
+    event: "plan_created",
+    properties: { platform: "web", token: "private-or-malformed" },
+  }, "abc123", distinctId), null);
 });
 
 test("telemetry session identifiers are random UUIDs", () => {

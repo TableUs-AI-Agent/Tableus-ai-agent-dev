@@ -2,15 +2,17 @@
 
 ## Status
 
-The first exact candidate reached the approved staging gate and created the
-isolated resources, but live canaries exposed a malformed public PostHog key
-and a missing required anonymous `distinct_id`. The staging key is corrected;
-the implementation now uses only the existing random process-memory UUID and
-queries aggregate evidence through read-only HogQL. A replacement candidate on
+Multiple exact candidates reached the approved staging gate and created the
+isolated resources. Candidate `932ac249421b190f932fc23f6e489593de88fe2a`
+proved exact-SHA Sentry delivery for API, web, and mobile and anonymous iOS and
+Android PostHog delivery, but the cumulative canary exposed two remaining
+fail-closed defects: the web sanitizer removed PostHog JS's required public
+transport token, and the API canary inherited the calling mobile platform.
+Both are corrected with regression tests. A replacement candidate on
 `codex/privacy-safe-observability`, branched from merged `main` at
 `3820297ff3a91a04695a4f7187bd8fc850a234dd`, must pass readiness before fresh
-exact-SHA deployments and mobile artifacts. The earlier candidate and evidence
-are superseded.
+exact-SHA deployments and mobile artifacts. All earlier candidates and their
+incomplete evidence are superseded.
 
 ## Objective
 

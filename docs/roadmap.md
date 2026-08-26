@@ -31,9 +31,9 @@ retained in-memory join intent, and rotated-link rejection passed on Android and
   spend ceiling. Privacy-safe observability is now the active closed-beta
   readiness packet: anonymous aggregate PostHog events and error-only Sentry
   reporting must pass replacement exact-SHA leakage and staging evidence after
-  the first live pass caught and fixed anonymous-ingestion configuration,
-  before cumulative web/iOS/Android smoke evidence and owner-reviewed
-  release/rollback decisions.
+  live canaries caught and fixed required anonymous transport fields and API
+  source attribution, before cumulative web/iOS/Android smoke evidence and
+  owner-reviewed release/rollback decisions.
 
 The active gate sequence and required owner inputs are maintained in
 `docs/release-runbook.md`.

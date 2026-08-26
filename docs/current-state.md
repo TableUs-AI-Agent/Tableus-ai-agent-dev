@@ -427,12 +427,15 @@
 - Telemetry remains off locally and in deterministic CI. Isolated staging
   resource creation, secret configuration, exact-SHA deployment/builds, and
   live canary evidence remain an explicit external gate.
-- The first approved staging pass created the isolated resources and proved
-  exact-SHA Sentry delivery for web and mobile. It also found and corrected two
-  fail-closed staging issues before acceptance: a malformed public PostHog
-  project key caused by isolated-browser clipboard transfer, and a sanitizer
-  that removed PostHog's required anonymous `distinct_id`. The corrected
-  sanitizer now supplies only the existing random process-memory session UUID,
-  and the aggregate evidence reader uses read-only HogQL. A new exact-SHA
-  deployment/build gate is required before this packet can close; the earlier
-  candidate and artifacts are superseded.
+- The approved staging passes created the isolated resources and candidate
+  `932ac249421b190f932fc23f6e489593de88fe2a` proved exact-SHA Sentry delivery
+  for API, web, and mobile plus anonymous iOS/Android PostHog delivery. Live
+  evidence found and corrected four fail-closed issues before acceptance: a
+  malformed public PostHog key, a missing random anonymous `distinct_id`, web
+  removal of PostHog JS's required public transport token, and an API canary
+  that inherited its caller's platform instead of recording `api`. Regression
+  tests now preserve only the validated public `phc_` transport field, keep the
+  random process-memory UUID as `distinct_id`, and force the backend canary's
+  platform to `api`. The aggregate evidence reader uses read-only HogQL. A new
+  exact-SHA deployment/build gate is required before this packet can close;
+  all earlier candidates and artifacts are superseded.

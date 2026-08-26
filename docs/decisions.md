@@ -212,3 +212,7 @@
   PostHog's required `distinct_id` is the same random process-memory UUID, not
   an SDK device identifier or application user ID; the sanitizer rejects any
   non-UUID replacement and removes all other automatic identity properties.
+  PostHog JS's validated public `phc_` project token is retained solely as the
+  required ingestion transport field; it is not a secret or an analytics
+  identity. Backend-generated events explicitly report platform `api` rather
+  than inheriting the requesting web or mobile platform.

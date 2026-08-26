@@ -2,7 +2,7 @@ from types import SimpleNamespace
 
 import pytest
 
-from tableus import telemetry
+from tableus import api, telemetry
 
 
 def test_context_accepts_only_random_v4_uuid_and_known_platform() -> None:
@@ -95,3 +95,27 @@ async def test_capture_is_anonymous_and_has_no_account_or_geoip(monkeypatch) -> 
     }
     serialized = repr(captured).lower()
     assert "email" not in serialized and "profile_id" not in serialized and "user_id" not in serialized
+
+
+@pytest.mark.asyncio
+async def test_api_canary_identifies_the_api_not_the_calling_client(monkeypatch) -> None:
+    captured = {}
+
+    async def capture(event, properties):
+        captured.update({"event": event, "properties": properties})
+
+    monkeypatch.setattr(
+        api,
+        "get_settings",
+        lambda: SimpleNamespace(tableus_telemetry_e2e=True),
+    )
+    monkeypatch.setattr(api, "capture_event", capture)
+    monkeypatch.setattr(api.sentry_sdk, "capture_exception", lambda _error: None)
+
+    result = await api.telemetry_e2e(object())
+
+    assert result == {"data": {"accepted": True}, "meta": {}}
+    assert captured == {
+        "event": "telemetry_e2e",
+        "properties": {"component": "api", "platform": "api"},
+    }

@@ -478,7 +478,10 @@ Keep deterministic providers green while each integration is added:
      SHA=<exact-candidate-sha> EVIDENCE=<sanitized-dir>
    ```
 
-   Inspect provider dashboards for release/source-map correlation and absence of
+   Keep each client alive through its analytics flush window. Confirm the web
+   request is not dropped by its `before_send` guard, and confirm the backend
+   canary records platform `api` rather than the caller's platform. Inspect
+   provider dashboards for release/source-map correlation and absence of
    messages, users, headers, bodies, queries, private URL segments, emails,
    reviews, location data, photos, prompts, provider responses, and complete
    share tokens. Retain only the aggregate report and sanitized screenshots.

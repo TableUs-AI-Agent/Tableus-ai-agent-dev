@@ -135,6 +135,11 @@ export function sanitizePostHogPayload<T extends Record<string, any>>(
   const event = payload.event;
   if (!TELEMETRY_EVENTS.includes(event)) return null;
   const raw = payload.properties && typeof payload.properties === "object" ? payload.properties : {};
+  const transportToken = raw.token;
+  if (
+    transportToken !== undefined
+    && (typeof transportToken !== "string" || !/^phc_[A-Za-z0-9_-]{10,128}$/.test(transportToken))
+  ) return null;
   const selected: Record<string, unknown> = { platform: raw.platform };
   for (const key of EVENT_PROPERTY_KEYS[event as TelemetryEventName]) selected[key] = raw[key];
   const sanitized = sanitizeTelemetryEvent(event, selected);
@@ -144,6 +149,7 @@ export function sanitizePostHogPayload<T extends Record<string, any>>(
     event: sanitized.event,
     properties: {
       ...sanitized.properties,
+      ...(transportToken ? { token: transportToken } : {}),
       distinct_id: distinctId,
       $process_person_profile: false,
       $geoip_disable: true,
