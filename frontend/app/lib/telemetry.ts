@@ -21,11 +21,17 @@ export function registerTelemetryClient(value: CaptureClient) {
 }
 
 export function captureTelemetry(event: TelemetryEventName, properties: Record<string, unknown> = {}) {
-  if (!enabled || !client) return;
+  if (!enabled || !client) return false;
   const sanitized = sanitizeTelemetryEvent(event, { platform: "web", ...properties });
-  if (sanitized) client.capture(sanitized.event, sanitized.properties);
+  if (!sanitized) return false;
+  client.capture(sanitized.event, sanitized.properties);
+  return true;
 }
 
 export function sanitizeWebPostHogPayload<T extends Record<string, any>>(payload: T): T | null {
-  return sanitizePostHogPayload(payload, process.env.NEXT_PUBLIC_SOURCE_SHA ?? "unknown");
+  return sanitizePostHogPayload(
+    payload,
+    process.env.NEXT_PUBLIC_SOURCE_SHA ?? "unknown",
+    sessionId ?? "",
+  );
 }

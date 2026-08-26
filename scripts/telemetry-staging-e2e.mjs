@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-import { parseArgs, writeSafeEvidence } from "./telemetry-evidence-utils.mjs";
+import { parseArgs, posthogCanaryQuery, writeSafeEvidence } from "./telemetry-evidence-utils.mjs";
 
 const args = parseArgs(process.argv.slice(2));
 const apiUrl = args["api-url"];
@@ -37,14 +37,19 @@ for (const project of sentryProjects) {
   sentryCounts[project] = Array.isArray(issues) ? issues.length : 0;
 }
 
-const posthogUrl = new URL(`/api/projects/${encodeURIComponent(posthogProject)}/events/`, posthogHost);
-posthogUrl.searchParams.set("event", "telemetry_e2e");
-const posthogResponse = await fetch(posthogUrl, { headers: { Authorization: `Bearer ${posthogToken}` } });
+const posthogUrl = new URL(`/api/projects/${encodeURIComponent(posthogProject)}/query/`, posthogHost);
+const posthogResponse = await fetch(posthogUrl, {
+  method: "POST",
+  headers: { Authorization: `Bearer ${posthogToken}`, "Content-Type": "application/json" },
+  body: JSON.stringify({ query: { kind: "HogQLQuery", query: posthogCanaryQuery(sha) } }),
+});
 if (!posthogResponse.ok) throw new Error(`PostHog read failed (${posthogResponse.status})`);
 const posthogPayload = await posthogResponse.json();
-const events = Array.isArray(posthogPayload.results) ? posthogPayload.results : [];
-const releaseEvents = events.filter((event) => event?.properties?.release === sha);
-const platforms = [...new Set(releaseEvents.map((event) => event?.properties?.platform).filter((value) => ["web", "ios", "android", "api"].includes(value)))].sort();
+const rows = Array.isArray(posthogPayload.results) ? posthogPayload.results : [];
+const platforms = [...new Set(rows.map((row) => row?.[0]).filter((value) => ["web", "ios", "android", "api"].includes(value)))].sort();
+const expectedPlatforms = ["android", "api", "ios", "web"];
+if (Object.values(sentryCounts).some((count) => count < 1)) throw new Error("Sentry canary evidence is incomplete");
+if (JSON.stringify(platforms) !== JSON.stringify(expectedPlatforms)) throw new Error("PostHog canary evidence is incomplete");
 
 const summary = {
   schema_version: 1,
@@ -52,7 +57,7 @@ const summary = {
   readiness_passed: true,
   sentry_project_count: sentryProjects.length,
   sentry_issue_counts: sentryCounts,
-  posthog_event_count: releaseEvents.length,
+  posthog_event_count: rows.length,
   posthog_platforms: platforms,
   anonymous_mode: true,
   error_only_mode: true,

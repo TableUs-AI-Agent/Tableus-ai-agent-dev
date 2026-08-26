@@ -209,3 +209,6 @@
   strings, private URL segments, contexts, breadcrumbs, profiling, tracing,
   replay, and attachments are excluded. Staging uses three isolated Sentry
   projects and one isolated US PostHog project; production remains a later gate.
+  PostHog's required `distinct_id` is the same random process-memory UUID, not
+  an SDK device identifier or application user ID; the sanitizer rejects any
+  non-UUID replacement and removes all other automatic identity properties.

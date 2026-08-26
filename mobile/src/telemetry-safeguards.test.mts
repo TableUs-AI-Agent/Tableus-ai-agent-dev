@@ -5,6 +5,7 @@ import test from "node:test";
 const providers = readFileSync(new URL("./providers/app-providers.tsx", import.meta.url), "utf8");
 const layout = readFileSync(new URL("../app/_layout.tsx", import.meta.url), "utf8");
 const privacy = readFileSync(new URL("../app/privacy.tsx", import.meta.url), "utf8");
+const canary = readFileSync(new URL("../app/e2e/telemetry.tsx", import.meta.url), "utf8");
 
 test("mobile analytics are memory-only, anonymous, and non-automatic", () => {
   assert.match(providers, /autocapture=\{false\}/);
@@ -14,6 +15,8 @@ test("mobile analytics are memory-only, anonymous, and non-automatic", () => {
   assert.match(providers, /enableSessionReplay: false/);
   assert.match(providers, /before_send/);
   assert.doesNotMatch(providers, /\.identify\(/);
+  assert.match(canary, /analyticsAccepted/);
+  assert.match(canary, /analyticsAccepted \? "passed" : "failed"/);
 });
 
 test("mobile Sentry is error-only and privacy copy is explicit", () => {

@@ -24,11 +24,11 @@ export default function TelemetryE2EScreen() {
   if (!enabled) return <Redirect href="/" />;
   const send = async () => {
     setStatus("running");
-    captureTelemetry("telemetry_e2e", { component: "mobile" });
+    const analyticsAccepted = captureTelemetry("telemetry_e2e", { component: "mobile" });
     Sentry.captureException(new Error("TableUs sanitized telemetry canary"));
     try {
       await api.post("/api/v1/e2e/telemetry");
-      setStatus("passed");
+      setStatus(analyticsAccepted ? "passed" : "failed");
     } catch {
       setStatus("failed");
     }

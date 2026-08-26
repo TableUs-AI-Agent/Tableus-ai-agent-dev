@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 
-import { assertSafeEvidence, parseArgs } from "./telemetry-evidence-utils.mjs";
+import { assertSafeEvidence, parseArgs, posthogCanaryQuery } from "./telemetry-evidence-utils.mjs";
 
 test("evidence allows aggregate-only values", () => {
   assert.deepEqual(assertSafeEvidence({ passed: true, count: 3, platforms: ["web", "ios"] }), { passed: true, count: 3, platforms: ["web", "ios"] });
@@ -16,4 +16,11 @@ test("evidence rejects identifiers and private payload fields", () => {
 test("operator arguments are explicit pairs", () => {
   assert.deepEqual(parseArgs(["--api-url", "https://api.example", "--sha", "abc"]), { "api-url": "https://api.example", sha: "abc" });
   assert.throws(() => parseArgs(["--api-url"]));
+});
+
+test("PostHog evidence uses an exact-SHA aggregate query", () => {
+  const sha = "a".repeat(40);
+  assert.match(posthogCanaryQuery(sha), /telemetry_e2e/);
+  assert.match(posthogCanaryQuery(sha), new RegExp(sha));
+  assert.throws(() => posthogCanaryQuery("main"), /full lowercase Git commit/);
 });

@@ -129,7 +129,9 @@ export function createTelemetrySessionId(): string {
 export function sanitizePostHogPayload<T extends Record<string, any>>(
   payload: T,
   release: string,
+  distinctId: string,
 ): T | null {
+  if (!isTelemetrySessionId(distinctId)) return null;
   const event = payload.event;
   if (!TELEMETRY_EVENTS.includes(event)) return null;
   const raw = payload.properties && typeof payload.properties === "object" ? payload.properties : {};
@@ -142,6 +144,7 @@ export function sanitizePostHogPayload<T extends Record<string, any>>(
     event: sanitized.event,
     properties: {
       ...sanitized.properties,
+      distinct_id: distinctId,
       $process_person_profile: false,
       $geoip_disable: true,
       release: release || "unknown",

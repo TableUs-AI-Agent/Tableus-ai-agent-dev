@@ -2,10 +2,15 @@
 
 ## Status
 
-Local implementation and deterministic readiness are complete on
+The first exact candidate reached the approved staging gate and created the
+isolated resources, but live canaries exposed a malformed public PostHog key
+and a missing required anonymous `distinct_id`. The staging key is corrected;
+the implementation now uses only the existing random process-memory UUID and
+queries aggregate evidence through read-only HogQL. A replacement candidate on
 `codex/privacy-safe-observability`, branched from merged `main` at
-`3820297ff3a91a04695a4f7187bd8fc850a234dd`. The exact candidate SHA is recorded
-in the handoff; the external staging gate remains pending.
+`3820297ff3a91a04695a4f7187bd8fc850a234dd`, must pass readiness before fresh
+exact-SHA deployments and mobile artifacts. The earlier candidate and evidence
+are superseded.
 
 ## Objective
 
@@ -38,6 +43,8 @@ isolated US PostHog staging project for anonymous allowlisted events.
 - PostHog receives allowlisted bounded properties, platform, release, and
   no-person/no-GeoIP flags only. No identifier survives process termination or
   links to an application profile.
+- PostHog's required `distinct_id` is the random process-memory telemetry UUID;
+  SDK device identifiers and account identifiers are not retained.
 - Sentry receives one sanitized canary per component with usable stack/release
   evidence and none of the prohibited private fields.
 - Retained evidence contains aggregate counts and booleans only.

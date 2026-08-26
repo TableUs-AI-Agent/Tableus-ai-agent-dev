@@ -21,19 +21,25 @@ test("telemetry allowlist rejects unknown events, properties, and invalid values
 });
 
 test("PostHog payloads discard automatic and sensitive properties", () => {
+  const distinctId = "123e4567-e89b-42d3-a456-426614174000";
   const result = sanitizePostHogPayload({
     event: "plan_created",
     properties: { platform: "web", email: "person@example.test", $current_url: "https://secret" },
-  }, "abc123");
+  }, "abc123", distinctId);
   assert.deepEqual(result, {
     event: "plan_created",
     properties: {
       platform: "web",
+      distinct_id: distinctId,
       $process_person_profile: false,
       $geoip_disable: true,
       release: "abc123",
     },
   });
+  assert.equal(sanitizePostHogPayload({
+    event: "plan_created",
+    properties: { platform: "web" },
+  }, "abc123", "persistent-user-id"), null);
 });
 
 test("telemetry session identifiers are random UUIDs", () => {

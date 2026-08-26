@@ -27,3 +27,8 @@ export function parseArgs(argv) {
   }
   return values;
 }
+
+export function posthogCanaryQuery(sha) {
+  if (!/^[0-9a-f]{40}$/.test(sha)) throw new Error("SHA must be a full lowercase Git commit");
+  return `select properties.platform from events where event = 'telemetry_e2e' and properties.release = '${sha}' limit 100`;
+}
