@@ -9,6 +9,7 @@ export default ({ config }: ConfigContext): ExpoConfig => {
   const readinessProfile = process.env.EAS_BUILD_PROFILE === "readiness-ios" || process.env.EAS_BUILD_PROFILE === "readiness-android";
   const localE2E = testBuildProfile && process.env.TABLEUS_LOCAL_E2E === "true";
   const apiUrl = process.env.EXPO_PUBLIC_API_URL ?? "";
+  const supabaseUrl = process.env.EXPO_PUBLIC_SUPABASE_URL ?? "";
   const sourceSha = process.env.EAS_BUILD_GIT_COMMIT_HASH ?? process.env.EXPO_PUBLIC_SOURCE_SHA;
   const authE2E = authTestProfile
     && process.env.TABLEUS_AUTH_E2E === "true"
@@ -81,6 +82,9 @@ export default ({ config }: ConfigContext): ExpoConfig => {
     ],
     experiments: { typedRoutes: true, reactCompiler: true },
     extra: {
+      apiUrl,
+      supabaseUrl,
+      linkHost,
       localE2E,
       authE2E,
       telemetryE2E,

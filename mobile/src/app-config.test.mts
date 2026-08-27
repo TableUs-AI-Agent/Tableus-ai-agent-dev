@@ -9,6 +9,7 @@ function configFor(profile: string, flag = "true", authFlag = "false", apiUrl = 
   const previousFlag = process.env.TABLEUS_LOCAL_E2E;
   const previousAuthFlag = process.env.TABLEUS_AUTH_E2E;
   const previousApiUrl = process.env.EXPO_PUBLIC_API_URL;
+  const previousSupabaseUrl = process.env.EXPO_PUBLIC_SUPABASE_URL;
   const previousDemoMode = process.env.EXPO_PUBLIC_DEMO_MODE;
   const previousSourceSha = process.env.EAS_BUILD_GIT_COMMIT_HASH;
   const previousLinkHost = process.env.EXPO_PUBLIC_LINK_HOST;
@@ -19,6 +20,7 @@ function configFor(profile: string, flag = "true", authFlag = "false", apiUrl = 
   process.env.TABLEUS_LOCAL_E2E = flag;
   process.env.TABLEUS_AUTH_E2E = authFlag;
   process.env.EXPO_PUBLIC_API_URL = apiUrl;
+  process.env.EXPO_PUBLIC_SUPABASE_URL = "https://project.supabase.co";
   process.env.EXPO_PUBLIC_DEMO_MODE = "false";
   process.env.EAS_BUILD_GIT_COMMIT_HASH = "a".repeat(40);
   process.env.EXPO_PUBLIC_LINK_HOST = linkHost;
@@ -36,6 +38,8 @@ function configFor(profile: string, flag = "true", authFlag = "false", apiUrl = 
     else process.env.TABLEUS_AUTH_E2E = previousAuthFlag;
     if (previousApiUrl === undefined) delete process.env.EXPO_PUBLIC_API_URL;
     else process.env.EXPO_PUBLIC_API_URL = previousApiUrl;
+    if (previousSupabaseUrl === undefined) delete process.env.EXPO_PUBLIC_SUPABASE_URL;
+    else process.env.EXPO_PUBLIC_SUPABASE_URL = previousSupabaseUrl;
     if (previousDemoMode === undefined) delete process.env.EXPO_PUBLIC_DEMO_MODE;
     else process.env.EXPO_PUBLIC_DEMO_MODE = previousDemoMode;
     if (previousSourceSha === undefined) delete process.env.EAS_BUILD_GIT_COMMIT_HASH;
@@ -168,6 +172,9 @@ test("readiness is enabled only for production-shaped readiness profiles", () =>
   for (const profile of ["readiness-ios", "readiness-android"]) {
     const config = configFor(profile, "false", "false", "https://tableus-api-staging.example", "links.table-us.com", "false", "staging", "true");
     assert.equal(config.extra?.readiness, true);
+    assert.equal(config.extra?.apiUrl, "https://tableus-api-staging.example");
+    assert.equal(config.extra?.supabaseUrl, "https://project.supabase.co");
+    assert.equal(config.extra?.linkHost, "links.table-us.com");
     assert.equal(config.extra?.localE2E, false);
     assert.equal(config.extra?.authE2E, false);
     assert.equal(config.extra?.telemetryE2E, false);
