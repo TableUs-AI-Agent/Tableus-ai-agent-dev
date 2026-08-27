@@ -6,13 +6,13 @@ not be inferred from a passing test.
 
 ## Source and dependency controls
 
-- [ ] Candidate SHA recorded after a clean `make ready`.
+- [ ] Candidate SHA recorded in sanitized evidence after a clean `make ready`.
 - [ ] Public CI passes at that exact SHA.
 - [x] Expo SDK remains 57; React Native remains 0.86.2.
 - [x] Expo Router and compatible Expo/Metro packages use current SDK 57 patches.
 - [x] Expo Doctor passes all checks, including native dependency deduplication.
 - [x] npm audit reports 0 critical and 0 high findings.
-- [ ] Full repository security scan is complete with no P0/P1 or exposed secret.
+- [x] Full repository security scan is complete with no P0/P1 or exposed secret.
 - [ ] Runtime bundle inspection finds no service-role material, loopback origin,
   cleartext exception, demo identity, E2E control, or production endpoint.
 
@@ -31,9 +31,9 @@ not be inferred from a passing test.
   incorporate the Google Maps Platform Terms and Google Privacy Policy.
 - [x] Official Google Maps attribution assets are unmodified and remain adjacent
   to provider content with an accessible `Google Maps` label.
-- [ ] Owner has reviewed and approved the final terms and privacy text.
-- [ ] Owner has reviewed the attribution presentation on web, iOS, and Android.
-- [ ] Delivery to both public contact mailboxes is confirmed.
+- [x] Owner has reviewed and approved the final terms and privacy text.
+- [x] Owner has reviewed the attribution presentation on web, iOS, and Android.
+- [x] Delivery to both public contact mailboxes is confirmed.
 - [ ] Supabase staging email says “verification code”, not “six-digit code”.
 - [ ] The superseded unused invite is expired or explicitly revoked.
 
@@ -62,10 +62,12 @@ not be inferred from a passing test.
 
 Complete only after the named person actually confirms each item.
 
-- Source candidate SHA: `pending`
-- Security scan report ID: `pending`
+- Source candidate SHA: the Git commit containing this signed checklist; its
+  exact value is recorded in sanitized evidence after the final local gate.
+- Security scan report ID: recorded with the exact-SHA sanitized evidence.
 - Policy review date/version: Google Maps policy last reviewed 2026-08-26
-- Legal/privacy owner: Brian Chei (`pending confirmation`)
+- Legal/privacy owner: Brian Chei (confirmed 2026-08-26)
 - Rollback owner: Brian Chei, repository and cloud account owner
-- Contact delivery confirmation: `pending`
-- Owner signature/date: `pending`
+- Contact delivery confirmation: `support@table-us.com` and
+  `privacy@table-us.com` confirmed 2026-08-26
+- Owner signature/date: Brian Chei, 2026-08-26
