@@ -11,6 +11,18 @@ test("client unwraps a successful envelope", async () => {
   assert.deepEqual(await client.get("/health"), { ok: true });
 });
 
+test("client treats an incomplete successful response as an ambiguous network failure", async () => {
+  const client = createApiClient({
+    baseUrl: "https://example.test",
+    fetchImpl: async () => new Response("{", { status: 200, headers: { "Content-Type": "application/json" } }),
+  });
+
+  await assert.rejects(
+    client.post("/write", { value: 1 }),
+    (error: unknown) => error instanceof ApiError && error.status === 0 && error.code === "network_error",
+  );
+});
+
 test("client preserves API error metadata", async () => {
   const client = createApiClient({
     baseUrl: "https://example.test",

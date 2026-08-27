@@ -8,6 +8,12 @@ the repository security scan, owner legal/contact confirmations, candidate
 freeze, public CI, deployments, signed builds, and cumulative evidence must all
 complete before this packet can be signed off.
 
+The first exact-SHA device pass exposed Android's native transparent retry of a
+pre-response POST. That candidate's artifacts are superseded. The replacement
+candidate must include the Android OkHttp no-retry lifecycle policy, incomplete-
+envelope handling, and the corrected cross-platform fault model before the
+external evidence gate is repeated.
+
 ## Objective
 
 Close the remaining pre-production gates without changing the public API,
@@ -32,6 +38,8 @@ emulator, with policy-safe retained evidence and an accountable rollback owner.
 - Production-shaped `readiness-ios` and `readiness-android` profiles, signed
   artifact inspection, guided device runners, and one-SHA cumulative evidence
   validation.
+- Cross-platform ambiguous-response evidence that disables Android transport
+  retries, requires explicit user Retry, and preserves one idempotency key.
 - A signed security/privacy checklist, residual-risk register, release-candidate
   procedure, and rollback matrix naming the repository owner as accountable.
 

@@ -171,7 +171,15 @@ try {
 
   await control("/reset", {});
   await control("/configure", { mode: "forward-then-drop-response", method: "POST", path: "/api/v1/plans" });
-  runFlow("create-failure.yml");
+  try {
+    runFlow("create-failure.yml");
+  } catch (error) {
+    const safeStats = await stats("POST", "/api/v1/plans");
+    throw new Error(
+      `Create-failure UI phase failed after ${safeStats.request_count} proxy request(s), ${safeStats.upstream_request_count} upstream request(s), and ${safeStats.dropped_after_commit_count} dropped committed response(s).`,
+      { cause: error },
+    );
+  }
   const createBeforeRetry = await stats("POST", "/api/v1/plans");
   if (createBeforeRetry.request_count !== 1 || createBeforeRetry.dropped_after_commit_count !== 1) throw new Error("Create fault did not commit exactly once before dropping the response.");
   await new Promise((resolvePromise) => setTimeout(resolvePromise, 1500));

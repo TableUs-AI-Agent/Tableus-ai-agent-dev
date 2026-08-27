@@ -70,6 +70,11 @@
   zero-request known-offline constraints, and explicit recovery on one exact-SHA
   test artifact per platform. The test-only connectivity deep link is triple-
   gated by local-E2E, demo mode, and loopback API configuration and is memory-only.
+- Android's application-level local Expo module configures the shared OkHttp
+  client with transparent connection retries disabled. The fault proxy delivers
+  headers and then truncates a committed response body, and the API client maps
+  an incomplete successful envelope to a retryable ambiguous-network failure;
+  retries therefore remain explicit and idempotency-key-stable on both platforms.
 - Deterministic simulator/emulator evidence may use `eas build --local` when
   hosted EAS test-build allowance is unavailable. `make local-mobile-build-receipt`
   records only the exact candidate SHA, sanitized local build ID/profile, artifact

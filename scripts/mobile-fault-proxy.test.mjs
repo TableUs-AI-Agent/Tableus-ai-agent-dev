@@ -63,7 +63,9 @@ test("fault proxy drops safely and reports only replay booleans and counts", asy
     await waitForControl();
     await post("/configure", { mode: "forward-then-drop-response", method: "POST", path: "/api/v1/write" });
     const secretKey = "must-never-be-emitted";
-    await assert.rejects(fetch(`${proxyUrl}/api/v1/write`, { method: "POST", headers: { "Idempotency-Key": secretKey }, body: "{}" }));
+    const interrupted = await fetch(`${proxyUrl}/api/v1/write`, { method: "POST", headers: { "Idempotency-Key": secretKey }, body: "{}" });
+    assert.equal(interrupted.status, 200);
+    await assert.rejects(interrupted.json());
     assert.equal(commits, 1);
 
     const replay = await fetch(`${proxyUrl}/api/v1/write`, { method: "POST", headers: { "Idempotency-Key": secretKey }, body: "{}" });

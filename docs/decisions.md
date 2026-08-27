@@ -79,6 +79,13 @@
   and idempotency key; editing or dismissal abandons that operation. If a read
   refresh observes the committed server state before an ambiguous retry, the
   retry/dismiss control remains available until the user resolves that attempt.
+- **2026-08-27:** Android disables OkHttp's transparent connection retry at
+  application startup so one logical mobile write produces one transport
+  attempt until the user explicitly retries. The deterministic fault proxy
+  models an ambiguous committed response by delivering response headers and
+  truncating its body; incomplete successful envelopes are normalized to a
+  retryable network error. The policy lives in an Android-only local Expo module
+  and preserves CNG without committing generated native projects.
 - **2026-08-22:** The closed-beta idempotency ledger remains a 24-hour,
   process-local response cache. Request-body fingerprints prevent one actor from
   reusing a key with a different body, but restart and horizontal-scaling replay

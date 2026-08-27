@@ -290,6 +290,10 @@ reversal, and removes its proxy/Maestro workspace. It records only artifact
 checksums, booleans, counts, and named screenshots. It must prove no automatic
 retry, no request while known offline, same-key successful replay after a
 dropped committed response, exactly one plan, and exactly one finalized event.
+The committed-response fault sends response headers and then truncates the body,
+so the platform cannot treat it as a pre-response connection retry. Android
+artifacts must also contain the local network retry policy that configures
+OkHttp with `retryOnConnectionFailure(false)`.
 Never retain raw proxy output or idempotency keys. The API idempotency cache is
 process-local; restart or multi-instance replay evidence is intentionally not
 claimed.

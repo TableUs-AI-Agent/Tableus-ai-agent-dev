@@ -86,7 +86,11 @@ const proxy = createServer(async (clientRequest, clientResponse) => {
       if (upstreamResponse.headers["x-idempotent-replay"] === "true") stats.idempotentReplays += 1;
       if (mode === "forward-then-drop-response") {
         stats.droppedAfterCommit += 1;
-        clientRequest.socket.destroy();
+        const responseBody = Buffer.concat(chunks);
+        clientResponse.writeHead(upstreamResponse.statusCode ?? 502, upstreamResponse.headers);
+        clientResponse.flushHeaders();
+        if (responseBody.length > 0) clientResponse.write(responseBody.subarray(0, 1));
+        clientResponse.destroy();
         return;
       }
       const responseBody = Buffer.concat(chunks);

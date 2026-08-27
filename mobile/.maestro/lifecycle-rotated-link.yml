@@ -23,6 +23,6 @@ appId: com.tableus.app
     timeout: 30000
 - tapOn: "Join this plan"
 - extendedWaitUntil:
-    visible: "Share link is invalid or has been rotated"
+    visible: "This private link is invalid, expired, or has been rotated."
     timeout: 30000
 - takeScreenshot: "rotated-link"

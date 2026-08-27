@@ -82,6 +82,9 @@ export function createApiClient(options: ClientOptions) {
       if (token) response = await send();
     }
     const payload = (await response.json().catch(() => null)) as ApiEnvelope<T> | ApiFailure | null;
+    if (response.ok && payload === null) {
+      throw new ApiError("Network unavailable. Reconnect and try again.", 0, "network_error");
+    }
     if (!response.ok) {
       const failure = payload as ApiFailure | null;
       throw new ApiError(
