@@ -32,6 +32,11 @@ test("device evidence starts from clean app state and accepts a tappable finaliz
   assert.doesNotMatch(constraintsFlow, /hideKeyboard/);
 });
 
+test("mobile requests have a bounded production timeout and a faster local fault-test timeout", () => {
+  const api = source("lib/api.ts");
+  assert.match(api, /requestTimeoutMs: localE2EEnabled \? 10_000 : 45_000/);
+});
+
 test("photo retries retain no image state and must open the picker again", () => {
   const review = source("../app/(tabs)/review.tsx");
   const analyze = review.slice(review.indexOf("const analyze"), review.indexOf("\n  return (", review.indexOf("const analyze")));

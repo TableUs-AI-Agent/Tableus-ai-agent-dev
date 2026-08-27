@@ -40,6 +40,7 @@ type ClientOptions = {
   getTelemetrySessionId?: () => string | null;
   telemetryPlatform?: TelemetryClientPlatform;
   fetchImpl?: typeof fetch;
+  requestTimeoutMs?: number;
 };
 
 export function createIdempotencyKey() {
@@ -66,22 +67,52 @@ export function createApiClient(options: ClientOptions) {
       const requestHeaders = new Headers(headers);
       if (token) requestHeaders.set("Authorization", `Bearer ${token}`);
       else requestHeaders.delete("Authorization");
+      const controller = options.requestTimeoutMs && options.requestTimeoutMs > 0 ? new AbortController() : null;
+      const upstreamSignal = init.signal;
+      const forwardAbort = () => controller?.abort();
+      if (controller && upstreamSignal) {
+        if (upstreamSignal.aborted) controller.abort();
+        else upstreamSignal.addEventListener("abort", forwardAbort, { once: true });
+      }
+      const timeout = controller
+        ? setTimeout(() => controller.abort(), options.requestTimeoutMs)
+        : null;
+      const cleanup = () => {
+        if (timeout) clearTimeout(timeout);
+        upstreamSignal?.removeEventListener("abort", forwardAbort);
+      };
       try {
-        return await (options.fetchImpl ?? fetch)(`${options.baseUrl}${path}`, { ...init, headers: requestHeaders });
+        const response = await (options.fetchImpl ?? fetch)(`${options.baseUrl}${path}`, {
+          ...init,
+          headers: requestHeaders,
+          signal: controller?.signal ?? upstreamSignal,
+        });
+        return { response, cleanup };
       } catch {
+        cleanup();
         throw new ApiError("Network unavailable. Reconnect and try again.", 0, "network_error");
       }
     };
-    let response = await send();
+    let attempt = await send();
+    let response = attempt.response;
     if (response.status === 401 && token && options.refreshAccessToken) {
       try {
         token = await options.refreshAccessToken();
       } catch {
         token = null;
       }
-      if (token) response = await send();
+      if (token) {
+        attempt.cleanup();
+        attempt = await send();
+        response = attempt.response;
+      }
     }
-    const payload = (await response.json().catch(() => null)) as ApiEnvelope<T> | ApiFailure | null;
+    let payload: ApiEnvelope<T> | ApiFailure | null;
+    try {
+      payload = (await response.json().catch(() => null)) as ApiEnvelope<T> | ApiFailure | null;
+    } finally {
+      attempt.cleanup();
+    }
     if (response.ok && payload === null) {
       throw new ApiError("Network unavailable. Reconnect and try again.", 0, "network_error");
     }

@@ -19,6 +19,14 @@ CI found two stale Playwright assertions: the former legal effective date and
 the retired text-only Maps attribution. The replacement assertions target the
 owner-approved date and the accessible official attribution image.
 
+Exact candidate `38aab2d49088416a26704a391bcf2bf21288ee2b` passed public CI,
+deployed cleanly, and produced four inspected local artifacts, but cumulative
+iOS fault evidence found a stalled response body could leave a mobile write
+pending indefinitely after the backend committed it. Those artifacts are
+superseded. The replacement candidate adds an abortable client deadline that
+remains active through response-body parsing: 10 seconds in gated local E2E and
+45 seconds in production-shaped mobile builds.
+
 ## Objective
 
 Close the remaining pre-production gates without changing the public API,
@@ -45,6 +53,8 @@ emulator, with policy-safe retained evidence and an accountable rollback owner.
   validation.
 - Cross-platform ambiguous-response evidence that disables Android transport
   retries, requires explicit user Retry, and preserves one idempotency key.
+- Bounded mobile request deadlines that convert a stalled fetch or response body
+  into the same explicit ambiguous-response Retry state.
 - A signed security/privacy checklist, residual-risk register, release-candidate
   procedure, and rollback matrix naming the repository owner as accountable.
 

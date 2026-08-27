@@ -252,3 +252,10 @@
   prior validated Railway/Vercel deployments, deterministic provider modes,
   disabled telemetry when necessary, and prior signed internal artifacts rather
   than applying a database rollback.
+- **2026-08-27:** Mobile request deadlines cover both the initial fetch and
+  response-body consumption. This is necessary because a transport can deliver
+  headers and then leave a truncated body pending after the server committed a
+  write. Local-E2E uses 10 seconds for deterministic fault evidence; ordinary
+  mobile builds use 45 seconds to accommodate bounded live-provider work. A
+  deadline failure is status `0`, remains explicit and retryable, and preserves
+  the logical write's idempotency key; it is never replayed automatically.

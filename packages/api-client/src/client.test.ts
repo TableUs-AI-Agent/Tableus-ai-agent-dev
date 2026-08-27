@@ -23,6 +23,50 @@ test("client treats an incomplete successful response as an ambiguous network fa
   );
 });
 
+test("client aborts a stalled request and reports an ambiguous network failure", async () => {
+  let observedSignal: AbortSignal | null | undefined;
+  const client = createApiClient({
+    baseUrl: "https://example.test",
+    requestTimeoutMs: 10,
+    fetchImpl: async (_input, init) => {
+      observedSignal = init?.signal;
+      return new Promise<Response>((_resolve, reject) => {
+        observedSignal?.addEventListener("abort", () => reject(new Error("aborted")), { once: true });
+      });
+    },
+  });
+
+  await assert.rejects(
+    client.post("/write", { value: 1 }),
+    (error: unknown) => error instanceof ApiError && error.status === 0 && error.code === "network_error",
+  );
+  assert.equal(observedSignal?.aborted, true);
+});
+
+test("client timeout remains active while a successful response body is incomplete", async () => {
+  let observedSignal: AbortSignal | null | undefined;
+  const client = createApiClient({
+    baseUrl: "https://example.test",
+    requestTimeoutMs: 10,
+    fetchImpl: async (_input, init) => {
+      observedSignal = init?.signal;
+      return {
+        ok: true,
+        status: 200,
+        json: () => new Promise((_resolve, reject) => {
+          observedSignal?.addEventListener("abort", () => reject(new Error("aborted")), { once: true });
+        }),
+      } as Response;
+    },
+  });
+
+  await assert.rejects(
+    client.post("/write", { value: 1 }),
+    (error: unknown) => error instanceof ApiError && error.status === 0 && error.code === "network_error",
+  );
+  assert.equal(observedSignal?.aborted, true);
+});
+
 test("client preserves API error metadata", async () => {
   const client = createApiClient({
     baseUrl: "https://example.test",

@@ -16,4 +16,5 @@ export const api = createApiClient({
   getTelemetrySessionId,
   telemetryPlatform: getTelemetryPlatform(),
   fetchImpl: expoFetch as typeof fetch,
+  requestTimeoutMs: localE2EEnabled ? 10_000 : 45_000,
 });

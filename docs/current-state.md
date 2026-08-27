@@ -75,6 +75,11 @@
   headers and then truncates a committed response body, and the API client maps
   an incomplete successful envelope to a retryable ambiguous-network failure;
   retries therefore remain explicit and idempotency-key-stable on both platforms.
+- Mobile API requests also retain an abort deadline through response-body
+  parsing, because Expo fetch can otherwise remain pending after a committed
+  response is truncated. Gated local fault evidence uses a 10-second deadline;
+  production-shaped mobile builds use 45 seconds so bounded server-side live
+  provider retries can complete before an ambiguous failure is shown.
 - Deterministic simulator/emulator evidence may use `eas build --local` when
   hosted EAS test-build allowance is unavailable. `make local-mobile-build-receipt`
   records only the exact candidate SHA, sanitized local build ID/profile, artifact

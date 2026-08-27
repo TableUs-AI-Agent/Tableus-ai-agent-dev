@@ -546,7 +546,10 @@ make inspect-mobile-readiness PLATFORM=android APP=<artifact> SHA=<source-sha> \
 Run deterministic lifecycle and offline evidence with the existing `mobile-e2e`
 and `mobile-offline-e2e` commands. Run the production-shaped cross-client phases
 with `mobile-readiness-e2e`; use preserved approved sessions where possible and
-send at most one returning code per platform only when installation requires it.
+confirm that a truncated committed response exits pending state within the
+gated 10-second local deadline and exposes explicit same-key Retry. Production-
+shaped mobile requests retain a 45-second deadline through body parsing. Send
+at most one returning code per platform only when installation requires it.
 No email, code, private URL, share token, Place ID, restaurant content,
 coordinate, prompt, provider response, or raw native/Maestro log may survive.
 
