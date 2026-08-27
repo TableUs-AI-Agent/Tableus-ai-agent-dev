@@ -14,6 +14,11 @@ candidate must include the Android OkHttp no-retry lifecycle policy, incomplete-
 envelope handling, and the corrected cross-platform fault model before the
 external evidence gate is repeated.
 
+The next public candidate was stopped before deployment when manually dispatched
+CI found two stale Playwright assertions: the former legal effective date and
+the retired text-only Maps attribution. The replacement assertions target the
+owner-approved date and the accessible official attribution image.
+
 ## Objective
 
 Close the remaining pre-production gates without changing the public API,

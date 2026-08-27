@@ -20,7 +20,7 @@ test("organizer creates a persistent plan", async ({ page }) => {
   await page.getByLabel("City, neighborhood, or ZIP code").fill("Boston, MA");
   await page.getByRole("button", { name: "Find location" }).click();
   await expect(page.getByText("Boston, MA", { exact: true })).toBeVisible();
-  await expect(page.getByText("Google Maps", { exact: true })).toBeVisible();
+  await expect(page.getByRole("img", { name: "Google Maps" })).toBeVisible();
   await page.getByRole("button", { name: "Create plan" }).click();
   await expect(page.getByText("Playwright dinner").first()).toBeVisible();
   await expect(page.getByText("Private join link")).toBeVisible();
@@ -30,7 +30,7 @@ test("organizer creates a persistent plan", async ({ page }) => {
 test("publishes release disclosures and verified-link manifests", async ({ page }) => {
   await page.goto("/privacy");
   await expect(page.getByRole("heading", { name: "TableUs closed-beta privacy notice" })).toBeVisible();
-  await expect(page.getByText("Effective August 17, 2026.")).toBeVisible();
+  await expect(page.getByText("Effective August 26, 2026.")).toBeVisible();
 
   const apple = await page.request.get("/.well-known/apple-app-site-association");
   expect(apple.status()).toBe(200);
