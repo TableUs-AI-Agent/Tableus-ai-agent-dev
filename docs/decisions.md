@@ -236,7 +236,8 @@
   normal-weight `Google Maps` fallback is reserved for genuinely constrained
   layouts and web fallback text must use `translate="no"`.
 - **2026-08-26:** The cumulative readiness candidate stays on Expo SDK 57 and
-  React Native 0.86.2. Patch releases are resolved with Expo tooling, while the
+  React Native 0.86.2. Patch releases are resolved with Expo tooling (currently
+  Expo 57.0.18, Constants 57.0.16, Updates 57.0.19, and Router 57.0.17), while the
   monorepo pins React/React DOM 19.2.3 at the root so native tests and Expo Doctor
   see one native-compatible copy; the web workspace retains 19.2.4 locally.
   Unsupported Expo downgrades, forced audit rewrites, and SDK upgrades are not
@@ -286,3 +287,12 @@
   scroll to either `Ranked vote saved.` or `Retry ranked vote` before branching,
   then require the saved state. A completed submit tap or changed score alone
   is not accepted as device evidence.
+- **2026-08-29:** Mobile release tooling uses Expo's live workflow-schema
+  validator as an operator gate and a shared local-device preflight before
+  deterministic evidence. The preflight may boot the explicitly requested iOS
+  simulator, but Android must already be an online, fully booted API 36+ ARM64
+  emulator. Sanitized preflight output retains no device identifier. Xcode
+  runtime snapshots and Android UI-tree/log/performance tooling are diagnostic
+  evidence tools; memgraphs, heap dumps, and broad performance traces remain
+  opt-in for a focused investigation and are never retained by routine release
+  runs.

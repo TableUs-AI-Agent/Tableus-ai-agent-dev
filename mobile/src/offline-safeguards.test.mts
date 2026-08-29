@@ -28,6 +28,7 @@ test("device evidence starts from clean app state and accepts a tappable finaliz
   const lifecycleFinalizeFlow = source("../.maestro/lifecycle-organizer-finalize.yml");
   assert.match(runner, /runBestEffort\("xcrun", \["simctl", "uninstall", device, appId\]/);
   assert.match(runner, /\["-s", device, "uninstall", appId\]/);
+  assert.match(runner, /mobile-device-preflight\.mjs/);
   assert.match(finalizeFlow, /visibilityPercentage: 60/);
   assert.match(constraintsFlow, /inputText: "Quiet patio and accessible seating"[\s\S]*tapOn: "Your constraints"[\s\S]*tapOn: "Save constraints"/);
   assert.doesNotMatch(constraintsFlow, /hideKeyboard/);

@@ -126,6 +126,13 @@ if (!evidenceDir) throw new Error("--evidence is required");
 if (new URL(proxyUrl).hostname !== "127.0.0.1" || new URL(upstreamUrl).hostname !== "127.0.0.1") throw new Error("Offline E2E refuses non-loopback APIs");
 
 await assertPortsAvailable();
+run(process.execPath, [
+  "scripts/mobile-device-preflight.mjs",
+  "--platform", platform,
+  "--device", device,
+  "--app", appPath,
+  "--boot", platform === "ios" ? "true" : "false",
+]);
 const temporaryRoot = mkdtempSync(join(tmpdir(), "tableus-mobile-offline-e2e-"));
 const flowDir = join(temporaryRoot, "flows");
 cpSync(flowSource, flowDir, { recursive: true });

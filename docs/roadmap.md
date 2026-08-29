@@ -50,5 +50,7 @@ separate explicit milestones after this readiness packet is merged.
 The next readiness candidate must replace superseded `0de0c34`: Android vote
 submission must scroll to either `Ranked vote saved.` or the bounded explicit
 `Retry ranked vote` state before continuing. Both organizer and guest flows are
-guarded. All exact-SHA artifacts and device evidence restart after that
+guarded. Expo workflow files are revalidated against Expo's live schema, and
+deterministic iOS/Android runs use the shared sanitized device preflight before
+installation. All exact-SHA artifacts and device evidence restart after that
 candidate freezes.

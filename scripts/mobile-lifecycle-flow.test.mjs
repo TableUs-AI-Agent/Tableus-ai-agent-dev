@@ -3,6 +3,7 @@ import { readFileSync } from "node:fs";
 import test from "node:test";
 
 const flow = (name) => readFileSync(new URL(`../mobile/.maestro/${name}`, import.meta.url), "utf8");
+const runner = readFileSync(new URL("./mobile-e2e.mjs", import.meta.url), "utf8");
 
 test("lifecycle create targets the explicit accessibility label", () => {
   const create = flow("lifecycle-create.yml");
@@ -36,4 +37,9 @@ test("lifecycle vote flows scroll to saved or retry status after submission", ()
       /text: "Submit ranked vote"[\s\S]*scrollUntilVisible:\n\s+element: "\.\*\(Ranked vote saved\.\|Retry ranked vote\)\.\*"/,
     );
   }
+});
+
+test("lifecycle runner preflights the exact simulator or emulator artifact", () => {
+  assert.match(runner, /mobile-device-preflight\.mjs/);
+  assert.match(runner, /"--boot", platform === "ios" \? "true" : "false"/);
 });

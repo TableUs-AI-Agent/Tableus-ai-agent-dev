@@ -524,6 +524,13 @@ at that exact SHA. After the single approved external gate, update the Supabase
 template to say “verification code”, deploy Railway and the Vercel staging
 Preview without moving production-facing aliases, and build sequentially:
 
+Before freezing, validate the checked-in Expo workflows against Expo's current
+schema (this operator check requires network access and the EAS CLI):
+
+```bash
+make mobile-workflows-validate
+```
+
 1. `test-ios`, then shut down and remove raw logs.
 2. ARM64 `test-android`, then shut down and remove raw logs.
 3. Apple-signed physical-device `readiness-ios`, then shut down build workers.
@@ -585,6 +592,23 @@ shaped mobile requests retain a 45-second deadline through body parsing. Send
 at most one returning code per platform only when installation requires it.
 No email, code, private URL, share token, Place ID, restaurant content,
 coordinate, prompt, provider response, or raw native/Maestro log may survive.
+
+The deterministic runners invoke `mobile-device-preflight` automatically. It
+boots only the explicitly named iOS simulator and requires Android to already be
+an online, boot-complete API 36+ ARM64 emulator. To diagnose a target before a
+run without retaining its hardware identifier:
+
+```bash
+make mobile-device-preflight PLATFORM=ios DEVICE=<simulator> APP=<TableUs.app> BOOT=true
+make mobile-device-preflight PLATFORM=android DEVICE=<adb-serial> APP=<tableus.apk>
+```
+
+Use Xcode runtime UI snapshots/screenshots after an iOS launch and adb UI-tree
+coordinates, crash-buffer logs, and a focused `gfxinfo`/`meminfo` snapshot for
+Android diagnostics. Raw native logs, UI trees, traces, memgraphs, and heap dumps
+stay in run-specific temporary directories and are deleted after a sanitized
+finding summary. Capture memgraphs or long performance traces only for a narrow
+reproduction; routine cumulative evidence does not retain them.
 
 Assemble the already-sanitized summaries, including the exact-SHA telemetry
 summary, and validate one source SHA:

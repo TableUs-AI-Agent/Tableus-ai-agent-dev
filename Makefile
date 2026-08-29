@@ -1,6 +1,6 @@
 SHELL := /bin/bash
 
-.PHONY: setup dev lint typecheck test build smoke mobile-e2e mobile-auth-e2e mobile-offline-e2e mobile-links-e2e mobile-readiness-e2e maps-staging-e2e gemini-staging-e2e telemetry-staging-e2e cumulative-readiness-evidence local-mobile-build-receipt inspect-mobile-auth inspect-mobile-local-e2e inspect-mobile-links inspect-mobile-readiness ready perf ai-eval ai-eval-live contract
+.PHONY: setup dev lint typecheck test build smoke mobile-workflows-validate mobile-device-preflight mobile-e2e mobile-auth-e2e mobile-offline-e2e mobile-links-e2e mobile-readiness-e2e maps-staging-e2e gemini-staging-e2e telemetry-staging-e2e cumulative-readiness-evidence local-mobile-build-receipt inspect-mobile-auth inspect-mobile-local-e2e inspect-mobile-links inspect-mobile-readiness ready perf ai-eval ai-eval-live contract
 
 setup:
 	npm ci
@@ -32,6 +32,15 @@ contract:
 
 smoke:
 	./scripts/smoke.sh
+
+mobile-workflows-validate:
+	node scripts/validate-eas-workflows.mjs
+
+mobile-device-preflight:
+	@test -n "$(PLATFORM)" || (echo "PLATFORM=ios or PLATFORM=android is required" && exit 2)
+	@test -n "$(DEVICE)" || (echo "DEVICE=<simulator-or-emulator-id> is required" && exit 2)
+	@test -n "$(APP)" || (echo "APP=<path-to-app-or-apk> is required" && exit 2)
+	node scripts/mobile-device-preflight.mjs --platform "$(PLATFORM)" --device "$(DEVICE)" --app "$(APP)" --boot "$(if $(BOOT),$(BOOT),false)" $(if $(EVIDENCE),--evidence "$(EVIDENCE)",)
 
 mobile-e2e:
 	@test -n "$(PLATFORM)" || (echo "PLATFORM=ios or PLATFORM=android is required" && exit 2)

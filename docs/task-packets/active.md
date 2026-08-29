@@ -67,8 +67,11 @@ On Android, the organizer vote persisted and the app rendered `Ranked vote
 saved.`, but the status was below the viewport while the host flow used an
 already-visible wait. The replacement scrolls to either the saved or bounded
 retry state after vote submission in both organizer and guest flows and guards
-that behavior. No artifact or partial Android evidence from `0de0c34` is
-accepted for cumulative sign-off.
+that behavior. It also adds repository-owned current-schema EAS workflow
+validation and a shared sanitized iOS/Android device preflight, applying the
+Expo, iOS-debugging, and Android-emulator procedures to the cumulative run. No
+artifact or partial Android evidence from `0de0c34` is accepted for cumulative
+sign-off.
 
 ## Objective
 
@@ -94,6 +97,9 @@ emulator, with policy-safe retained evidence and an accountable rollback owner.
 - Production-shaped `readiness-ios` and `readiness-android` profiles, signed
   artifact inspection, guided device runners, and one-SHA cumulative evidence
   validation.
+- Live-schema validation for every checked-in EAS workflow and a shared local
+  preflight that verifies the exact simulator/APK shape, may boot an explicitly
+  selected iOS simulator, and requires an online API 36+ ARM64 Android emulator.
 - Exact-SHA auxiliary `telemetry-test-ios` and `telemetry-test-android`
   artifacts used only to emit sanitized canaries; production-shaped readiness
   artifacts retain no telemetry E2E control.

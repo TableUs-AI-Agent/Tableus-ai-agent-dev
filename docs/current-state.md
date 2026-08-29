@@ -242,9 +242,10 @@
   deletion disclosures. Live Google content now uses Google's official
   unmodified attribution SVG with an accessible label in the same content
   container. The committed files are guarded against modification by SHA-256.
-- Expo remains on SDK 57 and React Native 0.86.2. Compatible Expo core, Router,
-  Metro, build-properties, image-picker, linking, SecureStore, sharing, and
-  Updates patches are applied. React and React DOM 19.2.3 are pinned at the
+- Expo remains on SDK 57 and React Native 0.86.2. Expo core 57.0.18, Constants
+  57.0.16, Updates 57.0.19, Router 57.0.17, and the compatible Metro,
+  build-properties, image-picker, linking, SecureStore, and sharing patches are
+  applied through Expo's resolver. React and React DOM 19.2.3 are pinned at the
   monorepo root to make the native graph deterministic; the Next.js workspace
   retains 19.2.4 locally. Expo Doctor passes 21/21 and npm reports zero critical
   or high findings. The remaining 12 moderate findings collapse to Expo build
@@ -271,8 +272,13 @@
   below the viewport and the host flow waited only for an already-visible
   label. That candidate and its artifacts are superseded. The next candidate
   scrolls to the bounded saved-or-retry state in both organizer and guest vote
-  flows before continuing. Replacement public CI, deployments, six artifacts,
-  live smoke, and device attestations remain gated.
+  flows before continuing. The replacement also integrates Expo live-schema
+  validation for all three checked-in EAS workflows and a shared device
+  preflight into deterministic lifecycle/offline runners. iOS can boot the
+  explicitly selected simulator; Android fails early unless the target is an
+  online, boot-complete API 36+ ARM64 emulator. Preflight summaries retain no
+  device identifier. Replacement public CI, deployments, six artifacts, live
+  smoke, and device attestations remain gated.
 
 ## External dependencies not provisioned in source
 
