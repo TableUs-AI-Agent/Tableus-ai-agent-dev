@@ -255,16 +255,16 @@
   and staging telemetry, with no demo, loopback, cleartext, local/auth/telemetry
   E2E, service-role, or production configuration. Exact-SHA artifact inspection,
   guided device evidence, and a cumulative sanitized evidence validator are
-  implemented. Exact candidate `c8a506fcfb0add43b2a156321628653e177fc1bf`
-  passed public CI, Railway/Vercel deployment, artifact inspection, and a live
-  two-user web lifecycle with four grounded candidates, 5/5/2 Borda scores,
-  organizer-only finalization/reopening, and rotated-link rejection. Its device
-  artifacts are superseded because the automation did not consume explicit
-  ambiguous-response Retry states, and its readiness runner could not honestly
-  produce a Sentry canary while telemetry E2E controls were absent. The next
-  candidate uses retry-aware Maestro flows and requires a separate sanitized
-  exact-SHA report from auxiliary telemetry-test artifacts. External replacement
-  deployments/builds and remaining device attestations remain gated.
+  implemented. Exact candidate `017c40f7ad96fa9e241ec833392f321ab63421b7`
+  passed public CI, Railway/Vercel staging deployment, and inspection of all six
+  requested local artifacts. Its device artifacts are superseded: iOS lifecycle
+  automation failed to scroll to the restored vote action after reopen, and the
+  offline committed-response-drop diagnostic proved that `expo/fetch` can leave
+  response-body parsing pending even after its abort signal fires. The next
+  candidate adds an explicit deadline race around body parsing and the missing
+  reopen scroll. No live provider call completed during the stopped `017c40f`
+  smoke. Replacement public CI, deployments, artifacts, live smoke, and device
+  attestations remain gated.
 
 ## External dependencies not provisioned in source
 

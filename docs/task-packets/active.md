@@ -38,6 +38,19 @@ correctly compile no telemetry test control. The replacement uses retry-aware
 Maestro flows and binds a separate exact-SHA sanitized telemetry report from the
 isolated telemetry-test profiles into cumulative evidence.
 
+Exact candidate `017c40f7ad96fa9e241ec833392f321ab63421b7` passed public CI,
+deployed cleanly, and produced all six inspected local artifacts. Device
+diagnostics superseded those artifacts before cumulative acceptance. The iOS
+lifecycle restored voting correctly after reopen, but its flow asserted the
+submit action before scrolling it into view. More importantly, the committed-
+response-drop test proved `expo/fetch` can ignore a post-header abort while
+response-body parsing remains pending, so the nominal ten-second deadline did
+not surface the explicit Retry state. The replacement candidate races the same
+deadline against both fetch and body parsing even when abort is ignored, and
+scrolls to the restored vote action before asserting it. The staged live smoke
+was stopped at its first verification-code prompt and made no paid provider
+call.
+
 ## Objective
 
 Close the remaining pre-production gates without changing the public API,

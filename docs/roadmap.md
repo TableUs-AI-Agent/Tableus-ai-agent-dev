@@ -46,3 +46,9 @@ validation, retry-aware deterministic device flows, isolated exact-SHA telemetry
 canaries, and the rollback/residual-risk record. Completion stops before
 production deployment, store submission, or cohort activation. Those remain
 separate explicit milestones after this readiness packet is merged.
+
+The next readiness candidate must replace superseded `017c40f`: its shared
+mobile deadline must terminate response-body parsing even when transport abort
+is ignored, and the reopened-voting journey must locate the restored action
+before asserting it. All exact-SHA artifacts and device evidence restart after
+that candidate freezes.

@@ -74,22 +74,31 @@ export function createApiClient(options: ClientOptions) {
         if (upstreamSignal.aborted) controller.abort();
         else upstreamSignal.addEventListener("abort", forwardAbort, { once: true });
       }
-      const timeout = controller
-        ? setTimeout(() => controller.abort(), options.requestTimeoutMs)
-        : null;
+      let timeout: ReturnType<typeof setTimeout> | null = null;
+      const deadline = new Promise<never>((_resolve, reject) => {
+        if (!controller || !options.requestTimeoutMs) return;
+        timeout = setTimeout(() => {
+          controller.abort();
+          reject(new ApiError("Network unavailable. Reconnect and try again.", 0, "network_error"));
+        }, options.requestTimeoutMs);
+      });
       const cleanup = () => {
         if (timeout) clearTimeout(timeout);
         upstreamSignal?.removeEventListener("abort", forwardAbort);
       };
       try {
-        const response = await (options.fetchImpl ?? fetch)(`${options.baseUrl}${path}`, {
+        const pendingResponse = (options.fetchImpl ?? fetch)(`${options.baseUrl}${path}`, {
           ...init,
           headers: requestHeaders,
           signal: controller?.signal ?? upstreamSignal,
         });
-        return { response, cleanup };
-      } catch {
+        const response = controller
+          ? await Promise.race([pendingResponse, deadline])
+          : await pendingResponse;
+        return { response, cleanup, deadline: controller ? deadline : null };
+      } catch (error) {
         cleanup();
+        if (error instanceof ApiError) throw error;
         throw new ApiError("Network unavailable. Reconnect and try again.", 0, "network_error");
       }
     };
@@ -109,7 +118,10 @@ export function createApiClient(options: ClientOptions) {
     }
     let payload: ApiEnvelope<T> | ApiFailure | null;
     try {
-      payload = (await response.json().catch(() => null)) as ApiEnvelope<T> | ApiFailure | null;
+      const pendingPayload = response.json().catch(() => null);
+      payload = (await (attempt.deadline
+        ? Promise.race([pendingPayload, attempt.deadline])
+        : pendingPayload)) as ApiEnvelope<T> | ApiFailure | null;
     } finally {
       attempt.cleanup();
     }

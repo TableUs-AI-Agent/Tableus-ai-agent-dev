@@ -25,11 +25,13 @@ test("device evidence starts from clean app state and accepts a tappable finaliz
   const runner = source("../../scripts/mobile-offline-e2e.mjs");
   const finalizeFlow = source("../.maestro-offline/finalize-failure.yml");
   const constraintsFlow = source("../.maestro-offline/constraints-offline.yml");
+  const lifecycleFinalizeFlow = source("../.maestro/lifecycle-organizer-finalize.yml");
   assert.match(runner, /runBestEffort\("xcrun", \["simctl", "uninstall", device, appId\]/);
   assert.match(runner, /\["-s", device, "uninstall", appId\]/);
   assert.match(finalizeFlow, /visibilityPercentage: 60/);
   assert.match(constraintsFlow, /inputText: "Quiet patio and accessible seating"[\s\S]*tapOn: "Your constraints"[\s\S]*tapOn: "Save constraints"/);
   assert.doesNotMatch(constraintsFlow, /hideKeyboard/);
+  assert.match(lifecycleFinalizeFlow, /tapOn: "Reopen voting"[\s\S]*scrollUntilVisible:[\s\S]*Submit ranked vote\|Retry reopening voting/);
 });
 
 test("mobile requests have a bounded production timeout and a faster local fault-test timeout", () => {

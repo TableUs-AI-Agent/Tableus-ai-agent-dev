@@ -536,6 +536,15 @@ route. Emit the fixed canaries, run `telemetry-staging-e2e`, and retain only its
 aggregate summary. Do not attest to a canary from `readiness-*`; those profiles
 intentionally compile no telemetry E2E control.
 
+Candidate `017c40f7ad96fa9e241ec833392f321ab63421b7` is superseded despite
+passing public CI, staging deployment, and all six artifact inspections. Its
+iOS device diagnostics found a missing post-reopen scroll in lifecycle
+automation and a response-body parser that could remain pending when
+`expo/fetch` ignored a post-header abort. Do not reuse its artifacts or partial
+device output. A replacement candidate must prove the independent deadline
+race, rebuild every artifact, and restart exact-SHA evidence from a clean
+backend.
+
 Inspect production-shaped artifacts before installation:
 
 ```bash

@@ -50,6 +50,10 @@ appId: com.tableus.app
     element: "Reopen voting"
     direction: DOWN
 - tapOn: "Reopen voting"
+- scrollUntilVisible:
+    element: ".*(Submit ranked vote|Retry reopening voting).*"
+    direction: DOWN
+    timeout: 30000
 - extendedWaitUntil:
     visible: ".*(Submit ranked vote|Retry reopening voting).*"
     timeout: 30000

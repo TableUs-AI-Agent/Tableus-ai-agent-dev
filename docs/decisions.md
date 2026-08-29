@@ -267,3 +267,11 @@
   controls disabled. Exact-release mobile Sentry/PostHog canaries come from the
   existing isolated telemetry-test profiles, and their sanitized aggregate
   report is a required cumulative evidence source.
+- **2026-08-29:** A mobile request deadline must be enforced independently of
+  transport abort behavior. `expo/fetch` may resolve response headers and then
+  leave truncated-body parsing pending after an abort, so the shared client
+  races one logical deadline against both fetch and JSON consumption. Expiry
+  remains a status-`0` ambiguous failure and never triggers automatic replay.
+  Reopen lifecycle automation must also scroll to the restored vote action
+  before asserting it; preserved ranking state alone does not guarantee that a
+  below-fold action is visible.
