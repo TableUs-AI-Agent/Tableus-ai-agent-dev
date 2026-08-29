@@ -27,6 +27,17 @@ superseded. The replacement candidate adds an abortable client deadline that
 remains active through response-body parsing: 10 seconds in gated local E2E and
 45 seconds in production-shaped mobile builds.
 
+Exact candidate `c8a506fcfb0add43b2a156321628653e177fc1bf` passed public CI,
+deployed cleanly, produced four inspected local artifacts, and passed the live
+two-user web lifecycle. Its private test link was rotated after the run. The
+candidate is nevertheless superseded for cumulative sign-off: device execution
+showed that ordinary lifecycle flows did not consume the app's intentional
+explicit Retry state after an ambiguous response, and the readiness runner
+asked for a mobile Sentry canary even though production-shaped profiles
+correctly compile no telemetry test control. The replacement uses retry-aware
+Maestro flows and binds a separate exact-SHA sanitized telemetry report from the
+isolated telemetry-test profiles into cumulative evidence.
+
 ## Objective
 
 Close the remaining pre-production gates without changing the public API,
@@ -51,6 +62,9 @@ emulator, with policy-safe retained evidence and an accountable rollback owner.
 - Production-shaped `readiness-ios` and `readiness-android` profiles, signed
   artifact inspection, guided device runners, and one-SHA cumulative evidence
   validation.
+- Exact-SHA auxiliary `telemetry-test-ios` and `telemetry-test-android`
+  artifacts used only to emit sanitized canaries; production-shaped readiness
+  artifacts retain no telemetry E2E control.
 - Cross-platform ambiguous-response evidence that disables Android transport
   retries, requires explicit user Retry, and preserves one idempotency key.
 - Bounded mobile request deadlines that convert a stalled fetch or response body
@@ -78,9 +92,10 @@ emulator, with policy-safe retained evidence and an accountable rollback owner.
 
 After a clean local candidate exists, one explicit owner approval is required
 before the public push, Supabase OTP-template change, contact-alias creation,
-Railway/Vercel staging deployment, budgeted live smoke, four sequential local
-mobile builds, or returning OTP delivery. A separate explicit approval is
-required to merge the evidence descendant into `main`.
+Railway/Vercel staging deployment, budgeted live smoke, four sequential release
+artifacts, two auxiliary telemetry-test artifacts, or returning OTP delivery. A
+separate explicit approval is required to merge the evidence descendant into
+`main`.
 
 ## Boundaries
 

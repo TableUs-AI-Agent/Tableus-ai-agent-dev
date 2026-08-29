@@ -135,7 +135,6 @@ try {
       organizer_authorization: await confirm(terminal, "Guest finalization was absent and organizer finalization/reopening succeeded"),
       rotated_link_rejected: await confirm(terminal, "The rotated private link showed the invalid or rotated state"),
       account_controls_read_only: await confirm(terminal, "Export and deletion-readiness were checked without deleting the account"),
-      telemetry_canary: await confirm(terminal, "The exact-release telemetry canary completed without private data"),
     };
     const summary = assertSafeReadinessEvidence({
       schema_version: 1,

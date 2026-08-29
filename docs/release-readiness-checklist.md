@@ -45,6 +45,8 @@ not be inferred from a passing test.
   passes with live Places/Gemini and Supabase authentication.
 - [ ] AASA and Android App Links match the inspected signed artifacts.
 - [ ] Sentry/PostHog canaries correlate to the exact release without private data.
+- [ ] Sanitized telemetry evidence comes from isolated exact-SHA telemetry-test
+  artifacts; readiness artifacts compile no telemetry E2E route or control.
 - [ ] Export/deletion readiness is read-only; no account is deleted.
 - [ ] The cumulative evidence validator accepts the sanitized evidence set.
 

@@ -13,7 +13,7 @@ test("readiness runner is exact-SHA, production-shaped, and sanitized", () => {
   assert.doesNotMatch(source, /question\([^)]*(?:email|otp|code|token)/i);
 });
 
-test("readiness runner covers cross-client, link, failure, account, and telemetry phases", () => {
+test("readiness runner covers cross-client, link, failure, and account phases", () => {
   for (const marker of [
     "returning_authentication",
     "session_persistence",
@@ -25,6 +25,6 @@ test("readiness runner covers cross-client, link, failure, account, and telemetr
     "organizer_authorization",
     "rotated_link_rejected",
     "account_controls_read_only",
-    "telemetry_canary",
   ]) assert.match(source, new RegExp(marker));
+  assert.doesNotMatch(source, /telemetry_canary/);
 });

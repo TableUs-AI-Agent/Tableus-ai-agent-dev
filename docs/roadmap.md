@@ -42,6 +42,7 @@ The active gate sequence and required owner inputs are maintained in
 The current objective is cumulative closed-beta staging readiness. It adds the
 owner-reviewed public contacts/legal/attribution closure, SDK 57 patch and
 security closure, production-shaped staging profiles, one-SHA evidence
-validation, and the rollback/residual-risk record. Completion stops before
+validation, retry-aware deterministic device flows, isolated exact-SHA telemetry
+canaries, and the rollback/residual-risk record. Completion stops before
 production deployment, store submission, or cohort activation. Those remain
 separate explicit milestones after this readiness packet is merged.

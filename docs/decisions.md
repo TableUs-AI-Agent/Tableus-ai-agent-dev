@@ -259,3 +259,11 @@
   mobile builds use 45 seconds to accommodate bounded live-provider work. A
   deadline failure is status `0`, remains explicit and retryable, and preserves
   the logical write's idempotency key; it is never replayed automatically.
+- **2026-08-28:** Cumulative device automation treats a surfaced recoverable
+  mutation as an expected explicit-retry branch, never as authorization for an
+  automatic replay. Maestro waits for either success or the operation-specific
+  Retry control, presses Retry only when visible, and then requires the normal
+  success state. Production-shaped readiness artifacts keep telemetry E2E
+  controls disabled. Exact-release mobile Sentry/PostHog canaries come from the
+  existing isolated telemetry-test profiles, and their sanitized aggregate
+  report is a required cumulative evidence source.

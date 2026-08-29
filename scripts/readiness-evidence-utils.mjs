@@ -46,6 +46,7 @@ export function validateCumulativeReadinessInput(value, expectedSha) {
     associations: value.associations,
     security: value.security,
     deterministic: value.deterministic,
+    telemetry: value.telemetry,
   })) requireSource(source, label, expectedSha);
 
   for (const [label, mobile] of Object.entries({ ios: value.ios, android: value.android })) {

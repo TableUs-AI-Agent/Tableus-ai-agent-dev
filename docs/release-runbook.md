@@ -529,6 +529,13 @@ Preview without moving production-facing aliases, and build sequentially:
 3. Apple-signed physical-device `readiness-ios`, then shut down build workers.
 4. ARM64 signed-APK `readiness-android`.
 
+After those four release artifacts, build `telemetry-test-ios` and
+`telemetry-test-android` sequentially as auxiliary exact-SHA artifacts. They are
+the only mobile artifacts allowed to expose the sanitized telemetry canary
+route. Emit the fixed canaries, run `telemetry-staging-e2e`, and retain only its
+aggregate summary. Do not attest to a canary from `readiness-*`; those profiles
+intentionally compile no telemetry E2E control.
+
 Inspect production-shaped artifacts before installation:
 
 ```bash
@@ -553,7 +560,8 @@ at most one returning code per platform only when installation requires it.
 No email, code, private URL, share token, Place ID, restaurant content,
 coordinate, prompt, provider response, or raw native/Maestro log may survive.
 
-Assemble the already-sanitized summaries and validate one source SHA:
+Assemble the already-sanitized summaries, including the exact-SHA telemetry
+summary, and validate one source SHA:
 
 ```bash
 make cumulative-readiness-evidence API_URL=<https-staging-api> \

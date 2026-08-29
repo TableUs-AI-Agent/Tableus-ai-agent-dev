@@ -23,6 +23,7 @@ const valid = () => ({
   associations: source(),
   security: source({ critical_findings: 0, high_runtime_findings: 0 }),
   deterministic: source(),
+  telemetry: source({ sentry_project_count: 3, posthog_platform_count: 4 }),
   release_checks: {
     owner_legal_reviewed: true,
     google_attribution_reviewed: true,
@@ -42,6 +43,9 @@ test("cumulative evidence requires one exact SHA and every release gate", () => 
   const unsigned = valid();
   unsigned.release_checks.owner_legal_reviewed = false;
   assert.throws(() => validateCumulativeReadinessInput(unsigned, sha), /owner_legal_reviewed/);
+  const missingTelemetry = valid();
+  delete missingTelemetry.telemetry;
+  assert.throws(() => validateCumulativeReadinessInput(missingTelemetry, sha), /telemetry does not match/);
 });
 
 test("critical or high runtime findings block readiness", () => {
