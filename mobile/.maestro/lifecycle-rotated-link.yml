@@ -23,6 +23,14 @@ appId: com.tableus.app
     timeout: 30000
 - tapOn: "Join this plan"
 - extendedWaitUntil:
+    visible: ".*(This private link is invalid, expired, or has been rotated.|Retry joining plan).*"
+    timeout: 30000
+- runFlow:
+    when:
+      visible: "Retry joining plan"
+    commands:
+      - tapOn: "Retry joining plan"
+- extendedWaitUntil:
     visible: "This private link is invalid, expired, or has been rotated."
     timeout: 30000
 - takeScreenshot: "rotated-link"

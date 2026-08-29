@@ -545,6 +545,14 @@ device output. A replacement candidate must prove the independent deadline
 race, rebuild every artifact, and restart exact-SHA evidence from a clean
 backend.
 
+Candidate `ac099f37f38a959f3c5d86c51ce78a225a836d09` is also superseded. It
+passed public CI, exact-SHA staging deployment, live-provider smoke, all six
+artifact inspections, and both iOS deterministic journeys. Android twice
+reached the app's intended status-zero `Retry joining plan` state during the
+rotated-link phase, but that one Maestro flow lacked the bounded explicit retry
+branch used by all other lifecycle writes. The replacement must include and
+guard that branch, rebuild every artifact, and restart exact-SHA evidence.
+
 Inspect production-shaped artifacts before installation:
 
 ```bash

@@ -17,6 +17,7 @@ test("lifecycle writes explicitly recover from ambiguous responses", () => {
     "lifecycle-organizer-vote.yml": "Retry ranked vote",
     "lifecycle-guest-vote.yml": "Retry ranked vote",
     "lifecycle-organizer-finalize.yml": "Retry finalizing plan",
+    "lifecycle-rotated-link.yml": "Retry joining plan",
     "lifecycle-stale-run.yml": "Retry saving constraints",
   };
   for (const [name, label] of Object.entries(expectations)) {

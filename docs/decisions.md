@@ -275,3 +275,9 @@
   Reopen lifecycle automation must also scroll to the restored vote action
   before asserting it; preserved ranking state alone does not guarantee that a
   below-fold action is visible.
+- **2026-08-29:** Rotated-link device evidence may encounter the same explicit
+  status-zero recoverable state as any other write. The lifecycle flow must tap
+  `Retry joining plan` once when surfaced and then require the terminal
+  invalid/expired/rotated state. This remains user-driven replay with the same
+  in-memory idempotency key; it is not an automatic retry or a relaxed token
+  assertion.

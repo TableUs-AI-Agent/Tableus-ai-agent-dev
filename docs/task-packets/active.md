@@ -51,6 +51,15 @@ scrolls to the restored vote action before asserting it. The staged live smoke
 was stopped at its first verification-code prompt and made no paid provider
 call.
 
+Exact candidate `ac099f37f38a959f3c5d86c51ce78a225a836d09` passed public CI,
+deployed cleanly, passed the budgeted two-user live Places/Gemini smoke, built
+all six inspected artifacts, and passed both iOS deterministic journeys. Its
+Android lifecycle reproducibly reached the explicit recoverable state before
+rotated-link rejection because that single lifecycle flow did not consume
+`Retry joining plan`. The replacement adds the same bounded explicit retry
+branch already required for every other lifecycle write. No Android evidence or
+artifact from this candidate is accepted for cumulative sign-off.
+
 ## Objective
 
 Close the remaining pre-production gates without changing the public API,
