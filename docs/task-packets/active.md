@@ -60,6 +60,16 @@ rotated-link rejection because that single lifecycle flow did not consume
 branch already required for every other lifecycle write. No Android evidence or
 artifact from this candidate is accepted for cumulative sign-off.
 
+Exact candidate `0de0c34c0806e25e6b0cea664159e0800fd2accf` passed public CI,
+deployed cleanly, passed the budgeted two-user live Places/Gemini smoke, built
+and inspected all six artifacts, and passed both iOS deterministic journeys.
+On Android, the organizer vote persisted and the app rendered `Ranked vote
+saved.`, but the status was below the viewport while the host flow used an
+already-visible wait. The replacement scrolls to either the saved or bounded
+retry state after vote submission in both organizer and guest flows and guards
+that behavior. No artifact or partial Android evidence from `0de0c34` is
+accepted for cumulative sign-off.
+
 ## Objective
 
 Close the remaining pre-production gates without changing the public API,

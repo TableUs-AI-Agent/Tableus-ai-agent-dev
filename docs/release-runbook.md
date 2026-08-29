@@ -553,6 +553,15 @@ rotated-link phase, but that one Maestro flow lacked the bounded explicit retry
 branch used by all other lifecycle writes. The replacement must include and
 guard that branch, rebuild every artifact, and restart exact-SHA evidence.
 
+Candidate `0de0c34c0806e25e6b0cea664159e0800fd2accf` is superseded as well. It
+passed public CI, exact-SHA staging deployment, live-provider smoke, all six
+artifact inspections, and both iOS deterministic journeys. Android persisted
+the organizer vote and rendered `Ranked vote saved.`, but the label was below
+the viewport while the host flow waited for an already-visible element. The
+replacement must scroll to the saved-or-retry state after organizer and guest
+vote submission, guard both flows, rebuild every artifact, and restart
+exact-SHA evidence.
+
 Inspect production-shaped artifacts before installation:
 
 ```bash

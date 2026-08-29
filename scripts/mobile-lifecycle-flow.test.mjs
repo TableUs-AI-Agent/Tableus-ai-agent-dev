@@ -27,3 +27,13 @@ test("lifecycle writes explicitly recover from ambiguous responses", () => {
   }
   assert.match(flow("lifecycle-organizer-finalize.yml"), /Retry reopening voting/);
 });
+
+test("lifecycle vote flows scroll to saved or retry status after submission", () => {
+  for (const name of ["lifecycle-organizer-vote.yml", "lifecycle-guest-vote.yml"]) {
+    const source = flow(name);
+    assert.match(
+      source,
+      /text: "Submit ranked vote"[\s\S]*scrollUntilVisible:\n\s+element: "\.\*\(Ranked vote saved\.\|Retry ranked vote\)\.\*"/,
+    );
+  }
+});

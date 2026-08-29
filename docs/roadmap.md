@@ -47,7 +47,8 @@ canaries, and the rollback/residual-risk record. Completion stops before
 production deployment, store submission, or cohort activation. Those remain
 separate explicit milestones after this readiness packet is merged.
 
-The next readiness candidate must replace superseded `ac099f3`: Android's
-rotated-link journey must consume the app's bounded explicit `Retry joining
-plan` state before requiring terminal token rejection. All exact-SHA artifacts
-and device evidence restart after that candidate freezes.
+The next readiness candidate must replace superseded `0de0c34`: Android vote
+submission must scroll to either `Ranked vote saved.` or the bounded explicit
+`Retry ranked vote` state before continuing. Both organizer and guest flows are
+guarded. All exact-SHA artifacts and device evidence restart after that
+candidate freezes.

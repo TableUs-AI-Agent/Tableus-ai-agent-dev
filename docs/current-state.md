@@ -263,7 +263,15 @@
   explicit status-zero `Retry joining plan` state, but that single Maestro flow
   did not consume the retry before asserting terminal token rejection. The
   replacement adds and guards the bounded retry branch already used by every
-  other lifecycle write. Replacement public CI, deployments, six artifacts,
+  other lifecycle write. Replacement candidate
+  `0de0c34c0806e25e6b0cea664159e0800fd2accf` then passed public CI, exact-SHA
+  Railway/Vercel staging deployment, budgeted live-provider smoke, all six
+  artifact inspections, and both iOS deterministic journeys. Its Android
+  organizer vote persisted successfully, but the saved/retry status rendered
+  below the viewport and the host flow waited only for an already-visible
+  label. That candidate and its artifacts are superseded. The next candidate
+  scrolls to the bounded saved-or-retry state in both organizer and guest vote
+  flows before continuing. Replacement public CI, deployments, six artifacts,
   live smoke, and device attestations remain gated.
 
 ## External dependencies not provisioned in source

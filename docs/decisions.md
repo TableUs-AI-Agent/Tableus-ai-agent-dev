@@ -281,3 +281,8 @@
   invalid/expired/rotated state. This remains user-driven replay with the same
   in-memory idempotency key; it is not an automatic retry or a relaxed token
   assertion.
+- **2026-08-29:** Ranked-vote success and bounded retry controls may render
+  below the Android viewport after the submit action. Lifecycle automation must
+  scroll to either `Ranked vote saved.` or `Retry ranked vote` before branching,
+  then require the saved state. A completed submit tap or changed score alone
+  is not accepted as device evidence.
