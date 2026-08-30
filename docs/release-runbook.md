@@ -583,7 +583,28 @@ also permit app installation under Screen Time or device management before the
 signed readiness artifact is installed; never request or retain an OTP before
 installation succeeds.
 
+Local remediation `520630393c45ad992c63b2a45078235d2ef8aff0` is also
+superseded and must never be deployed. Sealed scan
+`0933625b-4d73-4da7-ba6a-946128c29089` found that multipart parsing remained
+outside the body cap plus four medium and five low findings. The replacement
+must pass declared and chunked body-limit tests, secure-staging configuration
+tests, invite reservation/pruning tests, web subject-isolation tests, no-echo
+prompt and no-live-screenshot tests, immutable build-input tests, Expo Android
+autolinking resolution, `make ready`, and a fresh full exact-SHA scan.
+
 Inspect production-shaped artifacts before installation:
+
+The signed-artifact inspection must read the native `Info.plist` or Android
+manifest and reject `NSAllowsLocalNetworking=true` or
+`usesCleartextTraffic=true`; an embedded `localE2E=false` assertion alone is not
+transport evidence.
+
+For the local Expo loop, open the `mobile/` workspace and use the Codex Run,
+Run iOS, Run Android, Run Web, Run Dev Client, or Expo Doctor actions. The same
+entrypoint is `mobile/script/build_and_run.sh`; it deliberately contains no EAS
+build or submission action. The Doctor action resolves locked
+`expo-doctor@1.20.4` from the installed workspace and does not install mutable
+registry code.
 
 ```bash
 make inspect-mobile-readiness PLATFORM=ios APP=<artifact> SHA=<source-sha> \
@@ -606,6 +627,10 @@ shaped mobile requests retain a 45-second deadline through body parsing. Send
 at most one returning code per platform only when installation requires it.
 No email, code, private URL, share token, Place ID, restaurant content,
 coordinate, prompt, provider response, or raw native/Maestro log may survive.
+Live authenticated runners retain no screenshots; deterministic seeded runners
+may retain synthetic screenshots. OTPs, invites, account emails, and private
+URLs must be entered with the shared no-echo TTY prompt, never arguments or
+environment variables.
 
 The deterministic runners invoke `mobile-device-preflight` automatically. It
 boots only the explicitly named iOS simulator and requires Android to already be

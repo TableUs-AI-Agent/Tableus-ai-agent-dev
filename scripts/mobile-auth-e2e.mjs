@@ -1,14 +1,14 @@
 #!/usr/bin/env node
 
 import { randomBytes } from "node:crypto";
-import { copyFileSync, cpSync, existsSync, mkdirSync, mkdtempSync, readdirSync, rmSync, statSync, writeFileSync } from "node:fs";
+import { cpSync, existsSync, mkdirSync, mkdtempSync, readdirSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { basename, dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
-import { createInterface } from "node:readline/promises";
 import { spawnSync } from "node:child_process";
 
 import { artifactChecksum } from "./evidence-utils.mjs";
+import { promptSecret } from "./prompt-utils.mjs";
 
 const repoRoot = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const flowSource = join(repoRoot, "mobile", ".maestro-auth");
@@ -51,21 +51,15 @@ async function preflight(apiUrl) {
   return payload;
 }
 
-function collectScreenshot(root, evidenceDir, platform) {
-  const matches = [];
-  const visit = (directory) => {
-    for (const entry of readdirSync(directory)) {
-      const path = join(directory, entry);
-      if (statSync(path).isDirectory()) visit(path);
-      else if (entry === "returning-session.png" || entry === "account-controls.png") matches.push(path);
-    }
-  };
-  visit(root);
-  return matches.map((source) => {
-    const destination = join(evidenceDir, `${platform}-${basename(source)}`);
-    copyFileSync(source, destination);
-    return basename(destination);
-  });
+function snapshot(directory) {
+  return existsSync(directory) ? new Set(readdirSync(directory)) : new Set();
+}
+
+function removeNewEntries(directory, before) {
+  if (!existsSync(directory)) return;
+  for (const entry of readdirSync(directory)) {
+    if (!before.has(entry)) rmSync(join(directory, entry), { recursive: true, force: true });
+  }
 }
 
 const args = parseArgs(process.argv.slice(2));
@@ -83,11 +77,10 @@ const startPhaseIndex = phases.indexOf(startPhase);
 if (startPhaseIndex < 0) throw new Error(`--start-phase must be one of: ${phases.join(", ")}`);
 const readiness = await preflight(apiUrl);
 
-const terminal = createInterface({ input: process.stdin, output: process.stdout });
-const email = (await terminal.question("Test account email: ")).trim().toLowerCase();
+const email = (await promptSecret("Test account email: ")).trim().toLowerCase();
 const signupWillRun = startPhaseIndex <= phases.indexOf("signup-send");
-const displayName = signupWillRun ? (await terminal.question("Display name: ")).trim() : "";
-const invite = signupWillRun ? (await terminal.question("One-use invite code: ")).trim() : "";
+const displayName = signupWillRun ? (await promptSecret("Display name: ")).trim() : "";
+const invite = signupWillRun ? (await promptSecret("One-use invite code: ")).trim() : "";
 if (!email || (signupWillRun && (!displayName || !invite))) {
   throw new Error("Email is required, and signup runs also require display name and invite.");
 }
@@ -108,6 +101,10 @@ const maestroEnvironment = {
 const developerDir = process.env.DEVELOPER_DIR || "/Applications/Xcode.app/Contents/Developer";
 const knownAdb = "/opt/homebrew/share/android-commandlinetools/platform-tools/adb";
 const adb = process.env.ADB || (existsSync(knownAdb) ? knownAdb : "adb");
+const maestroTests = join(process.env.HOME ?? "", ".maestro", "tests");
+const maestroLogs = join(process.env.HOME ?? "", "Library", "Logs", "maestro");
+const testsBefore = snapshot(maestroTests);
+const logsBefore = snapshot(maestroLogs);
 
 function flow(name, variables = {}) {
   const maestroArgs = ["--device", device, "test", "--test-output-dir=results"];
@@ -134,7 +131,7 @@ try {
   if (shouldRun("invalid-invite")) flow("invalid-invite.yml", { INVALID_INVITE: invalidInvite, DISPLAY_NAME: displayName, EMAIL: email });
   if (shouldRun("signup-send")) flow("signup-send.yml", { INVITE: invite, DISPLAY_NAME: displayName, EMAIL: email, JOIN_TOKEN: joinToken });
   if (shouldRun("verify-signup")) {
-    const signupOtp = (await terminal.question("Signup OTP from the newest email: ")).trim();
+    const signupOtp = (await promptSecret("Signup OTP from the newest email: ")).trim();
     if (!signupOtp) throw new Error("Signup OTP is required.");
     secrets.push(signupOtp);
     flow("verify-signup.yml", { OTP: signupOtp });
@@ -148,14 +145,13 @@ try {
     flow("returning-send.yml", { EMAIL: email });
   }
   if (shouldRun("returning-verify")) {
-    const returningOtp = (await terminal.question("Returning sign-in OTP from the newest email: ")).trim();
+    const returningOtp = (await promptSecret("Returning sign-in OTP from the newest email: ")).trim();
     if (!returningOtp) throw new Error("Returning sign-in OTP is required.");
     secrets.push(returningOtp);
     flow("returning-verify.yml", { OTP: returningOtp });
   }
   if (shouldRun("account-controls")) flow("account-controls.yml");
 
-  const screenshots = collectScreenshot(temporaryRoot, evidenceDir, platform);
   const gitResult = spawnSync("git", ["rev-parse", "HEAD"], { cwd: repoRoot, encoding: "utf8" });
   if (gitResult.status !== 0) throw new Error("Could not resolve the candidate SHA.");
   const summary = {
@@ -180,7 +176,7 @@ try {
     sign_out: shouldRun("sign-out"),
     returning_sign_in: shouldRun("returning-verify"),
     account_controls_validated: shouldRun("account-controls"),
-    screenshots,
+    screenshots_retained_by_runner: false,
     started_at_phase: startPhase,
   };
   const summaryKind = startPhase === "returning-send" ? "account" : "auth";
@@ -189,6 +185,7 @@ try {
     ? `TableUs ${platform} staging authentication lifecycle passed.\n`
     : `TableUs ${platform} staging authentication segment from ${startPhase} passed.\n`);
 } finally {
-  terminal.close();
   rmSync(temporaryRoot, { recursive: true, force: true });
+  removeNewEntries(maestroTests, testsBefore);
+  removeNewEntries(maestroLogs, logsBefore);
 }

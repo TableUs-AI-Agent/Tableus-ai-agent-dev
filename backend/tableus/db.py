@@ -44,7 +44,7 @@ async def init_database() -> None:
                 )
             await connection.run_sync(Base.metadata.create_all)
 
-    if settings.tableus_auth_mode == "demo":
+    if settings.tableus_auth_mode == "demo" and settings.environment in {"development", "test"}:
         await seed_demo_data()
 
 

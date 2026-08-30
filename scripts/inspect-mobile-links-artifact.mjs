@@ -170,6 +170,15 @@ try {
 
   if (platform === "ios") {
     verifyIosCodeSignature(inspectionPath);
+    const localNetworking = tryRun("plutil", [
+      "-extract",
+      "NSAppTransportSecurity.NSAllowsLocalNetworking",
+      "raw",
+      join(inspectionPath, "Info.plist"),
+    ]);
+    if (localNetworking?.trim() === "true") {
+      throw new Error("Signed iOS artifact permits local networking.");
+    }
     const entitlements = run("codesign", ["-d", "--entitlements", "-", inspectionPath]);
     if (!entitlements.includes(`[String] applinks:${host}`)) throw new Error("iOS associated-domain entitlement is missing.");
     if (entitlements.includes("?mode=developer")) throw new Error("Development associated-domain mode is forbidden.");
@@ -245,6 +254,9 @@ try {
       "/opt/homebrew/share/android-commandlinetools/tools/bin/apkanalyzer",
     ]);
     const manifest = run(apkanalyzer, ["manifest", "print", artifact]);
+    if (manifest.includes('android:usesCleartextTraffic="true"')) {
+      throw new Error("Signed Android artifact permits cleartext traffic.");
+    }
     for (const marker of ["android:autoVerify=\"true\"", host, "android:pathPrefix=\"/join/\"", "android:path=\"/auth\""]) {
       if (!manifest.includes(marker)) throw new Error(`Android manifest is missing verified-link marker: ${marker}`);
     }

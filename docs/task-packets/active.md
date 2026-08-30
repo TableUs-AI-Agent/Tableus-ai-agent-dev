@@ -86,6 +86,24 @@ fresh exact-SHA scan and `make ready` must pass before replacement freeze.
 Physical-iPhone readiness also waits for the owner to allow app installation in
 device ManagedConfiguration.
 
+Local remediation commit `520630393c45ad992c63b2a45078235d2ef8aff0`
+closed those three findings and passed `make ready`, but its sealed full scan
+`0933625b-4d73-4da7-ba6a-946128c29089` found one further P1: multipart uploads
+could be parsed and spooled before the handler's size check. It also found
+staging fail-open defaults, append-only invite validations, cross-subject web
+cache retention, unsafe live-evidence screenshot promotion, echoed operator
+secrets, a revocation-insensitive connection replay, and mutable build inputs.
+That local candidate is superseded and was never pushed or deployed. The active
+remediation adds outer ASGI admission/body limits, secure hosted defaults,
+invite reservation reuse/pruning, subject-partitioned web caches, summary-only
+  live evidence, no-echo prompts, current-consent connection retries, and immutable
+  CI/container inputs. Signed native inspection additionally rejects the
+  local-network allowance found in the superseded iOS artifact and Android
+  cleartext transport. Independent bypass review additionally closed CORS
+  preflight admission, page-local cross-subject state, user-level Maestro-log,
+  and mutable Expo Doctor gaps. A new exact SHA still requires `make ready`, an
+  independent bypass review, and a fresh full scan before any external gate.
+
 ## Objective
 
 Close the remaining pre-production gates without changing the public API,
@@ -136,7 +154,8 @@ emulator, with policy-safe retained evidence and an accountable rollback owner.
   production-shaped mobile, link-association, telemetry, and security evidence
   reference one exact candidate SHA.
 - Evidence contains only approved identifiers, checksums, counts, booleans,
-  policy versions, and sanitized screenshots; it contains no personal, secret,
+  policy versions, and deterministic synthetic screenshots. Live authenticated
+  runners retain no screenshots; evidence contains no personal, secret,
   private-plan, location, restaurant, or provider response data.
 
 ## External gates

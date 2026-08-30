@@ -3,10 +3,10 @@
 import { randomUUID } from "node:crypto";
 import { mkdirSync, writeFileSync } from "node:fs";
 import { basename, resolve } from "node:path";
-import { createInterface } from "node:readline/promises";
 import { spawnSync } from "node:child_process";
 
 import { assertSanitizedMapsSummary, validateMapsReadiness } from "./maps-evidence-utils.mjs";
+import { promptSecret } from "./prompt-utils.mjs";
 
 function parseArgs(argv) {
   const values = {};
@@ -40,16 +40,15 @@ const expectedSha = git.stdout.trim();
 const readiness = await jsonRequest(`${apiUrl}/health/ready`);
 validateMapsReadiness(readiness, expectedSha);
 
-const terminal = createInterface({ input: process.stdin, output: process.stdout });
 async function authenticate(label) {
-  const email = (await terminal.question(`${label} approved account email: `)).trim().toLowerCase();
+  const email = (await promptSecret(`${label} approved account email: `)).trim().toLowerCase();
   if (!email) throw new Error("An approved account email is required.");
   await jsonRequest(`${supabaseUrl}/auth/v1/otp`, {
     method: "POST",
     headers: { apikey: supabaseAnonKey, "Content-Type": "application/json" },
     body: JSON.stringify({ email, create_user: false }),
   });
-  const code = (await terminal.question(`${label} newest verification code: `)).trim();
+  const code = (await promptSecret(`${label} newest verification code: `)).trim();
   if (!code) throw new Error("A verification code is required.");
   const session = await jsonRequest(`${supabaseUrl}/auth/v1/verify`, {
     method: "POST",
@@ -81,7 +80,6 @@ let guestToken;
 try {
   organizerToken = await authenticate("Organizer");
   guestToken = await authenticate("Guest");
-  terminal.close();
   const organizer = api(organizerToken);
   const guest = api(guestToken);
   const locationQuery = "Madison, Wisconsin";
@@ -129,5 +127,4 @@ try {
 } finally {
   organizerToken = undefined;
   guestToken = undefined;
-  terminal.close();
 }

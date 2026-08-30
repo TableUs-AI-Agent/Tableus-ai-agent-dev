@@ -8,14 +8,26 @@ import { useState } from "react";
 import { v1Api } from "../lib/v1-api";
 import { createCanonicalJoinUrl } from "../lib/links";
 import { GoogleMapsAttribution } from "../components/google-maps-attribution";
+import { useUser } from "../context/user-context";
 
 export default function PlansPage() {
+  const { currentUser } = useUser();
+  if (!currentUser) return <p className="p-8" role="status">Loading plans…</p>;
+  return <PlansPageContent key={currentUser.id} subject={currentUser.id} />;
+}
+
+function PlansPageContent({ subject }: { subject: string }) {
   const queryClient = useQueryClient();
   const [title, setTitle] = useState("");
   const [locationInput, setLocationInput] = useState("");
   const [selectedLocation, setSelectedLocation] = useState<ResolvedLocation | null>(null);
   const [shareUrl, setShareUrl] = useState("");
-  const plans = useQuery({ queryKey: ["plans"], queryFn: () => v1Api.get<PlanSummary[]>("/api/v1/plans") });
+  const plansKey = ["plans", subject] as const;
+  const plans = useQuery({
+    queryKey: plansKey,
+    queryFn: () => v1Api.get<PlanSummary[]>("/api/v1/plans"),
+    enabled: true,
+  });
   const resolve = useMutation({
     mutationFn: () => v1Api.post<ResolvedLocation>("/api/v1/locations/resolve", { query: locationInput.trim() }),
     onSuccess: setSelectedLocation,
@@ -31,7 +43,7 @@ export default function PlansPage() {
       setLocationInput("");
       setSelectedLocation(null);
       setShareUrl(createCanonicalJoinUrl(plan.id, share_token));
-      void queryClient.invalidateQueries({ queryKey: ["plans"] });
+      void queryClient.invalidateQueries({ queryKey: plansKey });
     },
   });
 

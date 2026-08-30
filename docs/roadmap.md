@@ -47,10 +47,14 @@ canaries, and the rollback/residual-risk record. Completion stops before
 production deployment, store submission, or cohort activation. Those remain
 separate explicit milestones after this readiness packet is merged.
 
-The next readiness candidate must replace security-blocked `d0955f5`. It keeps
+The next readiness candidate must replace security-blocked `d0955f5` and the
+local-only superseded remediation `5206303`. It keeps
 the corrected Android vote/retry automation and integrated Expo/iOS/Android
 preflight, and adds bounded transport-source/global request limiting, reusable
 JWKS verification state, an explicit idempotent-route allowlist, authenticated
-and role-revalidated replay, and fixed-capacity/byte-bounded success storage.
+and role-revalidated replay, fixed-capacity/byte-bounded success storage, outer
+streaming body admission, secure staging defaults, bounded invite reservations,
+web subject isolation, privacy-safe evidence input/retention, and immutable
+build inputs.
 Run a fresh exact-SHA repository scan and `make ready`; only then may Railway,
 Vercel, live-provider, six-artifact, and device evidence restart.

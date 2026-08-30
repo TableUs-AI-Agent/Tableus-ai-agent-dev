@@ -339,6 +339,7 @@ from tableus.request_controls import (
     CachedResponse,
     FixedWindowRateLimiter,
     IdempotencyReplayCache,
+    RequestBodyLimitMiddleware,
     is_idempotency_eligible,
 )
 
@@ -348,62 +349,17 @@ configure_sentry()
 app = FastAPI(title="TableUs", version="0.2.0", lifespan=lifespan)
 app.state.request_rate_limiter = FixedWindowRateLimiter()
 app.state.idempotency_cache = IdempotencyReplayCache()
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=settings.cors_origins,
-    allow_credentials=True,
-    allow_methods=["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
-    allow_headers=[
-        "Authorization",
-        "Content-Type",
-        "Idempotency-Key",
-        "X-Demo-User-ID",
-        "X-Request-ID",
-        "X-TableUs-Telemetry-Session",
-        "X-TableUs-Client",
-    ],
-)
-
-
 @app.middleware("http")
 async def request_context(request: Request, call_next):
     import uuid
 
-    from tableus.security import hash_value
-
-    request_id = request.headers.get("X-Request-ID") or str(uuid.uuid4())
+    request_id = (
+        getattr(request.state, "request_id", None)
+        or request.headers.get("X-Request-ID")
+        or str(uuid.uuid4())
+    )
     request.state.request_id = request_id
-    is_legacy = request.url.path.startswith("/api/") and not request.url.path.startswith("/api/v1")
-    if is_legacy and not settings.tableus_demo_mode:
-        return JSONResponse(
-            status_code=404,
-            content={
-                "error": {"code": "not_found", "message": "Not found"},
-                "request_id": request_id,
-            },
-        )
-    if (
-        request.url.path.startswith("/api/v1/plans")
-        and not settings.tableus_shared_plans_enabled
-    ):
-        return JSONResponse(
-            status_code=404,
-            content={
-                "error": {"code": "feature_disabled", "message": "Shared plans are disabled"},
-                "request_id": request_id,
-            },
-        )
     now = time.time()
-    source_key = hash_value(request.client.host if request.client else "unknown")
-    health_probe = request.url.path in {"/health/live", "/health/ready"}
-    if not health_probe and app.state.request_rate_limiter.consume(source_key, now):
-        return JSONResponse(
-            status_code=429,
-            content={
-                "error": {"code": "rate_limited", "message": "Too many requests"},
-                "request_id": request_id,
-            },
-        )
 
     idempotency_key = request.headers.get("Idempotency-Key")
     idempotency_eligible = bool(
@@ -591,6 +547,32 @@ async def request_context(request: Request, call_next):
         )
     )
     return response
+
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=settings.cors_origins,
+    allow_credentials=True,
+    allow_methods=["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
+    allow_headers=[
+        "Authorization",
+        "Content-Type",
+        "Idempotency-Key",
+        "X-Demo-User-ID",
+        "X-Request-ID",
+        "X-TableUs-Telemetry-Session",
+        "X-TableUs-Client",
+    ],
+)
+app.add_middleware(
+    RequestBodyLimitMiddleware,
+    rate_limiter=app.state.request_rate_limiter,
+    demo_legacy_allowed=(
+        settings.tableus_demo_mode and settings.environment in {"development", "test"}
+    ),
+    shared_plans_enabled=settings.tableus_shared_plans_enabled,
+    cors_origins=tuple(settings.cors_origins),
+)
 
 
 @app.exception_handler(HTTPException)

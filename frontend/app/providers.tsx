@@ -1,9 +1,33 @@
 "use client";
 
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { useEffect, useState, type PropsWithChildren } from "react";
+import { useEffect, useRef, useState, type PropsWithChildren } from "react";
 
+import { subscribeAuthorizationBoundary } from "./lib/authorization-boundary";
+import { clearPrivateQueryState, shouldClearForAuthTransition } from "./lib/session-query-isolation";
+import { isSupabaseConfigured, supabase } from "./lib/supabase-browser";
 import { captureTelemetry, registerTelemetryClient, sanitizeWebPostHogPayload } from "./lib/telemetry";
+
+function SessionQueryIsolation({ queryClient }: { queryClient: QueryClient }) {
+  const previousSubject = useRef<string | null | undefined>(undefined);
+
+  useEffect(() => {
+    if (!isSupabaseConfigured) return;
+    const clear = () => clearPrivateQueryState(queryClient);
+    const unsubscribeAuthorization = subscribeAuthorizationBoundary(clear);
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
+      const nextSubject = session?.user.id ?? null;
+      if (shouldClearForAuthTransition(previousSubject.current, nextSubject, event)) clear();
+      previousSubject.current = nextSubject;
+    });
+    return () => {
+      unsubscribeAuthorization();
+      subscription.unsubscribe();
+    };
+  }, [queryClient]);
+
+  return null;
+}
 
 export function AppProviders({ children }: PropsWithChildren) {
   const [queryClient] = useState(
@@ -33,5 +57,10 @@ export function AppProviders({ children }: PropsWithChildren) {
     });
   }, []);
 
-  return <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>;
+  return (
+    <QueryClientProvider client={queryClient}>
+      <SessionQueryIsolation queryClient={queryClient} />
+      {children}
+    </QueryClientProvider>
+  );
 }

@@ -3,35 +3,44 @@
 import type { Plan, PlanRevision } from "@tableus/domain";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 import { v1Api } from "../../lib/v1-api";
 import { createCanonicalJoinUrl } from "../../lib/links";
 import { GoogleMapsAttribution } from "../../components/google-maps-attribution";
+import { useUser } from "../../context/user-context";
 
 export default function PlanPage() {
+  const { currentUser } = useUser();
+  if (!currentUser) return <p className="p-8" role="status">Loading plan…</p>;
+  return <PlanPageContent key={currentUser.id} subject={currentUser.id} />;
+}
+
+function PlanPageContent({ subject }: { subject: string }) {
   const { id } = useParams<{ id: string }>();
   const queryClient = useQueryClient();
-  const key = ["plan", id];
+  const key = useMemo(() => ["plan", subject, id] as const, [subject, id]);
+  const revisionKey = useMemo(() => ["plan-revision", subject, id] as const, [subject, id]);
   const [notes, setNotes] = useState("");
   const [query, setQuery] = useState("group-friendly dinner");
   const [ranking, setRanking] = useState<string[]>([]);
   const plan = useQuery({ queryKey: key, queryFn: () => v1Api.get<Plan>(`/api/v1/plans/${id}`) });
   const revision = useQuery({
-    queryKey: ["plan-revision", id],
+    queryKey: revisionKey,
     queryFn: () => v1Api.get<PlanRevision>(`/api/v1/plans/${id}/revision`),
     refetchInterval: 30_000,
+    enabled: true,
   });
   useEffect(() => {
     if (revision.data?.updated_at && plan.data?.updated_at && revision.data.updated_at !== plan.data.updated_at) {
-      void queryClient.refetchQueries({ queryKey: ["plan", id], exact: true });
+      void queryClient.refetchQueries({ queryKey: key, exact: true });
     }
-  }, [id, plan.data?.updated_at, queryClient, revision.data?.updated_at]);
+  }, [key, plan.data?.updated_at, queryClient, revision.data?.updated_at]);
   const mutation = (path: string, body: unknown, method: "post" | "put" | "patch" = "post") => ({
     mutationFn: () => v1Api[method]<Plan>(`/api/v1/plans/${id}/${path}`, body),
     onSuccess: (data: Plan) => {
       queryClient.setQueryData(key, data);
-      queryClient.setQueryData<PlanRevision>(["plan-revision", id], { updated_at: data.updated_at });
+      queryClient.setQueryData<PlanRevision>(revisionKey, { updated_at: data.updated_at });
     },
   });
   const constraints = useMutation(mutation("constraints", { notes, cuisines: [], dietary_notes: [] }, "patch"));

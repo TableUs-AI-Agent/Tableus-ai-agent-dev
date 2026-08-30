@@ -70,10 +70,15 @@ test("local E2E configuration is enabled only for test artifacts", () => {
     assert.equal(buildProperties(config)?.android.usesCleartextTraffic, true);
   }
 
-  for (const profile of ["development", "preview", "production"]) {
+  const development = configFor("development");
+  assert.equal(development.extra?.localE2E, false);
+  assert.equal(development.ios?.infoPlist?.NSAppTransportSecurity.NSAllowsLocalNetworking, true);
+  assert.equal(buildProperties(development)?.android.usesCleartextTraffic, false);
+
+  for (const profile of ["preview", "production"]) {
     const config = configFor(profile);
     assert.equal(config.extra?.localE2E, false);
-    assert.equal(config.ios?.infoPlist, undefined);
+    assert.equal(config.ios?.infoPlist?.NSAppTransportSecurity.NSAllowsLocalNetworking, false);
     assert.equal(buildProperties(config)?.android.usesCleartextTraffic, false);
   }
 });
@@ -91,7 +96,7 @@ test("verified links use one exact HTTPS host and exclude the web auth callback"
 test("test profiles still require the explicit local E2E flag", () => {
   const config = configFor("test-ios", "false");
   assert.equal(config.extra?.localE2E, false);
-  assert.equal(config.ios?.infoPlist, undefined);
+  assert.equal(config.ios?.infoPlist?.NSAppTransportSecurity.NSAllowsLocalNetworking, false);
   assert.equal(buildProperties(config)?.android.usesCleartextTraffic, false);
 });
 
@@ -101,7 +106,7 @@ test("auth E2E is enabled only for auth test profiles with HTTPS staging", () =>
     assert.equal(config.extra?.authE2E, true);
     assert.equal(config.extra?.sourceSha, "a".repeat(40));
     assert.equal(config.extra?.localE2E, false);
-    assert.equal(config.ios?.infoPlist, undefined);
+    assert.equal(config.ios?.infoPlist?.NSAppTransportSecurity.NSAllowsLocalNetworking, false);
     assert.equal(buildProperties(config)?.android.usesCleartextTraffic, false);
   }
   for (const profile of ["development", "preview", "production", "test-ios", "test-android"]) {
@@ -144,7 +149,7 @@ test("telemetry E2E is enabled only for telemetry test profiles with HTTPS stagi
     assert.equal(config.extra?.telemetryE2E, true);
     assert.equal(config.extra?.localE2E, false);
     assert.equal(config.extra?.authE2E, false);
-    assert.equal(config.ios?.infoPlist, undefined);
+    assert.equal(config.ios?.infoPlist?.NSAppTransportSecurity.NSAllowsLocalNetworking, false);
     assert.equal(buildProperties(config)?.android.usesCleartextTraffic, false);
   }
   for (const profile of ["development", "preview", "production", "test-ios", "auth-test-ios", "links-test-ios"]) {
@@ -178,7 +183,7 @@ test("readiness is enabled only for production-shaped readiness profiles", () =>
     assert.equal(config.extra?.localE2E, false);
     assert.equal(config.extra?.authE2E, false);
     assert.equal(config.extra?.telemetryE2E, false);
-    assert.equal(config.ios?.infoPlist, undefined);
+    assert.equal(config.ios?.infoPlist?.NSAppTransportSecurity.NSAllowsLocalNetworking, false);
     assert.equal(buildProperties(config)?.android.usesCleartextTraffic, false);
   }
   for (const profile of ["development", "preview", "production", "test-ios", "auth-test-ios", "telemetry-test-ios", "links-test-ios"]) {

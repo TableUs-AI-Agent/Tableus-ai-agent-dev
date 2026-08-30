@@ -39,6 +39,7 @@ type ClientOptions = {
   getDemoUserId?: () => Promise<string | null>;
   getTelemetrySessionId?: () => string | null;
   telemetryPlatform?: TelemetryClientPlatform;
+  onAuthorizationError?: (status: 401 | 403) => void;
   fetchImpl?: typeof fetch;
   requestTimeoutMs?: number;
 };
@@ -130,6 +131,9 @@ export function createApiClient(options: ClientOptions) {
     }
     if (!response.ok) {
       const failure = payload as ApiFailure | null;
+      if (response.status === 401 || response.status === 403) {
+        options.onAuthorizationError?.(response.status);
+      }
       throw new ApiError(
         failure?.error?.message ?? `Request failed (${response.status})`,
         response.status,

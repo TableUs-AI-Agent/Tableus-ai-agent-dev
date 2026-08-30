@@ -15,6 +15,7 @@ from tableus.models import (
     Connection,
     Invite,
     InviteRedemption,
+    PendingAuthValidation,
     Plan,
     PlanEvent,
     PlanParticipant,
@@ -75,6 +76,84 @@ async def test_error_envelope_and_invite_gate(client: AsyncClient) -> None:
     valid = await client.post("/api/v1/access/validate", json={"code": "tableus-beta"})
     assert valid.status_code == 200
     assert valid.json()["data"]["redemption_token"]
+
+
+@pytest.mark.asyncio
+async def test_invite_validation_reuses_email_reservation_and_bounds_capacity(
+    client: AsyncClient,
+) -> None:
+    invite_code = "one-use-reservation-test"
+    async with SessionFactory() as session:
+        invite = Invite(code_hash=hash_value(invite_code), max_uses=1)
+        session.add(invite)
+        await session.commit()
+        invite_id = invite.id
+
+    first = await client.post(
+        "/api/v1/access/validate",
+        json={"code": invite_code, "email": "reserved@example.test"},
+    )
+    second = await client.post(
+        "/api/v1/access/validate",
+        json={"code": invite_code, "email": "RESERVED@example.test"},
+    )
+    blocked = await client.post(
+        "/api/v1/access/validate",
+        json={"code": invite_code, "email": "different@example.test"},
+    )
+
+    assert first.status_code == 200
+    assert second.status_code == 200
+    assert blocked.status_code == 409
+    async with SessionFactory() as session:
+        active = await session.scalar(
+            select(func.count())
+            .select_from(PendingAuthValidation)
+            .where(
+                PendingAuthValidation.invite_id == invite_id,
+                PendingAuthValidation.redeemed_at.is_(None),
+            )
+        )
+    assert active == 1
+
+
+@pytest.mark.asyncio
+async def test_expired_invite_validation_is_pruned_before_replacement(
+    client: AsyncClient,
+) -> None:
+    invite_code = "expired-reservation-test"
+    async with SessionFactory() as session:
+        invite = Invite(code_hash=hash_value(invite_code), max_uses=1)
+        session.add(invite)
+        await session.flush()
+        session.add(
+            PendingAuthValidation(
+                invite_id=invite.id,
+                email_hash=hash_value("expired@example.test"),
+                expires_at=datetime.now(UTC) - timedelta(seconds=1),
+            )
+        )
+        await session.commit()
+        invite_id = invite.id
+
+    response = await client.post(
+        "/api/v1/access/validate",
+        json={"code": invite_code, "email": "replacement@example.test"},
+    )
+
+    assert response.status_code == 200
+    async with SessionFactory() as session:
+        rows = list(
+            (
+                await session.scalars(
+                    select(PendingAuthValidation).where(
+                        PendingAuthValidation.invite_id == invite_id
+                    )
+                )
+            ).all()
+        )
+    assert len(rows) == 1
+    assert rows[0].email_hash == hash_value("replacement@example.test")
 
 
 @pytest.mark.asyncio
@@ -438,6 +517,76 @@ async def test_food_analysis_resizes_and_strips_input_before_provider(
 
 
 @pytest.mark.asyncio
+async def test_food_analysis_rejects_oversized_declared_body_before_parsing(
+    client: AsyncClient,
+) -> None:
+    response = await client.post(
+        "/api/v1/food/analyze",
+        headers={
+            **headers("demo-organizer"),
+            "Content-Length": str(10 * 1024 * 1024),
+            "Origin": "http://localhost:3000",
+        },
+        content=b"not-read",
+    )
+
+    assert response.status_code == 413
+    assert response.json()["error"]["code"] == "request_too_large"
+    assert response.headers["Access-Control-Allow-Origin"] == "http://localhost:3000"
+
+
+@pytest.mark.asyncio
+async def test_food_analysis_rejects_oversized_chunked_multipart_before_handler(
+    client: AsyncClient,
+) -> None:
+    boundary = "tableus-body-limit"
+
+    async def body_chunks():
+        yield (
+            f"--{boundary}\r\n"
+            'Content-Disposition: form-data; name="image"; filename="dish.jpg"\r\n'
+            "Content-Type: image/jpeg\r\n\r\n"
+        ).encode()
+        for _ in range(10):
+            yield b"x" * (1024 * 1024)
+
+    response = await client.post(
+        "/api/v1/food/analyze",
+        headers={
+            **headers("demo-organizer"),
+            "Content-Type": f"multipart/form-data; boundary={boundary}",
+        },
+        content=body_chunks(),
+    )
+
+    assert response.status_code == 413
+    assert response.json()["error"]["code"] == "request_too_large"
+
+
+@pytest.mark.asyncio
+async def test_idempotent_json_rejects_oversized_chunked_body_before_fingerprinting(
+    client: AsyncClient,
+) -> None:
+    async def body_chunks():
+        yield b'{"title":"'
+        for _ in range(17):
+            yield b"x" * (64 * 1024)
+
+    response = await client.post(
+        "/api/v1/plans",
+        headers={
+            **headers("demo-organizer"),
+            "Content-Type": "application/json",
+            "Idempotency-Key": "oversized-json-test",
+        },
+        content=body_chunks(),
+    )
+
+    assert response.status_code == 413
+    assert response.json()["error"]["code"] == "request_too_large"
+
+
+@pytest.mark.asyncio
 async def test_incomplete_place_details_do_not_commit_a_recommendation_run(
     client: AsyncClient, monkeypatch
 ) -> None:
@@ -587,6 +736,60 @@ async def test_idempotency_replay_requires_a_current_approved_profile(client: As
 
 
 @pytest.mark.asyncio
+async def test_connection_retry_reloads_current_taste_sharing_state(
+    client: AsyncClient,
+) -> None:
+    requester_id = "connection-retry-requester"
+    target_id = "connection-retry-target"
+    async with SessionFactory() as session:
+        session.add_all(
+            [
+                Profile(
+                    id=requester_id,
+                    display_name="Connection Requester",
+                    email_hash=hash_value("connection-requester@example.test"),
+                ),
+                Profile(
+                    id=target_id,
+                    display_name="Connection Target",
+                    email_hash=hash_value("connection-target@example.test"),
+                    taste_profile="Private after revocation",
+                    share_taste=True,
+                ),
+            ]
+        )
+        await session.commit()
+
+    request_headers = {
+        **headers(requester_id),
+        "Idempotency-Key": "connection-current-consent",
+    }
+    first = await client.post(
+        "/api/v1/connections",
+        headers=request_headers,
+        json={"profile_id": target_id},
+    )
+    assert first.status_code == 200
+    assert first.json()["data"]["taste_profile"] == "Private after revocation"
+
+    disabled = await client.patch(
+        "/api/v1/me",
+        headers=headers(target_id),
+        json={"share_taste": False},
+    )
+    assert disabled.status_code == 200
+
+    retried = await client.post(
+        "/api/v1/connections",
+        headers=request_headers,
+        json={"profile_id": target_id},
+    )
+    assert retried.status_code == 200
+    assert retried.json()["data"]["taste_profile"] is None
+    assert "X-Idempotent-Replay" not in retried.headers
+
+
+@pytest.mark.asyncio
 async def test_rotating_unverified_headers_cannot_bypass_source_limit(
     client: AsyncClient,
 ) -> None:
@@ -612,6 +815,26 @@ async def test_rotating_unverified_headers_cannot_bypass_source_limit(
 
     ready = await client.get("/health/ready")
     assert ready.status_code == 200
+
+
+@pytest.mark.asyncio
+async def test_cors_preflight_cannot_bypass_outer_request_admission(
+    client: AsyncClient,
+) -> None:
+    preflight_headers = {
+        "Origin": "http://localhost:3000",
+        "Access-Control-Request-Method": "POST",
+        "Access-Control-Request-Headers": "content-type",
+    }
+    for _ in range(120):
+        response = await client.options("/api/v1/plans", headers=preflight_headers)
+        assert response.status_code == 200
+
+    limited = await client.options("/api/v1/plans", headers=preflight_headers)
+
+    assert limited.status_code == 429
+    assert limited.json()["error"]["code"] == "rate_limited"
+    assert limited.headers["Access-Control-Allow-Origin"] == "http://localhost:3000"
 
 
 @pytest.mark.asyncio

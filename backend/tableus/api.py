@@ -9,7 +9,7 @@ import jwt
 import sentry_sdk
 from fastapi import APIRouter, File, HTTPException, UploadFile
 from PIL import Image
-from sqlalchemy import func, select, update
+from sqlalchemy import delete, func, select, update
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from .auth import CurrentIdentity, CurrentProfile, DbSession
@@ -391,7 +391,11 @@ def _require_organizer(plan: Plan, profile: Profile) -> None:
 
 @router.post("/access/validate", response_model=Envelope[InviteValidation])
 async def validate_access(body: InviteValidateIn, session: DbSession):
-    invite = await session.scalar(select(Invite).where(Invite.code_hash == hash_value(body.code)))
+    invite = await session.scalar(
+        select(Invite)
+        .where(Invite.code_hash == hash_value(body.code))
+        .with_for_update()
+    )
     now = datetime.now(UTC)
     if (
         not invite
@@ -402,12 +406,49 @@ async def validate_access(body: InviteValidateIn, session: DbSession):
         raise HTTPException(status_code=404, detail="Invite is invalid, expired, or fully redeemed")
     pending_validation = None
     if body.email:
-        pending_validation = PendingAuthValidation(
-            invite_id=invite.id,
-            email_hash=hash_value(body.email),
-            expires_at=now + timedelta(minutes=20),
+        await session.execute(
+            delete(PendingAuthValidation).where(
+                PendingAuthValidation.invite_id == invite.id,
+                PendingAuthValidation.redeemed_at.is_(None),
+                PendingAuthValidation.expires_at <= now,
+            )
         )
-        session.add(pending_validation)
+        email_hash = hash_value(body.email)
+        pending_validation = await session.scalar(
+            select(PendingAuthValidation).where(
+                PendingAuthValidation.invite_id == invite.id,
+                PendingAuthValidation.email_hash == email_hash,
+                PendingAuthValidation.redeemed_at.is_(None),
+                PendingAuthValidation.expires_at > now,
+            )
+        )
+        if pending_validation:
+            pending_validation.expires_at = now + timedelta(minutes=20)
+        else:
+            active_count = (
+                await session.scalar(
+                    select(func.count())
+                    .select_from(PendingAuthValidation)
+                    .where(
+                        PendingAuthValidation.invite_id == invite.id,
+                        PendingAuthValidation.redeemed_at.is_(None),
+                        PendingAuthValidation.expires_at > now,
+                    )
+                )
+                or 0
+            )
+            remaining_uses = invite.max_uses - invite.use_count
+            if active_count >= remaining_uses:
+                raise HTTPException(
+                    status_code=409,
+                    detail="Invite validation is already reserved; retry after it expires",
+                )
+            pending_validation = PendingAuthValidation(
+                invite_id=invite.id,
+                email_hash=email_hash,
+                expires_at=now + timedelta(minutes=20),
+            )
+            session.add(pending_validation)
         await session.commit()
     return ok(
         InviteValidation(
@@ -432,18 +473,6 @@ async def redeem_access(body: InviteRedeemIn, identity: CurrentIdentity, session
         raise HTTPException(
             status_code=403, detail="Invite validation email does not match session"
         )
-    pending_validation = None
-    if grant.pending_validation_id:
-        pending_validation = await session.get(
-            PendingAuthValidation, grant.pending_validation_id, with_for_update=True
-        )
-        if (
-            not pending_validation
-            or pending_validation.email_hash != grant.email_hash
-            or pending_validation.redeemed_at
-            or _is_expired(pending_validation.expires_at, datetime.now(UTC))
-        ):
-            raise HTTPException(status_code=409, detail="Invite validation can no longer be used")
     invite = await session.get(Invite, grant.invite_id, with_for_update=True)
     now = datetime.now(UTC)
     if (
@@ -453,6 +482,19 @@ async def redeem_access(body: InviteRedeemIn, identity: CurrentIdentity, session
         or invite.use_count >= invite.max_uses
     ):
         raise HTTPException(status_code=409, detail="Invite can no longer be redeemed")
+    pending_validation = None
+    if grant.pending_validation_id:
+        pending_validation = await session.get(
+            PendingAuthValidation, grant.pending_validation_id, with_for_update=True
+        )
+        if (
+            not pending_validation
+            or pending_validation.invite_id != invite.id
+            or pending_validation.email_hash != grant.email_hash
+            or pending_validation.redeemed_at
+            or _is_expired(pending_validation.expires_at, now)
+        ):
+            raise HTTPException(status_code=409, detail="Invite validation can no longer be used")
     profile = await session.get(Profile, identity.subject)
     if not profile:
         email_hash = hash_value(identity.email or f"{identity.subject}@supabase.local")

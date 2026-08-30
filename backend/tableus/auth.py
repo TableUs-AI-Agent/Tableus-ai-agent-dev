@@ -29,7 +29,7 @@ async def resolve_identity(
     authorization: str | None = None, x_demo_user_id: str | None = None
 ) -> Identity:
     settings = get_settings()
-    if settings.tableus_auth_mode == "demo" and settings.environment != "production":
+    if settings.tableus_auth_mode == "demo" and settings.environment in {"development", "test"}:
         return Identity(subject=x_demo_user_id or "demo-organizer")
 
     if not authorization or not authorization.startswith("Bearer "):

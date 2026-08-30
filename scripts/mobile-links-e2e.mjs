@@ -1,13 +1,13 @@
 #!/usr/bin/env node
 
-import { copyFileSync, cpSync, existsSync, mkdirSync, mkdtempSync, readdirSync, rmSync, statSync, writeFileSync } from "node:fs";
+import { cpSync, existsSync, mkdirSync, mkdtempSync, readdirSync, rmSync, statSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { basename, dirname, extname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
-import { createInterface } from "node:readline/promises";
 import { spawnSync } from "node:child_process";
 
 import { artifactChecksum } from "./evidence-utils.mjs";
+import { promptSecret, promptVisible } from "./prompt-utils.mjs";
 
 const repoRoot = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const flowSource = join(repoRoot, "mobile", ".maestro-links");
@@ -65,23 +65,6 @@ async function verifyWebFallback(joinUrl) {
   if (joinResponse.status !== 200 || new URL(joinResponse.url).pathname !== new URL(joinUrl).pathname) throw new Error("Web join fallback is unavailable.");
 }
 
-function collectScreenshot(root, evidenceDir, platform) {
-  const matches = [];
-  const visit = (directory) => {
-    for (const entry of readdirSync(directory)) {
-      const path = join(directory, entry);
-      if (statSync(path).isDirectory()) visit(path);
-      else if (entry === "verified-link-route.png" || entry === "rotated-link.png") matches.push(path);
-    }
-  };
-  visit(root);
-  return matches.map((source) => {
-    const destination = join(evidenceDir, `${platform}-${basename(source)}`);
-    copyFileSync(source, destination);
-    return basename(destination);
-  });
-}
-
 function snapshot(directory) {
   return existsSync(directory) ? new Set(readdirSync(directory)) : new Set();
 }
@@ -113,9 +96,8 @@ if (!device || !existsSync(appPath) || !buildId || !args.evidence) throw new Err
 if (origin !== expectedOrigin || args.origin !== expectedOrigin) throw new Error(`Verified-link evidence requires ${expectedOrigin}.`);
 await preflight(platform);
 
-const terminal = createInterface({ input: process.stdin, output: process.stdout });
-const email = (await terminal.question("Returning approved account email: ")).trim().toLowerCase();
-const joinUrl = (await terminal.question("Freshly rotated old private join URL (not retained): ")).trim();
+const email = (await promptSecret("Returning approved account email: ")).trim().toLowerCase();
+const joinUrl = (await promptSecret("Freshly rotated old private join URL (not retained): ")).trim();
 const parsedJoin = new URL(joinUrl);
 if (!email || parsedJoin.origin !== expectedOrigin || !parsedJoin.pathname.startsWith("/join/") || !parsedJoin.searchParams.get("token")) {
   throw new Error("An approved email and canonical private join URL are required.");
@@ -163,7 +145,7 @@ try {
   if (platform === "ios") {
     const installApp = extractIosApp(appPath, installRoot);
     run("xcrun", ["devicectl", "device", "install", "app", "--device", device, installApp], { env: { DEVELOPER_DIR: developerDir }, secrets });
-    appleDiagnosticsApproved = (await terminal.question(`Did Apple Associated Domains Diagnostics approve ${expectedOrigin}? Type yes: `)).trim().toLowerCase() === "yes";
+    appleDiagnosticsApproved = (await promptVisible(`Did Apple Associated Domains Diagnostics approve ${expectedOrigin}? Type yes: `)).trim().toLowerCase() === "yes";
     if (!appleDiagnosticsApproved) throw new Error("Apple Associated Domains Diagnostics approval is required.");
   } else {
     run(adb, ["-s", device, "install", "-r", appPath], { secrets });
@@ -176,17 +158,16 @@ try {
   }
 
   flow("routes-and-send.yml", { AUTH_URL: authUrl, JOIN_URL: joinUrl, EMAIL: email });
-  const otp = (await terminal.question("Returning sign-in OTP from the newest email: ")).trim();
+  const otp = (await promptSecret("Returning sign-in OTP from the newest email: ")).trim();
   if (!otp) throw new Error("Returning sign-in OTP is required.");
   secrets.push(otp);
   flow("verify-rotated.yml", { OTP: otp });
 
   if (platform === "ios") {
-    notesTapConfirmed = (await terminal.question("After tapping the same private link in Notes or Messages, did TableUs open the join screen? Type yes: ")).trim().toLowerCase() === "yes";
+    notesTapConfirmed = (await promptVisible("After tapping the same private link in Notes or Messages, did TableUs open the join screen? Type yes: ")).trim().toLowerCase() === "yes";
     if (!notesTapConfirmed) throw new Error("A Notes or Messages Universal Link tap is required.");
   }
 
-  const screenshots = collectScreenshot(temporaryRoot, evidenceDir, platform);
   const gitResult = spawnSync("git", ["rev-parse", "HEAD"], { cwd: repoRoot, encoding: "utf8" });
   if (gitResult.status !== 0) throw new Error("Could not resolve the candidate SHA.");
   const summary = {
@@ -208,12 +189,11 @@ try {
     android_domain_verified: platform === "android" ? domainVerified : null,
     apple_diagnostics_approved: platform === "ios" ? appleDiagnosticsApproved : null,
     ios_notes_or_messages_tap: platform === "ios" ? notesTapConfirmed : null,
-    screenshots,
+    screenshots_retained_by_runner: false,
   };
   writeFileSync(join(evidenceDir, `${platform}-verified-links-summary.json`), `${JSON.stringify(summary, null, 2)}\n`);
   process.stdout.write(`TableUs ${platform} verified-link journey passed.\n`);
 } finally {
-  terminal.close();
   rmSync(temporaryRoot, { recursive: true, force: true });
   removeNewEntries(maestroTests, testsBefore);
   removeNewEntries(maestroLogs, logsBefore);

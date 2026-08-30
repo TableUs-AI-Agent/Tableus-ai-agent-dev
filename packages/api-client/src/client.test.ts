@@ -98,6 +98,25 @@ test("client preserves API error metadata", async () => {
   await assert.rejects(client.get("/private"), (error: unknown) => error instanceof ApiError && error.requestId === "req-1");
 });
 
+test("client reports terminal authorization boundaries without changing the response", async () => {
+  const observed: number[] = [];
+  const client = createApiClient({
+    baseUrl: "https://example.test",
+    onAuthorizationError: (status) => observed.push(status),
+    fetchImpl: async (input) => {
+      const status = String(input).endsWith("/unauthorized") ? 401 : 403;
+      return new Response(
+        JSON.stringify({ error: { code: "denied", message: "No" }, request_id: "req-1" }),
+        { status },
+      );
+    },
+  });
+
+  await assert.rejects(client.get("/unauthorized"), (error: unknown) => error instanceof ApiError && error.status === 401);
+  await assert.rejects(client.get("/forbidden"), (error: unknown) => error instanceof ApiError && error.status === 403);
+  assert.deepEqual(observed, [401, 403]);
+});
+
 test("client resolves a dynamic demo identity for every request", async () => {
   const observed: Array<string | null> = [];
   let activeIdentity = "demo-organizer";

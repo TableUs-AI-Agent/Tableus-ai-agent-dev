@@ -296,6 +296,41 @@
   issues and one P2 stale-authorization replay, so the candidate and external
   evidence are superseded. Its physical-iPhone artifact also could not install
   because device ManagedConfiguration prohibited app installation.
+- Local-only remediation `520630393c45ad992c63b2a45078235d2ef8aff0`
+  bounded the source/global limiter and replay cache and passed `make ready`.
+  Sealed full scan `0933625b-4d73-4da7-ba6a-946128c29089` completed with one
+  high, four medium, and five low findings, so it was not pushed or deployed.
+  The high finding traced chunked multipart input through FastAPI parsing and
+  temporary-file spooling before the 8 MiB handler check. Active local
+  remediation now performs request-ID assignment, feature admission, bounded
+  transport/global rate admission, and declared/streamed body enforcement in an
+  outer pure-ASGI boundary; bodies are buffered only up to their route cap and
+  spill after 1 MiB. Hosted staging now refuses demo auth, demo routes, default
+  secrets, non-Postgres runtime credentials, mismatched roles, and non-HTTPS or
+  loopback origins. Invite validation reuses one active email reservation,
+  serializes on the invite, prunes expired reservations, and never authorizes
+  more active reservations than remaining uses. Web private queries are keyed
+  by Supabase subject and cleared on subject transitions, sign-out, deletion,
+  and terminal authorization responses. Live authenticated evidence retains no
+  raw screenshots and accepts sensitive operator input only through no-echo TTY
+  prompts. The connection endpoint is naturally idempotent and no longer stores
+  consent-sensitive opaque replay bytes. CI actions, the PostgreSQL service, and
+  backend OCI inputs are content pinned. Expo 57's resolver was executed and
+  confirms the local Android retry-policy lifecycle package is autolinked; a
+  credential-free unit guard now enforces that resolution.
+  Native inspection also proved the superseded signed readiness iOS artifact
+  still carried `NSAllowsLocalNetworking=true` despite `localE2E=false` in its
+  embedded Expo config. Release-shaped Expo profiles now write the native value
+  as false explicitly, while local test and development profiles retain their
+  intentional exception; signed iOS/Android inspection rejects local-network or
+  cleartext allowances from the actual plist/manifest.
+  The Expo app root now exposes Codex Run, iOS, Android, Web, Dev Client, and
+  Expo Doctor actions through one foreground project-local launcher; cloud EAS
+  builds and store operations remain outside one-click actions. Expo Doctor is
+  locked at `1.20.4` and passed all 21 checks. Independent bypass review also
+  moved admission outside CORS so preflights consume the same request budget,
+  keyed web page-local state by Supabase subject, and extended cleanup to
+  Maestro's user-level authenticated-flow test and log directories.
 
 ## External dependencies not provisioned in source
 

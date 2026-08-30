@@ -1,7 +1,9 @@
 import re
 from functools import lru_cache
+from ipaddress import ip_address
 from pathlib import Path
 from typing import Literal
+from urllib.parse import urlparse
 
 from pydantic import Field, field_validator, model_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
@@ -55,31 +57,66 @@ class Settings(BaseSettings):
         return value
 
     @model_validator(mode="after")
-    def production_is_fail_closed(self):
-        if self.environment != "production":
+    def hosted_environments_are_fail_closed(self):
+        if self.environment not in {"staging", "production"}:
             return self
         if self.tableus_demo_mode or self.tableus_auth_mode != "supabase":
-            raise ValueError("Production requires Supabase auth with demo mode disabled")
+            raise ValueError("Hosted environments require Supabase auth with demo mode disabled")
+        if not all(
+            [
+                self.supabase_url,
+                len(self.tableus_app_secret) >= 32,
+                self.tableus_app_secret != "development-only-change-me-at-least-32-bytes",
+                self.tableus_runtime_db_role,
+            ]
+        ):
+            raise ValueError("Hosted authentication and runtime credentials are incomplete")
+        if not self.sqlalchemy_url.startswith("postgresql+"):
+            raise ValueError("Hosted environments require PostgreSQL runtime credentials")
+        runtime_user = urlparse(self.database_url).username
+        if runtime_user != self.tableus_runtime_db_role:
+            raise ValueError("Hosted runtime database credentials must use TABLEUS_RUNTIME_DB_ROLE")
+        self._validate_hosted_url(self.supabase_url, "SUPABASE_URL", origin_only=True)
+        if not self.cors_origins:
+            raise ValueError("Hosted environments require at least one HTTPS CORS origin")
+        for origin in self.cors_origins:
+            self._validate_hosted_url(origin, "ALLOWED_ORIGINS", origin_only=True)
+        if self.environment != "production":
+            return self
         if self.places_provider_mode != "live" or self.ai_provider_mode != "live":
             raise ValueError("Production requires explicitly configured live Places and AI providers")
         if not all(
             [
-                self.supabase_url,
                 self.gemini_api_key,
                 self.google_maps_api_key,
-                self.tableus_app_secret != "development-only-change-me-at-least-32-bytes",
                 self.migration_database_url,
-                self.tableus_runtime_db_role,
             ]
         ):
-            raise ValueError("Production credentials are incomplete")
+            raise ValueError("Production provider and migration credentials are incomplete")
         if self.migration_database_url == self.database_url:
             raise ValueError("Production migration and runtime database credentials must differ")
         if self.tableus_telemetry_mode != "production" or not self.sentry_dsn or not self.posthog_key:
             raise ValueError("Production requires production error reporting and anonymous analytics")
-        if any("localhost" in origin for origin in self.cors_origins):
-            raise ValueError("Production CORS origins cannot include localhost")
         return self
+
+    @staticmethod
+    def _validate_hosted_url(value: str, label: str, *, origin_only: bool = False) -> None:
+        parsed = urlparse(value)
+        if parsed.scheme != "https" or not parsed.hostname or parsed.username or parsed.password:
+            raise ValueError(f"{label} must use a public HTTPS URL")
+        if origin_only and (parsed.path not in {"", "/"} or parsed.query or parsed.fragment):
+            raise ValueError(f"{label} entries must be origins without paths, queries, or fragments")
+        hostname = parsed.hostname.lower()
+        if "*" in hostname:
+            raise ValueError(f"{label} cannot use a wildcard host")
+        if hostname == "localhost" or hostname.endswith(".localhost"):
+            raise ValueError(f"{label} cannot use a loopback host")
+        try:
+            parsed_ip = ip_address(hostname)
+        except ValueError:
+            parsed_ip = None
+        if parsed_ip and not parsed_ip.is_global:
+            raise ValueError(f"{label} must use a public host")
 
     @model_validator(mode="after")
     def telemetry_environment_matches(self):

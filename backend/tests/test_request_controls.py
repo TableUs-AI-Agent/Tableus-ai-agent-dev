@@ -1,8 +1,13 @@
+import json
+
+import pytest
+
 from tableus import auth
 from tableus.request_controls import (
     CachedResponse,
     FixedWindowRateLimiter,
     IdempotencyReplayCache,
+    RequestBodyLimitMiddleware,
     is_idempotency_eligible,
 )
 
@@ -13,7 +18,144 @@ def test_idempotency_uses_an_explicit_product_route_allowlist() -> None:
     assert is_idempotency_eligible("DELETE", "/api/v1/me") is True
     assert is_idempotency_eligible("POST", "/api/v1/access/validate") is False
     assert is_idempotency_eligible("POST", "/api/v1/food/analyze") is False
+    assert is_idempotency_eligible("POST", "/api/v1/connections") is False
     assert is_idempotency_eligible("POST", "/api/v1/not-a-route") is False
+
+
+async def invoke_body_limiter(
+    chunks: list[bytes],
+    *,
+    path: str = "/api/v1/plans",
+    content_length: int | None = None,
+    rate_limiter: FixedWindowRateLimiter | None = None,
+    cors_origins: tuple[str, ...] = (),
+) -> tuple[list[dict], int]:
+    consumed = 0
+    messages = [
+        {
+            "type": "http.request",
+            "body": chunk,
+            "more_body": index < len(chunks) - 1,
+        }
+        for index, chunk in enumerate(chunks)
+    ]
+
+    async def receive():
+        nonlocal consumed
+        consumed += 1
+        return messages.pop(0)
+
+    async def downstream(scope, limited_receive, send):
+        while True:
+            message = await limited_receive()
+            if not message.get("more_body"):
+                break
+        body = b'{"data":{"ok":true},"meta":{}}'
+        await send(
+            {
+                "type": "http.response.start",
+                "status": 200,
+                "headers": [(b"content-length", str(len(body)).encode())],
+            }
+        )
+        await send({"type": "http.response.body", "body": body})
+
+    headers = [] if content_length is None else [(b"content-length", str(content_length).encode())]
+    sent: list[dict] = []
+
+    async def send(message: dict) -> None:
+        sent.append(message)
+
+    middleware = RequestBodyLimitMiddleware(
+        downstream,
+        default_limit=8,
+        photo_upload_limit=16,
+        rate_limiter=rate_limiter,
+        cors_origins=cors_origins,
+    )
+    await middleware(
+        {
+            "type": "http",
+            "path": path,
+            "headers": headers,
+            "state": {"request_id": "body-limit-test"},
+        },
+        receive,
+        send,
+    )
+    return sent, consumed
+
+
+@pytest.mark.asyncio
+async def test_request_body_limiter_rejects_declared_length_before_consumption() -> None:
+    sent, consumed = await invoke_body_limiter([b"ignored"], content_length=9)
+
+    assert sent[0]["status"] == 413
+    assert consumed == 0
+    assert json.loads(sent[1]["body"])["error"]["code"] == "request_too_large"
+
+
+@pytest.mark.asyncio
+async def test_request_body_limiter_rejects_chunked_body_and_preserves_photo_envelope() -> None:
+    rejected, consumed = await invoke_body_limiter([b"12345", b"6789"])
+    accepted, accepted_chunks = await invoke_body_limiter(
+        [b"12345678", b"9"], path="/api/v1/food/analyze"
+    )
+
+    assert rejected[0]["status"] == 413
+    assert consumed == 2
+    assert accepted[0]["status"] == 200
+    assert accepted_chunks == 2
+
+
+@pytest.mark.asyncio
+async def test_request_admission_rejects_before_consuming_a_body() -> None:
+    limiter = FixedWindowRateLimiter(per_source_limit=0, global_limit=10)
+
+    sent, consumed = await invoke_body_limiter([b"never-read"], rate_limiter=limiter)
+
+    assert sent[0]["status"] == 429
+    assert consumed == 0
+    assert json.loads(sent[1]["body"])["error"]["code"] == "rate_limited"
+
+
+@pytest.mark.asyncio
+async def test_request_admission_preserves_allowed_cors_on_rejection() -> None:
+    limiter = FixedWindowRateLimiter(per_source_limit=0, global_limit=10)
+    sent, _ = await invoke_body_limiter(
+        [b"never-read"],
+        rate_limiter=limiter,
+        cors_origins=("https://tableus.example",),
+    )
+
+    headers = dict(sent[0]["headers"])
+    assert headers.get(b"access-control-allow-origin") is None
+
+    async def receive():
+        return {"type": "http.request", "body": b"", "more_body": False}
+
+    rejected: list[dict] = []
+
+    async def send(message: dict) -> None:
+        rejected.append(message)
+
+    middleware = RequestBodyLimitMiddleware(
+        lambda scope, receive, send: None,
+        rate_limiter=FixedWindowRateLimiter(per_source_limit=0),
+        cors_origins=("https://tableus.example",),
+    )
+    await middleware(
+        {
+            "type": "http",
+            "method": "OPTIONS",
+            "path": "/api/v1/plans",
+            "headers": [(b"origin", b"https://tableus.example")],
+            "client": ("127.0.0.1", 1234),
+        },
+        receive,
+        send,
+    )
+    assert dict(rejected[0]["headers"])[b"access-control-allow-origin"] == b"https://tableus.example"
 
 
 def test_rate_limiter_ignores_rotating_credential_headers_at_the_boundary() -> None:

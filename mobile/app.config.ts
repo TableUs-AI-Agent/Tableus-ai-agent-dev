@@ -8,6 +8,7 @@ export default ({ config }: ConfigContext): ExpoConfig => {
   const telemetryTestProfile = process.env.EAS_BUILD_PROFILE === "telemetry-test-ios" || process.env.EAS_BUILD_PROFILE === "telemetry-test-android";
   const readinessProfile = process.env.EAS_BUILD_PROFILE === "readiness-ios" || process.env.EAS_BUILD_PROFILE === "readiness-android";
   const localE2E = testBuildProfile && process.env.TABLEUS_LOCAL_E2E === "true";
+  const allowsLocalNetworking = localE2E || process.env.EAS_BUILD_PROFILE === "development";
   const apiUrl = process.env.EXPO_PUBLIC_API_URL ?? "";
   const supabaseUrl = process.env.EXPO_PUBLIC_SUPABASE_URL ?? "";
   const sourceSha = process.env.EAS_BUILD_GIT_COMMIT_HASH ?? process.env.EXPO_PUBLIC_SOURCE_SHA;
@@ -44,9 +45,9 @@ export default ({ config }: ConfigContext): ExpoConfig => {
       associatedDomains: [`applinks:${linkHost}`],
       supportsTablet: true,
       config: { usesNonExemptEncryption: false },
-      ...(localE2E
-        ? { infoPlist: { NSAppTransportSecurity: { NSAllowsLocalNetworking: true } } }
-        : {}),
+      infoPlist: {
+        NSAppTransportSecurity: { NSAllowsLocalNetworking: allowsLocalNetworking },
+      },
     },
     android: {
       package: "com.tableus.app",

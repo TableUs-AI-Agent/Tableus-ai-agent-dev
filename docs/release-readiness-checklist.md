@@ -14,9 +14,15 @@ not be inferred from a passing test.
 - [x] npm audit reports 0 critical and 0 high findings.
 - [ ] Replacement exact-SHA repository scan is complete with no P0/P1 or exposed
   secret. Scan `b737ba37-01d4-4ba8-841d-f1da1d09d61a` blocked superseded
-  `d0955f5`; both P1 root causes are remediated locally and await rescan.
+  `d0955f5`; scan `0933625b-4d73-4da7-ba6a-946128c29089` then blocked local
+  `5206303` on one remaining P1 multipart boundary. Its source-owned high/medium
+  findings are remediated locally and await a new exact-SHA scan.
+- [x] GitHub Actions, CI service images, and backend OCI inputs are pinned to
+  immutable commits or multi-platform digests with executable policy tests.
 - [ ] Runtime bundle inspection finds no service-role material, loopback origin,
-  cleartext exception, demo identity, E2E control, or production endpoint.
+  local-network/cleartext exception, demo identity, E2E control, or production
+  endpoint. The superseded iOS artifact failed the strengthened native-plist
+  check and cannot supply replacement evidence.
 
 ## Product and privacy controls
 
@@ -24,6 +30,13 @@ not be inferred from a passing test.
   Supabase session alone.
 - [x] Organizer-only transitions, plan membership checks, hashed invite/share
   tokens, one-time invite redemption, and idempotency conflict checks are tested.
+- [x] Hosted staging fails closed against demo auth/routes, weak secrets,
+  non-Postgres runtime credentials, mismatched roles, and unsafe origins.
+- [x] Declared and chunked multipart bodies are bounded before FastAPI parsing;
+  invite validations are deduplicated, capacity-reserved, and expiry-pruned.
+- [x] Web private caches are subject-partitioned and cleared on auth/deletion;
+  plan-local state remounts by subject; live evidence retains no raw screenshots,
+  uses no-echo secret prompts, and removes new user-level Maestro logs.
 - [x] Google Places and Gemini inputs/outputs are bounded, validated, fail closed,
   and excluded from retained evidence and telemetry.
 - [x] Sentry is error-only and PostHog is anonymous, aggregate-only, and
@@ -59,7 +72,6 @@ not be inferred from a passing test.
 | --- | --- | --- | --- |
 | Expo build tooling reaches `uuid@7` through `xcode`; npm reports GHSA-w5hq-g745-h8pq as moderate. The vulnerable buffered v3/v5/v6 API is not used by shipped JS/runtime code. | SDK 57-compatible packages are fully patched, Expo Doctor passes, native builds are trusted inputs, and no force/downgrade remediation is accepted. Recheck Expo patches and npm advisories on every release packet. | Repository owner; exception expires 2026-09-30 or before any production/store approval, whichever is earlier. | Blocks production if still unreviewed at expiry; does not block this staging candidate while runtime critical/high findings remain zero. |
 | Idempotency response cache and paid-operation reservation locks are process-local. | Single Railway API process; explicit retry UX; verified-subject/role replay; fixed entry, byte, request, and response bounds; request fingerprints; conservative rate/spend limits. | Repository owner; replace before horizontal scaling. | Horizontal scaling is blocked until durable coordination exists. |
-| A holder of one live invite can create multiple short-lived pending email validations before redemption. | Strong invite entropy, bounded source/global request rate, 20-minute expiry, one-use redemption lock, and approved-profile API gate. | Repository owner; add deduplication/pruning before cohort expansion. | Does not block staging; cohort activation is blocked until resolved or accepted. |
 | Private-plan capability remains in the canonical join URL query. | Approved authentication is also required; tokens are random, hashed at rest, rotatable, redacted from telemetry/evidence, and old links are rejected after rotation. | Repository owner; design a short-lived exchange before production. | Production is blocked on a reviewed exchange or explicit risk acceptance. |
 | Aggregate provider usage is readable by any approved beta profile. | Output excludes identities, queries, coordinates, Place IDs, provider content, prompts, responses, and credentials. | Repository owner; add an operator boundary before cohort expansion. | Does not block isolated staging; cohort expansion is blocked until resolved. |
 | Staging Vercel uses an exact-SHA Preview deployment because the Production target also owns production-facing aliases. | Cumulative validator binds deployment ID and SHA; do not move production aliases. | Repository owner; revisit before production. | Production deployment remains blocked by a separate gate. |
@@ -72,8 +84,10 @@ Complete only after the named person actually confirms each item.
 
 - Source candidate SHA: the Git commit containing this signed checklist; its
   exact value is recorded in sanitized evidence after the final local gate.
-- Security scan report ID: replacement exact-SHA report pending; blocked report
-  `b737ba37-01d4-4ba8-841d-f1da1d09d61a` is retained for remediation traceability.
+- Security scan report ID: replacement exact-SHA report pending; blocked reports
+  `b737ba37-01d4-4ba8-841d-f1da1d09d61a` and
+  `0933625b-4d73-4da7-ba6a-946128c29089` are retained for remediation
+  traceability.
 - Policy review date/version: Google Maps policy last reviewed 2026-08-26
 - Legal/privacy owner: Brian Chei (confirmed 2026-08-26)
 - Rollback owner: Brian Chei, repository and cloud account owner

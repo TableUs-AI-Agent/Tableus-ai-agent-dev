@@ -306,3 +306,46 @@
   run before authentication/body/provider work, while Railway health probes
   bypass the product bucket. Supabase reuses one cached JWKS client per endpoint.
   A trusted edge limiter remains defense in depth rather than correctness.
+- **2026-08-30:** Request admission is an outer pure-ASGI boundary. It assigns a
+  validated request ID, rejects disabled legacy/shared-plan paths, consumes the
+  bounded transport/global rate bucket, and enforces declared and streamed body
+  limits before FastAPI routing, dependency resolution, or multipart parsing.
+  Ordinary bodies are capped at 1 MiB; photo multipart envelopes are capped at
+  9 MiB so the existing 8 MiB image contract plus form overhead remains valid.
+- **2026-08-30:** Staging and production share fail-closed hosted-runtime
+  invariants: Supabase authentication, demo disabled, a non-default 32-byte
+  application secret, matching least-privilege PostgreSQL runtime role, public
+  HTTPS Supabase/CORS origins, and no legacy demo routes. Staging may still use
+  deterministic or mixed providers; production continues to require both live.
+- **2026-08-30:** A live invite validation is a short-lived reservation against
+  the invite's remaining uses. Repeating the normalized email extends the same
+  reservation; a different email waits until capacity is released by expiry or
+  redemption. Expired unredeemed rows are pruned without a schema migration.
+- **2026-08-30:** Web private query keys include the Supabase subject and the
+  root provider clears query and mutation state on subject transition, sign-out,
+  deletion, or terminal authorization. Live authenticated evidence retains
+  summary assertions only; screenshots are allowed only for deterministic
+  synthetic journeys or an explicit reviewed/redacted promotion. Sensitive
+  evidence prompts require no-echo TTY input.
+- **2026-08-30:** Exact-SHA provenance includes content-pinned GitHub Actions and
+  multi-platform OCI digests. Readable version tags remain beside the immutable
+  hashes, and updates require a reviewed source change. Expo 57 source-scans the
+  local Android lifecycle `Package`; executable resolver evidence, not a false
+  `android.modules` entry, guards its autolinking.
+- **2026-08-30:** Release-shaped native transport policy is verified from signed
+  artifacts, not inferred from embedded Expo configuration. iOS explicitly sets
+  `NSAllowsLocalNetworking=false` outside local test/development builds, Android
+  sets `usesCleartextTraffic=false`, and the common signed-link inspector rejects
+  a true allowance in the native plist or manifest.
+- **2026-08-30:** Codex Expo actions are local and foreground-owned. The mobile
+  app provides Run/iOS/Android/Web/Dev Client/Doctor actions through a single
+  npm-aware Expo launcher, with Expo Doctor exactly locked and resolved offline
+  from the workspace dependency. Authenticated EAS builds, submissions, and store
+  operations are intentionally excluded from action buttons and retain their
+  explicit release gates.
+- **2026-08-30:** CORS is inside the universal request-admission boundary so
+  browser preflights cannot bypass feature, transport/global rate, or body
+  gates. Gate rejections add credentials-compatible CORS headers only for an
+  explicitly configured origin. Web subject transitions also remount
+  subject-keyed plan pages, and live mobile evidence deletes both temporary and
+  newly created user-level Maestro test/log entries.

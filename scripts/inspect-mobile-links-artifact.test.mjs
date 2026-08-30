@@ -25,6 +25,8 @@ test("verified-link inspection rejects private test and credential markers from 
     "ProvisionedDevices",
     "demo-organizer",
     "http://127.0.0.1",
+    "NSAppTransportSecurity.NSAllowsLocalNetworking",
+    'android:usesCleartextTraffic=\"true\"',
     "SUPABASE_SERVICE_ROLE",
     '"localE2E":false',
     '"authE2E":false',

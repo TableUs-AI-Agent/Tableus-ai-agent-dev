@@ -4,9 +4,12 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { Download, Loader2, ShieldCheck, Trash2 } from "lucide-react";
+import { useQueryClient } from "@tanstack/react-query";
 
 import { supabase } from "../lib/supabase-browser";
 import { v1Api } from "../lib/v1-api";
+import { clearPrivateQueryState } from "../lib/session-query-isolation";
+import { useUser } from "../context/user-context";
 
 type Profile = {
   id: string;
@@ -25,7 +28,20 @@ type AccountControl = {
 const DELETE_CONFIRMATION = "DELETE";
 
 export default function AccountPage() {
+  const { currentUser } = useUser();
+  if (!currentUser) {
+    return (
+      <main className="flex min-h-full items-center justify-center" aria-label="Loading account settings">
+        <Loader2 className="h-7 w-7 animate-spin text-[var(--accent)]" />
+      </main>
+    );
+  }
+  return <AccountPageContent key={currentUser.id} />;
+}
+
+function AccountPageContent() {
   const router = useRouter();
+  const queryClient = useQueryClient();
   const [profile, setProfile] = useState<Profile | null>(null);
   const [control, setControl] = useState<AccountControl | null>(null);
   const [confirmation, setConfirmation] = useState("");
@@ -89,6 +105,7 @@ export default function AccountPage() {
     setMessage("");
     try {
       await v1Api.delete<{ deleted: boolean }>("/api/v1/me", { confirmation: DELETE_CONFIRMATION });
+      clearPrivateQueryState(queryClient);
       await supabase.auth.signOut();
       router.replace("/invite");
     } catch (deleteError: unknown) {
