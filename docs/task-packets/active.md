@@ -73,6 +73,19 @@ Expo, iOS-debugging, and Android-emulator procedures to the cumulative run. No
 artifact or partial Android evidence from `0de0c34` is accepted for cumulative
 sign-off.
 
+Exact candidate `d0955f5d08537b3251341720ed3a28453a70e13b` passed public CI,
+staging deployment, live smoke, six artifact inspections, and the available
+deterministic mobile, web, link, and telemetry checks. The final repository scan
+then reported two P1 availability flaws: attacker-chosen credential headers
+bypassed the request bucket, and public writes could fill an unbounded response
+cache. It also reported P2 replay before current authorization. This candidate
+and all external evidence are superseded. Local remediation now uses bounded
+transport/global limits, reusable JWKS state, an authenticated route allowlist,
+current profile/plan-role replay checks, and bounded success-only storage. A
+fresh exact-SHA scan and `make ready` must pass before replacement freeze.
+Physical-iPhone readiness also waits for the owner to allow app installation in
+device ManagedConfiguration.
+
 ## Objective
 
 Close the remaining pre-production gates without changing the public API,

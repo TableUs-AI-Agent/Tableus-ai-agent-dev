@@ -61,10 +61,20 @@
   key, while editing discards the attempt. Authentication retains its separate
   session coordinator, and photo retry requires choosing the image again.
 - Every shared client write carries an idempotency key, including through the
-  one-time `401` refresh path. The closed-beta API caches successful responses
-  for 24 hours in one process and rejects a same-actor/key request whose body
-  fingerprint differs with `409 idempotency_conflict`. This ledger is not yet
-  durable across API restarts or shared across horizontally scaled instances.
+  one-time `401` refresh path. The API accepts replay only on an explicit
+  product-route allowlist, verifies canonical identity before reading a keyed
+  body, and rechecks current profile and plan authorization before returning a
+  protected response. Public invite validation and ephemeral photos are
+  excluded. Successful responses are retained for 24 hours in a fixed-capacity,
+  byte-bounded cache; keys are validated and hashed, bodies are capped, and a
+  changed fingerprint returns `409 idempotency_conflict`. Account deletion is
+  the narrow identity-only replay exception because its first success removes
+  the profile. The ledger is not durable across restarts or horizontally shared.
+- The universal request gate uses bounded transport-source and global windows,
+  never raw bearer or demo headers. Health probes bypass the product bucket, and
+  the Supabase JWKS client is reused process-wide. This closes the two P1
+  availability findings and P2 stale-session replay found in superseded
+  candidate `d0955f5`; a replacement exact-SHA scan remains required.
 - `make mobile-offline-e2e` starts a clean backend on loopback port 8001 and a
   fault proxy on 8000, then proves dropped-after-commit create/finalize replay,
   zero-request known-offline constraints, and explicit recovery on one exact-SHA
@@ -279,6 +289,13 @@
   online, boot-complete API 36+ ARM64 emulator. Preflight summaries retain no
   device identifier. Replacement public CI, deployments, six artifacts, live
   smoke, and device attestations remain gated.
+- Exact candidate `d0955f5d08537b3251341720ed3a28453a70e13b` passed public CI,
+  Railway/Vercel deployment, live smoke, six artifact inspections, available
+  deterministic mobile, web, link, and telemetry checks. Exact-SHA security scan
+  `b737ba37-01d4-4ba8-841d-f1da1d09d61a` then reported two P1 availability
+  issues and one P2 stale-authorization replay, so the candidate and external
+  evidence are superseded. Its physical-iPhone artifact also could not install
+  because device ManagedConfiguration prohibited app installation.
 
 ## External dependencies not provisioned in source
 
@@ -286,8 +303,8 @@
   provisioned in East US and linked locally. Resend-backed custom SMTP is
   configured with the required `resend` username and a verified `table-us.com`
   sending domain. Confirm signup and Magic Link present Supabase's `Token` as the
-  verification code. Supabase currently emits eight digits while the custom
-  template still says "six-digit"; that copy must be corrected before beta. A
+  verification code. Supabase currently emits eight digits, and the custom
+  template says “verification code” without claiming a fixed digit count. A
   real invite-approved OTP completed the Auth hook, email delivery,
   code verification, invite redemption, profile creation, and authenticated
   redirect to `/plans`. Sanitized staging evidence showed exactly one profile,
@@ -299,13 +316,12 @@
   credential has been rotated, the least-privilege `tableus_runtime` role is
   active, and the Before User Created hook is enabled against
   `app.hook_restrict_signup_to_validated_invite`. Owner and runtime credentials
-  are stored separately in macOS Keychain. One superseded unused invite remains
-  active until 2026-08-27; its plaintext is unavailable and it should be revoked
-  or allowed to expire before external beta access.
+  are stored separately in macOS Keychain. The latest aggregate audit reports
+  zero active invites and eight expired invites.
 - Railway staging project `tableus-staging`, environment `staging`, and service
-  `api` are provisioned. Deployment `bed50df4-5ced-465f-8492-a24147e8f663`
+  `api` are provisioned. Deployment `bfc3e745-cbd1-4a7f-926a-f111ca8555d0`
   serves `https://api-staging-3795.up.railway.app` from exact SHA
-  `4920d99b11b06c4e0aa1c4afc3f91763bb53ee1c`; readiness reports Supabase
+  `d0955f5d08537b3251341720ed3a28453a70e13b`; readiness reports Supabase
   Auth, live Places, live Agent Platform Gemini, `provider_mode=live`, and the
   gated staging telemetry configuration. High-availability static
   outbound IPs are active. Railway holds the runtime database credential,
@@ -315,8 +331,8 @@
   exposed the value; only the non-exposed restricted replacement remains in
   Railway and the operator Keychain.
 - Vercel staging client variables and `https://tableus-staging.vercel.app` are
-  live from exact SHA `4920d99b11b06c4e0aa1c4afc3f91763bb53ee1c`
-  through deployment `dpl_4M7eSvsht9UNB2wqmCjZ1pVUmHiD`. The production-facing
+  live from exact SHA `d0955f5d08537b3251341720ed3a28453a70e13b`
+  through deployment `dpl_6KHTRhyUS9qTAeJ7eXw3UvaghQmz`. The production-facing
   `https://links.table-us.com`, `table-us.com`, and `www.table-us.com` aliases
   remain on their prior validated deployment and were not moved by this staging
   gate. An authenticated

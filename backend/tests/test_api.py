@@ -32,7 +32,7 @@ from tableus.security import hash_value, issue_redemption_token
 _idempotency_500_calls = {"count": 0}
 
 
-@app.post("/__test/idempotency-500")
+@app.post("/api/v1/__test/idempotency-500")
 async def idempotency_500_fixture():
     _idempotency_500_calls["count"] += 1
     if _idempotency_500_calls["count"] == 1:
@@ -47,6 +47,8 @@ async def database() -> None:
 
 @pytest.fixture
 async def client() -> AsyncClient:
+    app.state.request_rate_limiter.clear()
+    app.state.idempotency_cache.clear()
     async with AsyncClient(transport=ASGITransport(app=app), base_url="http://test") as value:
         yield value
 
@@ -481,7 +483,6 @@ async def test_incomplete_place_details_do_not_commit_a_recommendation_run(
 
 @pytest.mark.asyncio
 async def test_idempotency_replay_conflict_actor_isolation_and_5xx(client: AsyncClient) -> None:
-    app.state.idempotency_cache = {}
     create_headers = {**headers("demo-organizer"), "Idempotency-Key": "create-replay-key"}
     body = {
         "title": "Idempotent dinner",
@@ -518,12 +519,99 @@ async def test_idempotency_replay_conflict_actor_isolation_and_5xx(client: Async
 
     _idempotency_500_calls["count"] = 0
     failure_headers = {"Idempotency-Key": "five-hundred-key"}
-    failed = await client.post("/__test/idempotency-500", headers=failure_headers, json={})
-    recovered = await client.post("/__test/idempotency-500", headers=failure_headers, json={})
+    failure_headers.update(headers("demo-organizer"))
+    failed = await client.post("/api/v1/__test/idempotency-500", headers=failure_headers, json={})
+    recovered = await client.post("/api/v1/__test/idempotency-500", headers=failure_headers, json={})
     assert failed.status_code == 503
     assert recovered.status_code == 200
     assert "X-Idempotent-Replay" not in recovered.headers
     assert _idempotency_500_calls["count"] == 2
+
+
+@pytest.mark.asyncio
+async def test_public_errors_do_not_enter_idempotency_cache(client: AsyncClient) -> None:
+    request_headers = {
+        "Authorization": "Bearer attacker-selected-value",
+        "Idempotency-Key": "public-error-key",
+    }
+    first = await client.post(
+        "/api/v1/access/validate", headers=request_headers, json={"code": "not-an-invite"}
+    )
+    second = await client.post(
+        "/api/v1/access/validate", headers=request_headers, json={"code": "not-an-invite"}
+    )
+
+    assert first.status_code == 404
+    assert second.status_code == 404
+    assert "X-Idempotent-Replay" not in second.headers
+    valid = await client.post(
+        "/api/v1/access/validate",
+        headers=request_headers,
+        json={"code": "tableus-beta"},
+    )
+    assert valid.status_code == 200
+    assert "X-Idempotent-Replay" not in valid.headers
+    assert len(app.state.idempotency_cache) == 0
+
+
+@pytest.mark.asyncio
+async def test_idempotency_replay_requires_a_current_approved_profile(client: AsyncClient) -> None:
+    profile_id = "stale-replay-profile"
+    async with SessionFactory() as session:
+        session.add(
+            Profile(
+                id=profile_id,
+                display_name="Replay Profile",
+                email_hash=hash_value("stale-replay@example.test"),
+            )
+        )
+        await session.commit()
+
+    request_headers = {**headers(profile_id), "Idempotency-Key": "profile-patch-replay"}
+    first = await client.patch(
+        "/api/v1/me", headers=request_headers, json={"display_name": "Updated Profile"}
+    )
+    assert first.status_code == 200
+
+    async with SessionFactory() as session:
+        profile = await session.get(Profile, profile_id)
+        assert profile is not None
+        await session.delete(profile)
+        await session.commit()
+
+    replay = await client.patch(
+        "/api/v1/me", headers=request_headers, json={"display_name": "Updated Profile"}
+    )
+    assert replay.status_code == 403
+    assert "X-Idempotent-Replay" not in replay.headers
+
+
+@pytest.mark.asyncio
+async def test_rotating_unverified_headers_cannot_bypass_source_limit(
+    client: AsyncClient,
+) -> None:
+    for index in range(120):
+        response = await client.post(
+            "/api/v1/access/validate",
+            headers={
+                "Authorization": f"Bearer invalid-{index}",
+                "X-Demo-User-ID": f"rotating-{index}",
+            },
+            json={"code": "not-an-invite"},
+        )
+        assert response.status_code == 404
+
+    limited = await client.post(
+        "/api/v1/access/validate",
+        headers={"Authorization": "Bearer another-invalid-value"},
+        json={"code": "not-an-invite"},
+    )
+    assert limited.status_code == 429
+    assert limited.json()["error"]["code"] == "rate_limited"
+    assert app.state.request_rate_limiter.source_count == 1
+
+    ready = await client.get("/health/ready")
+    assert ready.status_code == 200
 
 
 @pytest.mark.asyncio
@@ -646,7 +734,7 @@ async def test_account_export_and_deletion_readiness(client: AsyncClient) -> Non
     deleted = await client.request(
         "DELETE",
         "/api/v1/me",
-        headers=headers(member_id),
+        headers={**headers(member_id), "Idempotency-Key": "delete-account-replay"},
         json={"confirmation": "DELETE"},
     )
     assert deleted.status_code == 200
@@ -658,6 +746,16 @@ async def test_account_export_and_deletion_readiness(client: AsyncClient) -> Non
         retained_event = await session.get(PlanEvent, event_id)
         assert retained_event is not None
         assert retained_event.actor_id is None
+
+    deletion_replay = await client.request(
+        "DELETE",
+        "/api/v1/me",
+        headers={**headers(member_id), "Idempotency-Key": "delete-account-replay"},
+        json={"confirmation": "DELETE"},
+    )
+    assert deletion_replay.status_code == 200
+    assert deletion_replay.headers["X-Idempotent-Replay"] == "true"
+    assert deletion_replay.json()["data"]["deleted"] is True
 
     owner_control = await client.get("/api/v1/me/account-control", headers=headers(owner_id))
     assert owner_control.status_code == 200

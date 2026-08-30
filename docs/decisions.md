@@ -87,9 +87,14 @@
   retryable network error. The policy lives in an Android-only local Expo module
   and preserves CNG without committing generated native projects.
 - **2026-08-22:** The closed-beta idempotency ledger remains a 24-hour,
-  process-local response cache. Request-body fingerprints prevent one actor from
-  reusing a key with a different body, but restart and horizontal-scaling replay
-  safety require a later persistent-ledger migration.
+  process-local response cache. It is limited to an explicit product-route
+  allowlist, keyed by verified subject plus a hash of a validated key, stores
+  only bounded successful responses, and rechecks current approval and plan
+  authorization before replay. Public invite validation and ephemeral photos are
+  excluded. Account deletion revalidates identity but not the removed profile so
+  an ambiguous committed deletion can return its completion receipt. Request
+  fingerprints prevent changed-body reuse, but restart and horizontal-scaling
+  safety still require a persistent-ledger migration.
 - **2026-08-22:** Global mobile status banners render inside an explicit root
   safe-area provider and consume the top inset. Semantic alert labels do not
   substitute for visible bounds outside the system status bar.
@@ -296,3 +301,8 @@
   evidence tools; memgraphs, heap dumps, and broad performance traces remain
   opt-in for a focused investigation and are never retained by routine release
   runs.
+- **2026-08-29:** Pre-authentication rate identity never derives from raw bearer
+  or demo headers. A bounded transport-source bucket and bounded global ceiling
+  run before authentication/body/provider work, while Railway health probes
+  bypass the product bucket. Supabase reuses one cached JWKS client per endpoint.
+  A trusted edge limiter remains defense in depth rather than correctness.

@@ -569,6 +569,20 @@ replacement must scroll to the saved-or-retry state after organizer and guest
 vote submission, guard both flows, rebuild every artifact, and restart
 exact-SHA evidence.
 
+Candidate `d0955f5d08537b3251341720ed3a28453a70e13b` is security-blocked and
+superseded despite passing CI, staging deployment, live smoke, six artifact
+inspections, and available web/mobile/link/telemetry phases. Exact-SHA scan
+`b737ba37-01d4-4ba8-841d-f1da1d09d61a` reported two P1 availability flaws in
+unverified-header rate identity and unbounded public idempotency caching, plus a
+P2 replay-before-current-authorization flaw. A replacement must preserve the
+24-hour retry contract with bounded source/global limits, process-wide JWKS
+reuse, an authenticated route allowlist, current profile/plan-role checks, and
+fixed entry/byte/request/response limits. It must pass a fresh exact-SHA scan and
+`make ready` before any external evidence is reused. The physical iPhone must
+also permit app installation under Screen Time or device management before the
+signed readiness artifact is installed; never request or retain an OTP before
+installation succeeds.
+
 Inspect production-shaped artifacts before installation:
 
 ```bash

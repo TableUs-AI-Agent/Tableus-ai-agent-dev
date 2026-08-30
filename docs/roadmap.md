@@ -47,10 +47,10 @@ canaries, and the rollback/residual-risk record. Completion stops before
 production deployment, store submission, or cohort activation. Those remain
 separate explicit milestones after this readiness packet is merged.
 
-The next readiness candidate must replace superseded `0de0c34`: Android vote
-submission must scroll to either `Ranked vote saved.` or the bounded explicit
-`Retry ranked vote` state before continuing. Both organizer and guest flows are
-guarded. Expo workflow files are revalidated against Expo's live schema, and
-deterministic iOS/Android runs use the shared sanitized device preflight before
-installation. All exact-SHA artifacts and device evidence restart after that
-candidate freezes.
+The next readiness candidate must replace security-blocked `d0955f5`. It keeps
+the corrected Android vote/retry automation and integrated Expo/iOS/Android
+preflight, and adds bounded transport-source/global request limiting, reusable
+JWKS verification state, an explicit idempotent-route allowlist, authenticated
+and role-revalidated replay, and fixed-capacity/byte-bounded success storage.
+Run a fresh exact-SHA repository scan and `make ready`; only then may Railway,
+Vercel, live-provider, six-artifact, and device evidence restart.

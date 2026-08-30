@@ -12,7 +12,9 @@ not be inferred from a passing test.
 - [x] Expo Router and compatible Expo/Metro packages use current SDK 57 patches.
 - [x] Expo Doctor passes all checks, including native dependency deduplication.
 - [x] npm audit reports 0 critical and 0 high findings.
-- [x] Full repository security scan is complete with no P0/P1 or exposed secret.
+- [ ] Replacement exact-SHA repository scan is complete with no P0/P1 or exposed
+  secret. Scan `b737ba37-01d4-4ba8-841d-f1da1d09d61a` blocked superseded
+  `d0955f5`; both P1 root causes are remediated locally and await rescan.
 - [ ] Runtime bundle inspection finds no service-role material, loopback origin,
   cleartext exception, demo identity, E2E control, or production endpoint.
 
@@ -34,8 +36,9 @@ not be inferred from a passing test.
 - [x] Owner has reviewed and approved the final terms and privacy text.
 - [x] Owner has reviewed the attribution presentation on web, iOS, and Android.
 - [x] Delivery to both public contact mailboxes is confirmed.
-- [ ] Supabase staging email says “verification code”, not “six-digit code”.
-- [ ] The superseded unused invite is expired or explicitly revoked.
+- [x] Supabase staging email says “verification code”, not “six-digit code”.
+- [x] The superseded unused invite is expired or explicitly revoked; the latest
+  aggregate audit reports zero active and eight expired invites.
 
 ## Exact-SHA staging evidence
 
@@ -55,7 +58,10 @@ not be inferred from a passing test.
 | Risk | Current control | Owner / expiry | Production effect |
 | --- | --- | --- | --- |
 | Expo build tooling reaches `uuid@7` through `xcode`; npm reports GHSA-w5hq-g745-h8pq as moderate. The vulnerable buffered v3/v5/v6 API is not used by shipped JS/runtime code. | SDK 57-compatible packages are fully patched, Expo Doctor passes, native builds are trusted inputs, and no force/downgrade remediation is accepted. Recheck Expo patches and npm advisories on every release packet. | Repository owner; exception expires 2026-09-30 or before any production/store approval, whichever is earlier. | Blocks production if still unreviewed at expiry; does not block this staging candidate while runtime critical/high findings remain zero. |
-| Idempotency response cache and paid-operation reservation locks are process-local. | Single Railway API process, explicit retry UX, request fingerprints, conservative rate/spend limits. | Repository owner; replace before horizontal scaling. | Horizontal scaling is blocked until durable coordination exists. |
+| Idempotency response cache and paid-operation reservation locks are process-local. | Single Railway API process; explicit retry UX; verified-subject/role replay; fixed entry, byte, request, and response bounds; request fingerprints; conservative rate/spend limits. | Repository owner; replace before horizontal scaling. | Horizontal scaling is blocked until durable coordination exists. |
+| A holder of one live invite can create multiple short-lived pending email validations before redemption. | Strong invite entropy, bounded source/global request rate, 20-minute expiry, one-use redemption lock, and approved-profile API gate. | Repository owner; add deduplication/pruning before cohort expansion. | Does not block staging; cohort activation is blocked until resolved or accepted. |
+| Private-plan capability remains in the canonical join URL query. | Approved authentication is also required; tokens are random, hashed at rest, rotatable, redacted from telemetry/evidence, and old links are rejected after rotation. | Repository owner; design a short-lived exchange before production. | Production is blocked on a reviewed exchange or explicit risk acceptance. |
+| Aggregate provider usage is readable by any approved beta profile. | Output excludes identities, queries, coordinates, Place IDs, provider content, prompts, responses, and credentials. | Repository owner; add an operator boundary before cohort expansion. | Does not block isolated staging; cohort expansion is blocked until resolved. |
 | Staging Vercel uses an exact-SHA Preview deployment because the Production target also owns production-facing aliases. | Cumulative validator binds deployment ID and SHA; do not move production aliases. | Repository owner; revisit before production. | Production deployment remains blocked by a separate gate. |
 | Production Google Play signing fingerprint is not yet associated. | Preview certificate remains isolated; verified links are tested only against inspected preview artifacts. | Repository owner; required before Play submission. | Google Play submission is blocked. |
 | Legal text is operational disclosure, not counsel-reviewed legal advice. | Owner review is mandatory before source freeze; formal counsel review remains separately recordable. | Repository owner; before closed-beta cohort. | Cohort activation is blocked until owner acceptance. |
@@ -66,7 +72,8 @@ Complete only after the named person actually confirms each item.
 
 - Source candidate SHA: the Git commit containing this signed checklist; its
   exact value is recorded in sanitized evidence after the final local gate.
-- Security scan report ID: recorded with the exact-SHA sanitized evidence.
+- Security scan report ID: replacement exact-SHA report pending; blocked report
+  `b737ba37-01d4-4ba8-841d-f1da1d09d61a` is retained for remediation traceability.
 - Policy review date/version: Google Maps policy last reviewed 2026-08-26
 - Legal/privacy owner: Brian Chei (confirmed 2026-08-26)
 - Rollback owner: Brian Chei, repository and cloud account owner
