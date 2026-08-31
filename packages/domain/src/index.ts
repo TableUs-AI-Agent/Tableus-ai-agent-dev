@@ -91,10 +91,18 @@ export function normalizeHttpsOrigin(value: string): string {
 }
 
 export function buildJoinUrl(origin: string, planId: string, shareToken: string): string {
-  if (!planId.trim() || !shareToken.trim()) throw new Error("Plan ID and share token are required");
-  const url = new URL(`/join/${encodeURIComponent(planId.trim())}`, normalizeHttpsOrigin(origin));
+  if (!shareToken.trim()) throw new Error("Plan ID and share token are required");
+  const url = new URL(`/join/${requireCanonicalUuid(planId, "Plan ID")}`, normalizeHttpsOrigin(origin));
   url.searchParams.set("token", shareToken.trim());
   return url.toString();
+}
+
+export function requireCanonicalUuid(value: string, label = "Identifier"): string {
+  const normalized = value.trim();
+  if (!/^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/.test(normalized)) {
+    throw new Error(`${label} must be a canonical UUID`);
+  }
+  return normalized;
 }
 
 export function buildAuthUrl(origin: string, mode: AuthLinkMode): string {

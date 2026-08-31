@@ -2,10 +2,18 @@ import "react-native-url-polyfill/auto";
 
 import * as SecureStore from "expo-secure-store";
 import { createClient } from "@supabase/supabase-js";
+import { PUBLIC_RUNTIME_POLICY, requireExactHttpsOrigin } from "@tableus/domain";
 
-const supabaseUrl = process.env.EXPO_PUBLIC_SUPABASE_URL;
+const configuredSupabaseUrl = process.env.EXPO_PUBLIC_SUPABASE_URL;
 const supabaseAnonKey = process.env.EXPO_PUBLIC_SUPABASE_ANON_KEY;
 const demoMode = process.env.EXPO_PUBLIC_DEMO_MODE === "true";
+const supabaseUrl = configuredSupabaseUrl && !demoMode
+  ? requireExactHttpsOrigin(
+      configuredSupabaseUrl,
+      PUBLIC_RUNTIME_POLICY.stagingSupabaseOrigin,
+      "Mobile Supabase origin",
+    )
+  : configuredSupabaseUrl;
 
 export const secureAuthStorage = {
   getItem: (key: string) => SecureStore.getItemAsync(key),

@@ -9,6 +9,7 @@ import { spawnSync } from "node:child_process";
 
 import { artifactChecksum } from "./evidence-utils.mjs";
 import { promptSecret } from "./prompt-utils.mjs";
+import { RELEASE_ORIGINS, requireReleaseOrigin } from "./release-origins.mjs";
 
 const repoRoot = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const flowSource = join(repoRoot, "mobile", ".maestro-auth");
@@ -40,9 +41,8 @@ function run(command, args, { cwd = repoRoot, env = {}, secrets = [] } = {}) {
 }
 
 async function preflight(apiUrl) {
-  const url = new URL(apiUrl);
-  if (url.protocol !== "https:") throw new Error("Mobile auth E2E requires an HTTPS staging API.");
-  const response = await fetch(`${apiUrl.replace(/\/$/, "")}/health/ready`, { signal: AbortSignal.timeout(15_000) });
+  requireReleaseOrigin(apiUrl, RELEASE_ORIGINS.stagingApi, "Mobile auth staging API");
+  const response = await fetch(`${apiUrl.replace(/\/$/, "")}/health/ready`, { redirect: "error", signal: AbortSignal.timeout(15_000) });
   if (!response.ok) throw new Error(`Staging readiness failed with ${response.status}.`);
   const payload = await response.json();
   if (payload.auth_mode !== "supabase" || payload.ai_provider_mode !== "deterministic" || !["deterministic", "live"].includes(payload.places_provider_mode)) {

@@ -3,8 +3,9 @@ import { createApiClient } from "@tableus/api-client";
 import { isSupabaseConfigured, supabase } from "./supabase-browser";
 import { getTelemetrySessionId } from "./telemetry";
 import { notifyAuthorizationBoundary } from "./authorization-boundary";
+import { webApiOrigin } from "./runtime-config";
 
-const baseUrl = process.env.NEXT_PUBLIC_API_URL ?? "";
+const baseUrl = webApiOrigin();
 
 export const v1Api = createApiClient({
   baseUrl,

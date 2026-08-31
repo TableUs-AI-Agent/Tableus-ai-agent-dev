@@ -7,6 +7,7 @@ import { spawnSync } from "node:child_process";
 
 import { assertSanitizedMapsSummary, validateMapsReadiness } from "./maps-evidence-utils.mjs";
 import { promptSecret } from "./prompt-utils.mjs";
+import { RELEASE_ORIGINS, requireReleaseOrigin } from "./release-origins.mjs";
 
 function parseArgs(argv) {
   const values = {};
@@ -20,7 +21,7 @@ function parseArgs(argv) {
 }
 
 async function jsonRequest(url, options = {}) {
-  const response = await fetch(url, { ...options, signal: AbortSignal.timeout(20_000) });
+  const response = await fetch(url, { redirect: "error", ...options, signal: AbortSignal.timeout(20_000) });
   if (!response.ok) throw new Error(`Sanitized staging request failed (${response.status}).`);
   return response.json();
 }
@@ -31,7 +32,8 @@ const evidenceDir = resolve(args.evidence ?? "");
 const supabaseUrl = String(process.env.TABLEUS_SUPABASE_URL ?? process.env.NEXT_PUBLIC_SUPABASE_URL ?? "").replace(/\/$/, "");
 const supabaseAnonKey = process.env.TABLEUS_SUPABASE_ANON_KEY ?? process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ?? "";
 if (!apiUrl || !args.evidence) throw new Error("--api-url and --evidence are required.");
-if (new URL(apiUrl).protocol !== "https:") throw new Error("Maps staging evidence requires HTTPS.");
+requireReleaseOrigin(apiUrl, RELEASE_ORIGINS.stagingApi, "Maps staging API");
+requireReleaseOrigin(supabaseUrl, RELEASE_ORIGINS.stagingSupabase, "Maps Supabase");
 if (!supabaseUrl || !supabaseAnonKey) throw new Error("Supabase URL and public anon key must be provided through the environment.");
 
 const git = spawnSync("git", ["rev-parse", "HEAD"], { encoding: "utf8" });

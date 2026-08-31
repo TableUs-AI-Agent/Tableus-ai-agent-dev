@@ -1,11 +1,12 @@
 import { createServerClient } from "@supabase/ssr";
 import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
+import { webSupabaseOrigin } from "../../lib/runtime-config";
 
 export async function GET(request: Request) {
   const url = new URL(request.url);
   const code = url.searchParams.get("code");
-  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const supabaseUrl = webSupabaseOrigin();
   const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
   if (!code || !supabaseUrl || !supabaseKey) return NextResponse.redirect(new URL("/invite?error=invalid_callback", url));
   const cookieStore = await cookies();

@@ -349,3 +349,25 @@
   explicitly configured origin. Web subject transitions also remount
   subject-keyed plan pages, and live mobile evidence deletes both temporary and
   newly created user-level Maestro test/log entries.
+- **2026-08-31:** Hosted client trust anchors are source-owned, exact staging
+  values. Web and mobile builds reject alternate API, Supabase, link, telemetry,
+  and EAS project origins; production profiles fail closed until separately
+  approved production anchors exist. Expo Updates are disabled for this release
+  line because no app-owned signed-update authority has been approved. Native
+  dependency/configuration changes continue to require new signed artifacts.
+- **2026-08-31:** Same-key state-changing requests are serialized within the
+  single API process, and every plan mutation row-locks its current plan state.
+  JWKS refreshes use bounded timeouts, one coalesced refresh, and a short negative
+  cache. These are closed-beta single-process controls; durable coordination is
+  required before horizontal API scaling.
+- **2026-08-31:** Mobile plan detail does not poll provider-backed hydration.
+  Paid Places usage has both per-minute admission and a database-backed rolling
+  30-day ceiling of 150 outbound attempts. Review storage is capped at 100 rows
+  per account. These bounds protect the isolated cohort without adding a schema
+  migration.
+- **2026-08-31:** EAS CLI is repository-locked exactly at `23.2.0`, and the
+  configured version, installed executable, source SHA, dependency-lock checksum,
+  artifact checksum, and inspection result are bound in local build receipts.
+  The shipped dependency graph must have zero critical/high advisories. The
+  remaining developer-only EAS/Expo toolchain exception expires before
+  production or 2026-09-30, whichever is earlier.

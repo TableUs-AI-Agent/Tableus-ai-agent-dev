@@ -9,6 +9,7 @@ import { spawnSync } from "node:child_process";
 
 import { artifactChecksum } from "./evidence-utils.mjs";
 import { assertSafeReadinessEvidence, validateStagingReadiness } from "./readiness-evidence-utils.mjs";
+import { RELEASE_ORIGINS, requireReleaseOrigin } from "./release-origins.mjs";
 
 const repoRoot = resolve(fileURLToPath(new URL("..", import.meta.url)));
 const appId = "com.tableus.app";
@@ -75,7 +76,8 @@ const evidenceDir = resolve(args.evidence ?? "");
 if (!["ios", "android"].includes(platform) || !device || !existsSync(artifact) || !apiUrl || !supabaseUrl || !sha || !buildId || !args.evidence) {
   throw new Error("--platform, --device, --app, --api-url, --supabase-url, --sha, --build-id, and --evidence are required");
 }
-if (!apiUrl.startsWith("https://") || !supabaseUrl.startsWith("https://")) throw new Error("Readiness evidence requires HTTPS staging services");
+requireReleaseOrigin(apiUrl, RELEASE_ORIGINS.stagingApi, "Readiness staging API");
+requireReleaseOrigin(supabaseUrl, RELEASE_ORIGINS.stagingSupabase, "Readiness Supabase");
 if (platform === "ios" && !args["apple-team-id"]) throw new Error("--apple-team-id is required for iOS readiness");
 if (platform === "android" && !args["android-fingerprint"]) throw new Error("--android-fingerprint is required for Android readiness");
 

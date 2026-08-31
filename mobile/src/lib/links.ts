@@ -1,4 +1,4 @@
-import { buildAuthUrl, buildJoinUrl, type AuthLinkMode } from "@tableus/domain";
+import { buildAuthUrl, buildJoinUrl, requireCanonicalUuid, type AuthLinkMode } from "@tableus/domain";
 
 const linkOrigin = `https://${process.env.EXPO_PUBLIC_LINK_HOST ?? "links.table-us.com"}`;
 
@@ -22,8 +22,14 @@ export function rewriteCanonicalSystemPath(path: string): string {
       return `/auth?mode=${parseAuthLinkMode(url.searchParams.get("mode") ?? undefined)}`;
     }
     if (/^\/join\/[^/]+$/.test(url.pathname)) {
+      let planId: string;
+      try {
+        planId = requireCanonicalUuid(decodeURIComponent(url.pathname.slice("/join/".length)), "Plan ID");
+      } catch {
+        return "/join/invalid";
+      }
       const token = url.searchParams.get("token");
-      return token ? `${url.pathname}?token=${encodeURIComponent(token)}` : url.pathname;
+      return token ? `/join/${planId}?token=${encodeURIComponent(token)}` : `/join/${planId}`;
     }
     return path;
   } catch {

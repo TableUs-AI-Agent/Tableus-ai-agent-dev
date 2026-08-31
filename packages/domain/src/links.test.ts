@@ -22,10 +22,14 @@ test("rejects origins that could redirect or leak link secrets", () => {
   }
 });
 
-test("builds encoded canonical join and auth URLs", () => {
+test("builds canonical join and auth URLs", () => {
   assert.equal(
-    buildJoinUrl("https://links.table-us.com", "plan id", "private+/token"),
-    "https://links.table-us.com/join/plan%20id?token=private%2B%2Ftoken",
+    buildJoinUrl(
+      "https://links.table-us.com",
+      "123e4567-e89b-42d3-a456-426614174000",
+      "private+/token",
+    ),
+    "https://links.table-us.com/join/123e4567-e89b-42d3-a456-426614174000?token=private%2B%2Ftoken",
   );
   assert.equal(
     buildAuthUrl("https://links.table-us.com", "sign-in"),
@@ -35,5 +39,5 @@ test("builds encoded canonical join and auth URLs", () => {
 
 test("join URLs require both opaque inputs", () => {
   assert.throws(() => buildJoinUrl("https://links.table-us.com", "", "token"));
-  assert.throws(() => buildJoinUrl("https://links.table-us.com", "plan", ""));
+  assert.throws(() => buildJoinUrl("https://links.table-us.com", "123e4567-e89b-42d3-a456-426614174000", ""));
 });

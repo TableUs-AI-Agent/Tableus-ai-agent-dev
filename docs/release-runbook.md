@@ -531,6 +531,14 @@ schema (this operator check requires network access and the EAS CLI):
 make mobile-workflows-validate
 ```
 
+The validator must use the repository-installed `eas-cli@23.2.0`; `eas`, `npx
+eas-cli@latest`, or an environment-selected executable is not accepted. Run
+`npm audit --omit=dev --audit-level=high` against the frozen lock before the
+external gate. The production graph must contain no critical/high advisory. The
+full developer audit may rely only on the time-bounded EAS/Expo release-tool
+exception recorded in the security/privacy checklist; it may not conceal a
+runtime-reachable finding.
+
 1. `test-ios`, then shut down and remove raw logs.
 2. ARM64 `test-android`, then shut down and remove raw logs.
 3. Apple-signed physical-device `readiness-ios`, then shut down build workers.

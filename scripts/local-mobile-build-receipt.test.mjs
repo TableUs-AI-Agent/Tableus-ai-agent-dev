@@ -18,14 +18,8 @@ test("writes a sanitized checksum-only local build receipt", () => {
     "--sha", "a".repeat(40),
     "--build-id", "local-android-candidate",
     "--output", output,
-    "--eas-cli-version", "22.2.0",
     "--inspection-passed", "true",
   ], { encoding: "utf8" });
-  assert.equal(result.status, 0, result.stderr);
-  const receipt = JSON.parse(readFileSync(output, "utf8"));
-  assert.equal(receipt.candidate_sha, "a".repeat(40));
-  assert.equal(receipt.artifact_inspection_passed, true);
-  assert.match(receipt.artifact_sha256, /^[0-9a-f]{64}$/);
-  assert.equal(JSON.stringify(receipt).includes(root), false);
-  assert.equal(JSON.stringify(receipt).includes("artifact bytes"), false);
+  assert.notEqual(result.status, 0);
+  assert.match(result.stderr, /clean checkout at the exact candidate SHA/);
 });

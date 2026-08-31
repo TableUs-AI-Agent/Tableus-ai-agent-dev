@@ -1,7 +1,7 @@
 "use client";
 
 import { ApiError } from "@tableus/api-client";
-import type { Plan } from "@tableus/domain";
+import { requireCanonicalUuid, type Plan } from "@tableus/domain";
 import { useMutation } from "@tanstack/react-query";
 import { useParams, useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -12,14 +12,23 @@ import { v1Api } from "../../lib/v1-api";
 
 export default function JoinPage() {
   const { id } = useParams<{ id: string }>();
+  let planId: string | null = null;
+  try {
+    planId = requireCanonicalUuid(id ?? "", "Plan ID");
+  } catch {
+    planId = null;
+  }
   const token = useSearchParams().get("token");
   const router = useRouter();
   const [sessionReady, setSessionReady] = useState(!isSupabaseConfigured);
   const [hasSession, setHasSession] = useState(!isSupabaseConfigured);
   const [showAuth, setShowAuth] = useState(false);
   const join = useMutation({
-    mutationFn: () => v1Api.post<Plan>(`/api/v1/plans/${id}/join`, { share_token: token }),
-    onSuccess: () => router.replace(`/plans/${id}`),
+    mutationFn: () => {
+      if (!planId) throw new Error("This private link is invalid.");
+      return v1Api.post<Plan>(`/api/v1/plans/${planId}/join`, { share_token: token });
+    },
+    onSuccess: () => router.replace(`/plans/${planId}`),
     onError: (error) => {
       if (error instanceof ApiError && (error.status === 401 || error.status === 403)) setShowAuth(true);
     },
@@ -36,7 +45,7 @@ export default function JoinPage() {
     return () => { active = false; };
   }, []);
 
-  const invalidLink = !token || (join.error instanceof ApiError && join.error.status === 404);
+  const invalidLink = !planId || !token || (join.error instanceof ApiError && join.error.status === 404);
 
   if (showAuth) {
     return (

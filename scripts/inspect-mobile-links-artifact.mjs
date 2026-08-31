@@ -13,6 +13,7 @@ import {
   profileAuthorizesAssociatedDomain,
   selectProfileAuthorizedSigner,
 } from "./mobile-links-inspection-lib.mjs";
+import { validateHostedAppConfig } from "./readiness-inspection-lib.mjs";
 
 function parseArgs(argv) {
   const result = {};
@@ -148,6 +149,13 @@ try {
   const inspectionPath = platform === "ios" ? extractIosApp(artifact, temporaryRoot) : artifact;
   const content = artifactBytes(inspectionPath).toString("latin1");
   const appConfiguration = appConfigurationBytes(platform, artifact, inspectionPath).toString("utf8");
+  validateHostedAppConfig(appConfiguration, {
+    sha: args.sha,
+    apiUrl: args["api-url"],
+    supabaseUrl: args["supabase-url"],
+    linkHost: host,
+    forbiddenOrigins: (args["forbidden-origins"] ?? "").split(","),
+  });
   for (const required of [args.sha, args["api-url"], args["supabase-url"], host]) {
     if (!content.includes(required)) throw new Error(`Artifact is missing required marker: ${required}`);
   }

@@ -1,6 +1,8 @@
+import asyncio
 import json
 
 import pytest
+from fastapi import HTTPException
 
 from tableus import auth
 from tableus.request_controls import (
@@ -177,8 +179,115 @@ def test_rate_limiter_enforces_a_global_ceiling_and_bounded_sources() -> None:
     assert limiter.consume("source-b", 60.0) is False
     assert limiter.consume("source-c", 60.0) is False
     assert limiter.source_count == 2
-    assert limiter.consume("source-d", 60.0) is True
-    assert limiter.source_count == 2
+
+
+def test_source_rejections_do_not_consume_unrelated_global_capacity() -> None:
+    limiter = FixedWindowRateLimiter(per_source_limit=2, global_limit=4, max_sources=8)
+
+    assert limiter.consume("abusive-source", 60.0) is False
+    assert limiter.consume("abusive-source", 60.0) is False
+    for _ in range(100):
+        assert limiter.consume("abusive-source", 60.0) is True
+
+    assert limiter.consume("fresh-source-a", 60.0) is False
+    assert limiter.consume("fresh-source-b", 60.0) is False
+    assert limiter.consume("fresh-source-c", 60.0) is True
+
+
+@pytest.mark.asyncio
+async def test_body_receive_timeout_releases_the_active_slot() -> None:
+    sent: list[dict] = []
+
+    async def stalled_receive():
+        await asyncio.Event().wait()
+
+    async def send(message: dict) -> None:
+        sent.append(message)
+
+    middleware = RequestBodyLimitMiddleware(
+        lambda scope, receive, send: None,
+        body_idle_timeout_seconds=0.01,
+        body_total_timeout_seconds=0.02,
+        max_active_body_reads=1,
+        max_active_body_reads_per_source=1,
+    )
+    scope = {
+        "type": "http",
+        "method": "POST",
+        "path": "/api/v1/plans",
+        "headers": [(b"transfer-encoding", b"chunked")],
+        "client": ("127.0.0.1", 1234),
+    }
+    await middleware(scope, stalled_receive, send)
+    assert sent[0]["status"] == 408
+    assert json.loads(sent[1]["body"])["error"]["code"] == "request_timeout"
+
+    released: list[dict] = []
+
+    async def empty_receive():
+        return {"type": "http.request", "body": b"", "more_body": False}
+
+    async def downstream(scope, receive, send):
+        await receive()
+        await send({"type": "http.response.start", "status": 204, "headers": []})
+        await send({"type": "http.response.body", "body": b""})
+
+    middleware.app = downstream
+    async def collect_released(message: dict) -> None:
+        released.append(message)
+
+    await middleware(scope, empty_receive, collect_released)
+    assert released[0]["status"] == 204
+
+
+@pytest.mark.asyncio
+async def test_health_probe_rejects_body_before_receive_and_bounds_readiness() -> None:
+    consumed = 0
+
+    async def receive():
+        nonlocal consumed
+        consumed += 1
+        return {"type": "http.request", "body": b"ignored", "more_body": False}
+
+    sent: list[dict] = []
+    limiter = FixedWindowRateLimiter(per_source_limit=1, global_limit=2)
+    middleware = RequestBodyLimitMiddleware(
+        lambda scope, receive, send: None,
+        readiness_rate_limiter=limiter,
+    )
+    body_scope = {
+        "type": "http",
+        "method": "POST",
+        "path": "/health/ready",
+        "headers": [(b"content-length", b"7")],
+        "client": ("127.0.0.1", 1234),
+    }
+    async def collect_body_rejection(message: dict) -> None:
+        sent.append(message)
+
+    await middleware(body_scope, receive, collect_body_rejection)
+    assert sent[0]["status"] == 400
+    assert consumed == 0
+
+    async def downstream(scope, receive, send):
+        await send({"type": "http.response.start", "status": 200, "headers": []})
+        await send({"type": "http.response.body", "body": b""})
+
+    middleware.app = downstream
+    ready_scope = {**body_scope, "method": "GET", "headers": []}
+    first: list[dict] = []
+    second: list[dict] = []
+
+    async def collect_first(message: dict) -> None:
+        first.append(message)
+
+    async def collect_second(message: dict) -> None:
+        second.append(message)
+
+    await middleware(ready_scope, receive, collect_first)
+    await middleware(ready_scope, receive, collect_second)
+    assert first[0]["status"] == 200
+    assert second[0]["status"] == 429
 
 
 def test_idempotency_cache_bounds_entries_bytes_and_expiry() -> None:
@@ -204,12 +313,50 @@ def test_idempotency_cache_bounds_entries_bytes_and_expiry() -> None:
 
 def test_jwks_client_is_reused_per_supabase_endpoint(monkeypatch) -> None:
     created: list[str] = []
-    monkeypatch.setattr(auth, "PyJWKClient", lambda url: created.append(url) or object())
+    monkeypatch.setattr(auth, "PyJWKClient", lambda url, **kwargs: created.append(url) or object())
     auth._jwks_client.cache_clear()
-
     first = auth._jwks_client("https://example.supabase.co/auth/v1/.well-known/jwks.json")
     second = auth._jwks_client("https://example.supabase.co/auth/v1/.well-known/jwks.json")
 
     assert first is second
     assert created == ["https://example.supabase.co/auth/v1/.well-known/jwks.json"]
     auth._jwks_client.cache_clear()
+
+
+@pytest.mark.asyncio
+async def test_unknown_jwt_key_ids_are_coalesced_and_negatively_cached(monkeypatch) -> None:
+    calls = 0
+
+    class RejectingClient:
+        def get_signing_key_from_jwt(self, token):
+            nonlocal calls
+            calls += 1
+            raise auth.PyJWKClientError("unknown key")
+
+    auth._jwks_client.cache_clear()
+    auth._unknown_kids.clear()
+    auth._known_signing_keys.clear()
+    auth._last_unknown_refresh.clear()
+    auth._jwks_refresh_locks.clear()
+    monkeypatch.setattr(auth, "_jwks_client", lambda url: RejectingClient())
+    tokens = [
+        auth.jwt.encode(
+            {"sub": "subject"},
+            "unused-test-signing-key-that-is-long-enough",
+            algorithm="HS256",
+            headers={"kid": f"kid-{index}"},
+        )
+        for index in range(20)
+    ]
+
+    results = await asyncio.gather(
+        *(auth._get_signing_key("https://example.test/jwks", token) for token in tokens),
+        return_exceptions=True,
+    )
+
+    assert all(isinstance(result, HTTPException) for result in results)
+    assert calls == 1
+    auth._unknown_kids.clear()
+    auth._known_signing_keys.clear()
+    auth._last_unknown_refresh.clear()
+    auth._jwks_refresh_locks.clear()

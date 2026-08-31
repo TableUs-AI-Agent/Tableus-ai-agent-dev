@@ -11,8 +11,8 @@ import {
 test("mobile shares canonical HTTPS links", () => {
   assert.equal(createCanonicalAuthUrl("join"), "https://links.table-us.com/auth?mode=join");
   assert.equal(
-    createCanonicalJoinUrl("plan-id", "private/token"),
-    "https://links.table-us.com/join/plan-id?token=private%2Ftoken",
+    createCanonicalJoinUrl("123e4567-e89b-42d3-a456-426614174000", "private/token"),
+    "https://links.table-us.com/join/123e4567-e89b-42d3-a456-426614174000?token=private%2Ftoken",
   );
 });
 
@@ -34,8 +34,12 @@ test("canonical native paths retain only allowlisted auth and join parameters", 
     "/auth?mode=join",
   );
   assert.equal(
-    rewriteCanonicalSystemPath("https://links.table-us.com/join/plan-1?token=private%20token&extra=drop"),
-    "/join/plan-1?token=private%20token",
+    rewriteCanonicalSystemPath("https://links.table-us.com/join/123e4567-e89b-42d3-a456-426614174000?token=private%20token&extra=drop"),
+    "/join/123e4567-e89b-42d3-a456-426614174000?token=private%20token",
+  );
+  assert.equal(
+    rewriteCanonicalSystemPath("https://links.table-us.com/join/%2e%2e%2fshare-token%2frotate?token=private"),
+    "/join/invalid",
   );
 });
 

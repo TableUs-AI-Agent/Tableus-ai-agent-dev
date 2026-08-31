@@ -12,18 +12,18 @@ import {
 } from "./readiness-evidence-utils.mjs";
 
 const sha = "a".repeat(40);
-const source = (extra = {}) => ({ sha, passed: true, ...extra });
+const checksum = (character) => character.repeat(64);
 const valid = () => ({
   schema_version: 1,
   sha,
   deployments: { railway_id: "railway-deployment", vercel_id: "vercel-deployment" },
-  web: source(),
-  ios: source({ build_id: "local-ios", artifact_sha256: "b".repeat(64), inspection_passed: true }),
-  android: source({ build_id: "local-android", artifact_sha256: "c".repeat(64), inspection_passed: true }),
-  associations: source(),
-  security: source({ critical_findings: 0, high_runtime_findings: 0 }),
-  deterministic: source(),
-  telemetry: source({ sentry_project_count: 3, posthog_platform_count: 4 }),
+  web: { sha, passed: true, deployment_id: "vercel-deployment" },
+  ios: { sha, passed: true, platform: "ios", profile: "readiness-ios", build_id: "local-ios", artifact_sha256: checksum("b"), inspection_passed: true, receipt_sha256: checksum("1") },
+  android: { sha, passed: true, platform: "android", profile: "readiness-android", build_id: "local-android", artifact_sha256: checksum("c"), inspection_passed: true, receipt_sha256: checksum("2") },
+  associations: { sha, passed: true, manifest_sha256: checksum("3") },
+  security: { sha, passed: true, scan_id: "scan-id", report_sha256: checksum("4"), critical_findings: 0, high_runtime_findings: 0 },
+  deterministic: { sha, passed: true, ios_summary_sha256: checksum("5"), android_summary_sha256: checksum("6") },
+  telemetry: { sha, passed: true, summary_sha256: checksum("7"), sentry_project_count: 3, posthog_platform_count: 4 },
   release_checks: {
     owner_legal_reviewed: true,
     google_attribution_reviewed: true,
@@ -45,7 +45,16 @@ test("cumulative evidence requires one exact SHA and every release gate", () => 
   assert.throws(() => validateCumulativeReadinessInput(unsigned, sha), /owner_legal_reviewed/);
   const missingTelemetry = valid();
   delete missingTelemetry.telemetry;
-  assert.throws(() => validateCumulativeReadinessInput(missingTelemetry, sha), /telemetry does not match/);
+  assert.throws(() => validateCumulativeReadinessInput(missingTelemetry, sha), /missing or unknown fields/);
+});
+
+test("cumulative input rejects unknown fields and mismatched deployment provenance", () => {
+  const unknown = valid();
+  unknown.web.email = "hidden@example.test";
+  assert.throws(() => validateCumulativeReadinessInput(unknown, sha), /unknown fields/);
+  const mismatched = valid();
+  mismatched.web.deployment_id = "other-deployment";
+  assert.throws(() => validateCumulativeReadinessInput(mismatched, sha), /does not match/);
 });
 
 test("critical or high runtime findings block readiness", () => {

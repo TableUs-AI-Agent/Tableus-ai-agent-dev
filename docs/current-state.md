@@ -137,8 +137,9 @@
   returning OTP, retained join intent, and rotated-link handling while deleting
   raw private URLs and Maestro output. Expo SDK 57 iOS artifacts are inspected
   through `EXConstants.bundle/app.config`; the legacy config path remains
-  accepted. EAS CLI 22.4.0 is the minimum local-build version, and locally
-  generated credential/keystore files are ignored.
+  accepted. EAS CLI is locked exactly at `23.2.0` in the repository, EAS config,
+  workflow validator, and local-build receipt; locally generated
+  credential/keystore files are ignored.
 - Verified-link DNS, TLS, canonical staging deployment, signing identifiers, and
   both direct association endpoints are configured. Exact candidate
   `341d67ec73c96f96f19c6e0e2911677e973a7d61` is deployed to Vercel and produced
@@ -257,10 +258,14 @@
   build-properties, image-picker, linking, SecureStore, and sharing patches are
   applied through Expo's resolver. React and React DOM 19.2.3 are pinned at the
   monorepo root to make the native graph deterministic; the Next.js workspace
-  retains 19.2.4 locally. Expo Doctor passes 21/21 and npm reports zero critical
-  or high findings. The remaining 12 moderate findings collapse to Expo build
-  tooling's `xcode -> uuid@7` path and have no shipped runtime call path; the
-  exception expires before production or 2026-09-30, whichever comes first.
+  retains 19.2.4 locally. Expo Doctor passes 21/21. The production dependency
+  audit reports zero critical/high findings and 12 moderate Expo build-chain
+  findings. The full developer graph additionally reports four high, 19
+  moderate, and one low advisory through the local `eas-cli`/Expo release
+  toolchain; none is reachable from shipped web, mobile, or API runtime code.
+  This exception expires before production or 2026-09-30, whichever comes
+  first, and cannot be resolved by an unsupported SDK downgrade or forced audit
+  rewrite.
 - `readiness-ios` and `readiness-android` are production-shaped staging profiles:
   Supabase auth, HTTPS staging API, canonical links, live server-side providers,
   and staging telemetry, with no demo, loopback, cleartext, local/auth/telemetry
@@ -331,6 +336,25 @@
   moved admission outside CORS so preflights consume the same request budget,
   keyed web page-local state by Supabase subject, and extended cleanup to
   Maestro's user-level authenticated-flow test and log directories.
+  Full scan `2c12edd1-65ce-4cee-af11-c78c0b21ae85` then reviewed all 386
+  tracked files at exact local SHA
+  `b2823652ffb795469ffb84de13ccabbf4468a89d`. Its 95 raw findings included
+  duplicated paths but still identified 12 distinct high-severity root causes,
+  so that SHA is security-blocked and will not be deployed. The current local
+  remediation prevents global-bucket poisoning; fails closed when hosted
+  environment classification is absent; bounds concurrent and slow request
+  bodies, including health endpoints; pins web/mobile API, Supabase, link,
+  telemetry, EAS project, and update authorities to source-owned staging
+  values; and disables OTA updates until an app-owned signed update policy is
+  approved. It also serializes same-key idempotent mutations, row-locks plan
+  state changes, coalesces and negatively caches bounded JWKS refreshes,
+  rejects email-less hosted invite redemption, separates production runtime
+  and migration credentials, caps review storage, limits cumulative paid
+  Places attempts, removes provider-backed mobile polling, and makes cumulative
+  evidence fail closed on unknown or incomplete fields. Focused backend,
+  domain, web, mobile, and release-tool tests pass. A clean `make ready`, source
+  candidate freeze, and fresh exact-SHA repository scan remain before any
+  external action.
 
 ## External dependencies not provisioned in source
 

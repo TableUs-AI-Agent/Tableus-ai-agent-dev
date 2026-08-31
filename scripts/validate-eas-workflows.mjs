@@ -7,6 +7,7 @@ import { spawnSync } from "node:child_process";
 
 const repoRoot = resolve(fileURLToPath(new URL("..", import.meta.url)));
 const mobileRoot = join(repoRoot, "mobile");
+const lockedEasCli = join(repoRoot, "node_modules", ".bin", "eas");
 
 export function workflowFiles(directory) {
   return readdirSync(directory)
@@ -28,7 +29,7 @@ export function assertProfilesExist(files, easJson) {
   }
 }
 
-export function validateWithEas(files, { cli = process.env.EAS_CLI || "eas", spawn = spawnSync } = {}) {
+export function validateWithEas(files, { cli = lockedEasCli, spawn = spawnSync } = {}) {
   for (const file of files) {
     const result = spawn(cli, ["workflow:validate", file, "--non-interactive"], {
       cwd: mobileRoot,

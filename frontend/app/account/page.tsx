@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { Download, Loader2, ShieldCheck, Trash2 } from "lucide-react";
+import { Download, Loader2, LogOut, ShieldCheck, Trash2 } from "lucide-react";
 import { useQueryClient } from "@tanstack/react-query";
 
 import { supabase } from "../lib/supabase-browser";
@@ -48,6 +48,7 @@ function AccountPageContent() {
   const [loading, setLoading] = useState(true);
   const [exporting, setExporting] = useState(false);
   const [deleting, setDeleting] = useState(false);
+  const [signingOut, setSigningOut] = useState(false);
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
 
@@ -114,6 +115,19 @@ function AccountPageContent() {
     }
   };
 
+  const signOut = async () => {
+    setSigningOut(true);
+    setError("");
+    clearPrivateQueryState(queryClient);
+    const { error: signOutError } = await supabase.auth.signOut();
+    if (signOutError) {
+      setError("Unable to sign out. Please retry.");
+      setSigningOut(false);
+      return;
+    }
+    router.replace("/invite");
+  };
+
   if (loading) {
     return (
       <main className="flex min-h-full items-center justify-center" aria-label="Loading account settings">
@@ -143,6 +157,22 @@ function AccountPageContent() {
             <Link className="font-semibold text-[var(--accent)]" href="/privacy">privacy notice</Link>
             {" "}or <Link className="font-semibold text-[var(--accent)]" href="/terms">beta terms</Link>.
           </p>
+        </section>
+
+        <section className="glass rounded-[36px] p-6 sm:p-8">
+          <h2 className="text-xl font-semibold text-[var(--foreground)]">Session</h2>
+          <p className="mt-2 text-sm leading-6 text-[var(--muted-foreground)]">
+            Sign out of TableUs on this browser and clear private in-memory data.
+          </p>
+          <button
+            type="button"
+            onClick={signOut}
+            disabled={signingOut}
+            className="mt-5 inline-flex min-h-11 items-center justify-center gap-2 rounded-2xl border border-[var(--border)] bg-white px-5 py-3 text-sm font-semibold text-[var(--foreground)] disabled:cursor-not-allowed disabled:opacity-60"
+          >
+            {signingOut ? <Loader2 className="h-4 w-4 animate-spin" /> : <LogOut className="h-4 w-4" />}
+            {signingOut ? "Signing out…" : "Sign out"}
+          </button>
         </section>
 
         <section className="glass rounded-[36px] p-6 sm:p-8">

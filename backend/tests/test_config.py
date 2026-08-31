@@ -37,10 +37,24 @@ def test_production_uses_separate_async_database_credentials() -> None:
 def test_production_rejects_shared_migration_and_runtime_credentials() -> None:
     runtime_url = "postgresql://tableus_runtime:secret@db.example/tableus"
 
-    with pytest.raises(ValidationError, match="must differ"):
+    with pytest.raises(ValidationError, match="different roles"):
         production_settings(
             database_url=runtime_url,
             migration_database_url=runtime_url,
+        )
+
+
+def test_production_runtime_does_not_require_migration_credentials() -> None:
+    settings = production_settings(migration_database_url="")
+
+    assert settings.environment == "production"
+    assert settings.migration_database_url == ""
+
+
+def test_hosted_migration_credentials_require_a_separate_role() -> None:
+    with pytest.raises(ValidationError, match="different roles"):
+        production_settings(
+            migration_database_url="postgresql://tableus_runtime:other@db.example/tableus"
         )
 
 
@@ -83,6 +97,7 @@ def test_gemini_model_and_spend_ceilings_are_pinned() -> None:
     assert settings.gemini_model == "gemini-3.1-flash-lite"
     assert settings.live_ai_max_usd == 0.25
     assert settings.ai_runtime_max_usd_30d == 4.0
+    assert settings.places_runtime_max_attempts_30d == 150
 
     with pytest.raises(ValidationError, match="gemini-3.1-flash-lite"):
         Settings(_env_file=None, gemini_model="gemini-latest")
@@ -92,6 +107,8 @@ def test_gemini_model_and_spend_ceilings_are_pinned() -> None:
         Settings(_env_file=None, live_ai_max_usd=0.26)
     with pytest.raises(ValidationError):
         Settings(_env_file=None, ai_runtime_max_usd_30d=4.01)
+    with pytest.raises(ValidationError):
+        Settings(_env_file=None, places_runtime_max_attempts_30d=151)
 
 
 def test_telemetry_modes_are_fail_closed_by_environment() -> None:

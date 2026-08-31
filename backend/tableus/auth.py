@@ -1,11 +1,14 @@
 import asyncio
+import re
+import time
+from collections import OrderedDict
 from dataclasses import dataclass
 from functools import lru_cache
 from typing import Annotated
 
 import jwt
 from fastapi import Depends, Header, HTTPException, Request
-from jwt import PyJWKClient
+from jwt import PyJWKClient, PyJWKClientError
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
@@ -22,7 +25,88 @@ class Identity:
 
 @lru_cache(maxsize=4)
 def _jwks_client(jwks_url: str) -> PyJWKClient:
-    return PyJWKClient(jwks_url)
+    return PyJWKClient(
+        jwks_url,
+        cache_keys=True,
+        max_cached_keys=16,
+        lifespan=300,
+        timeout=3,
+    )
+
+
+_UNKNOWN_KID_TTL_SECONDS = 30.0
+_UNKNOWN_KID_MAX_ENTRIES = 256
+_unknown_kids: OrderedDict[tuple[str, str], float] = OrderedDict()
+_known_signing_keys: OrderedDict[tuple[str, str], object] = OrderedDict()
+_last_unknown_refresh: dict[str, float] = {}
+_jwks_refresh_locks: dict[str, asyncio.Lock] = {}
+
+
+def _validated_key_id(token: str) -> str:
+    if len(token) > 8192 or len(token.partition(".")[0]) > 2048:
+        raise HTTPException(status_code=401, detail="Invalid or expired session")
+    try:
+        header = jwt.get_unverified_header(token)
+    except jwt.PyJWTError as exc:
+        raise HTTPException(status_code=401, detail="Invalid or expired session") from exc
+    key_id = header.get("kid")
+    if not isinstance(key_id, str) or not re.fullmatch(r"[A-Za-z0-9._:-]{1,128}", key_id):
+        raise HTTPException(status_code=401, detail="Invalid or expired session")
+    return key_id
+
+
+def _prune_unknown_kids(now: float) -> None:
+    for key, expires_at in list(_unknown_kids.items()):
+        if expires_at > now:
+            continue
+        _unknown_kids.pop(key, None)
+
+
+def _remember_unknown_kid(jwks_url: str, key_id: str, now: float) -> None:
+    cache_key = (jwks_url, key_id)
+    _unknown_kids.pop(cache_key, None)
+    _unknown_kids[cache_key] = now + _UNKNOWN_KID_TTL_SECONDS
+    while len(_unknown_kids) > _UNKNOWN_KID_MAX_ENTRIES:
+        _unknown_kids.popitem(last=False)
+
+
+async def _get_signing_key(jwks_url: str, token: str):
+    key_id = _validated_key_id(token)
+    known = _known_signing_keys.get((jwks_url, key_id))
+    if known is not None:
+        _known_signing_keys.move_to_end((jwks_url, key_id))
+        return known
+    now = time.monotonic()
+    _prune_unknown_kids(now)
+    if _unknown_kids.get((jwks_url, key_id), 0) > now:
+        raise HTTPException(status_code=401, detail="Invalid or expired session")
+
+    lock = _jwks_refresh_locks.setdefault(jwks_url, asyncio.Lock())
+    async with lock:
+        known = _known_signing_keys.get((jwks_url, key_id))
+        if known is not None:
+            _known_signing_keys.move_to_end((jwks_url, key_id))
+            return known
+        now = time.monotonic()
+        _prune_unknown_kids(now)
+        if _unknown_kids.get((jwks_url, key_id), 0) > now:
+            raise HTTPException(status_code=401, detail="Invalid or expired session")
+        last_unknown = _last_unknown_refresh.get(jwks_url, 0)
+        if now - last_unknown < _UNKNOWN_KID_TTL_SECONDS:
+            raise HTTPException(status_code=401, detail="Invalid or expired session")
+        try:
+            signing_key = await asyncio.wait_for(
+                asyncio.to_thread(_jwks_client(jwks_url).get_signing_key_from_jwt, token),
+                timeout=4,
+            )
+            _known_signing_keys[(jwks_url, key_id)] = signing_key
+            while len(_known_signing_keys) > 64:
+                _known_signing_keys.popitem(last=False)
+            return signing_key
+        except (PyJWKClientError, TimeoutError) as exc:
+            _last_unknown_refresh[jwks_url] = now
+            _remember_unknown_kid(jwks_url, key_id, now)
+            raise HTTPException(status_code=401, detail="Invalid or expired session") from exc
 
 
 async def resolve_identity(
@@ -39,10 +123,8 @@ async def resolve_identity(
         raise HTTPException(status_code=503, detail="Supabase authentication is not configured")
 
     try:
-        jwks = _jwks_client(
-            f"{settings.supabase_url.rstrip('/')}/auth/v1/.well-known/jwks.json"
-        )
-        signing_key = await asyncio.to_thread(jwks.get_signing_key_from_jwt, token)
+        jwks_url = f"{settings.supabase_url.rstrip('/')}/auth/v1/.well-known/jwks.json"
+        signing_key = await _get_signing_key(jwks_url, token)
         claims = jwt.decode(
             token,
             signing_key.key,

@@ -1,10 +1,11 @@
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import test from "node:test";
+import { PUBLIC_RUNTIME_POLICY } from "@tableus/domain";
 
 import resolveExpoConfig from "../app.config.ts";
 
-function configFor(profile: string, flag = "true", authFlag = "false", apiUrl = "http://127.0.0.1:8000", linkHost = "links.table-us.com", telemetryFlag = "false", telemetryMode = "off", readinessFlag = "false") {
+function configFor(profile: string, flag = "true", authFlag = "false", apiUrl?: string, linkHost = "links.table-us.com", telemetryFlag = "false", telemetryMode = "off", readinessFlag = "false") {
   const previousProfile = process.env.EAS_BUILD_PROFILE;
   const previousFlag = process.env.TABLEUS_LOCAL_E2E;
   const previousAuthFlag = process.env.TABLEUS_AUTH_E2E;
@@ -19,8 +20,11 @@ function configFor(profile: string, flag = "true", authFlag = "false", apiUrl = 
   process.env.EAS_BUILD_PROFILE = profile;
   process.env.TABLEUS_LOCAL_E2E = flag;
   process.env.TABLEUS_AUTH_E2E = authFlag;
-  process.env.EXPO_PUBLIC_API_URL = apiUrl;
-  process.env.EXPO_PUBLIC_SUPABASE_URL = "https://project.supabase.co";
+  const localProfile = ["development", "test-ios", "test-android"].includes(profile);
+  process.env.EXPO_PUBLIC_API_URL = apiUrl ?? (
+    localProfile ? "http://127.0.0.1:8000" : PUBLIC_RUNTIME_POLICY.stagingApiOrigin
+  );
+  process.env.EXPO_PUBLIC_SUPABASE_URL = PUBLIC_RUNTIME_POLICY.stagingSupabaseOrigin;
   process.env.EXPO_PUBLIC_DEMO_MODE = "false";
   process.env.EAS_BUILD_GIT_COMMIT_HASH = "a".repeat(40);
   process.env.EXPO_PUBLIC_LINK_HOST = linkHost;
@@ -75,12 +79,11 @@ test("local E2E configuration is enabled only for test artifacts", () => {
   assert.equal(development.ios?.infoPlist?.NSAppTransportSecurity.NSAllowsLocalNetworking, true);
   assert.equal(buildProperties(development)?.android.usesCleartextTraffic, false);
 
-  for (const profile of ["preview", "production"]) {
-    const config = configFor(profile);
-    assert.equal(config.extra?.localE2E, false);
-    assert.equal(config.ios?.infoPlist?.NSAppTransportSecurity.NSAllowsLocalNetworking, false);
-    assert.equal(buildProperties(config)?.android.usesCleartextTraffic, false);
-  }
+  const preview = configFor("preview");
+  assert.equal(preview.extra?.localE2E, false);
+  assert.equal(preview.ios?.infoPlist?.NSAppTransportSecurity.NSAllowsLocalNetworking, false);
+  assert.equal(buildProperties(preview)?.android.usesCleartextTraffic, false);
+  assert.throws(() => configFor("production"), /Production mobile builds are disabled/);
 });
 
 test("verified links use one exact HTTPS host and exclude the web auth callback", () => {
@@ -102,17 +105,20 @@ test("test profiles still require the explicit local E2E flag", () => {
 
 test("auth E2E is enabled only for auth test profiles with HTTPS staging", () => {
   for (const profile of ["auth-test-ios", "auth-test-android"]) {
-    const config = configFor(profile, "false", "true", "https://tableus-api-staging.example");
+    const config = configFor(profile, "false", "true", PUBLIC_RUNTIME_POLICY.stagingApiOrigin);
     assert.equal(config.extra?.authE2E, true);
     assert.equal(config.extra?.sourceSha, "a".repeat(40));
     assert.equal(config.extra?.localE2E, false);
     assert.equal(config.ios?.infoPlist?.NSAppTransportSecurity.NSAllowsLocalNetworking, false);
     assert.equal(buildProperties(config)?.android.usesCleartextTraffic, false);
   }
-  for (const profile of ["development", "preview", "production", "test-ios", "test-android"]) {
-    assert.equal(configFor(profile, "false", "true", "https://tableus-api-staging.example").extra?.authE2E, false);
+  for (const profile of ["development", "preview", "test-ios", "test-android"]) {
+    assert.equal(configFor(profile, "false", "true", PUBLIC_RUNTIME_POLICY.stagingApiOrigin).extra?.authE2E, false);
   }
-  assert.equal(configFor("auth-test-ios", "false", "true", "http://127.0.0.1:8000").extra?.authE2E, false);
+  assert.throws(
+    () => configFor("auth-test-ios", "false", "true", "http://127.0.0.1:8000"),
+    /approved HTTPS origin/,
+  );
 });
 
 test("auth test EAS profiles explicitly disable demo and local E2E configuration", () => {
@@ -145,17 +151,20 @@ test("link test profiles inherit preview without enabling test controls", () => 
 
 test("telemetry E2E is enabled only for telemetry test profiles with HTTPS staging", () => {
   for (const profile of ["telemetry-test-ios", "telemetry-test-android"]) {
-    const config = configFor(profile, "false", "false", "https://tableus-api-staging.example", "links.table-us.com", "true", "staging");
+    const config = configFor(profile, "false", "false", PUBLIC_RUNTIME_POLICY.stagingApiOrigin, "links.table-us.com", "true", "staging");
     assert.equal(config.extra?.telemetryE2E, true);
     assert.equal(config.extra?.localE2E, false);
     assert.equal(config.extra?.authE2E, false);
     assert.equal(config.ios?.infoPlist?.NSAppTransportSecurity.NSAllowsLocalNetworking, false);
     assert.equal(buildProperties(config)?.android.usesCleartextTraffic, false);
   }
-  for (const profile of ["development", "preview", "production", "test-ios", "auth-test-ios", "links-test-ios"]) {
-    assert.equal(configFor(profile, "false", "false", "https://tableus-api-staging.example", "links.table-us.com", "true", "staging").extra?.telemetryE2E, false);
+  for (const profile of ["development", "preview", "test-ios", "auth-test-ios", "links-test-ios"]) {
+    assert.equal(configFor(profile, "false", "false", PUBLIC_RUNTIME_POLICY.stagingApiOrigin, "links.table-us.com", "true", "staging").extra?.telemetryE2E, false);
   }
-  assert.equal(configFor("telemetry-test-ios", "false", "false", "http://127.0.0.1:8000", "links.table-us.com", "true", "staging").extra?.telemetryE2E, false);
+  assert.throws(
+    () => configFor("telemetry-test-ios", "false", "false", "http://127.0.0.1:8000", "links.table-us.com", "true", "staging"),
+    /approved HTTPS origin/,
+  );
 });
 
 test("telemetry test profiles inherit preview without demo or local controls", () => {
@@ -175,10 +184,10 @@ test("telemetry test profiles inherit preview without demo or local controls", (
 
 test("readiness is enabled only for production-shaped readiness profiles", () => {
   for (const profile of ["readiness-ios", "readiness-android"]) {
-    const config = configFor(profile, "false", "false", "https://tableus-api-staging.example", "links.table-us.com", "false", "staging", "true");
+    const config = configFor(profile, "false", "false", PUBLIC_RUNTIME_POLICY.stagingApiOrigin, "links.table-us.com", "false", "staging", "true");
     assert.equal(config.extra?.readiness, true);
-    assert.equal(config.extra?.apiUrl, "https://tableus-api-staging.example");
-    assert.equal(config.extra?.supabaseUrl, "https://project.supabase.co");
+    assert.equal(config.extra?.apiUrl, PUBLIC_RUNTIME_POLICY.stagingApiOrigin);
+    assert.equal(config.extra?.supabaseUrl, PUBLIC_RUNTIME_POLICY.stagingSupabaseOrigin);
     assert.equal(config.extra?.linkHost, "links.table-us.com");
     assert.equal(config.extra?.localE2E, false);
     assert.equal(config.extra?.authE2E, false);
@@ -186,11 +195,33 @@ test("readiness is enabled only for production-shaped readiness profiles", () =>
     assert.equal(config.ios?.infoPlist?.NSAppTransportSecurity.NSAllowsLocalNetworking, false);
     assert.equal(buildProperties(config)?.android.usesCleartextTraffic, false);
   }
-  for (const profile of ["development", "preview", "production", "test-ios", "auth-test-ios", "telemetry-test-ios", "links-test-ios"]) {
-    assert.equal(configFor(profile, "false", "false", "https://tableus-api-staging.example", "links.table-us.com", "false", "staging", "true").extra?.readiness, false);
+  for (const profile of ["development", "preview", "test-ios", "auth-test-ios", "telemetry-test-ios", "links-test-ios"]) {
+    assert.equal(configFor(profile, "false", "false", PUBLIC_RUNTIME_POLICY.stagingApiOrigin, "links.table-us.com", "false", "staging", "true").extra?.readiness, false);
   }
-  assert.equal(configFor("readiness-ios", "false", "false", "http://127.0.0.1:8000", "links.table-us.com", "false", "staging", "true").extra?.readiness, false);
-  assert.equal(configFor("readiness-ios", "false", "false", "https://tableus-api-staging.example", "links.table-us.com", "false", "off", "true").extra?.readiness, false);
+  assert.throws(
+    () => configFor("readiness-ios", "false", "false", "http://127.0.0.1:8000", "links.table-us.com", "false", "staging", "true"),
+    /approved HTTPS origin/,
+  );
+  assert.equal(configFor("readiness-ios", "false", "false", PUBLIC_RUNTIME_POLICY.stagingApiOrigin, "links.table-us.com", "false", "off", "true").extra?.readiness, false);
+});
+
+test("hosted profiles reject mutable origins, project IDs, and unsigned updates", () => {
+  assert.throws(
+    () => configFor("readiness-ios", "false", "false", "https://attacker.example", "links.table-us.com", "false", "staging", "true"),
+    /approved HTTPS origin/,
+  );
+  const previousProject = process.env.EXPO_PUBLIC_EAS_PROJECT_ID;
+  process.env.EXPO_PUBLIC_EAS_PROJECT_ID = "389cad4e-f9b9-45f4-8621-462d47fa6301";
+  try {
+    assert.throws(() => configFor("preview"), /project ID/);
+  } finally {
+    if (previousProject === undefined) delete process.env.EXPO_PUBLIC_EAS_PROJECT_ID;
+    else process.env.EXPO_PUBLIC_EAS_PROJECT_ID = previousProject;
+  }
+  const config = configFor("readiness-ios", "false", "false", undefined, "links.table-us.com", "false", "staging", "true");
+  assert.equal(config.updates?.enabled, false);
+  assert.equal(config.updates?.url, undefined);
+  assert.equal(config.extra?.eas?.projectId, PUBLIC_RUNTIME_POLICY.easProjectId);
 });
 
 test("readiness profiles inherit preview without any test controls", () => {

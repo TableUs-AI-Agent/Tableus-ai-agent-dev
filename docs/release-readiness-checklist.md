@@ -11,12 +11,17 @@ not be inferred from a passing test.
 - [x] Expo SDK remains 57; React Native remains 0.86.2.
 - [x] Expo Router and compatible Expo/Metro packages use current SDK 57 patches.
 - [x] Expo Doctor passes all checks, including native dependency deduplication.
-- [x] npm audit reports 0 critical and 0 high findings.
+- [x] The production dependency audit reports 0 critical and 0 high findings.
+  The full developer graph's EAS/Expo release-tool exception is recorded below.
 - [ ] Replacement exact-SHA repository scan is complete with no P0/P1 or exposed
   secret. Scan `b737ba37-01d4-4ba8-841d-f1da1d09d61a` blocked superseded
   `d0955f5`; scan `0933625b-4d73-4da7-ba6a-946128c29089` then blocked local
   `5206303` on one remaining P1 multipart boundary. Its source-owned high/medium
-  findings are remediated locally and await a new exact-SHA scan.
+  findings are remediated locally. Full scan
+  `2c12edd1-65ce-4cee-af11-c78c0b21ae85` then blocked local SHA `b2823652`
+  on 12 distinct high-severity root causes (13 raw high records). All identified
+  high paths and the highest-confidence medium paths are remediated locally and
+  await a clean candidate plus a fresh exact-SHA scan.
 - [x] GitHub Actions, CI service images, and backend OCI inputs are pinned to
   immutable commits or multi-platform digests with executable policy tests.
 - [ ] Runtime bundle inspection finds no service-role material, loopback origin,
@@ -70,7 +75,7 @@ not be inferred from a passing test.
 
 | Risk | Current control | Owner / expiry | Production effect |
 | --- | --- | --- | --- |
-| Expo build tooling reaches `uuid@7` through `xcode`; npm reports GHSA-w5hq-g745-h8pq as moderate. The vulnerable buffered v3/v5/v6 API is not used by shipped JS/runtime code. | SDK 57-compatible packages are fully patched, Expo Doctor passes, native builds are trusted inputs, and no force/downgrade remediation is accepted. Recheck Expo patches and npm advisories on every release packet. | Repository owner; exception expires 2026-09-30 or before any production/store approval, whichever is earlier. | Blocks production if still unreviewed at expiry; does not block this staging candidate while runtime critical/high findings remain zero. |
+| The full developer dependency graph reports four high, 19 moderate, and one low advisory through the local EAS CLI/Expo build toolchain; the production graph has zero critical/high findings and 12 moderate Expo build-chain findings. | EAS CLI is locked exactly at `23.2.0`, SDK 57-compatible packages are fully patched, Expo Doctor passes, release inputs are inspected, and no forced audit rewrite or unsupported SDK downgrade is accepted. Recheck upstream patches and audit reachability on every release packet. | Repository owner; exception expires 2026-09-30 or before any production/store approval, whichever is earlier. | Blocks production if unresolved or newly runtime-reachable; does not block isolated staging while the shipped runtime graph remains free of critical/high findings. |
 | Idempotency response cache and paid-operation reservation locks are process-local. | Single Railway API process; explicit retry UX; verified-subject/role replay; fixed entry, byte, request, and response bounds; request fingerprints; conservative rate/spend limits. | Repository owner; replace before horizontal scaling. | Horizontal scaling is blocked until durable coordination exists. |
 | Private-plan capability remains in the canonical join URL query. | Approved authentication is also required; tokens are random, hashed at rest, rotatable, redacted from telemetry/evidence, and old links are rejected after rotation. | Repository owner; design a short-lived exchange before production. | Production is blocked on a reviewed exchange or explicit risk acceptance. |
 | Aggregate provider usage is readable by any approved beta profile. | Output excludes identities, queries, coordinates, Place IDs, provider content, prompts, responses, and credentials. | Repository owner; add an operator boundary before cohort expansion. | Does not block isolated staging; cohort expansion is blocked until resolved. |
@@ -85,9 +90,10 @@ Complete only after the named person actually confirms each item.
 - Source candidate SHA: the Git commit containing this signed checklist; its
   exact value is recorded in sanitized evidence after the final local gate.
 - Security scan report ID: replacement exact-SHA report pending; blocked reports
-  `b737ba37-01d4-4ba8-841d-f1da1d09d61a` and
-  `0933625b-4d73-4da7-ba6a-946128c29089` are retained for remediation
-  traceability.
+  `b737ba37-01d4-4ba8-841d-f1da1d09d61a`,
+  `0933625b-4d73-4da7-ba6a-946128c29089`, and
+  `2c12edd1-65ce-4cee-af11-c78c0b21ae85` at `b2823652` are retained for
+  remediation traceability.
 - Policy review date/version: Google Maps policy last reviewed 2026-08-26
 - Legal/privacy owner: Brian Chei (confirmed 2026-08-26)
 - Rollback owner: Brian Chei, repository and cloud account owner

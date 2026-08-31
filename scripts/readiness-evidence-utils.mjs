@@ -10,6 +10,25 @@ function requireBoolean(value, label) {
   if (value !== true) throw new Error(`${label} must be true`);
 }
 
+function requireExactKeys(value, keys, label) {
+  if (!value || typeof value !== "object" || Array.isArray(value)) throw new Error(`${label} must be an object`);
+  const actual = Object.keys(value).sort();
+  const expected = [...keys].sort();
+  if (JSON.stringify(actual) !== JSON.stringify(expected)) {
+    throw new Error(`${label} contains missing or unknown fields`);
+  }
+}
+
+function requireChecksum(value, label) {
+  if (!CHECKSUM_PATTERN.test(value ?? "")) throw new Error(`${label} must be a SHA-256 checksum`);
+}
+
+function requireSafeId(value, label) {
+  if (typeof value !== "string" || !/^[A-Za-z0-9._:-]{1,200}$/.test(value)) {
+    throw new Error(`${label} must be a sanitized identifier`);
+  }
+}
+
 function requireSource(value, label, sha) {
   if (!value || value.sha !== sha) throw new Error(`${label} does not match the exact source SHA`);
   requireBoolean(value.passed, `${label}.passed`);
@@ -39,21 +58,65 @@ export function validateCumulativeReadinessInput(value, expectedSha) {
   if (!SHA_PATTERN.test(expectedSha) || value?.schema_version !== 1 || value.sha !== expectedSha) {
     throw new Error("Cumulative evidence must use schema version 1 and the exact lowercase source SHA");
   }
-  for (const [label, source] of Object.entries({
-    web: value.web,
-    ios: value.ios,
-    android: value.android,
-    associations: value.associations,
-    security: value.security,
-    deterministic: value.deterministic,
-    telemetry: value.telemetry,
-  })) requireSource(source, label, expectedSha);
+  requireExactKeys(value, [
+    "schema_version", "sha", "deployments", "web", "ios", "android", "associations",
+    "security", "deterministic", "telemetry", "release_checks",
+  ], "cumulative input");
+  requireExactKeys(value.deployments, ["railway_id", "vercel_id"], "deployments");
+  requireSafeId(value.deployments.railway_id, "deployments.railway_id");
+  requireSafeId(value.deployments.vercel_id, "deployments.vercel_id");
 
-  for (const [label, mobile] of Object.entries({ ios: value.ios, android: value.android })) {
-    if (!mobile.build_id || !CHECKSUM_PATTERN.test(mobile.artifact_sha256 ?? "")) throw new Error(`${label} artifact receipt is incomplete`);
+  requireExactKeys(value.web, ["sha", "passed", "deployment_id"], "web");
+  requireSource(value.web, "web", expectedSha);
+  requireSafeId(value.web.deployment_id, "web.deployment_id");
+  if (value.web.deployment_id !== value.deployments.vercel_id) throw new Error("web deployment does not match deployments.vercel_id");
+
+  for (const [label, platform, profile] of [
+    ["ios", "ios", "readiness-ios"],
+    ["android", "android", "readiness-android"],
+  ]) {
+    const mobile = value[label];
+    requireExactKeys(mobile, [
+      "sha", "passed", "platform", "profile", "build_id", "artifact_sha256",
+      "inspection_passed", "receipt_sha256",
+    ], label);
+    requireSource(mobile, label, expectedSha);
+    if (mobile.platform !== platform || mobile.profile !== profile) throw new Error(`${label} platform or profile is invalid`);
+    requireSafeId(mobile.build_id, `${label}.build_id`);
+    requireChecksum(mobile.artifact_sha256, `${label}.artifact_sha256`);
+    requireChecksum(mobile.receipt_sha256, `${label}.receipt_sha256`);
     requireBoolean(mobile.inspection_passed, `${label}.inspection_passed`);
   }
-  if (!value.deployments?.railway_id || !value.deployments?.vercel_id) throw new Error("Railway and Vercel deployment IDs are required");
+
+  requireExactKeys(value.associations, ["sha", "passed", "manifest_sha256"], "associations");
+  requireSource(value.associations, "associations", expectedSha);
+  requireChecksum(value.associations.manifest_sha256, "associations.manifest_sha256");
+
+  requireExactKeys(value.security, [
+    "sha", "passed", "scan_id", "report_sha256", "critical_findings", "high_runtime_findings",
+  ], "security");
+  requireSource(value.security, "security", expectedSha);
+  requireSafeId(value.security.scan_id, "security.scan_id");
+  requireChecksum(value.security.report_sha256, "security.report_sha256");
+
+  requireExactKeys(value.deterministic, [
+    "sha", "passed", "ios_summary_sha256", "android_summary_sha256",
+  ], "deterministic");
+  requireSource(value.deterministic, "deterministic", expectedSha);
+  requireChecksum(value.deterministic.ios_summary_sha256, "deterministic.ios_summary_sha256");
+  requireChecksum(value.deterministic.android_summary_sha256, "deterministic.android_summary_sha256");
+
+  requireExactKeys(value.telemetry, [
+    "sha", "passed", "summary_sha256", "sentry_project_count", "posthog_platform_count",
+  ], "telemetry");
+  requireSource(value.telemetry, "telemetry", expectedSha);
+  requireChecksum(value.telemetry.summary_sha256, "telemetry.summary_sha256");
+
+  requireExactKeys(value.release_checks, [
+    "owner_legal_reviewed", "google_attribution_reviewed", "support_delivery_confirmed",
+    "privacy_delivery_confirmed", "otp_template_updated", "rollback_owner_recorded",
+    "residual_risks_recorded",
+  ], "release_checks");
   for (const flag of [
     "owner_legal_reviewed",
     "google_attribution_reviewed",
@@ -66,7 +129,7 @@ export function validateCumulativeReadinessInput(value, expectedSha) {
   if ((value.security.critical_findings ?? -1) !== 0 || (value.security.high_runtime_findings ?? -1) !== 0) {
     throw new Error("Critical or high runtime security findings block readiness");
   }
-  return assertSafeReadinessEvidence(value);
+  return assertSafeReadinessEvidence(structuredClone(value));
 }
 
 export function validateStagingReadiness(value, expectedSha) {

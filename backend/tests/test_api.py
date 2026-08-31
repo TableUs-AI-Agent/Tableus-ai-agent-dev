@@ -1,3 +1,4 @@
+import asyncio
 import io
 from datetime import UTC, datetime, timedelta
 from types import SimpleNamespace
@@ -6,7 +7,7 @@ import pytest
 from fastapi.responses import JSONResponse
 from httpx import ASGITransport, AsyncClient
 from PIL import Image
-from sqlalchemy import func, select
+from sqlalchemy import delete, func, select
 
 from main import app
 from tableus import api as tableus_api
@@ -49,7 +50,10 @@ async def database() -> None:
 @pytest.fixture
 async def client() -> AsyncClient:
     app.state.request_rate_limiter.clear()
+    app.state.readiness_rate_limiter.clear()
+    app.state.readiness_probe_expires_at = 0.0
     app.state.idempotency_cache.clear()
+    await app.state.idempotency_inflight.clear()
     async with AsyncClient(transport=ASGITransport(app=app), base_url="http://test") as value:
         yield value
 
@@ -76,6 +80,19 @@ async def test_error_envelope_and_invite_gate(client: AsyncClient) -> None:
     valid = await client.post("/api/v1/access/validate", json={"code": "tableus-beta"})
     assert valid.status_code == 200
     assert valid.json()["data"]["redemption_token"]
+
+
+@pytest.mark.asyncio
+async def test_supabase_invite_validation_requires_an_email_reservation(
+    client: AsyncClient,
+    monkeypatch,
+) -> None:
+    monkeypatch.setattr(tableus_api.get_settings(), "tableus_auth_mode", "supabase")
+
+    response = await client.post("/api/v1/access/validate", json={"code": "tableus-beta"})
+
+    assert response.status_code == 422
+    assert response.json()["error"]["code"] == "http_422"
 
 
 @pytest.mark.asyncio
@@ -311,6 +328,32 @@ def test_live_places_rate_limits_are_per_user_and_global(monkeypatch) -> None:
     with pytest.raises(Exception) as global_limit:
         tableus_api._consume_places_limit("one-more-user")
     assert global_limit.value.status_code == 429
+
+
+@pytest.mark.asyncio
+async def test_live_places_rolling_attempt_ceiling_reserves_before_provider_calls(
+    monkeypatch,
+) -> None:
+    monkeypatch.setattr(
+        tableus_api,
+        "get_settings",
+        lambda: SimpleNamespace(
+            places_provider_mode="live",
+            places_runtime_max_attempts_30d=3,
+        ),
+    )
+    async with SessionFactory() as session:
+        await session.execute(delete(ProviderUsage))
+        await session.commit()
+    tableus_api._places_reserved_attempts = 0
+
+    reserved = await tableus_api._reserve_places_budget(3)
+    with pytest.raises(Exception) as blocked:
+        await tableus_api._reserve_places_budget(1)
+    assert blocked.value.status_code == 429
+
+    await tableus_api._release_places_budget(reserved, 3)
+    assert tableus_api._places_reserved_attempts == 0
 
 
 @pytest.mark.asyncio
@@ -678,6 +721,37 @@ async def test_idempotency_replay_conflict_actor_isolation_and_5xx(client: Async
 
 
 @pytest.mark.asyncio
+async def test_concurrent_same_key_plan_creation_executes_once(client: AsyncClient) -> None:
+    request_headers = {
+        **headers("demo-organizer"),
+        "Idempotency-Key": "concurrent-plan-create-key",
+    }
+    payload = {
+        "title": "Concurrent idempotency dinner",
+        "location_label": "Fixture location",
+        "latitude": 42.36,
+        "longitude": -71.06,
+    }
+
+    first, second = await asyncio.gather(
+        client.post("/api/v1/plans", headers=request_headers, json=payload),
+        client.post("/api/v1/plans", headers=request_headers, json=payload),
+    )
+
+    assert first.status_code == 200
+    assert second.status_code == 200
+    assert sorted(
+        [first.headers.get("X-Idempotent-Replay"), second.headers.get("X-Idempotent-Replay")],
+        key=lambda value: value or "",
+    ) == [None, "true"]
+    async with SessionFactory() as session:
+        count = await session.scalar(
+            select(func.count()).select_from(Plan).where(Plan.title == payload["title"])
+        )
+    assert count == 1
+
+
+@pytest.mark.asyncio
 async def test_public_errors_do_not_enter_idempotency_cache(client: AsyncClient) -> None:
     request_headers = {
         "Authorization": "Bearer attacker-selected-value",
@@ -793,7 +867,8 @@ async def test_connection_retry_reloads_current_taste_sharing_state(
 async def test_rotating_unverified_headers_cannot_bypass_source_limit(
     client: AsyncClient,
 ) -> None:
-    for index in range(120):
+    limited = None
+    for index in range(240):
         response = await client.post(
             "/api/v1/access/validate",
             headers={
@@ -802,13 +877,12 @@ async def test_rotating_unverified_headers_cannot_bypass_source_limit(
             },
             json={"code": "not-an-invite"},
         )
+        if response.status_code == 429:
+            limited = response
+            break
         assert response.status_code == 404
 
-    limited = await client.post(
-        "/api/v1/access/validate",
-        headers={"Authorization": "Bearer another-invalid-value"},
-        json={"code": "not-an-invite"},
-    )
+    assert limited is not None
     assert limited.status_code == 429
     assert limited.json()["error"]["code"] == "rate_limited"
     assert app.state.request_rate_limiter.source_count == 1

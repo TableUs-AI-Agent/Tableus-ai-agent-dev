@@ -1,4 +1,4 @@
-import type { Plan } from "@tableus/domain";
+import { requireCanonicalUuid, type Plan } from "@tableus/domain";
 import { ApiError } from "@tableus/api-client";
 import { router, useLocalSearchParams } from "expo-router";
 import { ScrollView, Text } from "react-native";
@@ -12,12 +12,21 @@ import { colors } from "@/theme";
 
 export default function JoinPlanScreen() {
   const { id, token } = useLocalSearchParams<{ id: string; token?: string }>();
+  let planId: string | null = null;
+  try {
+    planId = requireCanonicalUuid(id ?? "", "Plan ID");
+  } catch {
+    planId = null;
+  }
   const auth = useAuth();
   const join = useRecoverableMutation({
-    mutationFn: (shareToken: string, idempotencyKey) => api.post<Plan>(`/api/v1/plans/${id}/join`, { share_token: shareToken }, { idempotencyKey }),
-    onSuccess: () => router.replace({ pathname: "/plans/[id]", params: { id } }),
+    mutationFn: (shareToken: string, idempotencyKey) => {
+      if (!planId) throw new Error("This private link is invalid.");
+      return api.post<Plan>(`/api/v1/plans/${planId}/join`, { share_token: shareToken }, { idempotencyKey });
+    },
+    onSuccess: () => router.replace({ pathname: "/plans/[id]", params: { id: planId! } }),
   });
-  const invalidLink = !token || (join.failure?.error instanceof ApiError && join.failure.error.status === 404);
+  const invalidLink = !planId || !token || (join.failure?.error instanceof ApiError && join.failure.error.status === 404);
   return (
     <ScrollView contentInsetAdjustmentBehavior="automatic" contentContainerStyle={{ padding: 20, gap: 16 }}>
       <Card>

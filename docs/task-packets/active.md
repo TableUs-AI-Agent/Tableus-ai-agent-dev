@@ -96,13 +96,26 @@ secrets, a revocation-insensitive connection replay, and mutable build inputs.
 That local candidate is superseded and was never pushed or deployed. The active
 remediation adds outer ASGI admission/body limits, secure hosted defaults,
 invite reservation reuse/pruning, subject-partitioned web caches, summary-only
-  live evidence, no-echo prompts, current-consent connection retries, and immutable
-  CI/container inputs. Signed native inspection additionally rejects the
+live evidence, no-echo prompts, current-consent connection retries, and
+immutable CI/container inputs. Signed native inspection additionally rejects the
   local-network allowance found in the superseded iOS artifact and Android
   cleartext transport. Independent bypass review additionally closed CORS
   preflight admission, page-local cross-subject state, user-level Maestro-log,
   and mutable Expo Doctor gaps. A new exact SHA still requires `make ready`, an
   independent bypass review, and a fresh full scan before any external gate.
+
+Full scan `2c12edd1-65ce-4cee-af11-c78c0b21ae85` reviewed all 386 tracked files
+at exact local SHA `b2823652ffb795469ffb84de13ccabbf4468a89d`. Its 95 raw
+findings included duplicates, but 12 distinct high-severity root causes remained,
+so that SHA is security-blocked and will not be deployed. The active local
+remediation closes every high path: global-limit poisoning, hosted demo fallback,
+slow/body and health amplification, mutable web/mobile trust origins, mutable EAS
+project/update authority, and unsigned production OTA. It additionally closes the
+highest-confidence medium paths through serialized idempotency, plan row locks,
+bounded/coalesced JWKS refreshes, hosted invite email binding, separate runtime
+and migration roles, review and paid-Places ceilings, no provider-backed mobile
+polling, and exact closed-schema evidence. Focused tests are green; `make ready`,
+candidate freeze, and a fresh exact-SHA scan remain.
 
 ## Objective
 
@@ -144,8 +157,9 @@ emulator, with policy-safe retained evidence and an accountable rollback owner.
 ## Acceptance
 
 - Deterministic CI and `make ready` require no provider or cloud credentials.
-- Expo Doctor passes; npm reports zero critical/high findings, with any accepted
-  moderate advisory documented by reachability and expiry.
+- Expo Doctor passes; the shipped runtime graph reports zero critical/high
+  findings. Any release-tool-only high or moderate advisory is documented by
+  reachability and a production-blocking expiry.
 - No P0/P1 security finding, exposed credential, or exploitable high runtime
   issue remains.
 - The owner confirms the final legal copy, attribution presentation, and actual

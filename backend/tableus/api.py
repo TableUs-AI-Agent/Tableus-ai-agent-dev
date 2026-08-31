@@ -85,8 +85,11 @@ _places_global_window: deque[float] = deque()
 _ai_user_windows: dict[str, deque[float]] = defaultdict(deque)
 _ai_global_window: deque[float] = deque()
 _ai_budget_lock = asyncio.Lock()
+_places_budget_lock = asyncio.Lock()
 _ai_reserved_usd = 0.0
+_places_reserved_attempts = 0
 _ai_reservation_usd = 0.02
+_MAX_REVIEWS_PER_PROFILE = 100
 
 
 def ok(data, **meta):
@@ -123,8 +126,11 @@ async def _participant(session: AsyncSession, plan_id: str, profile_id: str) -> 
     return participant
 
 
-async def _plan(session: AsyncSession, plan_id: str) -> Plan:
-    plan = await session.get(Plan, plan_id)
+async def _plan(session: AsyncSession, plan_id: str, *, for_update: bool = False) -> Plan:
+    statement = select(Plan).where(Plan.id == plan_id)
+    if for_update:
+        statement = statement.with_for_update()
+    plan = await session.scalar(statement)
     if not plan:
         raise HTTPException(status_code=404, detail="Plan not found")
     return plan
@@ -243,8 +249,44 @@ async def _record_places_usage(
         await usage_session.commit()
 
 
+async def _reserve_places_budget(max_attempts: int) -> bool:
+    global _places_reserved_attempts
+    settings = get_settings()
+    if settings.places_provider_mode != "live":
+        return False
+    async with _places_budget_lock:
+        cutoff = datetime.now(UTC) - timedelta(days=30)
+        async with SessionFactory() as budget_session:
+            spent = (
+                await budget_session.scalar(
+                    select(func.coalesce(func.sum(ProviderUsage.input_units), 0)).where(
+                        ProviderUsage.provider == "google-places-new",
+                        ProviderUsage.created_at >= cutoff,
+                    )
+                )
+                or 0
+            )
+        if int(spent) + _places_reserved_attempts + max_attempts > settings.places_runtime_max_attempts_30d:
+            raise HTTPException(
+                status_code=429,
+                detail="Places staging usage limit reached; try again after the budget window resets",
+            )
+        _places_reserved_attempts += max_attempts
+        return True
+
+
+async def _release_places_budget(reserved: bool, max_attempts: int) -> None:
+    global _places_reserved_attempts
+    if not reserved:
+        return
+    async with _places_budget_lock:
+        _places_reserved_attempts = max(0, _places_reserved_attempts - max_attempts)
+
+
 async def _call_places(profile_id: str, method: str, *args):
     _consume_places_limit(profile_id)
+    max_attempts = 12 if method == "get_places" else 3
+    reserved = await _reserve_places_budget(max_attempts)
     provider = get_places_provider()
     started = time.perf_counter()
 
@@ -258,6 +300,8 @@ async def _call_places(profile_id: str, method: str, *args):
         raise HTTPException(status_code=status, detail=str(exc)) from exc
     except ValueError as exc:
         raise HTTPException(status_code=404, detail=str(exc)) from exc
+    finally:
+        await _release_places_budget(reserved, max_attempts)
 
 
 def _consume_ai_limit(profile_id: str) -> None:
@@ -391,6 +435,9 @@ def _require_organizer(plan: Plan, profile: Profile) -> None:
 
 @router.post("/access/validate", response_model=Envelope[InviteValidation])
 async def validate_access(body: InviteValidateIn, session: DbSession):
+    settings = get_settings()
+    if settings.tableus_auth_mode == "supabase" and not body.email:
+        raise HTTPException(status_code=422, detail="Email is required for hosted invite validation")
     invite = await session.scalar(
         select(Invite)
         .where(Invite.code_hash == hash_value(body.code))
@@ -463,12 +510,20 @@ async def validate_access(body: InviteValidateIn, session: DbSession):
 
 @router.post("/access/redeem", response_model=Envelope[ProfileOut])
 async def redeem_access(body: InviteRedeemIn, identity: CurrentIdentity, session: DbSession):
+    settings = get_settings()
     try:
         grant = decode_redemption_token(body.redemption_token)
     except jwt.PyJWTError as exc:
         raise HTTPException(
             status_code=400, detail="Redemption token is invalid or expired"
         ) from exc
+    if settings.tableus_auth_mode == "supabase" and (
+        not grant.email_hash or not grant.pending_validation_id
+    ):
+        raise HTTPException(
+            status_code=400,
+            detail="Hosted redemption token is missing its email reservation",
+        )
     if grant.email_hash and hash_value((identity.email or "").lower()) != grant.email_hash:
         raise HTTPException(
             status_code=403, detail="Invite validation email does not match session"
@@ -725,6 +780,7 @@ async def list_reviews(profile: CurrentProfile, session: DbSession):
                 select(Review)
                 .where(Review.profile_id == profile.id)
                 .order_by(Review.created_at.desc())
+                .limit(_MAX_REVIEWS_PER_PROFILE)
             )
         ).all()
     )
@@ -733,6 +789,15 @@ async def list_reviews(profile: CurrentProfile, session: DbSession):
 
 @router.post("/reviews", response_model=Envelope[ReviewOut])
 async def create_review(body: ReviewIn, profile: CurrentProfile, session: DbSession):
+    await session.scalar(select(Profile.id).where(Profile.id == profile.id).with_for_update())
+    review_count = await session.scalar(
+        select(func.count()).select_from(Review).where(Review.profile_id == profile.id)
+    )
+    if (review_count or 0) >= _MAX_REVIEWS_PER_PROFILE:
+        raise HTTPException(
+            status_code=409,
+            detail="The closed beta supports at most 100 reviews per account",
+        )
     review = Review(profile_id=profile.id, **body.model_dump())
     session.add(review)
     await session.commit()
@@ -938,7 +1003,7 @@ async def get_plan_revision(plan_id: str, profile: CurrentProfile, session: DbSe
 
 @router.post("/plans/{plan_id}/join", response_model=Envelope[PlanOut])
 async def join_plan(plan_id: str, body: PlanJoinIn, profile: CurrentProfile, session: DbSession):
-    plan = await _plan(session, plan_id)
+    plan = await _plan(session, plan_id, for_update=True)
     if plan.share_token_hash != hash_value(body.share_token):
         raise HTTPException(status_code=404, detail="Share link is invalid or has been rotated")
     existing = await session.scalar(
@@ -969,7 +1034,7 @@ async def join_plan(plan_id: str, body: PlanJoinIn, profile: CurrentProfile, ses
 async def update_constraints(
     plan_id: str, body: ConstraintsIn, profile: CurrentProfile, session: DbSession
 ):
-    plan = await _plan(session, plan_id)
+    plan = await _plan(session, plan_id, for_update=True)
     participant = await _participant(session, plan.id, profile.id)
     participant.constraints = body.model_dump()
     plan.status = "collecting"
@@ -986,7 +1051,7 @@ async def update_constraints(
 async def generate_recommendations(
     plan_id: str, body: RecommendationIn, profile: CurrentProfile, session: DbSession
 ):
-    plan = await _plan(session, plan_id)
+    plan = await _plan(session, plan_id, for_update=True)
     await _participant(session, plan.id, profile.id)
     participant_rows = list(
         (
@@ -1074,7 +1139,7 @@ async def generate_recommendations(
 
 @router.put("/plans/{plan_id}/vote", response_model=Envelope[PlanOut])
 async def vote(plan_id: str, body: VoteIn, profile: CurrentProfile, session: DbSession):
-    plan = await _plan(session, plan_id)
+    plan = await _plan(session, plan_id, for_update=True)
     await _participant(session, plan.id, profile.id)
     if plan.status != "voting" or not plan.active_run_id:
         raise HTTPException(status_code=409, detail="The plan is not currently accepting votes")
@@ -1112,7 +1177,7 @@ async def vote(plan_id: str, body: VoteIn, profile: CurrentProfile, session: DbS
 
 @router.post("/plans/{plan_id}/finalize", response_model=Envelope[PlanOut])
 async def finalize(plan_id: str, body: FinalizeIn, profile: CurrentProfile, session: DbSession):
-    plan = await _plan(session, plan_id)
+    plan = await _plan(session, plan_id, for_update=True)
     _require_organizer(plan, profile)
     if plan.status != "voting" or not plan.active_run_id:
         raise HTTPException(status_code=409, detail="Generate recommendations before finalizing")
@@ -1139,7 +1204,7 @@ async def finalize(plan_id: str, body: FinalizeIn, profile: CurrentProfile, sess
 
 @router.post("/plans/{plan_id}/reopen", response_model=Envelope[PlanOut])
 async def reopen(plan_id: str, profile: CurrentProfile, session: DbSession):
-    plan = await _plan(session, plan_id)
+    plan = await _plan(session, plan_id, for_update=True)
     _require_organizer(plan, profile)
     if not plan.active_run_id:
         plan.status = "collecting"
@@ -1155,7 +1220,7 @@ async def reopen(plan_id: str, profile: CurrentProfile, session: DbSession):
 
 @router.post("/plans/{plan_id}/share-token/rotate", response_model=Envelope[ShareTokenOut])
 async def rotate_share_token(plan_id: str, profile: CurrentProfile, session: DbSession):
-    plan = await _plan(session, plan_id)
+    plan = await _plan(session, plan_id, for_update=True)
     _require_organizer(plan, profile)
     token = new_share_token()
     plan.share_token_hash = hash_value(token)

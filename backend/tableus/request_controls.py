@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import asyncio
 import hashlib
 import json
 import re
@@ -49,17 +50,30 @@ class RequestBodyLimitMiddleware:
         default_limit: int = DEFAULT_REQUEST_BODY_LIMIT,
         photo_upload_limit: int = PHOTO_UPLOAD_BODY_LIMIT,
         rate_limiter: Any | None = None,
+        readiness_rate_limiter: Any | None = None,
         demo_legacy_allowed: bool = False,
         shared_plans_enabled: bool = True,
         cors_origins: tuple[str, ...] = (),
+        body_idle_timeout_seconds: float = 5.0,
+        body_total_timeout_seconds: float = 15.0,
+        max_active_body_reads: int = 64,
+        max_active_body_reads_per_source: int = 8,
     ) -> None:
         self.app = app
         self.default_limit = default_limit
         self.photo_upload_limit = photo_upload_limit
         self.rate_limiter = rate_limiter
+        self.readiness_rate_limiter = readiness_rate_limiter
         self.demo_legacy_allowed = demo_legacy_allowed
         self.shared_plans_enabled = shared_plans_enabled
         self.cors_origins = frozenset(cors_origins)
+        self.body_idle_timeout_seconds = body_idle_timeout_seconds
+        self.body_total_timeout_seconds = body_total_timeout_seconds
+        self.max_active_body_reads = max_active_body_reads
+        self.max_active_body_reads_per_source = max_active_body_reads_per_source
+        self._active_body_lock = asyncio.Lock()
+        self._active_body_reads = 0
+        self._active_body_reads_by_source: dict[str, int] = {}
 
     def _limit_for_path(self, path: str) -> int:
         return self.photo_upload_limit if path in _PHOTO_UPLOAD_PATHS else self.default_limit
@@ -83,6 +97,9 @@ class RequestBodyLimitMiddleware:
             else str(uuid.uuid4())
         )
         scope.setdefault("state", {})["request_id"] = request_id
+        client = scope.get("client")
+        source = client[0] if client else "unknown"
+        source_key = hashlib.sha256(str(source).encode()).hexdigest()
         is_legacy = path.startswith("/api/") and not path.startswith("/api/v1")
         if is_legacy and not self.demo_legacy_allowed:
             await self._reject(scope, send, 404, "not_found", "Not found")
@@ -91,10 +108,27 @@ class RequestBodyLimitMiddleware:
             await self._reject(scope, send, 404, "feature_disabled", "Shared plans are disabled")
             return
         health_probe = path in {"/health/live", "/health/ready"}
-        if self.rate_limiter is not None and not health_probe:
-            client = scope.get("client")
-            source = client[0] if client else "unknown"
-            source_key = hashlib.sha256(str(source).encode()).hexdigest()
+        if health_probe:
+            method = str(scope.get("method", "GET")).upper()
+            declared_health_body = headers.get(b"content-length", b"0") != b"0"
+            streamed_health_body = b"transfer-encoding" in headers
+            if method not in {"GET", "HEAD"} or declared_health_body or streamed_health_body:
+                await self._reject(
+                    scope,
+                    send,
+                    400,
+                    "invalid_health_probe",
+                    "Health probes must be bodyless GET or HEAD requests",
+                )
+                return
+            if path == "/health/ready" and self.readiness_rate_limiter is not None:
+                if self.readiness_rate_limiter.consume(source_key, time.time()):
+                    await self._reject(scope, send, 429, "rate_limited", "Too many requests")
+                    return
+            await self.app(scope, receive, send)
+            return
+
+        if self.rate_limiter is not None:
             if self.rate_limiter.consume(source_key, time.time()):
                 await self._reject(scope, send, 429, "rate_limited", "Too many requests")
                 return
@@ -115,12 +149,40 @@ class RequestBodyLimitMiddleware:
             except ValueError:
                 pass
 
+        if not await self._try_acquire_body_slot(source_key):
+            await self._reject(scope, send, 503, "server_busy", "Server is busy; retry later")
+            return
+
         received = 0
         disconnected = False
         body_file = tempfile.SpooledTemporaryFile(max_size=min(limit, DEFAULT_REQUEST_BODY_LIMIT))
+        total_deadline = asyncio.get_running_loop().time() + self.body_total_timeout_seconds
         try:
             while True:
-                message = await receive()
+                remaining = total_deadline - asyncio.get_running_loop().time()
+                if remaining <= 0:
+                    await self._reject(
+                        scope,
+                        send,
+                        408,
+                        "request_timeout",
+                        "Request body was not received in time",
+                    )
+                    return
+                try:
+                    message = await asyncio.wait_for(
+                        receive(),
+                        timeout=min(self.body_idle_timeout_seconds, remaining),
+                    )
+                except TimeoutError:
+                    await self._reject(
+                        scope,
+                        send,
+                        408,
+                        "request_timeout",
+                        "Request body was not received in time",
+                    )
+                    return
                 if message.get("type") == "http.disconnect":
                     disconnected = True
                     break
@@ -156,6 +218,28 @@ class RequestBodyLimitMiddleware:
             await self.app(scope, replay_receive, send)
         finally:
             body_file.close()
+            await self._release_body_slot(source_key)
+
+    async def _try_acquire_body_slot(self, source_key: str) -> bool:
+        async with self._active_body_lock:
+            source_count = self._active_body_reads_by_source.get(source_key, 0)
+            if (
+                self._active_body_reads >= self.max_active_body_reads
+                or source_count >= self.max_active_body_reads_per_source
+            ):
+                return False
+            self._active_body_reads += 1
+            self._active_body_reads_by_source[source_key] = source_count + 1
+            return True
+
+    async def _release_body_slot(self, source_key: str) -> None:
+        async with self._active_body_lock:
+            self._active_body_reads = max(0, self._active_body_reads - 1)
+            source_count = self._active_body_reads_by_source.get(source_key, 0)
+            if source_count <= 1:
+                self._active_body_reads_by_source.pop(source_key, None)
+            else:
+                self._active_body_reads_by_source[source_key] = source_count - 1
 
     async def _reject(
         self,
@@ -255,13 +339,21 @@ class FixedWindowRateLimiter:
             self._global_count = 0
             self._source_counts.clear()
 
+        source_count = self._source_counts.pop(source_key, 0)
+        if source_count >= self.per_source_limit:
+            self._source_counts[source_key] = source_count
+            return True
+        if self._global_count >= self.global_limit:
+            if source_count:
+                self._source_counts[source_key] = source_count
+            return True
+
         self._global_count += 1
-        source_count = self._source_counts.pop(source_key, 0) + 1
-        self._source_counts[source_key] = source_count
+        self._source_counts[source_key] = source_count + 1
         while len(self._source_counts) > self.max_sources:
             self._source_counts.popitem(last=False)
 
-        return source_count > self.per_source_limit or self._global_count > self.global_limit
+        return False
 
 
 class IdempotencyReplayCache:
@@ -324,3 +416,44 @@ class IdempotencyReplayCache:
             oldest_key = next(iter(self._entries))
             self._delete(oldest_key)
         return key in self._entries
+
+
+class IdempotencyInFlightCoordinator:
+    """Serialize one process's requests that share an idempotency identity."""
+
+    def __init__(self) -> None:
+        self._guard = asyncio.Lock()
+        self._locks: dict[tuple[str, str, str, str], tuple[asyncio.Lock, int]] = {}
+
+    @property
+    def active_key_count(self) -> int:
+        return len(self._locks)
+
+    async def acquire(self, key: tuple[str, str, str, str]) -> asyncio.Lock:
+        async with self._guard:
+            lock, users = self._locks.get(key, (asyncio.Lock(), 0))
+            self._locks[key] = (lock, users + 1)
+        await lock.acquire()
+        return lock
+
+    async def release(
+        self,
+        key: tuple[str, str, str, str],
+        lock: asyncio.Lock,
+    ) -> None:
+        lock.release()
+        async with self._guard:
+            current = self._locks.get(key)
+            if current is None or current[0] is not lock:
+                return
+            users = current[1] - 1
+            if users <= 0:
+                self._locks.pop(key, None)
+            else:
+                self._locks[key] = (lock, users)
+
+    async def clear(self) -> None:
+        async with self._guard:
+            if any(lock.locked() or users > 0 for lock, users in self._locks.values()):
+                raise RuntimeError("Cannot clear active idempotency requests")
+            self._locks.clear()

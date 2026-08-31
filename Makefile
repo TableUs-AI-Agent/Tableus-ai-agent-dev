@@ -116,8 +116,7 @@ local-mobile-build-receipt:
 	@test -n "$(SHA)" || (echo "SHA=<exact-candidate-sha> is required" && exit 2)
 	@test -n "$(BUILD_ID)" || (echo "BUILD_ID=<sanitized-local-build-id> is required" && exit 2)
 	@test -n "$(EVIDENCE)" || (echo "EVIDENCE=<receipt-json-path> is required" && exit 2)
-	@test -n "$(EAS_VERSION)" || (echo "EAS_VERSION=<eas-cli-version> is required" && exit 2)
-	node scripts/local-mobile-build-receipt.mjs --platform "$(PLATFORM)" --profile "$(PROFILE)" --artifact "$(APP)" --sha "$(SHA)" --build-id "$(BUILD_ID)" --output "$(EVIDENCE)" --eas-cli-version "$(EAS_VERSION)" --inspection-passed "$(INSPECTION_PASSED)"
+	node scripts/local-mobile-build-receipt.mjs --platform "$(PLATFORM)" --profile "$(PROFILE)" --artifact "$(APP)" --sha "$(SHA)" --build-id "$(BUILD_ID)" --output "$(EVIDENCE)" --inspection-passed "$(INSPECTION_PASSED)"
 
 mobile-account-e2e:
 	@test -n "$(PLATFORM)" || (echo "PLATFORM=ios or PLATFORM=android is required" && exit 2)

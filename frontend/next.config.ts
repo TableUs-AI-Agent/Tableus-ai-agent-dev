@@ -1,6 +1,28 @@
 import type { NextConfig } from "next";
 import path from "node:path";
 import { withSentryConfig } from "@sentry/nextjs";
+import { PUBLIC_RUNTIME_POLICY, requireExactHttpsOrigin } from "@tableus/domain";
+
+if (process.env.VERCEL === "1") {
+  requireExactHttpsOrigin(
+    process.env.NEXT_PUBLIC_API_URL ?? "",
+    PUBLIC_RUNTIME_POLICY.stagingApiOrigin,
+    "Vercel web API origin",
+  );
+  requireExactHttpsOrigin(
+    process.env.TABLEUS_API_ORIGIN ?? "",
+    PUBLIC_RUNTIME_POLICY.stagingApiOrigin,
+    "Vercel server API origin",
+  );
+  requireExactHttpsOrigin(
+    process.env.NEXT_PUBLIC_SUPABASE_URL ?? "",
+    PUBLIC_RUNTIME_POLICY.stagingSupabaseOrigin,
+    "Vercel Supabase origin",
+  );
+  if ((process.env.NEXT_PUBLIC_LINK_ORIGIN ?? "") !== `https://${PUBLIC_RUNTIME_POLICY.linkHost}`) {
+    throw new Error("Vercel link origin does not match the source-controlled TableUs host");
+  }
+}
 
 const nextConfig: NextConfig = {
   transpilePackages: ["@tableus/domain", "@tableus/api-client"],
@@ -16,7 +38,14 @@ const nextConfig: NextConfig = {
     ],
   },
   async rewrites() {
-    const origin = process.env.TABLEUS_API_ORIGIN;
+    const configuredOrigin = process.env.TABLEUS_API_ORIGIN;
+    const origin = configuredOrigin
+      ? requireExactHttpsOrigin(
+          configuredOrigin,
+          PUBLIC_RUNTIME_POLICY.stagingApiOrigin,
+          "Web rewrite API origin",
+        )
+      : "";
     const rules = [
       {
         source: "/.well-known/apple-app-site-association",

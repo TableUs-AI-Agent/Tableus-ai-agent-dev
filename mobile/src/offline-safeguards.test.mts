@@ -15,6 +15,11 @@ test("every plan workspace write uses the recoverable controller and an explicit
   assert.match(plan, /setRankingDraft\(null\)/);
 });
 
+test("mobile plan details do not poll paid provider-backed hydration", () => {
+  const plan = source("../app/plans/[id].tsx");
+  assert.doesNotMatch(plan, /refetchInterval/);
+});
+
 test("ambiguous finalization remains retryable after a finalized-state refresh", () => {
   const plan = source("../app/plans/[id].tsx");
   const finalizedOrganizer = plan.slice(plan.indexOf('current.status === "finalized"'));

@@ -10,6 +10,7 @@ import {
   validateGeminiReadiness,
 } from "./gemini-evidence-utils.mjs";
 import { promptSecret } from "./prompt-utils.mjs";
+import { RELEASE_ORIGINS, requireReleaseOrigin } from "./release-origins.mjs";
 
 function parseArgs(argv) {
   const values = {};
@@ -23,7 +24,7 @@ function parseArgs(argv) {
 }
 
 async function jsonRequest(url, options = {}) {
-  const response = await fetch(url, { ...options, signal: AbortSignal.timeout(30_000) });
+  const response = await fetch(url, { redirect: "error", ...options, signal: AbortSignal.timeout(30_000) });
   if (!response.ok) throw new Error(`Sanitized staging request failed (${response.status}).`);
   return response.json();
 }
@@ -41,7 +42,8 @@ if (!apiUrl || !expectedSha || !args.evidence) {
   throw new Error("--api-url, --sha, and --evidence are required.");
 }
 if (!/^[0-9a-f]{40}$/.test(expectedSha)) throw new Error("--sha must be an exact commit SHA.");
-if (new URL(apiUrl).protocol !== "https:") throw new Error("Gemini staging evidence requires HTTPS.");
+requireReleaseOrigin(apiUrl, RELEASE_ORIGINS.stagingApi, "Gemini staging API");
+requireReleaseOrigin(supabaseUrl, RELEASE_ORIGINS.stagingSupabase, "Gemini Supabase");
 if (!supabaseUrl || !supabaseAnonKey) {
   throw new Error("Supabase URL and public anon key must be provided through the environment.");
 }

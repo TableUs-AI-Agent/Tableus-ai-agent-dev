@@ -1,7 +1,13 @@
 import type { ExpoConfig, ConfigContext } from "expo/config";
+import { PUBLIC_RUNTIME_POLICY, requireExactHttpsOrigin } from "@tableus/domain";
 
 export default ({ config }: ConfigContext): ExpoConfig => {
-  const projectId = process.env.EXPO_PUBLIC_EAS_PROJECT_ID ?? "0601c3b9-0082-454c-b636-45a1fe377f7b";
+  const profile = process.env.EAS_BUILD_PROFILE ?? "";
+  const configuredProjectId = process.env.EXPO_PUBLIC_EAS_PROJECT_ID;
+  if (configuredProjectId && configuredProjectId !== PUBLIC_RUNTIME_POLICY.easProjectId) {
+    throw new Error("Hosted Expo project ID does not match the source-controlled TableUs project");
+  }
+  const projectId = PUBLIC_RUNTIME_POLICY.easProjectId;
   const linkHost = process.env.EXPO_PUBLIC_LINK_HOST ?? "links.table-us.com";
   const testBuildProfile = process.env.EAS_BUILD_PROFILE === "test-ios" || process.env.EAS_BUILD_PROFILE === "test-android";
   const authTestProfile = process.env.EAS_BUILD_PROFILE === "auth-test-ios" || process.env.EAS_BUILD_PROFILE === "auth-test-android";
@@ -12,6 +18,43 @@ export default ({ config }: ConfigContext): ExpoConfig => {
   const apiUrl = process.env.EXPO_PUBLIC_API_URL ?? "";
   const supabaseUrl = process.env.EXPO_PUBLIC_SUPABASE_URL ?? "";
   const sourceSha = process.env.EAS_BUILD_GIT_COMMIT_HASH ?? process.env.EXPO_PUBLIC_SOURCE_SHA;
+  const hostedStagingProfiles = new Set([
+    "preview",
+    "auth-test-ios",
+    "auth-test-android",
+    "links-test-ios",
+    "links-test-android",
+    "telemetry-test-ios",
+    "telemetry-test-android",
+    "readiness-ios",
+    "readiness-android",
+  ]);
+  if (profile === "production") {
+    throw new Error(
+      "Production mobile builds are disabled until production origins and signed OTA policy are committed in source",
+    );
+  }
+  if (hostedStagingProfiles.has(profile)) {
+    requireExactHttpsOrigin(
+      apiUrl,
+      PUBLIC_RUNTIME_POLICY.stagingApiOrigin,
+      "Hosted mobile API origin",
+    );
+    requireExactHttpsOrigin(
+      supabaseUrl,
+      PUBLIC_RUNTIME_POLICY.stagingSupabaseOrigin,
+      "Hosted mobile Supabase origin",
+    );
+    if (linkHost !== PUBLIC_RUNTIME_POLICY.linkHost) {
+      throw new Error("Hosted mobile link host does not match the source-controlled host");
+    }
+    if (!sourceSha || !/^[0-9a-f]{40}$/.test(sourceSha)) {
+      throw new Error("Hosted mobile builds require an exact 40-character source SHA");
+    }
+    if (process.env.EXPO_PUBLIC_DEMO_MODE === "true" || localE2E) {
+      throw new Error("Hosted mobile builds cannot enable demo or local-E2E controls");
+    }
+  }
   const authE2E = authTestProfile
     && process.env.TABLEUS_AUTH_E2E === "true"
     && apiUrl.startsWith("https://")
@@ -39,7 +82,7 @@ export default ({ config }: ConfigContext): ExpoConfig => {
     orientation: "portrait",
     userInterfaceStyle: "automatic",
     runtimeVersion: { policy: "appVersion" },
-    updates: projectId ? { url: `https://u.expo.dev/${projectId}` } : undefined,
+    updates: { enabled: false, checkAutomatically: "NEVER" },
     ios: {
       bundleIdentifier: "com.tableus.app",
       associatedDomains: [`applinks:${linkHost}`],
@@ -93,7 +136,7 @@ export default ({ config }: ConfigContext): ExpoConfig => {
       telemetryMode: process.env.EXPO_PUBLIC_TELEMETRY_MODE ?? "off",
       demoMode: process.env.EXPO_PUBLIC_DEMO_MODE === "true",
       sourceSha,
-      eas: projectId ? { projectId } : undefined,
+      eas: { projectId },
     },
   };
 };

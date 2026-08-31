@@ -24,7 +24,7 @@ export default function PlanScreen() {
   const [refreshMessage, setRefreshMessage] = useState("");
   const [rankingDraft, setRankingDraft] = useState<{ planId: string; values: string[] } | null>(null);
   const key = ["plan", id];
-  const plan = useQuery({ queryKey: key, queryFn: () => api.get<Plan>(`/api/v1/plans/${id}`), refetchInterval: 30_000 });
+  const plan = useQuery({ queryKey: key, queryFn: () => api.get<Plan>(`/api/v1/plans/${id}`) });
   const updateData = (data: Plan) => { queryClient.setQueryData(key, data); };
   const constraints = useRecoverableMutation({
     mutationFn: (body: { notes: string; cuisines: string[]; dietary_notes: string[] }, idempotencyKey) => api.patch<Plan>(`/api/v1/plans/${id}/constraints`, body, { idempotencyKey }),

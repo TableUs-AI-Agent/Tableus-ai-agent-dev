@@ -8,6 +8,7 @@ import {
   validateStagingReadiness,
   writeCumulativeReadinessEvidence,
 } from "./readiness-evidence-utils.mjs";
+import { RELEASE_ORIGINS, requireReleaseOrigin } from "./release-origins.mjs";
 
 function parseArgs(argv) {
   const values = {};
@@ -26,13 +27,10 @@ const sha = args.sha;
 const inputPath = resolve(args.input ?? "");
 const evidence = resolve(args.evidence ?? "");
 if (!apiUrl || !sha || !args.input || !args.evidence) throw new Error("--api-url, --sha, --input, and --evidence are required");
-const parsedApi = new URL(apiUrl);
-if (parsedApi.protocol !== "https:" || parsedApi.username || parsedApi.password || parsedApi.search || parsedApi.hash) {
-  throw new Error("Cumulative staging evidence requires a credential-free HTTPS API origin");
-}
+requireReleaseOrigin(apiUrl, RELEASE_ORIGINS.stagingApi, "Cumulative staging API");
 
 const input = validateCumulativeReadinessInput(JSON.parse(readFileSync(inputPath, "utf8")), sha);
-const response = await fetch(`${apiUrl.replace(/\/$/, "")}/health/ready`, { signal: AbortSignal.timeout(15_000) });
+const response = await fetch(`${apiUrl.replace(/\/$/, "")}/health/ready`, { redirect: "error", signal: AbortSignal.timeout(15_000) });
 if (!response.ok) throw new Error(`Staging readiness failed (${response.status})`);
 const readiness = validateStagingReadiness(await response.json(), sha);
 const summary = {

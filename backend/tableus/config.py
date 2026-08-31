@@ -48,6 +48,7 @@ class Settings(BaseSettings):
 
     live_ai_max_usd: float = Field(default=0.25, gt=0, le=0.25)
     ai_runtime_max_usd_30d: float = Field(default=4.0, gt=0, le=4.0)
+    places_runtime_max_attempts_30d: int = Field(default=150, gt=0, le=150)
 
     @field_validator("tableus_runtime_db_role")
     @classmethod
@@ -76,6 +77,12 @@ class Settings(BaseSettings):
         runtime_user = urlparse(self.database_url).username
         if runtime_user != self.tableus_runtime_db_role:
             raise ValueError("Hosted runtime database credentials must use TABLEUS_RUNTIME_DB_ROLE")
+        if self.migration_database_url:
+            migration_user = urlparse(self.migration_database_url).username
+            if self.migration_database_url == self.database_url or migration_user == runtime_user:
+                raise ValueError(
+                    "Hosted migration and runtime database credentials must use different roles"
+                )
         self._validate_hosted_url(self.supabase_url, "SUPABASE_URL", origin_only=True)
         if not self.cors_origins:
             raise ValueError("Hosted environments require at least one HTTPS CORS origin")
@@ -89,12 +96,9 @@ class Settings(BaseSettings):
             [
                 self.gemini_api_key,
                 self.google_maps_api_key,
-                self.migration_database_url,
             ]
         ):
-            raise ValueError("Production provider and migration credentials are incomplete")
-        if self.migration_database_url == self.database_url:
-            raise ValueError("Production migration and runtime database credentials must differ")
+            raise ValueError("Production provider credentials are incomplete")
         if self.tableus_telemetry_mode != "production" or not self.sentry_dsn or not self.posthog_key:
             raise ValueError("Production requires production error reporting and anonymous analytics")
         return self
