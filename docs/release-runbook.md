@@ -177,7 +177,12 @@ App Links and require `pm get-app-links com.tableus.app` to report the host as
 Run the Android sanitized journey with the checked-in runner:
 
 ```bash
-make mobile-links-e2e PLATFORM=android DEVICE=<emulator-serial> APP=<signed-apk> BUILD_ID=<local-build-id> ORIGIN=https://links.table-us.com EVIDENCE=<sanitized-dir>
+make mobile-links-e2e PLATFORM=android DEVICE=<emulator-serial> \
+  APP=<signed-apk> BUILD_ID=<local-build-id> RECEIPT=<version-two-receipt> \
+  SHA=<candidate-sha> API_URL=<https-staging-api> \
+  SUPABASE_URL=<https-staging-supabase> \
+  ANDROID_FINGERPRINT=<preview-fingerprint> \
+  ORIGIN=https://links.table-us.com EVIDENCE=<sanitized-dir>
 ```
 
 The runner accepts one rotated private URL and one returning account/code in the
@@ -312,7 +317,11 @@ bundles first, then run each with a fresh one-use invite and a distinct
 owner-controlled email:
 
 ```bash
-make inspect-mobile-auth APP=<artifact> SHA=<candidate-sha> API_URL=https://<staging-api> SUPABASE_URL=https://<staging-supabase> FORBIDDEN_ORIGINS=<comma-separated-production-origins>
+make inspect-mobile-auth PLATFORM=<ios-or-android> APP=<artifact> \
+  SHA=<candidate-sha> API_URL=https://<staging-api> \
+  SUPABASE_URL=https://<staging-supabase> LINK_HOST=links.table-us.com \
+  ANDROID_FINGERPRINT=<required-for-android> \
+  FORBIDDEN_ORIGINS=<comma-separated-production-origins>
 ```
 
 This first verifies the embedded exact SHA and staging origins and rejects demo
@@ -320,8 +329,15 @@ identities, loopback endpoints, service-role markers, local-E2E enablement, and
 the explicitly listed production origins. Then run the lifecycle:
 
 ```bash
-make mobile-auth-e2e PLATFORM=ios DEVICE=<simulator-udid> APP=<path-to-TableUs.app> BUILD_ID=<eas-build-id> EVIDENCE=<sanitized-dir> API_URL=https://<staging-api>
-make mobile-auth-e2e PLATFORM=android DEVICE=<emulator-serial> APP=<path-to-tableus.apk> BUILD_ID=<eas-build-id> EVIDENCE=<sanitized-dir> API_URL=https://<staging-api>
+make mobile-auth-e2e PLATFORM=ios DEVICE=<simulator-udid> \
+  APP=<TableUs.app> BUILD_ID=<local-build-id> RECEIPT=<version-two-receipt> \
+  SHA=<candidate-sha> EVIDENCE=<sanitized-dir> API_URL=https://<staging-api> \
+  SUPABASE_URL=https://<staging-supabase>
+make mobile-auth-e2e PLATFORM=android DEVICE=<emulator-serial> \
+  APP=<tableus.apk> BUILD_ID=<local-build-id> RECEIPT=<version-two-receipt> \
+  SHA=<candidate-sha> EVIDENCE=<sanitized-dir> API_URL=https://<staging-api> \
+  SUPABASE_URL=https://<staging-supabase> \
+  ANDROID_FINGERPRINT=<preview-fingerprint>
 ```
 
 The runner requires Supabase/deterministic readiness, prompts interactively for
@@ -539,6 +555,28 @@ full developer audit may rely only on the time-bounded EAS/Expo release-tool
 exception recorded in the security/privacy checklist; it may not conceal a
 runtime-reachable finding.
 
+Every local artifact must be created by `make local-mobile-build`; do not run a
+build and issue a receipt afterward. The orchestrator creates a fresh detached
+worktree at `SHA`, performs the frozen install and one memory-bounded EAS local
+build, validates the single active Expo config plus native transport/signing
+state, and exports a version-two receipt bound to the artifact and inspection.
+Run one platform/profile at a time. Example:
+
+```bash
+make local-mobile-build PLATFORM=android PROFILE=readiness-android \
+  SHA=<source-sha> BUILD_ID=<sanitized-local-build-id> \
+  APP=<new-apk-output> INSPECTION_REPORT=<new-inspection-json> \
+  RECEIPT=<new-receipt-json> API_URL=<https-staging-api> \
+  SUPABASE_URL=<https-staging-supabase> LINK_HOST=links.table-us.com \
+  ANDROID_FINGERPRINT=<preview-fingerprint> \
+  FORBIDDEN_ORIGINS=<production-origins>
+```
+
+The output paths must not already exist. Raw build logs remain file-backed in
+the private temporary workspace and are deleted. Direct execution of
+`local-mobile-build-receipt.mjs`, staged/untracked source, duplicate embedded
+configuration, a mismatched signer, or artifact mutation must fail closed.
+
 1. `test-ios`, then shut down and remove raw logs.
 2. ARM64 `test-android`, then shut down and remove raw logs.
 3. Apple-signed physical-device `readiness-ios`, then shut down build workers.
@@ -628,7 +666,12 @@ make inspect-mobile-readiness PLATFORM=android APP=<artifact> SHA=<source-sha> \
 
 Run deterministic lifecycle and offline evidence with the existing `mobile-e2e`
 and `mobile-offline-e2e` commands. Run the production-shaped cross-client phases
-with `mobile-readiness-e2e`; use preserved approved sessions where possible and
+with `mobile-readiness-e2e`, passing the matching version-two `RECEIPT`; auth and
+link evidence runners require their matching receipts as well. Each runner
+copies the receipted artifact to a private directory, performs structured
+inspection there, and re-hashes it immediately before installation. Account,
+invite, OTP, or private-link prompts are not shown until this binding succeeds.
+Use preserved approved sessions where possible and
 confirm that a truncated committed response exits pending state within the
 gated 10-second local deadline and exposes explicit same-key Retry. Production-
 shaped mobile requests retain a 45-second deadline through body parsing. Send

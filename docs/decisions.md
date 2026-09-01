@@ -371,3 +371,18 @@
   The shipped dependency graph must have zero critical/high advisories. The
   remaining developer-only EAS/Expo toolchain exception expires before
   production or 2026-09-30, whichever is earlier.
+- **2026-09-01:** Local mobile evidence is accepted only from the repository's
+  isolated build orchestrator. It builds one profile from a fresh detached
+  exact-SHA worktree with frozen dependencies and bounded memory, then requires
+  one canonical active Expo configuration, effective native transport state,
+  the expected signer, and a digest-bound inspection report before issuing a
+  version-two receipt or exporting bytes. Device runners privately copy,
+  re-inspect, and re-hash the receipted bytes immediately before installation;
+  credential prompts occur only afterward. Direct post-hoc receipts and
+  caller-supplied inspection booleans are invalid.
+- **2026-09-01:** Supabase signing keys have one authoritative bounded cache:
+  PyJWT's five-minute JWK-set cache. Its optional per-key LRU is explicitly
+  disabled because that tier has no time-based expiration. TableUs retains
+  unknown-key throttling and refresh coalescing but no longer keeps any second
+  unexpired known-key cache, so removed keys and same-`kid` material replacement
+  take effect at the bounded provider cache lifetime.

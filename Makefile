@@ -1,6 +1,6 @@
 SHELL := /bin/bash
 
-.PHONY: setup dev lint typecheck test build smoke mobile-workflows-validate mobile-device-preflight mobile-e2e mobile-auth-e2e mobile-offline-e2e mobile-links-e2e mobile-readiness-e2e maps-staging-e2e gemini-staging-e2e telemetry-staging-e2e cumulative-readiness-evidence local-mobile-build-receipt inspect-mobile-auth inspect-mobile-local-e2e inspect-mobile-links inspect-mobile-readiness ready perf ai-eval ai-eval-live contract
+.PHONY: setup dev lint typecheck test build smoke mobile-workflows-validate mobile-device-preflight mobile-e2e mobile-auth-e2e mobile-offline-e2e mobile-links-e2e mobile-readiness-e2e maps-staging-e2e gemini-staging-e2e telemetry-staging-e2e cumulative-readiness-evidence local-mobile-build inspect-mobile-auth inspect-mobile-local-e2e inspect-mobile-links inspect-mobile-readiness ready perf ai-eval ai-eval-live contract
 
 setup:
 	npm ci
@@ -55,7 +55,11 @@ mobile-auth-e2e:
 	@test -n "$(BUILD_ID)" || (echo "BUILD_ID=<EAS-build-id> is required" && exit 2)
 	@test -n "$(EVIDENCE)" || (echo "EVIDENCE=<sanitized-output-directory> is required" && exit 2)
 	@test -n "$(API_URL)" || (echo "API_URL=<HTTPS-staging-api> is required" && exit 2)
-	node scripts/mobile-auth-e2e.mjs --platform "$(PLATFORM)" --device "$(DEVICE)" --app "$(APP)" --build-id "$(BUILD_ID)" --evidence "$(EVIDENCE)" --api-url "$(API_URL)" $(if $(START_PHASE),--start-phase "$(START_PHASE)",)
+	@test -n "$(SUPABASE_URL)" || (echo "SUPABASE_URL=<HTTPS-staging-supabase> is required" && exit 2)
+	@test -n "$(SHA)" || (echo "SHA=<exact-candidate-sha> is required" && exit 2)
+	@test -n "$(RECEIPT)" || (echo "RECEIPT=<verified-build-receipt-json> is required" && exit 2)
+	@test "$(PLATFORM)" != "android" -o -n "$(ANDROID_FINGERPRINT)" || (echo "ANDROID_FINGERPRINT=<expected-sha256> is required" && exit 2)
+	node scripts/mobile-auth-e2e.mjs --platform "$(PLATFORM)" --device "$(DEVICE)" --app "$(APP)" --build-id "$(BUILD_ID)" --evidence "$(EVIDENCE)" --api-url "$(API_URL)" --supabase-url "$(SUPABASE_URL)" --sha "$(SHA)" --receipt "$(RECEIPT)" --link-host "$(if $(LINK_HOST),$(LINK_HOST),links.table-us.com)" $(if $(ANDROID_FINGERPRINT),--android-fingerprint "$(ANDROID_FINGERPRINT)",) $(if $(FORBIDDEN_ORIGINS),--forbidden-origins "$(FORBIDDEN_ORIGINS)",) $(if $(START_PHASE),--start-phase "$(START_PHASE)",)
 
 mobile-offline-e2e:
 	@test -n "$(PLATFORM)" || (echo "PLATFORM=ios or PLATFORM=android is required" && exit 2)
@@ -72,7 +76,13 @@ mobile-links-e2e:
 	@test -n "$(BUILD_ID)" || (echo "BUILD_ID=<local-build-id> is required" && exit 2)
 	@test -n "$(ORIGIN)" || (echo "ORIGIN=https://links.table-us.com is required" && exit 2)
 	@test -n "$(EVIDENCE)" || (echo "EVIDENCE=<sanitized-output-directory> is required" && exit 2)
-	node scripts/mobile-links-e2e.mjs --platform "$(PLATFORM)" --device "$(DEVICE)" --app "$(APP)" --build-id "$(BUILD_ID)" --origin "$(ORIGIN)" --evidence "$(EVIDENCE)"
+	@test -n "$(API_URL)" || (echo "API_URL=<HTTPS-staging-api> is required" && exit 2)
+	@test -n "$(SUPABASE_URL)" || (echo "SUPABASE_URL=<HTTPS-staging-supabase> is required" && exit 2)
+	@test -n "$(SHA)" || (echo "SHA=<exact-candidate-sha> is required" && exit 2)
+	@test -n "$(RECEIPT)" || (echo "RECEIPT=<verified-build-receipt-json> is required" && exit 2)
+	@test "$(PLATFORM)" != "ios" -o -n "$(APPLE_TEAM_ID)" || (echo "APPLE_TEAM_ID=<expected-team-id> is required" && exit 2)
+	@test "$(PLATFORM)" != "android" -o -n "$(ANDROID_FINGERPRINT)" || (echo "ANDROID_FINGERPRINT=<expected-sha256> is required" && exit 2)
+	node scripts/mobile-links-e2e.mjs --platform "$(PLATFORM)" --device "$(DEVICE)" --app "$(APP)" --build-id "$(BUILD_ID)" --origin "$(ORIGIN)" --evidence "$(EVIDENCE)" --api-url "$(API_URL)" --supabase-url "$(SUPABASE_URL)" --sha "$(SHA)" --receipt "$(RECEIPT)" $(if $(APPLE_TEAM_ID),--apple-team-id "$(APPLE_TEAM_ID)",) $(if $(ANDROID_FINGERPRINT),--android-fingerprint "$(ANDROID_FINGERPRINT)",) $(if $(FORBIDDEN_ORIGINS),--forbidden-origins "$(FORBIDDEN_ORIGINS)",)
 
 mobile-readiness-e2e:
 	@test -n "$(PLATFORM)" || (echo "PLATFORM=ios or PLATFORM=android is required" && exit 2)
@@ -83,7 +93,8 @@ mobile-readiness-e2e:
 	@test -n "$(SUPABASE_URL)" || (echo "SUPABASE_URL=<HTTPS-staging-supabase> is required" && exit 2)
 	@test -n "$(SHA)" || (echo "SHA=<exact-candidate-sha> is required" && exit 2)
 	@test -n "$(EVIDENCE)" || (echo "EVIDENCE=<sanitized-output-directory> is required" && exit 2)
-	node scripts/mobile-readiness-e2e.mjs --platform "$(PLATFORM)" --device "$(DEVICE)" --app "$(APP)" --build-id "$(BUILD_ID)" --api-url "$(API_URL)" --supabase-url "$(SUPABASE_URL)" --sha "$(SHA)" --evidence "$(EVIDENCE)" $(if $(APPLE_TEAM_ID),--apple-team-id "$(APPLE_TEAM_ID)",) $(if $(ANDROID_FINGERPRINT),--android-fingerprint "$(ANDROID_FINGERPRINT)",) $(if $(FORBIDDEN_ORIGINS),--forbidden-origins "$(FORBIDDEN_ORIGINS)",)
+	@test -n "$(RECEIPT)" || (echo "RECEIPT=<verified-build-receipt-json> is required" && exit 2)
+	node scripts/mobile-readiness-e2e.mjs --platform "$(PLATFORM)" --device "$(DEVICE)" --app "$(APP)" --build-id "$(BUILD_ID)" --api-url "$(API_URL)" --supabase-url "$(SUPABASE_URL)" --sha "$(SHA)" --receipt "$(RECEIPT)" --evidence "$(EVIDENCE)" $(if $(APPLE_TEAM_ID),--apple-team-id "$(APPLE_TEAM_ID)",) $(if $(ANDROID_FINGERPRINT),--android-fingerprint "$(ANDROID_FINGERPRINT)",) $(if $(FORBIDDEN_ORIGINS),--forbidden-origins "$(FORBIDDEN_ORIGINS)",)
 
 maps-staging-e2e:
 	@test -n "$(API_URL)" || (echo "API_URL=<HTTPS-staging-api> is required" && exit 2)
@@ -109,14 +120,15 @@ cumulative-readiness-evidence:
 	@test -n "$(EVIDENCE)" || (echo "EVIDENCE=<sanitized-output-directory> is required" && exit 2)
 	node scripts/cumulative-readiness-evidence.mjs --api-url "$(API_URL)" --sha "$(SHA)" --input "$(INPUT)" --evidence "$(EVIDENCE)"
 
-local-mobile-build-receipt:
+local-mobile-build:
 	@test -n "$(PLATFORM)" || (echo "PLATFORM=ios or PLATFORM=android is required" && exit 2)
 	@test -n "$(PROFILE)" || (echo "PROFILE=<EAS-profile> is required" && exit 2)
-	@test -n "$(APP)" || (echo "APP=<path-to-app-or-apk> is required" && exit 2)
+	@test -n "$(APP)" || (echo "APP=<new-artifact-output-path> is required" && exit 2)
 	@test -n "$(SHA)" || (echo "SHA=<exact-candidate-sha> is required" && exit 2)
 	@test -n "$(BUILD_ID)" || (echo "BUILD_ID=<sanitized-local-build-id> is required" && exit 2)
-	@test -n "$(EVIDENCE)" || (echo "EVIDENCE=<receipt-json-path> is required" && exit 2)
-	node scripts/local-mobile-build-receipt.mjs --platform "$(PLATFORM)" --profile "$(PROFILE)" --artifact "$(APP)" --sha "$(SHA)" --build-id "$(BUILD_ID)" --output "$(EVIDENCE)" --inspection-passed "$(INSPECTION_PASSED)"
+	@test -n "$(RECEIPT)" || (echo "RECEIPT=<new-receipt-json-path> is required" && exit 2)
+	@test -n "$(INSPECTION_REPORT)" || (echo "INSPECTION_REPORT=<new-inspection-json-path> is required" && exit 2)
+	node scripts/local-mobile-build.mjs --platform "$(PLATFORM)" --profile "$(PROFILE)" --sha "$(SHA)" --build-id "$(BUILD_ID)" --artifact "$(APP)" --inspection-report "$(INSPECTION_REPORT)" --receipt "$(RECEIPT)" $(if $(API_URL),--api-url "$(API_URL)",) $(if $(SUPABASE_URL),--supabase-url "$(SUPABASE_URL)",) $(if $(LINK_HOST),--link-host "$(LINK_HOST)",) $(if $(APPLE_TEAM_ID),--apple-team-id "$(APPLE_TEAM_ID)",) $(if $(ANDROID_FINGERPRINT),--android-fingerprint "$(ANDROID_FINGERPRINT)",) $(if $(FORBIDDEN_ORIGINS),--forbidden-origins "$(FORBIDDEN_ORIGINS)",)
 
 mobile-account-e2e:
 	@test -n "$(PLATFORM)" || (echo "PLATFORM=ios or PLATFORM=android is required" && exit 2)
@@ -125,19 +137,28 @@ mobile-account-e2e:
 	@test -n "$(BUILD_ID)" || (echo "BUILD_ID=<EAS-build-id> is required" && exit 2)
 	@test -n "$(EVIDENCE)" || (echo "EVIDENCE=<sanitized-output-directory> is required" && exit 2)
 	@test -n "$(API_URL)" || (echo "API_URL=<HTTPS-staging-api> is required" && exit 2)
-	node scripts/mobile-auth-e2e.mjs --platform "$(PLATFORM)" --device "$(DEVICE)" --app "$(APP)" --build-id "$(BUILD_ID)" --evidence "$(EVIDENCE)" --api-url "$(API_URL)" --start-phase "returning-send"
+	@test -n "$(SUPABASE_URL)" || (echo "SUPABASE_URL=<HTTPS-staging-supabase> is required" && exit 2)
+	@test -n "$(SHA)" || (echo "SHA=<exact-candidate-sha> is required" && exit 2)
+	@test -n "$(RECEIPT)" || (echo "RECEIPT=<verified-build-receipt-json> is required" && exit 2)
+	@test "$(PLATFORM)" != "android" -o -n "$(ANDROID_FINGERPRINT)" || (echo "ANDROID_FINGERPRINT=<expected-sha256> is required" && exit 2)
+	node scripts/mobile-auth-e2e.mjs --platform "$(PLATFORM)" --device "$(DEVICE)" --app "$(APP)" --build-id "$(BUILD_ID)" --evidence "$(EVIDENCE)" --api-url "$(API_URL)" --supabase-url "$(SUPABASE_URL)" --sha "$(SHA)" --receipt "$(RECEIPT)" --link-host "$(if $(LINK_HOST),$(LINK_HOST),links.table-us.com)" $(if $(ANDROID_FINGERPRINT),--android-fingerprint "$(ANDROID_FINGERPRINT)",) --start-phase "returning-send"
 
 inspect-mobile-auth:
+	@test -n "$(PLATFORM)" || (echo "PLATFORM=ios or PLATFORM=android is required" && exit 2)
 	@test -n "$(APP)" || (echo "APP=<path-to-app-or-apk> is required" && exit 2)
 	@test -n "$(SHA)" || (echo "SHA=<exact-candidate-sha> is required" && exit 2)
 	@test -n "$(API_URL)" || (echo "API_URL=<HTTPS-staging-api> is required" && exit 2)
 	@test -n "$(SUPABASE_URL)" || (echo "SUPABASE_URL=<HTTPS-staging-supabase> is required" && exit 2)
-	node scripts/inspect-mobile-auth-artifact.mjs --artifact "$(APP)" --sha "$(SHA)" --api-url "$(API_URL)" --supabase-url "$(SUPABASE_URL)" $(if $(FORBIDDEN_ORIGINS),--forbidden-origins "$(FORBIDDEN_ORIGINS)",)
+	@test -n "$(LINK_HOST)" || (echo "LINK_HOST=links.table-us.com is required" && exit 2)
+	@test "$(PLATFORM)" != "android" -o -n "$(ANDROID_FINGERPRINT)" || (echo "ANDROID_FINGERPRINT=<expected-sha256> is required" && exit 2)
+	node scripts/inspect-mobile-auth-artifact.mjs --platform "$(PLATFORM)" --artifact "$(APP)" --sha "$(SHA)" --api-url "$(API_URL)" --supabase-url "$(SUPABASE_URL)" --link-host "$(LINK_HOST)" $(if $(ANDROID_FINGERPRINT),--android-fingerprint "$(ANDROID_FINGERPRINT)",) $(if $(FORBIDDEN_ORIGINS),--forbidden-origins "$(FORBIDDEN_ORIGINS)",) $(if $(INSPECTION_REPORT),--output "$(INSPECTION_REPORT)",)
 
 inspect-mobile-local-e2e:
+	@test -n "$(PLATFORM)" || (echo "PLATFORM=ios or PLATFORM=android is required" && exit 2)
 	@test -n "$(APP)" || (echo "APP=<path-to-app-or-apk> is required" && exit 2)
 	@test -n "$(SHA)" || (echo "SHA=<exact-candidate-sha> is required" && exit 2)
-	node scripts/inspect-mobile-local-e2e-artifact.mjs --artifact "$(APP)" --sha "$(SHA)" $(if $(FORBIDDEN_ORIGINS),--forbidden-origins "$(FORBIDDEN_ORIGINS)",)
+	@test "$(PLATFORM)" != "android" -o -n "$(ANDROID_FINGERPRINT)" || (echo "ANDROID_FINGERPRINT=<expected-sha256> is required" && exit 2)
+	node scripts/inspect-mobile-local-e2e-artifact.mjs --platform "$(PLATFORM)" --artifact "$(APP)" --sha "$(SHA)" $(if $(ANDROID_FINGERPRINT),--android-fingerprint "$(ANDROID_FINGERPRINT)",) $(if $(FORBIDDEN_ORIGINS),--forbidden-origins "$(FORBIDDEN_ORIGINS)",) $(if $(INSPECTION_REPORT),--output "$(INSPECTION_REPORT)",)
 
 inspect-mobile-links:
 	@test -n "$(PLATFORM)" || (echo "PLATFORM=ios or PLATFORM=android is required" && exit 2)
@@ -146,7 +167,9 @@ inspect-mobile-links:
 	@test -n "$(API_URL)" || (echo "API_URL=<HTTPS-staging-api> is required" && exit 2)
 	@test -n "$(SUPABASE_URL)" || (echo "SUPABASE_URL=<HTTPS-staging-supabase> is required" && exit 2)
 	@test -n "$(LINK_HOST)" || (echo "LINK_HOST=links.table-us.com is required" && exit 2)
-	node scripts/inspect-mobile-links-artifact.mjs --platform "$(PLATFORM)" --artifact "$(APP)" --sha "$(SHA)" --api-url "$(API_URL)" --supabase-url "$(SUPABASE_URL)" --link-host "$(LINK_HOST)" $(if $(APPLE_TEAM_ID),--apple-team-id "$(APPLE_TEAM_ID)",) $(if $(ANDROID_FINGERPRINT),--android-fingerprint "$(ANDROID_FINGERPRINT)",) $(if $(FORBIDDEN_ORIGINS),--forbidden-origins "$(FORBIDDEN_ORIGINS)",)
+	@test "$(PLATFORM)" != "ios" -o -n "$(APPLE_TEAM_ID)" || (echo "APPLE_TEAM_ID=<expected-team-id> is required" && exit 2)
+	@test "$(PLATFORM)" != "android" -o -n "$(ANDROID_FINGERPRINT)" || (echo "ANDROID_FINGERPRINT=<expected-sha256> is required" && exit 2)
+	node scripts/inspect-mobile-links-artifact.mjs --platform "$(PLATFORM)" --artifact "$(APP)" --sha "$(SHA)" --api-url "$(API_URL)" --supabase-url "$(SUPABASE_URL)" --link-host "$(LINK_HOST)" $(if $(APPLE_TEAM_ID),--apple-team-id "$(APPLE_TEAM_ID)",) $(if $(ANDROID_FINGERPRINT),--android-fingerprint "$(ANDROID_FINGERPRINT)",) $(if $(FORBIDDEN_ORIGINS),--forbidden-origins "$(FORBIDDEN_ORIGINS)",) $(if $(INSPECTION_REPORT),--output "$(INSPECTION_REPORT)",)
 
 inspect-mobile-readiness:
 	@test -n "$(PLATFORM)" || (echo "PLATFORM=ios or PLATFORM=android is required" && exit 2)
@@ -155,7 +178,9 @@ inspect-mobile-readiness:
 	@test -n "$(API_URL)" || (echo "API_URL=<HTTPS-staging-api> is required" && exit 2)
 	@test -n "$(SUPABASE_URL)" || (echo "SUPABASE_URL=<HTTPS-staging-supabase> is required" && exit 2)
 	@test -n "$(LINK_HOST)" || (echo "LINK_HOST=links.table-us.com is required" && exit 2)
-	node scripts/inspect-mobile-readiness-artifact.mjs --platform "$(PLATFORM)" --artifact "$(APP)" --sha "$(SHA)" --api-url "$(API_URL)" --supabase-url "$(SUPABASE_URL)" --link-host "$(LINK_HOST)" $(if $(APPLE_TEAM_ID),--apple-team-id "$(APPLE_TEAM_ID)",) $(if $(ANDROID_FINGERPRINT),--android-fingerprint "$(ANDROID_FINGERPRINT)",) $(if $(FORBIDDEN_ORIGINS),--forbidden-origins "$(FORBIDDEN_ORIGINS)",)
+	@test "$(PLATFORM)" != "ios" -o -n "$(APPLE_TEAM_ID)" || (echo "APPLE_TEAM_ID=<expected-team-id> is required" && exit 2)
+	@test "$(PLATFORM)" != "android" -o -n "$(ANDROID_FINGERPRINT)" || (echo "ANDROID_FINGERPRINT=<expected-sha256> is required" && exit 2)
+	node scripts/inspect-mobile-readiness-artifact.mjs --platform "$(PLATFORM)" --artifact "$(APP)" --sha "$(SHA)" --api-url "$(API_URL)" --supabase-url "$(SUPABASE_URL)" --link-host "$(LINK_HOST)" $(if $(APPLE_TEAM_ID),--apple-team-id "$(APPLE_TEAM_ID)",) $(if $(ANDROID_FINGERPRINT),--android-fingerprint "$(ANDROID_FINGERPRINT)",) $(if $(FORBIDDEN_ORIGINS),--forbidden-origins "$(FORBIDDEN_ORIGINS)",) $(if $(INSPECTION_REPORT),--output "$(INSPECTION_REPORT)",)
 
 perf:
 	./scripts/perf-budget.sh

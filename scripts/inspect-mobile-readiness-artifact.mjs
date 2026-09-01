@@ -1,12 +1,13 @@
 #!/usr/bin/env node
 
-import { existsSync, mkdtempSync, readFileSync, readdirSync, rmSync, statSync } from "node:fs";
-import { extname, join, resolve } from "node:path";
+import { existsSync, mkdirSync, mkdtempSync, readdirSync, rmSync, statSync, writeFileSync } from "node:fs";
+import { dirname, extname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { spawnSync } from "node:child_process";
 import { tmpdir } from "node:os";
 
 import { validateReadinessAppConfig } from "./readiness-inspection-lib.mjs";
+import { embeddedAppConfiguration, inspectionReport } from "./mobile-artifact-security.mjs";
 
 function parseArgs(argv) {
   const values = {};
@@ -26,40 +27,14 @@ function run(command, args) {
   return `${result.stdout ?? ""}${result.stderr ?? ""}`;
 }
 
-function visitFiles(directory, callback) {
-  for (const entry of readdirSync(directory)) {
-    const current = join(directory, entry);
-    if (statSync(current).isDirectory()) visitFiles(current, callback);
-    else callback(current);
-  }
-}
-
 function extractIosApp(artifact, temporaryRoot) {
   if (statSync(artifact).isDirectory()) return artifact;
   if (extname(artifact) !== ".ipa") throw new Error("iOS artifact must be an .ipa or .app directory");
   run("unzip", ["-qq", artifact, "-d", temporaryRoot]);
   const payload = join(temporaryRoot, "Payload");
-  const app = readdirSync(payload).find((entry) => entry.endsWith(".app"));
-  if (!app) throw new Error("IPA contains no application bundle");
-  return join(payload, app);
-}
-
-function appConfiguration(platform, artifact, temporaryRoot) {
-  if (platform === "android") {
-    const result = spawnSync("unzip", ["-p", artifact, "assets/app.config"], { encoding: "utf8", maxBuffer: 8 * 1024 * 1024 });
-    if (result.error) throw result.error;
-    if (result.status !== 0 || !result.stdout) throw new Error("Android artifact has no embedded Expo app configuration");
-    return result.stdout;
-  }
-  const app = extractIosApp(artifact, temporaryRoot);
-  let configuration;
-  visitFiles(app, (file) => {
-    if (!configuration && (file.endsWith("/assets/app.config") || file.endsWith("/EXConstants.bundle/app.config"))) {
-      configuration = readFileSync(file, "utf8");
-    }
-  });
-  if (!configuration) throw new Error("iOS artifact has no embedded Expo app configuration");
-  return configuration;
+  const apps = readdirSync(payload).filter((entry) => entry.endsWith(".app"));
+  if (apps.length !== 1) throw new Error("IPA must contain exactly one application bundle");
+  return join(payload, apps[0]);
 }
 
 const args = parseArgs(process.argv.slice(2));
@@ -68,6 +43,8 @@ const platform = args.platform;
 if (!existsSync(artifact) || !["ios", "android"].includes(platform) || !args.sha || !args["api-url"] || !args["supabase-url"] || !args["link-host"]) {
   throw new Error("--platform, --artifact, --sha, --api-url, --supabase-url, and --link-host are required");
 }
+if (platform === "ios" && !args["apple-team-id"]) throw new Error("--apple-team-id is required for iOS readiness inspection");
+if (platform === "android" && !args["android-fingerprint"]) throw new Error("--android-fingerprint is required for Android readiness inspection");
 const scriptRoot = resolve(fileURLToPath(new URL(".", import.meta.url)));
 const linkArgs = [
   join(scriptRoot, "inspect-mobile-links-artifact.mjs"),
@@ -77,6 +54,7 @@ const linkArgs = [
   "--api-url", args["api-url"],
   "--supabase-url", args["supabase-url"],
   "--link-host", args["link-host"],
+  "--profile", `readiness-${platform}`,
 ];
 if (args["apple-team-id"]) linkArgs.push("--apple-team-id", args["apple-team-id"]);
 if (args["android-fingerprint"]) linkArgs.push("--android-fingerprint", args["android-fingerprint"]);
@@ -85,15 +63,28 @@ if (args["forbidden-origins"]) linkArgs.push("--forbidden-origins", args["forbid
 const linkInspection = run(process.execPath, linkArgs);
 const temporaryRoot = mkdtempSync(join(tmpdir(), "tableus-readiness-inspection-"));
 try {
-  validateReadinessAppConfig(appConfiguration(platform, artifact, temporaryRoot), {
+  const extractedIosApp = platform === "ios" ? extractIosApp(artifact, temporaryRoot) : artifact;
+  validateReadinessAppConfig(embeddedAppConfiguration(platform, artifact, extractedIosApp), {
     sha: args.sha,
     apiUrl: args["api-url"],
     supabaseUrl: args["supabase-url"],
     linkHost: args["link-host"],
     forbiddenOrigins: (args["forbidden-origins"] ?? "").split(","),
   });
-  process.stdout.write(linkInspection);
-  process.stdout.write(`${JSON.stringify({ platform, profile: `readiness-${platform}`, readiness_configuration: true, inspection_passed: true })}\n`);
+  const signedReport = JSON.parse(linkInspection.trim());
+  const report = inspectionReport({
+    platform,
+    profile: `readiness-${platform}`,
+    candidateSha: args.sha,
+    artifact,
+    signerType: signedReport.signer_type,
+    signerIdentity: signedReport.signer_identity,
+  });
+  if (args.output) {
+    mkdirSync(dirname(resolve(args.output)), { recursive: true });
+    writeFileSync(resolve(args.output), `${JSON.stringify(report, null, 2)}\n`, { mode: 0o600 });
+  }
+  process.stdout.write(`${JSON.stringify(report)}\n`);
 } finally {
   rmSync(temporaryRoot, { recursive: true, force: true });
 }

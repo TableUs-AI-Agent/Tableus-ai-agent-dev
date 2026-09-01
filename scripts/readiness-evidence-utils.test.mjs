@@ -3,6 +3,7 @@ import { mkdtempSync, readFileSync, rmSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import test from "node:test";
+import { createHash } from "node:crypto";
 
 import {
   assertSafeReadinessEvidence,
@@ -13,13 +14,46 @@ import {
 
 const sha = "a".repeat(40);
 const checksum = (character) => character.repeat(64);
+const mobileEvidence = (platform, artifactCharacter) => {
+  const profile = `readiness-${platform}`;
+  const buildId = `local-${platform}`;
+  const artifactSha256 = checksum(artifactCharacter);
+  const receipt = {
+    schema_version: 2,
+    build_runner: "eas-local-build-plugin",
+    platform,
+    profile,
+    candidate_sha: sha,
+    source_tree_sha: "d".repeat(40),
+    build_id: buildId,
+    artifact_sha256: artifactSha256,
+    eas_cli_version: "23.2.0",
+    package_lock_sha256: checksum("e"),
+    host: { os: "darwin", architecture: "arm64" },
+    inspection_report_sha256: checksum("f"),
+    signer_type: platform === "ios" ? "apple-team-id" : "android-sha256-cert",
+    signer_identity: platform === "ios" ? "6MHJN5V9UJ" : "AA:BB:CC",
+    artifact_inspection_passed: true,
+  };
+  return {
+    sha,
+    passed: true,
+    platform,
+    profile,
+    build_id: buildId,
+    artifact_sha256: artifactSha256,
+    inspection_passed: true,
+    receipt_sha256: createHash("sha256").update(JSON.stringify(receipt)).digest("hex"),
+    receipt,
+  };
+};
 const valid = () => ({
   schema_version: 1,
   sha,
   deployments: { railway_id: "railway-deployment", vercel_id: "vercel-deployment" },
   web: { sha, passed: true, deployment_id: "vercel-deployment" },
-  ios: { sha, passed: true, platform: "ios", profile: "readiness-ios", build_id: "local-ios", artifact_sha256: checksum("b"), inspection_passed: true, receipt_sha256: checksum("1") },
-  android: { sha, passed: true, platform: "android", profile: "readiness-android", build_id: "local-android", artifact_sha256: checksum("c"), inspection_passed: true, receipt_sha256: checksum("2") },
+  ios: mobileEvidence("ios", "b"),
+  android: mobileEvidence("android", "c"),
   associations: { sha, passed: true, manifest_sha256: checksum("3") },
   security: { sha, passed: true, scan_id: "scan-id", report_sha256: checksum("4"), critical_findings: 0, high_runtime_findings: 0 },
   deterministic: { sha, passed: true, ios_summary_sha256: checksum("5"), android_summary_sha256: checksum("6") },

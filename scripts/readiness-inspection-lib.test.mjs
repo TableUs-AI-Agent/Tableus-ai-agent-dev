@@ -1,13 +1,13 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 
-import { validateReadinessAppConfig } from "./readiness-inspection-lib.mjs";
+import { validateAuthAppConfig, validateLocalE2EAppConfig, validateReadinessAppConfig, validateTelemetryAppConfig } from "./readiness-inspection-lib.mjs";
 
 const sha = "a".repeat(40);
 const options = {
   sha,
-  apiUrl: "https://api.staging.example",
-  supabaseUrl: "https://project.supabase.co",
+  apiUrl: "https://api-staging-3795.up.railway.app",
+  supabaseUrl: "https://mrwdhdeubdiiydmmvlda.supabase.co",
   linkHost: "links.table-us.com",
   forbiddenOrigins: ["https://api.table-us.com"],
 };
@@ -57,4 +57,43 @@ test("readiness inspection rejects decoys and mutable update authority", () => {
   const updatesEnabled = JSON.parse(valid);
   updatesEnabled.updates = { enabled: true, url: "https://u.expo.dev/attacker" };
   assert.throws(() => validateReadinessAppConfig(JSON.stringify(updatesEnabled), options), /updates disabled/);
+});
+
+test("auth inspection uses active structured values instead of decoy markers", () => {
+  const auth = JSON.parse(valid);
+  Object.assign(auth.extra, { readiness: false, authE2E: true, telemetryE2E: false });
+  assert.equal(validateAuthAppConfig(JSON.stringify(auth), options).extra.authE2E, true);
+
+  auth.extra.apiUrl = "https://attacker.example";
+  auth.decoy = { apiUrl: options.apiUrl, authE2E: true };
+  assert.throws(() => validateAuthAppConfig(JSON.stringify(auth), options), /exact reviewed/);
+});
+
+test("local E2E inspection requires active loopback and mutually exclusive controls", () => {
+  const local = JSON.parse(valid);
+  Object.assign(local.extra, {
+    apiUrl: "http://127.0.0.1:8000",
+    localE2E: true,
+    demoMode: true,
+    readiness: false,
+    authE2E: false,
+    telemetryE2E: false,
+  });
+  assert.equal(validateLocalE2EAppConfig(JSON.stringify(local), { sha }).extra.localE2E, true);
+  local.extra.apiUrl = "https://attacker.example";
+  local.decoy = "http://127.0.0.1:8000";
+  assert.throws(() => validateLocalE2EAppConfig(JSON.stringify(local), { sha }), /loopback API/);
+});
+
+test("telemetry inspection requires only the staging telemetry control", () => {
+  const telemetry = JSON.parse(valid);
+  Object.assign(telemetry.extra, {
+    readiness: false,
+    authE2E: false,
+    telemetryE2E: true,
+    telemetryMode: "staging",
+  });
+  assert.equal(validateTelemetryAppConfig(JSON.stringify(telemetry), options).extra.telemetryE2E, true);
+  telemetry.extra.authE2E = true;
+  assert.throws(() => validateTelemetryAppConfig(JSON.stringify(telemetry), options), /unrelated test control/);
 });

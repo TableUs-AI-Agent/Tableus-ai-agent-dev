@@ -7,9 +7,9 @@ import { fileURLToPath } from "node:url";
 import { createInterface } from "node:readline/promises";
 import { spawnSync } from "node:child_process";
 
-import { artifactChecksum } from "./evidence-utils.mjs";
 import { assertSafeReadinessEvidence, validateStagingReadiness } from "./readiness-evidence-utils.mjs";
 import { RELEASE_ORIGINS, requireReleaseOrigin } from "./release-origins.mjs";
+import { assertArtifactUnchanged, stageVerifiedArtifact } from "./mobile-artifact-security.mjs";
 
 const repoRoot = resolve(fileURLToPath(new URL("..", import.meta.url)));
 const appId = "com.tableus.app";
@@ -73,8 +73,8 @@ const supabaseUrl = args["supabase-url"];
 const sha = args.sha;
 const buildId = args["build-id"];
 const evidenceDir = resolve(args.evidence ?? "");
-if (!["ios", "android"].includes(platform) || !device || !existsSync(artifact) || !apiUrl || !supabaseUrl || !sha || !buildId || !args.evidence) {
-  throw new Error("--platform, --device, --app, --api-url, --supabase-url, --sha, --build-id, and --evidence are required");
+if (!["ios", "android"].includes(platform) || !device || !existsSync(artifact) || !apiUrl || !supabaseUrl || !sha || !buildId || !args.evidence || !args.receipt) {
+  throw new Error("--platform, --device, --app, --api-url, --supabase-url, --sha, --build-id, --receipt, and --evidence are required");
 }
 requireReleaseOrigin(apiUrl, RELEASE_ORIGINS.stagingApi, "Readiness staging API");
 requireReleaseOrigin(supabaseUrl, RELEASE_ORIGINS.stagingSupabase, "Readiness Supabase");
@@ -85,10 +85,24 @@ const readyResponse = await fetch(`${apiUrl.replace(/\/$/, "")}/health/ready`, {
 if (!readyResponse.ok) throw new Error(`Staging readiness failed (${readyResponse.status})`);
 validateStagingReadiness(await readyResponse.json(), sha);
 
+const verificationRoot = mkdtempSync(join(tmpdir(), "tableus-readiness-verified-"));
+process.once("exit", () => rmSync(verificationRoot, { recursive: true, force: true }));
+const verified = stageVerifiedArtifact({
+  artifact,
+  receiptPath: resolve(args.receipt),
+  platform,
+  profile: `readiness-${platform}`,
+  candidateSha: sha,
+  buildId,
+  destination: join(verificationRoot, "install"),
+  signerType: platform === "ios" ? "apple-team-id" : "android-sha256-cert",
+  signerIdentity: platform === "ios" ? args["apple-team-id"] : args["android-fingerprint"],
+});
+
 const inspectorArgs = [
   "scripts/inspect-mobile-readiness-artifact.mjs",
   "--platform", platform,
-  "--artifact", artifact,
+  "--artifact", verified.path,
   "--sha", sha,
   "--api-url", apiUrl,
   "--supabase-url", supabaseUrl,
@@ -98,6 +112,7 @@ if (args["apple-team-id"]) inspectorArgs.push("--apple-team-id", args["apple-tea
 if (args["android-fingerprint"]) inspectorArgs.push("--android-fingerprint", args["android-fingerprint"]);
 if (args["forbidden-origins"]) inspectorArgs.push("--forbidden-origins", args["forbidden-origins"]);
 run(process.execPath, inspectorArgs);
+assertArtifactUnchanged(verified.path, verified.digest);
 
 const apple = await association("/.well-known/apple-app-site-association");
 const android = await association("/.well-known/assetlinks.json");
@@ -117,10 +132,12 @@ const knownAdb = "/opt/homebrew/share/android-commandlinetools/platform-tools/ad
 const adb = process.env.ADB || (existsSync(knownAdb) ? knownAdb : "adb");
 try {
   if (platform === "ios") {
-    const installApp = extractIosApp(artifact, temporaryRoot);
+    assertArtifactUnchanged(verified.path, verified.digest);
+    const installApp = extractIosApp(verified.path, temporaryRoot);
     run("xcrun", ["devicectl", "device", "install", "app", "--device", device, installApp], { env: { DEVELOPER_DIR: developerDir } });
   } else {
-    run(adb, ["-s", device, "install", "-r", artifact]);
+    assertArtifactUnchanged(verified.path, verified.digest);
+    run(adb, ["-s", device, "install", "-r", verified.path]);
     run(adb, ["-s", device, "shell", "pm", "verify-app-links", "--re-verify", appId]);
   }
 
@@ -145,7 +162,7 @@ try {
       platform,
       build_id: buildId,
       artifact_name: basename(artifact),
-      artifact_sha256: artifactChecksum(artifact),
+      artifact_sha256: verified.digest,
       inspection_passed: true,
       association_passed: true,
       staging_readiness_passed: true,
@@ -163,4 +180,5 @@ try {
   }
 } finally {
   rmSync(temporaryRoot, { recursive: true, force: true });
+  rmSync(verificationRoot, { recursive: true, force: true });
 }

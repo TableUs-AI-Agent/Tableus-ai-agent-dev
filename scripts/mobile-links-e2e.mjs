@@ -6,8 +6,8 @@ import { basename, dirname, extname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { spawnSync } from "node:child_process";
 
-import { artifactChecksum } from "./evidence-utils.mjs";
 import { promptSecret, promptVisible } from "./prompt-utils.mjs";
+import { assertArtifactUnchanged, stageVerifiedArtifact } from "./mobile-artifact-security.mjs";
 
 const repoRoot = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const flowSource = join(repoRoot, "mobile", ".maestro-links");
@@ -92,9 +92,37 @@ const buildId = args["build-id"];
 const origin = new URL(args.origin ?? "").origin;
 const evidenceDir = resolve(args.evidence ?? "");
 if (!new Set(["ios", "android"]).has(platform)) throw new Error("--platform must be ios or android");
-if (!device || !existsSync(appPath) || !buildId || !args.evidence) throw new Error("--device, --app, --build-id, and --evidence are required");
+if (!device || !existsSync(appPath) || !buildId || !args.evidence || !args.sha || !args.receipt || !args["api-url"] || !args["supabase-url"]) {
+  throw new Error("--device, --app, --build-id, --evidence, --sha, --receipt, --api-url, and --supabase-url are required");
+}
+if (platform === "ios" && !args["apple-team-id"]) throw new Error("--apple-team-id is required for iOS link evidence");
+if (platform === "android" && !args["android-fingerprint"]) throw new Error("--android-fingerprint is required for Android link evidence");
 if (origin !== expectedOrigin || args.origin !== expectedOrigin) throw new Error(`Verified-link evidence requires ${expectedOrigin}.`);
 await preflight(platform);
+
+const verificationRoot = mkdtempSync(join(tmpdir(), "tableus-mobile-links-verified-"));
+process.once("exit", () => rmSync(verificationRoot, { recursive: true, force: true }));
+const verified = stageVerifiedArtifact({
+  artifact: appPath,
+  receiptPath: resolve(args.receipt),
+  platform,
+  profile: `links-test-${platform}`,
+  candidateSha: args.sha,
+  buildId,
+  destination: join(verificationRoot, "install"),
+  signerType: platform === "ios" ? "apple-team-id" : "android-sha256-cert",
+  signerIdentity: platform === "ios" ? args["apple-team-id"] : args["android-fingerprint"],
+});
+const inspectorArgs = [
+  "scripts/inspect-mobile-links-artifact.mjs", "--platform", platform, "--artifact", verified.path,
+  "--sha", args.sha, "--api-url", args["api-url"], "--supabase-url", args["supabase-url"],
+  "--link-host", "links.table-us.com", "--profile", `links-test-${platform}`,
+];
+if (args["apple-team-id"]) inspectorArgs.push("--apple-team-id", args["apple-team-id"]);
+if (args["android-fingerprint"]) inspectorArgs.push("--android-fingerprint", args["android-fingerprint"]);
+if (args["forbidden-origins"]) inspectorArgs.push("--forbidden-origins", args["forbidden-origins"]);
+run(process.execPath, inspectorArgs);
+assertArtifactUnchanged(verified.path, verified.digest);
 
 const email = (await promptSecret("Returning approved account email: ")).trim().toLowerCase();
 const joinUrl = (await promptSecret("Freshly rotated old private join URL (not retained): ")).trim();
@@ -143,12 +171,14 @@ let appleDiagnosticsApproved = false;
 let notesTapConfirmed = false;
 try {
   if (platform === "ios") {
-    const installApp = extractIosApp(appPath, installRoot);
+    assertArtifactUnchanged(verified.path, verified.digest);
+    const installApp = extractIosApp(verified.path, installRoot);
     run("xcrun", ["devicectl", "device", "install", "app", "--device", device, installApp], { env: { DEVELOPER_DIR: developerDir }, secrets });
     appleDiagnosticsApproved = (await promptVisible(`Did Apple Associated Domains Diagnostics approve ${expectedOrigin}? Type yes: `)).trim().toLowerCase() === "yes";
     if (!appleDiagnosticsApproved) throw new Error("Apple Associated Domains Diagnostics approval is required.");
   } else {
-    run(adb, ["-s", device, "install", "-r", appPath], { secrets });
+    assertArtifactUnchanged(verified.path, verified.digest);
+    run(adb, ["-s", device, "install", "-r", verified.path], { secrets });
     run(adb, ["-s", device, "shell", "pm", "set-app-links", "--package", appId, "0", "all"], { secrets });
     run(adb, ["-s", device, "shell", "pm", "verify-app-links", "--re-verify", appId], { secrets });
     await new Promise((resolveWait) => setTimeout(resolveWait, 20_000));
@@ -168,15 +198,13 @@ try {
     if (!notesTapConfirmed) throw new Error("A Notes or Messages Universal Link tap is required.");
   }
 
-  const gitResult = spawnSync("git", ["rev-parse", "HEAD"], { cwd: repoRoot, encoding: "utf8" });
-  if (gitResult.status !== 0) throw new Error("Could not resolve the candidate SHA.");
   const summary = {
     platform,
     device,
     build_id: buildId,
-    git_sha: gitResult.stdout.trim(),
+    git_sha: args.sha,
     artifact: basename(appPath),
-    artifact_sha256: artifactChecksum(appPath),
+    artifact_sha256: verified.digest,
     app_id: appId,
     link_origin: expectedOrigin,
     association_files_valid: true,
@@ -195,6 +223,7 @@ try {
   process.stdout.write(`TableUs ${platform} verified-link journey passed.\n`);
 } finally {
   rmSync(temporaryRoot, { recursive: true, force: true });
+  rmSync(verificationRoot, { recursive: true, force: true });
   removeNewEntries(maestroTests, testsBefore);
   removeNewEntries(maestroLogs, logsBefore);
 }

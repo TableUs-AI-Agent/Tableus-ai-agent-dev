@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
-import { existsSync, mkdtempSync, readFileSync, readdirSync, rmSync, statSync, writeFileSync } from "node:fs";
-import { extname, join, resolve } from "node:path";
+import { existsSync, mkdirSync, mkdtempSync, readFileSync, readdirSync, rmSync, statSync, writeFileSync } from "node:fs";
+import { dirname, extname, join, resolve } from "node:path";
 import { tmpdir } from "node:os";
 import { spawnSync } from "node:child_process";
 import {
@@ -14,6 +14,7 @@ import {
   selectProfileAuthorizedSigner,
 } from "./mobile-links-inspection-lib.mjs";
 import { validateHostedAppConfig } from "./readiness-inspection-lib.mjs";
+import { embeddedAppConfiguration, inspectionReport } from "./mobile-artifact-security.mjs";
 
 function parseArgs(argv) {
   const result = {};
@@ -61,29 +62,6 @@ function artifactBytes(path) {
   return Buffer.concat(chunks);
 }
 
-function appConfigurationBytes(platform, artifact, inspectionPath) {
-  if (platform === "android") {
-    const result = spawnSync("unzip", ["-p", artifact, "assets/app.config"], {
-      encoding: null,
-      maxBuffer: 8 * 1024 * 1024,
-    });
-    if (result.error) throw result.error;
-    if (result.status !== 0 || !result.stdout.length) {
-      throw new Error("Android artifact has no embedded Expo app configuration.");
-    }
-    return result.stdout;
-  }
-  let configuration;
-  const configurationSuffixes = ["/assets/app.config", "/EXConstants.bundle/app.config"];
-  visitFiles(inspectionPath, (file) => {
-    if (!configuration && configurationSuffixes.some((suffix) => file.endsWith(suffix))) {
-      configuration = readFileSync(file);
-    }
-  });
-  if (!configuration) throw new Error("iOS artifact has no embedded Expo app configuration.");
-  return configuration;
-}
-
 function findExecutable(name, candidates = []) {
   const discovered = spawnSync("which", [name], { encoding: "utf8" });
   if (discovered.status === 0 && discovered.stdout.trim()) return discovered.stdout.trim();
@@ -128,9 +106,9 @@ function extractIosApp(artifact, temporaryRoot) {
   if (extname(artifact) !== ".ipa") throw new Error("iOS artifact must be an .ipa or .app directory.");
   run("unzip", ["-qq", artifact, "-d", temporaryRoot]);
   const payload = join(temporaryRoot, "Payload");
-  const app = readdirSync(payload).find((entry) => entry.endsWith(".app"));
-  if (!app) throw new Error("IPA contains no application bundle.");
-  return join(payload, app);
+  const apps = readdirSync(payload).filter((entry) => entry.endsWith(".app"));
+  if (apps.length !== 1) throw new Error("IPA must contain exactly one application bundle.");
+  return join(payload, apps[0]);
 }
 
 const args = parseArgs(process.argv.slice(2));
@@ -143,13 +121,16 @@ if (!existsSync(artifact) || !["ios", "android"].includes(platform) || !args.sha
 if (!args["api-url"].startsWith("https://") || !args["supabase-url"].startsWith("https://") || host.includes(":")) {
   throw new Error("Verified-link artifacts require HTTPS services and a hostname without a port.");
 }
+if (platform === "ios" && !args["apple-team-id"]) throw new Error("--apple-team-id is required for signed iOS inspection");
+if (platform === "android" && !args["android-fingerprint"]) throw new Error("--android-fingerprint is required for signed Android inspection");
+const profile = args.profile ?? `links-test-${platform}`;
 
 const temporaryRoot = mkdtempSync(join(tmpdir(), "tableus-link-inspection-"));
 try {
   const inspectionPath = platform === "ios" ? extractIosApp(artifact, temporaryRoot) : artifact;
   const content = artifactBytes(inspectionPath).toString("latin1");
-  const appConfiguration = appConfigurationBytes(platform, artifact, inspectionPath).toString("utf8");
-  validateHostedAppConfig(appConfiguration, {
+  const appConfiguration = embeddedAppConfiguration(platform, artifact, inspectionPath);
+  const parsedConfiguration = validateHostedAppConfig(appConfiguration, {
     sha: args.sha,
     apiUrl: args["api-url"],
     supabaseUrl: args["supabase-url"],
@@ -173,8 +154,8 @@ try {
       throw new Error(`Embedded app configuration contains a loopback origin: ${loopback}`);
     }
   }
-  if (!/"localE2E":false/.test(appConfiguration)) throw new Error("Artifact does not prove localE2E=false.");
-  if (!/"authE2E":false/.test(appConfiguration)) throw new Error("Artifact does not prove authE2E=false.");
+  if (parsedConfiguration.extra.localE2E !== false) throw new Error("Artifact does not prove localE2E=false.");
+  if (parsedConfiguration.extra.authE2E !== false) throw new Error("Artifact does not prove authE2E=false.");
 
   if (platform === "ios") {
     verifyIosCodeSignature(inspectionPath);
@@ -193,7 +174,7 @@ try {
     const teamMatch = entitlements.match(/\[Key\] com\.apple\.developer\.team-identifier[\s\S]*?\[String\] ([A-Z0-9]{10})/);
     if (!teamMatch) throw new Error("Signed iOS artifact has no Apple Team ID entitlement.");
     const teamId = teamMatch[1];
-    if (args["apple-team-id"] && teamId !== args["apple-team-id"]) throw new Error("Apple Team ID does not match the expected association.");
+    if (teamId !== args["apple-team-id"]) throw new Error("Apple Team ID does not match the expected association.");
 
     const bundleId = run("plutil", ["-extract", "CFBundleIdentifier", "raw", join(inspectionPath, "Info.plist")]).trim();
     const profilePath = join(temporaryRoot, "verified-mobileprovision.plist");
@@ -247,14 +228,19 @@ try {
       profileFingerprints.push(fingerprintDerCertificate(certificate.trim()));
     }
     selectProfileAuthorizedSigner(certificateRecordsFromPem(readFileSync(appSignerPath, "utf8")), profileFingerprints, teamId);
-    process.stdout.write(`${JSON.stringify({ platform, apple_team_id: teamId, associated_domain: host, inspection_passed: true })}\n`);
+    const report = inspectionReport({ platform, profile, candidateSha: args.sha, artifact, signerType: "apple-team-id", signerIdentity: teamId });
+    if (args.output) {
+      mkdirSync(dirname(resolve(args.output)), { recursive: true });
+      writeFileSync(resolve(args.output), `${JSON.stringify(report, null, 2)}\n`, { mode: 0o600 });
+    }
+    process.stdout.write(`${JSON.stringify(report)}\n`);
   } else {
     const apksigner = latestBuildTool("apksigner");
     const signature = run(apksigner, ["verify", "--verbose", "--print-certs", artifact]);
     const digestMatch = signature.match(/Signer #1 certificate SHA-256 digest:\s*([0-9a-f]+)/i);
     if (!digestMatch) throw new Error("Could not read the APK signing fingerprint.");
     const fingerprint = normalizeFingerprint(digestMatch[1]);
-    if (args["android-fingerprint"] && fingerprint !== normalizeFingerprint(args["android-fingerprint"])) {
+    if (fingerprint !== normalizeFingerprint(args["android-fingerprint"])) {
       throw new Error("Android signing fingerprint does not match the expected association.");
     }
     const apkanalyzer = findExecutable("apkanalyzer", [
@@ -269,7 +255,12 @@ try {
       if (!manifest.includes(marker)) throw new Error(`Android manifest is missing verified-link marker: ${marker}`);
     }
     if (manifest.includes("/auth/confirm")) throw new Error("Android artifact must not intercept the web auth callback.");
-    process.stdout.write(`${JSON.stringify({ platform, android_sha256_cert_fingerprint: fingerprint, verified_link_host: host, inspection_passed: true })}\n`);
+    const report = inspectionReport({ platform, profile, candidateSha: args.sha, artifact, signerType: "android-sha256-cert", signerIdentity: fingerprint });
+    if (args.output) {
+      mkdirSync(dirname(resolve(args.output)), { recursive: true });
+      writeFileSync(resolve(args.output), `${JSON.stringify(report, null, 2)}\n`, { mode: 0o600 });
+    }
+    process.stdout.write(`${JSON.stringify(report)}\n`);
   }
 } finally {
   rmSync(temporaryRoot, { recursive: true, force: true });

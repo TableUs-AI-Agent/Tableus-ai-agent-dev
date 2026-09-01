@@ -27,8 +27,7 @@ class Identity:
 def _jwks_client(jwks_url: str) -> PyJWKClient:
     return PyJWKClient(
         jwks_url,
-        cache_keys=True,
-        max_cached_keys=16,
+        cache_keys=False,
         lifespan=300,
         timeout=3,
     )
@@ -37,7 +36,6 @@ def _jwks_client(jwks_url: str) -> PyJWKClient:
 _UNKNOWN_KID_TTL_SECONDS = 30.0
 _UNKNOWN_KID_MAX_ENTRIES = 256
 _unknown_kids: OrderedDict[tuple[str, str], float] = OrderedDict()
-_known_signing_keys: OrderedDict[tuple[str, str], object] = OrderedDict()
 _last_unknown_refresh: dict[str, float] = {}
 _jwks_refresh_locks: dict[str, asyncio.Lock] = {}
 
@@ -72,10 +70,6 @@ def _remember_unknown_kid(jwks_url: str, key_id: str, now: float) -> None:
 
 async def _get_signing_key(jwks_url: str, token: str):
     key_id = _validated_key_id(token)
-    known = _known_signing_keys.get((jwks_url, key_id))
-    if known is not None:
-        _known_signing_keys.move_to_end((jwks_url, key_id))
-        return known
     now = time.monotonic()
     _prune_unknown_kids(now)
     if _unknown_kids.get((jwks_url, key_id), 0) > now:
@@ -83,10 +77,6 @@ async def _get_signing_key(jwks_url: str, token: str):
 
     lock = _jwks_refresh_locks.setdefault(jwks_url, asyncio.Lock())
     async with lock:
-        known = _known_signing_keys.get((jwks_url, key_id))
-        if known is not None:
-            _known_signing_keys.move_to_end((jwks_url, key_id))
-            return known
         now = time.monotonic()
         _prune_unknown_kids(now)
         if _unknown_kids.get((jwks_url, key_id), 0) > now:
@@ -95,14 +85,10 @@ async def _get_signing_key(jwks_url: str, token: str):
         if now - last_unknown < _UNKNOWN_KID_TTL_SECONDS:
             raise HTTPException(status_code=401, detail="Invalid or expired session")
         try:
-            signing_key = await asyncio.wait_for(
+            return await asyncio.wait_for(
                 asyncio.to_thread(_jwks_client(jwks_url).get_signing_key_from_jwt, token),
                 timeout=4,
             )
-            _known_signing_keys[(jwks_url, key_id)] = signing_key
-            while len(_known_signing_keys) > 64:
-                _known_signing_keys.popitem(last=False)
-            return signing_key
         except (PyJWKClientError, TimeoutError) as exc:
             _last_unknown_refresh[jwks_url] = now
             _remember_unknown_kid(jwks_url, key_id, now)

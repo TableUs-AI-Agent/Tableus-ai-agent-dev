@@ -48,7 +48,8 @@ production deployment, store submission, or cohort activation. Those remain
 separate explicit milestones after this readiness packet is merged.
 
 The next readiness candidate must replace security-blocked `d0955f5`, local-only
-superseded remediation `5206303`, and security-blocked full-scan SHA `b2823652`.
+superseded remediation `5206303`, security-blocked full-scan SHA `b2823652`, and
+security-blocked candidate `9fbdf48`.
 It keeps
 the corrected Android vote/retry automation and integrated Expo/iOS/Android
 preflight, and adds bounded transport-source/global request limiting, reusable
@@ -61,5 +62,10 @@ pins all client trust origins and EAS/OTA authority, bounds health/body/JWKS
 work, serializes idempotent and plan-state races, caps review and paid-Places
 growth, removes provider-backed mobile polling, and validates cumulative
 evidence with closed schemas.
+It must also prove bounded JWKS key revocation and an end-to-end mobile artifact
+trust chain: fresh detached exact-SHA build, one structured active config,
+mandatory platform signer, digest-bound inspection/receipt/private copy, and
+same-byte installation. Cumulative evidence parses the complete version-two
+receipt.
 Run a fresh exact-SHA repository scan and `make ready`; only then may Railway,
 Vercel, live-provider, six-artifact, and device evidence restart.

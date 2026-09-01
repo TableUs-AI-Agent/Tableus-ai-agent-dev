@@ -7,9 +7,9 @@ import { basename, dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { spawnSync } from "node:child_process";
 
-import { artifactChecksum } from "./evidence-utils.mjs";
 import { promptSecret } from "./prompt-utils.mjs";
 import { RELEASE_ORIGINS, requireReleaseOrigin } from "./release-origins.mjs";
+import { assertArtifactUnchanged, stageVerifiedArtifact } from "./mobile-artifact-security.mjs";
 
 const repoRoot = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const flowSource = join(repoRoot, "mobile", ".maestro-auth");
@@ -67,31 +67,34 @@ const platform = args.platform;
 const device = args.device;
 const appPath = resolve(args.app ?? "");
 const apiUrl = args["api-url"] ?? process.env.EXPO_PUBLIC_API_URL ?? "";
+const supabaseUrl = args["supabase-url"] ?? "";
+const candidateSha = args.sha;
 const buildId = args["build-id"];
 const evidenceDir = resolve(args.evidence ?? "");
 const phases = ["invalid-invite", "signup-send", "verify-signup", "persistence", "refresh", "foreground", "sign-out", "returning-send", "returning-verify", "account-controls"];
 const startPhase = args["start-phase"] ?? phases[0];
 if (!new Set(["ios", "android"]).has(platform)) throw new Error("--platform must be ios or android");
-if (!device || !existsSync(appPath) || !buildId || !args.evidence) throw new Error("--device, --app, --build-id, and --evidence are required");
+if (!device || !existsSync(appPath) || !buildId || !args.evidence || !candidateSha || !args.receipt || !supabaseUrl) {
+  throw new Error("--device, --app, --build-id, --evidence, --sha, --receipt, and --supabase-url are required");
+}
+if (platform === "android" && !args["android-fingerprint"]) throw new Error("--android-fingerprint is required for Android auth evidence");
 const startPhaseIndex = phases.indexOf(startPhase);
 if (startPhaseIndex < 0) throw new Error(`--start-phase must be one of: ${phases.join(", ")}`);
 const readiness = await preflight(apiUrl);
 
-const email = (await promptSecret("Test account email: ")).trim().toLowerCase();
 const signupWillRun = startPhaseIndex <= phases.indexOf("signup-send");
-const displayName = signupWillRun ? (await promptSecret("Display name: ")).trim() : "";
-const invite = signupWillRun ? (await promptSecret("One-use invite code: ")).trim() : "";
-if (!email || (signupWillRun && (!displayName || !invite))) {
-  throw new Error("Email is required, and signup runs also require display name and invite.");
-}
-
 const temporaryRoot = mkdtempSync(join(tmpdir(), "tableus-mobile-auth-e2e-"));
 const flows = join(temporaryRoot, "flows");
+const installRoot = join(temporaryRoot, "install");
 cpSync(flowSource, flows, { recursive: true });
 mkdirSync(evidenceDir, { recursive: true });
+mkdirSync(installRoot, { recursive: true, mode: 0o700 });
 const joinToken = randomBytes(24).toString("base64url");
 const invalidInvite = `invalid-${randomBytes(12).toString("hex")}`;
-const secrets = [email, displayName, invite, joinToken, invalidInvite];
+const secrets = [joinToken, invalidInvite];
+let email = "";
+let displayName = "";
+let invite = "";
 const maestroEnvironment = {
   MAESTRO_CLI_NO_ANALYTICS: "1",
   MAESTRO_CLI_ANALYSIS_NOTIFICATION_DISABLED: "true",
@@ -125,8 +128,36 @@ function shouldRun(phase) {
 }
 
 try {
-  if (platform === "ios") run("xcrun", ["simctl", "install", device, appPath], { env: { DEVELOPER_DIR: developerDir } });
-  else run(adb, ["-s", device, "install", "-r", appPath]);
+  const verified = stageVerifiedArtifact({
+    artifact: appPath,
+    receiptPath: resolve(args.receipt),
+    platform,
+    profile: `auth-test-${platform}`,
+    candidateSha,
+    buildId,
+    destination: installRoot,
+    signerType: platform === "ios" ? "ios-simulator" : "android-sha256-cert",
+    signerIdentity: platform === "ios" ? appId : args["android-fingerprint"],
+  });
+  const inspectorArgs = [
+    "scripts/inspect-mobile-auth-artifact.mjs", "--platform", platform, "--artifact", verified.path,
+    "--sha", candidateSha, "--api-url", apiUrl, "--supabase-url", supabaseUrl,
+    "--link-host", args["link-host"] ?? "links.table-us.com",
+  ];
+  if (args["android-fingerprint"]) inspectorArgs.push("--android-fingerprint", args["android-fingerprint"]);
+  if (args["forbidden-origins"]) inspectorArgs.push("--forbidden-origins", args["forbidden-origins"]);
+  run(process.execPath, inspectorArgs);
+  assertArtifactUnchanged(verified.path, verified.digest);
+  if (platform === "ios") run("xcrun", ["simctl", "install", device, verified.path], { env: { DEVELOPER_DIR: developerDir } });
+  else run(adb, ["-s", device, "install", "-r", verified.path]);
+
+  email = (await promptSecret("Test account email: ")).trim().toLowerCase();
+  displayName = signupWillRun ? (await promptSecret("Display name: ")).trim() : "";
+  invite = signupWillRun ? (await promptSecret("One-use invite code: ")).trim() : "";
+  if (!email || (signupWillRun && (!displayName || !invite))) {
+    throw new Error("Email is required, and signup runs also require display name and invite.");
+  }
+  secrets.push(email, displayName, invite);
 
   if (shouldRun("invalid-invite")) flow("invalid-invite.yml", { INVALID_INVITE: invalidInvite, DISPLAY_NAME: displayName, EMAIL: email });
   if (shouldRun("signup-send")) flow("signup-send.yml", { INVITE: invite, DISPLAY_NAME: displayName, EMAIL: email, JOIN_TOKEN: joinToken });
@@ -152,15 +183,13 @@ try {
   }
   if (shouldRun("account-controls")) flow("account-controls.yml");
 
-  const gitResult = spawnSync("git", ["rev-parse", "HEAD"], { cwd: repoRoot, encoding: "utf8" });
-  if (gitResult.status !== 0) throw new Error("Could not resolve the candidate SHA.");
   const summary = {
     platform,
     device,
     build_id: buildId,
-    git_sha: gitResult.stdout.trim(),
+    git_sha: candidateSha,
     artifact: basename(appPath),
-    artifact_sha256: artifactChecksum(appPath),
+    artifact_sha256: verified.digest,
     api_origin: new URL(apiUrl).origin,
     app_id: appId,
     provider_mode: readiness.provider_mode,

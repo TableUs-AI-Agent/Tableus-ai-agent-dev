@@ -117,6 +117,22 @@ and migration roles, review and paid-Places ceilings, no provider-backed mobile
 polling, and exact closed-schema evidence. Focused tests are green; `make ready`,
 candidate freeze, and a fresh exact-SHA scan remain.
 
+Replacement candidate `9fbdf48afb237ae3c831d4f90798553cdc8672ab` passed
+`make ready`, but sealed scan `b8e34c01-ad8c-4bec-8d1d-f5212f94570d`
+reported four distinct high-severity root causes across JWKS revocation and the
+local mobile artifact trust chain. It is security-blocked and will not be
+deployed. Current remediation removes indefinite outer signing-key retention,
+requires structured single-config/native-signer inspection, binds device
+installation to a verified private artifact copy and version-two receipt, and
+replaces post-hoc receipt generation with an isolated detached exact-SHA build
+orchestrator. Cumulative evidence now validates the complete receipt rather than
+accepting a caller-supplied pass flag or checksum alone. Focused regressions are
+green. Formal remediation diff scan
+`9c5756d1-65d2-4c2f-8641-125352d5c935` found that PyJWT's separately enabled
+per-key LRU still had no TTL; the replacement now disables that tier and tests
+the real configured client rather than a cache-free fake. The replacement still
+requires the full repository gate and a fresh sealed scan.
+
 ## Objective
 
 Close the remaining pre-production gates without changing the public API,

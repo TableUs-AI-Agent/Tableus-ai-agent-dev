@@ -90,11 +90,14 @@
   response is truncated. Gated local fault evidence uses a 10-second deadline;
   production-shaped mobile builds use 45 seconds so bounded server-side live
   provider retries can complete before an ambiguous failure is shown.
-- Deterministic simulator/emulator evidence may use `eas build --local` when
-  hosted EAS test-build allowance is unavailable. `make local-mobile-build-receipt`
-  records only the exact candidate SHA, sanitized local build ID/profile, artifact
-  checksum, EAS CLI version, host OS/architecture, and artifact-inspection result.
-  Local receipts do not replace hosted EAS metadata for production or store builds.
+- Deterministic and staging evidence may use the memory-bounded
+  `make local-mobile-build` orchestrator when hosted EAS build allowance is
+  unavailable. It creates a fresh detached exact-SHA worktree, installs the
+  frozen dependency graph, builds one profile, parses exactly one active Expo
+  configuration plus effective native transport/signing state, and exports the
+  artifact only after a digest-bound inspection report and version-two receipt
+  pass. Direct post-hoc receipt generation is refused. Local receipts do not
+  replace hosted EAS metadata for production or store builds.
 - Dedicated `auth-test-ios` and `auth-test-android` EAS profiles use the preview
   environment with Supabase auth and deterministic staging providers. They
   compile without demo identity configuration, loopback API defaults, cleartext
@@ -351,10 +354,27 @@
   rejects email-less hosted invite redemption, separates production runtime
   and migration credentials, caps review storage, limits cumulative paid
   Places attempts, removes provider-backed mobile polling, and makes cumulative
-  evidence fail closed on unknown or incomplete fields. Focused backend,
-  domain, web, mobile, and release-tool tests pass. A clean `make ready`, source
-  candidate freeze, and fresh exact-SHA repository scan remain before any
-  external action.
+  evidence fail closed on unknown or incomplete fields. Candidate
+  `9fbdf48afb237ae3c831d4f90798553cdc8672ab` passed `make ready`, then sealed
+  full scan `b8e34c01-ad8c-4bec-8d1d-f5212f94570d` reviewed 392 files through
+  40 independent reviews. Its 99 raw findings contained no critical result but
+  identified four distinct high-severity root causes: an unexpired outer JWKS
+  key cache, marker/decoy-based mobile inspection, device installation not
+  bound to inspected bytes, and post-hoc receipts that could miss staged or
+  untracked build inputs. That SHA is blocked. Active remediation removes the
+  outer cache in favor of PyJWT's bounded JWKS cache; validates one canonical
+  active Expo config and mandatory native signer; binds inspected, privately
+  staged, and installed bytes to one receipt/digest; builds from a fresh
+  detached exact-SHA worktree; and makes cumulative evidence parse and
+  authenticate the full receipt. Focused backend and release-tool security
+  regressions are green. Repository-wide checks, replacement freeze, and a new
+  exact-SHA full scan remain before any external action. Formal remediation
+  diff scan `9c5756d1-65d2-4c2f-8641-125352d5c935` then identified one remaining
+  medium authentication-lifecycle issue: PyJWT's optional per-key LRU has no
+  TTL even when its JWK-set cache is bounded. The replacement disables that
+  per-key tier and now behavior-tests the real configured client across a
+  same-`kid` replacement. A new clean scan snapshot is required after this
+  correction.
 
 ## External dependencies not provisioned in source
 

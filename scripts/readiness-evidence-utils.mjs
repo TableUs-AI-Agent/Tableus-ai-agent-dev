@@ -1,5 +1,8 @@
 import { mkdirSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
+import { createHash } from "node:crypto";
+
+import { validateBuildReceipt } from "./mobile-artifact-security.mjs";
 
 const SHA_PATTERN = /^[0-9a-f]{40}$/;
 const CHECKSUM_PATTERN = /^[0-9a-f]{64}$/;
@@ -78,7 +81,7 @@ export function validateCumulativeReadinessInput(value, expectedSha) {
     const mobile = value[label];
     requireExactKeys(mobile, [
       "sha", "passed", "platform", "profile", "build_id", "artifact_sha256",
-      "inspection_passed", "receipt_sha256",
+      "inspection_passed", "receipt_sha256", "receipt",
     ], label);
     requireSource(mobile, label, expectedSha);
     if (mobile.platform !== platform || mobile.profile !== profile) throw new Error(`${label} platform or profile is invalid`);
@@ -86,6 +89,17 @@ export function validateCumulativeReadinessInput(value, expectedSha) {
     requireChecksum(mobile.artifact_sha256, `${label}.artifact_sha256`);
     requireChecksum(mobile.receipt_sha256, `${label}.receipt_sha256`);
     requireBoolean(mobile.inspection_passed, `${label}.inspection_passed`);
+    validateBuildReceipt(mobile.receipt, {
+      platform,
+      profile,
+      candidate_sha: expectedSha,
+      build_id: mobile.build_id,
+      artifact_sha256: mobile.artifact_sha256,
+    });
+    const canonicalReceiptSha256 = createHash("sha256").update(JSON.stringify(mobile.receipt)).digest("hex");
+    if (canonicalReceiptSha256 !== mobile.receipt_sha256) {
+      throw new Error(`${label} receipt checksum does not authenticate the parsed receipt`);
+    }
   }
 
   requireExactKeys(value.associations, ["sha", "passed", "manifest_sha256"], "associations");
