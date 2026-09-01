@@ -6,7 +6,7 @@ not be inferred from a passing test.
 
 ## Source and dependency controls
 
-- [x] Candidate SHA `069473c24e7921e5b4b2ad51faa04e71899721ad`
+- [x] Candidate SHA `d025b567447cb2226233e49aca33994c1945aae9`
   recorded after a clean `make ready`.
 - [ ] Public CI passes at that exact SHA.
 - [x] Expo SDK remains 57; React Native remains 0.86.2.
@@ -26,10 +26,14 @@ not be inferred from a passing test.
   20 changed security files at `3a215e7`. Deep scan
   `2482f6f3-b05c-4c40-bc9f-e5d5a0ec41a0` was canceled for disproportionate
   usage; its unsealed candidates were manually consolidated and reviewed. The
-  local replacement passes `make ready`. Frozen candidate `069473c` passed
+  local replacement passes `make ready`. Candidate `069473c` passed
   focused exact-diff scan `528a703f-7ff1-4505-828d-1a8b1de1fdc5` with complete
-  coverage and zero findings. No additional deep or diff scan is authorized
-  without separate owner confirmation.
+  coverage and zero findings. Its public CI run `33566981168` then failed only
+  because strict hosted-origin validation also covered Playwright's loopback
+  rewrite. Replacement candidate `d025b56` confines loopback acceptance to
+  credential-free non-production origins and adds production fail-closed tests;
+  focused validation and `make ready` are green. No additional deep or diff scan
+  is authorized without separate owner confirmation.
 - [x] GitHub Actions, CI service images, and backend OCI inputs are pinned to
   immutable commits or multi-platform digests with executable policy tests.
 - [ ] Runtime bundle inspection finds no service-role material, loopback origin,
@@ -100,7 +104,7 @@ not be inferred from a passing test.
 
 Complete only after the named person actually confirms each item.
 
-- Source candidate SHA: `069473c24e7921e5b4b2ad51faa04e71899721ad`.
+- Source candidate SHA: `d025b567447cb2226233e49aca33994c1945aae9`.
   This checklist update is an evidence-only descendant and does not change the
   reviewed source tree.
 - Security review report ID: focused exact-diff report

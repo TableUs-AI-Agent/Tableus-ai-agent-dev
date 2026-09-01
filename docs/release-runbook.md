@@ -738,9 +738,13 @@ and one exact-candidate diff review. Deep scan
 and its unsealed candidates are not accepted findings. Do not resume it or start
 another deep scan without separate owner confirmation.
 Focused exact-diff scan `528a703f-7ff1-4505-828d-1a8b1de1fdc5` completed for
-source candidate `069473c24e7921e5b4b2ad51faa04e71899721ad` with complete
-coverage and zero findings. It is the final security-plugin scan for this packet
-unless the owner explicitly authorizes another one.
+candidate `069473c24e7921e5b4b2ad51faa04e71899721ad` with complete coverage and
+zero findings. Public CI run `33566981168` then exposed a Playwright-only
+loopback rewrite mismatch. Replacement source candidate
+`d025b567447cb2226233e49aca33994c1945aae9` corrects only that development path,
+adds production fail-closed regression coverage, and passes `make ready`. The
+focused scan remains the final security-plugin scan for this packet unless the
+owner explicitly authorizes another one.
 
 The closed beta may advance only when deterministic CI, exact-SHA staging web,
 iOS, and Android evidence are green; the security/privacy checklist is signed;
