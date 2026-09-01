@@ -3,7 +3,7 @@ from functools import lru_cache
 from ipaddress import ip_address
 from pathlib import Path
 from typing import Literal
-from urllib.parse import urlparse
+from urllib.parse import unquote, urlparse
 
 from pydantic import Field, field_validator, model_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
@@ -74,8 +74,9 @@ class Settings(BaseSettings):
             raise ValueError("Hosted authentication and runtime credentials are incomplete")
         if not self.sqlalchemy_url.startswith("postgresql+"):
             raise ValueError("Hosted environments require PostgreSQL runtime credentials")
-        runtime_user = urlparse(self.database_url).username
-        if runtime_user != self.tableus_runtime_db_role:
+        runtime_url = urlparse(self.database_url)
+        runtime_user = unquote(runtime_url.username or "")
+        if not self._runtime_database_identity_is_allowed(runtime_url, runtime_user):
             raise ValueError("Hosted runtime database credentials must use TABLEUS_RUNTIME_DB_ROLE")
         if self.migration_database_url:
             migration_user = urlparse(self.migration_database_url).username
@@ -102,6 +103,20 @@ class Settings(BaseSettings):
         if self.tableus_telemetry_mode != "production" or not self.sentry_dsn or not self.posthog_key:
             raise ValueError("Production requires production error reporting and anonymous analytics")
         return self
+
+    def _runtime_database_identity_is_allowed(self, runtime_url, runtime_user: str) -> bool:
+        if runtime_user == self.tableus_runtime_db_role:
+            return True
+
+        supabase_host = (urlparse(self.supabase_url).hostname or "").lower()
+        project_ref = supabase_host.removesuffix(".supabase.co")
+        pooler_host = (runtime_url.hostname or "").lower()
+        return bool(
+            re.fullmatch(r"[a-z0-9]{20}", project_ref)
+            and re.fullmatch(r"[a-z0-9-]+\.pooler\.supabase\.com", pooler_host)
+            and runtime_url.port == 5432
+            and runtime_user == f"{self.tableus_runtime_db_role}.{project_ref}"
+        )
 
     @staticmethod
     def _validate_hosted_url(value: str, label: str, *, origin_only: bool = False) -> None:

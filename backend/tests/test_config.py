@@ -159,6 +159,54 @@ def test_staging_requires_secure_auth_database_secret_and_origins() -> None:
             Settings(_env_file=None, **{**baseline, **override})
 
 
+def test_staging_accepts_matching_supabase_session_pooler_runtime_role() -> None:
+    project_ref = "mrwdhdeubdiiydmmvlda"
+    settings = production_settings(
+        environment="staging",
+        migration_database_url="",
+        database_url=(
+            f"postgresql://tableus_runtime.{project_ref}:secret@"
+            "aws-0-us-east-1.pooler.supabase.com:5432/postgres?ssl=require"
+        ),
+        supabase_url=f"https://{project_ref}.supabase.co",
+        tableus_provider_mode="deterministic",
+        tableus_telemetry_mode="staging",
+    )
+
+    assert settings.environment == "staging"
+
+
+@pytest.mark.parametrize(
+    "database_url",
+    [
+        (
+            "postgresql://tableus_runtime.wrongprojectref00000:secret@"
+            "aws-0-us-east-1.pooler.supabase.com:5432/postgres?ssl=require"
+        ),
+        (
+            "postgresql://tableus_runtime.mrwdhdeubdiiydmmvlda:secret@"
+            "attacker.example:5432/postgres?ssl=require"
+        ),
+        (
+            "postgresql://tableus_runtime.mrwdhdeubdiiydmmvlda:secret@"
+            "aws-0-us-east-1.pooler.supabase.com:6543/postgres?ssl=require"
+        ),
+    ],
+)
+def test_staging_rejects_untrusted_or_transaction_pooler_runtime_identity(
+    database_url: str,
+) -> None:
+    with pytest.raises(ValidationError, match="TABLEUS_RUNTIME_DB_ROLE"):
+        production_settings(
+            environment="staging",
+            migration_database_url="",
+            database_url=database_url,
+            supabase_url="https://mrwdhdeubdiiydmmvlda.supabase.co",
+            tableus_provider_mode="deterministic",
+            tableus_telemetry_mode="staging",
+        )
+
+
 def test_demo_auth_is_limited_to_development_and_test() -> None:
     with pytest.raises(ValidationError, match="Hosted environments require Supabase auth"):
         Settings(_env_file=None, environment="staging")

@@ -607,6 +607,15 @@
   The focused scan reported 7,200,446 total tokens, including 7,018,496 cached
   input tokens; this is recorded transparently and is why the packet will not
   run another security-plugin scan.
+- Public CI run `33568872938` passed at exact source candidate
+  `d025b567447cb2226233e49aca33994c1945aae9`. Railway then refused to promote
+  the candidate because its new hosted role check recognized only the direct
+  database username, while the IPv6-only Supabase direct endpoint is
+  unreachable from Railway and the documented IPv4 session pooler uses
+  `role.project-ref`. The prior `d0955f5` staging deployment remains healthy.
+  The active correction permits that composite identity only when the project
+  suffix matches `SUPABASE_URL`, the host is an official Supabase pooler, and
+  the port is session mode `5432`; no credential was displayed or rotated.
 
 ## Privacy-safe observability staging validation
 

@@ -398,3 +398,9 @@
   but cannot consume another invite. Live photo analysis performs per-user
   admission before reading or sanitizing bytes, and bounded image work runs off
   the event loop before shared provider budget admission.
+- **2026-09-01:** Hosted runtime-role validation recognizes Supabase's documented
+  IPv4 session-pooler identity without weakening least privilege. Direct
+  connections require the exact configured role; pooler connections require
+  `role.project-ref`, the exact project from `SUPABASE_URL`, an official
+  `*.pooler.supabase.com` host, and session port `5432`. Arbitrary suffixes,
+  hosts, and transaction-pooler URLs fail closed.

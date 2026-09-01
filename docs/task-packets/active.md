@@ -152,8 +152,16 @@ findings, but public CI run `33566981168` found a Playwright-only loopback rewri
 configuration mismatch. Replacement source candidate
 `d025b567447cb2226233e49aca33994c1945aae9` fixes that bounded development path,
 keeps production fail closed, and passes focused validation plus `make ready`.
-No new deep or diff scan may run without separate owner confirmation. Public
-push, replacement CI, staging deployment, artifacts, and cumulative device
+Public CI passed, but Railway correctly refused to promote it: the hosted
+database-role check allowed only a direct PostgreSQL username even though the
+staging database's direct endpoint is IPv6-only and Railway must use Supabase's
+IPv4 session-pooler username `role.project-ref`. The active correction accepts
+only that documented composite identity when the suffix exactly matches the
+configured Supabase project, the host is an official Supabase pooler, and the
+port is session mode `5432`; mismatched projects, arbitrary hosts, and
+transaction mode remain rejected. The prior healthy staging deployment remains
+live. No new deep or diff scan may run without separate owner confirmation. A
+new exact SHA, public CI, staging deployment, artifacts, and cumulative device
 evidence remain external gates.
 
 ## Objective

@@ -72,7 +72,11 @@ focused exact-diff security review `528a703f-7ff1-4505-828d-1a8b1de1fdc5` with
 zero findings, but public CI run `33566981168` exposed a Playwright-only
 loopback rewrite configuration mismatch. Replacement source candidate
 `d025b567447cb2226233e49aca33994c1945aae9` keeps production origins fail closed
-and passes focused checks plus `make ready`. Replacement public CI, Railway,
-Vercel, live-provider, six-artifact, and device evidence are the next explicitly
+and passed focused checks, `make ready`, and public CI. Railway did not promote
+it because the hosted role validator rejected Supabase's required IPv4 session-
+pooler username form. The active bounded correction validates
+`role.project-ref` only against the configured Supabase project, official
+pooler host, and session port. A new exact candidate and the replacement
+Railway, Vercel, live-provider, six-artifact, and device evidence are the next
 gated actions. The canceled deep scan remains stopped, and no further scan is
 authorized without separate owner confirmation.
