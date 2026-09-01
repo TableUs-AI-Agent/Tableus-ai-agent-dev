@@ -6,14 +6,15 @@ not be inferred from a passing test.
 
 ## Source and dependency controls
 
-- [ ] Candidate SHA recorded in sanitized evidence after a clean `make ready`.
+- [x] Candidate SHA `069473c24e7921e5b4b2ad51faa04e71899721ad`
+  recorded after a clean `make ready`.
 - [ ] Public CI passes at that exact SHA.
 - [x] Expo SDK remains 57; React Native remains 0.86.2.
 - [x] Expo Router and compatible Expo/Metro packages use current SDK 57 patches.
 - [x] Expo Doctor passes all checks, including native dependency deduplication.
 - [x] The production dependency audit reports 0 critical and 0 high findings.
   The full developer graph's EAS/Expo release-tool exception is recorded below.
-- [ ] Replacement exact-SHA focused security review is complete with no P0/P1
+- [x] Replacement exact-SHA focused security review is complete with no P0/P1
   or exposed secret. Scan `b737ba37-01d4-4ba8-841d-f1da1d09d61a` blocked superseded
   `d0955f5`; scan `0933625b-4d73-4da7-ba6a-946128c29089` then blocked local
   `5206303` on one remaining P1 multipart boundary. Its source-owned high/medium
@@ -25,9 +26,10 @@ not be inferred from a passing test.
   20 changed security files at `3a215e7`. Deep scan
   `2482f6f3-b05c-4c40-bc9f-e5d5a0ec41a0` was canceled for disproportionate
   usage; its unsealed candidates were manually consolidated and reviewed. The
-  local replacement passes `make ready` and awaits a frozen commit plus one
-  focused exact-diff review. A new deep scan requires separate owner
-  confirmation.
+  local replacement passes `make ready`. Frozen candidate `069473c` passed
+  focused exact-diff scan `528a703f-7ff1-4505-828d-1a8b1de1fdc5` with complete
+  coverage and zero findings. No additional deep or diff scan is authorized
+  without separate owner confirmation.
 - [x] GitHub Actions, CI service images, and backend OCI inputs are pinned to
   immutable commits or multi-platform digests with executable policy tests.
 - [ ] Runtime bundle inspection finds no service-role material, loopback origin,
@@ -98,9 +100,11 @@ not be inferred from a passing test.
 
 Complete only after the named person actually confirms each item.
 
-- Source candidate SHA: the Git commit containing this signed checklist; its
-  exact value is recorded in sanitized evidence after the final local gate.
-- Security review report ID: replacement exact-diff report pending; blocked reports
+- Source candidate SHA: `069473c24e7921e5b4b2ad51faa04e71899721ad`.
+  This checklist update is an evidence-only descendant and does not change the
+  reviewed source tree.
+- Security review report ID: focused exact-diff report
+  `528a703f-7ff1-4505-828d-1a8b1de1fdc5`; blocked reports
   `b737ba37-01d4-4ba8-841d-f1da1d09d61a`,
   `0933625b-4d73-4da7-ba6a-946128c29089`, and
   `2c12edd1-65ce-4cee-af11-c78c0b21ae85` at `b2823652` are retained for

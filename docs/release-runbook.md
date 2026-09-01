@@ -737,6 +737,10 @@ and one exact-candidate diff review. Deep scan
 `2482f6f3-b05c-4c40-bc9f-e5d5a0ec41a0` was canceled for excessive weekly usage
 and its unsealed candidates are not accepted findings. Do not resume it or start
 another deep scan without separate owner confirmation.
+Focused exact-diff scan `528a703f-7ff1-4505-828d-1a8b1de1fdc5` completed for
+source candidate `069473c24e7921e5b4b2ad51faa04e71899721ad` with complete
+coverage and zero findings. It is the final security-plugin scan for this packet
+unless the owner explicitly authorizes another one.
 
 The closed beta may advance only when deterministic CI, exact-SHA staging web,
 iOS, and Android evidence are green; the security/privacy checklist is signed;

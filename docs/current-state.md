@@ -589,11 +589,17 @@
   five-minute JWKS cache window, the canonical private-link query capability,
   aggregate provider-usage visibility, and process-local coordination. Their
   controls and production/cohort effects are recorded in the readiness residual
-  register. The local source now needs a frozen commit and one focused exact-diff
-  review; no deep scan is authorized. The completed local
+  register. Source candidate `069473c24e7921e5b4b2ad51faa04e71899721ad` is
+  frozen and focused exact-diff scan
+  `528a703f-7ff1-4505-828d-1a8b1de1fdc5` completed with all five source-review
+  items closed and zero findings. No further deep or diff scan is authorized.
+  The completed local
   `make ready` run is green: lint, type checks, workspace tests, 94 backend tests
   with three environment-dependent migration skips, OpenAPI drift, web/mobile
   builds, deterministic smoke, and the report-only performance budget all pass.
+  The focused scan reported 7,200,446 total tokens, including 7,018,496 cached
+  input tokens; this is recorded transparently and is why the packet will not
+  run another security-plugin scan.
 
 ## Privacy-safe observability staging validation
 

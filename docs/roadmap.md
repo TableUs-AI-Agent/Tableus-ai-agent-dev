@@ -67,6 +67,8 @@ trust chain: fresh detached exact-SHA build, one structured active config,
 mandatory platform signer, digest-bound inspection/receipt/private copy, and
 same-byte installation. Cumulative evidence parses the complete version-two
 receipt.
-Run `make ready` and a focused exact-diff security review; only then may Railway,
-Vercel, live-provider, six-artifact, and device evidence restart. The canceled
-deep scan remains stopped unless the owner separately reauthorizes it.
+Source candidate `069473c24e7921e5b4b2ad51faa04e71899721ad` passed `make ready`
+and focused exact-diff security review `528a703f-7ff1-4505-828d-1a8b1de1fdc5`
+with zero findings. Railway, Vercel, live-provider, six-artifact, and device
+evidence are the next explicitly gated actions. The canceled deep scan remains
+stopped, and no further scan is authorized without separate owner confirmation.

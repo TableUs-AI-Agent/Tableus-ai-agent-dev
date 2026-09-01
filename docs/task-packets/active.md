@@ -146,9 +146,12 @@ cross-invite consumption, pre-admission image work, and web clickjacking. The
 remaining credible medium/low items are recorded as bounded residual risks or
 later production gates. The local replacement passes `make ready`, including 94
 backend tests with three environment-dependent migration skips, all workspace
-tests, builds, smoke, and the performance budget. It now needs a frozen commit
-and one focused exact-diff review. No new deep scan may run without separate
-owner confirmation.
+tests, builds, smoke, and the performance budget. Source candidate
+`069473c24e7921e5b4b2ad51faa04e71899721ad` is frozen; focused exact-diff scan
+`528a703f-7ff1-4505-828d-1a8b1de1fdc5` completed with all five source-review
+items closed and zero findings. No new deep or diff scan may run without
+separate owner confirmation. Public push, CI, staging deployment, artifacts, and
+cumulative device evidence remain external gates.
 
 ## Objective
 
