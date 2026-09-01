@@ -1,9 +1,11 @@
 import asyncio
 import io
+import threading
 from datetime import UTC, datetime, timedelta
 from types import SimpleNamespace
 
 import pytest
+from fastapi import HTTPException
 from fastapi.responses import JSONResponse
 from httpx import ASGITransport, AsyncClient
 from PIL import Image
@@ -11,6 +13,7 @@ from sqlalchemy import delete, func, select
 
 from main import app
 from tableus import api as tableus_api
+from tableus.auth import Identity
 from tableus.db import SessionFactory, init_database
 from tableus.models import (
     Connection,
@@ -29,6 +32,7 @@ from tableus.models import (
 from tableus.providers.base import AiCallUsage
 from tableus.providers.deterministic import DeterministicPlacesProvider
 from tableus.providers.google_live import AiProviderError
+from tableus.schemas import InviteRedeemIn
 from tableus.security import hash_value, issue_redemption_token
 
 _idempotency_500_calls = {"count": 0}
@@ -194,6 +198,146 @@ async def test_expired_invite_cannot_be_redeemed(client: AsyncClient) -> None:
 
 
 @pytest.mark.asyncio
+async def test_approved_profile_cannot_consume_a_different_invite(
+    client: AsyncClient,
+) -> None:
+    async with SessionFactory() as session:
+        original = Invite(code_hash=hash_value("original-approved-invite"), max_uses=1, use_count=1)
+        other = Invite(code_hash=hash_value("other-approved-invite"), max_uses=1)
+        profile = Profile(
+            id="approved-invite-reuse-user",
+            display_name="Approved User",
+            email_hash=hash_value("approved-invite-reuse@example.test"),
+        )
+        session.add_all([original, other, profile])
+        await session.flush()
+        session.add(InviteRedemption(invite_id=original.id, profile_id=profile.id))
+        await session.commit()
+        other_id = other.id
+
+    response = await client.post(
+        "/api/v1/access/redeem",
+        headers=headers("approved-invite-reuse-user"),
+        json={
+            "redemption_token": issue_redemption_token(other_id),
+            "display_name": "Approved User",
+        },
+    )
+
+    assert response.status_code == 409
+    async with SessionFactory() as session:
+        other = await session.get(Invite, other_id)
+        redemptions = list(
+            (
+                await session.scalars(
+                    select(InviteRedemption).where(
+                        InviteRedemption.profile_id == "approved-invite-reuse-user"
+                    )
+                )
+            ).all()
+        )
+    assert other is not None
+    assert other.use_count == 0
+    assert len(redemptions) == 1
+
+
+@pytest.mark.asyncio
+async def test_same_invite_redemption_retry_succeeds_after_capacity_is_consumed(
+    client: AsyncClient,
+) -> None:
+    async with SessionFactory() as session:
+        invite = Invite(code_hash=hash_value("retry-consumed-invite"), max_uses=1, use_count=1)
+        profile = Profile(
+            id="invite-retry-user",
+            display_name="Retry User",
+            email_hash=hash_value("invite-retry@example.test"),
+        )
+        session.add_all([invite, profile])
+        await session.flush()
+        session.add(InviteRedemption(invite_id=invite.id, profile_id=profile.id))
+        await session.commit()
+        invite_id = invite.id
+
+    response = await client.post(
+        "/api/v1/access/redeem",
+        headers=headers("invite-retry-user"),
+        json={
+            "redemption_token": issue_redemption_token(invite_id),
+            "display_name": "Retry User",
+        },
+    )
+
+    assert response.status_code == 200
+    assert response.json()["data"]["id"] == "invite-retry-user"
+    async with SessionFactory() as session:
+        invite = await session.get(Invite, invite_id)
+        redemption_count = await session.scalar(
+            select(func.count())
+            .select_from(InviteRedemption)
+            .where(InviteRedemption.profile_id == "invite-retry-user")
+        )
+    assert invite is not None
+    assert invite.use_count == 1
+    assert redemption_count == 1
+
+
+@pytest.mark.asyncio
+async def test_same_invite_retry_releases_a_fresh_hosted_reservation(
+    client: AsyncClient,
+) -> None:
+    email = "invite-reservation-retry@example.test"
+    async with SessionFactory() as session:
+        invite = Invite(code_hash=hash_value("retry-reserved-invite"), max_uses=2, use_count=1)
+        profile = Profile(
+            id="invite-reservation-retry-user",
+            display_name="Reservation Retry User",
+            email_hash=hash_value(email),
+        )
+        session.add_all([invite, profile])
+        await session.flush()
+        reservation = PendingAuthValidation(
+            invite_id=invite.id,
+            email_hash=hash_value(email),
+            expires_at=datetime.now(UTC) + timedelta(minutes=20),
+        )
+        session.add_all(
+            [
+                InviteRedemption(invite_id=invite.id, profile_id=profile.id),
+                reservation,
+            ]
+        )
+        await session.commit()
+        invite_id = invite.id
+        reservation_id = reservation.id
+        redemption_token = issue_redemption_token(invite.id, email, reservation.id)
+
+    async with SessionFactory() as session:
+        response = await tableus_api.redeem_access(
+            InviteRedeemIn(
+                redemption_token=redemption_token,
+                display_name="Reservation Retry User",
+            ),
+            Identity(subject="invite-reservation-retry-user", email=email),
+            session,
+        )
+    assert response["data"].id == "invite-reservation-retry-user"
+
+    async with SessionFactory() as session:
+        reservation = await session.get(PendingAuthValidation, reservation_id)
+        invite = await session.get(Invite, invite_id)
+    assert reservation is not None
+    assert reservation.redeemed_at is not None
+    assert invite is not None
+    assert invite.use_count == 1
+
+    available = await client.post(
+        "/api/v1/access/validate",
+        json={"code": "retry-reserved-invite", "email": "next-user@example.test"},
+    )
+    assert available.status_code == 200
+
+
+@pytest.mark.asyncio
 async def test_complete_shared_plan_flow(client: AsyncClient) -> None:
     created_response = await client.post(
         "/api/v1/plans",
@@ -263,6 +407,50 @@ async def test_complete_shared_plan_flow(client: AsyncClient) -> None:
     )
     assert finalized.status_code == 200
     assert finalized.json()["data"]["status"] == "finalized"
+
+    locked_constraints = await client.patch(
+        f"/api/v1/plans/{plan_id}/constraints",
+        headers=headers("demo-guest"),
+        json={"notes": "quieter please"},
+    )
+    assert locked_constraints.status_code == 409
+
+    locked_recommendations = await client.post(
+        f"/api/v1/plans/{plan_id}/recommendations",
+        headers=headers("demo-guest"),
+        json={"query": "replace the final choice"},
+    )
+    assert locked_recommendations.status_code == 409
+
+    async with SessionFactory() as session:
+        session.add(
+            Profile(
+                id="demo-late-guest",
+                display_name="Late Guest",
+                email_hash=hash_value("late-guest@example.test"),
+            )
+        )
+        await session.commit()
+    locked_join = await client.post(
+        f"/api/v1/plans/{plan_id}/join",
+        headers=headers("demo-late-guest"),
+        json={"share_token": created["share_token"]},
+    )
+    assert locked_join.status_code == 409
+
+    still_finalized = await client.get(
+        f"/api/v1/plans/{plan_id}", headers=headers("demo-organizer")
+    )
+    assert still_finalized.status_code == 200
+    assert still_finalized.json()["data"]["status"] == "finalized"
+    assert still_finalized.json()["data"]["finalized_candidate_id"] is not None
+    assert len(still_finalized.json()["data"]["participants"]) == 2
+
+    reopened = await client.post(
+        f"/api/v1/plans/{plan_id}/reopen", headers=headers("demo-organizer")
+    )
+    assert reopened.status_code == 200
+    assert reopened.json()["data"]["status"] == "voting"
 
     stale = await client.patch(
         f"/api/v1/plans/{plan_id}/constraints",
@@ -557,6 +745,132 @@ async def test_food_analysis_resizes_and_strips_input_before_provider(
     assert observed["format"] == "JPEG"
     assert len(observed["metadata"]) == 0
     assert observed["media_type"] == "image/jpeg"
+
+
+@pytest.mark.asyncio
+async def test_food_analysis_checks_live_ai_limit_before_sanitizing(
+    client: AsyncClient, monkeypatch
+) -> None:
+    monkeypatch.setattr(
+        tableus_api, "get_settings", lambda: SimpleNamespace(ai_provider_mode="live")
+    )
+    tableus_api._ai_user_windows.clear()
+    tableus_api._ai_global_window.clear()
+    for _ in range(5):
+        tableus_api._consume_ai_limit("demo-organizer", include_global=False)
+    sanitized = False
+
+    def unexpected_sanitizer(image_bytes: bytes) -> bytes:
+        del image_bytes
+        nonlocal sanitized
+        sanitized = True
+        raise AssertionError("sanitizer should not run after rate rejection")
+
+    monkeypatch.setattr(tableus_api, "_sanitize_food_image", unexpected_sanitizer)
+    source = Image.new("RGB", (8, 8), "#c9432d")
+    source_bytes = io.BytesIO()
+    source.save(source_bytes, format="JPEG")
+
+    response = await client.post(
+        "/api/v1/food/analyze",
+        headers=headers("demo-organizer"),
+        files={"image": ("dish.jpg", source_bytes.getvalue(), "image/jpeg")},
+    )
+
+    assert response.status_code == 429
+    assert sanitized is False
+    assert len(tableus_api._ai_global_window) == 0
+    tableus_api._ai_user_windows.clear()
+    tableus_api._ai_global_window.clear()
+
+
+@pytest.mark.asyncio
+async def test_food_analysis_checks_live_user_limit_before_reading(monkeypatch) -> None:
+    monkeypatch.setattr(
+        tableus_api, "get_settings", lambda: SimpleNamespace(ai_provider_mode="live")
+    )
+    tableus_api._ai_user_windows.clear()
+    tableus_api._ai_global_window.clear()
+    for _ in range(5):
+        tableus_api._consume_ai_limit(
+            "demo-organizer", include_global=False
+        )
+    read = False
+
+    class UnreadUpload:
+        content_type = "image/jpeg"
+
+        async def read(self, size: int) -> bytes:
+            del size
+            nonlocal read
+            read = True
+            return b"unused"
+
+    with pytest.raises(HTTPException) as rejected:
+        await tableus_api.analyze_food(
+            SimpleNamespace(id="demo-organizer"), UnreadUpload()
+        )
+    assert rejected.value.status_code == 429
+    assert read is False
+    assert len(tableus_api._ai_global_window) == 0
+    tableus_api._ai_user_windows.clear()
+    tableus_api._ai_global_window.clear()
+
+
+@pytest.mark.asyncio
+async def test_invalid_food_image_does_not_consume_global_ai_limit(
+    client: AsyncClient, monkeypatch
+) -> None:
+    monkeypatch.setattr(
+        tableus_api, "get_settings", lambda: SimpleNamespace(ai_provider_mode="live")
+    )
+    tableus_api._ai_user_windows.clear()
+    tableus_api._ai_global_window.clear()
+
+    response = await client.post(
+        "/api/v1/food/analyze",
+        headers=headers("demo-organizer"),
+        files={"image": ("dish.jpg", b"not-an-image", "image/jpeg")},
+    )
+
+    assert response.status_code == 422
+    assert len(tableus_api._ai_user_windows["demo-organizer"]) == 1
+    assert len(tableus_api._ai_global_window) == 0
+    assert tableus_api._ai_reserved_usd == 0
+    tableus_api._ai_user_windows.clear()
+    tableus_api._ai_global_window.clear()
+
+
+@pytest.mark.asyncio
+async def test_food_image_worker_slot_remains_held_after_caller_cancellation(monkeypatch) -> None:
+    started = threading.Event()
+    release = threading.Event()
+
+    def blocking_sanitizer(image_bytes: bytes) -> bytes:
+        started.set()
+        release.wait(timeout=5)
+        return image_bytes
+
+    slots = asyncio.Semaphore(1)
+    monkeypatch.setattr(tableus_api, "_food_image_slots", slots)
+    monkeypatch.setattr(tableus_api, "_sanitize_food_image", blocking_sanitizer)
+    first = asyncio.create_task(tableus_api._sanitize_food_image_bounded(b"first"))
+    assert await asyncio.to_thread(started.wait, 1)
+
+    first.cancel()
+    with pytest.raises(asyncio.CancelledError):
+        await first
+    assert slots.locked()
+    with pytest.raises(HTTPException) as saturated:
+        await tableus_api._sanitize_food_image_bounded(b"second")
+    assert saturated.value.status_code == 503
+
+    release.set()
+    for _ in range(50):
+        if not slots.locked():
+            break
+        await asyncio.sleep(0.01)
+    assert not slots.locked()
 
 
 @pytest.mark.asyncio

@@ -386,3 +386,15 @@
   unknown-key throttling and refresh coalescing but no longer keeps any second
   unexpired known-key cache, so removed keys and same-`kid` material replacement
   take effect at the bounded provider cache lifetime.
+- **2026-09-01:** Release security closure uses the prior sealed repository
+  baselines, focused source review of saved candidates, deterministic regression
+  tests, and one exact-candidate diff review. Deep scan
+  `2482f6f3-b05c-4c40-bc9f-e5d5a0ec41a0` was canceled because its marginal
+  value did not justify its weekly-usage cost; it must not be resumed or replaced
+  by another deep scan without separate owner confirmation.
+- **2026-09-01:** Finalized plans reject joins by new participants, constraint
+  changes, and recommendation regeneration until the organizer explicitly
+  reopens voting. Approved profiles may retry their original invite redemption
+  but cannot consume another invite. Live photo analysis performs per-user
+  admission before reading or sanitizing bytes, and bounded image work runs off
+  the event loop before shared provider budget admission.

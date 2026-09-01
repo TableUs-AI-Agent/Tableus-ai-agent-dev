@@ -2,6 +2,7 @@ import asyncio
 import io
 import time
 from collections import defaultdict, deque
+from contextlib import asynccontextmanager
 from datetime import UTC, datetime, timedelta
 from typing import Annotated, Literal, cast
 
@@ -89,6 +90,8 @@ _places_budget_lock = asyncio.Lock()
 _ai_reserved_usd = 0.0
 _places_reserved_attempts = 0
 _ai_reservation_usd = 0.02
+_food_image_slots = asyncio.Semaphore(2)
+_FOOD_IMAGE_SLOT_TIMEOUT_SECONDS = 0.25
 _MAX_REVIEWS_PER_PROFILE = 100
 
 
@@ -304,7 +307,9 @@ async def _call_places(profile_id: str, method: str, *args):
         await _release_places_budget(reserved, max_attempts)
 
 
-def _consume_ai_limit(profile_id: str) -> None:
+def _consume_ai_limit(
+    profile_id: str, *, include_user: bool = True, include_global: bool = True
+) -> None:
     if get_settings().ai_provider_mode != "live":
         return
     now = time.monotonic()
@@ -314,10 +319,14 @@ def _consume_ai_limit(profile_id: str) -> None:
         user_window.popleft()
     while _ai_global_window and _ai_global_window[0] <= cutoff:
         _ai_global_window.popleft()
-    if len(user_window) >= 5 or len(_ai_global_window) >= 30:
+    if (include_user and len(user_window) >= 5) or (
+        include_global and len(_ai_global_window) >= 30
+    ):
         raise HTTPException(status_code=429, detail="AI request limit reached; try again soon")
-    user_window.append(now)
-    _ai_global_window.append(now)
+    if include_user:
+        user_window.append(now)
+    if include_global:
+        _ai_global_window.append(now)
 
 
 async def _reserve_ai_budget() -> bool:
@@ -372,9 +381,21 @@ async def _record_ai_usage(
         await usage_session.commit()
 
 
-async def _call_ai(profile_id: str, method: str, *args):
-    _consume_ai_limit(profile_id)
+@asynccontextmanager
+async def _ai_admission(
+    profile_id: str, *, include_user: bool = True, include_global: bool = True
+):
+    _consume_ai_limit(
+        profile_id, include_user=include_user, include_global=include_global
+    )
     reserved = await _reserve_ai_budget()
+    try:
+        yield
+    finally:
+        await _release_ai_budget(reserved)
+
+
+async def _invoke_ai(method: str, *args):
     started = time.perf_counter()
     recorded = False
 
@@ -399,8 +420,55 @@ async def _call_ai(profile_id: str, method: str, *args):
         raise HTTPException(status_code=status, detail=str(exc)) from exc
     except RuntimeError as exc:
         raise HTTPException(status_code=503, detail="AI provider is not configured") from exc
-    finally:
-        await _release_ai_budget(reserved)
+
+
+async def _call_ai(profile_id: str, method: str, *args):
+    async with _ai_admission(profile_id):
+        return await _invoke_ai(method, *args)
+
+
+def _sanitize_food_image(image_bytes: bytes) -> bytes:
+    try:
+        with Image.open(io.BytesIO(image_bytes)) as opened:
+            if opened.width * opened.height > 20_000_000:
+                raise HTTPException(
+                    status_code=413, detail="Image must be 20 megapixels or smaller"
+                )
+            opened.verify()
+        with Image.open(io.BytesIO(image_bytes)) as opened:
+            sanitized = io.BytesIO()
+            with opened.convert("RGB") as converted:
+                converted.thumbnail((1600, 1600), Image.Resampling.LANCZOS)
+                converted.save(sanitized, format="JPEG", quality=85, optimize=True)
+        return sanitized.getvalue()
+    except HTTPException:
+        raise
+    except Exception as exc:
+        raise HTTPException(status_code=422, detail="Image data is invalid") from exc
+
+
+def _release_food_image_slot(worker: asyncio.Task[bytes]) -> None:
+    _food_image_slots.release()
+    if not worker.cancelled():
+        worker.exception()
+
+
+async def _sanitize_food_image_bounded(image_bytes: bytes) -> bytes:
+    try:
+        await asyncio.wait_for(
+            _food_image_slots.acquire(), timeout=_FOOD_IMAGE_SLOT_TIMEOUT_SECONDS
+        )
+    except TimeoutError as exc:
+        raise HTTPException(
+            status_code=503, detail="Image analysis is busy; try again soon"
+        ) from exc
+    try:
+        worker = asyncio.create_task(asyncio.to_thread(_sanitize_food_image, image_bytes))
+    except BaseException:
+        _food_image_slots.release()
+        raise
+    worker.add_done_callback(_release_food_image_slot)
+    return await asyncio.shield(worker)
 
 
 async def _event(
@@ -431,6 +499,14 @@ async def _account_control(session: AsyncSession, profile_id: str) -> AccountCon
 def _require_organizer(plan: Plan, profile: Profile) -> None:
     if plan.organizer_id != profile.id:
         raise HTTPException(status_code=403, detail="Only the organizer can perform this action")
+
+
+def _require_reopened(plan: Plan) -> None:
+    if plan.status == "finalized":
+        raise HTTPException(
+            status_code=409,
+            detail="The organizer must reopen this finalized plan before making changes",
+        )
 
 
 @router.post("/access/validate", response_model=Envelope[InviteValidation])
@@ -528,8 +604,43 @@ async def redeem_access(body: InviteRedeemIn, identity: CurrentIdentity, session
         raise HTTPException(
             status_code=403, detail="Invite validation email does not match session"
         )
-    invite = await session.get(Invite, grant.invite_id, with_for_update=True)
     now = datetime.now(UTC)
+    profile = await session.get(Profile, identity.subject)
+    if profile:
+        redeemed_invite_ids = set(
+            (
+                await session.scalars(
+                    select(InviteRedemption.invite_id).where(
+                        InviteRedemption.profile_id == profile.id
+                    )
+                )
+            ).all()
+        )
+        same_invite_retry = grant.invite_id in redeemed_invite_ids
+        reservation_changed = False
+        if grant.pending_validation_id:
+            existing_reservation = await session.get(
+                PendingAuthValidation, grant.pending_validation_id, with_for_update=True
+            )
+            if (
+                existing_reservation
+                and existing_reservation.invite_id == grant.invite_id
+                and existing_reservation.email_hash == grant.email_hash
+                and not _is_expired(existing_reservation.expires_at, now)
+                and not existing_reservation.redeemed_at
+            ):
+                if same_invite_retry:
+                    existing_reservation.redeemed_at = now
+                else:
+                    await session.delete(existing_reservation)
+                reservation_changed = True
+        if reservation_changed:
+            await session.commit()
+        if same_invite_retry:
+            return ok(ProfileOut.model_validate(profile))
+        if redeemed_invite_ids:
+            raise HTTPException(status_code=409, detail="This account has already joined TableUs")
+    invite = await session.get(Invite, grant.invite_id, with_for_update=True)
     if (
         not invite
         or invite.revoked_at
@@ -550,7 +661,6 @@ async def redeem_access(body: InviteRedeemIn, identity: CurrentIdentity, session
             or _is_expired(pending_validation.expires_at, now)
         ):
             raise HTTPException(status_code=409, detail="Invite validation can no longer be used")
-    profile = await session.get(Profile, identity.subject)
     if not profile:
         email_hash = hash_value(identity.email or f"{identity.subject}@supabase.local")
         profile = Profile(
@@ -842,28 +952,13 @@ async def analyze_food(profile: CurrentProfile, image: Annotated[UploadFile, Fil
     allowed = {"image/jpeg", "image/png", "image/webp"}
     if image.content_type not in allowed:
         raise HTTPException(status_code=415, detail="Only JPEG, PNG, and WebP images are supported")
+    _consume_ai_limit(profile.id, include_global=False)
     image_bytes = await image.read(8 * 1024 * 1024 + 1)
     if len(image_bytes) > 8 * 1024 * 1024:
         raise HTTPException(status_code=413, detail="Image must be 8 MB or smaller")
-    try:
-        with Image.open(io.BytesIO(image_bytes)) as opened:
-            if opened.width * opened.height > 20_000_000:
-                raise HTTPException(
-                    status_code=413, detail="Image must be 20 megapixels or smaller"
-                )
-            opened.verify()
-    except HTTPException:
-        raise
-    except Exception as exc:
-        raise HTTPException(status_code=422, detail="Image data is invalid") from exc
-    with Image.open(io.BytesIO(image_bytes)) as opened:
-        sanitized = io.BytesIO()
-        converted = opened.convert("RGB")
-        converted.thumbnail((1600, 1600), Image.Resampling.LANCZOS)
-        converted.save(sanitized, format="JPEG", quality=85, optimize=True)
-    result = await _call_ai(
-        profile.id, "analyze_food", sanitized.getvalue(), "image/jpeg"
-    )
+    sanitized = await _sanitize_food_image_bounded(image_bytes)
+    async with _ai_admission(profile.id, include_user=False):
+        result = await _invoke_ai("analyze_food", sanitized, "image/jpeg")
     return ok(FoodAnalysisOut.model_validate(result))
 
 
@@ -1012,6 +1107,7 @@ async def join_plan(plan_id: str, body: PlanJoinIn, profile: CurrentProfile, ses
         )
     )
     if not existing:
+        _require_reopened(plan)
         count = await session.scalar(
             select(func.count())
             .select_from(PlanParticipant)
@@ -1036,6 +1132,7 @@ async def update_constraints(
 ):
     plan = await _plan(session, plan_id, for_update=True)
     participant = await _participant(session, plan.id, profile.id)
+    _require_reopened(plan)
     participant.constraints = body.model_dump()
     plan.status = "collecting"
     plan.active_run_id = None
@@ -1053,6 +1150,7 @@ async def generate_recommendations(
 ):
     plan = await _plan(session, plan_id, for_update=True)
     await _participant(session, plan.id, profile.id)
+    _require_reopened(plan)
     participant_rows = list(
         (
             await session.scalars(select(PlanParticipant).where(PlanParticipant.plan_id == plan.id))

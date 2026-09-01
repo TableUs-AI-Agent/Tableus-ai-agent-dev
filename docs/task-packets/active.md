@@ -4,9 +4,9 @@
 
 Implementation is active on `codex/closed-beta-readiness`, branched from merged
 `main` at `e1184eca9b73e1a9f26d1007ab543df9d54c7124`. Local deterministic checks,
-the repository security scan, owner legal/contact confirmations, candidate
-freeze, public CI, deployments, signed builds, and cumulative evidence must all
-complete before this packet can be signed off.
+focused security closure, owner legal/contact confirmations, candidate freeze,
+public CI, deployments, signed builds, and cumulative evidence must all complete
+before this packet can be signed off.
 
 The first exact-SHA device pass exposed Android's native transparent retry of a
 pre-response POST. That candidate's artifacts are superseded. The replacement
@@ -131,7 +131,24 @@ green. Formal remediation diff scan
 `9c5756d1-65d2-4c2f-8641-125352d5c935` found that PyJWT's separately enabled
 per-key LRU still had no TTL; the replacement now disables that tier and tests
 the real configured client rather than a cache-free fake. The replacement still
-requires the full repository gate and a fresh sealed scan.
+requires the full repository gate and a focused exact-diff review.
+
+Local source candidate `3a215e7049a0b40cd1ea337b849ba9c17f380798`
+passed `make ready`; exact-candidate diff scan
+`273335ab-78d3-4d77-9ba6-6cd3ebd96fbb` reviewed all 20 changed security files
+and reported no findings. A subsequent deep scan
+`2482f6f3-b05c-4c40-bc9f-e5d5a0ec41a0` was canceled at owner request after
+397 tracked files because its cost was disproportionate to this bounded packet.
+Its 38 unsealed candidates are scanner input, not accepted findings. Focused
+source review consolidated the high candidates into one JWKS cooldown flaw and
+closed it, then also closed finalized-plan mutation bypasses, approved-profile
+cross-invite consumption, pre-admission image work, and web clickjacking. The
+remaining credible medium/low items are recorded as bounded residual risks or
+later production gates. The local replacement passes `make ready`, including 94
+backend tests with three environment-dependent migration skips, all workspace
+tests, builds, smoke, and the performance budget. It now needs a frozen commit
+and one focused exact-diff review. No new deep scan may run without separate
+owner confirmation.
 
 ## Objective
 

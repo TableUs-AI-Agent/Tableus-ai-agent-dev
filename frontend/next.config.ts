@@ -2,6 +2,7 @@ import type { NextConfig } from "next";
 import path from "node:path";
 import { withSentryConfig } from "@sentry/nextjs";
 import { PUBLIC_RUNTIME_POLICY, requireExactHttpsOrigin } from "@tableus/domain";
+import { FRAME_PROTECTION_HEADERS, FRAME_PROTECTION_SOURCE } from "./app/lib/security-headers";
 
 if (process.env.VERCEL === "1") {
   requireExactHttpsOrigin(
@@ -36,6 +37,14 @@ const nextConfig: NextConfig = {
       { protocol: "https", hostname: "randomuser.me" },
       { protocol: "https", hostname: "maps.googleapis.com" },
     ],
+  },
+  async headers() {
+    return [
+      {
+        source: FRAME_PROTECTION_SOURCE,
+        headers: [...FRAME_PROTECTION_HEADERS],
+      },
+    ];
   },
   async rewrites() {
     const configuredOrigin = process.env.TABLEUS_API_ORIGIN;

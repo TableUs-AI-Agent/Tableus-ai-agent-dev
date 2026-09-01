@@ -13,15 +13,21 @@ not be inferred from a passing test.
 - [x] Expo Doctor passes all checks, including native dependency deduplication.
 - [x] The production dependency audit reports 0 critical and 0 high findings.
   The full developer graph's EAS/Expo release-tool exception is recorded below.
-- [ ] Replacement exact-SHA repository scan is complete with no P0/P1 or exposed
-  secret. Scan `b737ba37-01d4-4ba8-841d-f1da1d09d61a` blocked superseded
+- [ ] Replacement exact-SHA focused security review is complete with no P0/P1
+  or exposed secret. Scan `b737ba37-01d4-4ba8-841d-f1da1d09d61a` blocked superseded
   `d0955f5`; scan `0933625b-4d73-4da7-ba6a-946128c29089` then blocked local
   `5206303` on one remaining P1 multipart boundary. Its source-owned high/medium
   findings are remediated locally. Full scan
   `2c12edd1-65ce-4cee-af11-c78c0b21ae85` then blocked local SHA `b2823652`
   on 12 distinct high-severity root causes (13 raw high records). All identified
-  high paths and the highest-confidence medium paths are remediated locally and
-  await a clean candidate plus a fresh exact-SHA scan.
+  high paths and the highest-confidence medium paths are remediated locally.
+  Exact-diff scan `273335ab-78d3-4d77-9ba6-6cd3ebd96fbb` found no issue in all
+  20 changed security files at `3a215e7`. Deep scan
+  `2482f6f3-b05c-4c40-bc9f-e5d5a0ec41a0` was canceled for disproportionate
+  usage; its unsealed candidates were manually consolidated and reviewed. The
+  local replacement passes `make ready` and awaits a frozen commit plus one
+  focused exact-diff review. A new deep scan requires separate owner
+  confirmation.
 - [x] GitHub Actions, CI service images, and backend OCI inputs are pinned to
   immutable commits or multi-platform digests with executable policy tests.
 - [ ] Runtime bundle inspection finds no service-role material, loopback origin,
@@ -79,6 +85,11 @@ not be inferred from a passing test.
 | Idempotency response cache and paid-operation reservation locks are process-local. | Single Railway API process; explicit retry UX; verified-subject/role replay; fixed entry, byte, request, and response bounds; request fingerprints; conservative rate/spend limits. | Repository owner; replace before horizontal scaling. | Horizontal scaling is blocked until durable coordination exists. |
 | Private-plan capability remains in the canonical join URL query. | Approved authentication is also required; tokens are random, hashed at rest, rotatable, redacted from telemetry/evidence, and old links are rejected after rotation. | Repository owner; design a short-lived exchange before production. | Production is blocked on a reviewed exchange or explicit risk acceptance. |
 | Aggregate provider usage is readable by any approved beta profile. | Output excludes identities, queries, coordinates, Place IDs, provider content, prompts, responses, and credentials. | Repository owner; add an operator boundary before cohort expansion. | Does not block isolated staging; cohort expansion is blocked until resolved. |
+| A bearer of a reusable invite can repeatedly renew one email reservation until invite expiry. | Closed beta issues one-use invites to named recipients, reservations expire, redemption is email-bound, and approved profiles cannot consume a different invite. Do not issue multi-use cohort invites. | Repository owner; redesign as server-bound recipient invitations before cohort expansion. | Does not block isolated one-use staging evidence; multi-use invites and cohort expansion are blocked. |
+| One approved user can consume the shared rolling Places/Gemini budget before other approved users. | Per-user and global minute limits, a hard rolling database ceiling, isolated small cohort, and provider budgets bound spend. | Repository owner; add durable per-actor quotas before cohort expansion or scaling. | Does not block isolated staging; broader cohort activation is blocked. |
+| Plan and event storage have no per-user lifetime plan quota or archival policy. | Invite-only access, bounded participants/reviews/providers, request limits, and operator monitoring constrain the current staging cohort. | Repository owner; define quotas, retention, and archival before cohort expansion. | Does not block isolated staging; broader cohort and production retention approval are blocked. |
+| Deterministic simulator artifacts are locally attested rather than remotely signed. | The isolated exact-SHA orchestrator, signer inspection, digest-bound receipts, private same-byte installation, and signed production-shaped artifacts separate deterministic evidence from release evidence. | Repository owner; require store/remote signing evidence at production gate. | Does not block local deterministic evidence; store submission remains blocked. |
+| Supabase JWKS and same-`kid` replacement may remain cached for at most five minutes. | One bounded provider cache, no indefinite per-key LRU, coalesced refresh, negative cache, and cached-known-key behavior under unknown-key traffic. | Repository owner; re-evaluate if revocation SLA becomes shorter than five minutes. | Accepted for isolated closed beta; a stricter production revocation SLA would require a shorter/provider-driven policy. |
 | Staging Vercel uses an exact-SHA Preview deployment because the Production target also owns production-facing aliases. | Cumulative validator binds deployment ID and SHA; do not move production aliases. | Repository owner; revisit before production. | Production deployment remains blocked by a separate gate. |
 | Production Google Play signing fingerprint is not yet associated. | Preview certificate remains isolated; verified links are tested only against inspected preview artifacts. | Repository owner; required before Play submission. | Google Play submission is blocked. |
 | Legal text is operational disclosure, not counsel-reviewed legal advice. | Owner review is mandatory before source freeze; formal counsel review remains separately recordable. | Repository owner; before closed-beta cohort. | Cohort activation is blocked until owner acceptance. |
@@ -89,11 +100,14 @@ Complete only after the named person actually confirms each item.
 
 - Source candidate SHA: the Git commit containing this signed checklist; its
   exact value is recorded in sanitized evidence after the final local gate.
-- Security scan report ID: replacement exact-SHA report pending; blocked reports
+- Security review report ID: replacement exact-diff report pending; blocked reports
   `b737ba37-01d4-4ba8-841d-f1da1d09d61a`,
   `0933625b-4d73-4da7-ba6a-946128c29089`, and
   `2c12edd1-65ce-4cee-af11-c78c0b21ae85` at `b2823652` are retained for
-  remediation traceability.
+  remediation traceability. Clean focused diff report
+  `273335ab-78d3-4d77-9ba6-6cd3ebd96fbb` and canceled deep report
+  `2482f6f3-b05c-4c40-bc9f-e5d5a0ec41a0` are also recorded; unsealed deep-scan
+  candidates are not release findings.
 - Policy review date/version: Google Maps policy last reviewed 2026-08-26
 - Legal/privacy owner: Brian Chei (confirmed 2026-08-26)
 - Rollback owner: Brian Chei, repository and cloud account owner

@@ -568,6 +568,33 @@
 - Obtain explicit approval before any production migration, deployment, EAS
   build/submission, paid live-AI evaluation, or cohort invitation.
 
+## Focused security closure after canceled deep scan
+
+- Exact local source candidate `3a215e7049a0b40cd1ea337b849ba9c17f380798`
+  passed `make ready`, and sealed exact-diff scan
+  `273335ab-78d3-4d77-9ba6-6cd3ebd96fbb` reviewed all 20 changed security files
+  with no finding. Deep scan `2482f6f3-b05c-4c40-bc9f-e5d5a0ec41a0` was later
+  canceled at the owner's request after excessive weekly usage. Its 38 unsealed
+  candidates were retained only as input for focused source review.
+- The focused review consolidated the duplicate high candidates into one root
+  cause and fixed it: unknown JWKS key traffic can no longer make a cached known
+  signing key unavailable during the refresh cooldown. It also fixed
+  finalized-plan mutations, approved-profile cross-invite consumption,
+  synchronous/pre-admission live image work, and missing global web framing
+  protection. Independent bypass/patch reviews and focused regressions are
+  green.
+- Remaining credible medium/low concerns are release-scoped controls rather than
+  untracked defects: one-use invite issuance, shared-provider budget fairness,
+  plan/event lifetime quotas, locally attested deterministic artifacts, the
+  five-minute JWKS cache window, the canonical private-link query capability,
+  aggregate provider-usage visibility, and process-local coordination. Their
+  controls and production/cohort effects are recorded in the readiness residual
+  register. The local source now needs a frozen commit and one focused exact-diff
+  review; no deep scan is authorized. The completed local
+  `make ready` run is green: lint, type checks, workspace tests, 94 backend tests
+  with three environment-dependent migration skips, OpenAPI drift, web/mobile
+  builds, deterministic smoke, and the report-only performance budget all pass.
+
 ## Privacy-safe observability staging validation
 
 - Web and mobile now use random process-memory telemetry session UUIDs. The API

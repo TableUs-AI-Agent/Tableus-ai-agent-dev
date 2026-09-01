@@ -361,6 +361,75 @@ async def test_unknown_jwt_key_ids_are_coalesced_and_negatively_cached(monkeypat
 
 
 @pytest.mark.asyncio
+async def test_unknown_jwt_key_does_not_block_a_cached_known_key(monkeypatch) -> None:
+    known_key = object()
+    calls: list[str] = []
+
+    class Cache:
+        def get(self):
+            return auth.jwt.PyJWKSet.from_dict(
+                {
+                    "keys": [
+                        {
+                            "kty": "oct",
+                            "k": "c2VjcmV0LXRlc3Qta2V5",
+                            "kid": "known-kid",
+                            "use": "sig",
+                            "alg": "HS256",
+                        }
+                    ]
+                }
+            )
+
+    class SigningKey:
+        key_id = "known-kid"
+        key = known_key
+
+    class Client:
+        jwk_set_cache = Cache()
+
+        @staticmethod
+        def match_kid(signing_keys, key_id):
+            if key_id == "known-kid":
+                return SigningKey()
+            return None
+
+        def get_signing_key_from_jwt(self, token):
+            key_id = auth.jwt.get_unverified_header(token)["kid"]
+            calls.append(key_id)
+            raise auth.PyJWKClientError("unknown key")
+
+    client = Client()
+    auth._jwks_client.cache_clear()
+    auth._unknown_kids.clear()
+    auth._last_unknown_refresh.clear()
+    auth._jwks_refresh_locks.clear()
+    monkeypatch.setattr(auth, "_jwks_client", lambda url: client)
+    unknown_token = auth.jwt.encode(
+        {"sub": "subject"},
+        "unused-test-signing-key-that-is-long-enough",
+        algorithm="HS256",
+        headers={"kid": "unknown-kid"},
+    )
+    known_token = auth.jwt.encode(
+        {"sub": "subject"},
+        "unused-test-signing-key-that-is-long-enough",
+        algorithm="HS256",
+        headers={"kid": "known-kid"},
+    )
+
+    with pytest.raises(HTTPException) as rejected:
+        await auth._get_signing_key("https://example.test/jwks", unknown_token)
+    assert rejected.value.status_code == 401
+    assert (await auth._get_signing_key("https://example.test/jwks", known_token)).key is known_key
+    assert calls == ["unknown-kid"]
+
+    auth._unknown_kids.clear()
+    auth._last_unknown_refresh.clear()
+    auth._jwks_refresh_locks.clear()
+
+
+@pytest.mark.asyncio
 async def test_production_jwks_client_uses_only_the_bounded_jwk_set_cache(monkeypatch) -> None:
     first_key = object()
     replacement_key = object()

@@ -731,6 +731,13 @@ No database rollback is part of this packet because it introduces no migration.
 
 ## 8. Release decision
 
+Security closure for this packet is deliberately bounded: use the retained
+sealed repository baselines, focused source triage, deterministic regressions,
+and one exact-candidate diff review. Deep scan
+`2482f6f3-b05c-4c40-bc9f-e5d5a0ec41a0` was canceled for excessive weekly usage
+and its unsealed candidates are not accepted findings. Do not resume it or start
+another deep scan without separate owner confirmation.
+
 The closed beta may advance only when deterministic CI, exact-SHA staging web,
 iOS, and Android evidence are green; the security/privacy checklist is signed;
 legal and attribution review is complete; rollback owners are named; and all

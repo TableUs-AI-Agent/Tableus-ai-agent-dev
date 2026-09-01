@@ -68,6 +68,28 @@ def _remember_unknown_kid(jwks_url: str, key_id: str, now: float) -> None:
         _unknown_kids.popitem(last=False)
 
 
+def _cached_signing_key(client: PyJWKClient, key_id: str):
+    cache = getattr(client, "jwk_set_cache", None)
+    if cache is None:
+        return None
+    cached_data = cache.get()
+    if cached_data is None:
+        return None
+    if isinstance(cached_data, jwt.PyJWKSet):
+        jwk_set = cached_data
+    else:
+        try:
+            jwk_set = jwt.PyJWKSet.from_dict(cached_data)
+        except (AttributeError, TypeError, ValueError, jwt.PyJWTError):
+            return None
+    signing_keys = [
+        key
+        for key in jwk_set.keys
+        if key.public_key_use in {"sig", None} and key.key_id
+    ]
+    return client.match_kid(signing_keys, key_id)
+
+
 async def _get_signing_key(jwks_url: str, token: str):
     key_id = _validated_key_id(token)
     now = time.monotonic()
@@ -81,12 +103,17 @@ async def _get_signing_key(jwks_url: str, token: str):
         _prune_unknown_kids(now)
         if _unknown_kids.get((jwks_url, key_id), 0) > now:
             raise HTTPException(status_code=401, detail="Invalid or expired session")
+        client = _jwks_client(jwks_url)
         last_unknown = _last_unknown_refresh.get(jwks_url, 0)
         if now - last_unknown < _UNKNOWN_KID_TTL_SECONDS:
+            cached_key = _cached_signing_key(client, key_id)
+            if cached_key is not None:
+                return cached_key
+            _remember_unknown_kid(jwks_url, key_id, now)
             raise HTTPException(status_code=401, detail="Invalid or expired session")
         try:
             return await asyncio.wait_for(
-                asyncio.to_thread(_jwks_client(jwks_url).get_signing_key_from_jwt, token),
+                asyncio.to_thread(client.get_signing_key_from_jwt, token),
                 timeout=4,
             )
         except (PyJWKClientError, TimeoutError) as exc:

@@ -67,5 +67,6 @@ trust chain: fresh detached exact-SHA build, one structured active config,
 mandatory platform signer, digest-bound inspection/receipt/private copy, and
 same-byte installation. Cumulative evidence parses the complete version-two
 receipt.
-Run a fresh exact-SHA repository scan and `make ready`; only then may Railway,
-Vercel, live-provider, six-artifact, and device evidence restart.
+Run `make ready` and a focused exact-diff security review; only then may Railway,
+Vercel, live-provider, six-artifact, and device evidence restart. The canceled
+deep scan remains stopped unless the owner separately reauthorizes it.
