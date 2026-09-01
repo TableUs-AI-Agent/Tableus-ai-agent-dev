@@ -2,6 +2,7 @@ import type { NextConfig } from "next";
 import path from "node:path";
 import { withSentryConfig } from "@sentry/nextjs";
 import { PUBLIC_RUNTIME_POLICY, requireExactHttpsOrigin } from "@tableus/domain";
+import { webApiOrigin } from "./app/lib/runtime-config";
 import { FRAME_PROTECTION_HEADERS, FRAME_PROTECTION_SOURCE } from "./app/lib/security-headers";
 
 if (process.env.VERCEL === "1") {
@@ -49,11 +50,7 @@ const nextConfig: NextConfig = {
   async rewrites() {
     const configuredOrigin = process.env.TABLEUS_API_ORIGIN;
     const origin = configuredOrigin
-      ? requireExactHttpsOrigin(
-          configuredOrigin,
-          PUBLIC_RUNTIME_POLICY.stagingApiOrigin,
-          "Web rewrite API origin",
-        )
+      ? webApiOrigin(configuredOrigin)
       : "";
     const rules = [
       {
