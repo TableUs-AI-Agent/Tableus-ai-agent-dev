@@ -123,6 +123,11 @@ try {
         NODE_OPTIONS: process.env.NODE_OPTIONS || "--max-old-space-size=4096",
         GRADLE_OPTS: process.env.GRADLE_OPTS || "-Dorg.gradle.jvmargs=-Xmx3072m -Dorg.gradle.workers.max=2",
         EAS_LOCAL_BUILD_SKIP_CLEANUP: "0",
+        // Local evidence validates runtime telemetry separately. Sentry's
+        // uploader requires cloud/build-only organization context and can fail
+        // before Expo finishes the JavaScript bundle. Hosted production and
+        // store builds must not inherit this local-only exception.
+        SENTRY_DISABLE_AUTO_UPLOAD: "true",
       },
     });
   } finally {

@@ -13,7 +13,14 @@ test("local builds originate in a fresh detached exact-SHA worktree", () => {
     '"build", "--local", "--non-interactive"',
     'EAS_BUILD_GIT_COMMIT_HASH: args.sha',
     'NODE_OPTIONS: process.env.NODE_OPTIONS || "--max-old-space-size=4096"',
+    'SENTRY_DISABLE_AUTO_UPLOAD: "true"',
   ]) assert.equal(source.includes(control), true);
+});
+
+test("local artifacts skip build-time Sentry upload without disabling runtime telemetry", () => {
+  assert.equal(source.includes('SENTRY_DISABLE_AUTO_UPLOAD: "true"'), true);
+  assert.equal(source.includes("EXPO_PUBLIC_SENTRY_DSN"), false);
+  assert.equal(source.includes("EXPO_PUBLIC_TELEMETRY_ENABLED"), false);
 });
 
 test("inspection and receipt are emitted before the artifact is exported", () => {

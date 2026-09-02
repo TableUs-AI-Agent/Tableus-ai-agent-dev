@@ -83,5 +83,11 @@ Railway and Vercel deployments are now green from source
 rolling Places total was already 151 against the default ceiling of 150. The
 approved replacement keeps that default but permits an explicit staging ceiling
 up to 500. A new exact candidate, CI, deployment, live smoke, six-artifact, and
-device-evidence sequence is next. The canceled deep scan remains stopped, and
-no further scan is authorized without separate owner confirmation.
+device-evidence sequence is next. Candidate `c917ca3` passed CI, deployment, and
+live smoke but produced no accepted artifact because the local iOS Sentry
+release uploader lacked its build-only organization context. The replacement
+keeps runtime telemetry and exact-release canaries while disabling only
+build-time Sentry uploads inside the repository local-artifact orchestrator;
+hosted production/store symbol upload remains a later blocking gate. The
+canceled deep scan remains stopped, and no further scan is authorized without
+separate owner confirmation.

@@ -419,3 +419,11 @@
   the installed Expo app. Web session bootstrap must expose bounded error and
   signed-out states rather than representing every failure as indefinite
   loading.
+- **2026-09-02:** Repository-owned local EAS artifacts disable Sentry's
+  build-time automatic source-map and native-symbol upload. The local uploader
+  does not reliably receive Sentry's build-only organization context and can
+  terminate before Expo finishes its bundle; runtime Sentry/PostHog configuration
+  and exact-release canaries remain mandatory and are validated separately.
+  Hosted production/store builds must restore source-map and native-symbol upload
+  with build-only credentials before approval; this exception is local-only and
+  must never be added to a production EAS profile.

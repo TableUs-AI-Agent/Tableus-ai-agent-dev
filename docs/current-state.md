@@ -97,7 +97,12 @@
   configuration plus effective native transport/signing state, and exports the
   artifact only after a digest-bound inspection report and version-two receipt
   pass. Direct post-hoc receipt generation is refused. Local receipts do not
-  replace hosted EAS metadata for production or store builds.
+  replace hosted EAS metadata for production or store builds. Local artifacts
+  compile runtime telemetry but skip Sentry's build-time automatic source-map
+  and native-symbol upload because those build-only credentials are not a local
+  artifact dependency; exact-release runtime canaries are verified separately.
+  Production/store builds remain blocked until hosted symbol upload is restored
+  and proven.
 - Dedicated `auth-test-ios` and `auth-test-android` EAS profiles use the preview
   environment with Supabase auth and deterministic staging providers. They
   compile without demo identity configuration, loopback API defaults, cleartext

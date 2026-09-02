@@ -190,6 +190,18 @@ link fallback to staging CORS, keep `table-us.com` outside staging, and repeat
 the affected exact-SHA deployment/artifact evidence. No further security scan
 is authorized.
 
+Exact candidate `c917ca347bfc7508b5b6892f658a8cc537e49b97` passed public CI,
+Railway/Vercel deployment, staging CORS verification, and the budgeted two-user
+live Places/Gemini smoke. Its first isolated `test-ios` build exposed a local
+Sentry build-tool failure: automatic release upload lacked reliable build-only
+organization context and exited before the source map required by the following
+module-collection phase existed. A filtered Xcode Release diagnostic proved the
+supported local-only `SENTRY_DISABLE_AUTO_UPLOAD=true` path completes while
+retaining compiled runtime telemetry. The replacement candidate applies that
+exception only inside the repository local-build orchestrator, requires separate
+exact-release runtime canaries, and keeps hosted production/store symbol upload
+as a later blocking gate. No artifact from `c917ca3` is accepted.
+
 ## Objective
 
 Close the remaining pre-production gates without changing the public API,

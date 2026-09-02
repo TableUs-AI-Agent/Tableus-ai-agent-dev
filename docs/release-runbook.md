@@ -599,6 +599,13 @@ The output paths must not already exist. Raw build logs remain file-backed in
 the private temporary workspace and are deleted. Direct execution of
 `local-mobile-build-receipt.mjs`, staged/untracked source, duplicate embedded
 configuration, a mismatched signer, or artifact mutation must fail closed.
+Local artifact builds set Sentry's supported `SENTRY_DISABLE_AUTO_UPLOAD=true`
+build flag because build-only release-upload credentials are outside the local
+artifact trust contract. This does not disable the compiled runtime telemetry
+client; exact-release Sentry/PostHog canaries remain required through the
+telemetry-test artifacts. Production or store builds must not use this exception:
+their separately approved hosted workflow must upload JavaScript source maps and
+native symbols successfully before release approval.
 
 1. `test-ios`, then shut down and remove raw logs.
 2. ARM64 `test-android`, then shut down and remove raw logs.
