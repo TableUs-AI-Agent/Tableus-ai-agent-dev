@@ -2,6 +2,7 @@
 
 import type { Plan, PlanRevision } from "@tableus/domain";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import Link from "next/link";
 import { useParams } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
 
@@ -11,9 +12,26 @@ import { GoogleMapsAttribution } from "../../components/google-maps-attribution"
 import { useUser } from "../../context/user-context";
 
 export default function PlanPage() {
-  const { currentUser } = useUser();
-  if (!currentUser) return <p className="p-8" role="status">Loading plan…</p>;
+  const { currentUser, userState, userError } = useUser();
+  if (userState === "loading") return <p className="p-8" role="status">Loading plan…</p>;
+  if (userState === "signed_out") return <PlanRecovery message="Sign in to view this TableUs plan." />;
+  if (userState === "error") return <PlanRecovery message={userError || "Unable to connect to TableUs."} retry />;
+  if (!currentUser) return <PlanRecovery message="Unable to load your approved TableUs profile." retry />;
   return <PlanPageContent key={currentUser.id} subject={currentUser.id} />;
+}
+
+function PlanRecovery({ message, retry = false }: { message: string; retry?: boolean }) {
+  return (
+    <main className="mx-auto flex min-h-full max-w-xl items-center px-6 py-16">
+      <section className="glass w-full space-y-4 rounded-[2rem] p-8">
+        <h1 className="text-3xl font-bold">Plan unavailable</h1>
+        <p role="alert" className="text-red-700">{message}</p>
+        {retry
+          ? <button type="button" onClick={() => window.location.reload()} className="rounded-2xl bg-[var(--accent)] px-5 py-3 font-semibold text-white">Retry</button>
+          : <Link href="/invite?mode=sign-in" className="inline-flex rounded-2xl bg-[var(--accent)] px-5 py-3 font-semibold text-white">Sign in</Link>}
+      </section>
+    </main>
+  );
 }
 
 function PlanPageContent({ subject }: { subject: string }) {

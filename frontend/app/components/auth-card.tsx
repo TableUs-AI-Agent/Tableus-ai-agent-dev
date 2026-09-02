@@ -20,6 +20,7 @@ export function AuthCard({ initialMode = "join", onApproved }: AuthCardProps) {
   const [invite, setInvite] = useState(isSupabaseConfigured ? "" : "tableus-beta");
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
+  const [sentEmail, setSentEmail] = useState("");
   const [otp, setOtp] = useState("");
   const [redemption, setRedemption] = useState("");
   const [sent, setSent] = useState(false);
@@ -35,23 +36,26 @@ export function AuthCard({ initialMode = "join", onApproved }: AuthCardProps) {
     setBusy(true);
     setError("");
     try {
+      const normalizedEmail = email.trim().toLowerCase();
       if (mode === "sign-in") {
-        const { error: signInError } = await supabase.auth.signInWithOtp({ email, options: { shouldCreateUser: false } });
+        const { error: signInError } = await supabase.auth.signInWithOtp({ email: normalizedEmail, options: { shouldCreateUser: false } });
         if (signInError) throw signInError;
+        setSentEmail(normalizedEmail);
         setSent(true);
         return;
       }
       const result = await v1Api.post<{ redemption_token: string }>("/api/v1/access/validate", {
         code: invite,
-        email: isSupabaseConfigured ? email : undefined,
+        email: isSupabaseConfigured ? normalizedEmail : undefined,
       });
       setRedemption(result.redemption_token);
       if (!isSupabaseConfigured) {
         await v1Api.post("/api/v1/access/redeem", { redemption_token: result.redemption_token, display_name: name });
         await finish();
       } else {
-        const { error: signInError } = await supabase.auth.signInWithOtp({ email, options: { shouldCreateUser: true } });
+        const { error: signInError } = await supabase.auth.signInWithOtp({ email: normalizedEmail, options: { shouldCreateUser: true } });
         if (signInError) throw signInError;
+        setSentEmail(normalizedEmail);
         setSent(true);
       }
     } catch (caught) {
@@ -65,7 +69,7 @@ export function AuthCard({ initialMode = "join", onApproved }: AuthCardProps) {
     setBusy(true);
     setError("");
     try {
-      const { error: verifyError } = await supabase.auth.verifyOtp({ email, token: otp.trim(), type: "email" });
+      const { error: verifyError } = await supabase.auth.verifyOtp({ email: sentEmail, token: otp.trim(), type: "email" });
       if (verifyError) throw verifyError;
       if (mode === "join") {
         await v1Api.post("/api/v1/access/redeem", { redemption_token: redemption, display_name: name });
@@ -89,6 +93,7 @@ export function AuthCard({ initialMode = "join", onApproved }: AuthCardProps) {
   function changeMode(nextMode: AuthLinkMode) {
     setMode(nextMode);
     setOtp("");
+    setSentEmail("");
     setRedemption("");
     setSent(false);
     setError("");
@@ -109,10 +114,11 @@ export function AuthCard({ initialMode = "join", onApproved }: AuthCardProps) {
       </div>
       {needsJoinFields ? <input aria-label="Invite code" className="w-full rounded-2xl border border-[var(--border)] bg-white p-4" value={invite} onChange={(event) => setInvite(event.target.value)} placeholder="Invite code" /> : null}
       {needsJoinFields ? <input aria-label="Display name" className="w-full rounded-2xl border border-[var(--border)] bg-white p-4" value={name} onChange={(event) => setName(event.target.value)} placeholder="Display name" autoComplete="name" /> : null}
-      {isSupabaseConfigured ? <input aria-label="Email address" className="w-full rounded-2xl border border-[var(--border)] bg-white p-4" value={email} onChange={(event) => setEmail(event.target.value)} placeholder="Email" type="email" autoComplete="email" /> : null}
+      {isSupabaseConfigured ? <input aria-label="Email address" className="w-full rounded-2xl border border-[var(--border)] bg-white p-4" value={email} onChange={(event) => setEmail(event.target.value)} placeholder="Email" type="email" autoComplete="email" disabled={sent} /> : null}
       {sent && isSupabaseConfigured ? <><p className="text-sm text-[var(--muted-foreground)]">Enter the complete code from the newest email. Code length can vary.</p><input aria-label="Email verification code" className="w-full rounded-2xl border border-[var(--border)] bg-white p-4" value={otp} onChange={(event) => setOtp(event.target.value)} placeholder="Email code" inputMode="numeric" autoComplete="one-time-code" /></> : null}
       {error ? <p role="alert" className="text-sm text-red-700">{error}</p> : null}
       <button disabled={disabled} onClick={sent && isSupabaseConfigured ? verify : begin} className="w-full rounded-2xl bg-[var(--accent)] px-5 py-4 font-semibold text-white disabled:opacity-50">{busy ? "Working…" : sent && isSupabaseConfigured ? "Verify and continue" : isSupabaseConfigured ? "Email me a code" : "Continue in demo mode"}</button>
+      {sent && isSupabaseConfigured ? <button type="button" disabled={busy} onClick={() => { setSent(false); setSentEmail(""); setOtp(""); setError(""); }} className="w-full text-sm font-semibold text-[var(--accent)] underline-offset-4 hover:underline">Use a different email or request a new code</button> : null}
       {isSupabaseConfigured ? <button type="button" onClick={() => changeMode(needsJoinFields ? "sign-in" : "join")} className="w-full text-sm font-semibold text-[var(--accent)] underline-offset-4 hover:underline">{needsJoinFields ? "Already joined? Sign in" : "Have a new invite? Join the beta"}</button> : null}
     </section>
   );

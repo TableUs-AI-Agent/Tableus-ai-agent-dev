@@ -410,3 +410,12 @@
   values of 501 or more fail configuration validation. Per-user and global
   minute limits, Google request quotas, and the $10 alert budget remain
   unchanged.
+- **2026-09-02:** The canonical `links.table-us.com` URL is both a native-link
+  association host and a supported browser fallback, so staging CORS must allow
+  that exact origin alongside `tableus-staging.vercel.app`. The production-facing
+  `table-us.com` origin remains outside staging until a separately approved
+  production deployment. Cumulative web evidence must name the exact staging
+  alias; opening the production site on a phone is mobile web, not evidence for
+  the installed Expo app. Web session bootstrap must expose bounded error and
+  signed-out states rather than representing every failure as indefinite
+  loading.

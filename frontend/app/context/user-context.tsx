@@ -1,5 +1,6 @@
 "use client";
 
+import { ApiError } from "@tableus/api-client";
 import { createContext, useCallback, useContext, useEffect, useState, type ReactNode } from "react";
 import { api } from "../lib/api";
 import { isSupabaseConfigured, supabase } from "../lib/supabase-browser";
@@ -8,9 +9,12 @@ import { v1Api } from "../lib/v1-api";
 type AppUser = { id: string; name: string; avatar: string };
 type Profile = { id: string; display_name: string };
 type Connection = { profile_id: string; display_name: string };
+type UserState = "loading" | "approved" | "signed_out" | "error";
 
 type UserContextValue = {
   currentUser: AppUser | null;
+  userState: UserState;
+  userError: string;
   allUsers: AppUser[];
   friends: AppUser[];
   canSwitchUser: boolean;
@@ -20,6 +24,8 @@ type UserContextValue = {
 
 const UserContext = createContext<UserContextValue>({
   currentUser: null,
+  userState: "loading",
+  userError: "",
   allUsers: [],
   friends: [],
   canSwitchUser: false,
@@ -33,19 +39,25 @@ export function UserProvider({ children }: { children: ReactNode }) {
   const [allUsers, setAllUsers] = useState<AppUser[]>([]);
   const [currentUser, setCurrentUser] = useState<AppUser | null>(null);
   const [friends, setFriends] = useState<AppUser[]>([]);
+  const [userState, setUserState] = useState<UserState>("loading");
+  const [userError, setUserError] = useState("");
 
   useEffect(() => {
     let cancelled = false;
     if (isSupabaseConfigured) {
       let requestVersion = 0;
-      const clearAuthenticatedUser = () => {
+      const clearAuthenticatedUser = (nextState: UserState = "signed_out", message = "") => {
         requestVersion += 1;
         setCurrentUser(null);
         setAllUsers([]);
         setFriends([]);
+        setUserState(nextState);
+        setUserError(message);
       };
       const loadAuthenticatedUser = async () => {
         const version = ++requestVersion;
+        setUserState("loading");
+        setUserError("");
         try {
           const [profile, connections] = await Promise.all([
             v1Api.get<Profile>("/api/v1/me"),
@@ -56,13 +68,30 @@ export function UserProvider({ children }: { children: ReactNode }) {
           setCurrentUser(authenticatedUser);
           setAllUsers([authenticatedUser]);
           setFriends(connections.map((connection) => toAppUser(connection.profile_id, connection.display_name)));
-        } catch {
+          setUserState("approved");
+        } catch (error) {
           if (cancelled || version !== requestVersion) return;
-          clearAuthenticatedUser();
+          if (error instanceof ApiError && (error.status === 401 || error.status === 403)) {
+            clearAuthenticatedUser("signed_out");
+          } else {
+            clearAuthenticatedUser(
+              "error",
+              error instanceof Error ? error.message : "Unable to connect to TableUs.",
+            );
+          }
         }
       };
 
-      void loadAuthenticatedUser();
+      void supabase.auth.getSession().then(({ data, error }) => {
+        if (cancelled) return;
+        if (error) {
+          clearAuthenticatedUser("error", "Unable to restore this browser session.");
+        } else if (data.session) {
+          void loadAuthenticatedUser();
+        } else {
+          clearAuthenticatedUser("signed_out");
+        }
+      });
       const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
         if (!session) {
           clearAuthenticatedUser();
@@ -84,7 +113,10 @@ export function UserProvider({ children }: { children: ReactNode }) {
       .then((users) => {
         if (cancelled) return;
         setAllUsers(users);
-        if (users.length > 0) setCurrentUser(users[0]);
+        if (users.length > 0) {
+          setCurrentUser(users[0]);
+          setUserState("approved");
+        }
       })
       .catch(() => {
         if (cancelled) return;
@@ -98,6 +130,7 @@ export function UserProvider({ children }: { children: ReactNode }) {
         ];
         setAllUsers(fallback);
         setCurrentUser(fallback[0]);
+        setUserState("approved");
       });
     return () => {
       cancelled = true;
@@ -131,7 +164,7 @@ export function UserProvider({ children }: { children: ReactNode }) {
   };
 
   return (
-    <UserContext.Provider value={{ currentUser, allUsers, friends, canSwitchUser: !isSupabaseConfigured, switchUser, refreshFriends }}>
+    <UserContext.Provider value={{ currentUser, userState, userError, allUsers, friends, canSwitchUser: !isSupabaseConfigured, switchUser, refreshFriends }}>
       {children}
     </UserContext.Provider>
   );

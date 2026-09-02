@@ -94,6 +94,14 @@ Set the backend variables from `backend/.env.example`, with at least:
 - `SUPABASE_URL`, `SUPABASE_JWT_AUDIENCE=authenticated`
 - exact `ALLOWED_ORIGINS` and `BACKEND_PUBLIC_URL`
 
+For staging verified-link evidence, `ALLOWED_ORIGINS` must contain exactly the
+staging web alias and the canonical browser-fallback origin:
+`https://tableus-staging.vercel.app,https://links.table-us.com`. Do not add
+`https://table-us.com` until its production deployment is separately approved.
+Verify both allowed origins with credential-free preflights after deployment;
+an omitted link origin breaks signed-out web fallback even when AASA/App Links
+are valid.
+
 Do not store `MIGRATION_DATABASE_URL` in Railway. Apply each approved migration
 from the trusted operator environment with the owner credential held outside the
 service, then deploy the runtime with only the least-privilege application role.
@@ -539,6 +547,21 @@ Then run the deterministic gate, freeze the source commit, and require public CI
 at that exact SHA. After the single approved external gate, update the Supabase
 template to say “verification code”, deploy Railway and the Vercel staging
 Preview without moving production-facing aliases, and build sequentially:
+
+Use `https://tableus-staging.vercel.app` for the web organizer journey. Do not
+substitute `https://table-us.com`; that is a production-facing alias and may
+serve a different source SHA. Test a canonical private link by tapping it from
+Notes or Messages into the installed app. If iOS remains in Safari, distinguish
+the browser fallback from the installed Expo app before diagnosing a native
+loading failure. The browser fallback itself must still authenticate and call
+the staging API from the allowlisted `https://links.table-us.com` origin.
+
+The live lifecycle order is: organizer creates the plan and saves constraints;
+guest opens the private link, authenticates, joins, and saves constraints;
+organizer then generates four options; both users vote; organizer finalizes and
+reopens; finally rotate and reject the old link. Do not treat recommendation
+generation as failed while the plan still has fewer than two eligible
+participants.
 
 Before freezing, validate the checked-in Expo workflows against Expo's current
 schema (this operator check requires network access and the EAS CLI):

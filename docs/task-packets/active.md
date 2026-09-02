@@ -173,6 +173,23 @@ artifact. The owner approved a bounded replacement that keeps the default at
 deployment, smoke, artifacts, and cumulative device evidence remain the active
 sequence.
 
+Exact candidate `006d27c2307016317eb92e78af7dea98e3e53b35` passed public CI,
+the budgeted live Places/Gemini smoke, all six sequential signed-artifact
+inspections, and the iOS/Android deterministic lifecycle and offline journeys.
+The first owner-guided production-shaped pass is not accepted: testing mixed
+the exact-SHA staging alias with the older `table-us.com` and
+`links.table-us.com` deployment. Railway allowed only
+`https://tableus-staging.vercel.app`; credential-free preflight checks returned
+`400` with no allowed-origin header for both older hosts. That caused the web
+Plans/Account failure, prevented the guest join, and therefore left the
+organizer ineligible to generate recommendations. The replacement source adds
+bounded web API deadlines, explicit signed-out/network-error states instead of
+indefinite loading, and verification-email binding to the normalized address
+that requested the code. The next external gate must add only the canonical
+link fallback to staging CORS, keep `table-us.com` outside staging, and repeat
+the affected exact-SHA deployment/artifact evidence. No further security scan
+is authorized.
+
 ## Objective
 
 Close the remaining pre-production gates without changing the public API,

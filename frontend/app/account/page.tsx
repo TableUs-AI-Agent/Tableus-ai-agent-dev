@@ -28,15 +28,38 @@ type AccountControl = {
 const DELETE_CONFIRMATION = "DELETE";
 
 export default function AccountPage() {
-  const { currentUser } = useUser();
-  if (!currentUser) {
+  const { currentUser, userState, userError } = useUser();
+  if (userState === "loading") {
     return (
       <main className="flex min-h-full items-center justify-center" aria-label="Loading account settings">
         <Loader2 className="h-7 w-7 animate-spin text-[var(--accent)]" />
       </main>
     );
   }
+  if (userState === "signed_out") {
+    return <AccountRecovery message="Sign in to view your account settings." />;
+  }
+  if (userState === "error") {
+    return <AccountRecovery message={userError || "Unable to connect to TableUs."} retry />;
+  }
+  if (!currentUser) {
+    return <AccountRecovery message="Unable to load your approved TableUs profile." retry />;
+  }
   return <AccountPageContent key={currentUser.id} />;
+}
+
+function AccountRecovery({ message, retry = false }: { message: string; retry?: boolean }) {
+  return (
+    <main className="mx-auto flex min-h-full max-w-xl items-center px-6 py-16">
+      <section className="glass w-full space-y-4 rounded-[2rem] p-8">
+        <h1 className="text-3xl font-semibold">Account unavailable</h1>
+        <p role="alert" className="text-red-700">{message}</p>
+        {retry
+          ? <button type="button" onClick={() => window.location.reload()} className="rounded-2xl bg-[var(--accent)] px-5 py-3 font-semibold text-white">Retry</button>
+          : <Link href="/invite?mode=sign-in" className="inline-flex rounded-2xl bg-[var(--accent)] px-5 py-3 font-semibold text-white">Sign in</Link>}
+      </section>
+    </main>
+  );
 }
 
 function AccountPageContent() {

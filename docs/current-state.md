@@ -668,3 +668,30 @@
   ingestion without weakening the filter or changing application code.
   Sanitized receipts and screenshots are in
   `docs/evidence/4920d99/observability/`. Public merge remains an explicit gate.
+
+## Cumulative staging readiness diagnosis
+
+- Exact candidate `006d27c2307016317eb92e78af7dea98e3e53b35` passed public CI,
+  the capped live Places/Gemini smoke, inspection of all six sequential local
+  mobile artifacts, and deterministic lifecycle/offline evidence on iOS and
+  Android. Those checks do not constitute final cumulative sign-off.
+- The owner-guided web/iPhone pass found a domain-boundary failure rather than
+  a native loading regression. The literal `Loading plans…` and Account spinner
+  are Next.js states. `tableus-staging.vercel.app` serves the exact-SHA Preview,
+  while `table-us.com` and `links.table-us.com` still serve an older
+  production-target deployment. Railway staging currently permits only the
+  exact staging alias, so browser preflights from the other two hosts return
+  `400` without CORS approval. This explains the reported loading and network
+  errors.
+- Recommendation generation was downstream-blocked: the product requires a
+  second approved participant and both participants' constraints before the
+  organizer generates four options. The failed guest auth/join left the plan
+  with one participant, so later voting/finalization/link-rotation checks could
+  not be verified.
+- The local replacement distinguishes loading, signed-out, and network-error
+  states on web Plans, Plan, and Account pages; bounds web API calls to 15
+  seconds; and verifies an OTP against the locked normalized email that
+  requested it. The next staging configuration must allow the canonical
+  `links.table-us.com` browser fallback while keeping `table-us.com` outside the
+  staging boundary. Redeployment and new exact-SHA evidence remain external
+  gates.
