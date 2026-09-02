@@ -1,0 +1,10 @@
+{
+  "schema_version": 1,
+  "platform": "android",
+  "profile": "test-android",
+  "candidate_sha": "006d27c2307016317eb92e78af7dea98e3e53b35",
+  "artifact_sha256": "8098c945225d72c8b7ba43e71ef88b45d866b56212598c902bea6f347007f4e2",
+  "inspection_passed": true,
+  "signer_type": "android-sha256-cert",
+  "signer_identity": "02:FC:F9:A8:5F:EF:26:D4:61:43:F4:D8:28:7A:32:5B:05:21:1B:B6:77:23:91:32:4C:12:AA:78:60:C6:65:68"
+}
