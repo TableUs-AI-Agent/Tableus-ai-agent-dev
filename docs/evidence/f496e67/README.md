@@ -19,7 +19,12 @@ Source candidate: `f496e6713d671e799082578af835047b59925208`
 
 ## Pending cumulative gates
 
-- Budgeted live Places/Gemini smoke.
+- The budgeted smoke authenticated both approved accounts, then stopped before
+  its first provider request because prior staging evidence had already used
+  151 of the default 150 rolling Places attempts. It produced no accepted live
+  evidence. The owner approved a replacement candidate that retains the
+  default of 150 while permitting an explicit staging ceiling of at most 500;
+  this deployment is therefore superseded for cumulative sign-off.
 - Sequential exact-SHA deterministic, readiness, and telemetry mobile
   artifacts and their sanitized device evidence.
 - Final cumulative evidence validation and separate merge approval.

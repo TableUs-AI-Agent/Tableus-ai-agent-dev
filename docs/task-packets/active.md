@@ -165,8 +165,13 @@ passed local readiness and public CI run `33572990627`; Railway deployment
 `e8b7c1e1-7f12-46ce-bc4f-ce8a2da57965` and Vercel Preview deployment
 `dpl_EpX2TtZRH3BDeyuPwXDZbuFiZAFB` are healthy at that source. Only the staging
 web alias moved. No new deep or diff scan may run without separate owner
-confirmation. Live-provider smoke, artifacts, and cumulative device evidence
-remain external gates.
+confirmation. The live smoke authenticated both accounts but stopped before its
+first provider request because retained staging usage was 151 attempts against
+the default rolling ceiling of 150; it produced no accepted evidence or mobile
+artifact. The owner approved a bounded replacement that keeps the default at
+150 and permits an explicit staging value up to 500. A new exact candidate,
+deployment, smoke, artifacts, and cumulative device evidence remain the active
+sequence.
 
 ## Objective
 

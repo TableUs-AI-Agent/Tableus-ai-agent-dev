@@ -79,6 +79,9 @@ pooler username form. The active bounded correction validates
 pooler host, and session port. A new exact candidate and the replacement
 Railway and Vercel deployments are now green from source
 `f496e6713d671e799082578af835047b59925208`, following successful public CI run
-`33572990627`. Live-provider smoke, six-artifact, and device evidence are the
-next gated actions. The canceled deep scan remains stopped, and no further scan
-is authorized without separate owner confirmation.
+`33572990627`. Its live smoke stopped before contacting a provider because the
+rolling Places total was already 151 against the default ceiling of 150. The
+approved replacement keeps that default but permits an explicit staging ceiling
+up to 500. A new exact candidate, CI, deployment, live smoke, six-artifact, and
+device-evidence sequence is next. The canceled deep scan remains stopped, and
+no further scan is authorized without separate owner confirmation.

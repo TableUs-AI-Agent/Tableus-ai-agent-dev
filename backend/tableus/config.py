@@ -48,7 +48,7 @@ class Settings(BaseSettings):
 
     live_ai_max_usd: float = Field(default=0.25, gt=0, le=0.25)
     ai_runtime_max_usd_30d: float = Field(default=4.0, gt=0, le=4.0)
-    places_runtime_max_attempts_30d: int = Field(default=150, gt=0, le=150)
+    places_runtime_max_attempts_30d: int = Field(default=150, gt=0, le=500)
 
     @field_validator("tableus_runtime_db_role")
     @classmethod

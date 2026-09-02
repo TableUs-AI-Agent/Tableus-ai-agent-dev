@@ -416,6 +416,13 @@
   Its existing least-privilege secret is used through Supabase's IPv4 session
   pooler; a read-only check confirmed the `tableus_runtime` role and private
   `app` schema access without displaying or rotating the credential.
+- Its cumulative live smoke authenticated both approved accounts and then
+  stopped before the first provider request: retained aggregate usage was 151
+  attempts against the default rolling Places ceiling of 150. It produced no
+  accepted live evidence or mobile artifact. The owner approved a replacement
+  candidate that preserves the 150 default and permits an explicit staging
+  ceiling up to 500. Per-minute limits, Google quotas, and the $10 alert budget
+  are unchanged.
 - Vercel staging client variables and `https://tableus-staging.vercel.app` are
   live from exact SHA `d0955f5d08537b3251341720ed3a28453a70e13b`
   through deployment `dpl_6KHTRhyUS9qTAeJ7eXw3UvaghQmz`. The production-facing

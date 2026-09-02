@@ -98,6 +98,13 @@ def test_gemini_model_and_spend_ceilings_are_pinned() -> None:
     assert settings.live_ai_max_usd == 0.25
     assert settings.ai_runtime_max_usd_30d == 4.0
     assert settings.places_runtime_max_attempts_30d == 150
+    assert (
+        Settings(
+            _env_file=None,
+            places_runtime_max_attempts_30d=500,
+        ).places_runtime_max_attempts_30d
+        == 500
+    )
 
     with pytest.raises(ValidationError, match="gemini-3.1-flash-lite"):
         Settings(_env_file=None, gemini_model="gemini-latest")
@@ -108,7 +115,7 @@ def test_gemini_model_and_spend_ceilings_are_pinned() -> None:
     with pytest.raises(ValidationError):
         Settings(_env_file=None, ai_runtime_max_usd_30d=4.01)
     with pytest.raises(ValidationError):
-        Settings(_env_file=None, places_runtime_max_attempts_30d=151)
+        Settings(_env_file=None, places_runtime_max_attempts_30d=501)
 
 
 def test_telemetry_modes_are_fail_closed_by_environment() -> None:

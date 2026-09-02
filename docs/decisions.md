@@ -404,3 +404,9 @@
   `role.project-ref`, the exact project from `SUPABASE_URL`, an official
   `*.pooler.supabase.com` host, and session port `5432`. Arbitrary suffixes,
   hosts, and transaction-pooler URLs fail closed.
+- **2026-09-01:** The paid Places rolling-attempt default remains 150. An
+  explicitly configured staging environment may raise that ceiling to at most
+  500 because prior exact-SHA evidence had already accumulated 151 attempts;
+  values of 501 or more fail configuration validation. Per-user and global
+  minute limits, Google request quotas, and the $10 alert budget remain
+  unchanged.
