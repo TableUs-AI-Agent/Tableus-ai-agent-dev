@@ -160,9 +160,13 @@ only that documented composite identity when the suffix exactly matches the
 configured Supabase project, the host is an official Supabase pooler, and the
 port is session mode `5432`; mismatched projects, arbitrary hosts, and
 transaction mode remain rejected. The prior healthy staging deployment remains
-live. No new deep or diff scan may run without separate owner confirmation. A
-new exact SHA, public CI, staging deployment, artifacts, and cumulative device
-evidence remain external gates.
+live. Replacement source `f496e6713d671e799082578af835047b59925208` then
+passed local readiness and public CI run `33572990627`; Railway deployment
+`e8b7c1e1-7f12-46ce-bc4f-ce8a2da57965` and Vercel Preview deployment
+`dpl_EpX2TtZRH3BDeyuPwXDZbuFiZAFB` are healthy at that source. Only the staging
+web alias moved. No new deep or diff scan may run without separate owner
+confirmation. Live-provider smoke, artifacts, and cumulative device evidence
+remain external gates.
 
 ## Objective
 

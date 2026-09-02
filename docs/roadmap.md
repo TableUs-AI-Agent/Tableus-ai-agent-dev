@@ -77,6 +77,8 @@ it because the hosted role validator rejected Supabase's required IPv4 session-
 pooler username form. The active bounded correction validates
 `role.project-ref` only against the configured Supabase project, official
 pooler host, and session port. A new exact candidate and the replacement
-Railway, Vercel, live-provider, six-artifact, and device evidence are the next
-gated actions. The canceled deep scan remains stopped, and no further scan is
-authorized without separate owner confirmation.
+Railway and Vercel deployments are now green from source
+`f496e6713d671e799082578af835047b59925208`, following successful public CI run
+`33572990627`. Live-provider smoke, six-artifact, and device evidence are the
+next gated actions. The canceled deep scan remains stopped, and no further scan
+is authorized without separate owner confirmation.

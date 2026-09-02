@@ -409,6 +409,13 @@
   The first CLI-created key was revoked immediately after its creation response
   exposed the value; only the non-exposed restricted replacement remains in
   Railway and the operator Keychain.
+- Replacement readiness source `f496e6713d671e799082578af835047b59925208`
+  passed public CI run `33572990627`. Railway deployment
+  `e8b7c1e1-7f12-46ce-bc4f-ce8a2da57965` is healthy at that exact SHA with
+  Supabase authentication, live Places, live Gemini, and staging telemetry.
+  Its existing least-privilege secret is used through Supabase's IPv4 session
+  pooler; a read-only check confirmed the `tableus_runtime` role and private
+  `app` schema access without displaying or rotating the credential.
 - Vercel staging client variables and `https://tableus-staging.vercel.app` are
   live from exact SHA `d0955f5d08537b3251341720ed3a28453a70e13b`
   through deployment `dpl_6KHTRhyUS9qTAeJ7eXw3UvaghQmz`. The production-facing
@@ -423,6 +430,9 @@
   Public invite and privacy routes return 200. Apple and Android association
   manifests now return direct JSON 200 responses with the inspected preview
   signing identifiers and only the allowlisted native routes.
+- Vercel Preview deployment `dpl_EpX2TtZRH3BDeyuPwXDZbuFiZAFB` is Ready from
+  the clean replacement source checkout, and `tableus-staging.vercel.app` now
+  targets it. The permanent link and production aliases remain unchanged.
 - Expo project `@tableus/tableus` is provisioned as
   `0601c3b9-0082-454c-b636-45a1fe377f7b`. Its preview environment contains only
   the staging API URL, Supabase URL/publishable client key, EAS project ID, and
