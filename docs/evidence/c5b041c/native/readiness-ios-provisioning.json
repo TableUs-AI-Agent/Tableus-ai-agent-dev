@@ -1,0 +1,9 @@
+{
+  "artifact_sha256": "c089122ea4ab71fc0d93edc2f69b9206ed00688c390ad04f4b5cdae1d2ac299c",
+  "apple_team_id": "6MHJN5V9UJ",
+  "profile_expires_at": "2027-08-24T23:33:31Z",
+  "provisioned_device_count": 1,
+  "paired_device_udid_available": true,
+  "paired_devices_covered": true,
+  "native_allows_local_networking": false
+}

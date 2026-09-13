@@ -1,7 +1,9 @@
 # c5b041c native verification
 
 Application source: `c5b041c85f4f7b959436c13bef48c959622c624f`.
-Operator source: `211ff1c7876694a4b2db677ec26fe5741a6770cb`.
+Operator tooling reference: `211ff1c7876694a4b2db677ec26fe5741a6770cb`.
+The operator files are unchanged across local evidence descendants; the
+[dispatch ledger](operator-provenance.json) records their actual checkout SHAs.
 This evidence checkpoint is local; publishing the branch would trigger another
 Vercel Preview. The deployed application remains the frozen source above.
 
@@ -9,8 +11,9 @@ Vercel Preview. The deployed application remains the frozen source above.
 | --- | --- | --- |
 | `test-ios` | Accepted; simulator bundle contains arm64 and x86_64 | iOS 26.5 lifecycle and offline mutation journeys passed |
 | `test-android` | Accepted; APK contains arm64-v8a only | API 36 lifecycle and offline mutation journeys passed |
-| `readiness-ios`, `readiness-android` | Inputs/configuration passed; iOS building | Pending |
-| `telemetry-test-ios`, `telemetry-test-android` | Inputs/configuration passed | Pending |
+| `readiness-ios` | Signed IPA and receipt accepted; paired iPhone is provisioned | Physical journey pending |
+| `readiness-android` | Signed APK and receipt accepted | Live journey pending |
+| `telemetry-test-ios`, `telemetry-test-android` | Inputs/configuration passed; iOS building | Delivery pending |
 
 ## Observed deterministic results
 
@@ -45,6 +48,14 @@ toolchain versions and private launcher hashes. The hosted launcher supplies the
 existing staging origins for Expo's initial config read. All artifacts are
 built from fresh detached exact-source checkouts with locked dependencies,
 then inspected by that source's own tooling before issuing a receipt.
+
+Both readiness artifacts passed inspection and receipt validation. Their
+[compiled bundles](compiled-source-checks.json) contain the expected `c5b041c`
+source literal and exclude the inherited `daa89a0` source literal. This checks
+build input resolution; telemetry delivery still needs an actual canary.
+The [iOS provisioning check](readiness-ios-provisioning.json) confirms the paired
+iPhone is covered and the profile remains valid until 2027-08-24. The owner
+confirmed availability to connect the phone after the remaining builds finish.
 
 ## Storage and limits
 

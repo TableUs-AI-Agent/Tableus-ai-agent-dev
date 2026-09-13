@@ -1,0 +1,20 @@
+{
+  "schema_version": 2,
+  "build_runner": "eas-local-build-plugin",
+  "platform": "android",
+  "profile": "readiness-android",
+  "candidate_sha": "c5b041c85f4f7b959436c13bef48c959622c624f",
+  "source_tree_sha": "ef9d4629bb7a5f22c3bd696d7b4355e26dd8ae51",
+  "build_id": "local-android-readiness-c5b041c",
+  "artifact_sha256": "8d59d69fd5fe1a19e6eaa0ea1330a36084e01119bf66b9d0751454df098779a8",
+  "eas_cli_version": "23.2.0",
+  "package_lock_sha256": "ba23ddb7a5b5a8782bcb4efeb8684c92816ff58ad271fbd22c92ca149ada9dd2",
+  "host": {
+    "os": "darwin",
+    "architecture": "arm64"
+  },
+  "inspection_report_sha256": "722f98f6405d52e55c033c03a58f4fc0a94d54d5b3ae79363771d070567a2d72",
+  "signer_type": "android-sha256-cert",
+  "signer_identity": "02:FC:F9:A8:5F:EF:26:D4:61:43:F4:D8:28:7A:32:5B:05:21:1B:B6:77:23:91:32:4C:12:AA:78:60:C6:65:68",
+  "artifact_inspection_passed": true
+}

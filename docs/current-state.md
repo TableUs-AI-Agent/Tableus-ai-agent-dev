@@ -47,9 +47,10 @@ existing report or prior task states the result; it has not been repeated.
 | Preview API CORS | Verified: both new exact Preview URLs and both existing origins pass; unrelated origin rejected | Corrected the missing-origin configuration and redeployed the same API source; [receipt](evidence/c5b041c/staging-deployment.json) |
 | Historical CI for `daa89a0` | Verified: completed successfully | [Run 33696336882](https://github.com/TableUs-AI-Agent/Tableus-ai-agent-dev/actions/runs/33696336882) |
 | Historical two-user live provider smoke for `daa89a0` | Recovered recorded report: 2 participants, 4 distinct candidates, 8 operations, estimated $0.00443325 | `docs/evidence/daa89a0/live/daa89a0-gemini-staging-summary.json`; no paid call repeated |
-| Native artifacts | Prior task reports `test-ios`, `test-android`, `readiness-ios`, `readiness-android` accepted | Files/receipts not recovered; owner saved no manual copies. Treat as unavailable and rebuild only after the next candidate freeze |
-| Telemetry artifacts | Prior task began `telemetry-test-ios`; completion unknown; Android not reported complete | Require actual artifact/receipt pairs |
-| Current-candidate device journeys and cumulative summary | Incomplete | No honest cumulative sign-off yet |
+| Historical native artifacts for `daa89a0` | Prior task reports `test-ios`, `test-android`, `readiness-ios`, `readiness-android` accepted | Files/receipts not recovered; owner saved no manual copies. Treat as unavailable and rebuild only after the next candidate freeze |
+| Historical telemetry artifacts | Prior task began `telemetry-test-ios`; completion unknown; Android not reported complete | Require actual artifact/receipt pairs |
+| Current native artifacts for `c5b041c` | Both deterministic test and signed readiness pairs accepted; iOS telemetry building | [Durable artifacts, inspections and receipts](evidence/c5b041c/native/README.md) |
+| Current-candidate device journeys and cumulative summary | Both simulator/emulator lifecycle and offline suites passed; physical/live/telemetry acceptance pending | No cumulative sign-off yet |
 | Security | Recorded clean focused review at `069473c`, followed by source changes | [Attributable source delta](reviews/2026-09-12-security-delta.md); no new plugin scan authorized |
 | Legal/contact/attribution | Owner confirmations recorded 2026-08-26 | Preserve the signed record; reconfirm only changed text or delivery conditions |
 
@@ -102,7 +103,10 @@ journeys passed: two participants, four candidates, votes, finalization, reopen,
 rotated-link rejection, stale-result clearing, same-key interrupted-write retry
 and zero writes while offline. [Native evidence](evidence/c5b041c/native/README.md)
 contains sanitized reports and synthetic screenshots. The four hosted profiles'
-inputs/configuration passed; the signed iOS readiness build is active.
+inputs/configuration passed. The signed iOS readiness IPA and receipt are accepted,
+and its valid provisioning profile covers the paired iPhone. The Android
+readiness APK is also accepted. iOS telemetry is building; Android telemetry
+remains pending. The owner confirmed availability for the physical-iPhone step.
 These simulator/demo results do not establish physical-device or live-auth
 acceptance. Visual review found default tab glyphs; functional text labels remain,
 and explicit icon/text-only styling is queued for the next client candidate.

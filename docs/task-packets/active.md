@@ -71,9 +71,12 @@ Do not attribute old smoke, scan or native reports to this source.
    Both test artifacts, receipts, lifecycle and offline mutation journeys passed.
    All four hosted profiles passed input/configuration checks; build readiness
    iOS, readiness Android, telemetry iOS, then telemetry Android sequentially.
+   Both signed readiness artifacts passed inspection and receipt checks; the iOS
+   profile covers the paired iPhone. iOS telemetry is building.
    Sanitized reports and synthetic screenshots are retained in
    `docs/evidence/c5b041c/native/`. The paired physical iPhone is currently
-   unavailable; actual physical/auth/provider observations remain pending.
+   unavailable, and the owner confirmed availability to connect it after builds;
+   actual physical/auth/provider observations remain pending.
 
 ## Acceptance and stopping rules
 
