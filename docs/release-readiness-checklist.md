@@ -1,6 +1,6 @@
 # Closed-beta readiness checklist
 
-Reviewed 2026-09-12. Deployed staging source:
+Reviewed 2026-09-13. Deployed staging source:
 `c5b041c85f4f7b959436c13bef48c959622c624f`.
 The owner-approved push, CI and existing Railway staging/Vercel Preview
 deployment are verified in [deployment evidence](evidence/c5b041c/README.md).
@@ -17,15 +17,19 @@ A historical confirmation is not a fresh test or a new owner signature.
   and deployment protection preserved. Both new Preview URLs and both existing
   origins pass CORS; an unrelated origin is rejected.
 - [x] Historical `daa89a0` two-user live Places/Gemini report recovered.
-- [ ] Current-candidate real-session web/native journey accepted under its
+- [x] Current-candidate real-session web/native journey accepted under its
   applicable auth/provider scope; old smoke is not relabeled.
-- [ ] Canonical fallback and association bodies rechecked for native acceptance.
-- [ ] Required native artifact/inspection/receipt pairs recovered or rebuilt,
-  with source/profile/signer/checksum verified. Four completions are reported
-  in the prior task; their files have not yet been recovered.
-- [ ] Both deterministic lifecycle/offline journeys pass at the selected source.
-- [ ] Web, physical-iPhone and ARM64 Android staging journeys pass together.
-- [ ] Separate telemetry-test evidence is bound to the exact selected release.
+- [x] Canonical fallback and association bodies rechecked for native acceptance;
+  [public response and manifest hashes](evidence/c5b041c/native/public-readiness-recheck.json) retained.
+- [x] All six current native artifact/inspection/receipt pairs accepted with
+  source/profile/signer/checksum verified in the [artifact matrix](evidence/c5b041c/native/artifact-matrix.json).
+- [x] Both deterministic lifecycle/offline journeys pass at the selected source.
+- [x] Web, physical-iPhone and ARM64 Android staging journeys pass together.
+  Native summaries explicitly assemble owner observations with verified
+  installation evidence; original interactive runners ended before final output.
+- [x] Separate telemetry-test evidence is bound to the exact selected release.
+  [All four platforms delivered](evidence/c5b041c/native/telemetry-staging-summary.json)
+  through explicitly attributed owner, connector and Sentry UI observations.
 - [x] The reproduced credential-wait deadline gap is fixed locally, with shared
   API tests and mobile restoration/retry/stale-result component tests.
 - [x] The [source delta](reviews/2026-09-12-security-delta.md) identifies the
@@ -33,6 +37,8 @@ A historical confirmation is not a fresh test or a new owner signature.
 - [ ] Security evidence acceptance for the replacement is resolved; the current
   cumulative schema still requires an exact-candidate scan.
 - [ ] Cumulative evidence validator accepts an honestly sourced evidence set.
+  The [pending input and component hashes](evidence/c5b041c/native/candidate-readiness-status.json)
+  are assembled; the unchanged validator rejects missing security evidence.
 
 ## Implemented controls and recorded owner confirmations
 
@@ -64,6 +70,8 @@ the existing exception expires on 2026-09-30 or before that approval.
 
 | Risk | Current control | Owner / expiry | Production effect |
 | --- | --- | --- | --- |
+| Mobile sign-out promises device-only behavior but invokes the provider's global default. | The discrepancy is attributed in the live findings; the tested sessions were recovered within the approved message budget. | Repository owner; align scope and verify another device's session before the next client candidate. | Queued correction before distribution; no new sign-out is needed for this completed verification. |
+| Every plan response hydrates live Places details; eighteen subsequent detail batches consumed 72 attempts in this journey. | Hard provider ceilings and observed usage bounded the run at 80/100 attempts. Individual UI triggers are not fully attributed. | Repository owner; reproduce inactive-screen/foreground behavior with deterministic providers and remove unnecessary reads before the next candidate. | Verify corrected request behavior before expanding the cohort or approving its operating budget. |
 | The full developer dependency graph reports four high, 19 moderate, and one low advisory through the local EAS CLI/Expo build toolchain; the production graph has zero critical/high findings and 12 moderate Expo build-chain findings. | EAS CLI is locked exactly at `23.2.0`, SDK 57-compatible packages are fully patched, Expo Doctor passes, release inputs are inspected, and no forced audit rewrite or unsupported SDK downgrade is accepted. Recheck upstream patches and audit reachability on every release packet. | Repository owner; exception expires 2026-09-30 or before any production/store approval, whichever is earlier. | Blocks production if unresolved or newly runtime-reachable; does not block isolated staging while the shipped runtime graph remains free of critical/high findings. |
 | Idempotency response cache and paid-operation reservation locks are process-local. | Single Railway API process; explicit retry UX; verified-subject/role replay; fixed entry, byte, request, and response bounds; request fingerprints; conservative rate/spend limits. | Repository owner; replace before horizontal scaling. | Horizontal scaling is blocked until durable coordination exists. |
 | Private-plan capability remains in the canonical join URL query. | Approved authentication is also required; tokens are random, hashed at rest, rotatable, redacted from telemetry/evidence, and old links are rejected after rotation. | Repository owner; design a short-lived exchange before production. | Production is blocked on a reviewed exchange or explicit risk acceptance. |

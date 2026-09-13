@@ -12,9 +12,9 @@ Vercel Preview. The deployed application remains the frozen source above.
 | `test-ios` | Accepted; simulator bundle contains arm64 and x86_64 | iOS 26.5 lifecycle and offline mutation journeys passed |
 | `test-android` | Accepted; APK contains arm64-v8a only | API 36 lifecycle and offline mutation journeys passed |
 | `readiness-ios` | Signed IPA installed on the provisioned physical iPhone | Ten-phase owner checklist passes; assembled summary identifies original installation evidence |
-| `readiness-android` | Signed APK installed; package manager verifies the canonical domain | Sign-in, relaunch and canonical links pass; distinct second account joined |
+| `readiness-android` | Signed APK installed; package manager verifies the canonical domain | Ten-phase owner checklist passes; assembled summary identifies original installation evidence |
 | `telemetry-test-ios` | Simulator bundle re-inspected and installed | Returning sign-in, canary UI and exact-release PostHog/Sentry delivery pass |
-| `telemetry-test-android` | Signed APK, inspection and receipt accepted | Delivery pending |
+| `telemetry-test-android` | Signed APK re-inspected and installed after readiness completion | Session preserved; canary UI and exact-release PostHog/Sentry delivery pass |
 
 The [final artifact matrix](artifact-matrix.json) validates all six preserved
 artifacts against their actual checksums, inspection reports, receipts, expected
@@ -85,7 +85,12 @@ QR, JSON share-sheet export and deletion-readiness. Its
 [assembled summary](ios/readiness/ios-readiness-summary.json) combines these
 observations with the original source runner's installation/preflight evidence.
 The original interactive runner ended before final output, so a complete runner
-execution is not claimed. Android's final UI checks remain incomplete.
+execution is not claimed. Android's owner subsequently confirmed the current
+three-person voting state, updated five-point card, saved vote, absent guest
+finalize control, old-link rejection and JSON export/deletion status. Its
+[assembled summary](android/readiness/android-readiness-summary.json) records
+all ten phases and identifies the emulator restart before its current-state
+observation. Both native checklists and the shared journey now pass.
 The session check follows [Supabase's session model](https://supabase.com/docs/guides/auth/sessions);
 the result above is the owner's actual observation on the installed build.
 
@@ -115,9 +120,9 @@ were read without changing configuration. A later web tab requires sign-in;
 the cause is unproven and the approved organizer recovery has completed. The single
 generation succeeded on Android using its existing session, producing four
 distinct candidates. [Live journey progress](live-journey-progress.json) records
-two complete saved votes and 60 Places
-attempts/$0.00056825 estimated Gemini usage. The 52 Places attempts
-after generation came from thirteen successful detail reads; the exact UI trigger
+two complete saved votes and 80 Places
+attempts/$0.00056825 estimated Gemini usage. The 72 Places attempts
+after generation came from eighteen successful detail reads; the exact UI trigger
 of each is unproven. The owner approved increased totals of 100 attempts and
 six returning messages after a pause at 36 attempts and four messages consumed.
 The original interactive readiness processes have ended without final reports;
@@ -128,8 +133,17 @@ messages are now conservatively consumed after web/simulator recovery. The
 [iOS/API canary](ios-api-telemetry-canary.json) passed its UI and delivered one
 event per platform to PostHog and Sentry with the exact release. The local-page
 link opened the check with the same artifact after the initial custom-scheme
-attempt returned to Plans. The iOS simulator is shut down; Android has restarted
-without wiping data for its final readiness checks and subsequent canary.
+attempt returned to Plans. The iOS simulator is shut down. Android's telemetry
+APK passed reinspection and installed without wiping data after readiness
+completion; its [session/canary check](android/telemetry/android-telemetry-progress.json)
+passed with the existing session. The [final telemetry summary](telemetry-staging-summary.json)
+records all four PostHog platforms and five events: one per client and two
+expected API calls. Sentry has three matching projects, with one web event and
+two each in mobile/API; the latest mobile event names the Android bundle. All
+messages are redacted. Both simulators are stopped without wiping data.
+The [public recheck](public-readiness-recheck.json) retains hashes
+for the canonical association bodies and verifies signed identities, allowed
+paths, fallback responses and current API source/modes.
 
 ## Storage and limits
 
@@ -144,9 +158,10 @@ Text labels and navigation work; explicit icons or text-only styling remain
 polish for the next client candidate before store distribution. The screenshots
 are retained unchanged, including this observation.
 
-The deterministic simulator/demo results alone do not establish physical or
-live acceptance. The separately observed partial real-session results above
-still leave Android's final readiness checks and canary incomplete.
-The existing exact-candidate security-evidence requirement
-also remains unresolved; no canceled scan was restarted. See
-[execution status](execution-summary.json) and the active packet for next steps.
+The separately attributed physical/live observations and telemetry delivery
+complete device verification. The [candidate status](candidate-readiness-status.json)
+binds component digests and the [pending cumulative input](cumulative-readiness-input.pending.json).
+The unchanged validator rejects missing security evidence with
+`security.passed must be true`. That acceptance requirement remains unresolved;
+no canceled scan was restarted. See [execution status](execution-summary.json)
+and the active packet for the remaining decision.

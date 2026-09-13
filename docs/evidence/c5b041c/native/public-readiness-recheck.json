@@ -1,0 +1,29 @@
+{
+  "schema_version": 1,
+  "sha": "c5b041c85f4f7b959436c13bef48c959622c624f",
+  "observed_at": "2026-09-13T08:18:06.548Z",
+  "passed": true,
+  "canonical_origin": "https://links.table-us.com",
+  "manifest_sha256": "3bb725a3f5c7a9ac737b01bd217a32bb47ec6559a3a251a46ace7a1700931673",
+  "manifest_path": "association-manifest.json",
+  "apple_body_sha256": "710eb96b4cb131ad435294629ed493857a0f8d38e9d0cba112fc905f9cc34d63",
+  "android_body_sha256": "e2ad9e673a352912bf9782eba015a5bbcfd28069c138d858d37ced66bf411430",
+  "association_HTTP_200_without_redirect": true,
+  "association_JSON_content_type": true,
+  "apple_paths_and_signer_match": true,
+  "android_signer_and_relation_match": true,
+  "browser_callback_excluded": true,
+  "auth_fallback_expected_redirect": true,
+  "invalid_join_fallback_passed": true,
+  "staging_readiness": {
+    "exact_sha": true,
+    "supabase_auth": true,
+    "live_places": true,
+    "live_ai": true,
+    "anonymous_analytics": true,
+    "error_only_reporting": true
+  },
+  "telemetry_e2e_enabled": true,
+  "provider_calls_made": 0,
+  "private_content_retained": false
+}

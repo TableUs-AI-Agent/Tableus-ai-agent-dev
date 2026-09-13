@@ -2,7 +2,7 @@
   "schema_version": 1,
   "application_sha": "c5b041c85f4f7b959436c13bef48c959622c624f",
   "operator_tooling_sha": "211ff1c7876694a4b2db677ec26fe5741a6770cb",
-  "updated_at": "2026-09-13T07:49:41.759810+00:00",
+  "updated_at": "2026-09-13T08:28:05.438Z",
   "native_builds_sequential": true,
   "test_ios": {
     "artifact_inspection_passed": true,
@@ -57,8 +57,8 @@
   "new_otp_or_email_sent": true,
   "security_scan_started": false,
   "physical_ios_acceptance_complete": true,
-  "live_native_acceptance_complete": false,
-  "telemetry_acceptance_complete": false,
+  "live_native_acceptance_complete": true,
+  "telemetry_acceptance_complete": true,
   "cumulative_signoff_complete": false,
   "readiness_ios": {
     "artifact_inspection_passed": true,
@@ -92,13 +92,15 @@
     "artifact_sha256": "8d59d69fd5fe1a19e6eaa0ea1330a36084e01119bf66b9d0751454df098779a8",
     "build_started_at": "2026-09-13T03:26:14.326962+00:00",
     "build_finished_at": "2026-09-13T03:34:58.516595+00:00",
-    "live_journey_passed": false,
+    "live_journey_passed": true,
     "installation_passed": true,
     "canonical_domain_verified": true,
     "existing_session_available": true,
     "existing_session_available_before_owner_signin": false,
     "returning_authentication_passed": true,
-    "relaunch_session_preserved": true
+    "relaunch_session_preserved": true,
+    "original_interactive_runner_completed": false,
+    "verification_method": "assembled_owner_checklist"
   },
   "telemetry_test_ios": {
     "status": "passed",
@@ -127,7 +129,15 @@
     "artifact_sha256": "47e5249afbf808575f1b8986cf7021edfb489a70985d6dbfac741bc1fd961832",
     "build_started_at": "2026-09-13T03:52:44.372492+00:00",
     "build_finished_at": "2026-09-13T04:09:49.991800+00:00",
-    "delivery_verified": false
+    "delivery_verified": true,
+    "installed": true,
+    "artifact_reinspection_before_install_passed": true,
+    "readiness_completed_before_replacement": true,
+    "returning_session_observation_pending": false,
+    "canary_delivery_pending": false,
+    "returning_session_preserved": true,
+    "ui_reported_passed": true,
+    "emulator_stopped": true
   },
   "web_telemetry_delivery_verified": true,
   "live_shared_plan": {
@@ -136,8 +146,8 @@
     "saved_constraints_count": 2,
     "status": "voting",
     "recommendation_generation_result": "four_distinct_candidates",
-    "latest_usage_observed_at": "2026-09-13T07:46:30.181238Z",
-    "places_attempts_delta": 60,
+    "latest_usage_observed_at": "2026-09-13T08:25:08.271390Z",
+    "places_attempts_delta": 80,
     "gemini_estimated_usd_delta": 0.00056825,
     "recommendation_runs": 1,
     "active_candidates": 4,
@@ -149,5 +159,8 @@
   },
   "original_interactive_readiness_runners_active": false,
   "api_telemetry_delivery_verified": true,
-  "recommendation_generation_repeated": false
+  "recommendation_generation_repeated": false,
+  "public_associations_and_readiness_rechecked": true,
+  "native_readiness_and_telemetry_verification_complete": true,
+  "original_interactive_readiness_runners_completed": false
 }

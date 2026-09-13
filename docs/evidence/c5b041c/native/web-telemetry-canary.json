@@ -25,5 +25,5 @@
   "anonymous_mode": true,
   "error_only_mode": true,
   "raw_payloads_retained": false,
-  "native_and_api_canaries_pending": true
+  "native_and_api_canaries_pending": false
 }

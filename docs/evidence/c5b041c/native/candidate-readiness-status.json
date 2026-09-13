@@ -1,0 +1,32 @@
+{
+  "schema_version": 1,
+  "sha": "c5b041c85f4f7b959436c13bef48c959622c624f",
+  "recorded_at": "2026-09-13T08:28:05.438Z",
+  "device_and_live_acceptance_complete": true,
+  "telemetry_acceptance_complete": true,
+  "component_sources_and_digests_checked": true,
+  "cumulative_validation_passed": false,
+  "cumulative_validator_error": "security.passed must be true",
+  "blocking_component": "security",
+  "security_evidence_available_for_exact_candidate": false,
+  "security_scan_started": false,
+  "security_policy_changed": false,
+  "provenance_note": "Native checklists and telemetry use explicitly assembled owner, connector, and UI evidence; the original interactive runners and standalone telemetry collector were not completed.",
+  "owner_release_controls_source": "docs/release-readiness-checklist.md",
+  "owner_release_controls_confirmation_date": "2026-08-26",
+  "owner_release_controls_reconfirmed": false,
+  "component_sha256": {
+    "ios/readiness/ios-readiness-summary.json": "30617782cd9d93d344b4eb2417a05a8f06963576c1f0910df64fd01dd7717d18",
+    "android/readiness/android-readiness-summary.json": "342bb2e0a285950501d55b976de8c4cc3abba65be2ddb693a981c6926d52ab1d",
+    "web-readiness-progress.json": "ce89c18a1616aab48fed7c76ed00b910899c0532d3e6f34776ae22887abe49ea",
+    "live-journey-progress.json": "ad0777b12ddb8d6efc2f08338f09d1c6f5abcb7e8c80983f4b0de270029603b8",
+    "telemetry-staging-summary.json": "178f6d2c32cd9ee90e6efcbd101a9eb342be65daabda0382e9443f1aa37bd9dd",
+    "public-readiness-recheck.json": "8f28a767dda004bac76f9a1011837693edcccb0c38b40a6f6ae7a4b61a9bed79",
+    "ios/lifecycle/ios-summary.json": "3a5714dafa8c1d2c88ec2eea935643e878e2ca40a65f93dad7e1f44e770031fd",
+    "android/lifecycle/android-summary.json": "30482ccae2b34aefb529f41183d43c8e9d15b1018f4b12b51cb9b82ee6c6f94b",
+    "ios/offline/ios-offline-summary.json": "cb4f8623dd6bdd886a199deefac1af2b5050f763c84dc728ff810512c3270f87",
+    "android/offline/android-offline-summary.json": "62416954abe5a87cd3a483b014cce9fcd951feaf8cb1247470410eaebdd9baea"
+  },
+  "pending_input_sha256": "f11c7e872d9b03ebaf6879422c66b5f44880fe2fc6aaa61dba9e53c8da93205b",
+  "production_store_cohort_approval_implied": false
+}

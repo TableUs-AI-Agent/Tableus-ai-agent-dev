@@ -1,0 +1,48 @@
+{
+  "schema_version": 1,
+  "sha": "c5b041c85f4f7b959436c13bef48c959622c624f",
+  "passed": true,
+  "observed_at": "2026-09-13T08:28:05.438Z",
+  "readiness_passed": true,
+  "sentry_project_count": 3,
+  "sentry_issue_counts": {
+    "tableus-web-staging": 1,
+    "tableus-mobile-staging": 1,
+    "tableus-api-staging": 1
+  },
+  "sentry_event_counts": {
+    "tableus-web-staging": 1,
+    "tableus-mobile-staging": 2,
+    "tableus-api-staging": 2
+  },
+  "sentry_issue_ids": {
+    "tableus-web-staging": "7694001131",
+    "tableus-mobile-staging": "7694252510",
+    "tableus-api-staging": "7694252495"
+  },
+  "sentry_release_and_staging_filters_verified": true,
+  "sentry_messages_redacted": true,
+  "sentry_android_bundle_observed": "index.android.bundle",
+  "posthog_project_id": 578352,
+  "posthog_event_count": 5,
+  "posthog_event_counts": {
+    "web": 1,
+    "ios": 1,
+    "android": 1,
+    "api": 2
+  },
+  "posthog_platforms": [
+    "android",
+    "api",
+    "ios",
+    "web"
+  ],
+  "posthog_release_and_platform_filters_verified": true,
+  "posthog_query_date_from": "2026-09-13T05:10:00Z",
+  "posthog_query_date_to": "2026-09-13T08:21:53.830Z",
+  "verification_method": "assembled_typed_connector_aggregates_and_authenticated_issue_list_UI",
+  "standalone_token_collector_run": false,
+  "anonymous_mode": true,
+  "error_only_mode": true,
+  "raw_payloads_retained": false
+}

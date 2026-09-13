@@ -2,6 +2,25 @@
 
 ## Current development and release decisions — 2026-09-12
 
+- Native, shared-journey and four-platform telemetry verification are complete
+  for `c5b041c`. The Android telemetry replacement preserved its approved session;
+  its canary delivered to PostHog and the existing Sentry issue, whose count
+  increased with the Android bundle observed. Stop the completed simulators
+  without wiping data. Record the final 80 Places attempts, one generation,
+  $0.00056825 estimated Gemini and six conservatively consumed message slots.
+  Preserve the validator's rejection of missing security evidence; assembling
+  component hashes does not grant cumulative, production, store or cohort approval.
+
+- The owner's final Android confirmation completes its ten-phase checklist:
+  current three-person voting state and updated score, saved vote, absent guest
+  finalize control, rotated-link rejection, JSON share sheet and deletion status.
+  Record that the current-state observation followed emulator restart; do not
+  turn it into a claim about an unobserved warm-resume sequence. Preserve the
+  assembled checklist and the original installation evidence before replacing
+  the readiness APK with the accepted telemetry APK. The replacement passed
+  reinspection and installed without a data wipe; no additional sign-in message
+  is authorized or requested. Android's subsequent canary completed the device checks.
+
 - Accept the iOS/API canary delivery from the owner's passed simulator UI,
   matching native accessibility, exact-release/platform PostHog counts, and
   exact-release/staging Sentry events. The local-page link succeeded with the

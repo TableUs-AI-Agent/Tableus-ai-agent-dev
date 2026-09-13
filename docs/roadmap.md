@@ -18,7 +18,7 @@ device or production release acceptance.
 | --- | --- | --- | --- |
 | 0 | Astra development migration and plan recovery — complete locally | Project model default, concise current documents, recovered candidate/CI/live-smoke record, early native preflight, local checks | Local work; no deployment or inference-provider change |
 | 1 | Bound auth restoration and freeze the replacement — complete; `c5b041c` pushed, CI passed and approved staging deployment verified | Shared deadline and mobile recovery tests; local full verification; attributable delta record; [exact-source deployment evidence](evidence/c5b041c/README.md) | Owner approval covers this push/CI and existing staging targets; no new paid-call or native-build allowance |
-| 2 | Complete cumulative staging readiness — hosted readiness and Preview CORS verified; both deterministic native suites and all six artifacts accepted; web/iOS/API canaries delivered | Canonical domains/associations; same-SHA web + physical iPhone + ARM64 Android lifecycle; signed artifact pairs; isolated telemetry; truthful cumulative report | Owner approved six returning sign-ins, one live journey (≤$0.25 estimated Gemini, ≤100 Places attempts), and sanitized canaries; cumulative security-evidence policy remains unresolved |
+| 2 | Complete cumulative staging readiness — hosted, native, shared journey and all four telemetry platforms verified; security acceptance remains | Canonical domains/associations; same-SHA web + physical iPhone + ARM64 Android lifecycle; signed artifact pairs; isolated telemetry; truthful cumulative report | Completed run used 80/100 Places attempts, $0.00056825/$0.25 estimated Gemini and six conservatively counted messages; cumulative security-evidence policy remains unresolved |
 | 3 | Prepare production privacy and operating boundaries | Account export/deletion including Auth ownership; retention; capability-link decision; one-use invite policy; explicit cohort/spend/quota limits; rollback owner | Significant policy/architecture choices require owner decision before production |
 | 4 | Prepare production release configuration | Source-controlled production origins, isolated credentials, signed-update/OTA policy, store signing associations, source maps and rollback rehearsal | Resource/secret creation, migrations, deployment and builds need explicit applicable approval |
 | 5 | Validate TestFlight and Play closed-testing distribution | Signed install/update, auth and universal links, core journey, explicit native tab presentation, privacy declarations, observed symbolication | Separate store-submission approval |
@@ -53,13 +53,14 @@ not instructions to start concurrent agents, scans or cloud work.
    confirms three participants and two saved sets of constraints in the same
    plan. The owner confirms the physical QR opened TableUs and consumed a new
    code. One generation produced four distinct recommendations, and one complete
-   ranked vote is saved for each native-associated account. The iPhone's ten
-   readiness phases and web finalize/reopen/rotation pass. Usage is 60/100
+   ranked vote is saved and UI-confirmed for each native-associated account.
+   Both native ten-phase checklists and web finalize/reopen/rotation pass. Usage is 80/100
    Places attempts and $0.00056825/$0.25 estimated Gemini; six returning
-   messages are conservatively consumed. Complete Android's vote/foreground UI,
-   guest controls, rotated-link rejection and account controls, then its canary.
-   Web, iOS and API canaries have delivered. The iOS simulator is shut down and
-   Android has restarted without wiping data, keeping emulator work sequential.
+   messages are conservatively consumed. Android's telemetry replacement
+   preserved its session, and all four platforms' canaries delivered. Both
+   simulators are stopped without wiping data. Canonical manifests/fallbacks
+   and API readiness were rechecked with retained hashes. The assembled
+   cumulative input is blocked on its explicitly missing security evidence.
    Investigate avoidable detail refreshes before the next client candidate;
    do not change the frozen artifacts or claim an established UI trigger.
    Align device-only sign-out copy with its currently global behavior and
