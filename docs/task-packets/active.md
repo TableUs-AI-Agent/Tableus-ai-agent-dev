@@ -91,9 +91,13 @@ Do not attribute old smoke, scan or native reports to this source.
    relaunch persistence and canonical auth/join opening pass. Android initially
    used the organizer's account, leaving one participant; the owner approved an
    additional message to switch it to the existing second approved account.
-   The switch passed and both the owner and database confirm two participants.
-   Guest constraints and physical iPhone private-link confirmation are pending
-   before the single recommendation generation. Android's runner awaits
+   The switch passed. After the owner subsequently joined with a third account,
+   SQL confirms three participants and two saved sets of constraints in the
+   same plan. The last QR's native-app versus Safari destination and any new
+   sign-in message await clarification. Do not mark physical private-link
+   acceptance from the participant count alone. One generation is requested on
+   Android using its existing session; a later web tab requires sign-in, with
+   no established cause and no additional web message requested. Android's runner awaits
    changed-state foreground recovery. Android became
    responsive after the idle iOS simulator was stopped; the cause of the earlier
    unresponsiveness is not conclusively established.
@@ -132,6 +136,9 @@ and do not regenerate recommendations merely to repeat a passed assertion.
 At authorization, no sign-in message or paid-provider call from this run had
 been sent. Record requested messages and actual usage deltas as execution proceeds;
 an interrupted or failed attempt still consumes its applicable allowance.
+The owner subsequently joined the same plan with a third account. Continue
+that single shared journey under the unchanged provider/message ceilings;
+the extra participant does not authorize new accounts, invites or messages.
 
 The old task approved public push, CI, existing staging deployment, bounded
 live smoke and six sequential native artifacts for `daa89a0`. Completed work

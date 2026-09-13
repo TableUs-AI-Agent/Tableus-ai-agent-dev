@@ -75,7 +75,10 @@ and canonical auth/private-join opening. The owner initially used the organizer'
 account on Android; both UI controls and the database's one-participant count
 agree. The extra message to use the existing second approved account is now
 authorized and used; the owner and database subsequently confirmed two
-participants. These are explicitly incomplete progress reports; the
+participants. A later owner-operated third-account join brought the same plan
+to three participants, with two saved sets of constraints. Native iPhone versus
+Safari attribution of that QR join and its message consumption await owner
+clarification. These are explicitly incomplete progress reports; the
 candidate's full readiness runner has not passed either complete live journey.
 The session check follows [Supabase's session model](https://supabase.com/docs/guides/auth/sessions);
 the result above is the owner's actual observation on the installed build.
@@ -102,7 +105,10 @@ out; no second export was requested and no raw account export is in Git.
 [Approval and baseline](live-approval-and-baseline.json) records four messages
 at most, one live journey, $0.25 estimated Gemini and 50 Places attempts. So far
 creation used two Places attempts and no Gemini call. Existing staging quotas
-were read without changing configuration.
+were read without changing configuration. A later web tab requires sign-in;
+the cause is unproven and no additional web message was requested. The single
+generation is requested on Android using its existing session; its result is
+pending.
 
 ## Storage and limits
 
@@ -119,7 +125,7 @@ are retained unchanged, including this observation.
 
 The deterministic simulator/demo results alone do not establish physical or
 live acceptance. The separately observed partial real-session results above
-still leave the two-person journey and native/API canaries incomplete.
+still leave the shared journey and native/API canaries incomplete.
 The existing exact-candidate security-evidence requirement
 also remains unresolved; no canceled scan was restarted. See
 [execution status](execution-summary.json) and the active packet for next steps.

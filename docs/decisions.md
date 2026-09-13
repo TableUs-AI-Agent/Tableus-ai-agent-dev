@@ -2,6 +2,15 @@
 
 ## Current development and release decisions — 2026-09-12
 
+- Keep the existing shared plan after the owner joined with a third account.
+  SQL confirms three participants and two saved sets of constraints; no new
+  plan, invite or removal is needed. Attribute the physical QR check only after
+  confirming whether the installed app or Safari opened. Account for any new
+  code within the existing four-message ceiling. A later web tab requires
+  sign-in, so request the single generation on Android's existing session while
+  retaining the earlier web observations and leaving the session-loss cause
+  unproven. Do not repeat generation to improve evidence.
+
 - After Android's organizer controls and the server's single-participant count
   established that both devices used the organizer account, the owner confirmed
   an existing second approved account and explicitly approved one extra Android

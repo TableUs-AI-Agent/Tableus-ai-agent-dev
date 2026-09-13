@@ -1,12 +1,12 @@
 {
   "schema_version": 1,
   "sha": "c5b041c85f4f7b959436c13bef48c959622c624f",
-  "observed_at": "2026-09-13T05:38:25.929507+00:00",
+  "observed_at": "2026-09-13T06:38:58.798463+00:00",
   "web_origin": "https://tableus-staging-3e0h7umke-briancheis-projects.vercel.app",
   "returning_signin_passed": true,
   "new_tab_session_restored": true,
   "matching_new_plan_count": 1,
-  "participant_count": 2,
+  "participant_count": 3,
   "organizer_constraints_saved": true,
   "resolved_us_location": true,
   "provider_places_attempts_delta": 2,
@@ -29,5 +29,13 @@
   },
   "raw_personal_data_in_report": false,
   "screenshots_retained": false,
-  "participant_count_source": "owner_confirmation_and_staging_aggregate_SQL"
+  "participant_count_source": "owner_confirmation_and_staging_aggregate_SQL",
+  "saved_constraints_count": 2,
+  "third_participant_join_owner_confirmed": true,
+  "latest_tab_session_restored": false,
+  "latest_tab_login_required": true,
+  "session_loss_cause_proven": false,
+  "additional_signin_requested": false,
+  "recommendation_generation_requested_on_android": true,
+  "recommendation_generation_result": "pending"
 }

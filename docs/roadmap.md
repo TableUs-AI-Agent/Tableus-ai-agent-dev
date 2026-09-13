@@ -43,15 +43,19 @@ not instructions to start concurrent agents, scans or cloud work.
    Only after both pass build the production-shaped and telemetry pairs.
    All native work stays sequential. This catches known fault-flow failures
    before spending time on the other four artifacts.
-6. Complete the two-person web/native journey and true physical-iPhone link
+6. Complete the shared web/native journey and true physical-iPhone link
    observations. A simulator cannot supply physical association evidence.
    Current progress: iPhone restoration/relaunch and the physical auth link pass;
    Android returning sign-in, persistence and canonical link opening pass.
    The iPhone picked up the web-created plan after foreground refresh. Android
    initially used the same organizer account; its existing second approved
-   account has now joined, confirmed by the owner and database. Physical join
-   intent, the guest's constraints and the remaining live journey
-   and native/API canaries are still required; the web canary has delivered.
+   account has now joined. The owner subsequently used a third account; SQL
+   confirms three participants and two saved sets of constraints in the same
+   plan. Physical native versus Safari join attribution and the latest message
+   consumption need clarification. One Android recommendation generation is
+   requested using its existing session after a later web tab required sign-in.
+   Voting, finalize/reopen, rotated-link rejection, native account controls and
+   native/API canaries remain; the web canary has delivered.
 7. Bind final evidence to its real source. Planning or operator-tool changes do
    not silently relabel the application candidate. A changed app source,
    dependency lockfile, compiled config or generated contract requires impact

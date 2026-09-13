@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "application_sha": "c5b041c85f4f7b959436c13bef48c959622c624f",
-  "recorded_at": "2026-09-13T05:22:00.799598+00:00",
+  "recorded_at": "2026-09-13T06:38:58.798463+00:00",
   "platform": "ios",
   "device_kind": "physical_iPhone",
   "os_version": "26.6.2",
@@ -34,5 +34,8 @@
     }
   },
   "raw_personal_data_retained": false,
-  "screenshots_retained": false
+  "screenshots_retained": false,
+  "qr_join_owner_reported_success": true,
+  "qr_native_app_or_safari_attribution": "awaiting_owner_clarification",
+  "third_account_signin_message_consumed": "awaiting_owner_clarification"
 }

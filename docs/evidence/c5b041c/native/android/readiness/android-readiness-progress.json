@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "application_sha": "c5b041c85f4f7b959436c13bef48c959622c624f",
-  "recorded_at": "2026-09-13T05:35:01.739321+00:00",
+  "recorded_at": "2026-09-13T06:38:58.798463+00:00",
   "platform": "android",
   "device_kind": "Android_API_36_ARM64_emulator",
   "build_id": "local-android-readiness-c5b041c",
@@ -40,9 +40,13 @@
   },
   "canonical_private_join_link_opened_app": true,
   "distinct_participant_account_verified": true,
-  "observed_participant_count": 2,
+  "observed_participant_count": 3,
   "emulator_recovered_after_idle_ios_simulator_shutdown": true,
   "root_cause_proven": false,
   "extra_returning_signin_message_used": true,
-  "initial_account_owner_controls_observed": true
+  "initial_account_owner_controls_observed": true,
+  "participant_count_source": "staging_aggregate_SQL",
+  "constraints_saved_owner_confirmed": true,
+  "recommendation_generation_requested": true,
+  "recommendation_generation_result": "pending"
 }

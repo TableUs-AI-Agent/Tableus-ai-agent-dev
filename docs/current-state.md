@@ -117,7 +117,11 @@ package manager reports the signed link domain as verified; the owner sees the
 plans screen after one approved returning sign-in message; relaunch persistence
 and canonical auth/join opening also pass. Android initially used the organizer's
 account. After the owner explicitly approved an extra Android message, the
-second approved account joined; the owner and database confirm two participants.
+second approved account joined. The owner subsequently joined with a third
+account; aggregate SQL now confirms three participants and two saved sets of
+constraints in the same plan. Whether that last QR opened the native iPhone
+app or Safari, and whether it consumed another sign-in message, await owner
+clarification. Do not infer native link acceptance from the participant count.
 The total ceiling is four returning
 sign-in messages. The approved journey is capped at $0.25 additional estimated
 Gemini spend and 50 Places attempts, and sanitized four-platform canaries.
@@ -126,7 +130,10 @@ Gemini usage. Existing rolling limits are 500 attempts and $4.00; configuration
 is unchanged. Web sign-in, one plan creation, organizer constraints, account
 export/deletion readiness and the web canary pass. PostHog and Sentry both show
 the exact-release canary. The iPhone observed the new plan after foreground
-refresh. Plan creation used two Places attempts and no Gemini call. The telemetry
+refresh. Plan creation used two Places attempts and no Gemini call. A later web
+tab requires sign-in; its missing session has no established cause, and no extra
+web message was requested. One recommendation generation has been requested on
+Android using its existing session; the result is pending. The telemetry
 iOS simulator artifact is privately copied, re-inspected and installed; that
 simulator is shut down while Android continues. Android recovered responsiveness
 after this change. Full physical/live acceptance remains incomplete.
