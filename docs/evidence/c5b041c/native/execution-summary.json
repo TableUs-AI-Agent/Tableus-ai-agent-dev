@@ -2,7 +2,7 @@
   "schema_version": 1,
   "application_sha": "c5b041c85f4f7b959436c13bef48c959622c624f",
   "operator_tooling_sha": "211ff1c7876694a4b2db677ec26fe5741a6770cb",
-  "updated_at": "2026-09-13T07:26:36.521527+00:00",
+  "updated_at": "2026-09-13T07:49:41.759810+00:00",
   "native_builds_sequential": true,
   "test_ios": {
     "artifact_inspection_passed": true,
@@ -54,7 +54,6 @@
     }
   ],
   "runtime_source_changed": false,
-  "paid_provider_calls_repeated": false,
   "new_otp_or_email_sent": true,
   "security_scan_started": false,
   "physical_ios_acceptance_complete": true,
@@ -107,13 +106,15 @@
     "artifact_sha256": "198ee544b6ac63eff9011330a6ed404852acc8d68af0d831026be79a6bd4a9da",
     "build_started_at": "2026-09-13T03:35:11.366335+00:00",
     "build_finished_at": "2026-09-13T03:51:30.570522+00:00",
-    "delivery_verified": false,
-    "simulator_booted": true,
+    "delivery_verified": true,
+    "simulator_booted": false,
     "owner_returning_signin_requested": true,
     "returning_signin_passed": true,
     "installed_public_config_and_bundle_match_verified_copy": true,
     "initial_custom_scheme_navigation_returned_to_plans": true,
-    "canary_delivery_pending": true
+    "canary_delivery_pending": false,
+    "ui_reported_passed": true,
+    "subsequent_local_page_link_navigation_passed": true
   },
   "owner_physical_verification_availability_confirmed": true,
   "all_six_native_artifacts_accepted": true,
@@ -135,8 +136,8 @@
     "saved_constraints_count": 2,
     "status": "voting",
     "recommendation_generation_result": "four_distinct_candidates",
-    "latest_usage_observed_at": "2026-09-13T07:11:24.735229Z",
-    "places_attempts_delta": 56,
+    "latest_usage_observed_at": "2026-09-13T07:46:30.181238Z",
+    "places_attempts_delta": 60,
     "gemini_estimated_usd_delta": 0.00056825,
     "recommendation_runs": 1,
     "active_candidates": 4,
@@ -146,5 +147,7 @@
     "reopening_passed": true,
     "private_link_rotation_passed": true
   },
-  "original_interactive_readiness_runners_active": false
+  "original_interactive_readiness_runners_active": false,
+  "api_telemetry_delivery_verified": true,
+  "recommendation_generation_repeated": false
 }

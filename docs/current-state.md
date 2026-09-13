@@ -50,7 +50,7 @@ existing report or prior task states the result; it has not been repeated.
 | Historical native artifacts for `daa89a0` | Prior task reports `test-ios`, `test-android`, `readiness-ios`, `readiness-android` accepted | Files/receipts not recovered; owner saved no manual copies. Treat as unavailable and rebuild only after the next candidate freeze |
 | Historical telemetry artifacts | Prior task began `telemetry-test-ios`; completion unknown; Android not reported complete | Require actual artifact/receipt pairs |
 | Current native artifacts for `c5b041c` | All six test, signed readiness and isolated telemetry artifacts accepted; final source/lockfile/digest checks passed | [Durable artifacts, inspections and receipts](evidence/c5b041c/native/README.md) |
-| Current-candidate device journeys and cumulative summary | Both deterministic suites and the physical iPhone's ten-phase checklist passed; web finalize/reopen/rotation passed | Android final UI checks, native/API telemetry canaries and cumulative sign-off pending |
+| Current-candidate device journeys and cumulative summary | Both deterministic suites and the physical iPhone's ten-phase checklist passed; web finalize/reopen/rotation passed; web, iOS and API canaries delivered | Android final UI checks and canary, plus cumulative sign-off, pending |
 | Security | Recorded clean focused review at `069473c`, followed by source changes | [Attributable source delta](reviews/2026-09-12-security-delta.md); no new plugin scan authorized |
 | Legal/contact/attribution | Owner confirmations recorded 2026-08-26 | Preserve the signed record; reconfirm only changed text or delivery conditions |
 
@@ -141,25 +141,29 @@ recommendations. Two complete ranked votes are now stored; the iPhone owner
 confirmed its saved vote and absent guest finalization control. Android's saved
 vote is associated with its prior account switch and awaits UI confirmation.
 Web finalization selected one winner; reopening preserved both votes and cleared
-the chosen state; the private link rotated once. Usage is now 56 Places attempts
+the chosen state; the private link rotated once. Usage is now 60 Places attempts
 and $0.00056825 estimated Gemini spend. Generation used six
-Places attempts after the two creation attempts; twelve subsequent detail reads
-used another 48. All returned complete results without recorded provider
+Places attempts after the two creation attempts; thirteen subsequent detail reads
+used another 52. All returned complete results without recorded provider
 retries. Every plan response re-fetches four restaurant details; the trigger of
 each observed read is not established. The owner approved continuation within
 the increased caps of 100 Places attempts and six messages. The telemetry
 iOS simulator artifact is privately copied, re-inspected and installed; that
-simulator is now booted with an approved session while the Android emulator is
-gracefully stopped. Android had previously recovered responsiveness when the
+simulator completed its canary and is now shut down while the Android emulator
+has restarted without wiping its session data. Android had previously recovered responsiveness when the
 idle iOS simulator was shut down. The physical iPhone also passed old-link
 rejection, JSON share-sheet export and deletion-readiness. Its ten-phase
 [readiness summary](evidence/c5b041c/native/ios/readiness/ios-readiness-summary.json)
 is assembled from durable owner observations and the original source runner's
 verified installation; it does not claim that the ended interactive runner
-completed. Android's remaining UI checks and native/API canaries are incomplete.
-The iOS telemetry simulator has an approved session and verified installed
-bundle/configuration, but the first custom-scheme attempt returned to Plans;
-the owner is checking the local-page link before any delivery claim.
+completed. Android's remaining UI checks and canary are incomplete.
+The iOS telemetry simulator's first custom-scheme attempt returned to Plans;
+the local-page link subsequently opened the check without changing the artifact.
+The owner and native accessibility confirmed its passed UI. PostHog received
+one iOS and one API canary with exact release/platform filters; Sentry received
+one redacted event in each corresponding staging project with the exact release.
+[Delivery evidence](evidence/c5b041c/native/ios-api-telemetry-canary.json) identifies
+connector and browser observations separately from the unrun standalone collector.
 The deterministic simulator/demo results alone do not establish physical-device
 or live-auth acceptance; those claims use the separate observations above.
 Visual review found default tab glyphs; functional text labels remain,

@@ -108,20 +108,25 @@ Do not attribute old smoke, scan or native reports to this source.
    unresponsiveness is not conclusively established.
    Web sign-in, the single plan creation, organizer constraints and account
    export/deletion-readiness checks pass. The web canary reached PostHog and
-   Sentry with the exact release. Usage is 56 Places attempts and $0.00056825
-   estimated Gemini: two creation attempts, six for generation, and 48 from
-   twelve later detail reads. There are no recorded provider retries. The API
+   Sentry with the exact release. Usage is 60 Places attempts and $0.00056825
+   estimated Gemini: two creation attempts, six for generation, and 52 from
+   thirteen later detail reads. There are no recorded provider retries. The API
    fetches restaurant details on each plan response; individual UI triggers are
    unproven. The owner approved increased run caps of 100 Places attempts and
    six returning messages, retaining one generation and the existing Gemini
    ceiling. The original readiness processes have ended without final reports;
    preserve partial observations without claiming complete runner execution.
    The telemetry iOS artifact is re-inspected and
-   installed; its simulator is signed in while the Android emulator is stopped,
-   keeping Mac simulator work sequential. All six returning messages are now
-   conservatively consumed. The first iOS telemetry custom-scheme attempt
-   returned to Plans despite matching installed bundle/configuration; the owner
-   is checking the local-page link, and no canary delivery is claimed yet.
+   installed; its simulator passed the telemetry check and is now shut down.
+   Android restarted without wiping its session data, keeping simulator work
+   sequential. All six returning messages are conservatively consumed. The first
+   iOS telemetry custom-scheme attempt returned to Plans, but the local-page
+   link subsequently opened the check with the same verified artifact. The
+   owner and native accessibility confirmed success. PostHog and Sentry each
+   received the exact-release iOS/API canaries. The
+   [delivery record](../evidence/c5b041c/native/ios-api-telemetry-canary.json)
+   uses connector/UI observations; the standalone collector was not run.
+   Android's final readiness observations are requested before APK replacement.
    [Approval and usage baseline](../evidence/c5b041c/native/live-approval-and-baseline.json)
    records the unchanged existing quota; current execution uses private deltas.
    [Live findings](../reviews/2026-09-13-live-readiness-findings.md) attribute the

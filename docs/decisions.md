@@ -2,6 +2,14 @@
 
 ## Current development and release decisions — 2026-09-12
 
+- Accept the iOS/API canary delivery from the owner's passed simulator UI,
+  matching native accessibility, exact-release/platform PostHog counts, and
+  exact-release/staging Sentry events. The local-page link succeeded with the
+  same installed artifact after the first custom-scheme attempt returned to
+  Plans. Do not rebuild or resend a passed canary to explain that initial
+  navigation. Shut down iOS and resume Android's preserved readiness session
+  before replacing its APK with the already accepted telemetry artifact.
+
 - Keep the existing shared plan after the owner joined with a third account.
   SQL confirms three participants and two saved sets of constraints; no new
   plan, invite or removal is needed. The owner confirms the QR opened the native

@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "application_sha": "c5b041c85f4f7b959436c13bef48c959622c624f",
-  "recorded_at": "2026-09-13T07:26:36.521527+00:00",
+  "recorded_at": "2026-09-13T07:49:41.759810+00:00",
   "complete": false,
   "evidence_source": "owner_UI_confirmation_and_staging_aggregate_SQL",
   "matching_plans": 1,
@@ -18,15 +18,15 @@
   "vote_platform_attribution_source": "inference_from_prior_owner_verified_account_switch_and_join_order",
   "native_vote_UI_confirmation_pending": true,
   "physical_iphone_private_join_opened_native_app": true,
-  "places_attempts_delta": 56,
+  "places_attempts_delta": 60,
   "gemini_estimated_usd_delta": 0.00056825,
-  "usage_observed_at": "2026-09-13T07:11:24.735229Z",
+  "usage_observed_at": "2026-09-13T07:46:30.181238Z",
   "places_breakdown": {
     "plan_setup": 2,
     "generation": 6,
-    "subsequent_details": 48
+    "subsequent_details": 52
   },
-  "restaurant_detail_batches": 13,
+  "restaurant_detail_batches": 14,
   "attempts_per_detail_batch": 4,
   "all_recorded_detail_batches_complete": true,
   "provider_retries_observed": false,

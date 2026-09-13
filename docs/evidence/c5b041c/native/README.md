@@ -13,7 +13,7 @@ Vercel Preview. The deployed application remains the frozen source above.
 | `test-android` | Accepted; APK contains arm64-v8a only | API 36 lifecycle and offline mutation journeys passed |
 | `readiness-ios` | Signed IPA installed on the provisioned physical iPhone | Ten-phase owner checklist passes; assembled summary identifies original installation evidence |
 | `readiness-android` | Signed APK installed; package manager verifies the canonical domain | Sign-in, relaunch and canonical links pass; distinct second account joined |
-| `telemetry-test-ios` | Simulator bundle re-inspected and installed | Returning sign-in passes; first telemetry route returned to Plans; owner link check pending |
+| `telemetry-test-ios` | Simulator bundle re-inspected and installed | Returning sign-in, canary UI and exact-release PostHog/Sentry delivery pass |
 | `telemetry-test-android` | Signed APK, inspection and receipt accepted | Delivery pending |
 
 The [final artifact matrix](artifact-matrix.json) validates all six preserved
@@ -115,18 +115,21 @@ were read without changing configuration. A later web tab requires sign-in;
 the cause is unproven and the approved organizer recovery has completed. The single
 generation succeeded on Android using its existing session, producing four
 distinct candidates. [Live journey progress](live-journey-progress.json) records
-two complete saved votes and 56 Places
-attempts/$0.00056825 estimated Gemini usage. The 48 Places attempts
-after generation came from twelve successful detail reads; the exact UI trigger
+two complete saved votes and 60 Places
+attempts/$0.00056825 estimated Gemini usage. The 52 Places attempts
+after generation came from thirteen successful detail reads; the exact UI trigger
 of each is unproven. The owner approved increased totals of 100 attempts and
 six returning messages after a pause at 36 attempts and four messages consumed.
 The original interactive readiness processes have ended without final reports;
 the observations above remain durable, with no complete-run claim. The web
 organizer finalized, reopened and rotated once; both votes were preserved and
 the chosen state cleared. The iPhone rejected the old link. Six returning
-messages are now conservatively consumed after web/simulator recovery. Native
-canary delivery remains pending, including diagnosis of the first iOS telemetry
-link returning to Plans despite matching installed public configuration and bundle.
+messages are now conservatively consumed after web/simulator recovery. The
+[iOS/API canary](ios-api-telemetry-canary.json) passed its UI and delivered one
+event per platform to PostHog and Sentry with the exact release. The local-page
+link opened the check with the same artifact after the initial custom-scheme
+attempt returned to Plans. The iOS simulator is shut down; Android has restarted
+without wiping data for its final readiness checks and subsequent canary.
 
 ## Storage and limits
 
@@ -143,7 +146,7 @@ are retained unchanged, including this observation.
 
 The deterministic simulator/demo results alone do not establish physical or
 live acceptance. The separately observed partial real-session results above
-still leave the shared journey and native/API canaries incomplete.
+still leave Android's final readiness checks and canary incomplete.
 The existing exact-candidate security-evidence requirement
 also remains unresolved; no canceled scan was restarted. See
 [execution status](execution-summary.json) and the active packet for next steps.
