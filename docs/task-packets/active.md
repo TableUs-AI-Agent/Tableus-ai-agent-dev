@@ -84,30 +84,50 @@ Do not attribute old smoke, scan or native reports to this source.
    approved the bounded returning sign-ins, cross-client journey and dedicated
    canaries described below. No cumulative acceptance is claimed.
    Sanitized reports and synthetic screenshots are retained in
-   `docs/evidence/c5b041c/native/`. Partial readiness reports explicitly remain
-   incomplete. Do not confirm the runner's remaining phases without actual
+   `docs/evidence/c5b041c/native/`. The physical iPhone checklist now passes;
+   Android readiness remains incomplete. Do not confirm remaining phases without actual
    observations. The iPhone now shows the new web-created plan after foreground
-   refresh and awaits its private-link observation. Android returning sign-in,
+   refresh and its private-link observation now passes. Android returning sign-in,
    relaunch persistence and canonical auth/join opening pass. Android initially
    used the organizer's account, leaving one participant; the owner approved an
    additional message to switch it to the existing second approved account.
    The switch passed. After the owner subsequently joined with a third account,
    SQL confirms three participants and two saved sets of constraints in the
-   same plan. The last QR's native-app versus Safari destination and any new
-   sign-in message await clarification. Do not mark physical private-link
-   acceptance from the participant count alone. One generation is requested on
-   Android using its existing session; a later web tab requires sign-in, with
-   no established cause and no additional web message requested. Android's runner awaits
-   changed-state foreground recovery. Android became
+   same plan. The owner confirms the QR opened the installed iPhone app and
+   used a new code. All four returning messages are conservatively consumed.
+   One generation ran on Android using its existing session; a later web tab
+   requires sign-in, with no established cause; an approved additional web
+   sign-in completed. Four distinct recommendations and two complete votes are
+   stored. The iPhone owner confirmed its vote and absent guest controls. Web
+   finalize/reopen/rotation pass with one event each and preserved votes. The
+   iPhone then rejected the old QR and passed JSON export/deletion-readiness.
+   Its ten-phase summary explicitly combines durable owner observations with
+   the source runner's installation; it does not claim a completed interactive
+   runner. Android vote/changed-state UI confirmations remain. Android became
    responsive after the idle iOS simulator was stopped; the cause of the earlier
    unresponsiveness is not conclusively established.
    Web sign-in, the single plan creation, organizer constraints and account
    export/deletion-readiness checks pass. The web canary reached PostHog and
-   Sentry with the exact release. Creating the plan used two Places attempts;
-   no Gemini call has run. The telemetry iOS artifact is re-inspected and
-   installed, but its simulator is shut down to keep native checks sequential.
+   Sentry with the exact release. Usage is 56 Places attempts and $0.00056825
+   estimated Gemini: two creation attempts, six for generation, and 48 from
+   twelve later detail reads. There are no recorded provider retries. The API
+   fetches restaurant details on each plan response; individual UI triggers are
+   unproven. The owner approved increased run caps of 100 Places attempts and
+   six returning messages, retaining one generation and the existing Gemini
+   ceiling. The original readiness processes have ended without final reports;
+   preserve partial observations without claiming complete runner execution.
+   The telemetry iOS artifact is re-inspected and
+   installed; its simulator is signed in while the Android emulator is stopped,
+   keeping Mac simulator work sequential. All six returning messages are now
+   conservatively consumed. The first iOS telemetry custom-scheme attempt
+   returned to Plans despite matching installed bundle/configuration; the owner
+   is checking the local-page link, and no canary delivery is claimed yet.
    [Approval and usage baseline](../evidence/c5b041c/native/live-approval-and-baseline.json)
    records the unchanged existing quota; current execution uses private deltas.
+   [Live findings](../reviews/2026-09-13-live-readiness-findings.md) attribute the
+   device-only/global sign-out mismatch and detail-read amplification. Queue
+   their focused deterministic work for the next client candidate, preserving
+   these artifact bytes and the current verification objective.
 
 ## Acceptance and stopping rules
 
@@ -139,6 +159,13 @@ an interrupted or failed attempt still consumes its applicable allowance.
 The owner subsequently joined the same plan with a third account. Continue
 that single shared journey under the unchanged provider/message ceilings;
 the extra participant does not authorize new accounts, invites or messages.
+After the owner confirmed that third-account code and usage reached 36 Places
+attempts, the owner explicitly approved increased totals of six returning
+messages and 100 Places attempts. The two additional messages are solely for
+the existing web organizer and iOS telemetry simulator if needed. The single
+generation and $0.25 Gemini ceiling remain unchanged. This later approval
+supersedes the four-message/50-attempt ceilings above; consumed usage carries
+forward and staging runtime configuration stays unchanged.
 
 The old task approved public push, CI, existing staging deployment, bounded
 live smoke and six sequential native artifacts for `daa89a0`. Completed work
@@ -152,7 +179,7 @@ production/store/cohort action or credential creation is implied.
 
 The owner's scan cancellation remains binding. This packet grants no merge,
 production migration/deployment, resource/secret creation, store submission,
-mail beyond the four returning messages, new invites, account deletion,
+mail beyond the six returning messages, new invites, account deletion,
 destructive cleanup or cohort activation.
 There are no unanswered intake questions. Later roadmap objectives and their
 explicit gates are queued, not active work.

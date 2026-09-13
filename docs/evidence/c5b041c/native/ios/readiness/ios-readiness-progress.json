@@ -1,13 +1,13 @@
 {
   "schema_version": 1,
   "application_sha": "c5b041c85f4f7b959436c13bef48c959622c624f",
-  "recorded_at": "2026-09-13T06:38:58.798463+00:00",
+  "recorded_at": "2026-09-13T07:26:36.521527+00:00",
   "platform": "ios",
   "device_kind": "physical_iPhone",
   "os_version": "26.6.2",
   "build_id": "local-ios-readiness-c5b041c",
   "artifact_sha256": "c089122ea4ab71fc0d93edc2f69b9206ed00688c390ad04f4b5cdae1d2ac299c",
-  "complete": false,
+  "complete": true,
   "installation": {
     "passed": true,
     "artifact_reinspection_passed": true,
@@ -31,11 +31,39 @@
     "foreground_refresh": {
       "passed": true,
       "evidence_source": "owner_observed_new_web_created_plan_on_foreground"
+    },
+    "verified_join_link": {
+      "passed": true,
+      "evidence_source": "owner_confirmed_QR_opened_installed_TableUs_app_and_join_completed"
+    },
+    "live_location_and_four_candidates": {
+      "passed": true,
+      "evidence_source": "owner_observed_four_live_cards_and_staging_aggregate_SQL"
+    },
+    "cross_client_vote": {
+      "passed": true,
+      "evidence_source": "owner_observed_ranked_vote_saved_and_SQL_confirmed_two_distinct_votes"
+    },
+    "organizer_authorization": {
+      "passed": true,
+      "evidence_source": "owner_observed_no_native_guest_finalize_control_and_web_organizer_finalize_reopen_verified"
+    },
+    "rotated_link_rejected": {
+      "passed": true,
+      "evidence_source": "owner_rescanned_same_private_QR_after_verified_web_rotation_and_observed_rejection"
+    },
+    "account_controls_read_only": {
+      "passed": true,
+      "evidence_source": "owner_observed_JSON_share_sheet_and_deletion_readiness_with_empty_confirmation",
+      "deletion_run": false
     }
   },
   "raw_personal_data_retained": false,
   "screenshots_retained": false,
   "qr_join_owner_reported_success": true,
-  "qr_native_app_or_safari_attribution": "awaiting_owner_clarification",
-  "third_account_signin_message_consumed": "awaiting_owner_clarification"
+  "qr_native_app_or_safari_attribution": "installed_TableUs_app",
+  "third_account_signin_message_consumed": true,
+  "original_interactive_runner_active": false,
+  "verification_method": "assembled_owner_checklist_with_original_source_runner_installation",
+  "original_interactive_runner_completed": false
 }

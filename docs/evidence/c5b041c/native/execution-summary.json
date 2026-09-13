@@ -2,7 +2,7 @@
   "schema_version": 1,
   "application_sha": "c5b041c85f4f7b959436c13bef48c959622c624f",
   "operator_tooling_sha": "211ff1c7876694a4b2db677ec26fe5741a6770cb",
-  "updated_at": "2026-09-13T06:38:58.798463+00:00",
+  "updated_at": "2026-09-13T07:26:36.521527+00:00",
   "native_builds_sequential": true,
   "test_ios": {
     "artifact_inspection_passed": true,
@@ -57,7 +57,7 @@
   "paid_provider_calls_repeated": false,
   "new_otp_or_email_sent": true,
   "security_scan_started": false,
-  "physical_ios_acceptance_complete": false,
+  "physical_ios_acceptance_complete": true,
   "live_native_acceptance_complete": false,
   "telemetry_acceptance_complete": false,
   "cumulative_signoff_complete": false,
@@ -67,12 +67,15 @@
     "build_started_at": "2026-09-13T03:14:47.923556+00:00",
     "build_finished_at": "2026-09-13T03:24:58.371078+00:00",
     "paired_iphone_provisioned": true,
-    "physical_journey_passed": false,
+    "physical_journey_passed": true,
     "physical_installation_passed": true,
     "existing_session_restored": true,
     "relaunch_session_preserved": true,
     "basic_analytics_delivery_observed": true,
-    "verified_auth_link_passed": true
+    "verified_auth_link_passed": true,
+    "verified_join_link_passed": true,
+    "original_interactive_runner_completed": false,
+    "verification_method": "assembled_owner_checklist"
   },
   "visual_observations": [
     {
@@ -104,7 +107,13 @@
     "artifact_sha256": "198ee544b6ac63eff9011330a6ed404852acc8d68af0d831026be79a6bd4a9da",
     "build_started_at": "2026-09-13T03:35:11.366335+00:00",
     "build_finished_at": "2026-09-13T03:51:30.570522+00:00",
-    "delivery_verified": false
+    "delivery_verified": false,
+    "simulator_booted": true,
+    "owner_returning_signin_requested": true,
+    "returning_signin_passed": true,
+    "installed_public_config_and_bundle_match_verified_copy": true,
+    "initial_custom_scheme_navigation_returned_to_plans": true,
+    "canary_delivery_pending": true
   },
   "owner_physical_verification_availability_confirmed": true,
   "all_six_native_artifacts_accepted": true,
@@ -124,10 +133,18 @@
     "matching_plans": 1,
     "participants": 3,
     "saved_constraints_count": 2,
-    "status": "collecting",
-    "recommendation_generation_result": "pending",
-    "latest_usage_observed_at": "2026-09-13T06:36:20.964521Z",
-    "places_attempts_delta": 2,
-    "gemini_estimated_usd_delta": 0
-  }
+    "status": "voting",
+    "recommendation_generation_result": "four_distinct_candidates",
+    "latest_usage_observed_at": "2026-09-13T07:11:24.735229Z",
+    "places_attempts_delta": 56,
+    "gemini_estimated_usd_delta": 0.00056825,
+    "recommendation_runs": 1,
+    "active_candidates": 4,
+    "complete_ranked_votes": 2,
+    "further_paid_steps_paused": false,
+    "finalization_passed": true,
+    "reopening_passed": true,
+    "private_link_rotation_passed": true
+  },
+  "original_interactive_readiness_runners_active": false
 }

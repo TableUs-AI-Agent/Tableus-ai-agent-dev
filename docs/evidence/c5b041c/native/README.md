@@ -11,9 +11,9 @@ Vercel Preview. The deployed application remains the frozen source above.
 | --- | --- | --- |
 | `test-ios` | Accepted; simulator bundle contains arm64 and x86_64 | iOS 26.5 lifecycle and offline mutation journeys passed |
 | `test-android` | Accepted; APK contains arm64-v8a only | API 36 lifecycle and offline mutation journeys passed |
-| `readiness-ios` | Signed IPA installed on the provisioned physical iPhone | Restoration, relaunch, physical auth link and changed-plan foreground refresh pass |
+| `readiness-ios` | Signed IPA installed on the provisioned physical iPhone | Ten-phase owner checklist passes; assembled summary identifies original installation evidence |
 | `readiness-android` | Signed APK installed; package manager verifies the canonical domain | Sign-in, relaunch and canonical links pass; distinct second account joined |
-| `telemetry-test-ios` | Simulator bundle re-inspected and installed | Simulator shut down while Android continues; delivery pending |
+| `telemetry-test-ios` | Simulator bundle re-inspected and installed | Returning sign-in passes; first telemetry route returned to Plans; owner link check pending |
 | `telemetry-test-android` | Signed APK, inspection and receipt accepted | Delivery pending |
 
 The [final artifact matrix](artifact-matrix.json) validates all six preserved
@@ -76,10 +76,16 @@ account on Android; both UI controls and the database's one-participant count
 agree. The extra message to use the existing second approved account is now
 authorized and used; the owner and database subsequently confirmed two
 participants. A later owner-operated third-account join brought the same plan
-to three participants, with two saved sets of constraints. Native iPhone versus
-Safari attribution of that QR join and its message consumption await owner
-clarification. These are explicitly incomplete progress reports; the
-candidate's full readiness runner has not passed either complete live journey.
+to three participants, with two saved sets of constraints. The owner confirms
+the QR opened the installed iPhone app and required a new code. All four
+returning messages were conservatively consumed before the later approved
+increase. The physical iPhone subsequently completed all ten phases: four live
+cards, its saved vote, absent guest finalize controls, rejection of the rotated
+QR, JSON share-sheet export and deletion-readiness. Its
+[assembled summary](ios/readiness/ios-readiness-summary.json) combines these
+observations with the original source runner's installation/preflight evidence.
+The original interactive runner ended before final output, so a complete runner
+execution is not claimed. Android's final UI checks remain incomplete.
 The session check follows [Supabase's session model](https://supabase.com/docs/guides/auth/sessions);
 the result above is the owner's actual observation on the installed build.
 
@@ -102,13 +108,25 @@ basic analytics delivery. This does not replace the dedicated canaries.
 constraints and read-only account controls. The exported JSON file was verified
 in the owner's Downloads after the browser's download-event observation timed
 out; no second export was requested and no raw account export is in Git.
-[Approval and baseline](live-approval-and-baseline.json) records four messages
-at most, one live journey, $0.25 estimated Gemini and 50 Places attempts. So far
-creation used two Places attempts and no Gemini call. Existing staging quotas
+[Approval and baseline](live-approval-and-baseline.json) records six messages
+at most, one live journey, $0.25 estimated Gemini and 100 Places attempts. So far
+creation used two Places attempts. Existing staging quotas
 were read without changing configuration. A later web tab requires sign-in;
-the cause is unproven and no additional web message was requested. The single
-generation is requested on Android using its existing session; its result is
-pending.
+the cause is unproven and the approved organizer recovery has completed. The single
+generation succeeded on Android using its existing session, producing four
+distinct candidates. [Live journey progress](live-journey-progress.json) records
+two complete saved votes and 56 Places
+attempts/$0.00056825 estimated Gemini usage. The 48 Places attempts
+after generation came from twelve successful detail reads; the exact UI trigger
+of each is unproven. The owner approved increased totals of 100 attempts and
+six returning messages after a pause at 36 attempts and four messages consumed.
+The original interactive readiness processes have ended without final reports;
+the observations above remain durable, with no complete-run claim. The web
+organizer finalized, reopened and rotated once; both votes were preserved and
+the chosen state cleared. The iPhone rejected the old link. Six returning
+messages are now conservatively consumed after web/simulator recovery. Native
+canary delivery remains pending, including diagnosis of the first iOS telemetry
+link returning to Plans despite matching installed public configuration and bundle.
 
 ## Storage and limits
 

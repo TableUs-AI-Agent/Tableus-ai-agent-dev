@@ -1,0 +1,31 @@
+{
+  "schema_version": 1,
+  "sha": "c5b041c85f4f7b959436c13bef48c959622c624f",
+  "passed": true,
+  "platform": "ios",
+  "build_id": "local-ios-readiness-c5b041c",
+  "artifact_name": "TableUs.ipa",
+  "artifact_sha256": "c089122ea4ab71fc0d93edc2f69b9206ed00688c390ad04f4b5cdae1d2ac299c",
+  "inspection_passed": true,
+  "association_passed": true,
+  "staging_readiness_passed": true,
+  "phases": {
+    "returning_authentication": true,
+    "session_persistence": true,
+    "verified_auth_link": true,
+    "foreground_refresh": true,
+    "verified_join_link": true,
+    "live_location_and_four_candidates": true,
+    "cross_client_vote": true,
+    "organizer_authorization": true,
+    "rotated_link_rejected": true,
+    "account_controls_read_only": true
+  },
+  "verification_method": "assembled_from_durable_owner_UI_and_source_runner_installation_observations",
+  "original_interactive_runner_completed": false,
+  "recorded_at": "2026-09-13T07:26:36.521527+00:00",
+  "source_progress_report": "ios-readiness-progress.json",
+  "raw_personal_data_retained": false,
+  "restricted_google_content_retained": false,
+  "screenshots_retained_by_runner": false
+}

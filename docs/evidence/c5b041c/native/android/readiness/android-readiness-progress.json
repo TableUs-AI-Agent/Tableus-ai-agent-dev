@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "application_sha": "c5b041c85f4f7b959436c13bef48c959622c624f",
-  "recorded_at": "2026-09-13T06:38:58.798463+00:00",
+  "recorded_at": "2026-09-13T06:55:43.410378+00:00",
   "platform": "android",
   "device_kind": "Android_API_36_ARM64_emulator",
   "build_id": "local-android-readiness-c5b041c",
@@ -36,6 +36,11 @@
     "verified_join_link": {
       "passed": true,
       "evidence_source": "owner_observed_canonical_link_open_app_and_two_person_plan_after_join"
+    },
+    "live_location_and_four_candidates": {
+      "passed": true,
+      "evidence_source": "owner_confirmation_and_staging_aggregate_SQL",
+      "google_maps_attribution_owner_confirmed": true
     }
   },
   "canonical_private_join_link_opened_app": true,
@@ -48,5 +53,9 @@
   "participant_count_source": "staging_aggregate_SQL",
   "constraints_saved_owner_confirmed": true,
   "recommendation_generation_requested": true,
-  "recommendation_generation_result": "pending"
+  "recommendation_generation_result": "four_distinct_candidates",
+  "saved_ranked_vote_for_associated_account": true,
+  "saved_vote_platform_attribution": "inferred_from_owner_confirmed_join_order",
+  "saved_vote_UI_confirmation_pending": true,
+  "original_interactive_runner_active": false
 }

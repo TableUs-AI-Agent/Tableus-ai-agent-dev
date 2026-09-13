@@ -4,12 +4,35 @@
 
 - Keep the existing shared plan after the owner joined with a third account.
   SQL confirms three participants and two saved sets of constraints; no new
-  plan, invite or removal is needed. Attribute the physical QR check only after
-  confirming whether the installed app or Safari opened. Account for any new
-  code within the existing four-message ceiling. A later web tab requires
-  sign-in, so request the single generation on Android's existing session while
+  plan, invite or removal is needed. The owner confirms the QR opened the native
+  iPhone app and used a new code. All four messages are conservatively consumed.
+  A later web tab requires sign-in, so the single generation ran on Android's existing session while
   retaining the earlier web observations and leaving the session-loss cause
   unproven. Do not repeat generation to improve evidence.
+
+- Paid steps paused after 36 of the initially approved 50 Places attempts. One
+  generation and seven subsequent detail reads explain the recorded usage;
+  each detail batch succeeded with four attempts. The remaining journey cannot
+  fit reliably within 14 attempts. The owner approved 100 attempts and six returning
+  messages total, preserving the existing Gemini ceiling and single generation.
+  The two extra messages cover the web organizer and iOS telemetry simulator
+  only if needed. The backend re-fetches restaurant
+  details for plan reads and mutation responses; foreground refresh can also
+  fetch an active plan. Record avoidable reads as a next-candidate efficiency
+  concern without claiming the trigger of every observed call is proven.
+
+- The original interactive readiness processes ended without final summaries.
+  Consolidate their verified installation/preflight evidence with durable owner
+  observations and web/SQL corroboration, labeling the result as an assembled
+  checklist rather than a completed runner execution. The physical iPhone's
+  ten phases now pass through this method. Do not repeat live calls merely to
+  reproduce a terminal transcript; Android and telemetry remain separately open.
+
+- The live review found device-only sign-out copy paired with Supabase's global
+  default. Align this scope and verify cross-device session behavior in the
+  next client candidate. It plausibly explains the later organizer web sign-in
+  requirement, without proving the specific revocation. Preserve the frozen
+  candidate's evidence and the [attributed findings](reviews/2026-09-13-live-readiness-findings.md).
 
 - After Android's organizer controls and the server's single-participant count
   established that both devices used the organizer account, the owner confirmed

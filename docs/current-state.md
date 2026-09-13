@@ -50,7 +50,7 @@ existing report or prior task states the result; it has not been repeated.
 | Historical native artifacts for `daa89a0` | Prior task reports `test-ios`, `test-android`, `readiness-ios`, `readiness-android` accepted | Files/receipts not recovered; owner saved no manual copies. Treat as unavailable and rebuild only after the next candidate freeze |
 | Historical telemetry artifacts | Prior task began `telemetry-test-ios`; completion unknown; Android not reported complete | Require actual artifact/receipt pairs |
 | Current native artifacts for `c5b041c` | All six test, signed readiness and isolated telemetry artifacts accepted; final source/lockfile/digest checks passed | [Durable artifacts, inspections and receipts](evidence/c5b041c/native/README.md) |
-| Current-candidate device journeys and cumulative summary | Both deterministic suites passed; signed builds installed; physical iPhone restores/preserves its session and opens the canonical auth link; Android returning sign-in passed | Live journey, dedicated telemetry canaries and cumulative sign-off pending |
+| Current-candidate device journeys and cumulative summary | Both deterministic suites and the physical iPhone's ten-phase checklist passed; web finalize/reopen/rotation passed | Android final UI checks, native/API telemetry canaries and cumulative sign-off pending |
 | Security | Recorded clean focused review at `069473c`, followed by source changes | [Attributable source delta](reviews/2026-09-12-security-delta.md); no new plugin scan authorized |
 | Legal/contact/attribution | Owner confirmations recorded 2026-08-26 | Preserve the signed record; reconfirm only changed text or delivery conditions |
 
@@ -119,27 +119,54 @@ and canonical auth/join opening also pass. Android initially used the organizer'
 account. After the owner explicitly approved an extra Android message, the
 second approved account joined. The owner subsequently joined with a third
 account; aggregate SQL now confirms three participants and two saved sets of
-constraints in the same plan. Whether that last QR opened the native iPhone
-app or Safari, and whether it consumed another sign-in message, await owner
-clarification. Do not infer native link acceptance from the participant count.
-The total ceiling is four returning
-sign-in messages. The approved journey is capped at $0.25 additional estimated
-Gemini spend and 50 Places attempts, and sanitized four-platform canaries.
+constraints in the same plan. The owner confirms that the QR opened the
+installed iPhone app and the third account required a new code, passing the
+physical private-link check. Counting the earlier conditional web sign-in
+conservatively, the initial four returning messages were consumed. The owner
+raised the ceiling to six; the two approved web-organizer/simulator sign-ins
+have now completed, consuming the six-message allowance conservatively.
+The approved journey is capped at $0.25 additional estimated
+Gemini spend and 100 Places attempts, and sanitized four-platform canaries.
 The read-only usage baseline is 189 Places attempts and $0.00443325 estimated
 Gemini usage. Existing rolling limits are 500 attempts and $4.00; configuration
 is unchanged. Web sign-in, one plan creation, organizer constraints, account
 export/deletion readiness and the web canary pass. PostHog and Sentry both show
 the exact-release canary. The iPhone observed the new plan after foreground
-refresh. Plan creation used two Places attempts and no Gemini call. A later web
-tab requires sign-in; its missing session has no established cause, and no extra
-web message was requested. One recommendation generation has been requested on
-Android using its existing session; the result is pending. The telemetry
+refresh. A later web
+tab required sign-in; the approved organizer recovery has now completed.
+The specific session loss has no established cause. Mobile sign-out uses the provider's
+global default despite device-only copy, which is a plausible explanation.
+One Android generation produced four distinct
+recommendations. Two complete ranked votes are now stored; the iPhone owner
+confirmed its saved vote and absent guest finalization control. Android's saved
+vote is associated with its prior account switch and awaits UI confirmation.
+Web finalization selected one winner; reopening preserved both votes and cleared
+the chosen state; the private link rotated once. Usage is now 56 Places attempts
+and $0.00056825 estimated Gemini spend. Generation used six
+Places attempts after the two creation attempts; twelve subsequent detail reads
+used another 48. All returned complete results without recorded provider
+retries. Every plan response re-fetches four restaurant details; the trigger of
+each observed read is not established. The owner approved continuation within
+the increased caps of 100 Places attempts and six messages. The telemetry
 iOS simulator artifact is privately copied, re-inspected and installed; that
-simulator is shut down while Android continues. Android recovered responsiveness
-after this change. Full physical/live acceptance remains incomplete.
-These simulator/demo results do not establish physical-device or live-auth
-acceptance. Visual review found default tab glyphs; functional text labels remain,
+simulator is now booted with an approved session while the Android emulator is
+gracefully stopped. Android had previously recovered responsiveness when the
+idle iOS simulator was shut down. The physical iPhone also passed old-link
+rejection, JSON share-sheet export and deletion-readiness. Its ten-phase
+[readiness summary](evidence/c5b041c/native/ios/readiness/ios-readiness-summary.json)
+is assembled from durable owner observations and the original source runner's
+verified installation; it does not claim that the ended interactive runner
+completed. Android's remaining UI checks and native/API canaries are incomplete.
+The iOS telemetry simulator has an approved session and verified installed
+bundle/configuration, but the first custom-scheme attempt returned to Plans;
+the owner is checking the local-page link before any delivery claim.
+The deterministic simulator/demo results alone do not establish physical-device
+or live-auth acceptance; those claims use the separate observations above.
+Visual review found default tab glyphs; functional text labels remain,
 and explicit icon/text-only styling is queued for the next client candidate.
+The [live findings](reviews/2026-09-13-live-readiness-findings.md) also queue the
+device sign-out mismatch and unnecessary detail-refresh investigation for that
+candidate.
 
 ## Remaining release constraints
 
