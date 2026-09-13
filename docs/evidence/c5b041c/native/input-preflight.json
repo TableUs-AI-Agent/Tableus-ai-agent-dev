@@ -82,13 +82,14 @@
     "android_abi": "arm64-v8a",
     "android_gradle_jvm": "18.0.2.1",
     "gradle_compiler_jdk_17_cached": true,
-    "maestro": "2.8.0"
+    "maestro": "2.8.0",
+    "android_emulator": "37.1.11.0"
   },
   "durable_storage": "Original checkout .artifacts/mobile/<full-application-sha>/",
   "artifact_paths_overwritten": false,
   "native_builds_sequential": true,
   "private_log_capture_sha256": "0bfc5a93b873bcd2fb5e66b3faa45503b0f1d58a91440c3f04bdb14d5f370da8",
-  "native_journeys_complete": false,
+  "native_journeys_complete": true,
   "android_expected_signer_matches_canonical_association": true,
   "ios_simulator_artifact_architectures": [
     "x86_64",
@@ -96,5 +97,7 @@
   ],
   "hosted_profiles_verified_at": "2026-09-13T02:53:43.890008+00:00",
   "hosted_private_log_capture_sha256": "e02057e35b3eb5e5e0a1dc6a58384edfd491580109a5844de51914cdb41907f2",
-  "apple_expected_signer_matches_canonical_association": true
+  "apple_expected_signer_matches_canonical_association": true,
+  "native_journeys_scope": "deterministic lifecycle and offline mutation suites on iOS simulator and ARM64 Android emulator",
+  "android_system_image_from_existing_homebrew_sdk": true
 }

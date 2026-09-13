@@ -68,9 +68,12 @@ Do not attribute old smoke, scan or native reports to this source.
    outside disposable worktrees and OS temp. Finish each deterministic
    platform's fault flows before the readiness/telemetry pairs. Real-session,
    physical-device and paid-provider acceptance remain separately attributable.
-   The iOS test artifact, receipt, lifecycle and offline mutation journeys passed;
-   Android is next. Sanitized reports and synthetic screenshots are retained in
-   `docs/evidence/c5b041c/native/`.
+   Both test artifacts, receipts, lifecycle and offline mutation journeys passed.
+   All four hosted profiles passed input/configuration checks; build readiness
+   iOS, readiness Android, telemetry iOS, then telemetry Android sequentially.
+   Sanitized reports and synthetic screenshots are retained in
+   `docs/evidence/c5b041c/native/`. The paired physical iPhone is currently
+   unavailable; actual physical/auth/provider observations remain pending.
 
 ## Acceptance and stopping rules
 

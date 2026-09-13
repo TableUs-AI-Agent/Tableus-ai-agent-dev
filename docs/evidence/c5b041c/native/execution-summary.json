@@ -2,7 +2,7 @@
   "schema_version": 1,
   "application_sha": "c5b041c85f4f7b959436c13bef48c959622c624f",
   "operator_tooling_sha": "211ff1c7876694a4b2db677ec26fe5741a6770cb",
-  "updated_at": "2026-09-13T02:53:43.892003+00:00",
+  "updated_at": "2026-09-13T03:16:54.385481+00:00",
   "native_builds_sequential": true,
   "test_ios": {
     "artifact_inspection_passed": true,
@@ -13,7 +13,15 @@
     "build_finished_at": "2026-09-13T02:19:34.110190Z"
   },
   "test_android": {
-    "status": "building"
+    "artifact_inspection_passed": true,
+    "lifecycle_passed": true,
+    "offline_mutations_passed": true,
+    "artifact_sha256": "716370574aa91aed4834c37a9866011c9a114b11d3162007a903840c18d7b860",
+    "build_started_at": "2026-09-13T02:47:08.682539Z",
+    "build_finished_at": "2026-09-13T03:01:20.402994Z",
+    "compiled_abis": [
+      "arm64-v8a"
+    ]
   },
   "hosted_profile_input_preflights_passed": true,
   "setup_observations": [
@@ -34,6 +42,15 @@
       "result": "missing_bootstrap_api_origin_rejected_before_build",
       "existing_source_owned_staging_origins_supplied": true,
       "all_four_resolved_configs_passed": true
+    },
+    {
+      "phase": "android_emulator_startup",
+      "result": "configured_system_image_resides_in_other_existing_sdk",
+      "explicit_existing_system_image_path_used": true,
+      "new_system_image_downloaded": false,
+      "boot_ready_seconds": 17.53,
+      "api_level": 36,
+      "abi": "arm64-v8a"
     }
   ],
   "runtime_source_changed": false,
@@ -43,5 +60,19 @@
   "physical_ios_acceptance_complete": false,
   "live_native_acceptance_complete": false,
   "telemetry_acceptance_complete": false,
-  "cumulative_signoff_complete": false
+  "cumulative_signoff_complete": false,
+  "readiness_ios": {
+    "status": "building"
+  },
+  "visual_observations": [
+    {
+      "item": "default_tab_glyphs",
+      "platforms": [
+        "ios",
+        "android"
+      ],
+      "tab_labels_functional": true,
+      "next_client_candidate_polish": true
+    }
+  ]
 }

@@ -8,11 +8,11 @@ Vercel Preview. The deployed application remains the frozen source above.
 | Profile | Artifact and receipt | Device evidence |
 | --- | --- | --- |
 | `test-ios` | Accepted; simulator bundle contains arm64 and x86_64 | iOS 26.5 lifecycle and offline mutation journeys passed |
-| `test-android` | Building for API 36 ARM64 | Pending |
-| `readiness-ios`, `readiness-android` | Inputs/configuration passed | Pending |
+| `test-android` | Accepted; APK contains arm64-v8a only | API 36 lifecycle and offline mutation journeys passed |
+| `readiness-ios`, `readiness-android` | Inputs/configuration passed; iOS building | Pending |
 | `telemetry-test-ios`, `telemetry-test-android` | Inputs/configuration passed | Pending |
 
-## Observed iOS results
+## Observed deterministic results
 
 - [Lifecycle](ios/lifecycle/ios-summary.json): two participants, four candidates,
   ranked votes, finalization, reopening, rotated-link rejection and stale-result
@@ -27,7 +27,15 @@ Vercel Preview. The deployed application remains the frozen source above.
   `61d4d12a25d2857942402095a9fea24e97e7b0e8d0ddca1d586b4c945c5735f2`.
   The compiled configuration uses loopback, demo/local E2E and telemetry off.
 
-The first lifecycle attempt timed out while starting the local backend, before
+Android's [lifecycle](android/lifecycle/android-summary.json) and
+[offline mutations](android/offline/android-offline-summary.json) passed the same
+assertions. Its [inspection](artifacts/test-android-inspection.json) and
+[receipt](artifacts/test-android-receipt.json) bind APK digest
+`716370574aa91aed4834c37a9866011c9a114b11d3162007a903840c18d7b860`.
+The configured AVD's system image was already installed in the Homebrew SDK;
+an explicit system-image path resolved startup without downloading an image.
+
+The first iOS lifecycle attempt timed out while starting the local backend, before
 app installation. A measured clean restart became ready in 4.499 seconds;
 the unchanged journey then passed. The original delay was not conclusively
 isolated, and no deadline or application behavior was changed to obtain a pass.
@@ -45,6 +53,11 @@ checkout's ignored `.artifacts/mobile/<full-source-sha>/`, outside OS temp and
 disposable worktrees. Tracked summaries replace device identifiers with their
 platform/runtime; screenshots contain deterministic synthetic fixtures only.
 The reports' source hashes, artifact hashes, counts and results are unchanged.
+
+Visual review also observed the framework's default tab glyphs on both clients.
+Text labels and navigation work; explicit icons or text-only styling remain
+polish for the next client candidate before store distribution. The screenshots
+are retained unchanged, including this observation.
 
 These simulator/demo results do not establish physical-iPhone link behavior,
 real Supabase session recovery, cross-client live-provider acceptance or

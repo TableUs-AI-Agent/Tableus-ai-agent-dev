@@ -2,6 +2,11 @@
 
 ## Current development and release decisions — 2026-09-12
 
+- Both frozen-candidate deterministic native suites passed. Keep `c5b041c`
+  for the authorized readiness/telemetry artifact sequence. Record the observed
+  default tab glyphs as presentation polish for the next client candidate before
+  store distribution; do not alter artifact bytes or hide the screenshots.
+
 - After the staging handoff, the owner requested the next steps. Execute the
   native reliability sequence against frozen `c5b041c`: iOS test artifact and
   fault journeys, then ARM64 Android, before readiness/telemetry artifacts.

@@ -96,11 +96,16 @@ The owner requested continuation into native reliability verification. Both
 build-input preflights passed for `c5b041c`; sequential deterministic iOS then
 ARM64 Android builds and lifecycle/offline tests are active. Durable private
 storage is `.artifacts/mobile/<full-source-sha>/` in the original checkout.
-The `test-ios` artifact now passed source/configuration/simulator-signature
-inspection, with its version-two receipt saved. The iOS two-person lifecycle and offline tests passed: finalization, reopen,
+Both test artifacts passed source/configuration/signature inspection and have
+version-two receipts. The iOS 26.5 and Android API 36 ARM64 lifecycle and offline
+journeys passed: two participants, four candidates, votes, finalization, reopen,
 rotated-link rejection, stale-result clearing, same-key interrupted-write retry
-and zero writes while offline. Android build/journey results remain pending.
-These simulator/demo results do not establish physical-device or live-auth acceptance.
+and zero writes while offline. [Native evidence](evidence/c5b041c/native/README.md)
+contains sanitized reports and synthetic screenshots. The four hosted profiles'
+inputs/configuration passed; the signed iOS readiness build is active.
+These simulator/demo results do not establish physical-device or live-auth
+acceptance. Visual review found default tab glyphs; functional text labels remain,
+and explicit icon/text-only styling is queued for the next client candidate.
 
 ## Remaining release constraints
 
