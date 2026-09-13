@@ -2,6 +2,17 @@
 
 ## Current development and release decisions — 2026-09-12
 
+- The owner approved pushing `c5b041c85f4f7b959436c13bef48c959622c624f`,
+  running CI, and deploying to existing Railway staging and Vercel Preview.
+  The completed deployment preserves the application SHA, updates only existing
+  noncredential source stamps and the exact Preview CORS origins, and retains
+  production aliases and deployment protection. This approval does not renew
+  native, paid-provider, OTP, security-scan or production/store/cohort scope.
+  [Evidence](evidence/c5b041c/README.md) records the completed operations.
+- Keep this deployment's evidence descendant local: pushing the application
+  branch automatically creates another Vercel Preview. The remote application
+  candidate remains the verified `c5b041c`; future evidence publication must
+  account for that trigger instead of silently deploying documentation commits.
 - The owner confirmed GPT-6 Astra for **development only**. Pin
   `gpt-6-astra` in project Codex configuration; preserve compatible existing
   reasoning settings and global configuration. Gemini/Places application
@@ -22,7 +33,7 @@
   before compiling the other production-shaped/telemetry artifact families.
   The owner did not manually save the prior native artifacts; no durable set
   is currently available for reuse.
-- The reproduced credential/session wait gap is fixed in the local replacement.
+- The reproduced credential/session wait gap is fixed in the `c5b041c` candidate.
   Use one end-to-end API deadline, preserve a write's idempotency key across
   the single authorized token refresh, and never send a late credential result.
   SDK timeout/rejection is recoverable, not proof of revoked authorization.

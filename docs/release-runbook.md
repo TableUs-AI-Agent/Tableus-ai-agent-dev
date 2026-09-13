@@ -6,11 +6,12 @@ to create resources, send mail, deploy or start paid calls.
 
 ## 1. Establish what already exists
 
-The last observed staging source is `daa89a03e1ba09b4249125476c5d28b7f2a98f31`.
-The replacement on `codex/astra-project-reassessment` includes an auth fix;
-record the handoff commit before requesting its staging deployment.
-CI and public API readiness were rechecked; the previous live-smoke report was
-recovered. Four native completions are reported but no usable files/receipts
+The deployed staging source is `c5b041c85f4f7b959436c13bef48c959622c624f`.
+The owner-approved push/CI and existing Railway staging/Vercel Preview rollout
+are complete. [Evidence](evidence/c5b041c/README.md) records exact deployment
+IDs, readiness, Preview CORS and preservation of production targets.
+The previous `daa89a0` live-smoke report was recovered and remains historical.
+Four native completions were reported but no usable files/receipts
 were recovered, and the owner saved no manual copies. Do not repeat successful
 external operations solely because a task or coding model changed.
 
@@ -60,6 +61,13 @@ The previously recorded candidate's smoke succeeded; its report is historical
 evidence, not authorization to spend again. A replacement deployment/live smoke
 requires a matching, concrete approved scope and budget. Preserve completed
 approvals, their exact source/scope and remaining limited-call allowances.
+
+The `c5b041c` approval covered push/CI and the existing staging targets only.
+Before another deployment, account for Vercel's automatic branch-push trigger,
+set source-stamp inputs before the build, and verify the exact Preview URLs in
+the API CORS allowlist. Keep the existing production target/aliases intact.
+Do not push an evidence-only descendant merely to publish receipts if that
+would automatically create an unapproved replacement Preview.
 
 The [source delta](reviews/2026-09-12-security-delta.md) records the older
 `069473c` scan association and later changes. The cumulative schema currently

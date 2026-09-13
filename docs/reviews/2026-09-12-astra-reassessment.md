@@ -112,6 +112,11 @@ unavailable for scheduling, without claiming they cannot exist elsewhere.
 
 ## Validation and deferred work
 
+The initial local handoff below is preserved. The owner subsequently approved
+the exact `c5b041c` push/CI and existing staging rollout; its
+[deployment evidence](../evidence/c5b041c/README.md) records successful public CI,
+including all three Postgres checks, and the verified hosted deployments.
+
 `make ready` passed on the completed runtime change: 197 JavaScript tests,
 98 Python tests, lint, types, contract generation, web/Expo-web builds and
 deterministic smoke. Three Postgres-only migration assertions are skipped in

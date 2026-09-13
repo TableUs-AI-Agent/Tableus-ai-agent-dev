@@ -1,18 +1,25 @@
 # Closed-beta readiness checklist
 
-Reviewed 2026-09-12. Last observed staging source:
-`daa89a03e1ba09b4249125476c5d28b7f2a98f31`.
-The replacement on `codex/astra-project-reassessment` changes auth behavior and
-is not deployed. Existing checked observations below belong to `daa89a0`; they
-do not certify the replacement.
+Reviewed 2026-09-12. Deployed staging source:
+`c5b041c85f4f7b959436c13bef48c959622c624f`.
+The owner-approved push, CI and existing Railway staging/Vercel Preview
+deployment are verified in [deployment evidence](evidence/c5b041c/README.md).
+Historical live-smoke/native/scan observations keep their original source
+associations and do not certify the replacement.
 A historical confirmation is not a fresh test or a new owner signature.
 
 ## Candidate acceptance
 
-- [x] Public CI verified for the candidate: run `33696336882`.
+- [x] Public CI verified for `c5b041c`: run `34728044149`, including all three
+  Postgres migration assertions and four browser tests.
 - [x] Public Railway readiness rechecked on 2026-09-12 at the exact candidate.
-- [x] Existing sanitized two-user live Places/Gemini smoke report recovered.
-- [ ] Current Vercel alias, canonical fallback, CORS and associations rechecked.
+- [x] Vercel Preview READY at the exact candidate; production target/aliases
+  and deployment protection preserved. Both new Preview URLs and both existing
+  origins pass CORS; an unrelated origin is rejected.
+- [x] Historical `daa89a0` two-user live Places/Gemini report recovered.
+- [ ] Current-candidate real-session web/native journey accepted under its
+  applicable auth/provider scope; old smoke is not relabeled.
+- [ ] Canonical fallback and association bodies rechecked for native acceptance.
 - [ ] Required native artifact/inspection/receipt pairs recovered or rebuilt,
   with source/profile/signer/checksum verified. Four completions are reported
   in the prior task; their files have not yet been recovered.
@@ -31,8 +38,8 @@ A historical confirmation is not a fresh test or a new owner signature.
 
 The source contains approved-profile/organizer checks, bounded body/admission
 work, bounded JWKS caching, idempotent replay checks, strict hosted origins,
-private query state, provider validation and telemetry scrubbing. `daa89a0` CI is
-passing; replacement CI is pending. This is not a new security certification.
+private query state, provider validation and telemetry scrubbing. `c5b041c` CI
+passed. This is not a new security certification.
 
 Owner legal/privacy and attribution approval, delivery to support and privacy
 mailboxes, and rollback ownership were recorded on 2026-08-26. Preserve those
@@ -74,7 +81,8 @@ the existing exception expires on 2026-09-30 or before that approval.
 
 - Legal/privacy and rollback owner: Brian Chei.
 - Legal/contact/attribution confirmation date: 2026-08-26 (historical record).
-- Current application source for evidence recovery: `daa89a03e1ba09b4249125476c5d28b7f2a98f31`.
+- Current deployed application source: `c5b041c85f4f7b959436c13bef48c959622c624f`.
+- Historical application source for old evidence: `daa89a03e1ba09b4249125476c5d28b7f2a98f31`.
 - Cumulative staging sign-off: **not complete**.
 - Production/store/cohort authorization: **not granted by this reassessment**.
 

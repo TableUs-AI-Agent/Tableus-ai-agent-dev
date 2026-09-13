@@ -1,10 +1,12 @@
 # Current state
 
-Reviewed 2026-09-12. Last observed staging source:
-`daa89a03e1ba09b4249125476c5d28b7f2a98f31`.
-The replacement source on `codex/astra-project-reassessment` adds bounded auth
-restoration, development configuration, operator preflight and revised plans.
-It has not been deployed; the handoff identifies its exact commit.
+Verified 2026-09-12 (America/Chicago; deployment receipts dated 2026-09-13 UTC).
+Current staging application source:
+`c5b041c85f4f7b959436c13bef48c959622c624f`, branch
+`codex/astra-project-reassessment`. It adds bounded auth restoration,
+development configuration, operator preflight and revised plans. The owner
+approved its push, CI and existing Railway staging/Vercel Preview deployment.
+[Deployment evidence](evidence/c5b041c/README.md) records the exact targets.
 
 ## Product and architecture
 
@@ -23,7 +25,7 @@ organizer finalization, reopen, and share-link rotation.
 | Reliability | Bounded admission/JWKS work, route/role-checked idempotent replay, plan locks, response-body deadlines | Idempotency cache and provider reservation locks are process-local; one API process only |
 | Delivery | Locked dependencies, pinned CI/container inputs, clean detached native builds, signed inspection and version-two receipts | Production origins, signing, source maps, rollback and store approval remain release work |
 
-The local replacement fixes the reproduced credential-wait gap. One API deadline
+The current candidate fixes the reproduced credential-wait gap. One API deadline
 now covers credential/demo-identity lookup, fetch, one refresh and body parsing.
 Late credentials cannot dispatch a write. Web and mobile startup reads time out
 after 15 seconds; mobile provides an explicit restoration retry that preserves
@@ -39,10 +41,12 @@ existing report or prior task states the result; it has not been repeated.
 
 | Evidence | Status at this review | Source / next step |
 | --- | --- | --- |
-| Public CI for `daa89a0` | Verified: completed successfully | [Run 33696336882](https://github.com/TableUs-AI-Agent/Tableus-ai-agent-dev/actions/runs/33696336882) |
-| Railway public readiness | Verified: exact candidate, Supabase, live Places/Agent Platform, staging anonymous/error-only telemetry | Read-only `/health/ready` on 2026-09-12 |
-| Two-user live provider smoke | Recovered recorded report: 2 participants, 4 distinct candidates, 8 operations, estimated $0.00443325 | `docs/evidence/daa89a0/live/daa89a0-gemini-staging-summary.json`; no paid call repeated |
-| Vercel candidate | Recorded deployment `dpl_7yiJcGeeVGHBRzFggodNCLzoiAeX` | Recheck aliases, CORS and association bodies before interactive evidence |
+| Public CI for `c5b041c` | Verified: 197 JavaScript, 101 Python, four browser tests and seven deterministic AI cases passed; all three Postgres migration tests ran | [Run 34728044149](https://github.com/TableUs-AI-Agent/Tableus-ai-agent-dev/actions/runs/34728044149) |
+| Railway public readiness for `c5b041c` | Verified: exact candidate, Supabase, live Places/Agent Platform, staging anonymous/error-only telemetry | Deployment `dcccd4a1-cca7-489b-9d7d-81e4019aad0c`; public `/health/ready` passed |
+| Vercel Preview for `c5b041c` | Verified READY: exact Git SHA; build completed after Preview source-stamp updates | Deployment `dpl_9zGVqXpFNQkCzSXBaecR18hqMs2M`; [Preview](https://tableus-staging-3e0h7umke-briancheis-projects.vercel.app); production target/aliases and deployment protection preserved |
+| Preview API CORS | Verified: both new exact Preview URLs and both existing origins pass; unrelated origin rejected | Corrected the missing-origin configuration and redeployed the same API source; [receipt](evidence/c5b041c/staging-deployment.json) |
+| Historical CI for `daa89a0` | Verified: completed successfully | [Run 33696336882](https://github.com/TableUs-AI-Agent/Tableus-ai-agent-dev/actions/runs/33696336882) |
+| Historical two-user live provider smoke for `daa89a0` | Recovered recorded report: 2 participants, 4 distinct candidates, 8 operations, estimated $0.00443325 | `docs/evidence/daa89a0/live/daa89a0-gemini-staging-summary.json`; no paid call repeated |
 | Native artifacts | Prior task reports `test-ios`, `test-android`, `readiness-ios`, `readiness-android` accepted | Files/receipts not recovered; owner saved no manual copies. Treat as unavailable and rebuild only after the next candidate freeze |
 | Telemetry artifacts | Prior task began `telemetry-test-ios`; completion unknown; Android not reported complete | Require actual artifact/receipt pairs |
 | Current-candidate device journeys and cumulative summary | Incomplete | No honest cumulative sign-off yet |
@@ -59,7 +63,7 @@ A passing report from an older source must never be relabeled as a replacement.
 conflicting test-command environment overrides. JavaScript: 197 passing tests
 (74 scripts, 19 web, 56 mobile unit, 9 mobile component, 25 shared API, 14 domain).
 Backend: 98 passed; three Postgres-only migration assertions skipped locally.
-CI must run those against Postgres. Lint, types, contract generation, web and
+Public CI subsequently passed all 101 against Postgres. Lint, types, contract generation, web and
 Expo-web builds, and deterministic smoke passed. OpenAPI and lockfiles are
 unchanged. Bundle size is a report-only 2,820,354 web JavaScript bytes.
 Browser fixtures confirmed timeout → visible Retry → restored plans;
@@ -71,7 +75,11 @@ runtime-file hashes. These are not live-auth or device results.
 - Inherited staging application worktree: `.worktrees/closed-beta-readiness`, branch
   `codex/closed-beta-readiness`, at `daa89a0`.
 - Current replacement application worktree: `.worktrees/astra-project-reassessment`, branch
-  `codex/astra-project-reassessment`.
+  `codex/astra-project-reassessment`; deployed application remains `c5b041c`.
+- This follow-up records deployment evidence and status only. An evidence
+  descendant does not change the deployed application SHA. A branch push
+  triggers Vercel Preview automatically, so the evidence-only commit stays
+  local until a later approved push.
 - The repository's original checkout remains on the older
   `codex/privacy-safe-observability` branch. Its status files are not the latest
   handoff; neither original worktree nor untracked evidence was overwritten.

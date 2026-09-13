@@ -1,4 +1,4 @@
-# Active packet: bounded auth restoration and candidate freeze
+# Active packet: bounded auth restoration and verified staging handoff
 
 ## Objective and source
 
@@ -8,10 +8,11 @@ The owner confirmed **development-only Astra**; application inference remains
 Gemini/Places. This is the only active implementation packet.
 
 Branch: `codex/astra-project-reassessment`.
-Inherited/staging source: `daa89a03e1ba09b4249125476c5d28b7f2a98f31`.
-Replacement: the commit containing this packet and the auth correction; its
-exact SHA is recorded in the handoff. It is not deployed. Do not attribute old
-CI, smoke, scan or native reports to it.
+Inherited source: `daa89a03e1ba09b4249125476c5d28b7f2a98f31`.
+Frozen and deployed replacement:
+`c5b041c85f4f7b959436c13bef48c959622c624f`.
+The owner approved its push, CI, Railway staging and Vercel Preview rollout.
+Do not attribute old smoke, scan or native reports to this source.
 
 ## Completed locally
 
@@ -35,7 +36,7 @@ CI, smoke, scan or native reports to it.
 - Added behavioral shared-client and mobile recovery tests. Preserved the
   historical scan association in an [attributable source delta](../reviews/2026-09-12-security-delta.md).
 
-## Current verification and next actions
+## Current verification and handoff
 
 1. Local verification is complete: `make ready` passed (197 JavaScript and
    98 Python tests; three Postgres checks deferred to CI), browser fixtures
@@ -43,17 +44,25 @@ CI, smoke, scan or native reports to it.
    [Evidence](../evidence/astra-reassessment/README.md) includes runtime hashes.
    The handoff commit freezes the replacement. This worktree has its own locked
    JavaScript/Python environments.
-2. Request a concrete replacement staging scope only after that handoff is
-   reviewable: push/CI, existing Railway/Vercel staging targets, and any bounded
-   live calls or native/device work explicitly included in the request.
+2. Approved hosted work is complete. Public CI run `34728044149` passed,
+   including the three locally deferred Postgres assertions and four browser
+   tests. Railway deployment `dcccd4a1-cca7-489b-9d7d-81e4019aad0c` and Vercel
+   Preview `dpl_9zGVqXpFNQkCzSXBaecR18hqMs2M` use `c5b041c`. Public readiness
+   and exact-origin CORS pass; an unrelated origin is rejected. Source-stamp
+   updates and the CORS correction are recorded in
+   [deployment evidence](../evidence/c5b041c/README.md). Production aliases and
+   deployment protection were preserved. This evidence-only descendant stays
+   local because a branch push would automatically build another Preview.
 3. Resolve security-evidence acceptance before cumulative sign-off. The source
    delta is an ordinary review, not a new scan. The validator's current
    exact-candidate scan requirement remains in force; do not relabel the old
    scan or restart the canceled scan to fill it.
-4. Freeze the application source, preflight configuration and durable output
-   paths, then follow roadmap objective 2: finish each deterministic platform's
-   fault flows before building readiness and telemetry pairs. Keep all native
-   work sequential and preserve accepted bytes/receipts outside OS temp.
+4. Keep `c5b041c` frozen. The next bounded objective is to preflight durable
+   output paths and obtain its native/device scope, then finish each
+   deterministic platform's fault flows before building readiness and telemetry
+   pairs. Keep native work sequential and preserve accepted bytes/receipts
+   outside OS temp. No native build or new paid/live-auth operation was run
+   under the hosted-deployment approval.
 
 ## Acceptance and stopping rules
 
@@ -72,10 +81,12 @@ CI, smoke, scan or native reports to it.
 The old task approved public push, CI, existing staging deployment, bounded
 live smoke and six sequential native artifacts for `daa89a0`. Completed work
 does not need repeated approval, and consumed limited-call/OTP allowances do
-not reset. A replacement application/deployment needs a matching scope.
+not reset. On 2026-09-12 the owner's `APPROVE` supplied the matching scope for
+the `c5b041c` push, CI and existing staging deployments. Those operations are
+complete. Native/device, paid live-provider and new OTP scopes were not included.
 
 The owner's scan cancellation remains binding. This packet grants no merge,
 production migration/deployment, resource/secret creation, store submission,
 new mail/invites, account deletion, destructive cleanup or cohort activation.
-There are no unanswered intake questions; release approval follows concrete
-local verification. Later roadmap objectives are queued, not active work.
+There are no unanswered intake questions. Later roadmap objectives and their
+explicit gates are queued, not active work.
