@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "application_sha": "c5b041c85f4f7b959436c13bef48c959622c624f",
-  "recorded_at": "2026-09-13T04:31:44.630139+00:00",
+  "recorded_at": "2026-09-13T05:35:01.739321+00:00",
   "platform": "android",
   "device_kind": "Android_API_36_ARM64_emulator",
   "build_id": "local-android-readiness-c5b041c",
@@ -16,8 +16,33 @@
   },
   "canonical_domain_state": "verified",
   "domain_state_observation_source": "adb_package_manager_get_app_links",
-  "owner_observed_screen": "returning_sign_in",
-  "new_signin_message_requested": false,
+  "owner_observed_screen": "plans_after_returning_signin",
+  "new_signin_message_requested": true,
   "raw_personal_data_retained": false,
-  "screenshots_retained": false
+  "screenshots_retained": false,
+  "phases": {
+    "returning_authentication": {
+      "passed": true,
+      "observation_source": "owner_confirmation"
+    },
+    "session_persistence": {
+      "passed": true,
+      "evidence_source": "owner_observed_relaunch_after_emulator_recovery"
+    },
+    "verified_auth_link": {
+      "passed": true,
+      "evidence_source": "owner_tapped_canonical_link_on_local_page"
+    },
+    "verified_join_link": {
+      "passed": true,
+      "evidence_source": "owner_observed_canonical_link_open_app_and_two_person_plan_after_join"
+    }
+  },
+  "canonical_private_join_link_opened_app": true,
+  "distinct_participant_account_verified": true,
+  "observed_participant_count": 2,
+  "emulator_recovered_after_idle_ios_simulator_shutdown": true,
+  "root_cause_proven": false,
+  "extra_returning_signin_message_used": true,
+  "initial_account_owner_controls_observed": true
 }

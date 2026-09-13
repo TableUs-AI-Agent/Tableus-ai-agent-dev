@@ -11,9 +11,9 @@ Vercel Preview. The deployed application remains the frozen source above.
 | --- | --- | --- |
 | `test-ios` | Accepted; simulator bundle contains arm64 and x86_64 | iOS 26.5 lifecycle and offline mutation journeys passed |
 | `test-android` | Accepted; APK contains arm64-v8a only | API 36 lifecycle and offline mutation journeys passed |
-| `readiness-ios` | Signed IPA installed on the provisioned physical iPhone | Session restoration/relaunch and physical auth link pass; remaining journey pending |
-| `readiness-android` | Signed APK installed; package manager verifies the canonical domain | Owner sees returning sign-in; live journey pending |
-| `telemetry-test-ios` | Simulator bundle, inspection and receipt accepted | Delivery pending |
+| `readiness-ios` | Signed IPA installed on the provisioned physical iPhone | Restoration, relaunch, physical auth link and changed-plan foreground refresh pass |
+| `readiness-android` | Signed APK installed; package manager verifies the canonical domain | Sign-in, relaunch and canonical links pass; distinct second account joined |
+| `telemetry-test-ios` | Simulator bundle re-inspected and installed | Simulator shut down while Android continues; delivery pending |
 | `telemetry-test-android` | Signed APK, inspection and receipt accepted | Delivery pending |
 
 The [final artifact matrix](artifact-matrix.json) validates all six preserved
@@ -67,10 +67,15 @@ on each platform. It reached the first manual confirmation on both.
 
 The [physical iPhone progress](ios/readiness/ios-readiness-progress.json) records
 the owner's observed approved-session restoration, persistence after full close
-and relaunch, and the canonical `/auth` link opening TableUs from Notes. The
+and relaunch, the canonical `/auth` link opening TableUs from Notes, and the new
+web-created plan appearing after foreground refresh. The
 [Android progress](android/readiness/android-readiness-progress.json) records
-installation, the package manager's verified domain and the owner's sign-in
-screen observation. These are explicitly incomplete progress reports; the
+installation, the package manager's verified domain, returning sign-in, relaunch
+and canonical auth/private-join opening. The owner initially used the organizer's
+account on Android; both UI controls and the database's one-participant count
+agree. The extra message to use the existing second approved account is now
+authorized and used; the owner and database subsequently confirmed two
+participants. These are explicitly incomplete progress reports; the
 candidate's full readiness runner has not passed either complete live journey.
 The session check follows [Supabase's session model](https://supabase.com/docs/guides/auth/sessions);
 the result above is the owner's actual observation on the installed build.
@@ -80,11 +85,24 @@ staging organization. The [PostHog baseline](posthog-canary-baseline.json) uses
 the verified event schema and an exact release filter, following the official
 [filtering guidance](https://posthog.com/docs/product-analytics/trends/filters).
 The [Sentry baseline](sentry-canary-baseline.json) confirms the three staging
-projects and an empty exact-release/environment search. Neither is delivery
-evidence; actual authenticated canaries remain outstanding. A subsequent
+projects and an empty exact-release/environment search. Neither baseline is
+delivery evidence. The subsequent [web canary](web-telemetry-canary.json)
+reached PostHog and Sentry with exact-release filters; its Sentry message is
+redacted. Evidence comes from the typed PostHog connector and authenticated
+Sentry UI, not the standalone read-token collector. Native/API canaries remain
+outstanding. A subsequent
 [aggregate iOS app-open query](ios/readiness/ios-app-opened-telemetry.json)
 observed one event for this exact release after physical installation, confirming
 basic analytics delivery. This does not replace the dedicated canaries.
+
+[Web progress](web-readiness-progress.json) records sign-in, one plan, organizer
+constraints and read-only account controls. The exported JSON file was verified
+in the owner's Downloads after the browser's download-event observation timed
+out; no second export was requested and no raw account export is in Git.
+[Approval and baseline](live-approval-and-baseline.json) records four messages
+at most, one live journey, $0.25 estimated Gemini and 50 Places attempts. So far
+creation used two Places attempts and no Gemini call. Existing staging quotas
+were read without changing configuration.
 
 ## Storage and limits
 
@@ -99,8 +117,9 @@ Text labels and navigation work; explicit icons or text-only styling remain
 polish for the next client candidate before store distribution. The screenshots
 are retained unchanged, including this observation.
 
-These simulator/demo results do not establish physical-iPhone link behavior,
-real Supabase session recovery, cross-client live-provider acceptance or
-telemetry delivery. The existing exact-candidate security-evidence requirement
+The deterministic simulator/demo results alone do not establish physical or
+live acceptance. The separately observed partial real-session results above
+still leave the two-person journey and native/API canaries incomplete.
+The existing exact-candidate security-evidence requirement
 also remains unresolved; no canceled scan was restarted. See
 [execution status](execution-summary.json) and the active packet for next steps.

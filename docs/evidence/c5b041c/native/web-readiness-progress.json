@@ -1,0 +1,33 @@
+{
+  "schema_version": 1,
+  "sha": "c5b041c85f4f7b959436c13bef48c959622c624f",
+  "observed_at": "2026-09-13T05:38:25.929507+00:00",
+  "web_origin": "https://tableus-staging-3e0h7umke-briancheis-projects.vercel.app",
+  "returning_signin_passed": true,
+  "new_tab_session_restored": true,
+  "matching_new_plan_count": 1,
+  "participant_count": 2,
+  "organizer_constraints_saved": true,
+  "resolved_us_location": true,
+  "provider_places_attempts_delta": 2,
+  "provider_gemini_estimated_usd_delta": 0,
+  "two_person_journey_complete": false,
+  "account_controls": {
+    "deletion_blocked_by_organized_plans": true,
+    "delete_button_disabled": true,
+    "deletion_run": false,
+    "export_clicks": 1,
+    "export_UI_reported_downloaded": true,
+    "browser_download_event_observed": false,
+    "browser_download_event_timed_out": true,
+    "download_file_verified": true,
+    "export_json_valid": true,
+    "export_bytes": 6553,
+    "export_sha256": "91f61d2f649b9198d12456b1afdd40e02ab8413c49f585353d77939ada0ea103",
+    "export_file_in_owner_downloads": true,
+    "raw_export_committed": false
+  },
+  "raw_personal_data_in_report": false,
+  "screenshots_retained": false,
+  "participant_count_source": "owner_confirmation_and_staging_aggregate_SQL"
+}

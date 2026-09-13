@@ -50,7 +50,7 @@ existing report or prior task states the result; it has not been repeated.
 | Historical native artifacts for `daa89a0` | Prior task reports `test-ios`, `test-android`, `readiness-ios`, `readiness-android` accepted | Files/receipts not recovered; owner saved no manual copies. Treat as unavailable and rebuild only after the next candidate freeze |
 | Historical telemetry artifacts | Prior task began `telemetry-test-ios`; completion unknown; Android not reported complete | Require actual artifact/receipt pairs |
 | Current native artifacts for `c5b041c` | All six test, signed readiness and isolated telemetry artifacts accepted; final source/lockfile/digest checks passed | [Durable artifacts, inspections and receipts](evidence/c5b041c/native/README.md) |
-| Current-candidate device journeys and cumulative summary | Both deterministic suites passed; signed builds installed; physical iPhone restores/preserves its session and opens the canonical auth link; Android needs sign-in | Live journey, dedicated telemetry canaries and cumulative sign-off pending |
+| Current-candidate device journeys and cumulative summary | Both deterministic suites passed; signed builds installed; physical iPhone restores/preserves its session and opens the canonical auth link; Android returning sign-in passed | Live journey, dedicated telemetry canaries and cumulative sign-off pending |
 | Security | Recorded clean focused review at `069473c`, followed by source changes | [Attributable source delta](reviews/2026-09-12-security-delta.md); no new plugin scan authorized |
 | Legal/contact/attribution | Owner confirmations recorded 2026-08-26 | Preserve the signed record; reconfirm only changed text or delivery conditions |
 
@@ -114,9 +114,22 @@ observed restoration of the existing approved session, persistence after a full
 close/relaunch, and the canonical `/auth` link opening TableUs from Notes.
 PostHog received an iOS `app_opened` event for this exact release. Android's
 package manager reports the signed link domain as verified; the owner sees the
-returning sign-in screen. New sign-in messages and paid-provider work have not
-run. The remaining cross-client journey and dedicated telemetry canaries need
-their applicable authorization; full physical/live acceptance remains incomplete.
+plans screen after one approved returning sign-in message; relaunch persistence
+and canonical auth/join opening also pass. Android initially used the organizer's
+account. After the owner explicitly approved an extra Android message, the
+second approved account joined; the owner and database confirm two participants.
+The total ceiling is four returning
+sign-in messages. The approved journey is capped at $0.25 additional estimated
+Gemini spend and 50 Places attempts, and sanitized four-platform canaries.
+The read-only usage baseline is 189 Places attempts and $0.00443325 estimated
+Gemini usage. Existing rolling limits are 500 attempts and $4.00; configuration
+is unchanged. Web sign-in, one plan creation, organizer constraints, account
+export/deletion readiness and the web canary pass. PostHog and Sentry both show
+the exact-release canary. The iPhone observed the new plan after foreground
+refresh. Plan creation used two Places attempts and no Gemini call. The telemetry
+iOS simulator artifact is privately copied, re-inspected and installed; that
+simulator is shut down while Android continues. Android recovered responsiveness
+after this change. Full physical/live acceptance remains incomplete.
 These simulator/demo results do not establish physical-device or live-auth
 acceptance. Visual review found default tab glyphs; functional text labels remain,
 and explicit icon/text-only styling is queued for the next client candidate.

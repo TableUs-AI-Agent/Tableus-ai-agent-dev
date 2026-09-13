@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "application_sha": "c5b041c85f4f7b959436c13bef48c959622c624f",
-  "recorded_at": "2026-09-13T04:31:44.630139+00:00",
+  "recorded_at": "2026-09-13T05:22:00.799598+00:00",
   "platform": "ios",
   "device_kind": "physical_iPhone",
   "os_version": "26.6.2",
@@ -27,6 +27,10 @@
     "verified_auth_link": {
       "passed": true,
       "evidence_source": "owner_tapped_canonical_auth_link_in_Notes_and_observed_TableUs_open"
+    },
+    "foreground_refresh": {
+      "passed": true,
+      "evidence_source": "owner_observed_new_web_created_plan_on_foreground"
     }
   },
   "raw_personal_data_retained": false,

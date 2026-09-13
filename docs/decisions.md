@@ -2,6 +2,24 @@
 
 ## Current development and release decisions — 2026-09-12
 
+- After Android's organizer controls and the server's single-participant count
+  established that both devices used the organizer account, the owner confirmed
+  an existing second approved account and explicitly approved one extra Android
+  sign-in email. The total ceiling is now four, preserving the original iOS
+  simulator/web allowance. The switch and two-participant join subsequently
+  passed. No new account or invite is authorized. Keep native
+  devices sequential after Android's observed unresponsiveness recovered when
+  the idle iOS simulator was shut down; do not claim a proven root cause.
+
+- The owner's latest “approve” (2026-09-13 UTC) authorizes at most three
+  returning sign-in messages across Android, the iOS telemetry simulator and web;
+  one two-person live journey using existing approved accounts, capped at $0.25
+  additional estimated Gemini spend and 50 Places outbound attempts; and
+  sanitized web/API/iOS/Android canaries. Record a provider-usage baseline and
+  check deltas between paid steps. Failed attempts count; passed assertions do
+  not justify regeneration. No new invite, credential, resource, deployment,
+  scan, production/store action or change to the cumulative security gate follows.
+
 - All six `c5b041c` native artifacts are now accepted and durably retained.
   Reuse these exact bytes for the remaining physical, live-auth and telemetry
   observations. The owner restored TableUs PostHog and Sentry access; empty
@@ -9,7 +27,7 @@
   Preserve the separate paid-provider/OTP and cumulative security-evidence gates.
   Physical iPhone session restoration, relaunch persistence and the canonical
   auth-link observation now pass. Android installation/domain verification pass,
-  but its returning sign-in needs a new message. Retain these partial results
+  and its returning sign-in now passes after one approved message. Retain these partial results
   without labeling the complete live journey or dedicated canaries as passed.
 
 - Both frozen-candidate deterministic native suites passed. Keep `c5b041c`

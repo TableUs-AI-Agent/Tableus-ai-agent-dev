@@ -79,14 +79,31 @@ Do not attribute old smoke, scan or native reports to this source.
    the physical iPhone restores its approved session, preserves it after full
    close/relaunch, and opens the canonical `/auth` link from Notes. PostHog
    received an exact-release iOS app-open event. Android's signed domain is
-   verified; the owner sees its returning sign-in screen. Continue after
-   applicable returning-message/paid-provider authorization with the cross-client
-   journey and dedicated canaries. No cumulative acceptance is claimed.
+   verified; returning authentication now passes after one approved message.
+   The owner has now
+   approved the bounded returning sign-ins, cross-client journey and dedicated
+   canaries described below. No cumulative acceptance is claimed.
    Sanitized reports and synthetic screenshots are retained in
    `docs/evidence/c5b041c/native/`. Partial readiness reports explicitly remain
    incomplete. Do not confirm the runner's remaining phases without actual
-   observations. The iPhone runner awaits foreground-state refresh; Android
-   awaits returning authentication. No new message or paid call was sent.
+   observations. The iPhone now shows the new web-created plan after foreground
+   refresh and awaits its private-link observation. Android returning sign-in,
+   relaunch persistence and canonical auth/join opening pass. Android initially
+   used the organizer's account, leaving one participant; the owner approved an
+   additional message to switch it to the existing second approved account.
+   The switch passed and both the owner and database confirm two participants.
+   Guest constraints and physical iPhone private-link confirmation are pending
+   before the single recommendation generation. Android's runner awaits
+   changed-state foreground recovery. Android became
+   responsive after the idle iOS simulator was stopped; the cause of the earlier
+   unresponsiveness is not conclusively established.
+   Web sign-in, the single plan creation, organizer constraints and account
+   export/deletion-readiness checks pass. The web canary reached PostHog and
+   Sentry with the exact release. Creating the plan used two Places attempts;
+   no Gemini call has run. The telemetry iOS artifact is re-inspected and
+   installed, but its simulator is shut down to keep native checks sequential.
+   [Approval and usage baseline](../evidence/c5b041c/native/live-approval-and-baseline.json)
+   records the unchanged existing quota; current execution uses private deltas.
 
 ## Acceptance and stopping rules
 
@@ -102,15 +119,19 @@ Do not attribute old smoke, scan or native reports to this source.
 
 ## Authorization carried forward
 
-The next gated run is prepared but not yet authorized: up to three returning
-sign-in messages total, one each for Android, the iOS telemetry simulator and
-web only where an existing session is unavailable; one two-person live dining
+The owner's “approve” (2026-09-13 UTC) authorized three returning sign-in
+messages, one each for Android, the iOS telemetry simulator and web only where
+an existing session is unavailable. The owner subsequently explicitly approved
+one extra Android message to use the existing second approved account: four
+messages total at most. The same approval covers one two-person live dining
 journey using existing approved accounts, with at most $0.25 additional estimated
 Gemini spend and 50 Places outbound attempts; and anonymous/error-only canaries
 from web, API, iOS and Android. Observe usage before and between provider-backed
-steps, stop before the proposed allowance or existing staging quota is exhausted,
+steps, stop before the approved allowance or existing staging quota is exhausted,
 and do not regenerate recommendations merely to repeat a passed assertion.
-No sign-in message or paid-provider call from this proposed run has been sent.
+At authorization, no sign-in message or paid-provider call from this run had
+been sent. Record requested messages and actual usage deltas as execution proceeds;
+an interrupted or failed attempt still consumes its applicable allowance.
 
 The old task approved public push, CI, existing staging deployment, bounded
 live smoke and six sequential native artifacts for `daa89a0`. Completed work
@@ -118,11 +139,13 @@ does not need repeated approval, and consumed limited-call/OTP allowances do
 not reset. On 2026-09-12 the owner's `APPROVE` supplied the matching scope for
 the `c5b041c` push, CI and existing staging deployments. Those operations are
 complete. The later continuation request authorizes the native reliability
-sequence described above. No paid-provider budget, new OTP/mail allowance,
-security scan, production/store/cohort action or credential creation is implied.
+sequence described above. The latest explicit approval supplies only the bounded
+paid-provider and returning-message scope above. No security scan,
+production/store/cohort action or credential creation is implied.
 
 The owner's scan cancellation remains binding. This packet grants no merge,
 production migration/deployment, resource/secret creation, store submission,
-new mail/invites, account deletion, destructive cleanup or cohort activation.
+mail beyond the four returning messages, new invites, account deletion,
+destructive cleanup or cohort activation.
 There are no unanswered intake questions. Later roadmap objectives and their
 explicit gates are queued, not active work.

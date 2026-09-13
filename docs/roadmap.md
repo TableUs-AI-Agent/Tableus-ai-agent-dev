@@ -18,7 +18,7 @@ device or production release acceptance.
 | --- | --- | --- | --- |
 | 0 | Astra development migration and plan recovery — complete locally | Project model default, concise current documents, recovered candidate/CI/live-smoke record, early native preflight, local checks | Local work; no deployment or inference-provider change |
 | 1 | Bound auth restoration and freeze the replacement — complete; `c5b041c` pushed, CI passed and approved staging deployment verified | Shared deadline and mobile recovery tests; local full verification; attributable delta record; [exact-source deployment evidence](evidence/c5b041c/README.md) | Owner approval covers this push/CI and existing staging targets; no new paid-call or native-build allowance |
-| 2 | Complete cumulative staging readiness — hosted readiness and Preview CORS verified; both deterministic native lifecycle/offline suites passed; all six native artifacts accepted | Canonical domains/associations; same-SHA web + physical iPhone + ARM64 Android lifecycle; signed artifact pairs; isolated telemetry; truthful cumulative report | Owner continuation authorizes the native sequence; paid/live-auth operations need their own applicable scope; resolve cumulative security-evidence policy |
+| 2 | Complete cumulative staging readiness — hosted readiness and Preview CORS verified; both deterministic native suites and all six artifacts accepted; web canary delivered | Canonical domains/associations; same-SHA web + physical iPhone + ARM64 Android lifecycle; signed artifact pairs; isolated telemetry; truthful cumulative report | Owner approved four returning sign-ins including the extra Android account switch, one live journey (≤$0.25 estimated Gemini, ≤50 Places attempts), and sanitized canaries; cumulative security-evidence policy remains unresolved |
 | 3 | Prepare production privacy and operating boundaries | Account export/deletion including Auth ownership; retention; capability-link decision; one-use invite policy; explicit cohort/spend/quota limits; rollback owner | Significant policy/architecture choices require owner decision before production |
 | 4 | Prepare production release configuration | Source-controlled production origins, isolated credentials, signed-update/OTA policy, store signing associations, source maps and rollback rehearsal | Resource/secret creation, migrations, deployment and builds need explicit applicable approval |
 | 5 | Validate TestFlight and Play closed-testing distribution | Signed install/update, auth and universal links, core journey, explicit native tab presentation, privacy declarations, observed symbolication | Separate store-submission approval |
@@ -46,9 +46,12 @@ not instructions to start concurrent agents, scans or cloud work.
 6. Complete the two-person web/native journey and true physical-iPhone link
    observations. A simulator cannot supply physical association evidence.
    Current progress: iPhone restoration/relaunch and the physical auth link pass;
-   Android is installed with a verified domain and awaits returning sign-in.
-   Private join links, changed-state foreground recovery and the remaining
-   live/provider/canary observations are still required.
+   Android returning sign-in, persistence and canonical link opening pass.
+   The iPhone picked up the web-created plan after foreground refresh. Android
+   initially used the same organizer account; its existing second approved
+   account has now joined, confirmed by the owner and database. Physical join
+   intent, the guest's constraints and the remaining live journey
+   and native/API canaries are still required; the web canary has delivered.
 7. Bind final evidence to its real source. Planning or operator-tool changes do
    not silently relabel the application candidate. A changed app source,
    dependency lockfile, compiled config or generated contract requires impact
