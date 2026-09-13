@@ -1,0 +1,93 @@
+# Closed-beta roadmap
+
+1. **Foundation** — control plane, npm workspaces, uv project, deterministic CI.
+2. **Backend v1** — providers, persistence, invite auth, plans, ranking, privacy.
+3. **Clients** — shared generated contract, web transition, Expo iOS/Android.
+4. **Evidence** — unit/integration/E2E suites, AI evaluation, performance budgets,
+   verified-link manifests, an operator release runbook, and exact-SHA evidence.
+5. **Staging** — Supabase, Railway, Vercel, EAS, Maps, then budgeted Gemini.
+6. **Closed beta** — dogfood followed by a small invite-only US cohort.
+
+Every milestone must be deterministic and credential-free in CI before the next
+external integration is enabled.
+
+Exact-SHA mobile offline mutation resilience is complete from candidate
+`9acf4fe2a648d4226be028d947ca8d08d7fc7029`. Verified HTTPS routing through
+`links.table-us.com` is complete from candidate
+`341d67ec73c96f96f19c6e0e2911677e973a7d61`: DNS/TLS, Apple and Android
+associations, signed artifact inspection, browser fallback, native auth/join,
+retained in-memory join intent, and rotated-link rejection passed on Android and
+  a physical iPhone. Production Play App Signing remains part of the later store
+  gate. Policy-safe live Maps staging is complete from exact candidate
+  `4a790b4ee40a12cdba8540fb12da586b3373a895`, including mixed-provider
+  deployment, restricted egress/key configuration, fail-closed US location
+  resolution, policy-safe persistence, and sanitized two-user evidence.
+  Pull request #3 is merged. Budgeted Gemini hardening and Agent Platform staging
+  validation are complete from exact candidate
+  `2eb428a05913c60dd1af1ae59fdd79fb233c5ede`. Public CI, the frozen six-case
+  paid evaluation, exact-SHA Railway/Vercel deployment, and sanitized two-user
+  staging evidence are green. Staging now runs Supabase auth, live Places, and
+  live Gemini with the restricted service-account-bound key and application
+  spend ceiling. Privacy-safe observability is complete in staging from exact
+  candidate `4920d99b11b06c4e0aa1c4afc3f91763bb53ee1c`: error-only Sentry passed
+  for API, web, and mobile, and anonymous aggregate PostHog passed for web, iOS,
+  Android, and API. The remaining closed-beta sequence is merge approval,
+  cumulative exact-SHA web/iOS/Android smoke evidence, owner-reviewed legal and
+  attribution checks, rollback ownership, and then separate production/store and
+  cohort gates.
+
+The active gate sequence and required owner inputs are maintained in
+`docs/release-runbook.md`.
+
+The current objective is cumulative closed-beta staging readiness. It adds the
+owner-reviewed public contacts/legal/attribution closure, SDK 57 patch and
+security closure, production-shaped staging profiles, one-SHA evidence
+validation, retry-aware deterministic device flows, isolated exact-SHA telemetry
+canaries, and the rollback/residual-risk record. Completion stops before
+production deployment, store submission, or cohort activation. Those remain
+separate explicit milestones after this readiness packet is merged.
+
+The next readiness candidate must replace security-blocked `d0955f5`, local-only
+superseded remediation `5206303`, security-blocked full-scan SHA `b2823652`, and
+security-blocked candidate `9fbdf48`.
+It keeps
+the corrected Android vote/retry automation and integrated Expo/iOS/Android
+preflight, and adds bounded transport-source/global request limiting, reusable
+JWKS verification state, an explicit idempotent-route allowlist, authenticated
+and role-revalidated replay, fixed-capacity/byte-bounded success storage, outer
+streaming body admission, secure staging defaults, bounded invite reservations,
+web subject isolation, privacy-safe evidence input/retention, and immutable
+build inputs. The additional full-scan remediation fails hosted runtimes closed,
+pins all client trust origins and EAS/OTA authority, bounds health/body/JWKS
+work, serializes idempotent and plan-state races, caps review and paid-Places
+growth, removes provider-backed mobile polling, and validates cumulative
+evidence with closed schemas.
+It must also prove bounded JWKS key revocation and an end-to-end mobile artifact
+trust chain: fresh detached exact-SHA build, one structured active config,
+mandatory platform signer, digest-bound inspection/receipt/private copy, and
+same-byte installation. Cumulative evidence parses the complete version-two
+receipt.
+Candidate `069473c24e7921e5b4b2ad51faa04e71899721ad` passed `make ready` and
+focused exact-diff security review `528a703f-7ff1-4505-828d-1a8b1de1fdc5` with
+zero findings, but public CI run `33566981168` exposed a Playwright-only
+loopback rewrite configuration mismatch. Replacement source candidate
+`d025b567447cb2226233e49aca33994c1945aae9` keeps production origins fail closed
+and passed focused checks, `make ready`, and public CI. Railway did not promote
+it because the hosted role validator rejected Supabase's required IPv4 session-
+pooler username form. The active bounded correction validates
+`role.project-ref` only against the configured Supabase project, official
+pooler host, and session port. A new exact candidate and the replacement
+Railway and Vercel deployments are now green from source
+`f496e6713d671e799082578af835047b59925208`, following successful public CI run
+`33572990627`. Its live smoke stopped before contacting a provider because the
+rolling Places total was already 151 against the default ceiling of 150. The
+approved replacement keeps that default but permits an explicit staging ceiling
+up to 500. A new exact candidate, CI, deployment, live smoke, six-artifact, and
+device-evidence sequence is next. Candidate `c917ca3` passed CI, deployment, and
+live smoke but produced no accepted artifact because the local iOS Sentry
+release uploader lacked its build-only organization context. The replacement
+keeps runtime telemetry and exact-release canaries while disabling only
+build-time Sentry uploads inside the repository local-artifact orchestrator;
+hosted production/store symbol upload remains a later blocking gate. The
+canceled deep scan remains stopped, and no further scan is authorized without
+separate owner confirmation.

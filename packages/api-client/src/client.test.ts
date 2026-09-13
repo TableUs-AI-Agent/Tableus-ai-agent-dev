@@ -1,7 +1,91 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 
-import { ApiError, createApiClient, createIdempotencyKey } from "./index.ts";
+import { ApiError, createApiClient, createIdempotencyKey, withAuthTimeout } from "./index.ts";
+
+const isNetworkError = (error: unknown) => error instanceof ApiError && error.status === 0 && error.code === "network_error";
+function deferred<T>() {
+  let resolve!: (value: T) => void;
+  const promise = new Promise<T>((done) => { resolve = done; });
+  return { promise, resolve };
+}
+
+for (const resolver of ["getAccessToken", "getDemoUserId"] as const) {
+  test(`client bounds ${resolver} and never dispatches after a late credential`, async () => {
+    const credential = deferred<string | null>();
+    let calls = 0;
+    const boundaries: number[] = [];
+    const client = createApiClient({
+      baseUrl: "https://example.test", requestTimeoutMs: 10,
+      [resolver]: () => credential.promise,
+      onAuthorizationError: (status) => boundaries.push(status),
+      fetchImpl: async () => { calls += 1; return new Response("{}"); },
+    });
+    await assert.rejects(client.post("/write", {}), isNetworkError);
+    credential.resolve("late-credential");
+    await new Promise((resolve) => setImmediate(resolve));
+    assert.equal(calls, 0);
+    assert.deepEqual(boundaries, []);
+  });
+}
+
+test("client sanitizes rejected credential lookup without sending or signing out", async () => {
+  let calls = 0;
+  const boundaries: number[] = [];
+  const client = createApiClient({
+    baseUrl: "https://example.test", requestTimeoutMs: 10,
+    getAccessToken: async () => { throw new Error("private SDK detail"); },
+    onAuthorizationError: (status) => boundaries.push(status),
+    fetchImpl: async () => { calls += 1; return new Response("{}"); },
+  });
+  await assert.rejects(client.get("/private"), (error: unknown) => isNetworkError(error) && !String(error).includes("private SDK detail"));
+  assert.equal(calls, 0);
+  assert.deepEqual(boundaries, []);
+});
+
+test("a hung refresh is bounded and its late result never retries a write", async () => {
+  const refresh = deferred<string | null>();
+  let calls = 0;
+  const boundaries: number[] = [];
+  const client = createApiClient({
+    baseUrl: "https://example.test", requestTimeoutMs: 10,
+    getAccessToken: async () => "expired",
+    refreshAccessToken: () => refresh.promise,
+    onAuthorizationError: (status) => boundaries.push(status),
+    fetchImpl: async () => { calls += 1; return new Response("{}", { status: 401 }); },
+  });
+  await assert.rejects(client.post("/write", {}), isNetworkError);
+  refresh.resolve("late-token");
+  await new Promise((resolve) => setImmediate(resolve));
+  assert.equal(calls, 1);
+  assert.deepEqual(boundaries, []);
+});
+
+test("credential lookup and refresh share the original request deadline", async (context) => {
+  context.mock.timers.enable({ apis: ["setTimeout"] });
+  const credential = deferred<string | null>();
+  let refreshes = 0;
+  const client = createApiClient({
+    baseUrl: "https://example.test", requestTimeoutMs: 100,
+    getAccessToken: () => credential.promise,
+    refreshAccessToken: () => { refreshes += 1; return new Promise(() => {}); },
+    fetchImpl: async () => new Response("{}", { status: 401 }),
+  });
+  const pending = assert.rejects(client.get("/private"), isNetworkError);
+  context.mock.timers.tick(90);
+  credential.resolve("expired");
+  await new Promise((resolve) => setImmediate(resolve));
+  assert.equal(refreshes, 1);
+  context.mock.timers.tick(10);
+  await pending;
+});
+
+test("auth reads return data, sanitize rejection and reject a hung read", async () => {
+  assert.equal(await withAuthTimeout(async () => "session", 10), "session");
+  await assert.rejects(withAuthTimeout(async () => { throw new Error("private SDK detail"); }, 10),
+    (error: unknown) => isNetworkError(error) && !String(error).includes("private SDK detail"));
+  await assert.rejects(withAuthTimeout(() => new Promise(() => {}), 10), isNetworkError);
+});
 
 test("client unwraps a successful envelope", async () => {
   const client = createApiClient({
@@ -209,19 +293,22 @@ test("client does not retry when refresh fails", async () => {
   assert.equal(calls, 1);
 });
 
-test("client does not retry when refresh throws", async () => {
+test("client treats a thrown refresh as recoverable without an authorization boundary", async () => {
   let calls = 0;
+  const boundaries: number[] = [];
   const client = createApiClient({
     baseUrl: "https://api.example",
     getAccessToken: async () => "expired",
     refreshAccessToken: async () => { throw new Error("refresh failed"); },
+    onAuthorizationError: (status) => boundaries.push(status),
     fetchImpl: async () => {
       calls += 1;
       return new Response(JSON.stringify({ error: { code: "unauthorized", message: "expired" }, request_id: "req" }), { status: 401 });
     },
   });
-  await assert.rejects(() => client.get("/api/v1/me"), (error: unknown) => error instanceof ApiError && error.status === 401);
+  await assert.rejects(() => client.get("/api/v1/me"), isNetworkError);
   assert.equal(calls, 1);
+  assert.deepEqual(boundaries, []);
 });
 
 test("client never refreshes or retries a 403", async () => {

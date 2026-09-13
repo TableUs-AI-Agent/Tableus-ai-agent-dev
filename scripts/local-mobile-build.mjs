@@ -17,6 +17,7 @@ import { fileURLToPath } from "node:url";
 import { spawnSync } from "node:child_process";
 
 import { artifactChecksum } from "./evidence-utils.mjs";
+import { assertLocalBuildPreflight } from "./local-mobile-build-preflight.mjs";
 
 const repoRoot = resolve(fileURLToPath(new URL("..", import.meta.url)));
 const simulatorProfiles = new Set(["test-ios", "auth-test-ios", "telemetry-test-ios"]);
@@ -92,6 +93,15 @@ if (args.platform === "android" && !args["android-fingerprint"]) {
 if (!args.profile.startsWith("test-") && (!args["api-url"] || !args["supabase-url"] || !args["link-host"])) {
   throw new Error("Hosted profiles require --api-url, --supabase-url, and --link-host");
 }
+if (args["preflight-only"] !== undefined && args["preflight-only"] !== "true") {
+  throw new Error("--preflight-only accepts only true");
+}
+assertLocalBuildPreflight(args);
+run("git", ["cat-file", "-e", `${args.sha}^{commit}`]);
+if (args["preflight-only"] === "true") {
+  process.stdout.write(`Local ${args.profile} input preflight passed; no build started.\n`);
+  process.exit(0);
+}
 
 const temporaryRoot = mkdtempSync(join(tmpdir(), "tableus-exact-sha-build-"));
 const workspace = join(temporaryRoot, "workspace");
@@ -102,7 +112,6 @@ const logPath = join(temporaryRoot, "build.log");
 let worktreeAdded = false;
 
 try {
-  run("git", ["cat-file", "-e", `${args.sha}^{commit}`]);
   run("git", ["worktree", "add", "--detach", workspace, args.sha]);
   worktreeAdded = true;
   if (run("git", ["status", "--porcelain=v1", "--untracked-files=all"], { cwd: workspace })) {

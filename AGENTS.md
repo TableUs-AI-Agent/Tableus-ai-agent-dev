@@ -17,12 +17,27 @@ Update these documents in the same change when their truth changes.
 
 ## Working agreement
 
+- GPT-6 Astra (`gpt-6-astra`) is the development model for this project. The
+  application's AI provider is a separate architecture decision.
+- Read the four current documents above first. Historical packets and chat
+  transcripts are context, not additional active requirements.
 - Use a `codex/<objective>` branch and an isolated worktree for concurrent work.
 - Keep one objective bounded enough to review and validate continuously.
 - Preserve user changes and never rewrite unrelated work.
 - Prefer deterministic providers locally and in CI. Live provider evaluation is
   an explicit, budgeted operation and never part of the normal test suite.
 - Run focused checks while iterating, then `make ready` once before handoff.
+- Use one primary agent by default. Delegate only when explicitly requested;
+  give any delegated work a bounded question and budget. Never restart the
+  canceled security scans without separate user authorization.
+- Keep native builds sequential and file-backed. Validate build identifiers,
+  output paths, SDK configuration, and the candidate before compilation. Keep
+  accepted artifacts and receipts in durable private storage outside OS temp.
+- Distinguish application source SHA, operator-tooling SHA, and evidence commit.
+  Build and inspect the requested application SHA in a detached clean worktree;
+  never relabel older reports or artifacts as evidence for a newer SHA.
+- Report a completed phase, changed result, failure, or required action. Avoid
+  repeated unchanged status checks and repeated full-suite runs.
 - Handoffs include the exact commit SHA, checks run, observable evidence,
   residual risks, and intentionally deferred work.
 

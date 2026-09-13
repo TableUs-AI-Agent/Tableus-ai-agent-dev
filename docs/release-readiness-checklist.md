@@ -1,89 +1,59 @@
-# Closed-beta security and privacy checklist
+# Closed-beta readiness checklist
 
-This checklist is bound to the eventual source candidate SHA. Technical items
-may be completed by Codex; owner attestations remain human decisions and must
-not be inferred from a passing test.
+Reviewed 2026-09-12. Last observed staging source:
+`daa89a03e1ba09b4249125476c5d28b7f2a98f31`.
+The replacement on `codex/astra-project-reassessment` changes auth behavior and
+is not deployed. Existing checked observations below belong to `daa89a0`; they
+do not certify the replacement.
+A historical confirmation is not a fresh test or a new owner signature.
 
-## Source and dependency controls
+## Candidate acceptance
 
-- [x] Candidate SHA `d025b567447cb2226233e49aca33994c1945aae9`
-  recorded after a clean `make ready`.
-- [ ] Public CI passes at that exact SHA.
-- [x] Expo SDK remains 57; React Native remains 0.86.2.
-- [x] Expo Router and compatible Expo/Metro packages use current SDK 57 patches.
-- [x] Expo Doctor passes all checks, including native dependency deduplication.
-- [x] The production dependency audit reports 0 critical and 0 high findings.
-  The full developer graph's EAS/Expo release-tool exception is recorded below.
-- [x] Replacement exact-SHA focused security review is complete with no P0/P1
-  or exposed secret. Scan `b737ba37-01d4-4ba8-841d-f1da1d09d61a` blocked superseded
-  `d0955f5`; scan `0933625b-4d73-4da7-ba6a-946128c29089` then blocked local
-  `5206303` on one remaining P1 multipart boundary. Its source-owned high/medium
-  findings are remediated locally. Full scan
-  `2c12edd1-65ce-4cee-af11-c78c0b21ae85` then blocked local SHA `b2823652`
-  on 12 distinct high-severity root causes (13 raw high records). All identified
-  high paths and the highest-confidence medium paths are remediated locally.
-  Exact-diff scan `273335ab-78d3-4d77-9ba6-6cd3ebd96fbb` found no issue in all
-  20 changed security files at `3a215e7`. Deep scan
-  `2482f6f3-b05c-4c40-bc9f-e5d5a0ec41a0` was canceled for disproportionate
-  usage; its unsealed candidates were manually consolidated and reviewed. The
-  local replacement passes `make ready`. Candidate `069473c` passed
-  focused exact-diff scan `528a703f-7ff1-4505-828d-1a8b1de1fdc5` with complete
-  coverage and zero findings. Its public CI run `33566981168` then failed only
-  because strict hosted-origin validation also covered Playwright's loopback
-  rewrite. Replacement candidate `d025b56` confines loopback acceptance to
-  credential-free non-production origins and adds production fail-closed tests;
-  focused validation and `make ready` are green. No additional deep or diff scan
-  is authorized without separate owner confirmation.
-- [x] GitHub Actions, CI service images, and backend OCI inputs are pinned to
-  immutable commits or multi-platform digests with executable policy tests.
-- [ ] Runtime bundle inspection finds no service-role material, loopback origin,
-  local-network/cleartext exception, demo identity, E2E control, or production
-  endpoint. The superseded iOS artifact failed the strengthened native-plist
-  check and cannot supply replacement evidence.
+- [x] Public CI verified for the candidate: run `33696336882`.
+- [x] Public Railway readiness rechecked on 2026-09-12 at the exact candidate.
+- [x] Existing sanitized two-user live Places/Gemini smoke report recovered.
+- [ ] Current Vercel alias, canonical fallback, CORS and associations rechecked.
+- [ ] Required native artifact/inspection/receipt pairs recovered or rebuilt,
+  with source/profile/signer/checksum verified. Four completions are reported
+  in the prior task; their files have not yet been recovered.
+- [ ] Both deterministic lifecycle/offline journeys pass at the selected source.
+- [ ] Web, physical-iPhone and ARM64 Android staging journeys pass together.
+- [ ] Separate telemetry-test evidence is bound to the exact selected release.
+- [x] The reproduced credential-wait deadline gap is fixed locally, with shared
+  API tests and mobile restoration/retry/stale-result component tests.
+- [x] The [source delta](reviews/2026-09-12-security-delta.md) identifies the
+  historical scan and subsequent changes without relabeling the old scan.
+- [ ] Security evidence acceptance for the replacement is resolved; the current
+  cumulative schema still requires an exact-candidate scan.
+- [ ] Cumulative evidence validator accepts an honestly sourced evidence set.
 
-## Product and privacy controls
+## Implemented controls and recorded owner confirmations
 
-- [x] Product authorization derives from an invite-approved API profile, not a
-  Supabase session alone.
-- [x] Organizer-only transitions, plan membership checks, hashed invite/share
-  tokens, one-time invite redemption, and idempotency conflict checks are tested.
-- [x] Hosted staging fails closed against demo auth/routes, weak secrets,
-  non-Postgres runtime credentials, mismatched roles, and unsafe origins.
-- [x] Declared and chunked multipart bodies are bounded before FastAPI parsing;
-  invite validations are deduplicated, capacity-reserved, and expiry-pruned.
-- [x] Web private caches are subject-partitioned and cleared on auth/deletion;
-  plan-local state remounts by subject; live evidence retains no raw screenshots,
-  uses no-echo secret prompts, and removes new user-level Maestro logs.
-- [x] Google Places and Gemini inputs/outputs are bounded, validated, fail closed,
-  and excluded from retained evidence and telemetry.
-- [x] Sentry is error-only and PostHog is anonymous, aggregate-only, and
-  allowlisted; replay, profiling, tracing, autocapture, GeoIP, and person profiles
-  remain disabled.
-- [x] Public notices use `support@table-us.com` and `privacy@table-us.com` and
-  incorporate the Google Maps Platform Terms and Google Privacy Policy.
-- [x] Official Google Maps attribution assets are unmodified and remain adjacent
-  to provider content with an accessible `Google Maps` label.
-- [x] Owner has reviewed and approved the final terms and privacy text.
-- [x] Owner has reviewed the attribution presentation on web, iOS, and Android.
-- [x] Delivery to both public contact mailboxes is confirmed.
-- [x] Supabase staging email says “verification code”, not “six-digit code”.
-- [x] The superseded unused invite is expired or explicitly revoked; the latest
-  aggregate audit reports zero active and eight expired invites.
+The source contains approved-profile/organizer checks, bounded body/admission
+work, bounded JWKS caching, idempotent replay checks, strict hosted origins,
+private query state, provider validation and telemetry scrubbing. `daa89a0` CI is
+passing; replacement CI is pending. This is not a new security certification.
 
-## Exact-SHA staging evidence
+Owner legal/privacy and attribution approval, delivery to support and privacy
+mailboxes, and rollback ownership were recorded on 2026-08-26. Preserve those
+confirmations unless their scope changes. Do not ask for identical approvals
+again merely because an agent or coding model changed. The prior checklist also
+records the staging verification-code template correction and expired unused
+invites; no mail or invite operation was repeated in this review.
 
-- [ ] Railway and Vercel staging report the source candidate SHA.
-- [ ] Deterministic iOS and Android lifecycle/offline evidence passes.
-- [ ] Web, physical-iOS, and ARM64-Android production-shaped staging evidence
-  passes with live Places/Gemini and Supabase authentication.
-- [ ] AASA and Android App Links match the inspected signed artifacts.
-- [ ] Sentry/PostHog canaries correlate to the exact release without private data.
-- [ ] Sanitized telemetry evidence comes from isolated exact-SHA telemetry-test
-  artifacts; readiness artifacts compile no telemetry E2E route or control.
-- [ ] Export/deletion readiness is read-only; no account is deleted.
-- [ ] The cumulative evidence validator accepts the sanitized evidence set.
+The last completed focused scan is `528a703f-7ff1-4505-828d-1a8b1de1fdc5`, for
+`069473c24e7921e5b4b2ad51faa04e71899721ad`. The deep scan
+`2482f6f3-b05c-4c40-bc9f-e5d5a0ec41a0` remains canceled at the owner's request.
+Do not start any new plugin scan without explicit authorization. Preserve the
+actual source/report association and review only the relevant later delta.
 
 ## Residual-risk register
+
+The following controls and exceptions are carried forward from the prior
+record. Dependency counts are historical observations, not a fresh advisory
+query. Recheck current advisory reachability before production/store approval;
+the existing exception expires on 2026-09-30 or before that approval.
+
 
 | Risk | Current control | Owner / expiry | Production effect |
 | --- | --- | --- | --- |
@@ -100,25 +70,14 @@ not be inferred from a passing test.
 | Production Google Play signing fingerprint is not yet associated. | Preview certificate remains isolated; verified links are tested only against inspected preview artifacts. | Repository owner; required before Play submission. | Google Play submission is blocked. |
 | Legal text is operational disclosure, not counsel-reviewed legal advice. | Owner review is mandatory before source freeze; formal counsel review remains separately recordable. | Repository owner; before closed-beta cohort. | Cohort activation is blocked until owner acceptance. |
 
-## Approval record
+## Owner record and release decision
 
-Complete only after the named person actually confirms each item.
+- Legal/privacy and rollback owner: Brian Chei.
+- Legal/contact/attribution confirmation date: 2026-08-26 (historical record).
+- Current application source for evidence recovery: `daa89a03e1ba09b4249125476c5d28b7f2a98f31`.
+- Cumulative staging sign-off: **not complete**.
+- Production/store/cohort authorization: **not granted by this reassessment**.
 
-- Source candidate SHA: `d025b567447cb2226233e49aca33994c1945aae9`.
-  This checklist update is an evidence-only descendant and does not change the
-  reviewed source tree.
-- Security review report ID: focused exact-diff report
-  `528a703f-7ff1-4505-828d-1a8b1de1fdc5`; blocked reports
-  `b737ba37-01d4-4ba8-841d-f1da1d09d61a`,
-  `0933625b-4d73-4da7-ba6a-946128c29089`, and
-  `2c12edd1-65ce-4cee-af11-c78c0b21ae85` at `b2823652` are retained for
-  remediation traceability. Clean focused diff report
-  `273335ab-78d3-4d77-9ba6-6cd3ebd96fbb` and canceled deep report
-  `2482f6f3-b05c-4c40-bc9f-e5d5a0ec41a0` are also recorded; unsealed deep-scan
-  candidates are not release findings.
-- Policy review date/version: Google Maps policy last reviewed 2026-08-26
-- Legal/privacy owner: Brian Chei (confirmed 2026-08-26)
-- Rollback owner: Brian Chei, repository and cloud account owner
-- Contact delivery confirmation: `support@table-us.com` and
-  `privacy@table-us.com` confirmed 2026-08-26
-- Owner signature/date: Brian Chei, 2026-08-26
+Do not fill a missing checkbox from an assumption or older source. The
+[roadmap](roadmap.md) defines the next bounded objectives and the
+[active packet](task-packets/active.md) records remaining actions and inputs.

@@ -31,6 +31,40 @@ export class ApiError extends Error {
   }
 }
 
+function networkError() {
+  return new ApiError("Network unavailable. Reconnect and try again.", 0, "network_error");
+}
+
+function createDeadline(timeoutMs?: number, onTimeout?: () => void) {
+  let timeout: ReturnType<typeof setTimeout> | undefined;
+  const deadline = new Promise<never>((_resolve, reject) => {
+    if (timeoutMs && timeoutMs > 0) {
+      timeout = setTimeout(() => {
+        reject(networkError());
+        onTimeout?.();
+      }, timeoutMs);
+    }
+  });
+  return {
+    wait: <T>(pending: PromiseLike<T> | T): Promise<T> => timeout === undefined
+      ? Promise.resolve(pending)
+      : Promise.race([pending, deadline]),
+    cleanup: () => { if (timeout !== undefined) clearTimeout(timeout); },
+  };
+}
+
+/** Bound an auth/storage read without deleting a session or exposing SDK errors. */
+export async function withAuthTimeout<T>(operation: () => Promise<T>, timeoutMs = 15_000): Promise<T> {
+  const deadline = createDeadline(timeoutMs);
+  try {
+    return await deadline.wait(operation());
+  } catch {
+    throw networkError();
+  } finally {
+    deadline.cleanup();
+  }
+}
+
 type ClientOptions = {
   baseUrl: string;
   getAccessToken?: () => Promise<string | null>;
@@ -50,98 +84,70 @@ export function createIdempotencyKey() {
 
 export function createApiClient(options: ClientOptions) {
   const request = async <T>(path: string, init: RequestInit = {}, requestOptions: ApiRequestOptions = {}): Promise<T> => {
-    let token = await options.getAccessToken?.();
-    const dynamicDemoUserId = await options.getDemoUserId?.();
-    const demoUserId = dynamicDemoUserId ?? options.demoUserId;
-    const headers = new Headers(init.headers);
-    if (!(init.body instanceof FormData)) headers.set("Content-Type", "application/json");
-    if (demoUserId) headers.set("X-Demo-User-ID", demoUserId);
-    const telemetrySessionId = options.getTelemetrySessionId?.();
-    if (telemetrySessionId && options.telemetryPlatform) {
-      headers.set("X-TableUs-Telemetry-Session", telemetrySessionId);
-      headers.set("X-TableUs-Client", options.telemetryPlatform);
+    // One budget covers credentials, both fetch attempts and the response body.
+    // Await each stage against it so a late credential cannot dispatch a write.
+    const controller = options.requestTimeoutMs && options.requestTimeoutMs > 0 ? new AbortController() : null;
+    const upstreamSignal = init.signal;
+    const forwardAbort = () => controller?.abort();
+    if (controller && upstreamSignal) {
+      if (upstreamSignal.aborted) controller.abort();
+      else upstreamSignal.addEventListener("abort", forwardAbort, { once: true });
     }
-    if (init.method && init.method !== "GET") {
-      headers.set("Idempotency-Key", requestOptions.idempotencyKey ?? createIdempotencyKey());
-    }
-    const send = async () => {
-      const requestHeaders = new Headers(headers);
-      if (token) requestHeaders.set("Authorization", `Bearer ${token}`);
-      else requestHeaders.delete("Authorization");
-      const controller = options.requestTimeoutMs && options.requestTimeoutMs > 0 ? new AbortController() : null;
-      const upstreamSignal = init.signal;
-      const forwardAbort = () => controller?.abort();
-      if (controller && upstreamSignal) {
-        if (upstreamSignal.aborted) controller.abort();
-        else upstreamSignal.addEventListener("abort", forwardAbort, { once: true });
+    const deadline = createDeadline(options.requestTimeoutMs, () => controller?.abort());
+    try {
+      let token = await deadline.wait(options.getAccessToken?.());
+      const dynamicDemoUserId = await deadline.wait(options.getDemoUserId?.());
+      const demoUserId = dynamicDemoUserId ?? options.demoUserId;
+      const headers = new Headers(init.headers);
+      if (!(init.body instanceof FormData)) headers.set("Content-Type", "application/json");
+      if (demoUserId) headers.set("X-Demo-User-ID", demoUserId);
+      const telemetrySessionId = options.getTelemetrySessionId?.();
+      if (telemetrySessionId && options.telemetryPlatform) {
+        headers.set("X-TableUs-Telemetry-Session", telemetrySessionId);
+        headers.set("X-TableUs-Client", options.telemetryPlatform);
       }
-      let timeout: ReturnType<typeof setTimeout> | null = null;
-      const deadline = new Promise<never>((_resolve, reject) => {
-        if (!controller || !options.requestTimeoutMs) return;
-        timeout = setTimeout(() => {
-          controller.abort();
-          reject(new ApiError("Network unavailable. Reconnect and try again.", 0, "network_error"));
-        }, options.requestTimeoutMs);
-      });
-      const cleanup = () => {
-        if (timeout) clearTimeout(timeout);
-        upstreamSignal?.removeEventListener("abort", forwardAbort);
-      };
-      try {
-        const pendingResponse = (options.fetchImpl ?? fetch)(`${options.baseUrl}${path}`, {
+      if (init.method && init.method !== "GET") {
+        headers.set("Idempotency-Key", requestOptions.idempotencyKey ?? createIdempotencyKey());
+      }
+      const send = async () => {
+        const requestHeaders = new Headers(headers);
+        if (token) requestHeaders.set("Authorization", `Bearer ${token}`);
+        else requestHeaders.delete("Authorization");
+        return deadline.wait((options.fetchImpl ?? fetch)(`${options.baseUrl}${path}`, {
           ...init,
           headers: requestHeaders,
           signal: controller?.signal ?? upstreamSignal,
-        });
-        const response = controller
-          ? await Promise.race([pendingResponse, deadline])
-          : await pendingResponse;
-        return { response, cleanup, deadline: controller ? deadline : null };
-      } catch (error) {
-        cleanup();
-        if (error instanceof ApiError) throw error;
-        throw new ApiError("Network unavailable. Reconnect and try again.", 0, "network_error");
+        }));
+      };
+      let response = await send();
+      if (response.status === 401 && token && options.refreshAccessToken) {
+        token = await deadline.wait(options.refreshAccessToken());
+        if (token) response = await send();
       }
-    };
-    let attempt = await send();
-    let response = attempt.response;
-    if (response.status === 401 && token && options.refreshAccessToken) {
-      try {
-        token = await options.refreshAccessToken();
-      } catch {
-        token = null;
+      const payload = await deadline.wait(response.json().catch(() => null)) as ApiEnvelope<T> | ApiFailure | null;
+      if (response.ok && payload === null) {
+        throw networkError();
       }
-      if (token) {
-        attempt.cleanup();
-        attempt = await send();
-        response = attempt.response;
+      if (!response.ok) {
+        const failure = payload as ApiFailure | null;
+        if (response.status === 401 || response.status === 403) {
+          options.onAuthorizationError?.(response.status);
+        }
+        throw new ApiError(
+          failure?.error?.message ?? `Request failed (${response.status})`,
+          response.status,
+          failure?.error?.code,
+          failure?.request_id,
+        );
       }
-    }
-    let payload: ApiEnvelope<T> | ApiFailure | null;
-    try {
-      const pendingPayload = response.json().catch(() => null);
-      payload = (await (attempt.deadline
-        ? Promise.race([pendingPayload, attempt.deadline])
-        : pendingPayload)) as ApiEnvelope<T> | ApiFailure | null;
+      return (payload as ApiEnvelope<T>).data;
+    } catch (error) {
+      if (error instanceof ApiError) throw error;
+      throw networkError();
     } finally {
-      attempt.cleanup();
+      deadline.cleanup();
+      upstreamSignal?.removeEventListener("abort", forwardAbort);
     }
-    if (response.ok && payload === null) {
-      throw new ApiError("Network unavailable. Reconnect and try again.", 0, "network_error");
-    }
-    if (!response.ok) {
-      const failure = payload as ApiFailure | null;
-      if (response.status === 401 || response.status === 403) {
-        options.onAuthorizationError?.(response.status);
-      }
-      throw new ApiError(
-        failure?.error?.message ?? `Request failed (${response.status})`,
-        response.status,
-        failure?.error?.code,
-        failure?.request_id,
-      );
-    }
-    return (payload as ApiEnvelope<T>).data;
   };
 
   return {

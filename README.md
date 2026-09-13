@@ -4,7 +4,7 @@
 ### *The Location-Aware AI Group Dining Planner*
 
 [![Cursor Hackathon](https://img.shields.io/badge/Cursor%20Hackathon%202026-🏆%202nd%20Place-FFD700?style=for-the-badge&logo=cursor)](https://cursor.com)
-[![Gemini AI](https://img.shields.io/badge/Powered%20By-Google%20Gemini%202.5-4285F4?style=for-the-badge&logo=google)](https://deepmind.google/technologies/gemini/)
+[![Gemini AI](https://img.shields.io/badge/Powered%20By-Gemini%203.1%20Flash--Lite-4285F4?style=for-the-badge&logo=google)](https://deepmind.google/technologies/gemini/)
 [![Clients](https://img.shields.io/badge/Clients-Next.js%20%7C%20Expo-000000?style=for-the-badge&logo=expo)](https://expo.dev/)
 [![FastAPI](https://img.shields.io/badge/Backend-FastAPI%20%7C%20Python-009688?style=for-the-badge&logo=fastapi)](https://fastapi.tiangolo.com/)
 [![Google Maps](https://img.shields.io/badge/Maps-Google%20Places%20API-4285F4?style=for-the-badge&logo=googlemaps)](https://developers.google.com/maps)
@@ -27,7 +27,24 @@ By fusing **real-time Google Maps geocoding**, **Google Places candidate pools**
 
 ## ⚡ What TableUs Focuses On
 
-- **🎯 Small-Group Meal Planning**: Rapid decision-making for 1-5 people without long-term social network bloat.
+**Closed-beta status (2026-09-12):** web, iOS, Android, the versioned API, and
+live staging providers are implemented. Cumulative device verification and
+production/store/cohort release gates are still open. Start with
+[current state](docs/current-state.md), [roadmap](docs/roadmap.md), and the
+[active packet](docs/task-packets/active.md). The
+[Astra reassessment](docs/reviews/2026-09-12-astra-reassessment.md) explains the
+remaining work and changes to the development process.
+
+The beta's primary journey is: approved sign-in → create a shared plan → invite
+a second participant → save both participants' constraints → generate four
+candidates → rank/vote → organizer finalizes. The illustrated discovery/demo
+experiences below are additional surfaces, not the beta release checklist.
+
+Development defaults to GPT-6 Astra through the project Codex configuration.
+The deployed application continues to use its independently configured Gemini
+provider; the coding-model migration does not change application inference.
+
+- **🎯 Small-Group Meal Planning**: Shared dining decisions for 2–8 participants.
 - **📍 Grounded Location Intelligence**: Dynamic nearby restaurant discovery rooted in live Google Geocoding & Places APIs.
 - **🤖 Explainable AI Reasoning**: Transparent match percentages and natural-language justifications for every venue.
 - **👥 Multi-Person Taste Synthesis**: `@` tag friends to instantly merge distinct dietary needs, budget constraints, and craving profiles.

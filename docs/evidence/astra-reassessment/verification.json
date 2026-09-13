@@ -1,0 +1,29 @@
+{
+  "kind": "local_deterministic_reassessment",
+  "date": "2026-09-12",
+  "base_sha": "daa89a03e1ba09b4249125476c5d28b7f2a98f31",
+  "candidate_branch": "codex/astra-project-reassessment",
+  "make_ready_passed": true,
+  "javascript_tests_passed": 197,
+  "backend_tests_passed": 98,
+  "backend_tests_skipped": 3,
+  "skipped_reason": "Postgres-only migration assertions; require CI Postgres",
+  "contracts_and_lockfiles_unchanged": true,
+  "web_bundle_bytes_report_only": 2820354,
+  "browser_fixture": {
+    "session_timeout_recovery_visible": true,
+    "explicit_retry_restored_plans": true,
+    "live_accounts_used": false,
+    "emails_sent": 0,
+    "provider_calls": 0,
+    "scope": "Local Supabase/API fixtures; not hosted or real-auth acceptance"
+  },
+  "runtime_files_sha256": {
+    "frontend/app/context/user-context.tsx": "06601643a5a58761e26b791078e1f2b539207879e8e07f43d1ab0178bbb73a6c",
+    "frontend/app/lib/v1-api.ts": "49c67c762435131e9c00989743531f0736b160ff2aa000fde4349184ef6a2ceb",
+    "mobile/src/providers/auth-provider.tsx": "0bb11aa4c2bb03836d0bd1675fcb39e27615608732c6a0d4148ff5b2e1f39fef",
+    "mobile/src/lib/supabase.ts": "b1a7e453a8b90c80a9f20fdde329f52905f3d4cd45a87551752a7579f85a4bc2",
+    "mobile/app/auth.tsx": "fa1bc8b568d004d16faa87371f482e4028c695353458aee98d37af8ef9063cee",
+    "packages/api-client/src/index.ts": "552bc3f5f6db0c58d1a663b1db30dfec2059412c3c0478cae86be0bc34a4741a"
+  }
+}

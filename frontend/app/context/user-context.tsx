@@ -1,6 +1,6 @@
 "use client";
 
-import { ApiError } from "@tableus/api-client";
+import { ApiError, withAuthTimeout } from "@tableus/api-client";
 import { createContext, useCallback, useContext, useEffect, useState, type ReactNode } from "react";
 import { api } from "../lib/api";
 import { isSupabaseConfigured, supabase } from "../lib/supabase-browser";
@@ -82,17 +82,10 @@ export function UserProvider({ children }: { children: ReactNode }) {
         }
       };
 
-      void supabase.auth.getSession().then(({ data, error }) => {
-        if (cancelled) return;
-        if (error) {
-          clearAuthenticatedUser("error", "Unable to restore this browser session.");
-        } else if (data.session) {
-          void loadAuthenticatedUser();
-        } else {
-          clearAuthenticatedUser("signed_out");
-        }
-      });
-      const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+      const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
+        // The bounded startup read owns INITIAL_SESSION and its failure state.
+        if (cancelled || event === "INITIAL_SESSION") return;
+        const version = ++requestVersion;
         if (!session) {
           clearAuthenticatedUser();
           return;
@@ -100,8 +93,21 @@ export function UserProvider({ children }: { children: ReactNode }) {
         // Run after Supabase releases its auth-state callback lock so the API
         // client can safely read the newly persisted access token.
         setTimeout(() => {
-          if (!cancelled) void loadAuthenticatedUser();
+          if (!cancelled && version === requestVersion) void loadAuthenticatedUser();
         }, 0);
+      });
+      const restorationVersion = ++requestVersion;
+      void withAuthTimeout(async () => {
+        const { data, error } = await supabase.auth.getSession();
+        if (error) throw error;
+        return data.session;
+      }).then((session) => {
+        if (cancelled || restorationVersion !== requestVersion) return;
+        if (session) void loadAuthenticatedUser();
+        else clearAuthenticatedUser("signed_out");
+      }).catch(() => {
+        if (cancelled || restorationVersion !== requestVersion) return;
+        clearAuthenticatedUser("error", "Unable to restore this browser session. Reconnect and retry.");
       });
       return () => {
         cancelled = true;

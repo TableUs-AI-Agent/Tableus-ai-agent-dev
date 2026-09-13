@@ -1,5 +1,44 @@
 # Decision log
 
+## Current development and release decisions — 2026-09-12
+
+- The owner confirmed GPT-6 Astra for **development only**. Pin
+  `gpt-6-astra` in project Codex configuration; preserve compatible existing
+  reasoning settings and global configuration. Gemini/Places application
+  inference is unchanged. Official sources and migration scope are in
+  `docs/reviews/2026-09-12-astra-reassessment.md`.
+- Use one primary agent and focused deterministic checks by default. Prior
+  security-scan cancellation remains binding; no new plugin scan is implied by
+  a model change, stale checklist or broad project review.
+- Separate application candidate, operator tooling, and evidence provenance.
+  Existing `daa89a0` evidence retains that SHA. Operator preflight may inspect
+  or build an explicitly selected clean detached candidate, whose own locked
+  build configuration, inspectors and receipt generator remain authoritative.
+  Any changed runtime source/lockfile/config requires an explicit candidate
+  decision; never relabel existing evidence or claim a new scan occurred.
+- Recover durable artifact/receipt pairs before scheduling rebuilds. Validate
+  identifiers, output paths and Android SDK roots before expensive native work.
+  For a fresh candidate, finish each deterministic platform's fault journeys
+  before compiling the other production-shaped/telemetry artifact families.
+  The owner did not manually save the prior native artifacts; no durable set
+  is currently available for reuse.
+- The reproduced credential/session wait gap is fixed in the local replacement.
+  Use one end-to-end API deadline, preserve a write's idempotency key across
+  the single authorized token refresh, and never send a late credential result.
+  SDK timeout/rejection is recoverable, not proof of revoked authorization.
+  Startup has a 15-second deadline and mobile has an explicit restoration retry.
+  This runtime change requires a new application candidate; `daa89a0` evidence
+  remains historical. No claim of a currently broken hosted login is made.
+- Preserve the existing web/Expo/FastAPI architecture and prioritize the complete
+  shared-plan journey. Production privacy/operating decisions, source-controlled
+  production trust/signing, store distribution and cohort activation are separate
+  objectives. Durable shared coordination remains required before horizontal
+  scaling.
+
+Older dated decisions below retain their historical context. Current status and
+execution order live in `docs/current-state.md` and `docs/roadmap.md`; earlier
+candidate narratives are not additional active gates.
+
 - **2026-08-15:** Closed beta is invite-only and US-only.
 - **2026-08-15:** Retain Next.js for web and add one Expo Router app for iOS and
   Android. Platform UI is not shared.

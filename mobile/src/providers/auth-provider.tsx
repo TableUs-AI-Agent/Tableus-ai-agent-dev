@@ -1,4 +1,4 @@
-import { ApiError } from "@tableus/api-client";
+import { ApiError, withAuthTimeout } from "@tableus/api-client";
 import type { Session } from "@supabase/supabase-js";
 import { useQueryClient } from "@tanstack/react-query";
 import {
@@ -26,7 +26,7 @@ import {
 import { isSupabaseConfigured, secureAuthStorage, supabase } from "@/lib/supabase";
 import { captureTelemetry } from "@/lib/telemetry";
 
-export type AuthPhase = "loading" | "signed_out" | "pending_verification" | "redeem_pending" | "approved";
+export type AuthPhase = "loading" | "restore_failed" | "signed_out" | "pending_verification" | "redeem_pending" | "approved";
 type Profile = { id: string; display_name: string; share_taste: boolean };
 
 type AuthContextValue = {
@@ -40,6 +40,7 @@ type AuthContextValue = {
   beginSignIn: (email: string) => Promise<void>;
   verifyCode: (code: string) => Promise<void>;
   finishApproval: () => Promise<void>;
+  retryRestore: () => void;
   cancelPending: () => Promise<void>;
   signOut: () => Promise<void>;
   clearError: () => void;
@@ -60,6 +61,7 @@ export function AuthProvider({ children }: PropsWithChildren) {
   const [profile, setProfile] = useState<Profile | null>(null);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState("");
+  const [restoreAttempt, setRestoreAttempt] = useState(0);
   const subjectRef = useRef<string | null>(null);
   const pendingRef = useRef<PendingAuthTransaction | null>(null);
   const phaseRef = useRef<AuthPhase>(phase);
@@ -95,13 +97,15 @@ export function AuthProvider({ children }: PropsWithChildren) {
     updatePhase("signed_out");
   }, [clearStoredPending, observeSession, updatePhase]);
 
-  const completeApproval = useCallback(async (transaction: PendingAuthTransaction | null) => {
+  const completeApproval = useCallback(async (transaction: PendingAuthTransaction | null, isCurrent: () => boolean = () => true) => {
     const result = await resolveApproval(transaction, {
       redeem: (body) => api.post<Profile>("/api/v1/access/redeem", body),
       getProfile: () => api.get<Profile>("/api/v1/me"),
     });
+    if (!isCurrent()) return false;
     if (result.kind === "approved") {
       await clearStoredPending();
+      if (!isCurrent()) return false;
       setProfile(result.profile);
       setError("");
       updatePhase("approved");
@@ -127,7 +131,11 @@ export function AuthProvider({ children }: PropsWithChildren) {
     setBusy(true);
     setError("");
     try {
-      const currentSession = session ?? (await supabase.auth.getSession()).data.session;
+      const currentSession = session ?? await withAuthTimeout(async () => {
+        const { data, error: sessionError } = await supabase.auth.getSession();
+        if (sessionError) throw sessionError;
+        return data.session;
+      });
       if (!currentSession) {
         updatePhase(pendingRef.current ? "pending_verification" : "signed_out");
         setError("Your verification session is missing. Enter a current email code or start again.");
@@ -135,10 +143,19 @@ export function AuthProvider({ children }: PropsWithChildren) {
       }
       observeSession(currentSession);
       await completeApproval(pendingRef.current);
+    } catch {
+      setError("Could not restore your session. Reconnect and try again.");
+      updatePhase(session ? "redeem_pending" : "restore_failed");
     } finally {
       setBusy(false);
     }
   }, [completeApproval, observeSession, session, updatePhase]);
+
+  const retryRestore = useCallback(() => {
+    updatePhase("loading");
+    setError("");
+    setRestoreAttempt((attempt) => attempt + 1);
+  }, [updatePhase]);
 
   const begin = useCallback(async (mode: AuthMode, input: { invite?: string; email: string; displayName?: string }) => {
     setBusy(true);
@@ -230,40 +247,60 @@ export function AuthProvider({ children }: PropsWithChildren) {
   useEffect(() => {
     if (!isSupabaseConfigured) return;
     let active = true;
+    let restorationCancelled = false;
+    let eventVersion = 0;
+    const isCurrent = () => active && !restorationCancelled;
     const { data: { subscription } } = supabase.auth.onAuthStateChange((event, nextSession) => {
       if (!active) return;
+      // The bounded read below owns INITIAL_SESSION. No async SDK work inside
+      // this callback: Supabase holds its auth lock while notifying listeners.
+      if (event === "INITIAL_SESSION") return;
+      const version = ++eventVersion;
+      const previousSubject = subjectRef.current;
       observeSession(nextSession);
       if (event === "SIGNED_OUT") {
+        restorationCancelled = true;
         void clearPendingTransaction(secureAuthStorage);
         updatePending(null);
         setProfile(null);
         updatePhase("signed_out");
         queryClient.clear();
+      } else if (event === "SIGNED_IN" && (phaseRef.current === "loading" || phaseRef.current === "restore_failed" || phaseRef.current === "signed_out" || (previousSubject && nextSession && previousSubject !== nextSession.user.id))) {
+        restorationCancelled = true;
+        setProfile(null);
+        updatePhase("loading");
+        setTimeout(() => { if (active && version === eventVersion) retryRestore(); }, 0);
       }
     });
 
-    void (async () => {
+    void withAuthTimeout(async () => {
       const [storedPending, sessionResult] = await Promise.all([
         loadPendingTransaction(secureAuthStorage),
         supabase.auth.getSession(),
       ]);
-      if (!active) return;
+      if (sessionResult.error) throw sessionResult.error;
+      return { storedPending, restoredSession: sessionResult.data.session };
+    }).then(async ({ storedPending, restoredSession }) => {
+      if (!isCurrent()) return;
       updatePending(storedPending);
-      const restoredSession = sessionResult.data.session;
       observeSession(restoredSession);
       if (restoredSession) {
         updatePhase("redeem_pending");
-        await completeApproval(storedPending);
+        await completeApproval(storedPending, isCurrent);
       } else {
         updatePhase(storedPending ? "pending_verification" : "signed_out");
       }
-    })();
+    }).catch(() => {
+      if (!isCurrent()) return;
+      setError("Could not restore your session. Reconnect and try again.");
+      updatePhase("restore_failed");
+    });
 
     return () => {
       active = false;
       subscription.unsubscribe();
     };
-  }, [completeApproval, observeSession, queryClient, updatePending, updatePhase]);
+  }, [completeApproval, observeSession, queryClient, restoreAttempt, retryRestore, updatePending, updatePhase]);
 
   useEffect(() => {
     if (!isSupabaseConfigured) return;
@@ -292,10 +329,11 @@ export function AuthProvider({ children }: PropsWithChildren) {
     beginSignIn,
     verifyCode,
     finishApproval,
+    retryRestore,
     cancelPending,
     signOut,
     clearError: () => setError(""),
-  }), [beginJoin, beginSignIn, busy, cancelPending, error, finishApproval, pending, phase, profile, signOut, verifyCode]);
+  }), [beginJoin, beginSignIn, busy, cancelPending, error, finishApproval, pending, phase, profile, retryRestore, signOut, verifyCode]);
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }
