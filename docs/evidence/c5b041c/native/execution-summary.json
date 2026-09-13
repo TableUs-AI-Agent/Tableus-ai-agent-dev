@@ -2,7 +2,7 @@
   "schema_version": 1,
   "application_sha": "c5b041c85f4f7b959436c13bef48c959622c624f",
   "operator_tooling_sha": "211ff1c7876694a4b2db677ec26fe5741a6770cb",
-  "updated_at": "2026-09-13T03:38:17.712921+00:00",
+  "updated_at": "2026-09-13T04:31:44.630139+00:00",
   "native_builds_sequential": true,
   "test_ios": {
     "artifact_inspection_passed": true,
@@ -67,7 +67,12 @@
     "build_started_at": "2026-09-13T03:14:47.923556+00:00",
     "build_finished_at": "2026-09-13T03:24:58.371078+00:00",
     "paired_iphone_provisioned": true,
-    "physical_journey_passed": false
+    "physical_journey_passed": false,
+    "physical_installation_passed": true,
+    "existing_session_restored": true,
+    "relaunch_session_preserved": true,
+    "basic_analytics_delivery_observed": true,
+    "verified_auth_link_passed": true
   },
   "visual_observations": [
     {
@@ -85,10 +90,30 @@
     "artifact_sha256": "8d59d69fd5fe1a19e6eaa0ea1330a36084e01119bf66b9d0751454df098779a8",
     "build_started_at": "2026-09-13T03:26:14.326962+00:00",
     "build_finished_at": "2026-09-13T03:34:58.516595+00:00",
-    "live_journey_passed": false
+    "live_journey_passed": false,
+    "installation_passed": true,
+    "canonical_domain_verified": true,
+    "existing_session_available": false
   },
   "telemetry_test_ios": {
-    "status": "building"
+    "status": "passed",
+    "artifact_inspection_passed": true,
+    "artifact_sha256": "198ee544b6ac63eff9011330a6ed404852acc8d68af0d831026be79a6bd4a9da",
+    "build_started_at": "2026-09-13T03:35:11.366335+00:00",
+    "build_finished_at": "2026-09-13T03:51:30.570522+00:00",
+    "delivery_verified": false
   },
-  "owner_physical_verification_availability_confirmed": true
+  "owner_physical_verification_availability_confirmed": true,
+  "all_six_native_artifacts_accepted": true,
+  "artifact_matrix_verified": true,
+  "posthog_access_restored": true,
+  "sentry_access_restored": true,
+  "telemetry_test_android": {
+    "status": "passed",
+    "artifact_inspection_passed": true,
+    "artifact_sha256": "47e5249afbf808575f1b8986cf7021edfb489a70985d6dbfac741bc1fd961832",
+    "build_started_at": "2026-09-13T03:52:44.372492+00:00",
+    "build_finished_at": "2026-09-13T04:09:49.991800+00:00",
+    "delivery_verified": false
+  }
 }

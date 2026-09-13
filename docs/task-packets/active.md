@@ -69,14 +69,24 @@ Do not attribute old smoke, scan or native reports to this source.
    platform's fault flows before the readiness/telemetry pairs. Real-session,
    physical-device and paid-provider acceptance remain separately attributable.
    Both test artifacts, receipts, lifecycle and offline mutation journeys passed.
-   All four hosted profiles passed input/configuration checks; build readiness
-   iOS, readiness Android, telemetry iOS, then telemetry Android sequentially.
-   Both signed readiness artifacts passed inspection and receipt checks; the iOS
-   profile covers the paired iPhone. iOS telemetry is building.
+   All four hosted profiles passed input/configuration checks and were built
+   sequentially: readiness iOS, readiness Android, telemetry iOS, telemetry Android.
+   All six artifacts passed inspection, receipt and final source/lockfile/digest
+   checks. The signed iOS readiness profile covers the paired iPhone. Both
+   telemetry artifacts contain the current source literal in their bundles.
+   The owner restored TableUs PostHog and Sentry access; current-release canary
+   baselines are empty. Both readiness builds are installed. The owner confirmed
+   the physical iPhone restores its approved session, preserves it after full
+   close/relaunch, and opens the canonical `/auth` link from Notes. PostHog
+   received an exact-release iOS app-open event. Android's signed domain is
+   verified; the owner sees its returning sign-in screen. Continue after
+   applicable returning-message/paid-provider authorization with the cross-client
+   journey and dedicated canaries. No cumulative acceptance is claimed.
    Sanitized reports and synthetic screenshots are retained in
-   `docs/evidence/c5b041c/native/`. The paired physical iPhone is currently
-   unavailable, and the owner confirmed availability to connect it after builds;
-   actual physical/auth/provider observations remain pending.
+   `docs/evidence/c5b041c/native/`. Partial readiness reports explicitly remain
+   incomplete. Do not confirm the runner's remaining phases without actual
+   observations. The iPhone runner awaits foreground-state refresh; Android
+   awaits returning authentication. No new message or paid call was sent.
 
 ## Acceptance and stopping rules
 
@@ -91,6 +101,16 @@ Do not attribute old smoke, scan or native reports to this source.
   concrete step requires a physical device or a current verification code.
 
 ## Authorization carried forward
+
+The next gated run is prepared but not yet authorized: up to three returning
+sign-in messages total, one each for Android, the iOS telemetry simulator and
+web only where an existing session is unavailable; one two-person live dining
+journey using existing approved accounts, with at most $0.25 additional estimated
+Gemini spend and 50 Places outbound attempts; and anonymous/error-only canaries
+from web, API, iOS and Android. Observe usage before and between provider-backed
+steps, stop before the proposed allowance or existing staging quota is exhausted,
+and do not regenerate recommendations merely to repeat a passed assertion.
+No sign-in message or paid-provider call from this proposed run has been sent.
 
 The old task approved public push, CI, existing staging deployment, bounded
 live smoke and six sequential native artifacts for `daa89a0`. Completed work

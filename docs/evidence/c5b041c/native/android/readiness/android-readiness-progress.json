@@ -1,0 +1,23 @@
+{
+  "schema_version": 1,
+  "application_sha": "c5b041c85f4f7b959436c13bef48c959622c624f",
+  "recorded_at": "2026-09-13T04:31:44.630139+00:00",
+  "platform": "android",
+  "device_kind": "Android_API_36_ARM64_emulator",
+  "build_id": "local-android-readiness-c5b041c",
+  "artifact_sha256": "8d59d69fd5fe1a19e6eaa0ea1330a36084e01119bf66b9d0751454df098779a8",
+  "complete": false,
+  "installation": {
+    "passed": true,
+    "artifact_reinspection_passed": true,
+    "association_preflight_passed": true,
+    "staging_readiness_passed": true,
+    "evidence_source": "candidate_readiness_runner_reached_first_confirmation"
+  },
+  "canonical_domain_state": "verified",
+  "domain_state_observation_source": "adb_package_manager_get_app_links",
+  "owner_observed_screen": "returning_sign_in",
+  "new_signin_message_requested": false,
+  "raw_personal_data_retained": false,
+  "screenshots_retained": false
+}

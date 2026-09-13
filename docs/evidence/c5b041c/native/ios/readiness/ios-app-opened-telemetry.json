@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "application_sha": "c5b041c85f4f7b959436c13bef48c959622c624f",
+  "project_id": 578352,
+  "platform": "ios",
+  "event": "app_opened",
+  "date_from": "2026-09-13T04:10:00Z",
+  "event_count": 1,
+  "observation_source": "posthog_aggregate_query",
+  "dedicated_canary_delivery_verified": false,
+  "raw_event_payloads_retained": false,
+  "recorded_at": "2026-09-13 04:26:59 UTC"
+}

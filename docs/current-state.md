@@ -49,8 +49,8 @@ existing report or prior task states the result; it has not been repeated.
 | Historical two-user live provider smoke for `daa89a0` | Recovered recorded report: 2 participants, 4 distinct candidates, 8 operations, estimated $0.00443325 | `docs/evidence/daa89a0/live/daa89a0-gemini-staging-summary.json`; no paid call repeated |
 | Historical native artifacts for `daa89a0` | Prior task reports `test-ios`, `test-android`, `readiness-ios`, `readiness-android` accepted | Files/receipts not recovered; owner saved no manual copies. Treat as unavailable and rebuild only after the next candidate freeze |
 | Historical telemetry artifacts | Prior task began `telemetry-test-ios`; completion unknown; Android not reported complete | Require actual artifact/receipt pairs |
-| Current native artifacts for `c5b041c` | Both deterministic test and signed readiness pairs accepted; iOS telemetry building | [Durable artifacts, inspections and receipts](evidence/c5b041c/native/README.md) |
-| Current-candidate device journeys and cumulative summary | Both simulator/emulator lifecycle and offline suites passed; physical/live/telemetry acceptance pending | No cumulative sign-off yet |
+| Current native artifacts for `c5b041c` | All six test, signed readiness and isolated telemetry artifacts accepted; final source/lockfile/digest checks passed | [Durable artifacts, inspections and receipts](evidence/c5b041c/native/README.md) |
+| Current-candidate device journeys and cumulative summary | Both deterministic suites passed; signed builds installed; physical iPhone restores/preserves its session and opens the canonical auth link; Android needs sign-in | Live journey, dedicated telemetry canaries and cumulative sign-off pending |
 | Security | Recorded clean focused review at `069473c`, followed by source changes | [Attributable source delta](reviews/2026-09-12-security-delta.md); no new plugin scan authorized |
 | Legal/contact/attribution | Owner confirmations recorded 2026-08-26 | Preserve the signed record; reconfirm only changed text or delivery conditions |
 
@@ -77,7 +77,7 @@ runtime-file hashes. These are not live-auth or device results.
   `codex/closed-beta-readiness`, at `daa89a0`.
 - Current replacement application worktree: `.worktrees/astra-project-reassessment`, branch
   `codex/astra-project-reassessment`; deployed application remains `c5b041c`.
-- This follow-up records deployment evidence and status only. An evidence
+- This follow-up records deployment/native evidence and status only. An evidence
   descendant does not change the deployed application SHA. A branch push
   triggers Vercel Preview automatically, so the evidence-only commit stays
   local until a later approved push.
@@ -95,7 +95,7 @@ runtime-file hashes. These are not live-auth or device results.
 
 The owner requested continuation into native reliability verification. Both
 build-input preflights passed for `c5b041c`; sequential deterministic iOS then
-ARM64 Android builds and lifecycle/offline tests are active. Durable private
+ARM64 Android builds and lifecycle/offline tests are complete. Durable private
 storage is `.artifacts/mobile/<full-source-sha>/` in the original checkout.
 Both test artifacts passed source/configuration/signature inspection and have
 version-two receipts. The iOS 26.5 and Android API 36 ARM64 lifecycle and offline
@@ -105,8 +105,18 @@ and zero writes while offline. [Native evidence](evidence/c5b041c/native/README.
 contains sanitized reports and synthetic screenshots. The four hosted profiles'
 inputs/configuration passed. The signed iOS readiness IPA and receipt are accepted,
 and its valid provisioning profile covers the paired iPhone. The Android
-readiness APK is also accepted. iOS telemetry is building; Android telemetry
-remains pending. The owner confirmed availability for the physical-iPhone step.
+readiness APK is also accepted. Both telemetry artifacts are accepted, completing
+the six-build sequence. The final matrix verifies source, dependency lockfile,
+signer, receipt/inspection digests and sequential build times. The owner restored
+TableUs PostHog and Sentry access; both current-release canary baselines are empty.
+The signed readiness builds are installed. On the physical iPhone, the owner
+observed restoration of the existing approved session, persistence after a full
+close/relaunch, and the canonical `/auth` link opening TableUs from Notes.
+PostHog received an iOS `app_opened` event for this exact release. Android's
+package manager reports the signed link domain as verified; the owner sees the
+returning sign-in screen. New sign-in messages and paid-provider work have not
+run. The remaining cross-client journey and dedicated telemetry canaries need
+their applicable authorization; full physical/live acceptance remains incomplete.
 These simulator/demo results do not establish physical-device or live-auth
 acceptance. Visual review found default tab glyphs; functional text labels remain,
 and explicit icon/text-only styling is queued for the next client candidate.

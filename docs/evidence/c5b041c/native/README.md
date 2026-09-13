@@ -11,9 +11,15 @@ Vercel Preview. The deployed application remains the frozen source above.
 | --- | --- | --- |
 | `test-ios` | Accepted; simulator bundle contains arm64 and x86_64 | iOS 26.5 lifecycle and offline mutation journeys passed |
 | `test-android` | Accepted; APK contains arm64-v8a only | API 36 lifecycle and offline mutation journeys passed |
-| `readiness-ios` | Signed IPA and receipt accepted; paired iPhone is provisioned | Physical journey pending |
-| `readiness-android` | Signed APK and receipt accepted | Live journey pending |
-| `telemetry-test-ios`, `telemetry-test-android` | Inputs/configuration passed; iOS building | Delivery pending |
+| `readiness-ios` | Signed IPA installed on the provisioned physical iPhone | Session restoration/relaunch and physical auth link pass; remaining journey pending |
+| `readiness-android` | Signed APK installed; package manager verifies the canonical domain | Owner sees returning sign-in; live journey pending |
+| `telemetry-test-ios` | Simulator bundle, inspection and receipt accepted | Delivery pending |
+| `telemetry-test-android` | Signed APK, inspection and receipt accepted | Delivery pending |
+
+The [final artifact matrix](artifact-matrix.json) validates all six preserved
+artifacts against their actual checksums, inspection reports, receipts, expected
+signers, exact source tree and dependency lockfile. Build timestamps confirm
+sequential execution. This check does not claim physical or live acceptance.
 
 ## Observed deterministic results
 
@@ -49,13 +55,36 @@ existing staging origins for Expo's initial config read. All artifacts are
 built from fresh detached exact-source checkouts with locked dependencies,
 then inspected by that source's own tooling before issuing a receipt.
 
-Both readiness artifacts passed inspection and receipt validation. Their
+Both readiness and telemetry pairs passed inspection and receipt validation. Their
 [compiled bundles](compiled-source-checks.json) contain the expected `c5b041c`
 source literal and exclude the inherited `daa89a0` source literal. This checks
 build input resolution; telemetry delivery still needs an actual canary.
 The [iOS provisioning check](readiness-ios-provisioning.json) confirms the paired
 iPhone is covered and the profile remains valid until 2027-08-24. The owner
-confirmed availability to connect the phone after the remaining builds finish.
+connected the phone after all builds finished. The candidate's readiness runner
+re-inspected, privately copied and re-hashed the signed bytes before installation
+on each platform. It reached the first manual confirmation on both.
+
+The [physical iPhone progress](ios/readiness/ios-readiness-progress.json) records
+the owner's observed approved-session restoration, persistence after full close
+and relaunch, and the canonical `/auth` link opening TableUs from Notes. The
+[Android progress](android/readiness/android-readiness-progress.json) records
+installation, the package manager's verified domain and the owner's sign-in
+screen observation. These are explicitly incomplete progress reports; the
+candidate's full readiness runner has not passed either complete live journey.
+The session check follows [Supabase's session model](https://supabase.com/docs/guides/auth/sessions);
+the result above is the owner's actual observation on the installed build.
+
+The owner restored access to the existing TableUs PostHog project and Sentry
+staging organization. The [PostHog baseline](posthog-canary-baseline.json) uses
+the verified event schema and an exact release filter, following the official
+[filtering guidance](https://posthog.com/docs/product-analytics/trends/filters).
+The [Sentry baseline](sentry-canary-baseline.json) confirms the three staging
+projects and an empty exact-release/environment search. Neither is delivery
+evidence; actual authenticated canaries remain outstanding. A subsequent
+[aggregate iOS app-open query](ios/readiness/ios-app-opened-telemetry.json)
+observed one event for this exact release after physical installation, confirming
+basic analytics delivery. This does not replace the dedicated canaries.
 
 ## Storage and limits
 

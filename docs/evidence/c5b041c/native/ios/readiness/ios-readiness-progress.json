@@ -1,0 +1,34 @@
+{
+  "schema_version": 1,
+  "application_sha": "c5b041c85f4f7b959436c13bef48c959622c624f",
+  "recorded_at": "2026-09-13T04:31:44.630139+00:00",
+  "platform": "ios",
+  "device_kind": "physical_iPhone",
+  "os_version": "26.6.2",
+  "build_id": "local-ios-readiness-c5b041c",
+  "artifact_sha256": "c089122ea4ab71fc0d93edc2f69b9206ed00688c390ad04f4b5cdae1d2ac299c",
+  "complete": false,
+  "installation": {
+    "passed": true,
+    "artifact_reinspection_passed": true,
+    "association_preflight_passed": true,
+    "staging_readiness_passed": true,
+    "evidence_source": "candidate_readiness_runner_reached_first_confirmation"
+  },
+  "phases": {
+    "returning_authentication": {
+      "passed": true,
+      "evidence_source": "owner_observed_existing_approved_session_restored"
+    },
+    "session_persistence": {
+      "passed": true,
+      "evidence_source": "owner_observed_full_close_and_relaunch"
+    },
+    "verified_auth_link": {
+      "passed": true,
+      "evidence_source": "owner_tapped_canonical_auth_link_in_Notes_and_observed_TableUs_open"
+    }
+  },
+  "raw_personal_data_retained": false,
+  "screenshots_retained": false
+}

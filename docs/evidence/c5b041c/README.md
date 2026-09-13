@@ -38,10 +38,12 @@ There was no interactive hosted auth journey, new provider evaluation, email,
 OTP, native build, security-plugin scan, resource/credential creation,
 production deployment or store submission. CI used deterministic providers.
 
-Native artifacts/device journeys, canonical fallback and associations,
-current-candidate live-session and telemetry evidence, security-evidence
-acceptance, and cumulative sign-off remain outstanding. Historical `daa89a0`
-smoke and `069473c` scan reports keep their original source associations.
+The subsequent [native verification](native/README.md) accepted all six artifact
+pairs and passed deterministic lifecycle/offline journeys on iOS and Android.
+Canonical fallback, physical/live-session observations, telemetry delivery,
+security-evidence acceptance and cumulative sign-off remain outstanding.
+Historical `daa89a0` smoke and `069473c` scan reports keep their original source
+associations.
 
 Raw operational metadata and logs remain in the private ignored `.artifacts/`
 directory; the receipt includes log digests. This evidence/status descendant

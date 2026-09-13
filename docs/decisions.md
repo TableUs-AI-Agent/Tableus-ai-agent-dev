@@ -2,6 +2,16 @@
 
 ## Current development and release decisions — 2026-09-12
 
+- All six `c5b041c` native artifacts are now accepted and durably retained.
+  Reuse these exact bytes for the remaining physical, live-auth and telemetry
+  observations. The owner restored TableUs PostHog and Sentry access; empty
+  current-release baselines establish access, not successful canary delivery.
+  Preserve the separate paid-provider/OTP and cumulative security-evidence gates.
+  Physical iPhone session restoration, relaunch persistence and the canonical
+  auth-link observation now pass. Android installation/domain verification pass,
+  but its returning sign-in needs a new message. Retain these partial results
+  without labeling the complete live journey or dedicated canaries as passed.
+
 - Both frozen-candidate deterministic native suites passed. Keep `c5b041c`
   for the authorized readiness/telemetry artifact sequence. Record the observed
   default tab glyphs as presentation polish for the next client candidate before
