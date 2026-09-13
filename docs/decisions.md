@@ -2,6 +2,13 @@
 
 ## Current development and release decisions — 2026-09-12
 
+- After the staging handoff, the owner requested the next steps. Execute the
+  native reliability sequence against frozen `c5b041c`: iOS test artifact and
+  fault journeys, then ARM64 Android, before readiness/telemetry artifacts.
+  Keep accepted bytes, inspections and receipts under the original checkout's
+  private `.artifacts/mobile/<full-source-sha>/`. The canceled scan and explicit
+  paid-provider/OTP/production/store gates remain in force.
+
 - The owner approved pushing `c5b041c85f4f7b959436c13bef48c959622c624f`,
   running CI, and deploying to existing Railway staging and Vercel Preview.
   The completed deployment preserves the application SHA, updates only existing

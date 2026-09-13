@@ -1,11 +1,14 @@
-# Active packet: bounded auth restoration and verified staging handoff
+# Active packet: native reliability verification for c5b041c
 
 ## Objective and source
 
-Complete the Astra development transition, correct the reproduced auth-wait
-gap, and prepare one verified replacement for cumulative staging acceptance.
-The owner confirmed **development-only Astra**; application inference remains
-Gemini/Places. This is the only active implementation packet.
+Build and verify the frozen staging candidate on iOS and ARM64 Android.
+The owner requested continuation after reviewing the native reliability
+sequence. Start with `test-ios` and its deterministic lifecycle/offline flows,
+then `test-android`; preserve artifacts, inspection reports and receipts in
+durable private storage before the readiness/telemetry pairs.
+Development uses Astra; application inference remains Gemini/Places.
+This is the only active implementation packet.
 
 Branch: `codex/astra-project-reassessment`.
 Inherited source: `daa89a03e1ba09b4249125476c5d28b7f2a98f31`.
@@ -36,7 +39,7 @@ Do not attribute old smoke, scan or native reports to this source.
 - Added behavioral shared-client and mobile recovery tests. Preserved the
   historical scan association in an [attributable source delta](../reviews/2026-09-12-security-delta.md).
 
-## Current verification and handoff
+## Current verification and next actions
 
 1. Local verification is complete: `make ready` passed (197 JavaScript and
    98 Python tests; three Postgres checks deferred to CI), browser fixtures
@@ -57,12 +60,17 @@ Do not attribute old smoke, scan or native reports to this source.
    delta is an ordinary review, not a new scan. The validator's current
    exact-candidate scan requirement remains in force; do not relabel the old
    scan or restart the canceled scan to fill it.
-4. Keep `c5b041c` frozen. The next bounded objective is to preflight durable
-   output paths and obtain its native/device scope, then finish each
-   deterministic platform's fault flows before building readiness and telemetry
-   pairs. Keep native work sequential and preserve accepted bytes/receipts
-   outside OS temp. No native build or new paid/live-auth operation was run
-   under the hosted-deployment approval.
+4. Native continuation is now authorized by the owner's “continue with the
+   next steps.” Keep `c5b041c` frozen and run native builds sequentially.
+   iOS and Android build-input preflights passed; use the existing dedicated
+   iOS 26.5 simulator and API 36 ARM64 emulator. Artifacts and receipts belong
+   in the original checkout's ignored `.artifacts/mobile/<full-source-sha>/`,
+   outside disposable worktrees and OS temp. Finish each deterministic
+   platform's fault flows before the readiness/telemetry pairs. Real-session,
+   physical-device and paid-provider acceptance remain separately attributable.
+   The iOS test artifact, receipt, lifecycle and offline mutation journeys passed;
+   Android is next. Sanitized reports and synthetic screenshots are retained in
+   `docs/evidence/c5b041c/native/`.
 
 ## Acceptance and stopping rules
 
@@ -83,7 +91,9 @@ live smoke and six sequential native artifacts for `daa89a0`. Completed work
 does not need repeated approval, and consumed limited-call/OTP allowances do
 not reset. On 2026-09-12 the owner's `APPROVE` supplied the matching scope for
 the `c5b041c` push, CI and existing staging deployments. Those operations are
-complete. Native/device, paid live-provider and new OTP scopes were not included.
+complete. The later continuation request authorizes the native reliability
+sequence described above. No paid-provider budget, new OTP/mail allowance,
+security scan, production/store/cohort action or credential creation is implied.
 
 The owner's scan cancellation remains binding. This packet grants no merge,
 production migration/deployment, resource/secret creation, store submission,

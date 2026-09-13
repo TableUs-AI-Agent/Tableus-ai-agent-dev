@@ -90,6 +90,18 @@ runtime-file hashes. These are not live-auth or device results.
   conflicting Android SDK configuration, and overlapping output paths before
   dependency installation/compilation. `--preflight-only true` starts no build.
 
+## Native verification in progress
+
+The owner requested continuation into native reliability verification. Both
+build-input preflights passed for `c5b041c`; sequential deterministic iOS then
+ARM64 Android builds and lifecycle/offline tests are active. Durable private
+storage is `.artifacts/mobile/<full-source-sha>/` in the original checkout.
+The `test-ios` artifact now passed source/configuration/simulator-signature
+inspection, with its version-two receipt saved. The iOS two-person lifecycle and offline tests passed: finalization, reopen,
+rotated-link rejection, stale-result clearing, same-key interrupted-write retry
+and zero writes while offline. Android build/journey results remain pending.
+These simulator/demo results do not establish physical-device or live-auth acceptance.
+
 ## Remaining release constraints
 
 Use the [roadmap](roadmap.md) for order and

@@ -1,0 +1,27 @@
+{
+  "platform": "ios",
+  "device": "iOS 26.5 simulator",
+  "build_id": "local-ios-test-c5b041c",
+  "git_sha": "c5b041c85f4f7b959436c13bef48c959622c624f",
+  "app": "TableUs.app",
+  "artifact_sha256": "61d4d12a25d2857942402095a9fea24e97e7b0e8d0ddca1d586b4c945c5735f2",
+  "app_id": "com.tableus.app",
+  "provider_mode": "deterministic",
+  "places_provider_mode": "deterministic",
+  "ai_provider_mode": "deterministic",
+  "auth_mode": "demo",
+  "create_request_count": 2,
+  "create_same_key_replay": true,
+  "plan_count": 1,
+  "offline_constraint_request_count": 0,
+  "recovered_constraint_request_count": 1,
+  "candidate_count": 4,
+  "finalize_request_count": 2,
+  "finalize_same_key_replay": true,
+  "finalized_event_count": 1,
+  "screenshots": [
+    "ios-offline-retry.png",
+    "ios-recovered-finalized.png"
+  ],
+  "device_identifier_redacted": true
+}

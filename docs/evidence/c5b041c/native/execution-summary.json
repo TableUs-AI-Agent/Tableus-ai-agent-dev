@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "application_sha": "c5b041c85f4f7b959436c13bef48c959622c624f",
+  "operator_tooling_sha": "211ff1c7876694a4b2db677ec26fe5741a6770cb",
+  "updated_at": "2026-09-13T02:53:43.892003+00:00",
+  "native_builds_sequential": true,
+  "test_ios": {
+    "artifact_inspection_passed": true,
+    "lifecycle_passed": true,
+    "offline_mutations_passed": true,
+    "artifact_sha256": "61d4d12a25d2857942402095a9fea24e97e7b0e8d0ddca1d586b4c945c5735f2",
+    "build_started_at": "2026-09-13T01:48:20.145978Z",
+    "build_finished_at": "2026-09-13T02:19:34.110190Z"
+  },
+  "test_android": {
+    "status": "building"
+  },
+  "hosted_profile_input_preflights_passed": true,
+  "setup_observations": [
+    {
+      "phase": "ios_lifecycle_initial_attempt",
+      "result": "local_backend_startup_exceeded_30_seconds_before_app_install",
+      "measured_clean_restart_ready_seconds": 4.499,
+      "unchanged_lifecycle_retry_passed": true,
+      "root_cause_conclusive": false
+    },
+    {
+      "phase": "hosted_build_input_preflight",
+      "result": "invalid_operator_build_id_rejected_before_build",
+      "corrected_platform_prefixed_ids_passed": true
+    },
+    {
+      "phase": "hosted_profile_config",
+      "result": "missing_bootstrap_api_origin_rejected_before_build",
+      "existing_source_owned_staging_origins_supplied": true,
+      "all_four_resolved_configs_passed": true
+    }
+  ],
+  "runtime_source_changed": false,
+  "paid_provider_calls_repeated": false,
+  "new_otp_or_email_sent": false,
+  "security_scan_started": false,
+  "physical_ios_acceptance_complete": false,
+  "live_native_acceptance_complete": false,
+  "telemetry_acceptance_complete": false,
+  "cumulative_signoff_complete": false
+}
