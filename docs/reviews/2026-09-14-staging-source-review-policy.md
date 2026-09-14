@@ -1,9 +1,11 @@
-# Staging source-review policy prepared for owner acceptance
+# Accepted staging source-review policy
 
 Policy identifier: `staging-source-review-v1`.
 Scope: existing isolated staging only. It does not authorize production,
 TestFlight/Play distribution, cohort invitations or an increased operating budget.
-The owner requested preparation; final report acceptance is still pending.
+The owner accepted this policy and the exact 6b9719b report on 2026-09-14.
+The [decision record](../evidence/source-review-6b9719b/owner-acceptance.json)
+binds the policy, candidate, report digest and two recorded medium risks.
 
 ## Evidence contract
 
@@ -42,9 +44,10 @@ staging readiness origin, after local input validation. There is no offline
 substitute for final hosted readiness, and no request is needed to validate the
 prepared report itself.
 
-The prepared candidate report and pending acceptance record live under
-`docs/evidence/source-review-6b9719b/`. Do not fill the owner approval on their
-behalf before their concrete acceptance. Do not construct a passing cumulative
+The candidate report and `security.accepted.json` live under
+`docs/evidence/source-review-6b9719b/`. The original pending record is retained
+as historical preparation evidence. Future report/source changes need their
+own concrete acceptance. Do not construct a passing cumulative
 input for 6b9719b from older c5b041c native or telemetry artifacts.
 
 ## Assurance and limits

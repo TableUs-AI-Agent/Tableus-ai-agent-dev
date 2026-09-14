@@ -1,0 +1,34 @@
+{
+  "schema_version": 1,
+  "recorded_at": "2026-09-14T21:54:57.646Z",
+  "status": "security_review_accepted_only",
+  "application_source_sha": "6b9719b4e63e34803f2e7c2598e45851790df661",
+  "tooling_source_sha": "1c75832ef421335662319635e1b74888476cdb77",
+  "preparation_evidence_sha": "6469bb4f451f246bf50103dc4ce9e24b18f52d15",
+  "policy": "staging-source-review-v1",
+  "report_sha256": "046bba5a771112ef1e49888b6a09235f9c6d259b757b81f90f85607785795122",
+  "owner_acceptance": {
+    "reference": "codex:01a097ad-4b11-7d62-9813-6ae4cf75f3f5:turn:01a0a1e8-0b1d-75f3-ba56-91d28505a781",
+    "reference_type": "codex_turn",
+    "thread_id": "01a097ad-4b11-7d62-9813-6ae4cf75f3f5",
+    "turn_id": "01a0a1e8-0b1d-75f3-ba56-91d28505a781",
+    "quoted_message": "accept",
+    "context": "Direct reply accepting the linked staging-only policy and report for 6b9719b, including the two recorded medium risks.",
+    "scope": "Existing isolated staging only. Deployment, native builds, live operations, production, stores and cohort expansion were not approved by this reply."
+  },
+  "checks": {
+    "accepted_security_record_passed": true,
+    "reviewed_git_blobs_verified": 11,
+    "coverage_areas": 7,
+    "report_bytes_unchanged": true,
+    "pending_record_still_rejected": true,
+    "legacy_c5_input_unchanged_and_rejected": true,
+    "tooling_and_test_bytes_match_prior_make_ready": true
+  },
+  "verification_note": "Evidence and documentation only. The existing full make ready result remains applicable to unchanged application/tooling/test bytes; no full-suite or security-scan rerun.",
+  "open_risk_ids": [
+    "staging-shared-quota",
+    "staging-capability-url"
+  ],
+  "cumulative_staging_accepted": false
+}

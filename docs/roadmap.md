@@ -18,18 +18,20 @@ device or production release acceptance.
 | --- | --- | --- | --- |
 | 0 | Astra development migration and plan recovery — complete locally | Project model default, concise current documents, recovered candidate/CI/live-smoke record, early native preflight, local checks | Local work; no deployment or inference-provider change |
 | 1 | Bound auth restoration and freeze the replacement — complete; `c5b041c` pushed, CI passed and approved staging deployment verified | Shared deadline and mobile recovery tests; local full verification; attributable delta record; [exact-source deployment evidence](evidence/c5b041c/README.md) | Owner approval covers this push/CI and existing staging targets; no new paid-call or native-build allowance |
-| 2 | Complete cumulative staging readiness — hosted, native, shared journey and all four telemetry platforms verified; security acceptance remains | Canonical domains/associations; same-SHA web + physical iPhone + ARM64 Android lifecycle; signed artifact pairs; isolated telemetry; truthful cumulative report | Completed run used 80/100 Places attempts, $0.00056825/$0.25 estimated Gemini and six conservatively counted messages; staging source-review pathway being prepared; no new scan authorized |
-| 2a | Correct device sign-out and redundant client detail refreshes — `6b9719b` frozen locally; checks and source review complete | Local scope/error recovery; hidden-query and foreground request-count regressions; focused checks and one `make ready`; ordinary source review, then freeze | No live calls/builds/deployment here. Obtain source-bound security acceptance and affected native/hosted evidence for the replacement |
-| 2b | Prepare staging source-review acceptance — tooling and report complete locally; owner decision pending | Strict version-two evidence; seven review areas and verified Git file hashes; fourteen gate tests and full local readiness pass; [report and risks](evidence/source-review-6b9719b/README.md) | Accept the concrete policy/report for 6b9719b; no scan or release approval implied. Replacement hosted/native verification follows under its own approved scope |
+| 2 | Complete cumulative staging readiness — c5b041c component evidence complete; replacement 6b9719b verification remains | Canonical domains/associations; same-SHA web + physical iPhone + ARM64 Android lifecycle; signed artifact pairs; isolated telemetry; truthful cumulative report | Completed run used 80/100 Places attempts, $0.00056825/$0.25 estimated Gemini and six conservatively counted messages; security review accepted for 6b9719b only; no new scan authorized |
+| 2a | Correct device sign-out and redundant client detail refreshes — `6b9719b` frozen locally; checks and source review complete | Local scope/error recovery; hidden-query and foreground request-count regressions; focused checks and one `make ready`; ordinary source review, then freeze | No live calls/builds/deployment here. Security review accepted; affected native/hosted evidence still required for the replacement |
+| 2b | Staging source-review acceptance — complete; exact report and two medium risks accepted | Strict version-two evidence; seven review areas and verified Git file hashes; fourteen gate tests and full local readiness pass; [report and risks](evidence/source-review-6b9719b/README.md) | Owner acceptance for 6b9719b is recorded and validates. Replacement hosted/native verification follows under its own approved scope |
+| 2c | Prepare and verify the replacement on hosted staging and native devices — preparation active | Exact-candidate CI, inspected sequential builds, real same-account session isolation and plan focus/foreground observations; new source-bound receipts and cumulative input | Complete read-only preflight and a bounded execution request before deployment, native builds or live calls |
 | 3 | Prepare production privacy and operating boundaries | Account export/deletion including Auth ownership; retention; capability-link decision; one-use invite policy; explicit cohort/spend/quota limits; rollback owner | Significant policy/architecture choices require owner decision before production |
 | 4 | Prepare production release configuration | Source-controlled production origins, isolated credentials, signed-update/OTA policy, store signing associations, source maps and rollback rehearsal | Resource/secret creation, migrations, deployment and builds need explicit applicable approval |
 | 5 | Validate TestFlight and Play closed-testing distribution | Signed install/update, auth and universal links, core journey, explicit native tab presentation, privacy declarations, observed symbolication | Separate store-submission approval |
 | 6 | Activate a bounded invite-only cohort | Named owner, exact participant cap, spend/health thresholds, support coverage and stop/rollback procedure | Explicit cohort invitation/activation approval |
 
-The owner prefers avoiding another scan. The active objective has prepared the
-[staging source-review pathway](reviews/2026-09-14-staging-source-review-policy.md).
-A concrete report needs owner acceptance; this does not grant production, store
-or cohort approval. Codex Security is installed but no scan has started.
+The owner accepted the
+[staging source-review pathway](reviews/2026-09-14-staging-source-review-policy.md)
+and exact 6b9719b report. The active objective now prepares replacement
+hosted/native verification. Deployment, builds and live-operation scope remain
+separate; no production, store or cohort approval follows. No scan has started.
 
 Only `docs/task-packets/active.md` is active. Later rows are queued outcomes,
 not instructions to start concurrent agents, scans or cloud work.
@@ -68,7 +70,7 @@ not instructions to start concurrent agents, scans or cloud work.
    simulators are stopped without wiping data. Canonical manifests/fallbacks
    and API readiness were rechecked with retained hashes. The assembled
    cumulative input is blocked on its explicitly missing security evidence.
-   The next local correction addresses device-only sign-out and reproduced
+   The frozen local 6b9719b correction addresses device-only sign-out and reproduced
    hidden-query/duplicate-active refreshes. Preserve frozen artifacts; do not
    claim these triggers explain every historical call. Later candidate-bound
    device checks must verify cross-device session preservation and navigation;

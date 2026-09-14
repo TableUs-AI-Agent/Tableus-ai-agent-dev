@@ -79,26 +79,28 @@ were preserved. The detailed previous state is [archived](history/2026-09-14/c5b
 
 ## Security and release boundary
 
-The owner asked to avoid another usage-heavy scan and continued with preparation
-of the staging source-review pathway. Codex Security remains installed but no
+The owner accepted the staging source-review policy and exact 6b9719b report
+on 2026-09-14. Codex Security remains installed but no
 scan has started. The earlier scan proposal is superseded. Version-one scan
 records remain supported; new version-two staging-only evidence binds the review
 and owner acceptance to the candidate and immutable file/report hashes.
-The prepared review remains unaccepted until its concrete report receives owner
-approval. Historical c5b041c cumulative evidence stays unchanged and incomplete.
+The [acceptance record](evidence/source-review-6b9719b/owner-acceptance.json)
+binds the actual owner reply, policy, candidate and report digest; validation passes.
+Historical c5b041c cumulative evidence stays unchanged and incomplete.
 The historical focused scan report is unavailable, and the deep scan stays canceled.
 
-The [prepared report](evidence/source-review-6b9719b/README.md) binds eleven
+The [accepted report](evidence/source-review-6b9719b/README.md) binds eleven
 reviewed files and seven control areas to 6b9719b. Two medium risks remain open:
-shared provider quota consumption and private capabilities in URLs. The pending
-acceptance record correctly fails validation. Tooling `make ready` passed 212
+shared provider quota consumption and private capabilities in URLs. The owner
+accepted these risks for isolated staging; neither is resolved. The historical
+pending record still fails validation. Tooling `make ready` passed 212
 JavaScript and 98 Python tests, with three Postgres-only local skips; lint,
 types, contracts, web/Expo-web builds and deterministic smoke also passed.
 This tooling verification does not replace the application candidate's own
 204-JavaScript-test record or its outstanding device/hosted acceptance.
 
-The local correction must receive accepted source-bound security evidence and affected
-native/hosted verification before release acceptance. New pushes trigger Vercel
+The security review decision is complete. The local correction still requires
+affected native/hosted verification before release acceptance. New pushes trigger Vercel
 Preview, so keep the branch local until authorized. Production trust origins,
 privacy/Auth deletion/retention, capability and invite/cohort limits, signing,
 OTA authority, source maps, rollback and store distribution remain roadmap work.
@@ -109,7 +111,10 @@ Native default tab glyph polish remains queued before distribution.
 Work in `.worktrees/astra-project-reassessment` on
 `codex/staging-source-review`, based on tooling/evidence commit `5256390`.
 Source-review tooling is frozen at `1c75832ef421335662319635e1b74888476cdb77`;
-the following evidence-only commit records that identity and validation hashes.
+evidence commit `6469bb4f451f246bf50103dc4ce9e24b18f52d15` records its validation.
+The following owner-acceptance change updates evidence and documentation only;
+application, tooling and test bytes still match the prior verification.
+The active packet now scopes replacement hosted/native verification preparation.
 The client candidate and prior validation remain on `codex/device-session-plan-refresh`.
 `codex/astra-project-reassessment` preserves that evidence checkpoint. The
 separate `.worktrees/native-c5b041c` checkout remains clean at the deployed SHA.

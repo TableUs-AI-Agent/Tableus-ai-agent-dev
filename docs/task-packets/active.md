@@ -1,61 +1,78 @@
-# Active packet: staging source-review acceptance
+# Active packet: replacement hosted/native verification preparation
 
 ## Objective and authority
 
-The owner asked to avoid another usage-heavy security scan and continued with
-preparation of the recommended staging source-review pathway. Build a distinct,
-truthful evidence type, targeted review and deterministic rejection checks.
-No plugin scan is authorized. This is the only active implementation packet.
+Prepare verification of the frozen replacement's device-only sign-out and
+plan focus/foreground refresh on web, iOS and Android. This is the only active
+implementation packet. Use one primary agent and preserve the existing release
+architecture and provider choices.
 
-Branch: `codex/staging-source-review`, isolated worktree
-`.worktrees/astra-project-reassessment`, based on tooling/evidence `5256390`.
-Application candidate remains `6b9719b4e63e34803f2e7c2598e45851790df661`.
-Hosted staging/artifacts remain `c5b041c85f4f7b959436c13bef48c959622c624f`.
+The owner accepted the staging source-review policy and exact candidate report,
+including its two medium risks. That decision is complete and must not be asked
+again for unchanged source/report. It permits preparation, not deployment,
+native compilation, new sign-in messages or a new live-provider run.
 
-## Acceptance criteria
+## Source and evidence
 
-- Version-one scan evidence remains unchanged. New version-two cumulative input
-  accepts only `environment: staging` and an explicit `source_review` record.
-- The report identifies candidate, reviewer, date, seven security boundary areas,
-  source file digests, passing deterministic checks, findings and limitations.
-  Verify file bytes from the exact Git commit, not the current working tree.
-- Require an owner acceptance record for `staging-source-review-v1`, bound to
-  the exact candidate and parsed-report SHA-256. Keep it pending until the owner
-  accepts the concrete report. Hashes detect changes, not reviewer truthfulness.
-- Reject missing/unknown fields, file/report tampering, incomplete coverage,
-  failed checks, unresolved critical/high runtime findings, production scope
-  and absent/mismatched owner acceptance. Preserve every native/web/telemetry gate.
-- Run focused tests and one final `make ready`; record source/tooling/evidence
-  provenance and the remaining acceptance boundary without inventing scan data.
+- Application candidate: `6b9719b4e63e34803f2e7c2598e45851790df661`.
+- Accepted policy/report: [source-review evidence](../evidence/source-review-6b9719b/README.md).
+  Parsed-report SHA-256: `046bba5a771112ef1e49888b6a09235f9c6d259b757b81f90f85607785795122`.
+- Evidence tooling: `1c75832ef421335662319635e1b74888476cdb77`.
+- Currently deployed source and older native/telemetry artifacts:
+  `c5b041c85f4f7b959436c13bef48c959622c624f`.
+- The accepted security record passes local validation. The prior full checks
+  remain applicable because this acceptance change alters evidence/docs only.
+  The [completed review packet](../history/2026-09-14/staging-source-review-packet.md)
+  is historical.
 
-## Scope and handoff
+## Preparation before an execution request
 
-This is operator tooling and evidence preparation. It neither changes application
-runtime/locks/contracts nor approves release. Targeted source review covers the
-listed controls; it is not a whole-repository audit or independent verification.
-The historical scanner report remains unavailable, and canceled scans stay canceled.
+1. Verify the clean detached 6b9719b source, source/tooling separation, retained
+   artifact inventory, SDK/signing availability, disk headroom and durable
+   private output directory. Reuse accepted bytes only at their actual SHA;
+   older c5b041c receipts do not establish replacement acceptance.
+2. Identify the exact candidate ref, existing Railway staging and Vercel Preview
+   targets and rollback source. A push triggers Preview deployment and needs
+   the same explicit deployment scope. Keep production aliases unchanged.
+3. Scope the narrow real-session checks: two devices using the same already
+   approved account; one device signs out while the other retains its session;
+   repeat for the other platform. Verify restoration, hidden-plan inactivity,
+   visible return/foreground refresh and offline/recovery behavior. Prefer
+   retained sessions; count any required sign-in codes before requesting them.
+4. Prepare a concrete execution request covering deployment/CI, necessary native
+   profiles, owner availability and provider/message ceilings. Full plan reads
+   hydrate Places details, so budget reads as well as mutations. The prior run
+   ended at 80/100 Places attempts, one generation and six conservatively counted
+   sign-in messages; it grants no automatic new allowance. A fresh recommendation
+   generation is not needed merely to prove the two client corrections.
 
-The prepared report and policy need final owner acceptance. The replacement still
-needs its own authorized hosted/native verification; do not reuse c5b041c artifacts
-as replacement evidence. Production, store and cohort approval stay separate.
-No push, merge, deployment, native build, new provider call, message/account,
-resource or secret creation, destructive cleanup or scan is implied.
+## Verification after the applicable execution approval
 
-## Completed preparation and next decision
+Build sequentially from the exact clean application source, with logs in files
+and inspected artifacts/receipts retained outside temporary storage. Run and
+accept `test-ios` and `test-android` lifecycle/offline checks first, then the
+`readiness-ios`/`readiness-android` pair and the separate telemetry pair required
+by the unchanged cumulative contract. Stop on a failed prerequisite.
 
-The evidence validator and targeted [candidate report](../evidence/source-review-6b9719b/README.md)
-are prepared. All fourteen focused gate tests pass. `make ready` passed 212
-JavaScript and 98 Python tests, with three Postgres-only local skips, plus lint,
-types, contracts, web/Expo-web builds and deterministic smoke. The actual report
-passes source-file verification; its pending owner acceptance correctly fails.
-Historical c5b041c input remains unchanged and blocked on missing security evidence.
-Tooling source is `1c75832ef421335662319635e1b74888476cdb77`, distinct from
-application candidate 6b9719b. The evidence-only follow-up binds the local checks
-and retained log hashes to that tooling commit.
+Record actual same-account cross-device observations and plan request behavior.
+Use deterministic or retained plan state where it satisfies the check; any
+live reads or messages must stay within the newly approved scope. Preserve
+accounts, sessions and previous artifacts throughout installation and rollback.
 
-The remaining step in this packet is the owner's decision on the concrete
-staging-only policy/report and its two recorded medium risks. After acceptance,
-record the actual message reference and matching report hash. The next bounded
-packet should scope replacement hosted/native verification around cross-device
-sign-out preservation and plan focus/foreground refresh. It must preserve source
-provenance and define any required deployment, build and live-operation approvals.
+Assemble version-two cumulative staging input with `security.accepted.json`
+only once all other evidence genuinely belongs to 6b9719b. Missing native,
+hosted, association or telemetry fields remain missing until verified. The
+historical c5b041c pending input remains unchanged and incomplete.
+
+## Exit and deferred work
+
+Preparation exits with a concrete, bounded execution request. Verification exits
+with source-bound CI/deployment/device evidence and a truthful cumulative
+validation result. A source/report change requires matching review acceptance;
+a new scanner is never automatic. No application change is currently planned.
+
+Shared provider quotas and private capability URLs remain accepted medium risks
+for isolated staging only. Production/privacy/retention, broader cohorts,
+scaling, store signing/submission, OTA authority and native tab polish remain
+later objectives. No merge, production change, secret/resource creation or
+destructive cleanup is implied.

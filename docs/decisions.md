@@ -1,5 +1,24 @@
 # Decision log
 
+## Staging source-review acceptance — 2026-09-14
+
+- The owner's direct “accept” reply adopts `staging-source-review-v1` and the
+  report for `6b9719b4e63e34803f2e7c2598e45851790df661`, parsed-report SHA-256
+  `046bba5a771112ef1e49888b6a09235f9c6d259b757b81f90f85607785795122`.
+  The actual Codex turn and validation are recorded in
+  [owner acceptance](evidence/source-review-6b9719b/owner-acceptance.json).
+- Shared provider quotas and URL capabilities remain open medium risks,
+  accepted for existing isolated staging only. The accepted security record
+  passes validation; application/report bytes and historical evidence are unchanged.
+- The completed review packet is archived. The active packet now scopes
+  replacement hosted/native verification, with real cross-device session and
+  focus/foreground observations. This acceptance does not approve its deployment,
+  builds or live operations, and does not complete cumulative staging, production,
+  store or cohort acceptance. No scan is authorized or started.
+- This change records evidence and documentation only. Reuse the full local
+  checks for unchanged application/tooling/test bytes and validate the new
+  acceptance data directly; no duplicate full-suite run is needed.
+
 ## Staging source-review preparation — 2026-09-14
 
 - Following the owner's request to avoid another usage-heavy scan, prepare the

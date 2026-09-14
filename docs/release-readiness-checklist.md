@@ -34,9 +34,11 @@ A historical confirmation is not a fresh test or a new owner signature.
   API tests and mobile restoration/retry/stale-result component tests.
 - [x] The [source delta](reviews/2026-09-12-security-delta.md) identifies the
   historical scan and subsequent changes without relabeling the old scan.
-- [ ] Security evidence acceptance for the replacement is resolved. A distinct
+- [x] Security evidence acceptance for replacement 6b9719b is resolved. The owner
+  accepted the distinct
   staging-only [source-review policy and report](evidence/source-review-6b9719b/README.md)
-  is prepared for 6b9719b; concrete owner acceptance remains pending. The legacy
+  on 2026-09-14, including the two medium staging risks; its exact-source
+  security record passes validation. This does not accept c5b041c security. The legacy
   version-one scan contract retains its original meaning.
 - [ ] Cumulative evidence validator accepts an honestly sourced evidence set.
   The [pending input and component hashes](evidence/c5b041c/native/candidate-readiness-status.json)
