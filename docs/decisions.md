@@ -2,6 +2,12 @@
 
 ## Device-session and refresh correction — 2026-09-14
 
+- The owner approved installing Codex Security and inspecting scan controls,
+  not scan execution. Version 0.1.24 is installed. Prepare one Standard scan
+  proposal with a maximum of two active reviewers and a 20-minute checkpoint,
+  explicitly distinguishing that effort bound from an unavailable desktop hard
+  usage cap. No new scan or persistent concurrency setting is authorized.
+
 - The owner accepted the recommended order: prepare known client fixes locally,
   freeze/review the replacement, and obtain explicit scope/usage approval before
   a new exact-candidate scan. Retain the current scan gate; the proposed staging

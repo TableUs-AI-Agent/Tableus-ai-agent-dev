@@ -25,6 +25,10 @@ device or production release acceptance.
 | 5 | Validate TestFlight and Play closed-testing distribution | Signed install/update, auth and universal links, core journey, explicit native tab presentation, privacy declarations, observed symbolication | Separate store-submission approval |
 | 6 | Activate a bounded invite-only cohort | Named owner, exact participant cap, spend/health thresholds, support coverage and stop/rollback procedure | Explicit cohort invitation/activation approval |
 
+Codex Security is installed. The [replacement scan proposal](reviews/2026-09-14-security-scan-proposal.md)
+is ready for separate approval; its 20-minute checkpoint is an effort bound,
+not an enforceable token/dollar cap. No scan has started.
+
 Only `docs/task-packets/active.md` is active. Later rows are queued outcomes,
 not instructions to start concurrent agents, scans or cloud work.
 

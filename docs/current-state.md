@@ -81,7 +81,11 @@ were preserved. The detailed previous state is [archived](history/2026-09-14/c5b
 
 The owner accepted keeping the exact-candidate scan requirement and fixing the
 known issues before scanning the replacement. No new scan is authorized or
-started. The historical focused scan belongs to 069473c and its sealed report
+started. Codex Security 0.1.24 is installed with owner approval; its desktop
+launcher exposes no hard token/dollar cap. A [bounded proposal](reviews/2026-09-14-security-scan-proposal.md)
+for one Standard pass, two active reviewers maximum and a 20-minute checkpoint
+is awaiting separate execution approval. A clean detached candidate checkout
+is prepared at `.worktrees/security-6b9719b`. The historical focused scan belongs to 069473c and its sealed report
 is unavailable; the deep scan remains canceled. The cumulative validator
 continues to reject c5b041c's missing security evidence. Ordinary source review
 is not scan evidence, and no cumulative sign-off is claimed.

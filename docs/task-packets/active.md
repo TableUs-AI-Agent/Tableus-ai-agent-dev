@@ -47,9 +47,12 @@ that source. Its cumulative status still rejects missing security evidence.
 [Historical acceptance packet](../history/2026-09-14/c5b041c-acceptance-packet.md).
 
 Do not relabel that evidence for the replacement. The exact replacement source
-and ordinary review are recorded above. Codex Security is not installed/callable
-in this session. Obtain authorization to enable it, inspect supported scope and
-usage controls, then present a bounded scan proposal for separate approval.
+and ordinary review are recorded above. Codex Security 0.1.24 is now installed
+with owner approval and its controls have been inspected. The
+[scan proposal](../reviews/2026-09-14-security-scan-proposal.md) is ready:
+one Standard scan, at most two active reviewers and a 20-minute checkpoint;
+there is no exposed desktop hard token/dollar cap. Execution remains unapproved.
+A clean detached target exists at `.worktrees/security-6b9719b`; no scan exists.
 Another scan, push/CI, deployment, native build/device acceptance or paid live
 run needs its applicable explicit authorization. The canceled scan stays canceled.
 
