@@ -1,9 +1,12 @@
 # Closed-beta readiness checklist
 
-Reviewed 2026-09-14. Deployed staging source:
+Reviewed 2026-09-14. The historical component checklist below concerns:
 `c5b041c85f4f7b959436c13bef48c959622c624f`.
 The owner-approved push, CI and existing Railway staging/Vercel Preview
 deployment are verified in [deployment evidence](evidence/c5b041c/README.md).
+Current staging/Preview now serve replacement `6b9719b`; its exact-source CI
+and deployment pass, with native verification in progress in the
+[active execution record](evidence/replacement-6b9719b/README.md).
 Historical live-smoke/native/scan observations keep their original source
 associations and do not certify the replacement.
 A historical confirmation is not a fresh test or a new owner signature.

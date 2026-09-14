@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "application_sha": "6b9719b4e63e34803f2e7c2598e45851790df661",
+  "observed_at": "2026-09-14T22:56:40.118732+00:00",
+  "matching_issues": 0,
+  "verification_method": "authenticated_sentry_UI_empty_state",
+  "release_filter": "6b9719b4e63e34803f2e7c2598e45851790df661",
+  "canaries_sent": false,
+  "organization_slug": "tableus-staging",
+  "environment_filter": "staging",
+  "stats_period": "14d",
+  "all_projects": true
+}

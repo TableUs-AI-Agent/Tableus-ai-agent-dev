@@ -1,7 +1,16 @@
-# Replacement verification execution request
+# Replacement verification execution
 
-Status: preflight complete; execution approval pending. No push, deployment,
-native build, sign-in message, new provider generation or security scan has run.
+Status: owner approved execution on 2026-09-14; hosted CI/deployment pass and
+sequential native execution is in progress.
+The [approval record](execution-approval.json) binds the owner's direct reply to
+the plan at `9ee4a8035389d2cdd26e2dec2efae0eb39c5ee42`. The preflight remains a
+historical snapshot; source-bound execution evidence follows separately.
+
+[Deployment evidence](deployment.json) records the exact-source CI and healthy
+Railway/Preview deployments, CORS, reduced provider ceiling and unchanged
+Production pointers. Fresh [PostHog](posthog-baseline.json) and
+[Sentry](sentry-baseline.json) baselines contain no replacement canaries.
+Native/device/telemetry delivery and cumulative acceptance remain outstanding.
 
 ## Candidate and readiness
 
@@ -23,7 +32,7 @@ native build, sign-in message, new provider generation or security scan has run.
   iOS/Android test targets are stopped. The physical iPhone is paired but currently
   unavailable; reconnect/unlock it when its signed artifact is ready.
 
-## Requested execution scope
+## Approved execution scope
 
 1. Update existing **Preview/staging** source stamps, then push only
    `codex/replacement-6b9719b` and run its GitHub CI. A branch push automatically
@@ -50,7 +59,7 @@ native build, sign-in message, new provider generation or security scan has run.
 
 ## Budget and operating limits
 
-| Measure | Bound for this proposed run |
+| Measure | Bound for this approved run |
 | --- | --- |
 | Additional Places attempts | At most 80, including failed attempts and detail reads |
 | New Gemini generations | Zero; no additional live-AI evaluation |

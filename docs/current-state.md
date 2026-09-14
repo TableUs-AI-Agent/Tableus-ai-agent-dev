@@ -1,10 +1,10 @@
 # Current state
 
 Updated 2026-09-14. Development uses GPT-6 Astra. Application providers remain
-Gemini and Google Places. The next client correction is local on
+Gemini and Google Places. The client correction is published on
 `codex/replacement-6b9719b`, frozen application source
-`6b9719b4e63e34803f2e7c2598e45851790df661`; deployed staging still runs
-`c5b041c85f4f7b959436c13bef48c959622c624f`.
+`6b9719b4e63e34803f2e7c2598e45851790df661`; Railway staging and Vercel Preview
+now serve this source. Native replacement verification is in progress.
 Only [the active packet](task-packets/active.md) directs current implementation.
 
 ## Product and architecture
@@ -23,7 +23,15 @@ Supabase Auth deletion and production retention remain separate release work.
 The beta API uses one process: idempotency/JWKS/provider coordination is bounded
 but not a substitute for durable coordination before horizontal scaling.
 
-## Local client correction
+## Client correction and replacement execution
+
+[Hosted deployment evidence](evidence/replacement-6b9719b/deployment.json)
+records Railway `69c96019-bedc-4b53-a37d-358a103f7e24` and Preview
+`dpl_2qeefqPhARdErQxUqxLssCintxte` at 6b9719b. Both Preview origins pass CORS;
+Production pointers/protection are unchanged. CI run `34905755622` passes
+204 JavaScript, 101 Python and four browser tests. The reduced Places backstop
+is verified at 349; starting aggregate remains 269. The first sequential local
+native build is running. No replacement native or cumulative acceptance exists yet.
 
 Mobile device sign-out now explicitly uses Supabase local scope. It clears local
 state after success and exposes a sanitized retry message on failure instead of
@@ -100,8 +108,9 @@ This tooling verification does not replace the application candidate's own
 204-JavaScript-test record or its outstanding device/hosted acceptance.
 
 The security review decision is complete. The local correction still requires
-affected native/hosted verification before release acceptance. New pushes trigger Vercel
-Preview, so keep the branch local until authorized. Production trust origins,
+affected native/hosted verification before release acceptance. The owner approved
+publishing the exact candidate and its existing staging/Preview deployments.
+Production trust origins,
 privacy/Auth deletion/retention, capability and invite/cohort limits, signing,
 OTA authority, source maps, rollback and store distribution remain roadmap work.
 Native default tab glyph polish remains queued before distribution.
@@ -115,16 +124,17 @@ evidence commit `6469bb4f451f246bf50103dc4ce9e24b18f52d15` records its validatio
 The owner-acceptance and preflight changes update evidence/documentation only;
 application, tooling and test bytes still match the prior verification.
 The active packet's [execution request](evidence/replacement-6b9719b/README.md)
-is prepared and awaiting deployment/build/live-operation approval. Six build-input
+was approved on 2026-09-14 and execution is starting. Six build-input
 checks pass; all six older artifact/receipt sets still verify. Node/EAS/Xcode,
 Android tools, existing Expo authentication and Vercel CLI access are available.
 Resolved iOS readiness configuration carries the replacement SHA and staging
-origins. No replacement artifact, hosted CI run or deployment exists yet.
+origins. Hosted CI/deployment now pass; replacement native artifacts and live
+acceptance remain in progress.
 
-The proposed run permits at most 80 additional Places attempts, four new sign-in
+The approved run permits at most 80 additional Places attempts, four new sign-in
 emails, no fresh Gemini generation and the six sequential native profiles. The
-project-wide 30-day Places baseline is 269/500; proposal lowers the staging
-backstop to 349, without increasing the current ceiling. This is distinct from
+project-wide 30-day Places baseline was 269/500 at execution start; staging now
+uses the approved reduced backstop of 349. This is distinct from
 the prior completed run's 80/100 attempts. The paired iPhone is currently
 unavailable; simulator/emulator targets are stopped. A successful token refresh
 on the other client must support cross-device sign-out preservation; cached UI

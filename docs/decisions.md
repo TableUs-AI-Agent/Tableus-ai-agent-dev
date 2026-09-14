@@ -1,5 +1,26 @@
 # Decision log
 
+## Replacement execution approval — 2026-09-14
+
+- Exact-source CI and existing staging/Preview deployments now pass. The
+  [deployment record](evidence/replacement-6b9719b/deployment.json) preserves
+  the actual IDs, source stamps, CORS and unchanged Production pointers.
+- Run deterministic native harnesses on isolated local test devices: their
+  app-reset behavior must not erase the retained staging sessions required for
+  cross-device verification. Native workloads remain sequential.
+- The owner's direct “approve” reply accepts the prepared plan at `9ee4a80`;
+  [the record](evidence/replacement-6b9719b/execution-approval.json) binds the
+  exact candidate, plan and actual task turn. Execute existing staging/Preview
+  deployment, exact-SHA CI, six sequential native builds and bounded verification.
+- Limits are 80 additional Places attempts, four sign-in emails, no new Gemini
+  generation, and one web/iOS/Android telemetry flow (at most five analytics and
+  five error events including API companions). The read-only starting aggregate
+  confirms 269 Places attempts; lower the rolling backstop to 349 and retain it.
+- Preserve existing credentials, data, artifacts and Production aliases. The
+  approved rollback covers newly changed staging/Preview source and CORS only;
+  retain the reduced provider backstop. No scan, merge, new resource/secret,
+  production change, store submission or cohort expansion is authorized.
+
 ## Replacement verification preflight — 2026-09-14
 
 - Prepare the exact application ref `codex/replacement-6b9719b` and the bounded

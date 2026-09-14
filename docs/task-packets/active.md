@@ -1,24 +1,26 @@
-# Active packet: replacement hosted/native verification preparation
+# Active packet: replacement hosted/native verification
 
 ## Objective and authority
 
-Prepare verification of the frozen replacement's device-only sign-out and
+Execute verification of the frozen replacement's device-only sign-out and
 plan focus/foreground refresh on web, iOS and Android. This is the only active
 implementation packet. Use one primary agent and preserve the existing release
 architecture and provider choices.
 
 The owner accepted the staging source-review policy and exact candidate report,
 including its two medium risks. That decision is complete and must not be asked
-again for unchanged source/report. It permits preparation, not deployment,
-native compilation, new sign-in messages or a new live-provider run.
+again for unchanged source/report. Separately, the owner approved the prepared
+execution plan on 2026-09-14; its deployment, native-build and live-operation
+limits below now apply without repeated permission requests.
 
 ## Source and evidence
 
-Preparation is complete. The [concrete execution request](../evidence/replacement-6b9719b/README.md)
-and [preflight results](../evidence/replacement-6b9719b/preflight.json) are ready
-for owner approval. Operator branch: `codex/replacement-verification`; exact
-application publishing ref: `codex/replacement-6b9719b`. Neither has been pushed.
-The request includes staging/Preview deployment, six sequential native profiles,
+Preparation is complete. The [concrete execution plan](../evidence/replacement-6b9719b/README.md)
+is [approved](../evidence/replacement-6b9719b/execution-approval.json).
+Operator branch: `codex/replacement-verification`; exact
+application publishing ref: `codex/replacement-6b9719b`, now pushed at the exact
+candidate. The operator/evidence branch remains unpublished.
+The approval includes staging/Preview deployment, six sequential native profiles,
 at most 80 additional Places attempts, four new sign-in emails and zero new
 Gemini generation. Lower the current 500-attempt rolling backstop to 349 based
 on the observed 269 baseline; reconcile any drift before executing.
@@ -27,7 +29,7 @@ on the observed 269 baseline; reconcile any drift before executing.
 - Accepted policy/report: [source-review evidence](../evidence/source-review-6b9719b/README.md).
   Parsed-report SHA-256: `046bba5a771112ef1e49888b6a09235f9c6d259b757b81f90f85607785795122`.
 - Evidence tooling: `1c75832ef421335662319635e1b74888476cdb77`.
-- Currently deployed source and older native/telemetry artifacts:
+- Previously deployed source and retained older native/telemetry artifacts:
   `c5b041c85f4f7b959436c13bef48c959622c624f`.
 - The accepted security record passes local validation. The prior full checks
   remain applicable because this acceptance change alters evidence/docs only.
@@ -58,6 +60,14 @@ on the observed 269 baseline; reconcile any drift before executing.
    generation is not needed merely to prove the two client corrections.
 
 ## Verification after the applicable execution approval
+
+Hosted execution passes: [deployment evidence](../evidence/replacement-6b9719b/deployment.json)
+binds CI run `34905755622`, Railway `69c96019-bedc-4b53-a37d-358a103f7e24`
+and Preview `dpl_2qeefqPhARdErQxUqxLssCintxte` to 6b9719b. Source stamps,
+exact Preview CORS and the 349-attempt backstop are verified; Production is
+unchanged. The first local native build is running. Use isolated deterministic
+test targets because those harnesses reset app data; preserve the existing
+staging simulator/emulator sessions for the same-account refresh checks.
 
 Build sequentially from the exact clean application source, with logs in files
 and inspected artifacts/receipts retained outside temporary storage. Run and
