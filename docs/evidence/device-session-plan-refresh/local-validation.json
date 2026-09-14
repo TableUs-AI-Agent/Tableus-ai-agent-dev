@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
   "observed_at": "2026-09-14T21:23:06.021597+00:00",
-  "source_sha": null,
-  "source_sha_note": "Bind after committing these reviewed files; no source changes after successful validation.",
+  "source_sha": "6b9719b4e63e34803f2e7c2598e45851790df661",
+  "source_sha_note": "Reviewed runtime and test bytes match this committed source; subsequent evidence binding changes documentation only.",
   "baseline_sha": "1c65f68c6cba9bb675bb898b13b7080f6f97a925",
   "branch": "codex/device-session-plan-refresh",
   "make_ready": {

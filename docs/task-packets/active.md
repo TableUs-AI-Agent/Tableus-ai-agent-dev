@@ -12,6 +12,10 @@ implementation packet.
 Branch: `codex/device-session-plan-refresh` in the isolated
 `.worktrees/astra-project-reassessment` worktree, based on evidence commit
 `1c65f68c6cba9bb675bb898b13b7080f6f97a925`.
+Frozen replacement application source: `6b9719b4e63e34803f2e7c2598e45851790df661`.
+[Validation](../evidence/device-session-plan-refresh/local-validation.json) and
+[ordinary source review](../reviews/2026-09-14-device-session-plan-refresh.md)
+are complete. Native/hosted/scan acceptance for this replacement is pending.
 Development uses Astra; application providers remain Gemini and Places.
 
 ## Implementation and acceptance
@@ -42,8 +46,10 @@ checklists, shared journey and four-platform telemetry remain attributed to
 that source. Its cumulative status still rejects missing security evidence.
 [Historical acceptance packet](../history/2026-09-14/c5b041c-acceptance-packet.md).
 
-Do not relabel that evidence for the replacement. Record the new exact source
-commit and an ordinary source-review report before proposing the focused scan.
+Do not relabel that evidence for the replacement. The exact replacement source
+and ordinary review are recorded above. Codex Security is not installed/callable
+in this session. Obtain authorization to enable it, inspect supported scope and
+usage controls, then present a bounded scan proposal for separate approval.
 Another scan, push/CI, deployment, native build/device acceptance or paid live
 run needs its applicable explicit authorization. The canceled scan stays canceled.
 

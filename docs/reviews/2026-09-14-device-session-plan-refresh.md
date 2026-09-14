@@ -4,7 +4,9 @@ Reviewed 2026-09-14 by the primary GPT-6 Astra development agent.
 Branch: `codex/device-session-plan-refresh`.
 Base: `1c65f68c6cba9bb675bb898b13b7080f6f97a925`; the runtime base is
 `c5b041c85f4f7b959436c13bef48c959622c624f`.
-Replacement source: pending the final validated local commit.
+Replacement source: `6b9719b4e63e34803f2e7c2598e45851790df661`.
+[Local validation](../evidence/device-session-plan-refresh/local-validation.json)
+binds the checks to this source. Subsequent evidence binding changes docs only.
 
 This is an ordinary review of the changed source and adjacent auth/query
 boundaries. It is not an automated scan, independent audit, hosted/device

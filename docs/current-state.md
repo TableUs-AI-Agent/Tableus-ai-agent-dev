@@ -2,7 +2,8 @@
 
 Updated 2026-09-14. Development uses GPT-6 Astra. Application providers remain
 Gemini and Google Places. The next client correction is local on
-`codex/device-session-plan-refresh`; deployed staging still runs
+`codex/device-session-plan-refresh`, frozen application source
+`6b9719b4e63e34803f2e7c2598e45851790df661`; deployed staging still runs
 `c5b041c85f4f7b959436c13bef48c959622c624f`.
 Only [the active packet](task-packets/active.md) directs current implementation.
 
