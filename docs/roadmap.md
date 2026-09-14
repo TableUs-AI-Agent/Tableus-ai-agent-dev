@@ -21,7 +21,7 @@ device or production release acceptance.
 | 2 | Complete cumulative staging readiness — c5b041c component evidence complete; replacement 6b9719b verification remains | Canonical domains/associations; same-SHA web + physical iPhone + ARM64 Android lifecycle; signed artifact pairs; isolated telemetry; truthful cumulative report | Completed run used 80/100 Places attempts, $0.00056825/$0.25 estimated Gemini and six conservatively counted messages; security review accepted for 6b9719b only; no new scan authorized |
 | 2a | Correct device sign-out and redundant client detail refreshes — `6b9719b` frozen locally; checks and source review complete | Local scope/error recovery; hidden-query and foreground request-count regressions; focused checks and one `make ready`; ordinary source review, then freeze | No live calls/builds/deployment here. Security review accepted; affected native/hosted evidence still required for the replacement |
 | 2b | Staging source-review acceptance — complete; exact report and two medium risks accepted | Strict version-two evidence; seven review areas and verified Git file hashes; fourteen gate tests and full local readiness pass; [report and risks](evidence/source-review-6b9719b/README.md) | Owner acceptance for 6b9719b is recorded and validates. Replacement hosted/native verification follows under its own approved scope |
-| 2c | Prepare and verify the replacement on hosted staging and native devices — preparation active | Exact-candidate CI, inspected sequential builds, real same-account session isolation and plan focus/foreground observations; new source-bound receipts and cumulative input | Complete read-only preflight and a bounded execution request before deployment, native builds or live calls |
+| 2c | Prepare and verify the replacement on hosted staging and native devices — preflight complete; execution approval pending | Exact-candidate CI, inspected sequential builds, real same-account session isolation and plan focus/foreground observations; new source-bound receipts and cumulative input | [Execution request](evidence/replacement-6b9719b/README.md): existing staging/Preview deployment, six sequential native profiles, max 80 additional Places attempts/four emails/zero fresh generation; explicit approval pending |
 | 3 | Prepare production privacy and operating boundaries | Account export/deletion including Auth ownership; retention; capability-link decision; one-use invite policy; explicit cohort/spend/quota limits; rollback owner | Significant policy/architecture choices require owner decision before production |
 | 4 | Prepare production release configuration | Source-controlled production origins, isolated credentials, signed-update/OTA policy, store signing associations, source maps and rollback rehearsal | Resource/secret creation, migrations, deployment and builds need explicit applicable approval |
 | 5 | Validate TestFlight and Play closed-testing distribution | Signed install/update, auth and universal links, core journey, explicit native tab presentation, privacy declarations, observed symbolication | Separate store-submission approval |
@@ -29,8 +29,8 @@ device or production release acceptance.
 
 The owner accepted the
 [staging source-review pathway](reviews/2026-09-14-staging-source-review-policy.md)
-and exact 6b9719b report. The active objective now prepares replacement
-hosted/native verification. Deployment, builds and live-operation scope remain
+and exact 6b9719b report. Replacement hosted/native preflight is complete;
+the active objective is awaiting approval of its bounded execution request. Deployment, builds and live-operation scope remain
 separate; no production, store or cohort approval follows. No scan has started.
 
 Only `docs/task-packets/active.md` is active. Later rows are queued outcomes,

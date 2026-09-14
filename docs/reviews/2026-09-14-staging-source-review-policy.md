@@ -25,8 +25,9 @@ line or attack surface was audited.
 
 Owner acceptance must explicitly bind this policy, the candidate and the exact
 report hash, with a sanitized reference to the actual acceptance message. The
-report hash is SHA-256 of UTF-8 `JSON.stringify(parsedReport)`, matching the
-existing receipt convention; it is not the hash of pretty-printed JSON bytes.
+report hash is SHA-256 of UTF-8 `JSON.stringify(parsedReport)`; it is not the
+hash of pretty-printed JSON bytes. Native inspection receipts have their own
+file-byte hash contract. The accepted report digest and its algorithm are unchanged.
 Any report/source change requires new matching acceptance. A recorded approval
 is an operator attestation, not a digital signature or proof of the person's identity.
 

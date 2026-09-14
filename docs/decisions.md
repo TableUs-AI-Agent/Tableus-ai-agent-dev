@@ -1,5 +1,29 @@
 # Decision log
 
+## Replacement verification preflight — 2026-09-14
+
+- Prepare the exact application ref `codex/replacement-6b9719b` and the bounded
+  [execution request](evidence/replacement-6b9719b/README.md). Source/report
+  acceptance remains valid; no new security decision or scan is requested.
+- Six retained c5b041c artifacts/receipts verify and six replacement build-input
+  checks pass. Existing tools and Expo/Vercel CLI access work. Preserve the
+  previously working Java/build SDK configuration; emulator SDK files use a
+  different installed root. No replacement native artifacts or CI run exist.
+- Proposed, not yet approved: exact-source existing staging/Preview deployment,
+  six sequential native profiles, at most 80 additional Places attempts, four
+  new sign-in emails, zero new Gemini generation and bounded telemetry canaries.
+  Current project-wide rolling Places usage is 269/500; lower its backstop to
+  349 for this scope and retain the reduced value after handoff. Reconcile any
+  baseline drift before executing; do not automatically replenish the run.
+- Require evidence of a successful other-client session refresh after local
+  sign-out. Cached UI or a still-valid access token alone is insufficient.
+  Reuse the existing plan and recommendation run, while recording fresh
+  source-bound device and hosted observations. Preserve old artifacts and data.
+- This packet changes documentation/evidence only. Reuse prior full-suite
+  validation for matching bytes, plus the actual artifact/configuration/input
+  preflights. No deployment, native build, message, paid journey or scan follows
+  until the concrete execution scope receives approval.
+
 ## Staging source-review acceptance — 2026-09-14
 
 - The owner's direct “accept” reply adopts `staging-source-review-v1` and the

@@ -1,6 +1,6 @@
 # Closed-beta release runbook
 
-Updated 2026-09-12. Start with [current state](current-state.md) and the
+Updated 2026-09-14. Start with [current state](current-state.md) and the
 [active packet](task-packets/active.md). The recipes here do not grant authority
 to create resources, send mail, deploy or start paid calls.
 
@@ -11,9 +11,11 @@ The owner-approved push/CI and existing Railway staging/Vercel Preview rollout
 are complete. [Evidence](evidence/c5b041c/README.md) records exact deployment
 IDs, readiness, Preview CORS and preservation of production targets.
 The previous `daa89a0` live-smoke report was recovered and remains historical.
-Four native completions were reported but no usable files/receipts
-were recovered, and the owner saved no manual copies. Do not repeat successful
-external operations solely because a task or coding model changed.
+Those four historical daa89a0 completions had no recovered files/receipts.
+The six newer c5b041c artifact/receipt pairs are now retained and reverified.
+The frozen 6b9719b replacement changes client bytes and needs its own artifacts;
+see the [preflight and execution request](evidence/replacement-6b9719b/README.md).
+Do not repeat successful external operations solely because a coding model changed.
 
 Keep three identities separate:
 
@@ -29,11 +31,12 @@ work. Never relabel old evidence with that new source.
 
 ## 2. Complete cheap local work first
 
-The local auth-restoration correction is described in the
-[review](reviews/2026-09-12-astra-reassessment.md). Finish local verification
-and freeze its candidate before compiling native artifacts.
+The frozen local device-session and plan-refresh correction is described in the
+[review](reviews/2026-09-14-device-session-plan-refresh.md). Local verification
+passed for 6b9719b. Evidence-only updates reuse those checks when the actual
+application, tooling and test bytes remain unchanged.
 
-Run focused tests while iterating, then `make ready` once. Check generated
+For implementation changes, run focused tests while iterating, then `make ready` once. Check generated
 OpenAPI drift explicitly:
 
 ```bash
@@ -69,11 +72,12 @@ the API CORS allowlist. Keep the existing production target/aliases intact.
 Do not push an evidence-only descendant merely to publish receipts if that
 would automatically create an unapproved replacement Preview.
 
-The [source delta](reviews/2026-09-12-security-delta.md) records the older
-`069473c` scan association and later changes. The cumulative schema currently
-requires an exact-candidate scan; its acceptance policy remains an explicit
-release question, not something this report silently overrides. Do not claim that older scan ran on
-the selected candidate or restart a plugin scan to satisfy a stale checkbox.
+The [source delta](reviews/2026-09-12-security-delta.md) retains the older
+`069473c` scan association. Version-one cumulative input retains its scan contract;
+version two uses the distinct [accepted staging source review](evidence/source-review-6b9719b/README.md)
+for 6b9719b. Bind its exact report/owner acceptance and preserve all remaining
+source-bound gates. The report digest uses parsed JSON; native inspection receipts
+hash their raw inspection-file bytes. Do not restart a scan for a stale checkbox.
 
 ## 4. Preflight every native build
 

@@ -2,7 +2,7 @@
 
 Updated 2026-09-14. Development uses GPT-6 Astra. Application providers remain
 Gemini and Google Places. The next client correction is local on
-`codex/device-session-plan-refresh`, frozen application source
+`codex/replacement-6b9719b`, frozen application source
 `6b9719b4e63e34803f2e7c2598e45851790df661`; deployed staging still runs
 `c5b041c85f4f7b959436c13bef48c959622c624f`.
 Only [the active packet](task-packets/active.md) directs current implementation.
@@ -109,12 +109,28 @@ Native default tab glyph polish remains queued before distribution.
 ## Worktree handoff
 
 Work in `.worktrees/astra-project-reassessment` on
-`codex/staging-source-review`, based on tooling/evidence commit `5256390`.
+`codex/replacement-verification`, based on owner-acceptance evidence `09acc1b`.
 Source-review tooling is frozen at `1c75832ef421335662319635e1b74888476cdb77`;
 evidence commit `6469bb4f451f246bf50103dc4ce9e24b18f52d15` records its validation.
-The following owner-acceptance change updates evidence and documentation only;
+The owner-acceptance and preflight changes update evidence/documentation only;
 application, tooling and test bytes still match the prior verification.
-The active packet now scopes replacement hosted/native verification preparation.
+The active packet's [execution request](evidence/replacement-6b9719b/README.md)
+is prepared and awaiting deployment/build/live-operation approval. Six build-input
+checks pass; all six older artifact/receipt sets still verify. Node/EAS/Xcode,
+Android tools, existing Expo authentication and Vercel CLI access are available.
+Resolved iOS readiness configuration carries the replacement SHA and staging
+origins. No replacement artifact, hosted CI run or deployment exists yet.
+
+The proposed run permits at most 80 additional Places attempts, four new sign-in
+emails, no fresh Gemini generation and the six sequential native profiles. The
+project-wide 30-day Places baseline is 269/500; proposal lowers the staging
+backstop to 349, without increasing the current ceiling. This is distinct from
+the prior completed run's 80/100 attempts. The paired iPhone is currently
+unavailable; simulator/emulator targets are stopped. A successful token refresh
+on the other client must support cross-device sign-out preservation; cached UI
+alone is insufficient. No scan, build, message, deployment or paid journey ran
+during this preflight.
+
 The client candidate and prior validation remain on `codex/device-session-plan-refresh`.
 `codex/astra-project-reassessment` preserves that evidence checkpoint. The
 separate `.worktrees/native-c5b041c` checkout remains clean at the deployed SHA.

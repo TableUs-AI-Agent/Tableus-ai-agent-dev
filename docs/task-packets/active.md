@@ -14,6 +14,15 @@ native compilation, new sign-in messages or a new live-provider run.
 
 ## Source and evidence
 
+Preparation is complete. The [concrete execution request](../evidence/replacement-6b9719b/README.md)
+and [preflight results](../evidence/replacement-6b9719b/preflight.json) are ready
+for owner approval. Operator branch: `codex/replacement-verification`; exact
+application publishing ref: `codex/replacement-6b9719b`. Neither has been pushed.
+The request includes staging/Preview deployment, six sequential native profiles,
+at most 80 additional Places attempts, four new sign-in emails and zero new
+Gemini generation. Lower the current 500-attempt rolling backstop to 349 based
+on the observed 269 baseline; reconcile any drift before executing.
+
 - Application candidate: `6b9719b4e63e34803f2e7c2598e45851790df661`.
 - Accepted policy/report: [source-review evidence](../evidence/source-review-6b9719b/README.md).
   Parsed-report SHA-256: `046bba5a771112ef1e49888b6a09235f9c6d259b757b81f90f85607785795122`.
@@ -36,7 +45,9 @@ native compilation, new sign-in messages or a new live-provider run.
    the same explicit deployment scope. Keep production aliases unchanged.
 3. Scope the narrow real-session checks: two devices using the same already
    approved account; one device signs out while the other retains its session;
-   repeat for the other platform. Verify restoration, hidden-plan inactivity,
+   repeat for the other platform. Require a successful other-client session
+   refresh after sign-out, not just cached UI or an unexpired access token.
+   Verify restoration, hidden-plan inactivity,
    visible return/foreground refresh and offline/recovery behavior. Prefer
    retained sessions; count any required sign-in codes before requesting them.
 4. Prepare a concrete execution request covering deployment/CI, necessary native
@@ -76,3 +87,18 @@ for isolated staging only. Production/privacy/retention, broader cohorts,
 scaling, store signing/submission, OTA authority and native tab polish remain
 later objectives. No merge, production change, secret/resource creation or
 destructive cleanup is implied.
+
+## Completed preflight
+
+All six build-input checks pass and the six retained c5b041c artifact/receipt
+sets verify. No replacement artifacts or CI run exist. Existing tools, signing
+identity and Expo/Vercel CLI access are available. Resolved iOS readiness config
+contains 6b9719b and staging endpoints. The build SDK and emulator SDK use
+different installed roots; prepared private inputs reproduce the previously
+working build SDK/Java setup. The physical iPhone is paired but unavailable;
+the simulator and emulator are stopped. Previous six-build compilation took
+about 98 minutes; new duration and session-refresh waiting are not guaranteed.
+
+The preflight and this packet change documentation/evidence only. Prior full
+local validation remains applicable to unchanged application/tooling/test bytes.
+No scan, native build, deployment, sign-in email or paid journey ran.

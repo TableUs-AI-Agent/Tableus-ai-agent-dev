@@ -1,0 +1,181 @@
+{
+  "schema_version": 1,
+  "observed_at": "2026-09-14T22:26:38.926988+00:00",
+  "application_source_sha": "6b9719b4e63e34803f2e7c2598e45851790df661",
+  "candidate_ref": "codex/replacement-6b9719b",
+  "operator_branch": "codex/replacement-verification",
+  "evidence_tooling_sha": "1c75832ef421335662319635e1b74888476cdb77",
+  "security_acceptance_commit": "09acc1b31cae8da43e25d469b6fce18ae0a02554",
+  "candidate_clean": true,
+  "runtime_and_build_tool_bytes_match": true,
+  "current_candidate_ci_runs": 0,
+  "toolchain": {
+    "node": "22.23.1",
+    "npm": "10.9.8",
+    "eas_cli": "23.2.0",
+    "xcode": "26.6",
+    "xcode_build": "17F113",
+    "java": "18.0.2.1",
+    "android_api": 36,
+    "android_build_tools": [
+      "36.0.0",
+      "35.0.0"
+    ],
+    "android_ndk": [
+      "27.1.12297006",
+      "27.0.12077973"
+    ],
+    "android_architecture": "arm64-v8a",
+    "build_and_emulator_sdk_roots_differ": true,
+    "explicit_build_sdk_configured": true,
+    "expo_authenticated": true,
+    "valid_local_signing_identities": 1
+  },
+  "resources": {
+    "free_disk_gib": 28.28,
+    "minimum_start_disk_gib": 20,
+    "stop_floor_gib": 8,
+    "native_process_counts": {
+      "xcodebuild": 0,
+      "clang": 0,
+      "swift-frontend": 0,
+      "GradleDaemon": 0,
+      "qemu-system": 0
+    },
+    "prior_six_build_minutes": 98
+  },
+  "devices": {
+    "ios_simulator": "iOS 26.5 available, shut down",
+    "android_emulator": "API 36 ARM64 available, stopped",
+    "physical_iphone_paired": true,
+    "physical_iphone_available": false,
+    "hardware_identifiers_retained": false
+  },
+  "artifacts": {
+    "retained_source_sha": "c5b041c85f4f7b959436c13bef48c959622c624f",
+    "retained_verified_count": 6,
+    "replacement_artifacts_found": false,
+    "existing_profiles": [
+      "test-ios",
+      "test-android",
+      "readiness-ios",
+      "readiness-android",
+      "telemetry-test-ios",
+      "telemetry-test-android"
+    ],
+    "build_input_preflights_passed": 6,
+    "durable_output_relative_to_primary_checkout": ".artifacts/mobile/6b9719b4e63e34803f2e7c2598e45851790df661",
+    "private_build_inputs_sha256": "dda1de66e6fa4e84ddb8d9a6fda8a43b71db0381909527b37f34d9be211ccf55",
+    "old_profile_expires_at": "2027-08-24T23:33:31Z",
+    "future_signing_reuse_still_requires_build_inspection": true
+  },
+  "resolved_ios_readiness": {
+    "source_sha": "6b9719b4e63e34803f2e7c2598e45851790df661",
+    "api_url": "https://api-staging-3795.up.railway.app",
+    "supabase_url": "https://mrwdhdeubdiiydmmvlda.supabase.co",
+    "link_host": "links.table-us.com",
+    "bundle_identifier": "com.tableus.app"
+  },
+  "hosted": {
+    "railway": {
+      "project_id": "93dcd3f4-7c47-4010-9431-fc28638813d2",
+      "project_name": "tableus-staging",
+      "service": {
+        "id": "94aeecda-4575-4fc1-bb08-796bf779ada5",
+        "name": "api"
+      },
+      "environment": {
+        "id": "0f546dbc-222f-48b8-a27b-ff008af4fec9",
+        "name": "staging"
+      },
+      "current_deployment": {
+        "id": "dcccd4a1-cca7-489b-9d7d-81e4019aad0c",
+        "status": "SUCCESS",
+        "commit_sha": "c5b041c85f4f7b959436c13bef48c959622c624f"
+      },
+      "provider_calls_run": 0
+    },
+    "public_readiness": {
+      "http_status": 200,
+      "origin": "https://api-staging-3795.up.railway.app",
+      "body_sha256": "bf4ad33f57f2ab1af8ad49b83e65c35b6ae126aacd314749261b78df373568ea",
+      "readiness": {
+        "status": "ready",
+        "provider_mode": "live",
+        "places_provider_mode": "live",
+        "ai_provider_mode": "live",
+        "ai_backend": "agent-platform",
+        "auth_mode": "supabase",
+        "build_sha": "c5b041c85f4f7b959436c13bef48c959622c624f",
+        "telemetry_mode": "staging",
+        "analytics_mode": "anonymous",
+        "error_reporting_mode": "errors_only",
+        "telemetry_e2e": true
+      }
+    },
+    "vercel": {
+      "id": "prj_lPu3pWZiJ5ZRUIab6wiXrJIW930G",
+      "name": "tableus-staging",
+      "framework": "nextjs",
+      "rootDirectory": null,
+      "ssoProtection": {
+        "deploymentType": "all_except_custom_domains"
+      },
+      "git_link": {
+        "type": "github",
+        "repo": "Tableus-ai-agent-dev",
+        "org": "TableUs-AI-Agent",
+        "productionBranch": "main"
+      },
+      "targets": {
+        "production": {
+          "id": "dpl_7csJvHoJH9qgFZDijbwu3w36r2sK",
+          "url": "tableus-staging-eck69x9mb-briancheis-projects.vercel.app",
+          "readyState": "READY",
+          "alias": [
+            "www.table-us.com",
+            "links.table-us.com",
+            "tableus-staging.vercel.app",
+            "table-us.com",
+            "tableus-staging-briancheis-projects.vercel.app",
+            "tableus-staging-git-main-briancheis-projects.vercel.app"
+          ],
+          "sha": "e1184eca9b73e1a9f26d1007ab543df9d54c7124"
+        },
+        "preview": {
+          "id": "dpl_9zGVqXpFNQkCzSXBaecR18hqMs2M",
+          "url": "tableus-staging-3e0h7umke-briancheis-projects.vercel.app",
+          "readyState": "READY",
+          "alias": [
+            "tableus-staging-git-codex-astra-proj-30d7eb-briancheis-projects.vercel.app"
+          ],
+          "sha": "c5b041c85f4f7b959436c13bef48c959622c624f"
+        }
+      },
+      "response_sha256": "2edb0b669a41960845e08d16c9930590977510c48da1ed8e3980d853c3c035b5"
+    },
+    "vercel_connector_access": "unavailable; existing authenticated CLI read access verified"
+  },
+  "provider_baseline": {
+    "window_days": 30,
+    "places_attempts": 269,
+    "places_current_limit": 500,
+    "gemini_generations": 9,
+    "gemini_estimated_cost_usd": 0.0050015,
+    "new_run_calls": 0,
+    "proposed_additional_places_max": 80,
+    "proposed_places_runtime_ceiling": 349,
+    "proposed_new_generations": 0,
+    "proposed_new_sign_in_emails_max": 4
+  },
+  "checks_not_run": [
+    "native compilation",
+    "new candidate hosted CI",
+    "device acceptance",
+    "telemetry delivery",
+    "live provider journey",
+    "security scan"
+  ],
+  "verification_scope": "Read-only preflight plus local branch/output preparation; previous make ready remains applicable to unchanged runtime/tooling/test bytes.",
+  "approval_status": "pending_execution_approval"
+}
