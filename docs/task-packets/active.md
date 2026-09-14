@@ -1,89 +1,62 @@
-# Active packet: cumulative staging acceptance for c5b041c
+# Active packet: device session and plan refresh correction
 
-## Objective and source
+## Objective
 
-Close cumulative staging acceptance for the frozen candidate. Device, live
-journey, artifact, association and telemetry verification are complete. The
-remaining gate is security-evidence acceptance; no release sign-off is claimed.
-This is the only active implementation packet.
+Prepare the replacement client candidate with device-only sign-out and fewer
+unnecessary Places-backed reads. The owner accepted the recommended order on
+2026-09-14: fix locally, freeze/review the replacement, then request explicit
+scope/usage approval for an exact-candidate security scan. Keep the scan
+requirement and its fail-closed validator unchanged. This is the only active
+implementation packet.
 
-Application source: `c5b041c85f4f7b959436c13bef48c959622c624f`.
-Evidence branch: `codex/astra-project-reassessment`.
+Branch: `codex/device-session-plan-refresh` in the isolated
+`.worktrees/astra-project-reassessment` worktree, based on evidence commit
+`1c65f68c6cba9bb675bb898b13b7080f6f97a925`.
 Development uses Astra; application providers remain Gemini and Places.
-Evidence descendants stay local because a push would trigger another Preview.
-The detailed execution history is [archived](../history/2026-09-13/native-verification-packet.md).
 
-## Accepted evidence
+## Implementation and acceptance
 
-- Local `make ready` passed: 197 JavaScript and 98 Python tests, with three
-  Postgres checks subsequently passed in CI. Exact-source CI run `34728044149`
-  passed 197 JavaScript/101 Python tests, four browser tests and seven
-  deterministic AI cases. No runtime or dependency changes followed this freeze.
-- Railway staging deployment `dcccd4a1-cca7-489b-9d7d-81e4019aad0c` and Vercel
-  Preview `dpl_9zGVqXpFNQkCzSXBaecR18hqMs2M` use the candidate. Production
-  aliases and deployment protection remain unchanged.
-- All six native artifacts have verified source/profile/signer/digest receipts
-  in durable private storage. Both deterministic lifecycle/offline suites pass.
-- One shared journey used three existing approved accounts, two constraint
-  submissions, four distinct live candidates and two saved ranked votes.
-  Finalize, reopen and link rotation each occurred once. Both native clients
-  rejected the old link and passed read-only export/deletion-status checks.
-- Physical iPhone and ARM64 Android each have a ten-phase readiness checklist.
-  Summaries explicitly combine owner observations with source-runner installation
-  evidence; the original interactive runners ended before final reports.
-  Android's final current-state observation followed emulator restart.
-- Web, iOS, Android and API telemetry delivered at the exact release. PostHog
-  counts are 1/1/1/2 respectively. Three Sentry projects show five redacted
-  events. Connector/UI evidence is labeled as such; the standalone collector
-  was not run. Android's telemetry replacement preserved its session.
-- API readiness, canonical association bodies, signed identities, path allowlists,
-  auth redirect and invalid-join fallback passed a public recheck with hashes.
-  Both simulators are now stopped without wiping data.
+- Mobile sign-out explicitly uses Supabase local scope. Successful sign-out
+  clears local pending auth, profile and query state. A returned provider error
+  leaves the session/cache available and displays a sanitized retry message.
+- Hidden mounted plan routes unsubscribe from their query. They do not start
+  detail reads on mount, global invalidation, foreground or reconnect.
+- AppProviders is the single owner of foreground query refresh. Auth resumes
+  pending approval without separately invalidating every query. A real return
+  to the foreground refreshes subscribed queries even within the 30-second
+  default freshness window; duplicate active notifications do not refetch.
+- Re-entering a plan refreshes votes/status immediately. Pull-to-refresh and
+  offline cached reads remain available. Mutation responses update the plan
+  without an additional client detail request.
+- Component tests reproduce the original faults and exercise the actual auth,
+  app and plan components with real TanStack Query and mocked external edges.
+  Eleven focused tests and mobile types passed. The final `make ready` passed
+  204 JavaScript/98 Python tests (three local Postgres skips), lint/types,
+  contracts, builds and smoke. The narrow source review is complete.
 
-[Candidate status](../evidence/c5b041c/native/candidate-readiness-status.json),
-[native evidence](../evidence/c5b041c/native/README.md), and
-[deployment evidence](../evidence/c5b041c/README.md) bind these claims to their sources.
+## Evidence boundaries and next gate
 
-## Remaining security decision
+The frozen deployed application remains
+`c5b041c85f4f7b959436c13bef48c959622c624f`. Its six artifacts, both native
+checklists, shared journey and four-platform telemetry remain attributed to
+that source. Its cumulative status still rejects missing security evidence.
+[Historical acceptance packet](../history/2026-09-14/c5b041c-acceptance-packet.md).
 
-The [pending cumulative input](../evidence/c5b041c/native/cumulative-readiness-input.pending.json)
-contains the accepted components and explicitly missing security evidence.
-The unchanged validator rejects it with `security.passed must be true`.
-It requires a candidate-bound scan ID, report SHA-256 and zero critical/high
-runtime findings. No report, checksum or passing disposition is invented.
+Do not relabel that evidence for the replacement. Record the new exact source
+commit and an ordinary source-review report before proposing the focused scan.
+Another scan, push/CI, deployment, native build/device acceptance or paid live
+run needs its applicable explicit authorization. The canceled scan stays canceled.
 
-The historical focused scan applies to `069473c`, not this candidate, and its
-sealed report/digest remains unrecovered. The owner's canceled deep scan stays
-canceled. The [attributable source review](../reviews/2026-09-12-security-delta.md)
-is an ordinary review and does not satisfy the current scan requirement.
-Resolve this through explicitly authorized exact-candidate scan evidence or an
-explicitly approved, truthfully implemented staging acceptance-policy change.
-Do not start a scan or weaken the validator before that decision.
-The [decision brief](../reviews/2026-09-13-security-acceptance-options.md)
-describes the unchanged requirement and a proposed staging-only alternative.
+No new provider calls, sign-in emails, accounts, secrets, resources, merge,
+production/store/cohort action or destructive cleanup are authorized here.
+The completed live run remains 80 Places attempts, one generation,
+$0.00056825 estimated Gemini and six conservatively consumed messages.
 
-## Scope and limits carried forward
+## Deliberate limits
 
-The owner authorized one shared live journey, one generation, at most 100 Places
-attempts, $0.25 estimated Gemini and six returning sign-in messages. Final
-observed usage is 80 attempts and $0.00056825; all six message slots are
-conservatively consumed. Existing staging quotas were unchanged. The completed
-journey does not authorize a new journey, generation, message or account.
-
-No merge, push, new resources/secrets, production migration/deployment, store
-submission, cohort activation, account deletion or destructive cleanup is
-implied. Preserve all approved sessions and durable artifacts.
-
-## Queued work and handoff
-
-Before the next client candidate, align device-only sign-out with its current
-provider-global behavior, reproduce and remove unnecessary Places detail reads
-using deterministic providers, and address native tab glyphs. See the
-[live findings](../reviews/2026-09-13-live-readiness-findings.md). Production
-privacy, signing/symbolication, distribution and cohort controls remain later
-roadmap objectives with their own approval gates.
-
-This checkpoint changes evidence and planning only. Validate JSON, component
-sources/digests, evidence privacy and `git diff --check`; do not rerun native
-builds, paid providers or the already passed full suite for these document changes.
-Handoff includes the evidence commit and the unchanged application source.
+This correction removes reproduced client triggers; it does not add provider
+storage or alter backend hydration. A necessary visible detail read or mutation
+response still hydrates live restaurant data. The origin of every historical
+read remains unproven. Real cross-device session preservation and native
+navigation on the replacement still require later authorized device evidence.
+Native glyph polish and production privacy/distribution remain queued.

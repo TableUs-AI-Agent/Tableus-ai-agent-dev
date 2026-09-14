@@ -1,7 +1,7 @@
 import type { Plan } from "@tableus/domain";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import * as Linking from "expo-linking";
-import { useLocalSearchParams } from "expo-router";
+import { useIsFocused, useLocalSearchParams } from "expo-router";
 import { useState } from "react";
 import { RefreshControl, ScrollView, Share, Text, View } from "react-native";
 
@@ -18,13 +18,21 @@ import { colors } from "@/theme";
 export default function PlanScreen() {
   const { id } = useLocalSearchParams<{ id: string }>();
   const queryClient = useQueryClient();
+  const isFocused = useIsFocused();
   const { isOnline } = useConnectivity();
   const [notes, setNotes] = useState("");
   const [query, setQuery] = useState("group-friendly dinner");
   const [refreshMessage, setRefreshMessage] = useState("");
   const [rankingDraft, setRankingDraft] = useState<{ planId: string; values: string[] } | null>(null);
   const key = ["plan", id];
-  const plan = useQuery({ queryKey: key, queryFn: () => api.get<Plan>(`/api/v1/plans/${id}`) });
+  const plan = useQuery({
+    queryKey: key,
+    queryFn: () => api.get<Plan>(`/api/v1/plans/${id}`),
+    // A mounted route behind another screen must not hydrate paid Places data.
+    subscribed: isFocused,
+    // Re-entering the screen must pick up votes and organizer changes immediately.
+    staleTime: 0,
+  });
   const updateData = (data: Plan) => { queryClient.setQueryData(key, data); };
   const constraints = useRecoverableMutation({
     mutationFn: (body: { notes: string; cuisines: string[]; dietary_notes: string[] }, idempotencyKey) => api.patch<Plan>(`/api/v1/plans/${id}/constraints`, body, { idempotencyKey }),
@@ -66,7 +74,7 @@ export default function PlanScreen() {
   };
 
   return (
-    <ScrollView contentInsetAdjustmentBehavior="automatic" contentContainerStyle={{ padding: 16, gap: 14 }} refreshControl={<RefreshControl refreshing={plan.isRefetching} onRefresh={() => void refresh()} />}>
+    <ScrollView testID="plan-screen" contentInsetAdjustmentBehavior="automatic" contentContainerStyle={{ padding: 16, gap: 14 }} refreshControl={<RefreshControl refreshing={plan.isRefetching} onRefresh={() => void refresh()} />}>
       {error ? <ErrorText message={error.message} /> : null}
       {refreshMessage ? <Text selectable accessibilityRole="alert" style={{ color: colors.muted }}>{refreshMessage}</Text> : null}
       {current ? (

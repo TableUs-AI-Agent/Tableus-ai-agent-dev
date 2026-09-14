@@ -66,6 +66,7 @@ export default function AccountScreen() {
         <Text selectable style={{ color: colors.muted, lineHeight: 22 }}>
           Sign out on this device and clear its cached TableUs data.
         </Text>
+        {auth.error ? <ErrorText message={auth.error} /> : null}
         <Button label="Sign out" onPress={() => void auth.signOut()} loading={auth.busy} />
       </Card>
 

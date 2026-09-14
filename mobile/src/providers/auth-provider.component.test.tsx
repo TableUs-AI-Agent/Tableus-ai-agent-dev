@@ -2,7 +2,7 @@ import type { AuthChangeEvent, Session } from "@supabase/supabase-js";
 import { afterEach, beforeEach, expect, jest, test } from "@jest/globals";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { act, cleanup, fireEvent, render } from "@testing-library/react-native";
-import { Text } from "react-native";
+import { Pressable, Text } from "react-native";
 
 import AuthScreen from "../../app/auth";
 import { authTransactionKey } from "@/lib/auth-transaction";
@@ -13,7 +13,7 @@ const mockGetSession = jest.fn<() => Promise<SessionResult>>();
 const mockGetProfile = jest.fn<() => Promise<{ id: string; display_name: string; share_taste: boolean }>>();
 const mockGetItem = jest.fn<(key: string) => Promise<string | null>>();
 const mockRemoveItem = jest.fn<(key: string) => Promise<void>>();
-const mockSignOut = jest.fn<() => Promise<void>>();
+const mockSignOut = jest.fn<(options?: { scope: string }) => Promise<{ error: Error | null }>>();
 let mockAuthListener: (event: AuthChangeEvent, session: Session | null) => void;
 
 jest.mock("@/lib/supabase", () => ({
@@ -28,7 +28,7 @@ jest.mock("@/lib/supabase", () => ({
       mockAuthListener = listener;
       return { data: { subscription: { unsubscribe: jest.fn() } } };
     },
-    signOut: () => mockSignOut(),
+    signOut: (options?: { scope: string }) => mockSignOut(options),
     startAutoRefresh: jest.fn(),
     stopAutoRefresh: jest.fn(),
   } },
@@ -43,7 +43,7 @@ const clients: QueryClient[] = [];
 
 function Harness() {
   const auth = useAuth();
-  return <><Text testID="phase">{auth.phase}</Text><Text testID="profile">{auth.profile?.id ?? "none"}</Text><AuthScreen /></>;
+  return <><Text testID="phase">{auth.phase}</Text><Text testID="auth-error">{auth.error}</Text><Text testID="profile">{auth.profile?.id ?? "none"}</Text><Pressable onPress={() => void auth.signOut()}><Text>Device sign out</Text></Pressable><AuthScreen /></>;
 }
 
 async function renderAuth() {
@@ -58,7 +58,7 @@ beforeEach(() => {
   mockGetProfile.mockReset().mockResolvedValue(profile);
   mockGetItem.mockReset().mockResolvedValue(null);
   mockRemoveItem.mockReset().mockResolvedValue(undefined);
-  mockSignOut.mockReset().mockResolvedValue(undefined);
+  mockSignOut.mockReset().mockResolvedValue({ error: null });
 });
 
 afterEach(async () => {
@@ -126,4 +126,41 @@ test("sign-out supersedes a pending profile restoration", async () => {
   await act(async () => { resolveProfile(profile); });
   expect(screen.getByTestId("phase").props.children).toBe("signed_out");
   expect(screen.getByTestId("profile").props.children).toBe("none");
+});
+
+
+test("device sign-out uses local scope, clears local private state and leaves other sessions alone", async () => {
+  const sessions = new Set(["this-device", "other-device"]);
+  mockSignOut.mockImplementation(async (options) => {
+    if (options?.scope === "local") sessions.delete("this-device");
+    else sessions.clear();
+    return { error: null };
+  });
+  const screen = await renderAuth();
+  const client = clients[clients.length - 1];
+  client.setQueryData(["private-plan"], { title: "Cached dinner" });
+  await act(async () => { fireEvent.press(screen.getByText("Device sign out")); });
+  expect(mockSignOut).toHaveBeenCalledWith({ scope: "local" });
+  expect([...sessions]).toEqual(["other-device"]);
+  expect(mockRemoveItem).toHaveBeenCalledWith(authTransactionKey);
+  expect(client.getQueryData(["private-plan"])).toBeUndefined();
+  expect(screen.getByTestId("phase").props.children).toBe("signed_out");
+  expect(screen.getByTestId("profile").props.children).toBe("none");
+});
+
+
+test("a rejected local sign-out keeps the session and cache available for retry", async () => {
+  mockSignOut.mockResolvedValueOnce({ error: new Error("private provider failure") });
+  const screen = await renderAuth();
+  const client = clients[clients.length - 1];
+  client.setQueryData(["private-plan"], { title: "Cached dinner" });
+  await act(async () => { fireEvent.press(screen.getByText("Device sign out")); });
+  expect(screen.getByTestId("phase").props.children).toBe("approved");
+  expect(client.getQueryData(["private-plan"])).toEqual({ title: "Cached dinner" });
+  expect(screen.getByTestId("auth-error").props.children).toBe("Could not sign out on this device. Reconnect and try again.");
+  expect(screen.queryByText(/private provider failure/)).toBeNull();
+  await act(async () => { fireEvent.press(screen.getByText("Device sign out")); });
+  expect(mockSignOut).toHaveBeenCalledTimes(2);
+  expect(screen.getByTestId("phase").props.children).toBe("signed_out");
+  expect(client.getQueryData(["private-plan"])).toBeUndefined();
 });

@@ -1,5 +1,10 @@
 # Live readiness findings for c5b041c
 
+**2026-09-14 follow-up:** local branch `codex/device-session-plan-refresh`
+corrects the sign-out scope and reproduced hidden-query/duplicate-active
+refreshes. See the [correction review](2026-09-14-device-session-plan-refresh.md).
+The findings below remain historical observations of c5b041c.
+
 Application source: `c5b041c85f4f7b959436c13bef48c959622c624f`.
 These findings do not change the frozen candidate or establish a completed
 native, telemetry or cumulative acceptance run.

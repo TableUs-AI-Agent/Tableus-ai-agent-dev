@@ -1,6 +1,11 @@
-# Remaining staging security decision
+# Staging security decision — exact-candidate requirement retained
 
-Candidate: `c5b041c85f4f7b959436c13bef48c959622c624f`.
+**2026-09-14 decision:** the owner accepted keeping the exact-candidate scan
+requirement, correcting the known client issues first, then obtaining separate
+scope/usage approval before scanning the replacement. The review-only proposal
+below is retained as history and is not adopted. No new scan was authorized.
+
+Historical candidate: `c5b041c85f4f7b959436c13bef48c959622c624f`.
 Device, live-journey, artifact, association and telemetry checks are complete.
 The [assembled input](../evidence/c5b041c/native/cumulative-readiness-input.pending.json)
 keeps unavailable security fields explicitly empty. The unchanged validator

@@ -1,5 +1,26 @@
 # Decision log
 
+## Device-session and refresh correction — 2026-09-14
+
+- The owner accepted the recommended order: prepare known client fixes locally,
+  freeze/review the replacement, and obtain explicit scope/usage approval before
+  a new exact-candidate scan. Retain the current scan gate; the proposed staging
+  review-only alternative is not adopted. Prior canceled scans stay canceled.
+- “Sign out on this device” explicitly uses Supabase local scope. Clear session
+  UI/query state after successful sign-out; provider failures show a sanitized
+  retry message and must not be presented as success. Deterministic SDK-boundary
+  tests do not establish a real second device's session status.
+- AppProviders alone handles foreground query refresh. Auth still manages token
+  refresh and pending approval, without a second blanket query invalidation on
+  foreground. Hidden plan routes unsubscribe; returning to the plan fetches
+  current votes/state immediately. Use existing session-memory query data only,
+  with no new persistence or backend provider cache. Full visible plan reads
+  and mutation responses retain existing provider hydration.
+- The correction creates a new application candidate. c5b041c's accepted native,
+  live and telemetry evidence stays bound to c5b041c. No new push, deployment,
+  build, paid journey, sign-in message, resource, secret or scan is implied.
+
+
 ## Current development and release decisions — 2026-09-12
 
 - Native, shared-journey and four-platform telemetry verification are complete

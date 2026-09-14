@@ -1,6 +1,6 @@
 # Closed-beta roadmap
 
-Reassessed 2026-09-12. The goal remains an invite-only US beta across web, iOS
+Reassessed 2026-09-14. The goal remains an invite-only US beta across web, iOS
 and Android. Preserve the implemented architecture and validate the complete
 shared-plan journey before adding features or replacing application providers.
 
@@ -18,7 +18,8 @@ device or production release acceptance.
 | --- | --- | --- | --- |
 | 0 | Astra development migration and plan recovery — complete locally | Project model default, concise current documents, recovered candidate/CI/live-smoke record, early native preflight, local checks | Local work; no deployment or inference-provider change |
 | 1 | Bound auth restoration and freeze the replacement — complete; `c5b041c` pushed, CI passed and approved staging deployment verified | Shared deadline and mobile recovery tests; local full verification; attributable delta record; [exact-source deployment evidence](evidence/c5b041c/README.md) | Owner approval covers this push/CI and existing staging targets; no new paid-call or native-build allowance |
-| 2 | Complete cumulative staging readiness — hosted, native, shared journey and all four telemetry platforms verified; security acceptance remains | Canonical domains/associations; same-SHA web + physical iPhone + ARM64 Android lifecycle; signed artifact pairs; isolated telemetry; truthful cumulative report | Completed run used 80/100 Places attempts, $0.00056825/$0.25 estimated Gemini and six conservatively counted messages; cumulative security-evidence policy remains unresolved |
+| 2 | Complete cumulative staging readiness — hosted, native, shared journey and all four telemetry platforms verified; security acceptance remains | Canonical domains/associations; same-SHA web + physical iPhone + ARM64 Android lifecycle; signed artifact pairs; isolated telemetry; truthful cumulative report | Completed run used 80/100 Places attempts, $0.00056825/$0.25 estimated Gemini and six conservatively counted messages; exact-candidate scan requirement retained; no new scan authorized |
+| 2a | Correct device sign-out and redundant client detail refreshes — local checks and source review complete | Local scope/error recovery; hidden-query and foreground request-count regressions; focused checks and one `make ready`; ordinary source review, then freeze | No live calls/builds/deployment here. Keep the exact-candidate scan gate; obtain explicit scope/usage approval before scanning replacement |
 | 3 | Prepare production privacy and operating boundaries | Account export/deletion including Auth ownership; retention; capability-link decision; one-use invite policy; explicit cohort/spend/quota limits; rollback owner | Significant policy/architecture choices require owner decision before production |
 | 4 | Prepare production release configuration | Source-controlled production origins, isolated credentials, signed-update/OTA policy, store signing associations, source maps and rollback rehearsal | Resource/secret creation, migrations, deployment and builds need explicit applicable approval |
 | 5 | Validate TestFlight and Play closed-testing distribution | Signed install/update, auth and universal links, core journey, explicit native tab presentation, privacy declarations, observed symbolication | Separate store-submission approval |
@@ -61,11 +62,11 @@ not instructions to start concurrent agents, scans or cloud work.
    simulators are stopped without wiping data. Canonical manifests/fallbacks
    and API readiness were rechecked with retained hashes. The assembled
    cumulative input is blocked on its explicitly missing security evidence.
-   Investigate avoidable detail refreshes before the next client candidate;
-   do not change the frozen artifacts or claim an established UI trigger.
-   Align device-only sign-out copy with its currently global behavior and
-   verify preservation of another device's session; see the
-   [live findings](reviews/2026-09-13-live-readiness-findings.md).
+   The next local correction addresses device-only sign-out and reproduced
+   hidden-query/duplicate-active refreshes. Preserve frozen artifacts; do not
+   claim these triggers explain every historical call. Later candidate-bound
+   device checks must verify cross-device session preservation and navigation;
+   see the [live findings](reviews/2026-09-13-live-readiness-findings.md).
 7. Bind final evidence to its real source. Planning or operator-tool changes do
    not silently relabel the application candidate. A changed app source,
    dependency lockfile, compiled config or generated contract requires impact

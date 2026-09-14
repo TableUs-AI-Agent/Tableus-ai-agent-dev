@@ -232,13 +232,18 @@ export function AuthProvider({ children }: PropsWithChildren) {
     try {
       await performSignOutCleanup({
         clearPending: clearStoredPending,
-        signOut: async () => { await supabase.auth.signOut(); },
+        signOut: async () => {
+          const { error: signOutError } = await supabase.auth.signOut({ scope: "local" });
+          if (signOutError) throw signOutError;
+        },
         clearCache: () => queryClient.clear(),
       });
       observeSession(null);
       setProfile(null);
       setError("");
       updatePhase("signed_out");
+    } catch {
+      setError("Could not sign out on this device. Reconnect and try again.");
     } finally {
       setBusy(false);
     }
@@ -308,15 +313,16 @@ export function AuthProvider({ children }: PropsWithChildren) {
     const subscription = AppState.addEventListener("change", (nextState) => {
       void applyAuthAppState(nextState, supabase.auth);
       if (nextState === "active") {
-        if (phaseRef.current === "approved") void queryClient.invalidateQueries();
-        else if (phaseRef.current === "redeem_pending") void finishApproval();
+        // AppProviders owns query refresh on foreground. Auth only resumes
+        // unfinished approval here, avoiding a second invalidation/refetch.
+        if (phaseRef.current === "redeem_pending") void finishApproval();
       }
     });
     return () => {
       subscription.remove();
       void supabase.auth.stopAutoRefresh();
     };
-  }, [finishApproval, queryClient]);
+  }, [finishApproval]);
 
   const value = useMemo<AuthContextValue>(() => ({
     phase,
