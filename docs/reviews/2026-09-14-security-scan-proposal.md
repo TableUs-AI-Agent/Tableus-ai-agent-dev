@@ -1,6 +1,8 @@
 # Proposed security scan for the replacement candidate
 
-Status: installation/setup approved; scan execution not approved or started.
+Status: superseded after the owner asked to avoid another scan. Installation
+was approved; execution was never approved or started. The active objective
+prepares staging source-review acceptance instead.
 Codex Security `0.1.24` was installed with explicit owner confirmation.
 No scan ID was created. Existing canceled scans were not resumed or modified.
 

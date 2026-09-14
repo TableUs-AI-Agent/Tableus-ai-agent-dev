@@ -1,6 +1,6 @@
 # Closed-beta readiness checklist
 
-Reviewed 2026-09-13. Deployed staging source:
+Reviewed 2026-09-14. Deployed staging source:
 `c5b041c85f4f7b959436c13bef48c959622c624f`.
 The owner-approved push, CI and existing Railway staging/Vercel Preview
 deployment are verified in [deployment evidence](evidence/c5b041c/README.md).
@@ -34,11 +34,14 @@ A historical confirmation is not a fresh test or a new owner signature.
   API tests and mobile restoration/retry/stale-result component tests.
 - [x] The [source delta](reviews/2026-09-12-security-delta.md) identifies the
   historical scan and subsequent changes without relabeling the old scan.
-- [ ] Security evidence acceptance for the replacement is resolved; the current
-  cumulative schema still requires an exact-candidate scan.
+- [ ] Security evidence acceptance for the replacement is resolved. A distinct
+  staging-only [source-review policy and report](evidence/source-review-6b9719b/README.md)
+  is prepared for 6b9719b; concrete owner acceptance remains pending. The legacy
+  version-one scan contract retains its original meaning.
 - [ ] Cumulative evidence validator accepts an honestly sourced evidence set.
   The [pending input and component hashes](evidence/c5b041c/native/candidate-readiness-status.json)
-  are assembled; the unchanged validator rejects missing security evidence.
+  are assembled for c5b041c; validation still rejects their missing security
+  evidence. Older native/telemetry artifacts cannot complete the 6b9719b input.
 
 ## Implemented controls and recorded owner confirmations
 

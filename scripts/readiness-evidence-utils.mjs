@@ -2,6 +2,8 @@ import { mkdirSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { createHash } from "node:crypto";
 
+import { validateStagingSourceReview } from "./source-review-evidence.mjs";
+
 import { validateBuildReceipt } from "./mobile-artifact-security.mjs";
 
 const SHA_PATTERN = /^[0-9a-f]{40}$/;
@@ -57,13 +59,14 @@ export function assertSafeReadinessEvidence(value) {
   return value;
 }
 
-export function validateCumulativeReadinessInput(value, expectedSha) {
-  if (!SHA_PATTERN.test(expectedSha) || value?.schema_version !== 1 || value.sha !== expectedSha) {
-    throw new Error("Cumulative evidence must use schema version 1 and the exact lowercase source SHA");
+export function validateCumulativeReadinessInput(value, expectedSha, { sourceRoot } = {}) {
+  if (!SHA_PATTERN.test(expectedSha) || ![1, 2].includes(value?.schema_version) || value.sha !== expectedSha) {
+    throw new Error("Cumulative evidence must use schema version 1 or 2 and the exact lowercase source SHA");
   }
   requireExactKeys(value, [
     "schema_version", "sha", "deployments", "web", "ios", "android", "associations",
     "security", "deterministic", "telemetry", "release_checks",
+    ...(value.schema_version === 2 ? ["environment"] : []),
   ], "cumulative input");
   requireExactKeys(value.deployments, ["railway_id", "vercel_id"], "deployments");
   requireSafeId(value.deployments.railway_id, "deployments.railway_id");
@@ -106,12 +109,20 @@ export function validateCumulativeReadinessInput(value, expectedSha) {
   requireSource(value.associations, "associations", expectedSha);
   requireChecksum(value.associations.manifest_sha256, "associations.manifest_sha256");
 
-  requireExactKeys(value.security, [
-    "sha", "passed", "scan_id", "report_sha256", "critical_findings", "high_runtime_findings",
-  ], "security");
-  requireSource(value.security, "security", expectedSha);
-  requireSafeId(value.security.scan_id, "security.scan_id");
-  requireChecksum(value.security.report_sha256, "security.report_sha256");
+  if (value.schema_version === 2) {
+    if (value.environment !== "staging") throw new Error("Source review acceptance is staging-only");
+    validateStagingSourceReview(value.security, expectedSha, sourceRoot);
+  } else {
+    requireExactKeys(value.security, [
+      "sha", "passed", "scan_id", "report_sha256", "critical_findings", "high_runtime_findings",
+    ], "security");
+    requireSource(value.security, "security", expectedSha);
+    requireSafeId(value.security.scan_id, "security.scan_id");
+    requireChecksum(value.security.report_sha256, "security.report_sha256");
+    if (value.security.critical_findings !== 0 || value.security.high_runtime_findings !== 0) {
+      throw new Error("Critical or high runtime security findings block readiness");
+    }
+  }
 
   requireExactKeys(value.deterministic, [
     "sha", "passed", "ios_summary_sha256", "android_summary_sha256",
@@ -140,9 +151,6 @@ export function validateCumulativeReadinessInput(value, expectedSha) {
     "rollback_owner_recorded",
     "residual_risks_recorded",
   ]) requireBoolean(value.release_checks?.[flag], `release_checks.${flag}`);
-  if ((value.security.critical_findings ?? -1) !== 0 || (value.security.high_runtime_findings ?? -1) !== 0) {
-    throw new Error("Critical or high runtime security findings block readiness");
-  }
   return assertSafeReadinessEvidence(structuredClone(value));
 }
 

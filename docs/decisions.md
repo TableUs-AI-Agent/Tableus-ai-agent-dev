@@ -1,6 +1,30 @@
 # Decision log
 
+## Staging source-review preparation — 2026-09-14
+
+- Following the owner's request to avoid another usage-heavy scan, prepare the
+  documented staging source-review pathway. This supersedes the earlier proposed
+  scanner execution. No scan is started; the installed plugin and canceled scans
+  are unchanged. Preparation does not claim owner acceptance of an unseen report.
+- Keep legacy scan records intact. Use version-two cumulative staging input with
+  a separate `source_review` report, required coverage and immutable Git file
+  verification. Bind explicit owner acceptance to policy, candidate and report
+  hash; incomplete evidence or unresolved critical/high runtime findings fails.
+  Production/store/cohort gates and application/native provenance are unchanged.
+- This is targeted primary-agent review plus deterministic tests, not independent
+  auditing or scan certification. Mechanical validation establishes consistency
+  and source identity, not the truth of a human approval or reviewer assertion.
+- The concrete report for 6b9719b records two open medium staging risks: shared
+  provider quotas and URL capabilities. Eleven file hashes and seven review
+  areas are verified; owner acceptance remains false. Fourteen focused gate
+  tests and full local readiness pass. No application source or hosted state
+  changes in this objective.
+
+
 ## Device-session and refresh correction — 2026-09-14
+
+The scan proposal and scan-only next-step choice below are historical and
+superseded by the staging source-review preparation decision above.
 
 - The owner approved installing Codex Security and inspecting scan controls,
   not scan execution. Version 0.1.24 is installed. Prepare one Standard scan

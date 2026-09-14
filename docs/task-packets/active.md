@@ -1,71 +1,58 @@
-# Active packet: device session and plan refresh correction
+# Active packet: staging source-review acceptance
 
-## Objective
+## Objective and authority
 
-Prepare the replacement client candidate with device-only sign-out and fewer
-unnecessary Places-backed reads. The owner accepted the recommended order on
-2026-09-14: fix locally, freeze/review the replacement, then request explicit
-scope/usage approval for an exact-candidate security scan. Keep the scan
-requirement and its fail-closed validator unchanged. This is the only active
-implementation packet.
+The owner asked to avoid another usage-heavy security scan and continued with
+preparation of the recommended staging source-review pathway. Build a distinct,
+truthful evidence type, targeted review and deterministic rejection checks.
+No plugin scan is authorized. This is the only active implementation packet.
 
-Branch: `codex/device-session-plan-refresh` in the isolated
-`.worktrees/astra-project-reassessment` worktree, based on evidence commit
-`1c65f68c6cba9bb675bb898b13b7080f6f97a925`.
-Frozen replacement application source: `6b9719b4e63e34803f2e7c2598e45851790df661`.
-[Validation](../evidence/device-session-plan-refresh/local-validation.json) and
-[ordinary source review](../reviews/2026-09-14-device-session-plan-refresh.md)
-are complete. Native/hosted/scan acceptance for this replacement is pending.
-Development uses Astra; application providers remain Gemini and Places.
+Branch: `codex/staging-source-review`, isolated worktree
+`.worktrees/astra-project-reassessment`, based on tooling/evidence `5256390`.
+Application candidate remains `6b9719b4e63e34803f2e7c2598e45851790df661`.
+Hosted staging/artifacts remain `c5b041c85f4f7b959436c13bef48c959622c624f`.
 
-## Implementation and acceptance
+## Acceptance criteria
 
-- Mobile sign-out explicitly uses Supabase local scope. Successful sign-out
-  clears local pending auth, profile and query state. A returned provider error
-  leaves the session/cache available and displays a sanitized retry message.
-- Hidden mounted plan routes unsubscribe from their query. They do not start
-  detail reads on mount, global invalidation, foreground or reconnect.
-- AppProviders is the single owner of foreground query refresh. Auth resumes
-  pending approval without separately invalidating every query. A real return
-  to the foreground refreshes subscribed queries even within the 30-second
-  default freshness window; duplicate active notifications do not refetch.
-- Re-entering a plan refreshes votes/status immediately. Pull-to-refresh and
-  offline cached reads remain available. Mutation responses update the plan
-  without an additional client detail request.
-- Component tests reproduce the original faults and exercise the actual auth,
-  app and plan components with real TanStack Query and mocked external edges.
-  Eleven focused tests and mobile types passed. The final `make ready` passed
-  204 JavaScript/98 Python tests (three local Postgres skips), lint/types,
-  contracts, builds and smoke. The narrow source review is complete.
+- Version-one scan evidence remains unchanged. New version-two cumulative input
+  accepts only `environment: staging` and an explicit `source_review` record.
+- The report identifies candidate, reviewer, date, seven security boundary areas,
+  source file digests, passing deterministic checks, findings and limitations.
+  Verify file bytes from the exact Git commit, not the current working tree.
+- Require an owner acceptance record for `staging-source-review-v1`, bound to
+  the exact candidate and parsed-report SHA-256. Keep it pending until the owner
+  accepts the concrete report. Hashes detect changes, not reviewer truthfulness.
+- Reject missing/unknown fields, file/report tampering, incomplete coverage,
+  failed checks, unresolved critical/high runtime findings, production scope
+  and absent/mismatched owner acceptance. Preserve every native/web/telemetry gate.
+- Run focused tests and one final `make ready`; record source/tooling/evidence
+  provenance and the remaining acceptance boundary without inventing scan data.
 
-## Evidence boundaries and next gate
+## Scope and handoff
 
-The frozen deployed application remains
-`c5b041c85f4f7b959436c13bef48c959622c624f`. Its six artifacts, both native
-checklists, shared journey and four-platform telemetry remain attributed to
-that source. Its cumulative status still rejects missing security evidence.
-[Historical acceptance packet](../history/2026-09-14/c5b041c-acceptance-packet.md).
+This is operator tooling and evidence preparation. It neither changes application
+runtime/locks/contracts nor approves release. Targeted source review covers the
+listed controls; it is not a whole-repository audit or independent verification.
+The historical scanner report remains unavailable, and canceled scans stay canceled.
 
-Do not relabel that evidence for the replacement. The exact replacement source
-and ordinary review are recorded above. Codex Security 0.1.24 is now installed
-with owner approval and its controls have been inspected. The
-[scan proposal](../reviews/2026-09-14-security-scan-proposal.md) is ready:
-one Standard scan, at most two active reviewers and a 20-minute checkpoint;
-there is no exposed desktop hard token/dollar cap. Execution remains unapproved.
-A clean detached target exists at `.worktrees/security-6b9719b`; no scan exists.
-Another scan, push/CI, deployment, native build/device acceptance or paid live
-run needs its applicable explicit authorization. The canceled scan stays canceled.
+The prepared report and policy need final owner acceptance. The replacement still
+needs its own authorized hosted/native verification; do not reuse c5b041c artifacts
+as replacement evidence. Production, store and cohort approval stay separate.
+No push, merge, deployment, native build, new provider call, message/account,
+resource or secret creation, destructive cleanup or scan is implied.
 
-No new provider calls, sign-in emails, accounts, secrets, resources, merge,
-production/store/cohort action or destructive cleanup are authorized here.
-The completed live run remains 80 Places attempts, one generation,
-$0.00056825 estimated Gemini and six conservatively consumed messages.
+## Completed preparation and next decision
 
-## Deliberate limits
+The evidence validator and targeted [candidate report](../evidence/source-review-6b9719b/README.md)
+are prepared. All fourteen focused gate tests pass. `make ready` passed 212
+JavaScript and 98 Python tests, with three Postgres-only local skips, plus lint,
+types, contracts, web/Expo-web builds and deterministic smoke. The actual report
+passes source-file verification; its pending owner acceptance correctly fails.
+Historical c5b041c input remains unchanged and blocked on missing security evidence.
 
-This correction removes reproduced client triggers; it does not add provider
-storage or alter backend hydration. A necessary visible detail read or mutation
-response still hydrates live restaurant data. The origin of every historical
-read remains unproven. Real cross-device session preservation and native
-navigation on the replacement still require later authorized device evidence.
-Native glyph polish and production privacy/distribution remain queued.
+The remaining step in this packet is the owner's decision on the concrete
+staging-only policy/report and its two recorded medium risks. After acceptance,
+record the actual message reference and matching report hash. The next bounded
+packet should scope replacement hosted/native verification around cross-device
+sign-out preservation and plan focus/foreground refresh. It must preserve source
+provenance and define any required deployment, build and live-operation approvals.

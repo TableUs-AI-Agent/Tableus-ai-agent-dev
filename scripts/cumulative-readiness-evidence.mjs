@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 
 import { readFileSync } from "node:fs";
+import { fileURLToPath } from "node:url";
 import { resolve } from "node:path";
 
 import {
@@ -29,7 +30,8 @@ const evidence = resolve(args.evidence ?? "");
 if (!apiUrl || !sha || !args.input || !args.evidence) throw new Error("--api-url, --sha, --input, and --evidence are required");
 requireReleaseOrigin(apiUrl, RELEASE_ORIGINS.stagingApi, "Cumulative staging API");
 
-const input = validateCumulativeReadinessInput(JSON.parse(readFileSync(inputPath, "utf8")), sha);
+const sourceRoot = args["source-root"] ? resolve(args["source-root"]) : fileURLToPath(new URL("..", import.meta.url));
+const input = validateCumulativeReadinessInput(JSON.parse(readFileSync(inputPath, "utf8")), sha, { sourceRoot });
 const response = await fetch(`${apiUrl.replace(/\/$/, "")}/health/ready`, { redirect: "error", signal: AbortSignal.timeout(15_000) });
 if (!response.ok) throw new Error(`Staging readiness failed (${response.status})`);
 const readiness = validateStagingReadiness(await response.json(), sha);

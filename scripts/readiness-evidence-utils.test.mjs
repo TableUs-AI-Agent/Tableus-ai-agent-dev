@@ -4,6 +4,9 @@ import { tmpdir } from "node:os";
 import { join } from "node:path";
 import test from "node:test";
 import { createHash } from "node:crypto";
+import { execFileSync } from "node:child_process";
+import { fileURLToPath } from "node:url";
+import { evidenceDigest, SOURCE_REVIEW_AREAS, SOURCE_REVIEW_POLICY, validateSourceReviewReport } from "./source-review-evidence.mjs";
 
 import {
   assertSafeReadinessEvidence,
@@ -12,7 +15,8 @@ import {
   writeCumulativeReadinessEvidence,
 } from "./readiness-evidence-utils.mjs";
 
-const sha = "a".repeat(40);
+const sourceRoot = fileURLToPath(new URL("..", import.meta.url));
+const sha = execFileSync("git", ["rev-parse", "HEAD"], { cwd: sourceRoot, encoding: "utf8" }).trim();
 const checksum = (character) => character.repeat(64);
 const mobileEvidence = (platform, artifactCharacter) => {
   const profile = `readiness-${platform}`;
@@ -135,4 +139,114 @@ test("writer retains only validated sanitized JSON", () => {
   } finally {
     rmSync(directory, { recursive: true, force: true });
   }
+});
+
+
+function reviewed() {
+  const value = valid();
+  const file = "scripts/release-origins.mjs";
+  const bytes = execFileSync("git", ["cat-file", "blob", `${sha}:${file}`], { cwd: sourceRoot });
+  const report = {
+    schema_version: 1, kind: "source_review", sha, environment: "staging",
+    reviewer: "fixture-reviewer", reviewed_at: "2026-09-14T00:00:00.000Z",
+    files: [{ path: file, sha256: createHash("sha256").update(bytes).digest("hex") }],
+    coverage: SOURCE_REVIEW_AREAS.map((area) => ({ area, files: [file], assessment: "Synthetic validation fixture only." })),
+    checks: [{ name: "Synthetic regression result", passed: true, evidence_sha256: checksum("6") }],
+    findings: [], limitations: ["Synthetic evidence for validator behavior only."],
+  };
+  value.schema_version = 2;
+  value.environment = "staging";
+  value.security = { kind: "source_review", sha, report, report_sha256: evidenceDigest(report),
+    owner_acceptance: { policy: SOURCE_REVIEW_POLICY, approved: true, sha, report_sha256: evidenceDigest(report), reference: "fixture-approval" } };
+  return value;
+}
+function rebind(value) {
+  value.security.report_sha256 = evidenceDigest(value.security.report);
+  value.security.owner_acceptance.report_sha256 = value.security.report_sha256;
+  return value;
+}
+function verifyReview(value) { return validateCumulativeReadinessInput(value, sha, { sourceRoot }); }
+
+test("staging source review verifies immutable source and preserves distinct provenance", () => {
+  const value = reviewed();
+  assert.deepEqual(verifyReview(value), value);
+  assert.equal(value.security.scan_id, undefined);
+  assert.throws(() => validateCumulativeReadinessInput(value, sha), /Git source root/);
+});
+
+test("staging source review cannot replace a scan in version one or authorize production", () => {
+  const legacy = reviewed(); legacy.schema_version = 1; delete legacy.environment;
+  assert.throws(() => verifyReview(legacy), /security contains/);
+  const production = reviewed(); production.environment = "production";
+  assert.throws(() => verifyReview(production), /staging-only/);
+  const reportScope = reviewed(); reportScope.security.report.environment = "production";
+  assert.throws(() => verifyReview(rebind(reportScope)), /staging environment/);
+});
+
+test("owner acceptance is required and binds policy, source, and exact reviewed report", () => {
+  for (const [key, value] of [["approved", false], ["policy", "production"], ["sha", "f".repeat(40)], ["report_sha256", checksum("0")], ["reference", ""]]) {
+    const input = reviewed(); input.security.owner_acceptance[key] = value;
+    assert.throws(() => verifyReview(input), /Explicit owner acceptance/);
+  }
+  const missing = reviewed(); delete missing.security.owner_acceptance;
+  assert.throws(() => verifyReview(missing), /missing or unknown/);
+  const reportChanged = reviewed(); reportChanged.security.report.limitations.push("Another unresolved limit.");
+  assert.throws(() => verifyReview(reportChanged), /report hash mismatch/);
+  reportChanged.security.report_sha256 = evidenceDigest(reportChanged.security.report);
+  assert.throws(() => verifyReview(reportChanged), /Explicit owner acceptance/);
+});
+
+test("source review rejects forged file hashes, absent paths and traversal", () => {
+  const wrong = reviewed(); wrong.security.report.files[0].sha256 = checksum("0");
+  assert.throws(() => verifyReview(rebind(wrong)), /file hash mismatch/);
+  for (const path of ["../package.json", "/etc/hosts", ".git/config", "scripts/../../package.json", "scripts/absent.mjs"]) {
+    const input = reviewed(); input.security.report.files[0].path = path;
+    assert.throws(() => verifyReview(rebind(input)));
+  }
+});
+
+test("source review rejects missing or fabricated coverage and missing check evidence", () => {
+  const missing = reviewed(); missing.security.report.coverage.pop();
+  assert.throws(() => verifyReview(rebind(missing)), /missing required coverage/);
+  const unbound = reviewed(); unbound.security.report.coverage[0].files = ["unreviewed.ts"];
+  assert.throws(() => verifyReview(rebind(unbound)), /verified files/);
+  const duplicate = reviewed(); duplicate.security.report.coverage[1].area = duplicate.security.report.coverage[0].area;
+  assert.throws(() => verifyReview(rebind(duplicate)), /duplicate review area/);
+  const checks = reviewed(); checks.security.report.checks = [];
+  assert.throws(() => verifyReview(rebind(checks)), /Deterministic checks/);
+  const failed = reviewed(); failed.security.report.checks[0].passed = false;
+  assert.throws(() => verifyReview(rebind(failed)), /checks must pass/);
+  const unknown = reviewed(); unknown.security.report.scan_id = "misleading-scan";
+  assert.throws(() => verifyReview(rebind(unknown)), /unknown fields/);
+});
+
+test("unresolved critical/high runtime findings block review acceptance even when deferred", () => {
+  for (const [severity, runtime] of [["critical", false], ["critical", true], ["high", true]]) {
+    for (const status of ["open", "deferred"]) {
+      const value = reviewed();
+      value.security.report.findings = [{ id: "finding-1", severity, runtime, status, disposition: "Needs resolution." }];
+      assert.throws(() => verifyReview(rebind(value)), /block readiness/);
+    }
+  }
+  const lower = reviewed();
+  lower.security.report.findings = [{ id: "finding-1", severity: "medium", runtime: true, status: "open", disposition: "Isolated staging boundary recorded for owner review." }];
+  assert.equal(verifyReview(rebind(lower)).security.report.findings.length, 1);
+  const missing = reviewed(); missing.security.report.findings = [{ id: "finding-1", severity: "high" }];
+  assert.throws(() => verifyReview(rebind(missing)), /missing or unknown/);
+});
+
+test("source review retains all other cumulative gates and evidence privacy", () => {
+  const noDevice = reviewed(); noDevice.ios.passed = false;
+  assert.throws(() => verifyReview(noDevice), /ios.passed/);
+  const noTelemetry = reviewed(); noTelemetry.telemetry.passed = false;
+  assert.throws(() => verifyReview(noTelemetry), /telemetry.passed/);
+  const unsafe = reviewed(); unsafe.security.report.limitations.push("person@example.test");
+  assert.throws(() => verifyReview(rebind(unsafe)), /prohibited/);
+});
+
+test("a review can be checked before acceptance without producing a passing release", () => {
+  const value = reviewed();
+  assert.equal(validateSourceReviewReport(value.security.report, sha, sourceRoot), value.security.report);
+  value.security.owner_acceptance.approved = false;
+  assert.throws(() => verifyReview(value), /Explicit owner acceptance/);
 });

@@ -79,18 +79,25 @@ were preserved. The detailed previous state is [archived](history/2026-09-14/c5b
 
 ## Security and release boundary
 
-The owner accepted keeping the exact-candidate scan requirement and fixing the
-known issues before scanning the replacement. No new scan is authorized or
-started. Codex Security 0.1.24 is installed with owner approval; its desktop
-launcher exposes no hard token/dollar cap. A [bounded proposal](reviews/2026-09-14-security-scan-proposal.md)
-for one Standard pass, two active reviewers maximum and a 20-minute checkpoint
-is awaiting separate execution approval. A clean detached candidate checkout
-is prepared at `.worktrees/security-6b9719b`. The historical focused scan belongs to 069473c and its sealed report
-is unavailable; the deep scan remains canceled. The cumulative validator
-continues to reject c5b041c's missing security evidence. Ordinary source review
-is not scan evidence, and no cumulative sign-off is claimed.
+The owner asked to avoid another usage-heavy scan and continued with preparation
+of the staging source-review pathway. Codex Security remains installed but no
+scan has started. The earlier scan proposal is superseded. Version-one scan
+records remain supported; new version-two staging-only evidence binds the review
+and owner acceptance to the candidate and immutable file/report hashes.
+The prepared review remains unaccepted until its concrete report receives owner
+approval. Historical c5b041c cumulative evidence stays unchanged and incomplete.
+The historical focused scan report is unavailable, and the deep scan stays canceled.
 
-The local correction must receive its own source-bound review/scan and affected
+The [prepared report](evidence/source-review-6b9719b/README.md) binds eleven
+reviewed files and seven control areas to 6b9719b. Two medium risks remain open:
+shared provider quota consumption and private capabilities in URLs. The pending
+acceptance record correctly fails validation. Tooling `make ready` passed 212
+JavaScript and 98 Python tests, with three Postgres-only local skips; lint,
+types, contracts, web/Expo-web builds and deterministic smoke also passed.
+This tooling verification does not replace the application candidate's own
+204-JavaScript-test record or its outstanding device/hosted acceptance.
+
+The local correction must receive accepted source-bound security evidence and affected
 native/hosted verification before release acceptance. New pushes trigger Vercel
 Preview, so keep the branch local until authorized. Production trust origins,
 privacy/Auth deletion/retention, capability and invite/cohort limits, signing,
@@ -100,7 +107,8 @@ Native default tab glyph polish remains queued before distribution.
 ## Worktree handoff
 
 Work in `.worktrees/astra-project-reassessment` on
-`codex/device-session-plan-refresh`, based on evidence commit `1c65f68`.
+`codex/staging-source-review`, based on tooling/evidence commit `5256390`.
+The client candidate and prior validation remain on `codex/device-session-plan-refresh`.
 `codex/astra-project-reassessment` preserves that evidence checkpoint. The
 separate `.worktrees/native-c5b041c` checkout remains clean at the deployed SHA.
 The original checkout and its unrelated/untracked work are preserved.

@@ -1,3 +1,7 @@
+> Superseded: the owner subsequently asked to avoid another scan and continued
+> with preparation of the [staging source-review pathway](2026-09-14-staging-source-review-policy.md).
+> Final acceptance remains tied to the concrete report. The earlier decision below is historical.
+
 # Staging security decision — exact-candidate requirement retained
 
 **2026-09-14 decision:** the owner accepted keeping the exact-candidate scan
