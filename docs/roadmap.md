@@ -32,6 +32,11 @@ The owner accepted the
 and exact 6b9719b report. Replacement hosted/native preflight is complete;
 the owner approved its bounded execution request and execution is starting.
 No production, store or cohort approval follows. No scan has started.
+The existing Expo Doctor patch-version warning is recorded during native
+execution; dependency patch/advisory review remains a later release requirement.
+The first replacement iOS artifact is inspected, deterministic device execution
+is active, and the exact-release web canary has reached both providers. Native
+readiness and cumulative acceptance remain the current objective.
 
 Only `docs/task-packets/active.md` is active. Later rows are queued outcomes,
 not instructions to start concurrent agents, scans or cloud work.

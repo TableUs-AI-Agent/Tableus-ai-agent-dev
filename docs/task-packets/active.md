@@ -65,9 +65,18 @@ Hosted execution passes: [deployment evidence](../evidence/replacement-6b9719b/d
 binds CI run `34905755622`, Railway `69c96019-bedc-4b53-a37d-358a103f7e24`
 and Preview `dpl_2qeefqPhARdErQxUqxLssCintxte` to 6b9719b. Source stamps,
 exact Preview CORS and the 349-attempt backstop are verified; Production is
-unchanged. The first local native build is running. Use isolated deterministic
+unchanged. The first iOS test build and its artifact inspection pass; its
+deterministic lifecycle/offline suite is running. Web session reload and read-only
+account controls pass, and both providers received one exact-release web canary.
+See the [execution progress](../evidence/replacement-6b9719b/execution-progress.json).
+Use isolated deterministic
 test targets because those harnesses reset app data; preserve the existing
 staging simulator/emulator sessions for the same-account refresh checks.
+
+EAS Expo Doctor reports 20/21 checks passing and eleven patch recommendations,
+identical to the retained previous build. Keep frozen dependencies for this
+approved staging run and retain the explicit [toolchain observation](../evidence/replacement-6b9719b/build-toolchain-observation.json).
+Do not describe Doctor as entirely passing or claim a fresh advisory review.
 
 Build sequentially from the exact clean application source, with logs in files
 and inspected artifacts/receipts retained outside temporary storage. Run and

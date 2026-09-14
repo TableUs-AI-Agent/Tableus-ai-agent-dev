@@ -2,12 +2,20 @@
 
 ## Replacement execution approval — 2026-09-14
 
+- The first inspected iOS artifact and delivered web canary do not imply native
+  or cumulative acceptance. Retain separate artifact, deterministic, live-device
+  and telemetry gates; subsequent native phases stop on any failed prerequisite.
 - Exact-source CI and existing staging/Preview deployments now pass. The
   [deployment record](evidence/replacement-6b9719b/deployment.json) preserves
   the actual IDs, source stamps, CORS and unchanged Production pointers.
 - Run deterministic native harnesses on isolated local test devices: their
   app-reset behavior must not erase the retained staging sessions required for
   cross-device verification. Native workloads remain sequential.
+- Record the existing EAS Expo Doctor warning accurately: 20/21 checks pass,
+  with eleven patch recommendations identical in both the old and replacement
+  test-ios logs. Keep the approved candidate's locked bytes for this staging run;
+  patch/advisory review remains required before production/store acceptance.
+  This is a corrected toolchain observation, not a new advisory result or scan.
 - The owner's direct “approve” reply accepts the prepared plan at `9ee4a80`;
   [the record](evidence/replacement-6b9719b/execution-approval.json) binds the
   exact candidate, plan and actual task turn. Execute existing staging/Preview

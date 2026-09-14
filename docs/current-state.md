@@ -30,8 +30,20 @@ records Railway `69c96019-bedc-4b53-a37d-358a103f7e24` and Preview
 `dpl_2qeefqPhARdErQxUqxLssCintxte` at 6b9719b. Both Preview origins pass CORS;
 Production pointers/protection are unchanged. CI run `34905755622` passes
 204 JavaScript, 101 Python and four browser tests. The reduced Places backstop
-is verified at 349; starting aggregate remains 269. The first sequential local
-native build is running. No replacement native or cumulative acceptance exists yet.
+is verified at 349; starting aggregate remains 269. The first iOS test artifact
+passed source/checksum/receipt inspection; its isolated lifecycle/offline suite
+is running. [Execution progress](evidence/replacement-6b9719b/execution-progress.json)
+also records web session restoration, read-only account controls and one delivered
+web canary in each provider. One sign-in email is counted; new Places/Gemini usage
+remains zero at the last aggregate check. Native device and cumulative acceptance
+remain incomplete.
+
+The EAS build's Expo Doctor step passes 20/21 checks and reports eleven SDK 57
+patch-version recommendations. The exact same warning appears in the retained
+c5b041c build log. [The observation](evidence/replacement-6b9719b/build-toolchain-observation.json)
+records locked/recommended versions; dependencies remain frozen. This corrects
+the release checklist's unqualified historical Doctor-pass wording. No fresh
+advisory query or dependency upgrade was performed.
 
 Mobile device sign-out now explicitly uses Supabase local scope. It clears local
 state after success and exposes a sanitized retry message on failure instead of

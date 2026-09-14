@@ -10,7 +10,11 @@ historical snapshot; source-bound execution evidence follows separately.
 Railway/Preview deployments, CORS, reduced provider ceiling and unchanged
 Production pointers. Fresh [PostHog](posthog-baseline.json) and
 [Sentry](sentry-baseline.json) baselines contain no replacement canaries.
-Native/device/telemetry delivery and cumulative acceptance remain outstanding.
+[Execution progress](execution-progress.json) records the first inspected iOS
+test artifact, active deterministic suite and web session/account checks.
+[PostHog](posthog-web-observation.json) and [Sentry](sentry-web-observation.json)
+each received the single exact-release web canary. Native readiness, native/API
+telemetry delivery and cumulative acceptance remain outstanding.
 
 ## Candidate and readiness
 

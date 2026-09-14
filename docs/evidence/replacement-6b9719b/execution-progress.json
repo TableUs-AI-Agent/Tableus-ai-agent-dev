@@ -1,0 +1,30 @@
+{
+  "schema_version": 1,
+  "application_sha": "6b9719b4e63e34803f2e7c2598e45851790df661",
+  "observed_at": "2026-09-14T23:56:02.010194+00:00",
+  "native_artifacts_inspected": 1,
+  "test_ios": {
+    "profile": "test-ios",
+    "artifact_name": "TableUs.app",
+    "artifact_sha256": "b20fe1b11178545521521329113e742e84da447d61604cbf3af5d9d55ee7ceb9",
+    "receipt_and_inspection_validated": true,
+    "source_and_lock_validated": true,
+    "build_started_at": "2026-09-14T22:43:08.678220+00:00",
+    "build_finished_at": "2026-09-14T23:41:33.096365+00:00",
+    "build_duration_seconds": 3504
+  },
+  "ios_deterministic_status": "in-progress",
+  "web_session_reload_passed": true,
+  "web_account_export_ui_reported_download": true,
+  "web_deletion_blocked_on_organized_plans": true,
+  "web_deletion_confirmation_empty": true,
+  "web_canary_delivered": {
+    "posthog": 1,
+    "sentry": 1
+  },
+  "places_attempts_this_run": 0,
+  "gemini_generations_this_run": 0,
+  "sign_in_emails_conservatively_consumed": 1,
+  "provider_usage_observed_at": "2026-09-14T23:41:52.393645Z",
+  "cumulative_acceptance_complete": false
+}
