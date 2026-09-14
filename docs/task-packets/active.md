@@ -49,6 +49,9 @@ JavaScript and 98 Python tests, with three Postgres-only local skips, plus lint,
 types, contracts, web/Expo-web builds and deterministic smoke. The actual report
 passes source-file verification; its pending owner acceptance correctly fails.
 Historical c5b041c input remains unchanged and blocked on missing security evidence.
+Tooling source is `1c75832ef421335662319635e1b74888476cdb77`, distinct from
+application candidate 6b9719b. The evidence-only follow-up binds the local checks
+and retained log hashes to that tooling commit.
 
 The remaining step in this packet is the owner's decision on the concrete
 staging-only policy/report and its two recorded medium risks. After acceptance,

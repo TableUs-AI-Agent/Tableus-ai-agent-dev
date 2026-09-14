@@ -12,6 +12,9 @@ builds, live operations, production, store distribution or cohort expansion.
 - Report: [`review.json`](review.json).
 - Parsed-report SHA-256: `046bba5a771112ef1e49888b6a09235f9c6d259b757b81f90f85607785795122`.
 - Owner acceptance: **pending** in [`security.pending.json`](security.pending.json).
+- Operator tooling commit: `1c75832ef421335662319635e1b74888476cdb77`;
+  [local validation and file/log hashes](local-validation.json). This is separate
+  from the application source above.
 
 The report digest hashes UTF-8 `JSON.stringify(parsedReport)`, not the raw
 pretty-printed file. A later source/report change needs new matching acceptance.

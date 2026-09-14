@@ -108,6 +108,8 @@ Native default tab glyph polish remains queued before distribution.
 
 Work in `.worktrees/astra-project-reassessment` on
 `codex/staging-source-review`, based on tooling/evidence commit `5256390`.
+Source-review tooling is frozen at `1c75832ef421335662319635e1b74888476cdb77`;
+the following evidence-only commit records that identity and validation hashes.
 The client candidate and prior validation remain on `codex/device-session-plan-refresh`.
 `codex/astra-project-reassessment` preserves that evidence checkpoint. The
 separate `.worktrees/native-c5b041c` checkout remains clean at the deployed SHA.
