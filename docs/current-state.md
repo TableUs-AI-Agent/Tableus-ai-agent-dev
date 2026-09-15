@@ -31,13 +31,14 @@ three local Postgres skips. Subsequent changes were YAML/navigation and evidence
 YAML parsing and evidence privacy checks pass. Existing Expo patch warnings remain.
 
 The [next staging verification plan](evidence/plan-refresh-staging-2ad48a8/README.md)
-is concrete and awaits approval. It reuses both test artifacts, builds the four
+was approved on 2026-09-15; execution is starting. It reuses both test artifacts, builds the four
 remaining profiles, and caps a new run at 80 additional Places attempts, four
 sign-in messages and zero generations. All four input preflights pass. The exact
 [focused source review](evidence/source-review-2ad48a8/README.md), including its
-same two medium risks, still needs matching owner acceptance. No Security Scan,
-hosted deployment, additional build or physical installation followed from the
-local verification request.
+same two medium risks, now has matching owner acceptance. The new approval
+covers the four remaining builds, staging/Preview deployment and saved-device
+checks under the linked limits. No Security Scan is authorized. The fresh provider
+baseline remains 329 Places attempts, allowing the approved backstop of 409.
 
 ## Reported scrolling and refresh behavior
 

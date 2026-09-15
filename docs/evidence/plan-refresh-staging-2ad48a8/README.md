@@ -1,6 +1,8 @@
-# Proposed staging verification of the refresh correction
+# Approved staging verification of the refresh correction
 
-Status: prepared only; owner acceptance and execution approval are pending.
+Status: owner accepted the exact source review and approved this execution on
+2026-09-15. [Approval evidence](execution-approval.json) binds the original plan
+at commit `73ff83b1105bf06a130d209a67a327eee8e77f74`.
 Both isolated native verification phases now pass; see the
 [completed evidence](../plan-refresh-verification-2ad48a8/README.md).
 
@@ -13,8 +15,9 @@ provider-quota fairness and private join capabilities in URLs. The review covers
 fourteen source files and seven areas; it is not a Security Scan or independent
 audit. Its report was prepared before native execution; native results are separate.
 
-The owner decision would accept that exact report for existing isolated staging
-and authorize the bounded execution below. No approval has been recorded here.
+The owner decision accepts that exact report for existing isolated staging
+and authorizes the bounded execution below. Cumulative acceptance still requires
+the actual hosted/native results.
 
 ## Execution
 
@@ -49,7 +52,7 @@ and authorize the bounded execution below. No approval has been recorded here.
    Assemble the version-two cumulative report only from genuine source-bound
    evidence and the owner's matching review acceptance.
 
-## Proposed limits
+## Approved limits
 
 | Measure | Maximum for this new run |
 | --- | --- |
@@ -71,7 +74,7 @@ do not start a phase whose maximum exceeds its remaining allowance.
 The prior 6b9719b run stays recorded at 60/80 Places attempts and 3/4 messages;
 this proposal does not relabel or reset that history. The last project-wide
 aggregate was 329 and the configured backstop was 349. Recheck the aggregate
-read-only before executing. If unchanged, the proposed backstop is 409 (329+80).
+read-only before executing. The fresh read-only count remains 329; the approved backstop is 409 (329+80).
 If it changed, reconcile the difference before proceeding; never exceed the
 existing supported maximum of 500. A separate new-run ledger must enforce 80
 even if older attempts expire from the rolling window. Leave the reduced

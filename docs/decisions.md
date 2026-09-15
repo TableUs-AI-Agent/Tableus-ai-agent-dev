@@ -1,5 +1,17 @@
 # Decision log
 
+## Approved refresh staging verification — 2026-09-15
+
+- The owner replied “approve” to the exact 2ad48a8 source-review and execution
+  request. Record the immutable report digest and original plan commit, preserve
+  their pending records, and execute existing staging/Preview plus saved-device
+  verification. Approved caps are 80 additional Places attempts, four sign-in
+  messages, zero generations, five events per provider and four native builds.
+- The read-only Places baseline remains 329 in both all-time and 30-day totals;
+  the approved new backstop is 409. Maintain a separate new-run ledger and retain
+  the old 60/80 and 3/4 run unchanged. No Security Scan, production change, new
+  resources/secrets, migration, store submission or destructive cleanup is approved.
+
 ## Deterministic refresh verification continuation — 2026-09-15
 
 - Complete the local objective with both platform results bound to application

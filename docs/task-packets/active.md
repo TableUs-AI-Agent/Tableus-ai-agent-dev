@@ -2,14 +2,14 @@
 
 ## Status and objective
 
-Awaiting owner acceptance and execution approval. The authorized deterministic
+Owner accepted the exact source review and approved execution on 2026-09-15. The authorized deterministic
 local objective is complete. Carry the proven refresh correction into existing
 staging and saved native devices, then finish the source-bound cumulative report.
 Use one primary agent. This is the only active implementation packet.
 
 The concrete [execution request](../evidence/plan-refresh-staging-2ad48a8/README.md)
-is prepared. A request to continue the prior local checks has not approved this
-external step. Preserve all existing hosted/device state while approval is pending.
+is approved; [the decision](../evidence/plan-refresh-staging-2ad48a8/execution-approval.json)
+binds the original plan and source report. Execute its bounded staging scope.
 
 ## Completed prerequisites
 
@@ -28,12 +28,12 @@ external step. Preserve all existing hosted/device state while approval is pendi
   execution. Both new test devices are stopped and retained; test ports closed.
 - The [focused source review](../evidence/source-review-2ad48a8/README.md) validates
   fourteen source hashes/seven areas and transparently carries eleven unchanged
-  controls. Exact owner acceptance is pending; no Security Scan is required.
+  controls. Exact owner acceptance now validates; no Security Scan is required.
 - All four remaining native profile inputs pass preflight; no build has started.
 
-## Proposed next execution
+## Approved execution
 
-Accept the exact review and the linked plan, then publish/CI/deploy the frozen
+Publish/CI/deploy the frozen
 source only to existing staging/Preview targets. Reuse the two test artifacts;
 build the four remaining profiles sequentially and inspect before installation.
 Verify saved sessions, links, deliberate voting, organizer finalization/reopening,
@@ -41,9 +41,9 @@ rotation, export/read-only deletion readiness, foreground/hidden-route/scroll/ma
 refresh behavior, both directions of real surviving-session refresh, and delivered
 source-bound telemetry. Assemble only genuine current-source cumulative evidence.
 
-Proposed caps: 80 additional Places attempts, four new sign-in messages, zero
+Approved caps: 80 additional Places attempts, four new sign-in messages, zero
 Gemini generations, five events per telemetry provider and four native builds.
-These limits are pending. Reconcile the fresh read-only provider baseline first
+These limits are binding. Reconcile the fresh read-only provider baseline first
 and track an independent new-run ledger. The linked request defines allocation,
 backstop, stop conditions and staging-only rollback scope.
 

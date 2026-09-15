@@ -75,8 +75,7 @@ review and native tab presentation remain later release work. These fixture
 results do not supply hosted, physical-iPhone association or production evidence.
 Saved staging devices and hosted targets still use 6b9719b.
 
-The [next staging request](../plan-refresh-staging-2ad48a8/README.md) is prepared
-with four remaining input preflights passing. Exact
-[source-review acceptance](../source-review-2ad48a8/README.md) and execution
-approval are pending. No Security Scan, hosted deployment, additional build or
-installation on a saved device is authorized by this completed local objective.
+The [next staging request](../plan-refresh-staging-2ad48a8/README.md) and exact
+[source review](../source-review-2ad48a8/README.md) are now approved separately
+from this completed local objective. All four remaining input preflights passed;
+actual hosted and saved-device results remain pending. No Security Scan is included.

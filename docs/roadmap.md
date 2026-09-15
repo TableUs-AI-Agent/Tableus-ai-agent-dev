@@ -24,7 +24,7 @@ device or production release acceptance.
 | 2c | Verify the replacement on hosted staging and native devices — hosted CI/deployment pass; native execution paused | Exact-candidate CI, inspected sequential builds, real same-account session isolation and plan focus/foreground observations; new source-bound receipts and cumulative input | [Approved execution](evidence/replacement-6b9719b/README.md): 60/80 Places attempts and 3/4 emails consumed; zero fresh generation; retained artifacts bind only 6b9719b |
 | 2d | Correct unintended plan refresh and ambiguous vote feedback — complete locally at `2ad48a8` | Slow-request reproduction, explicit refresh control, request coalescing, distinct previous-vote/unsent/success messages; all readiness targets pass with 216 JavaScript/98 Python tests and three local Postgres skips | Deterministic local work only; new source requires matching review and native evidence before live verification resumes |
 | 2e | Verify the frozen refresh correction on isolated devices — complete | Both artifacts inspected; iOS and Android lifecycle/offline/refresh pass; zero scroll reads/writes, one delayed read, successful explicit recovery; fourteen reviewed screenshots and all failed attempts retained | No live allowance used; both disposable devices stopped and retained |
-| 2f | Verify the refresh correction on hosted staging and saved devices — awaiting approval | [Prepared execution](evidence/plan-refresh-staging-2ad48a8/README.md): reuse two accepted test artifacts; four remaining profiles; exact-source CI, device/session/link/telemetry and cumulative evidence | Matching source-review acceptance plus staging execution approval; proposed 80 additional Places attempts, four messages, zero generation; no Security Scan |
+| 2f | Verify the refresh correction on hosted staging and saved devices — approved, execution starting | [Prepared execution](evidence/plan-refresh-staging-2ad48a8/README.md): reuse two accepted test artifacts; four remaining profiles; exact-source CI, device/session/link/telemetry and cumulative evidence | Exact source-review and staging execution approved; 80 additional Places attempts, four messages, zero generation; no Security Scan |
 | 3 | Prepare production privacy and operating boundaries | Account export/deletion including Auth ownership; retention; capability-link decision; one-use invite policy; explicit cohort/spend/quota limits; rollback owner | Significant policy/architecture choices require owner decision before production |
 | 4 | Prepare production release configuration | Source-controlled production origins, isolated credentials, signed-update/OTA policy, store signing associations, source maps and rollback rehearsal | Resource/secret creation, migrations, deployment and builds need explicit applicable approval |
 | 5 | Validate TestFlight and Play closed-testing distribution | Signed install/update, auth and universal links, core journey, explicit native tab presentation, privacy declarations, observed symbolication | Separate store-submission approval |
@@ -67,8 +67,8 @@ Only `docs/task-packets/active.md` is active. Later rows are queued outcomes,
 not instructions to start concurrent agents, scans or cloud work. Deterministic
 native verification of `2ad48a8d8ec4d3aa9a7bd52061b823bb55960bcd` is complete on
 both inspected artifacts. Both new test devices are stopped and retained. The
-next bounded step is matching source-review acceptance and the prepared staging
-execution plan; it has not been approved or started.
+next bounded step is the approved staging execution plan. Matching exact-review
+acceptance is recorded; deployment and the four remaining native profiles follow.
 
 ## Validation order and reuse
 
