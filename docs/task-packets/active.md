@@ -1,8 +1,9 @@
 # Active packet: resolve the iOS 27 launch blocker
 
 Local repair frozen at `f94a1d9d1125e6c9111aa08eda496f014f20d0c0`.
-[Exact-source review](../evidence/source-review-f94a1d9/README.md) is prepared; acceptance and the one-build
-iOS 27 pilot remain pending. Local checks pass; no new device/deployment evidence.
+[Exact-source review](../evidence/source-review-f94a1d9/README.md) and one-build iOS 27 pilot are approved. Build preflight is paused at 15.75 GiB
+free, below the approved 20 GiB minimum; a specific cleanup request is pending.
+Local checks pass; no new device/deployment evidence.
 
 ## Status
 
@@ -26,18 +27,17 @@ The two telemetry profiles remain unstarted. Preserve the raw build logs.
 
 ## Next bounded objective
 
-Obtain acceptance of the prepared source review and the proposed one-build
-iOS 27 pilot. Local validation and freeze are complete in
+Execute the owner-approved one-build iOS 27 pilot after the disk guard passes. Local validation and freeze are complete in
 `codex/ios27-scene-lifecycle`. Expo is pinned to 57.0.23; the official plugin was
 still unpublished, so the approved attributed local adaptation is used. Actual
 prebuild comparison now passes before/after/repeated generation. Keep React
 Native 0.86.2 and application providers unchanged. The single `make ready` run passed.
 
-Prepare exact-source review acceptance and the smallest separate execution
-request: first an inspected signed iOS build and iOS 27 launch/relaunch proof,
-then cold/warm canonical and private links plus lifecycle/refresh regressions.
-Do not start compilation, installation, CI push, deployment or live calls under
-the local repair approval. Do not restart old-candidate builds or ask the owner
+The owner accepted the exact source report and approved one signed iOS build,
+inspected update installation, Plans/relaunch and canonical auth checks. The
+approved pilot excludes private plan detail, extra emails, canaries, additional
+artifacts, cleanup and hosted deployment. A separate narrowly scoped cleanup
+request is pending because the disk minimum is unmet. Do not restart old-candidate builds or ask the owner
 to keep reopening the crashing app.
 
 Local validation passes: 226 JavaScript tests, 98 Python tests with three local
@@ -52,9 +52,9 @@ passed on their recorded OS/toolchain. The iPhone readiness artifact passed
 source/config/signing inspection but fails launch on iOS 27. Web organizer
 sign-in, reload restoration, export/read-only deletion readiness and one canary
 in each provider pass. Current ledger: zero observed new Places/generations,
-one of four sign-in messages conservatively counted. Latest verified provider
-aggregate is 329; two later connector reads failed, so reconcile before any new
-live phase. The staging backstop remains 409.
+one of four sign-in messages conservatively counted. The read-only pilot reconciliation at 21:58 UTC confirms 329 Places attempts
+and nine Gemini rows, matching the previous baseline. Recheck after a long build
+before device work. The staging backstop remains 409.
 
 No app-data deletion, Security Scan, production/store/cohort change, new
 resources/secrets or migration is authorized. The old source-review acceptance

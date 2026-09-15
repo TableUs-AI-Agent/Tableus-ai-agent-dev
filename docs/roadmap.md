@@ -1,8 +1,9 @@
 # Closed-beta roadmap
 
 Local repair frozen at `f94a1d9d1125e6c9111aa08eda496f014f20d0c0`.
-[Exact-source review](evidence/source-review-f94a1d9/README.md) is prepared; acceptance and the one-build
-iOS 27 pilot remain pending. Local checks pass; no new device/deployment evidence.
+[Exact-source review](evidence/source-review-f94a1d9/README.md) and one-build iOS 27 pilot are approved. Build preflight is paused at 15.75 GiB
+free, below the approved 20 GiB minimum; a specific cleanup request is pending.
+Local checks pass; no new device/deployment evidence.
 
 Reassessed 2026-09-15. The goal remains an invite-only US beta across web, iOS
 and Android. Preserve the implemented architecture and validate the complete

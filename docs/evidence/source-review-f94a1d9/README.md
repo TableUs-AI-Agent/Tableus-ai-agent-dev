@@ -1,4 +1,4 @@
-# Focused staging source review: acceptance pending
+# Focused staging source review: accepted for the iOS pilot
 
 Application: `f94a1d9d1125e6c9111aa08eda496f014f20d0c0`. Parsed report SHA-256:
 `490ab7cab808455d38e21cd00942b6aa9b071a0b54d0810bb1e980c010f891cc`.
@@ -19,6 +19,7 @@ scene integration is experimental, and compilation, iOS 27 startup and link
 forwarding have not yet been verified on the new source. React Native remains
 0.86.2. No fresh dependency advisory audit is claimed.
 
-The [pending record](security.pending.json) intentionally rejects acceptance.
-The owner's local implementation approval does not accept this new source report.
-The [one-build pilot](ios27-pilot.md) is the recommended next execution request.
+The [pending record](security.pending.json) is preserved. The owner subsequently
+[accepted this exact report](owner-acceptance.json); [accepted evidence](security.accepted.json)
+passes the source gate. The [one-build pilot](ios27-pilot.md) is approved; its
+disk preflight blocks execution until at least 20 GiB is free.

@@ -1,0 +1,45 @@
+{
+  "application_sha": "f94a1d9d1125e6c9111aa08eda496f014f20d0c0",
+  "status": "paused_disk_guard",
+  "recorded_at": "2026-09-15T21:59:47.293047+00:00",
+  "source_review_accepted": true,
+  "pilot_approved": true,
+  "input_preflight_passed": true,
+  "sdk_preflight_passed": true,
+  "xcode_version": "27.0",
+  "xcode_build": "27A266a",
+  "iphoneos_sdk": "27.0",
+  "free_disk_gib": 15.749,
+  "required_free_disk_gib": 20,
+  "build_started": false,
+  "installed": false,
+  "cleanup_proposal": {
+    "status": "pending_owner_approval",
+    "preserve": "All source, logs, evidence, signed artifacts, receipts, saved devices and app data",
+    "targets": [
+      "/Users/brianchei/repos/Tableus-ai-agent-dev/.artifacts/mobile/2ad48a8d8ec4d3aa9a7bd52061b823bb55960bcd/logs/tmp-readiness-android",
+      "/Users/brianchei/repos/Tableus-ai-agent-dev/.worktrees/plan-refresh-controls/node_modules",
+      "/Users/brianchei/repos/Tableus-ai-agent-dev/.worktrees/plan-refresh-controls/mobile/node_modules",
+      "/Users/brianchei/repos/Tableus-ai-agent-dev/.worktrees/plan-refresh-controls/frontend/node_modules",
+      "/Users/brianchei/repos/Tableus-ai-agent-dev/.worktrees/plan-refresh-controls/frontend/.next",
+      "/Users/brianchei/repos/Tableus-ai-agent-dev/.worktrees/plan-refresh-controls/mobile/dist"
+    ],
+    "free_gib_before": 15.755,
+    "retained_build_log_sha256": "f69e277d8ec0ed8587ae3179436f455e4b65da07ccb75b655a05b946eae086f7"
+  },
+  "budget_reconciliation": {
+    "observed_at": "2026-09-15T21:58:38.834942Z",
+    "places_attempts_all_time": 329,
+    "places_attempts_30d": 329,
+    "gemini_usage_rows": 9,
+    "gemini_estimated_usd": 0.0050015,
+    "latest_usage_at": "2026-09-15T06:33:43.488754Z",
+    "places_delta_since_previous_run_baseline": 0,
+    "gemini_delta_since_previous_run_baseline": 0,
+    "sign_in_messages_conservatively_used": 1,
+    "sign_in_messages_previous_limit": 4,
+    "pilot_new_email_allowance": 0,
+    "pilot_new_paid_provider_allowance": 0,
+    "note": "Read-only app.provider_usage aggregate reconciles with prior ledger. No new sign-in action occurred. Earlier public-schema query failed harmlessly before app schema discovery."
+  }
+}

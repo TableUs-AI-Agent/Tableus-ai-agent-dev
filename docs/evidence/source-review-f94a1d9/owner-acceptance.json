@@ -1,0 +1,19 @@
+{
+  "schema_version": 1,
+  "recorded_at": "2026-09-15T21:57:42.077328+00:00",
+  "application_source_sha": "f94a1d9d1125e6c9111aa08eda496f014f20d0c0",
+  "preparation_evidence_sha": "a93984138c6c0ae948b8ef7efb70de0a0f151c5f",
+  "policy": "staging-source-review-v1",
+  "report_sha256": "490ab7cab808455d38e21cd00942b6aa9b071a0b54d0810bb1e980c010f891cc",
+  "owner_acceptance": {
+    "reference": "owner-approved-f94a1d9-ios27-pilot-2026-09-15",
+    "quoted_message": "approve",
+    "context": "Direct reply to exact-source review and single-build iPhone pilot request.",
+    "scope": "One signed readiness-ios build, inspected update install and Plans/relaunch/canonical auth checks; no additional artifacts, spending, emails or deployments."
+  },
+  "open_risk_ids": [
+    "staging-shared-quota",
+    "staging-capability-url"
+  ],
+  "cumulative_staging_accepted": false
+}
