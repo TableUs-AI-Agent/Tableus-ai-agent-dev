@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
   "application_sha": "6b9719b4e63e34803f2e7c2598e45851790df661",
-  "observed_at": "2026-09-15T00:21:55.135845+00:00",
-  "native_artifacts_inspected": 1,
+  "observed_at": "2026-09-15T01:08:02.560153+00:00",
+  "native_artifacts_inspected": 2,
   "test_ios": {
     "profile": "test-ios",
     "artifact_name": "TableUs.app",
@@ -25,15 +25,40 @@
   "places_attempts_this_run": 8,
   "gemini_generations_this_run": 0,
   "sign_in_emails_conservatively_consumed": 1,
-  "provider_usage_observed_at": "2026-09-15T00:20:12.617523Z",
+  "provider_usage_observed_at": "2026-09-15T01:00:05.654022+00:00",
   "cumulative_acceptance_complete": false,
   "ios_lifecycle_passed": true,
   "ios_offline_passed": true,
-  "android_build_status": "in-progress",
+  "android_build_status": "passed",
   "web_four_candidates_verified": true,
   "web_google_attribution_verified": true,
   "web_organizer_controls_verified": true,
   "private_link_rotations": 1,
   "local_link_handoff_pending": true,
-  "disposable_ios_simulator_retained": true
+  "disposable_ios_simulator_retained": true,
+  "test_android": {
+    "profile": "test-android",
+    "artifact_name": "TableUs.apk",
+    "artifact_sha256": "80b35fbe955e9c335d5f30dfc819e6f78a294fc3b195947fddcea687db6cb681",
+    "receipt_and_inspection_validated": true,
+    "source_and_lock_validated": true,
+    "build_started_at": "2026-09-15T00:12:51.941509+00:00",
+    "build_finished_at": "2026-09-15T00:26:36.887410+00:00",
+    "build_duration_seconds": 825
+  },
+  "android_deterministic_status": "passed",
+  "android_lifecycle_passed": true,
+  "android_offline_passed": true,
+  "android_deterministic_attempts": {
+    "lifecycle": 2,
+    "offline": 3
+  },
+  "android_offline_navigation_overlay_recorded": true,
+  "native_workload_running": false,
+  "remaining_native_profiles": 4,
+  "remaining_build_status": "paused-disk-headroom",
+  "free_disk_gib": 15.789,
+  "minimum_build_start_gib": 20,
+  "disposable_device_cleanup_approval_pending": true,
+  "disposable_android_device_retained": true
 }

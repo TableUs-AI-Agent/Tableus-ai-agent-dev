@@ -2,6 +2,18 @@
 
 ## Replacement execution approval — 2026-09-14
 
+- Accept Android lifecycle from the four-core retry and offline verification
+  from the subsequent bounded run. Preserve the startup System UI failure and
+  the clipped retry-button failure. The [operator navigation patch](evidence/replacement-6b9719b/android-offline-navigation.patch)
+  scrolls before the existing assertion and retains before/after screenshots;
+  it changes neither application bytes nor the frozen checkout. Request counts
+  prove one created plan and one finalization event after same-key retries.
+- Both deterministic platform gates are complete. Keep the 20 GiB build-start
+  minimum: observed free space is 15.8 GiB. Automatic review rejected deletion
+  of the newly created iOS test device because destructive cleanup requires
+  explicit approval. The concrete pending request covers only the two completed
+  disposable test devices (about 4.7 GiB), preserving saved live sessions and all
+  artifacts/evidence. No cleanup or remaining build has started.
 - The first inspected iOS artifact and delivered web canary do not imply native
   or cumulative acceptance. Retain separate artifact, deterministic, live-device
   and telemetry gates; subsequent native phases stop on any failed prerequisite.

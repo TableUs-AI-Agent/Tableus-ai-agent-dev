@@ -34,9 +34,12 @@ the owner approved its bounded execution request and execution is starting.
 No production, store or cohort approval follows. No scan has started.
 The existing Expo Doctor patch-version warning is recorded during native
 execution; dependency patch/advisory review remains a later release requirement.
-The first replacement iOS artifact is inspected and both deterministic suites
-pass. Android is building, and the exact-release web canary has reached both
-providers. Native readiness and cumulative acceptance remain the current objective.
+Both replacement test artifacts are inspected and lifecycle/offline verification
+passes. Android's accepted offline run records a navigation-only scroll before
+the original retry-button assertion, with earlier failures retained. The four
+remaining builds are paused at the disk guard, pending approval to remove only
+the two completed disposable test devices. The exact-release web canary reached
+both providers. Native readiness and cumulative acceptance remain the objective.
 
 Only `docs/task-packets/active.md` is active. Later rows are queued outcomes,
 not instructions to start concurrent agents, scans or cloud work.

@@ -65,8 +65,10 @@ Hosted execution passes: [deployment evidence](../evidence/replacement-6b9719b/d
 binds CI run `34905755622`, Railway `69c96019-bedc-4b53-a37d-358a103f7e24`
 and Preview `dpl_2qeefqPhARdErQxUqxLssCintxte` to 6b9719b. Source stamps,
 exact Preview CORS and the 349-attempt backstop are verified; Production is
-unchanged. The first iOS test build, its artifact inspection and both deterministic
-lifecycle/offline suites pass; Android is building. Web session reload and read-only
+unchanged. Both test builds, artifact inspections and deterministic lifecycle/offline
+verification pass. Android acceptance retains its earlier System UI startup failure
+and offline visibility failure; the final offline run uses a recorded operator
+scroll before the unchanged retry-button assertion. Web session reload and read-only
 account controls pass, and both providers received one exact-release web canary.
 See the [execution progress](../evidence/replacement-6b9719b/execution-progress.json).
 The existing web plan has four attributed candidates and organizer controls.
@@ -77,6 +79,14 @@ web revision poll; it is counted, and native live refresh proof remains pending.
 Use isolated deterministic
 test targets because those harnesses reset app data; preserve the existing
 staging simulator/emulator sessions for the same-account refresh checks.
+
+The remaining four builds are paused before `readiness-ios`: free disk is
+15.8 GiB, below the approved 20 GiB start minimum. Both disposable test devices
+are stopped and their evidence is retained. The pending [cleanup request](../evidence/replacement-6b9719b/disk-headroom.json)
+would remove only these newly created devices and reclaim about 4.7 GiB. Explicit
+owner approval is required after automatic review rejected the earlier iOS
+deletion. Do not delete, lower the guard or restart completed builds. After
+approval, remeasure headroom and resume only the readiness and telemetry pairs.
 
 EAS Expo Doctor reports 20/21 checks passing and eleven patch recommendations,
 identical to the retained previous build. Keep frozen dependencies for this

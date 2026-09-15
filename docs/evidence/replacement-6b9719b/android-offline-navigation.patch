@@ -1,0 +1,14 @@
+--- frozen/mobile/.maestro-offline/finalize-failure.yml
++++ operator/finalize-failure.yml
+@@ -29,4 +29,11 @@
+ - extendedWaitUntil:
+     visible: ".*may have completed.*"
+     timeout: 30000
++- takeScreenshot: "retry-before-scroll"
++- scrollUntilVisible:
++    element: "Retry finalizing plan"
++    direction: DOWN
++    centerElement: true
++    timeout: 15000
++- takeScreenshot: "retry-after-scroll"
+ - assertVisible: "Retry finalizing plan"

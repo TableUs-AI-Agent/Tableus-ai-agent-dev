@@ -10,9 +10,15 @@ historical snapshot; source-bound execution evidence follows separately.
 Railway/Preview deployments, CORS, reduced provider ceiling and unchanged
 Production pointers. Fresh [PostHog](posthog-baseline.json) and
 [Sentry](sentry-baseline.json) baselines contain no replacement canaries.
-[Execution progress](execution-progress.json) records the first inspected iOS
-test artifact, [passed iOS deterministic suites](ios-deterministic.json), active
-Android build and web session/account checks. [Web request observations](web-request-observation.json)
+[Execution progress](execution-progress.json) records both inspected test
+artifacts, [passed iOS verification](ios-deterministic.json),
+[passed Android verification](android-deterministic.json) and web session/account
+checks. Android's earlier failures are retained. Its accepted offline run adds
+an [operator scroll](android-offline-navigation.patch) before the unchanged retry
+assertion, supported by reviewed before/after screenshots. The frozen application
+and checkout remain unchanged. The four remaining builds are paused at the
+[disk guard](disk-headroom.json); deleting the two completed disposable test
+devices requires the owner's pending approval. [Web request observations](web-request-observation.json)
 count eight Places attempts; one email is counted and no new generation has run.
 [PostHog](posthog-web-observation.json) and [Sentry](sentry-web-observation.json)
 each received the single exact-release web canary. Native readiness, native/API

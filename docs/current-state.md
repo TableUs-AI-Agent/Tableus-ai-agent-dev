@@ -30,10 +30,19 @@ records Railway `69c96019-bedc-4b53-a37d-358a103f7e24` and Preview
 `dpl_2qeefqPhARdErQxUqxLssCintxte` at 6b9719b. Both Preview origins pass CORS;
 Production pointers/protection are unchanged. CI run `34905755622` passes
 204 JavaScript, 101 Python and four browser tests. The reduced Places backstop
-is verified at 349; starting aggregate remains 269. The first iOS test artifact
-passed source/checksum/receipt inspection and both isolated lifecycle/offline
-suites. [iOS evidence](evidence/replacement-6b9719b/ios-deterministic.json)
-binds the reports and reviewed screenshots to that artifact. Android is building.
+is verified at 349; starting aggregate remains 269. Both test artifacts passed
+source/checksum/receipt inspection and isolated lifecycle/offline verification.
+[iOS evidence](evidence/replacement-6b9719b/ios-deterministic.json) and
+[Android evidence](evidence/replacement-6b9719b/android-deterministic.json)
+bind the reports and reviewed screenshots to their actual artifacts. Android's
+first startup was obscured by a System UI unresponsive dialog; the four-core
+retry passed lifecycle. Its offline run required a documented operator scroll
+before the unchanged retry-button assertion. Before/after screenshots confirm
+the control was clipped at the viewport edge; all request-count checks passed.
+Application bytes and the frozen checkout are unchanged. Four remaining builds
+are paused: [disk headroom](evidence/replacement-6b9719b/disk-headroom.json) is
+15.8 GiB against the approved 20 GiB start minimum. Deleting the two completed
+disposable test devices would reclaim about 4.7 GiB and needs explicit approval.
 [Execution progress](evidence/replacement-6b9719b/execution-progress.json)
 also records web session restoration, read-only account controls and one delivered
 web canary in each provider. The web plan shows four attributed candidates and
@@ -41,7 +50,8 @@ organizer controls. One private-link rotation succeeded; its local clipboard
 handoff is pending. One sign-in email and eight Places attempts are counted;
 new Gemini generation remains zero. [Request timing](evidence/replacement-6b9719b/web-request-observation.json)
 is consistent with a web revision refresh following rotation. Native live-device
-and cumulative acceptance remain incomplete.
+and cumulative acceptance remain incomplete. All native workloads are stopped;
+saved live-account devices and accepted artifacts remain intact.
 
 The EAS build's Expo Doctor step passes 20/21 checks and reports eleven SDK 57
 patch-version recommendations. The exact same warning appears in the retained
