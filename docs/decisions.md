@@ -2,6 +2,14 @@
 
 ## Approved refresh staging verification — 2026-09-15
 
+- Hosted deployment of exact source 2ad48a8 passes readiness, served Preview
+  bundle/source, CORS and canonical association checks. Production pointers,
+  protection and existing credentials are preserved. CI passes 216 JavaScript,
+  101 Python and four browser tests. Configure the approved 409 Places backstop;
+  the aggregate remains 329 and the new live allowance is untouched. Xcode's
+  license/setup prompt blocks native tools. Ask the owner to complete those
+  prompts; do not accept the license on their behalf or start native compilation
+  before the host preflight succeeds. The four-build approval remains valid.
 - The owner replied “approve” to the exact 2ad48a8 source-review and execution
   request. Record the immutable report digest and original plan commit, preserve
   their pending records, and execute existing staging/Preview plus saved-device

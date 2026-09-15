@@ -6,6 +6,16 @@ at commit `73ff83b1105bf06a130d209a67a327eee8e77f74`.
 Both isolated native verification phases now pass; see the
 [completed evidence](../plan-refresh-verification-2ad48a8/README.md).
 
+Hosted execution now passes: [deployment evidence](deployment.json) binds Railway
+`6fcc6835-d22a-4125-b80f-df671a415741`, Preview
+`dpl_7WqJNTybVFA425ABS7uB3rWGkPKu` and CI run `35016584574` to the exact source.
+Readiness, served Preview bundles, both CORS origins and canonical associations
+pass; production pointers/protection are unchanged. CI passes 216 JavaScript,
+101 Python and four browser tests. The configured Places backstop is 409 and
+the observed aggregate remains 329. No new-run live allowance has been consumed.
+The host reports an unaccepted Xcode license/setup requirement. Native execution
+awaits owner completion of those prompts; no new native build has started.
+
 Application source: `2ad48a8d8ec4d3aa9a7bd52061b823bb55960bcd`.
 Focused review digest (SHA-256 of parsed `JSON.stringify` report):
 `65f9f2e8e0a48f3431cf15633dfe42bf886a2334969a47381dab04325215be0e`.

@@ -11,9 +11,18 @@ The concrete [execution request](../evidence/plan-refresh-staging-2ad48a8/README
 is approved; [the decision](../evidence/plan-refresh-staging-2ad48a8/execution-approval.json)
 binds the original plan and source report. Execute its bounded staging scope.
 
+Hosted staging and Preview now pass the [deployment checks](../evidence/plan-refresh-staging-2ad48a8/deployment.json)
+at exact source 2ad48a8. CI passes 216 JavaScript, 101 Python and four browser
+tests. Production and protection are unchanged. Both CORS origins and canonical
+associations pass; the configured provider backstop is 409, aggregate 329, and
+new-run usage is zero. Xcode requires owner completion of license/setup prompts;
+no native build has started. After that user action, repeat host/resource preflight,
+then build and inspect `readiness-ios` first under the existing approval.
+
 ## Completed prerequisites
 
-- Application source: `2ad48a8d8ec4d3aa9a7bd52061b823bb55960bcd`, frozen locally.
+- Application source: `2ad48a8d8ec4d3aa9a7bd52061b823bb55960bcd`, published on
+  `codex/refresh-2ad48a8`; CI and existing hosted deployment checks pass.
 - Operator branch: `codex/plan-refresh-verification` in `plan-refresh-controls`.
 - Both [deterministic native records](../evidence/plan-refresh-verification-2ad48a8/README.md)
   pass inspection, lifecycle, offline recovery and all refresh phases. Scrolling
@@ -50,9 +59,10 @@ backstop, stop conditions and staging-only rollback scope.
 ## Preserved state and boundaries
 
 The older live run stays paused at 60/80 Places attempts, 3/4 messages, zero new
-generation and three of five canaries per provider; its backstop remains 349.
-The latest recorded aggregate is 329. Saved staging devices and hosted services
-remain on 6b9719b. Preserve their accounts, artifacts, helper state and partial
+generation and three of five canaries per provider; its historical backstop was 349.
+The latest recorded aggregate is 329 and the approved current backstop is 409.
+Saved staging devices remain on 6b9719b; hosted staging now serves 2ad48a8.
+Preserve their accounts, artifacts, helper state and partial
 checklists; do not use newer-source answers to finish older checklists.
 
 The owner denied deliberate Android voting and described persistent loading while

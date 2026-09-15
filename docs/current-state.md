@@ -1,9 +1,10 @@
 # Current state
 
 Updated 2026-09-15. Development uses GPT-6 Astra; application providers remain
-Gemini and Google Places. Railway staging, Vercel Preview and the saved staging
-devices remain on `6b9719b4e63e34803f2e7c2598e45851790df661`. That live run is
-paused. The refresh correction is frozen locally at
+Gemini and Google Places. Railway staging and the new Vercel Preview now serve
+`2ad48a8d8ec4d3aa9a7bd52061b823bb55960bcd`; production pointers and protection
+are unchanged. Saved staging devices retain `6b9719b4e63e34803f2e7c2598e45851790df661`.
+That older live run is paused. The refresh correction is frozen at
 `2ad48a8d8ec4d3aa9a7bd52061b823bb55960bcd`, and its deterministic iOS and Android
 verification is complete. Operator/evidence work is on
 `codex/plan-refresh-verification` in the isolated `plan-refresh-controls` worktree.
@@ -31,7 +32,14 @@ three local Postgres skips. Subsequent changes were YAML/navigation and evidence
 YAML parsing and evidence privacy checks pass. Existing Expo patch warnings remain.
 
 The [next staging verification plan](evidence/plan-refresh-staging-2ad48a8/README.md)
-was approved on 2026-09-15; execution is starting. It reuses both test artifacts, builds the four
+was approved on 2026-09-15. [Hosted deployment checks](evidence/plan-refresh-staging-2ad48a8/deployment.json)
+pass: exact-source readiness and served Preview bundles, both Preview CORS origins,
+canonical native associations, unchanged production/protection and the configured
+409-attempt backstop. CI run `35016584574` passes 216 JavaScript, 101 Python and
+four browser tests. The provider aggregate remains 329; this new run has used zero
+Places attempts, sign-in messages, generations or canaries. Xcode now requires
+owner completion of its license/setup prompts before native tools can run; no new
+native build has started. The approved plan reuses both test artifacts, builds the four
 remaining profiles, and caps a new run at 80 additional Places attempts, four
 sign-in messages and zero generations. All four input preflights pass. The exact
 [focused source review](evidence/source-review-2ad48a8/README.md), including its
