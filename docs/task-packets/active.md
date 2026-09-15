@@ -54,6 +54,15 @@ private AVD, re-inspecting and reusing the same APK. Reuse the existing lifecycl
 result and record its older operator SHA separately. Do not overwrite attempt one,
 rebuild, run live traffic or accept the staging review.
 
+The second attempt stopped before refresh checks: the title was visibly
+`OOffline resilience dinner`, so the exact title assertion failed. The screenshot
+and hierarchy confirm input mismatch, not clipped content; the duplication's
+mechanism is unestablished. Preserve attempt two. The flow now verifies title
+input before submission, with at most one clear/retype correction; no request or
+large flow is wrapped in a retry. Parse the changed YAML, then run one investigated
+offline/refresh attempt three with the same APK, private AVD and retained lifecycle.
+No application or JavaScript change requires a rebuild or repeated full suite.
+
 ## Execution order
 
 1. Build `test-ios` as `local-ios-test-2ad48a8`; inspect the actual artifact,

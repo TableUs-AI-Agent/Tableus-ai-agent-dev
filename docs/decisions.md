@@ -2,6 +2,15 @@
 
 ## Deterministic refresh verification continuation — 2026-09-15
 
+- Preserve Android attempt two, which stopped before refresh checks: its visible
+  title field contained `OOffline resilience dinner`. Screenshot and hierarchy
+  establish the mismatch; the exact input-duplication mechanism is unknown.
+  Add an exact pre-submission title assertion with at most one clear/retype
+  correction. Never retry the create request in that input block or weaken the
+  retained-input assertion after failure. Reuse the same inspected APK and
+  completed lifecycle for one investigated offline/refresh retry. This YAML-only
+  change needs parsing and the affected native execution; the latest full
+  220-JavaScript/98-Python readiness result remains applicable.
 - Preserve Android's first failed attempt: the UI displayed the injected error,
   cached plan and enabled refresh button, but the probe observed two HTTP
   requests instead of the three required by its initial expectation. Its exact

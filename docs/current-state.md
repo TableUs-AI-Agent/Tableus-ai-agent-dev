@@ -32,7 +32,14 @@ requires one to three observed injected errors, zero upstream requests and write
 while retaining exact success/scroll counts and journaling every probe before
 assertion. Four focused checks and a new full readiness run pass 220 JavaScript
 and 98 Python tests, with three local Postgres skips. An offline-only Android
-retry is prepared; the existing APK and lifecycle evidence are reused. The
+retry stopped before refresh checks because automated input produced
+`OOffline resilience dinner`; the exact title assertion correctly failed.
+The screenshot and hierarchy confirm that the field was fully visible. The
+[second attempt](evidence/plan-refresh-verification-2ad48a8/android-attempt-2.json)
+is preserved. Verify the title before submission, allowing one clear/retype
+attempt without retrying any request, then repeat only offline/refresh on the
+same APK and retained private AVD. The input duplication's mechanism is not
+established; application source and all acceptance assertions remain unchanged. The
 [focused source review](evidence/source-review-2ad48a8/README.md) validates fourteen
 file hashes and seven areas; all eleven prior control files are unchanged. Its
 same two medium risks and exact report still require matching owner acceptance

@@ -38,6 +38,18 @@ skips. This check was rerun because operator JavaScript changed.
 One offline/refresh retry is prepared on the retained Android test emulator,
 reusing the inspected APK and completed lifecycle evidence. No build is repeated.
 
+[Attempt two](android-attempt-2.json), under operator `9fd9eb3`, stopped at the
+retained-title assertion before any refresh phase. The screenshot and hierarchy
+show `OOffline resilience dinner`, fully visible. One create request committed
+and its response was dropped as intended. The input duplication's mechanism is
+unestablished. The flow now validates exact input before submission, with one
+bounded clear/retype correction using Maestro's documented
+[retry](https://docs.maestro.dev/reference/commands-available/retry) and
+[eraseText](https://docs.maestro.dev/api-reference/commands/erasetext) commands.
+All original assertions remain, and the input block contains no request action.
+Parse the changed YAML and run only the affected Android offline/refresh suite
+as attempt three; preserve both previous failures and reuse the same artifact.
+
 The owner's request to continue advances the previously identified local device
 verification step. The [execution plan](execution-plan.json) is bounded to two
 sequential local profiles, `test-ios` then `test-android`, with deterministic demo
