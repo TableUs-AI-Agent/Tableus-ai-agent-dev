@@ -2,7 +2,7 @@
   "schema_version": 1,
   "application_sha": "2ad48a8d8ec4d3aa9a7bd52061b823bb55960bcd",
   "operator_branch": "codex/plan-refresh-verification",
-  "authorization": "Owner requested continuation after the handoff identified local device verification as the next step. This authorizes the bounded deterministic test execution below, not staging source-review acceptance or hosted actions.",
+  "execution_authority_note": "Owner requested continuation after the handoff identified local device verification as the next step. This authorizes the bounded deterministic test execution below, not staging source-review acceptance or hosted actions.",
   "profiles": [
     "test-ios",
     "test-android"
