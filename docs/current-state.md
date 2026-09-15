@@ -51,15 +51,16 @@ telemetry profile. [Its iOS and API canaries](evidence/replacement-6b9719b/ios-t
 reached both providers with the exact source release. [Session isolation](evidence/replacement-6b9719b/session-isolation-progress.json)
 is incomplete: iOS local sign-out removed its own session while the original
 Android session remained; a later Android refresh and the reverse direction
-still require observation. One approved iOS restoration message is reserved.
+still require observation. The first restoration used a different account. That account was signed out
+locally; the correct-account restoration is pending using the contingency message.
 [Execution progress](evidence/replacement-6b9719b/execution-progress.json)
 also records web session restoration, read-only account controls and one delivered
 web canary in each provider. A later Preview network error recovered with one
 Retry while retaining the organizer session. The web plan shows four attributed candidates and
 organizer controls. Two private-link rotations are recorded, and the
 [repaired local helper](evidence/replacement-6b9719b/local-helper-observation.json)
-accepted the owner's copied link. Two sign-in emails are conservatively reserved
-(one confirmed, one awaiting owner entry), and thirty-two Places
+accepted the owner's copied link. Three sign-in emails are conservatively reserved
+(two confirmed, one awaiting owner entry), and thirty-two Places
 attempts are counted: sixteen for web/link recovery and sixteen for iPhone
 join, plan reads and the confirmed vote;
 new Gemini generation remains zero. [Request timing](evidence/replacement-6b9719b/web-request-observation.json)

@@ -2,6 +2,11 @@
 
 ## Replacement execution approval — 2026-09-14
 
+- Provider metadata identified a different-account iOS restoration before it
+  could be counted as session-isolation evidence. Sign that account out locally
+  and use the approved contingency message to restore the matching account.
+  Three messages are now reserved, with the fourth retained for Android.
+  This does not invalidate the earlier iOS sign-out or delivered canaries.
 - **2026-09-15 live checkpoint:** Accept the iOS/API canary delivery separately
   from session isolation. The original iOS session refreshed after replacement
   installation; local sign-out removed it and retained the original Android

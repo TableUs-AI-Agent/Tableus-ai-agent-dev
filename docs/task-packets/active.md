@@ -73,8 +73,8 @@ account controls pass, and both providers received one exact-release web canary.
 See the [execution progress](../evidence/replacement-6b9719b/execution-progress.json).
 The existing web plan has four attributed candidates and organizer controls.
 Two private-link rotations succeeded; the repaired local helper accepted the
-owner's copied link. Usage is thirty-two Places attempts and two emails reserved
-(one owner-confirmed and one pending iOS restoration),
+owner's copied link. Usage is thirty-two Places attempts and three emails reserved
+(two owner-confirmed and one pending corrected iOS restoration),
 with zero new generation. Web/link recovery used sixteen; iPhone join, plan reads
 and the confirmed vote used sixteen. Forty-eight attempts remain allocated to
 Android join/vote, organizer changes, native witnesses and one Android return.
@@ -92,7 +92,9 @@ All six artifacts now pass inspection, with sequential build timing verified.
 The preserved iOS session restored after installation; its single iOS/API canary
 flow passed in the UI and delivered to both providers at the exact release.
 Local iOS sign-out removed that session while the original Android session
-remained in the provider. Restore the same iOS account with its reserved message,
+remained in the provider. The first restored iOS account differed from Android;
+local sign-out removed it. Restore the matching account with its reserved
+contingency message, leaving the final message for Android restoration,
 then stop iOS and require Android refresh survival after the sign-out. Complete
 Android readiness and telemetry before its local sign-out/restoration, then
 require the existing restored iOS session to refresh after Android sign-out.

@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "application_sha": "6b9719b4e63e34803f2e7c2598e45851790df661",
-  "observed_at": "2026-09-15T05:57:26.208921+00:00",
+  "observed_at": "2026-09-15T06:21:56.472888+00:00",
   "native_artifacts_inspected": 6,
   "test_ios": {
     "profile": "test-ios",
@@ -24,7 +24,7 @@
   },
   "places_attempts_this_run": 32,
   "gemini_generations_this_run": 0,
-  "sign_in_emails_conservatively_consumed": 2,
+  "sign_in_emails_conservatively_consumed": 3,
   "provider_usage_observed_at": "2026-09-15T04:25:48.709671+00:00",
   "cumulative_acceptance_complete": false,
   "ios_lifecycle_passed": true,
@@ -136,7 +136,7 @@
     }
   },
   "native_workload": "preserved-ios-simulator",
-  "sign_in_emails_owner_confirmed": 1,
+  "sign_in_emails_owner_confirmed": 2,
   "ios_telemetry_ui_passed": true,
   "ios_api_canary_delivery": {
     "posthog": {
@@ -150,5 +150,6 @@
   },
   "ios_local_sign_out_confirmed": true,
   "ios_same_account_restoration_pending": true,
-  "session_isolation_complete": false
+  "session_isolation_complete": false,
+  "ios_restoration_account_mismatch_detected": true
 }

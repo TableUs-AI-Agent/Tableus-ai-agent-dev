@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "application_sha": "6b9719b4e63e34803f2e7c2598e45851790df661",
-  "observed_at": "2026-09-15T05:57:26.208921+00:00",
+  "observed_at": "2026-09-15T06:21:56.472888+00:00",
   "same_account_label": "639e57785617",
   "complete": false,
   "ios_original_session": {
@@ -25,6 +25,15 @@
     "refresh_after_ios_sign_out_pending": true
   },
   "reverse_direction_pending": true,
-  "new_messages_reserved": 1,
-  "raw_account_data_retained": false
+  "new_messages_reserved": 2,
+  "raw_account_data_retained": false,
+  "restoration_account_mismatch": {
+    "observed_at": "2026-09-15T06:19:25.242099Z",
+    "account_label": "0c2cdd62a6fc",
+    "session_label": "6c5787791ee6",
+    "created_at": "2026-09-15T06:18:33.671758Z",
+    "same_account_as_android": false,
+    "signed_out_locally": true,
+    "correct_account_restoration_pending": true
+  }
 }
