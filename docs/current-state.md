@@ -1,9 +1,9 @@
 # Current state
 
 Local repair frozen at `f94a1d9d1125e6c9111aa08eda496f014f20d0c0`.
-[Exact-source review](evidence/source-review-f94a1d9/README.md) and one-build iOS 27 pilot are approved. The approved six-path cleanup completed, but actual free disk is only 18.99 GiB,
-below the 20 GiB minimum. A second exact four-directory cleanup request is
-pending; no native build has started.
+[Exact-source review](evidence/source-review-f94a1d9/README.md) and one-build iOS 27 pilot are approved. Both explicitly approved cleanup stages are complete. Free disk is 21.575 GiB,
+above the 20 GiB start guard. The single signed iOS pilot is ready to start;
+all source, evidence, signed artifacts and saved device/account data are preserved.
 Local checks pass; no new device/deployment evidence.
 
 Updated 2026-09-15. Staging verification is paused because the installed

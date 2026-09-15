@@ -1,4 +1,4 @@
-# Approved iOS 27 startup pilot: disk preflight paused
+# Approved iOS 27 startup pilot: disk preflight passed
 
 Source review and the single signed iOS pilot are approved for
 `f94a1d9d1125e6c9111aa08eda496f014f20d0c0`.
@@ -17,3 +17,5 @@ request. All source, receipts, artifacts and saved device/account data are prese
 Do not delete any proposed path without the owner's separate cleanup approval.
 After cleanup or owner-provided free space, remeasure the 20 GiB guard before
 starting the prepared one-profile runner. No extra source-review approval is needed.
+
+The owner approved the additional four generated directories; [cleanup completed](additional-cleanup-completed.json) and free disk is 21.575 GiB. Source status and untracked historical evidence hashes are unchanged. The single signed iOS pilot may now start under the existing approval.
