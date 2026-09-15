@@ -1,10 +1,27 @@
 # Decision log
 
-Local repair frozen at `f94a1d9d1125e6c9111aa08eda496f014f20d0c0`.
-[Exact-source review](evidence/source-review-f94a1d9/README.md) and one-build iOS 27 pilot are approved. Both explicitly approved cleanup stages are complete. Free disk is 21.575 GiB,
-above the 20 GiB start guard. The single signed iOS pilot is ready to start;
-all source, evidence, signed artifacts and saved device/account data are preserved.
-Local checks pass; no new device/deployment evidence.
+The iOS 27 pilot passed for `f94a1d9d1125e6c9111aa08eda496f014f20d0c0`.
+The signed replacement installs and the owner confirms first launch, relaunch
+with session persistence, and the canonical auth link. [Pilot evidence](evidence/ios27-pilot-f94a1d9/README.md)
+records zero added Places/Gemini usage or emails. The existing API remains
+2ad48a8; [remaining same-source verification](evidence/ios27-pilot-f94a1d9/remaining-verification-plan.md)
+is prepared and awaits its separate execution approval.
+
+## iOS 27 pilot accepted by observed checks — 2026-09-15
+
+- The owner approved both cleanup scopes. The second removed only four generated
+  directories and preserved old source status and untracked evidence hashes;
+  disk reached 21.575 GiB. One signed readiness-ios build ran from exact f94a1d9.
+- Native build and independent artifact/receipt/signing/source/scene checks pass.
+  The verified update installed on iOS 27 without deleting app data. Owner
+  confirms first launch to Plans, relaunch with the session preserved, and the
+  canonical auth link opening TableUs. The prior immediate crash did not recur.
+- Post-pilot provider aggregate is unchanged at 329 Places attempts and nine
+  Gemini rows. No new email or canary was requested. Reuse this signed artifact
+  for later f94a1d9 verification; do not rebuild it without a demonstrated need.
+- Keep pilot evidence separate from cumulative readiness: the hosted API is still
+  2ad48a8, and five f94a1d9 native profiles plus remaining hosted/device checks
+  are outstanding. The prepared remaining execution plan requires approval.
 
 ## Approved pilot cleanup — 2026-09-15
 

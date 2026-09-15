@@ -1,0 +1,30 @@
+{
+  "application_sha": "f94a1d9d1125e6c9111aa08eda496f014f20d0c0",
+  "artifact_sha256": "9d569309e437b3212a827305e1e119d4424d65c40f1c5fd464a120ad9bcf1798",
+  "executable_uuid": "5E8ED08A-6282-3483-90E7-53442A4511A8",
+  "device_os": "27.0",
+  "device_os_build": "24A437",
+  "api_source_sha": "2ad48a8d8ec4d3aa9a7bd52061b823bb55960bcd",
+  "status": "pilot_passed",
+  "owner_observations": [
+    {
+      "phase": "first_launch_and_session_restoration",
+      "passed": true,
+      "quoted_answer": "Plans appears without signing in",
+      "recorded_at": "2026-09-15T22:28:48.142257+00:00"
+    },
+    {
+      "phase": "relaunch_and_session_persistence",
+      "passed": true,
+      "quoted_answer": "Plans returns without signing in",
+      "recorded_at": "2026-09-15T22:29:25.489816+00:00"
+    },
+    {
+      "phase": "canonical_auth_link",
+      "passed": true,
+      "quoted_answer": "TableUs opens successfully",
+      "recorded_at": "2026-09-15T22:31:05.149346+00:00"
+    }
+  ],
+  "cumulative_same_sha_readiness": false
+}

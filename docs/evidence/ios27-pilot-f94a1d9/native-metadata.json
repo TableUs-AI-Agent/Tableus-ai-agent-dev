@@ -1,0 +1,18 @@
+{
+  "DTSDKName": "iphoneos27.0",
+  "DTXcodeBuild": "27A266a",
+  "DTSDKBuild": "24A430",
+  "CFBundleIdentifier": "com.tableus.app",
+  "CFBundleVersion": "1",
+  "UIApplicationSceneManifest": {
+    "UIApplicationSupportsMultipleScenes": false,
+    "UISceneConfigurations": {
+      "UIWindowSceneSessionRoleApplication": [
+        {
+          "UISceneDelegateClassName": "EXExpoAppSceneDelegate",
+          "UISceneConfigurationName": "Default Configuration"
+        }
+      ]
+    }
+  }
+}

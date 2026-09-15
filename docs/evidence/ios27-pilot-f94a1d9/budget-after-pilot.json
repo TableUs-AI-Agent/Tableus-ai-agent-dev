@@ -1,0 +1,13 @@
+{
+  "observed_at": "2026-09-15T22:31:05.084499Z",
+  "places_attempts_all_time": 329,
+  "places_attempts_30d": 329,
+  "gemini_usage_rows": 9,
+  "gemini_estimated_usd": 0.0050015,
+  "new_places_attempts_in_pilot": 0,
+  "new_gemini_usage_rows_in_pilot": 0,
+  "new_sign_in_emails_in_pilot": 0,
+  "explicit_telemetry_canaries_in_pilot": 0,
+  "prior_run_emails_conservatively_used": 1,
+  "prior_run_email_limit": 4
+}

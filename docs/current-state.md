@@ -1,39 +1,36 @@
 # Current state
 
-Local repair frozen at `f94a1d9d1125e6c9111aa08eda496f014f20d0c0`.
-[Exact-source review](evidence/source-review-f94a1d9/README.md) and one-build iOS 27 pilot are approved. Both explicitly approved cleanup stages are complete. Free disk is 21.575 GiB,
-above the 20 GiB start guard. The single signed iOS pilot is ready to start;
-all source, evidence, signed artifacts and saved device/account data are preserved.
-Local checks pass; no new device/deployment evidence.
+The iOS 27 pilot passed for `f94a1d9d1125e6c9111aa08eda496f014f20d0c0`.
+The signed replacement installs and the owner confirms first launch, relaunch
+with session persistence, and the canonical auth link. [Pilot evidence](evidence/ios27-pilot-f94a1d9/README.md)
+records zero added Places/Gemini usage or emails. The existing API remains
+2ad48a8; [remaining same-source verification](evidence/ios27-pilot-f94a1d9/remaining-verification-plan.md)
+is prepared and awaits its separate execution approval.
 
-Updated 2026-09-15. Staging verification is paused because the installed
-`2ad48a8d8ec4d3aa9a7bd52061b823bb55960bcd` iPhone app crashes at launch on
-iOS 27. Two crash reports match its executable and trap in UIKit's required
-scene-lifecycle check. The signed artifact was built with Xcode 27/iPhoneOS 27
-and has no scene manifest. Earlier deterministic iOS tests used iOS 26.5; their
-pass does not certify the new SDK/OS combination.
+Updated 2026-09-15. The previous 2ad48a8 iPhone build crashed at launch on
+iOS 27 because it lacked the required scene lifecycle. The approved replacement
+pins Expo to 57.0.23 and uses an attributed adaptation of the official experimental
+scene plugin. It validates installed runtime versions and generated startup
+shape, and rejects incompatible SDK 27 builds/artifacts before acceptance.
 
-[Crash evidence](evidence/plan-refresh-staging-2ad48a8/iphone-launch-failure.json)
-and the [bounded local repair proposal](reviews/2026-09-15-ios27-scene-lifecycle.md)
-are recorded. The owner approved the bounded local repair on 2026-09-15.
-Implementation uses exact Expo 57.0.23 and a small, attributed config-plugin
-adaptation from the immutable official revision. The npm plugin remained
-unpublished. Installed-runtime, generated AppDelegate and artifact-manifest
-checks reject the old SDK 27 combination. The local prebuild comparison passes,
-including repeat generation and unchanged links/transport/project settings.
-Native compilation and iPhone startup remain unverified for the repair.
-Local validation passes: 226 JavaScript tests, 98 Python tests with three local
-Postgres skips, actual before/after/repeated prebuild and all `make ready` targets.
-[Evidence](evidence/ios27-scene-repair/local-validation.json) records limits and retained
-harness failures. No new native build, installation, live call or deployment ran.
+Local checks passed 226 JavaScript and 98 Python tests with three PostgreSQL
+skips, actual before/after/repeated native generation, and all `make ready`
+targets. The separately approved signed build passed in 18 minutes. Independent
+source/lock/receipt/signing/transport inspection passed and confirmed the required
+scene manifest. The owner unlocked the iPhone, the update installed preserving
+app data, and all three bounded pilot observations passed.
 
-Only [the active packet](task-packets/active.md) directs work.
+The last read-only reconciliation at 22:31 UTC still shows 329 Places attempts
+and nine Gemini usage rows ($0.0050015 accumulated estimated cost). No paid
+provider operation, new email, canary or deployment occurred in this pilot.
+Existing shared limits remain unchanged. Only [the active packet](task-packets/active.md)
+directs the next work; no additional build or deployment is implied by pilot success.
 
 Both approved cleanup stages completed: five obsolete npm caches and two
 finished disposable deterministic devices. Saved staging devices/account data,
-all accepted artifacts/receipts and evidence are preserved. The owner resolved
-Screen Time; the same signed artifact installed on the second attempt, then
-failed its first launch check. No successful iPhone readiness phase is claimed.
+all accepted artifacts/receipts and evidence are preserved. In the earlier 2ad48a8 run, the owner resolved Screen Time and installation
+succeeded, but first launch failed. That historical artifact remains rejected
+for physical iOS 27 launch; the new pilot does not relabel its evidence.
 
 The Android readiness build started at 23.25 GiB free and was intentionally
 stopped after the diagnosis, with no APK exported. This is an operator

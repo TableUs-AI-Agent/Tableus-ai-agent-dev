@@ -1,10 +1,11 @@
 # Closed-beta roadmap
 
-Local repair frozen at `f94a1d9d1125e6c9111aa08eda496f014f20d0c0`.
-[Exact-source review](evidence/source-review-f94a1d9/README.md) and one-build iOS 27 pilot are approved. Both explicitly approved cleanup stages are complete. Free disk is 21.575 GiB,
-above the 20 GiB start guard. The single signed iOS pilot is ready to start;
-all source, evidence, signed artifacts and saved device/account data are preserved.
-Local checks pass; no new device/deployment evidence.
+The iOS 27 pilot passed for `f94a1d9d1125e6c9111aa08eda496f014f20d0c0`.
+The signed replacement installs and the owner confirms first launch, relaunch
+with session persistence, and the canonical auth link. [Pilot evidence](evidence/ios27-pilot-f94a1d9/README.md)
+records zero added Places/Gemini usage or emails. The existing API remains
+2ad48a8; [remaining same-source verification](evidence/ios27-pilot-f94a1d9/remaining-verification-plan.md)
+is prepared and awaits its separate execution approval.
 
 Reassessed 2026-09-15. The goal remains an invite-only US beta across web, iOS
 and Android. Preserve the implemented architecture and validate the complete
@@ -31,7 +32,7 @@ device or production release acceptance.
 | 2d | Correct unintended plan refresh and ambiguous vote feedback — complete locally at `2ad48a8` | Slow-request reproduction, explicit refresh control, request coalescing, distinct previous-vote/unsent/success messages; all readiness targets pass with 216 JavaScript/98 Python tests and three local Postgres skips | Deterministic local work only; new source requires matching review and native evidence before live verification resumes |
 | 2e | Verify the frozen refresh correction on isolated devices — complete | Both artifacts inspected; iOS and Android lifecycle/offline/refresh pass; zero scroll reads/writes, one delayed read, successful explicit recovery; fourteen reviewed screenshots and all failed attempts retained | No live allowance used; both disposable devices stopped and retained |
 | 2f | Verify refresh correction on hosted staging and saved devices — paused on iOS 27 launch crash | Hosted CI/deployment, deterministic suites and web controls pass; physical startup fails; Android build canceled, telemetry builds unstarted | Evidence remains bound to 2ad48a8; cleanup complete; no further old-candidate execution |
-| 2g | Repair iOS 27 scene lifecycle — frozen locally at f94a1d9 | [Bounded repair](reviews/2026-09-15-ios27-scene-lifecycle.md), actual prebuild/compatibility tests and `make ready` pass (226 JavaScript/98 Python; three skips); exact-source review prepared | Local dependency/lifecycle repair approved; later native and hosted execution require a concrete source-bound plan |
+| 2g | Repair iOS 27 scene lifecycle — local repair and physical pilot pass at f94a1d9 | [Bounded repair](reviews/2026-09-15-ios27-scene-lifecycle.md), actual prebuild/compatibility tests and `make ready` pass (226 JavaScript/98 Python; three skips); exact-source review prepared | Source review and single signed iOS pilot approved and passed; remaining native/hosted execution is proposed separately |
 | 3 | Prepare production privacy and operating boundaries | Account export/deletion including Auth ownership; retention; capability-link decision; one-use invite policy; explicit cohort/spend/quota limits; rollback owner | Significant policy/architecture choices require owner decision before production |
 | 4 | Prepare production release configuration | Source-controlled production origins, isolated credentials, signed-update/OTA policy, store signing associations, source maps and rollback rehearsal | Resource/secret creation, migrations, deployment and builds need explicit applicable approval |
 | 5 | Validate TestFlight and Play closed-testing distribution | Signed install/update, auth and universal links, core journey, explicit native tab presentation, privacy declarations, observed symbolication | Separate store-submission approval |
