@@ -29,4 +29,9 @@ appId: com.tableus.app
 - extendedWaitUntil:
     visible: ".*may have completed.*"
     timeout: 30000
+- scrollUntilVisible:
+    element: "Retry finalizing plan"
+    direction: DOWN
+    centerElement: true
+    timeout: 15000
 - assertVisible: "Retry finalizing plan"

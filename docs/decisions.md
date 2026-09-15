@@ -2,6 +2,17 @@
 
 ## Deterministic refresh verification continuation — 2026-09-15
 
+- Accept the inspected iOS test artifact and its completed deterministic
+  lifecycle/offline/refresh observations separately from hosted acceptance.
+  Operator `cced1728628d594c1e957f9efc48a03428fa8f4a` recorded zero scroll
+  reads/writes, one delayed coalesced read, three injected failures and one
+  successful recovery read; the prior vote remained unchanged. Seven screenshots
+  were reviewed. Stop and retain the new test simulator before Android begins.
+- Include the previously verified finalization-retry scroll in the source-owned
+  operator flow before Android execution. It brings the retry control fully into
+  view while preserving the existing assertion and all request-count checks.
+  This changes neither the frozen application nor the already accepted iOS run;
+  Android records its actual operator identity separately.
 - Continue the identified local device-verification step under the owner's
   request. Bound execution to two sequential local test profiles with fixture
   providers, demo identities and telemetry off. This does not accept a staging

@@ -4,6 +4,21 @@ Application source: `2ad48a8d8ec4d3aa9a7bd52061b823bb55960bcd`.
 Operator branch: `codex/plan-refresh-verification`. The application is frozen;
 new flow/proxy changes run from the operator checkout and have separate identity.
 
+[iOS execution](ios-deterministic.json) passes on the inspected app, under operator
+`cced1728628d594c1e957f9efc48a03428fa8f4a`. Its build took approximately twenty
+minutes; lifecycle, offline recovery and all five refresh phases pass. Scrolling
+caused zero reads/writes, delayed repeated taps made one read, and failure/recovery
+preserved the saved vote and cached plan. All seven retained screenshots were
+visually reviewed. The new iOS simulator is stopped and retained, and its local
+services are stopped. Android execution remains pending.
+
+Before Android, the operator's `finalize-failure.yml` incorporates the navigation
+already proven in the 6b9719b Android run: scroll the retry control fully into view,
+then execute the unchanged visibility assertion. No assertion or request-count
+check is removed, and the frozen application is unchanged. This avoids repeating
+the known clipped-control test failure. Android will record its actual operator
+SHA; the completed iOS evidence retains the operator above.
+
 The owner's request to continue advances the previously identified local device
 verification step. The [execution plan](execution-plan.json) is bounded to two
 sequential local profiles, `test-ios` then `test-android`, with deterministic demo

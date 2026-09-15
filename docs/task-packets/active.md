@@ -33,6 +33,14 @@ Postgres skips. New operator tooling passes one `make ready`: 219 JavaScript and
 parsing for all five new flows pass. Both profile input preflights pass. None of
 these preparation checks establishes native execution acceptance.
 
+The [iOS result](../evidence/plan-refresh-verification-2ad48a8/ios-deterministic.json)
+now passes actual artifact inspection, lifecycle, offline and all five refresh
+phases under operator `cced1728628d594c1e957f9efc48a03428fa8f4a`. Seven screenshots
+were reviewed. Its test simulator is stopped/retained and all three local service
+ports are closed. Android is the remaining local phase. Before it starts, the
+operator flow incorporates the previously verified scroll to the finalization
+retry control; all existing assertions and application bytes remain unchanged.
+
 ## Execution order
 
 1. Build `test-ios` as `local-ios-test-2ad48a8`; inspect the actual artifact,

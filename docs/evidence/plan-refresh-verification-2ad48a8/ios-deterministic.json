@@ -1,0 +1,131 @@
+{
+  "schema_version": 1,
+  "application_sha": "2ad48a8d8ec4d3aa9a7bd52061b823bb55960bcd",
+  "operator_sha": "cced1728628d594c1e957f9efc48a03428fa8f4a",
+  "platform": "ios",
+  "accepted_at": "2026-09-15T08:44:36.511900+00:00",
+  "artifact": {
+    "schema_version": 1,
+    "application_sha": "2ad48a8d8ec4d3aa9a7bd52061b823bb55960bcd",
+    "operator_sha": "cced1728628d594c1e957f9efc48a03428fa8f4a",
+    "platform": "ios",
+    "profile": "test-ios",
+    "build_id": "local-ios-test-2ad48a8",
+    "artifact_sha256": "9b0488a47bd93bfd8f48d32bdc1a5f69d5e67ea5229ffb92afc908bace531150",
+    "receipt_sha256": "1f0d70e36cf4992f492038c762626cff725b7f0e9fc5041967b7bbb226a08ec7",
+    "inspection_sha256": "1e58eb535735114318b39cd57d611faa3cf1c98c085ae146137850d0e86b605e",
+    "source_tree_sha": "02afc0fc88cc6c9658b452dfcaacd4955b92b6b5",
+    "package_lock_sha256": "ba23ddb7a5b5a8782bcb4efeb8684c92816ff58ad271fbd22c92ca149ada9dd2",
+    "verified_at": "2026-09-15T08:18:22.160Z",
+    "checks": [
+      {
+        "receipt_and_inspection_validated": true,
+        "reinspection_matches": true,
+        "actual_artifact_bytes_match": true,
+        "source_tree_matches": true,
+        "frozen_lock_matches": true,
+        "embedded_source_matches": true,
+        "local_demo_configuration": true,
+        "telemetry_off": true,
+        "native_test_platform_validated": true,
+        "refresh_correction_in_bundle": true
+      }
+    ]
+  },
+  "lifecycle_passed": true,
+  "offline_passed": true,
+  "explicit_refresh_passed": true,
+  "lifecycle_summary_sha256": "b924b541ca0e8672c760a64f898d98c986262251e61be48940a40279c14040f5",
+  "offline_summary_sha256": "a19c2546fd1c892f468db31fd88216ca8b28d5acb6f9bcef4df5590a7e244c4e",
+  "refresh_summary_sha256": "bf378a8e2459ca1237ceccc250316ec7516915e596d8e09f2ce282d195faff7a",
+  "refresh": {
+    "schema_version": 1,
+    "application_sha": "2ad48a8d8ec4d3aa9a7bd52061b823bb55960bcd",
+    "operator_sha": "cced1728628d594c1e957f9efc48a03428fa8f4a",
+    "platform": "ios",
+    "build_id": "local-ios-test-2ad48a8",
+    "artifact_sha256": "9b0488a47bd93bfd8f48d32bdc1a5f69d5e67ea5229ffb92afc908bace531150",
+    "provider_mode": "deterministic",
+    "auth_mode": "demo",
+    "telemetry_mode": "off",
+    "phases": [
+      {
+        "phase": "initial",
+        "write_request_count": 0,
+        "request_count": 1,
+        "upstream_request_count": 1,
+        "passed": true
+      },
+      {
+        "phase": "scrolling",
+        "write_request_count": 0,
+        "request_count": 0,
+        "upstream_request_count": 0,
+        "passed": true
+      },
+      {
+        "phase": "slow_refresh",
+        "write_request_count": 0,
+        "request_count": 1,
+        "upstream_request_count": 1,
+        "delayed_response_count": 1,
+        "passed": true
+      },
+      {
+        "phase": "failed_refresh",
+        "write_request_count": 0,
+        "request_count": 3,
+        "upstream_request_count": 0,
+        "synthetic_error_count": 3,
+        "passed": true
+      },
+      {
+        "phase": "recovered_refresh",
+        "write_request_count": 0,
+        "request_count": 1,
+        "upstream_request_count": 1,
+        "passed": true
+      }
+    ],
+    "prior_vote_unchanged": true,
+    "screenshots": [
+      "ios-refresh-after-scrolling.png",
+      "ios-refresh-failure-cached-plan.png",
+      "ios-refresh-recovered.png"
+    ]
+  },
+  "screenshots_visually_reviewed": {
+    "ios-finalized-plan.png": "1d150c32ecba24c4b5d5aa2ad8f87d703f43502c88f6fe2b3e64b59111ffcfda",
+    "ios-rotated-link.png": "ef5a2e1bb151ae9a27032987fe023528f0193526e86a7bad7aa50fd28ea77c41",
+    "ios-offline-retry.png": "f09c647a0b74792549638bc616461bb91b49cdd59e0dd60bdcf9b5641271f8a7",
+    "ios-recovered-finalized.png": "baf435613f45bbcb6eb736b935cd956d560b96258f35d637bd385fc3968b3c6c",
+    "ios-refresh-after-scrolling.png": "04fe62632e3b5d82dd109b2e4ac75416a7f44c9e8c38999cfa7440ee15e46dae",
+    "ios-refresh-failure-cached-plan.png": "9b519bd80752fa54117b099b80516e5ea7bce4554ce5de3efb69061a2af5b9a2",
+    "ios-refresh-recovered.png": "180237d5955334eac46598f2511d05e668fd33138c6df945872fc3d8d8fc57c9"
+  },
+  "test_device": {
+    "platform": "ios",
+    "new_test_device_stopped": true,
+    "new_test_device_retained": true,
+    "local_test_services_stopped": true,
+    "checked_at": "2026-09-15T08:43:09.053660+00:00"
+  },
+  "build": {
+    "profile": "test-ios",
+    "application_sha": "2ad48a8d8ec4d3aa9a7bd52061b823bb55960bcd",
+    "status": "passed",
+    "started_at": "2026-09-15T07:57:34.808624+00:00",
+    "free_gib_at_start": 34.138,
+    "exit_code": 0,
+    "finished_at": "2026-09-15T08:18:03.285541+00:00",
+    "artifact_exists": true,
+    "inspection_exists": true,
+    "receipt_exists": true,
+    "free_gib_at_finish": 32.862
+  },
+  "build_toolchain_observation": {
+    "expo_doctor_checks_passed": 20,
+    "expo_doctor_checks_total": 21,
+    "existing_dependency_patch_warning_retained": true
+  }
+}

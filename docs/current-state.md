@@ -7,8 +7,8 @@ Gemini and Google Places. The client correction is published on
 now serve this source. Native replacement verification is paused. The active
 local correction is on `codex/plan-refresh-controls`, based on operator/evidence
 commit `25e0397d7803651d39968f53868a2b73845817c3`. Corrected application source is
-frozen locally at `2ad48a8d8ec4d3aa9a7bd52061b823bb55960bcd`; it has not been
-built into a native artifact or deployed. Subsequent evidence commits do not
+frozen locally at `2ad48a8d8ec4d3aa9a7bd52061b823bb55960bcd`; its iOS test artifact
+is built and verified, while Android is next and hosted deployment remains pending. Subsequent evidence commits do not
 change that application identity.
 Only [the active packet](task-packets/active.md) directs current implementation.
 
@@ -16,7 +16,14 @@ Deterministic device verification is now prepared on `codex/plan-refresh-verific
 under the owner's request to continue. The [bounded execution plan](evidence/plan-refresh-verification-2ad48a8/README.md)
 covers two local test profiles and new isolated test devices. Both input
 preflights pass, and operator `make ready` passes 219 JavaScript/98 Python tests
-with three local Postgres skips. Native outcomes remain pending. The
+with three local Postgres skips. [iOS deterministic verification](evidence/plan-refresh-verification-2ad48a8/ios-deterministic.json)
+passes lifecycle, offline recovery and all five refresh phases. Scrolling caused
+zero detail reads or writes; a double tap during a delayed response made one
+request; failed refresh retained the plan and recovered with one explicit read.
+The previous vote stayed unchanged. All seven screenshots were reviewed, and the
+new test simulator is stopped and retained. Android remains pending. Its operator
+flow now includes the previously proven scroll to the finalization retry control;
+application bytes and all assertions remain unchanged. The
 [focused source review](evidence/source-review-2ad48a8/README.md) validates fourteen
 file hashes and seven areas; all eleven prior control files are unchanged. Its
 same two medium risks and exact report still require matching owner acceptance
@@ -39,8 +46,9 @@ and unsent ranking changes receive distinct messages. Hidden-route inactivity,
 foreground updates and offline recovery remain required. See the
 [local investigation](reviews/2026-09-15-explicit-plan-refresh.md) for validation
 and the limits of request attribution. This does not prove an endless native loop
-or establish the origin of every historical request. Native verification of the
-new source remains outstanding; retained 6b9719b artifacts retain their actual SHA.
+or establish the origin of every historical request. iOS simulator verification
+now passes; Android and hosted/physical verification of the new source remain
+outstanding. Retained 6b9719b artifacts retain their actual SHA.
 All local readiness targets pass: 216 JavaScript and 98 Python tests, with three
 Postgres-only tests skipped. The initial `make ready` passed lint/types but could
 not open the proxy test's loopback listener in the sandbox. The remaining targets
