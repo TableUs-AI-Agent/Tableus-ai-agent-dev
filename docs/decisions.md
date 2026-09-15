@@ -1,5 +1,9 @@
 # Decision log
 
+Local repair frozen at `f94a1d9d1125e6c9111aa08eda496f014f20d0c0`.
+[Exact-source review](evidence/source-review-f94a1d9/README.md) is prepared; acceptance and the one-build
+iOS 27 pilot remain pending. Local checks pass; no new device/deployment evidence.
+
 ## Approved local scene repair — 2026-09-15
 
 - The owner approved the bounded proposal recorded at 83420fb. Pin Expo to

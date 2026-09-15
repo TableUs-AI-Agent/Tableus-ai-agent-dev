@@ -1,12 +1,16 @@
 # Active packet: resolve the iOS 27 launch blocker
 
+Local repair frozen at `f94a1d9d1125e6c9111aa08eda496f014f20d0c0`.
+[Exact-source review](../evidence/source-review-f94a1d9/README.md) is prepared; acceptance and the one-build
+iOS 27 pilot remain pending. Local checks pass; no new device/deployment evidence.
+
 ## Status
 
 The frozen `2ad48a8d8ec4d3aa9a7bd52061b823bb55960bcd` staging verification
 is paused after a confirmed physical-iPhone launch crash. Use one primary agent.
 This is the only active packet. The [bounded local repair proposal](../reviews/2026-09-15-ios27-scene-lifecycle.md)
 was approved by the owner on 2026-09-15. The local dependency/configuration
-repair is implemented; freeze/review follows deterministic validation.
+repair is implemented, validated and frozen; exact-source review is prepared.
 
 The signed app installed after the owner resolved Screen Time, but iOS 27 traps
 because the Xcode 27 build lacks scene-lifecycle adoption. Two crash reports
@@ -22,11 +26,12 @@ The two telemetry profiles remain unstarted. Preserve the raw build logs.
 
 ## Next bounded objective
 
-Complete local validation and freeze/review the minimum SDK 57 scene repair in
+Obtain acceptance of the prepared source review and the proposed one-build
+iOS 27 pilot. Local validation and freeze are complete in
 `codex/ios27-scene-lifecycle`. Expo is pinned to 57.0.23; the official plugin was
 still unpublished, so the approved attributed local adaptation is used. Actual
 prebuild comparison now passes before/after/repeated generation. Keep React
-Native 0.86.2 and application providers unchanged. Run `make ready` once.
+Native 0.86.2 and application providers unchanged. The single `make ready` run passed.
 
 Prepare exact-source review acceptance and the smallest separate execution
 request: first an inspected signed iOS build and iOS 27 launch/relaunch proof,

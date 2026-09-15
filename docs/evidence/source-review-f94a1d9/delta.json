@@ -1,0 +1,10 @@
+{
+  "schema_version": 1,
+  "application_sha": "f94a1d9d1125e6c9111aa08eda496f014f20d0c0",
+  "comparison_sha": "2ad48a8d8ec4d3aa9a7bd52061b823bb55960bcd",
+  "previous_review_digest": "7e8debeffb2656ca5b55c5b2e725bb482763b85b258914b6e8a20fb93034d912",
+  "unchanged_previously_reviewed_files": 14,
+  "reviewed_files": 26,
+  "owner_acceptance_pending": true,
+  "dependency_delta": "../ios27-scene-repair/dependency-delta.json"
+}
