@@ -73,7 +73,8 @@ account controls pass, and both providers received one exact-release web canary.
 See the [execution progress](../evidence/replacement-6b9719b/execution-progress.json).
 The existing web plan has four attributed candidates and organizer controls.
 Two private-link rotations succeeded; the repaired local helper accepted the
-owner's copied link. Usage is thirty-two Places attempts and one counted email,
+owner's copied link. Usage is thirty-two Places attempts and two emails reserved
+(one owner-confirmed and one pending iOS restoration),
 with zero new generation. Web/link recovery used sixteen; iPhone join, plan reads
 and the confirmed vote used sixteen. Forty-eight attempts remain allocated to
 Android join/vote, organizer changes, native witnesses and one Android return.
@@ -87,8 +88,16 @@ The owner approved removing the two completed disposable test devices after
 the disk guard paused execution. [Cleanup is complete](../evidence/replacement-6b9719b/disk-cleanup-execution.json),
 with accepted artifacts, diagnostics and saved live sessions preserved. The four
 remaining builds resumed sequentially at `readiness-ios` with 30.0 GiB free.
-Both readiness artifacts now pass inspection; the two telemetry profiles remain
-in progress. The connected iPhone blocked its first install through Screen Time.
+All six artifacts now pass inspection, with sequential build timing verified.
+The preserved iOS session restored after installation; its single iOS/API canary
+flow passed in the UI and delivered to both providers at the exact release.
+Local iOS sign-out removed that session while the original Android session
+remained in the provider. Restore the same iOS account with its reserved message,
+then stop iOS and require Android refresh survival after the sign-out. Complete
+Android readiness and telemetry before its local sign-out/restoration, then
+require the existing restored iOS session to refresh after Android sign-out.
+Cached UI or a fresh replacement sign-in cannot establish survival. Continue
+these checks one native device at a time. The connected iPhone blocked its first install through Screen Time.
 The owner resolved that restriction, and the same package is installed; physical
 session restoration, relaunch and canonical auth-link checks pass. Remaining
 physical checks are in progress. The private link, four candidates, guest controls,
@@ -131,7 +140,7 @@ scaling, store signing/submission, OTA authority and native tab polish remain
 later objectives. No merge, production change, secret/resource creation or
 destructive cleanup is implied.
 
-## Completed preflight
+## Completed preflight — historical snapshot
 
 All six build-input checks pass and the six retained c5b041c artifact/receipt
 sets verify. No replacement artifacts or CI run exist. Existing tools, signing

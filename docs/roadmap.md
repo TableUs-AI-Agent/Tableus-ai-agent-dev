@@ -1,6 +1,6 @@
 # Closed-beta roadmap
 
-Reassessed 2026-09-14. The goal remains an invite-only US beta across web, iOS
+Reassessed 2026-09-15. The goal remains an invite-only US beta across web, iOS
 and Android. Preserve the implemented architecture and validate the complete
 shared-plan journey before adding features or replacing application providers.
 
@@ -38,12 +38,16 @@ Both replacement test artifacts are inspected and lifecycle/offline verification
 passes. Android's accepted offline run records a navigation-only scroll before
 the original retry-button assertion, with earlier failures retained. The owner
 approved cleanup of the two completed disposable test devices; cleanup is complete
-and both readiness artifacts now pass inspection. The two telemetry profiles
-remain in progress. The exact-release web canary reached both providers, and the
+and all six artifacts now pass inspection with sequential build timing verified.
+The saved iOS session restored and its iOS/API canaries reached both providers
+for the exact release. Its local sign-out removed only its provider session;
+Android refresh survival and the reverse direction remain unverified. The
+owner-operated iOS restoration is pending. The exact-release web canary also
+reached both providers, and the
 repaired local helper accepted the copied private link. The physical iPhone build is installed after the owner resolved a Screen Time
 restriction. Its session restoration, relaunch and canonical auth link pass. Native readiness
 and cumulative acceptance remain the objective, with 32/80 Places attempts and
-one of four emails consumed.
+two of four emails conservatively reserved (one owner-confirmed).
 
 Only `docs/task-packets/active.md` is active. Later rows are queued outcomes,
 not instructions to start concurrent agents, scans or cloud work.

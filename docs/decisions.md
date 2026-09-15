@@ -2,6 +2,23 @@
 
 ## Replacement execution approval — 2026-09-14
 
+- **2026-09-15 live checkpoint:** Accept the iOS/API canary delivery separately
+  from session isolation. The original iOS session refreshed after replacement
+  installation; local sign-out removed it and retained the original Android
+  session. Require an actual Android refresh after that sign-out and a later
+  iOS refresh after Android sign-out. Restore iOS first using one reserved
+  approved message so the natural refresh wait can overlap Android verification.
+  Do not change expiry settings or use a new sign-in as survival evidence.
+- All six artifacts now pass source, lock, checksum, receipt and signer checks;
+  recorded build times prove sequential execution. Accept that artifact gate
+  and continue the saved-session and live-device gates separately. A Preview
+  network error recovered with one Retry and retained its organizer session.
+- Five artifacts now pass inspection, including iOS telemetry. Its build took
+  4,082 seconds and compiled both Intel and Apple silicon simulator binaries.
+  Keep the current accepted bytes. Evaluate an ARM-only local simulator profile
+  before the next build cycle to reduce compilation work. The verified idle
+  Gradle daemon from the completed readiness build was stopped through Gradle;
+  no files or app data were removed. Android telemetry is the final build.
 - A pre-existing saved-vote label does not prove a new submission. The first
   iPhone observation had no new server event; the subsequent explicit submission
   produced one `vote.updated` event. Accept that attributable result. The run

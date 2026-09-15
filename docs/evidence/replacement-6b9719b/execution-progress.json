@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
   "application_sha": "6b9719b4e63e34803f2e7c2598e45851790df661",
-  "observed_at": "2026-09-15T04:32:07.246179+00:00",
-  "native_artifacts_inspected": 4,
+  "observed_at": "2026-09-15T05:57:26.208921+00:00",
+  "native_artifacts_inspected": 6,
   "test_ios": {
     "profile": "test-ios",
     "artifact_name": "TableUs.app",
@@ -24,7 +24,7 @@
   },
   "places_attempts_this_run": 32,
   "gemini_generations_this_run": 0,
-  "sign_in_emails_conservatively_consumed": 1,
+  "sign_in_emails_conservatively_consumed": 2,
   "provider_usage_observed_at": "2026-09-15T04:25:48.709671+00:00",
   "cumulative_acceptance_complete": false,
   "ios_lifecycle_passed": true,
@@ -55,9 +55,9 @@
   },
   "android_offline_navigation_overlay_recorded": true,
   "native_workload_running": true,
-  "remaining_native_profiles": 2,
-  "remaining_build_status": "telemetry-test-ios-in-progress",
-  "free_disk_gib": 18.2,
+  "remaining_native_profiles": 0,
+  "remaining_build_status": "complete",
+  "free_disk_gib": 31.608,
   "minimum_build_start_gib": 20,
   "disposable_device_cleanup_approval_pending": false,
   "disposable_android_device_retained": false,
@@ -100,5 +100,55 @@
   "iphone_live_vote_server_confirmed": true,
   "iphone_live_join_confirmed": true,
   "iphone_live_account_controls_confirmed": true,
-  "remaining_places_attempts": 48
+  "remaining_places_attempts": 48,
+  "telemetry_test_ios": {
+    "profile": "telemetry-test-ios",
+    "artifact_name": "TableUs.app",
+    "artifact_sha256": "d22c4178adf27520d6b8f7058be32059e80d3b3b5be5227d99ab3977b20dad21",
+    "receipt_and_inspection_validated": true,
+    "source_and_lock_validated": true,
+    "build_started_at": "2026-09-15T04:04:34.541935+00:00",
+    "build_finished_at": "2026-09-15T05:12:36.672784+00:00",
+    "build_duration_seconds": 4082,
+    "compiled_source": {
+      "bundle_sha256": "76f2cf3b2803f9b02ff7d66bf2fe7faffc9a2b037ef8e1baabbb5f9777da0bda",
+      "expected_source_literal_present": true,
+      "inherited_source_literal_present": false,
+      "runtime_delivery_verified": true
+    }
+  },
+  "sequential_builds_verified": true,
+  "web_network_error_recovered": true,
+  "telemetry_test_android": {
+    "profile": "telemetry-test-android",
+    "artifact_name": "TableUs.apk",
+    "artifact_sha256": "098b9861a206746282f3a3aa66ba02e043cb14b42e0028707b0357915634b4a3",
+    "receipt_and_inspection_validated": true,
+    "source_and_lock_validated": true,
+    "build_started_at": "2026-09-15T05:12:37.185843+00:00",
+    "build_finished_at": "2026-09-15T05:33:48.254393+00:00",
+    "build_duration_seconds": 1271,
+    "compiled_source": {
+      "bundle_sha256": "9770ddc0dd838f7e89b1c566f5d0149ea89f45ee60109cf698695691c544d82b",
+      "expected_source_literal_present": true,
+      "inherited_source_literal_present": false,
+      "runtime_delivery_verified": false
+    }
+  },
+  "native_workload": "preserved-ios-simulator",
+  "sign_in_emails_owner_confirmed": 1,
+  "ios_telemetry_ui_passed": true,
+  "ios_api_canary_delivery": {
+    "posthog": {
+      "ios": 1,
+      "api": 1
+    },
+    "sentry": {
+      "mobile": 1,
+      "api": 1
+    }
+  },
+  "ios_local_sign_out_confirmed": true,
+  "ios_same_account_restoration_pending": true,
+  "session_isolation_complete": false
 }

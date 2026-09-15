@@ -1,0 +1,53 @@
+{
+  "schema_version": 1,
+  "application_sha": "6b9719b4e63e34803f2e7c2598e45851790df661",
+  "observed_at": "2026-09-15T05:57:26.208921+00:00",
+  "platform": "ios",
+  "profile": "telemetry-test-ios",
+  "artifact_sha256": "d22c4178adf27520d6b8f7058be32059e80d3b3b5be5227d99ab3977b20dad21",
+  "inspected_before_installation": true,
+  "preserved_data_installation": true,
+  "installed_at": "2026-09-15T05:37:03.228Z",
+  "existing_plans_restored": true,
+  "ui_result": "Telemetry checks passed",
+  "ui_send_count": 1,
+  "posthog": {
+    "project_id": 578352,
+    "event": "telemetry_e2e",
+    "release": "6b9719b4e63e34803f2e7c2598e45851790df661",
+    "platform_counts": {
+      "ios": 1,
+      "api": 1
+    },
+    "delivery_verified": true,
+    "method": "project-scoped-connector-aggregate"
+  },
+  "sentry": {
+    "organization": "tableus-staging",
+    "release": "6b9719b4e63e34803f2e7c2598e45851790df661",
+    "environment": "staging",
+    "matching_events": [
+      {
+        "project": "tableus-mobile-staging",
+        "issue_id": 7694252510,
+        "event_id": "97d2c423ae6445ca86d41d38f0cdec54",
+        "at": "2026-09-15T05:52:32.121Z",
+        "handled": true,
+        "redacted_message": true
+      },
+      {
+        "project": "tableus-api-staging",
+        "issue_id": 7694252495,
+        "event_id": "f035b1bf1ddc4fd9a9aecadde02c4822",
+        "at": "2026-09-15T05:52:33.163Z",
+        "handled": true,
+        "redacted_message": true
+      }
+    ],
+    "delivery_verified": true,
+    "method": "authenticated-provider-event-detail-ui"
+  },
+  "android_canaries_pending": true,
+  "cumulative_acceptance_complete": false,
+  "raw_payloads_retained": false
+}

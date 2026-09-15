@@ -1,6 +1,6 @@
 # Current state
 
-Updated 2026-09-14. Development uses GPT-6 Astra. Application providers remain
+Updated 2026-09-15. Development uses GPT-6 Astra. Application providers remain
 Gemini and Google Places. The client correction is published on
 `codex/replacement-6b9719b`, frozen application source
 `6b9719b4e63e34803f2e7c2598e45851790df661`; Railway staging and Vercel Preview
@@ -44,19 +44,29 @@ removing the two completed disposable test devices. [Cleanup evidence](evidence/
 records only those two removals, with all artifacts/evidence and saved live
 devices preserved. Free space was 27.7 GiB immediately afterward and 30.0 GiB
 when `readiness-ios` started. Both readiness artifacts now pass source, checksum,
-receipt and signer inspection; the two telemetry profiles remain in progress.
+receipt and signer inspection. [All six artifacts](evidence/replacement-6b9719b/native-artifacts.json)
+now pass inspection, and their build timestamps verify sequential execution.
+The saved iOS simulator restored its original session after installing the inspected
+telemetry profile. [Its iOS and API canaries](evidence/replacement-6b9719b/ios-telemetry-observation.json)
+reached both providers with the exact source release. [Session isolation](evidence/replacement-6b9719b/session-isolation-progress.json)
+is incomplete: iOS local sign-out removed its own session while the original
+Android session remained; a later Android refresh and the reverse direction
+still require observation. One approved iOS restoration message is reserved.
 [Execution progress](evidence/replacement-6b9719b/execution-progress.json)
 also records web session restoration, read-only account controls and one delivered
-web canary in each provider. The web plan shows four attributed candidates and
+web canary in each provider. A later Preview network error recovered with one
+Retry while retaining the organizer session. The web plan shows four attributed candidates and
 organizer controls. Two private-link rotations are recorded, and the
 [repaired local helper](evidence/replacement-6b9719b/local-helper-observation.json)
-accepted the owner's copied link. One sign-in email and thirty-two Places
+accepted the owner's copied link. Two sign-in emails are conservatively reserved
+(one confirmed, one awaiting owner entry), and thirty-two Places
 attempts are counted: sixteen for web/link recovery and sixteen for iPhone
 join, plan reads and the confirmed vote;
 new Gemini generation remains zero. [Request timing](evidence/replacement-6b9719b/web-request-observation.json)
 is consistent with a web revision refresh following rotation. Native live-device
 and cumulative acceptance remain incomplete. Saved live-account devices remain
-stopped and accepted artifacts remain intact during native compilation. The
+preserved, with only the iOS simulator currently running. Accepted artifacts
+remain intact. The
 connected iPhone's first installation was blocked by Screen Time. The owner
 resolved the restriction; the same inspected package is now installed. Physical
 session restoration, relaunch, canonical auth/private links, four candidates,

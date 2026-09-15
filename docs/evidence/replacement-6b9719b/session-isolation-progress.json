@@ -1,0 +1,30 @@
+{
+  "schema_version": 1,
+  "application_sha": "6b9719b4e63e34803f2e7c2598e45851790df661",
+  "observed_at": "2026-09-15T05:57:26.208921+00:00",
+  "same_account_label": "639e57785617",
+  "complete": false,
+  "ios_original_session": {
+    "label": "5e9d62e57278",
+    "created_at": "2026-09-13T07:07:32.37836Z",
+    "refreshed_after_replacement_install_at": "2026-09-15T05:40:28.309975Z",
+    "plans_restored": true
+  },
+  "ios_local_sign_out": {
+    "click_started_after": "2026-09-15T05:54:21.757106Z",
+    "provider_observed_at": "2026-09-15T05:54:51.684182Z",
+    "original_session_removed": true,
+    "signed_out_ui_visible": true,
+    "restoration_pending": true
+  },
+  "android_preserved_session": {
+    "label": "d6bef86af4f6",
+    "created_at": "2026-09-13T05:22:10.976283Z",
+    "refreshed_at": "2026-09-13T08:11:48.293198Z",
+    "present_after_ios_sign_out": true,
+    "refresh_after_ios_sign_out_pending": true
+  },
+  "reverse_direction_pending": true,
+  "new_messages_reserved": 1,
+  "raw_account_data_retained": false
+}

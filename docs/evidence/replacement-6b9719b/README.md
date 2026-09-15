@@ -1,7 +1,7 @@
 # Replacement verification execution
 
 Status: owner approved execution on 2026-09-14; hosted CI/deployment pass and
-sequential native execution is in progress.
+all six sequential native builds pass; live verification is in progress.
 The [approval record](execution-approval.json) binds the owner's direct reply to
 the plan at `9ee4a8035389d2cdd26e2dec2efae0eb39c5ee42`. The preflight remains a
 historical snapshot; source-bound execution evidence follows separately.
@@ -19,19 +19,26 @@ assertion, supported by reviewed before/after screenshots. The frozen applicatio
 and checkout remain unchanged. After the [disk guard](disk-headroom.json) paused
 work, the owner [approved](disk-cleanup-approval.json) removing the two completed
 disposable test devices. [Cleanup](disk-cleanup-execution.json) preserved artifacts,
-evidence and saved live sessions. Both readiness artifacts now pass inspection;
-the two telemetry profiles remain in progress. [Web request observations](web-request-observation.json)
+evidence and saved live sessions. [All six artifacts](native-artifacts.json) now
+pass inspection, and their recorded build times verify sequential execution.
+The [Preview recovered](web-recovery-observation.json) from a later network error
+with one Retry while retaining the organizer session. [Web request observations](web-request-observation.json)
 count the initial eight Places attempts. [Clipboard recovery](local-helper-observation.json)
 used eight more, and the repaired helper accepted the owner's copied link.
 iPhone join, plan reads and the confirmed vote used sixteen, bringing the run
-total to thirty-two. One email is counted and no new generation has run. Physical iPhone
+total to thirty-two. Two messages are conservatively reserved (one confirmed
+and one pending iOS restoration), and no new generation has run. Physical iPhone
 [installation succeeded](iphone-installation-observation.json) after the owner
 resolved a Screen Time restriction.
 [PostHog](posthog-web-observation.json) and [Sentry](sentry-web-observation.json)
-each received the single exact-release web canary. Native readiness, native/API
-telemetry delivery and cumulative acceptance remain outstanding.
+each received the single exact-release web canary. The inspected iOS telemetry
+profile restored its saved session, and [its iOS/API canaries](ios-telemetry-observation.json)
+reached both providers with the exact release. [Session-isolation progress](session-isolation-progress.json)
+records local iOS sign-out and the retained Android provider session; Android
+refresh survival and the reverse direction are still pending. Native readiness,
+Android/API telemetry and cumulative acceptance remain outstanding.
 
-## Candidate and readiness
+## Approved preflight snapshot (historical)
 
 - Application: `6b9719b4e63e34803f2e7c2598e45851790df661`, clean detached source
   and local publishing ref `codex/replacement-6b9719b`.
