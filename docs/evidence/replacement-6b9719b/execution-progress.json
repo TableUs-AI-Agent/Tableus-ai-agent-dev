@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "application_sha": "6b9719b4e63e34803f2e7c2598e45851790df661",
-  "observed_at": "2026-09-15T01:08:02.560153+00:00",
+  "observed_at": "2026-09-15T03:36:30.566413+00:00",
   "native_artifacts_inspected": 2,
   "test_ios": {
     "profile": "test-ios",
@@ -22,10 +22,10 @@
     "posthog": 1,
     "sentry": 1
   },
-  "places_attempts_this_run": 8,
+  "places_attempts_this_run": 12,
   "gemini_generations_this_run": 0,
   "sign_in_emails_conservatively_consumed": 1,
-  "provider_usage_observed_at": "2026-09-15T01:00:05.654022+00:00",
+  "provider_usage_observed_at": "2026-09-15T03:41:32.492154+00:00",
   "cumulative_acceptance_complete": false,
   "ios_lifecycle_passed": true,
   "ios_offline_passed": true,
@@ -35,7 +35,7 @@
   "web_organizer_controls_verified": true,
   "private_link_rotations": 1,
   "local_link_handoff_pending": true,
-  "disposable_ios_simulator_retained": true,
+  "disposable_ios_simulator_retained": false,
   "test_android": {
     "profile": "test-android",
     "artifact_name": "TableUs.apk",
@@ -54,11 +54,13 @@
     "offline": 3
   },
   "android_offline_navigation_overlay_recorded": true,
-  "native_workload_running": false,
+  "native_workload_running": true,
   "remaining_native_profiles": 4,
-  "remaining_build_status": "paused-disk-headroom",
-  "free_disk_gib": 15.789,
+  "remaining_build_status": "readiness-ios-in-progress",
+  "free_disk_gib": 27.706,
   "minimum_build_start_gib": 20,
-  "disposable_device_cleanup_approval_pending": true,
-  "disposable_android_device_retained": true
+  "disposable_device_cleanup_approval_pending": false,
+  "disposable_android_device_retained": false,
+  "disposable_test_devices_removed": true,
+  "link_handoff_additional_places": 4
 }

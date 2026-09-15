@@ -3,8 +3,8 @@
   "observed_at": "2026-09-15T01:06:24.832121+00:00",
   "free_gib": 15.789,
   "minimum_build_start_gib": 20,
-  "cleanup_executed": false,
-  "explicit_cleanup_approval_received": false,
+  "cleanup_executed": true,
+  "explicit_cleanup_approval_received": true,
   "requires_approval_to_delete": true,
   "automatic_review_rejection": "Earlier simulator deletion rejected because AGENTS.md requires explicit destructive-cleanup approval.",
   "estimated_reclaim_gib": 4.744,
@@ -29,5 +29,7 @@
       "stopped": true,
       "allocated_gib": 2.383
     }
-  ]
+  ],
+  "execution_record": "disk-cleanup-execution.json",
+  "approval_record": "disk-cleanup-approval.json"
 }

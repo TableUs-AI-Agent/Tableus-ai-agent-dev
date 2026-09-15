@@ -39,19 +39,21 @@ first startup was obscured by a System UI unresponsive dialog; the four-core
 retry passed lifecycle. Its offline run required a documented operator scroll
 before the unchanged retry-button assertion. Before/after screenshots confirm
 the control was clipped at the viewport edge; all request-count checks passed.
-Application bytes and the frozen checkout are unchanged. Four remaining builds
-are paused: [disk headroom](evidence/replacement-6b9719b/disk-headroom.json) is
-15.8 GiB against the approved 20 GiB start minimum. Deleting the two completed
-disposable test devices would reclaim about 4.7 GiB and needs explicit approval.
+Application bytes and the frozen checkout are unchanged. The owner approved
+removing the two completed disposable test devices. [Cleanup evidence](evidence/replacement-6b9719b/disk-cleanup-execution.json)
+records only those two removals, with all artifacts/evidence and saved live
+devices preserved. Free space was 27.7 GiB immediately afterward and 30.0 GiB
+when `readiness-ios` started. The remaining four builds have resumed sequentially.
 [Execution progress](evidence/replacement-6b9719b/execution-progress.json)
 also records web session restoration, read-only account controls and one delivered
 web canary in each provider. The web plan shows four attributed candidates and
 organizer controls. One private-link rotation succeeded; its local clipboard
-handoff is pending. One sign-in email and eight Places attempts are counted;
+handoff is pending. One sign-in email and twelve Places attempts are counted, including four to
+reopen the plan for an owner-operated clipboard handoff;
 new Gemini generation remains zero. [Request timing](evidence/replacement-6b9719b/web-request-observation.json)
 is consistent with a web revision refresh following rotation. Native live-device
-and cumulative acceptance remain incomplete. All native workloads are stopped;
-saved live-account devices and accepted artifacts remain intact.
+and cumulative acceptance remain incomplete. Saved live-account devices remain
+stopped and accepted artifacts remain intact during native compilation.
 
 The EAS build's Expo Doctor step passes 20/21 checks and reports eleven SDK 57
 patch-version recommendations. The exact same warning appears in the retained

@@ -1,0 +1,14 @@
+{
+  "application_sha": "6b9719b4e63e34803f2e7c2598e45851790df661",
+  "started_at": "2026-09-15T03:34:58.719741+00:00",
+  "free_gib_before": 25.266,
+  "approved_turn_id": "01a0a31f-3572-7852-b2b1-ab0c4a86adba",
+  "deleted": [
+    "TableUsReplacement-Deterministic",
+    "TableUsReplacement_Deterministic"
+  ],
+  "finished_at": "2026-09-15T03:35:01.995494+00:00",
+  "free_gib_after": 27.706,
+  "artifacts_and_evidence_retained": true,
+  "saved_live_devices_untouched": true
+}

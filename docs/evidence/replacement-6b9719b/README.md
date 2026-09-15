@@ -16,9 +16,11 @@ artifacts, [passed iOS verification](ios-deterministic.json),
 checks. Android's earlier failures are retained. Its accepted offline run adds
 an [operator scroll](android-offline-navigation.patch) before the unchanged retry
 assertion, supported by reviewed before/after screenshots. The frozen application
-and checkout remain unchanged. The four remaining builds are paused at the
-[disk guard](disk-headroom.json); deleting the two completed disposable test
-devices requires the owner's pending approval. [Web request observations](web-request-observation.json)
+and checkout remain unchanged. After the [disk guard](disk-headroom.json) paused
+work, the owner [approved](disk-cleanup-approval.json) removing the two completed
+disposable test devices. [Cleanup](disk-cleanup-execution.json) preserved artifacts,
+evidence and saved live sessions; the four remaining builds resumed with
+`readiness-ios`. [Web request observations](web-request-observation.json)
 count eight Places attempts; one email is counted and no new generation has run.
 [PostHog](posthog-web-observation.json) and [Sentry](sentry-web-observation.json)
 each received the single exact-release web canary. Native readiness, native/API

@@ -2,6 +2,12 @@
 
 ## Replacement execution approval — 2026-09-14
 
+- The owner explicitly approved the two-device cleanup in task turn
+  `01a0a31f-3572-7852-b2b1-ab0c4a86adba`. [Execution](evidence/replacement-6b9719b/disk-cleanup-execution.json)
+  removed only the completed iOS/Android deterministic devices through their
+  platform managers. Artifacts, diagnostics and saved live-account devices were
+  preserved. The four remaining builds resumed sequentially; `readiness-ios`
+  started with 30.0 GiB free. This resolves the earlier cleanup approval gate.
 - Accept Android lifecycle from the four-core retry and offline verification
   from the subsequent bounded run. Preserve the startup System UI failure and
   the clipped retry-button failure. The [operator navigation patch](evidence/replacement-6b9719b/android-offline-navigation.patch)
@@ -13,7 +19,8 @@
   of the newly created iOS test device because destructive cleanup requires
   explicit approval. The concrete pending request covers only the two completed
   disposable test devices (about 4.7 GiB), preserving saved live sessions and all
-  artifacts/evidence. No cleanup or remaining build has started.
+  artifacts/evidence. That request was subsequently approved and executed as
+  recorded above; no additional cleanup authority is implied.
 - The first inspected iOS artifact and delivered web canary do not imply native
   or cumulative acceptance. Retain separate artifact, deterministic, live-device
   and telemetry gates; subsequent native phases stop on any failed prerequisite.
