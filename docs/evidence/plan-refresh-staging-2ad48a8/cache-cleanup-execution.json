@@ -1,0 +1,55 @@
+{
+  "executed_at": "2026-09-15T21:06:41.887937+00:00",
+  "approval": "Latest direct owner message: approve; scope is the five previously requested obsolete npm caches.",
+  "plan_commit": "aabd673386129e51323e63a4ac71f9a7dcf9d2ec",
+  "plan_sha256": "c1aee818e08775f4970f003e72f4454702605fbb087a3c55e3c2eb05ee394742",
+  "scope": [
+    {
+      "path": "/Users/brianchei/.npm/_npx/cec30832843bb978",
+      "package": "eas-cli-local-build-plugin",
+      "installed_version": "22.0.0",
+      "disk_bytes": 154095616
+    },
+    {
+      "path": "/Users/brianchei/.npm/_npx/ef685c6f911b3820",
+      "package": "eas-cli-local-build-plugin",
+      "installed_version": "23.0.0",
+      "disk_bytes": 155860992
+    },
+    {
+      "path": "/Users/brianchei/.npm/_npx/802c0adac2da20b8",
+      "package": "eas-cli",
+      "installed_version": "22.6.0",
+      "disk_bytes": 167596032
+    },
+    {
+      "path": "/Users/brianchei/.npm/_npx/a87b1a52244dc211",
+      "package": "eas-cli",
+      "installed_version": "23.0.0",
+      "disk_bytes": 167624704
+    },
+    {
+      "path": "/Users/brianchei/.npm/_npx/6bc7bae5c2059953",
+      "package": "eas-cli",
+      "installed_version": "23.0.0",
+      "disk_bytes": 158552064
+    }
+  ],
+  "preserved": [
+    "current repository-locked EAS CLI 23.2.0",
+    "current cached local build plugin 23.1.0",
+    "all signed artifacts and receipts",
+    "all saved simulators and emulators",
+    "all raw logs and evidence"
+  ],
+  "free_gib_before": 18.607601165771484,
+  "removed": [
+    "/Users/brianchei/.npm/_npx/cec30832843bb978",
+    "/Users/brianchei/.npm/_npx/ef685c6f911b3820",
+    "/Users/brianchei/.npm/_npx/802c0adac2da20b8",
+    "/Users/brianchei/.npm/_npx/a87b1a52244dc211",
+    "/Users/brianchei/.npm/_npx/6bc7bae5c2059953"
+  ],
+  "free_gib_after": 19.535369873046875,
+  "status": "passed"
+}

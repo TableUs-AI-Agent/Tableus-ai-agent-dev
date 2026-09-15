@@ -2,6 +2,19 @@
 
 ## Approved refresh staging verification — 2026-09-15
 
+- The owner subsequently approved exactly the five obsolete npm caches. All five
+  removals completed, with current versions/devices/artifacts/evidence preserved.
+  About 19.5 GiB remains below the 20 GiB guard. Prepare a separate request for
+  only the two completed disposable deterministic test devices (about 4.9 GiB);
+  do not remove them before explicit approval. The original cache denial is
+  resolved for its exact approved scope and retained as historical evidence.
+- The physical iPhone is connected, but the source-verified installation failed
+  with ManagedConfiguration's installation prohibition. Preserve the failure,
+  ask the owner to resolve the previously encountered Screen Time restriction,
+  and reuse the same artifact. Do not rebuild or modify device restrictions.
+  The new Preview session is provider-confirmed as the organizer; conservatively
+  count one approved sign-in message. Web export and read-only deletion
+  readiness pass; leave the deletion confirmation empty.
 - Owner completed Xcode setup. Build and inspect `readiness-ios` with existing
   signing material under Xcode 27.0; retain its actual receipt and artifact
   checksum. It passes, but has not been installed. Reuse the existing validated

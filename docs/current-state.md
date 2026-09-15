@@ -37,23 +37,32 @@ pass: exact-source readiness and served Preview bundles, both Preview CORS origi
 canonical native associations, unchanged production/protection and the configured
 409-attempt backstop. CI run `35016584574` passes 216 JavaScript, 101 Python and
 four browser tests. The last provider aggregate is 329; this new run has made no
-Places calls or generations, and no new sign-in message is yet confirmed.
+Places calls or generations. One new organizer sign-in message is conservatively counted.
 Xcode setup now passes on Xcode 27.0. The signed
 [iPhone readiness artifact](evidence/plan-refresh-staging-2ad48a8/readiness-ios-artifact.json)
 built successfully and passes a second source/signer/configuration/receipt
-inspection. It is not installed; the paired physical iPhone is not detected.
+inspection. It is not installed. The paired physical iPhone is now connected, but its
+[first installation attempt](evidence/plan-refresh-staging-2ad48a8/iphone-install-attempt-1.json)
+failed because ManagedConfiguration prohibits installation. The owner is asked
+to resolve the previously encountered Screen Time restriction; retry the same
+inspected artifact afterward.
 The [web canary](evidence/plan-refresh-staging-2ad48a8/web-telemetry-observation.json)
 reached PostHog and Sentry once each for 2ad48a8. Sentry's UI also shows coarse
 geography despite the application sanitizer omitting user fields; the enrichment
 source has not been independently verified and the location value is not retained.
 This remains a provider-side privacy item for production preparation.
 
-Three native builds remain. Free disk is about 19.8 GiB, below the required
-20 GiB start guard. Automatic approval review rejected clearing five obsolete,
-re-downloadable EAS caches because the repository requires explicit cleanup
-approval. Nothing was deleted; the [750 MiB cleanup proposal](evidence/plan-refresh-staging-2ad48a8/cache-cleanup-pending.json)
-awaits owner approval. Organizer sign-in on the new Preview and physical-iPhone
-connection are also pending. The existing helper link is still valid for the
+Three native builds remain. The owner approved the five obsolete npm caches;
+[cleanup completed](evidence/plan-refresh-staging-2ad48a8/cache-cleanup-execution.json),
+leaving about 19.5 GiB free, still below the 20 GiB start guard. The original
+automatic-review denial is resolved for those five paths only. A separate
+[prepared proposal](evidence/plan-refresh-staging-2ad48a8/disposable-device-cleanup-pending.json)
+would remove only the two completed disposable test devices (about 4.9 GiB);
+that approval is pending. All saved staging devices, artifacts and evidence remain.
+The [new Preview organizer session](evidence/plan-refresh-staging-2ad48a8/organizer-session-observation.json)
+is confirmed. Web export reports downloaded; deletion readiness shows its
+organized-plan blocker with the confirmation empty and deletion disabled.
+The existing helper link is still valid for the
 four-candidate, three-participant dinner. The approved plan reuses both test artifacts, builds the four
 remaining profiles, and caps a new run at 80 additional Places attempts, four
 sign-in messages and zero generations. All four input preflights pass. The exact

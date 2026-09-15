@@ -13,20 +13,26 @@ Readiness, served Preview bundles, both CORS origins and canonical associations
 pass; production pointers/protection are unchanged. CI passes 216 JavaScript,
 101 Python and four browser tests. The configured Places backstop is 409 and
 the last observed aggregate remains 329. No new-run Places calls/generations have
-been made, and no new sign-in message is confirmed. Xcode setup is now complete.
+been made. One organizer sign-in message is conservatively counted. Xcode setup is now complete.
 The [signed iPhone readiness build](readiness-ios-artifact.json) passes source,
 signer, receipt and configuration reinspection under Xcode 27.0. It is not yet
-installed. The [single web canary](web-telemetry-observation.json) reached both
+installed: the connected physical iPhone rejected the first attempt with
+ManagedConfiguration’s installation prohibition. The owner must resolve the
+previously encountered Screen Time restriction before the same artifact is retried.
+The [single web canary](web-telemetry-observation.json) reached both
 providers with the exact source. Sentry also displays coarse geography despite
 the app omitting user fields; no location value is retained and its enrichment
 source has not been independently verified. The [existing helper link](helper-preflight.json)
 still matches the current four-candidate, three-participant dinner.
 
-Three native builds remain. About 19.8 GiB free fails the 20 GiB start guard.
-Automatic approval review rejected deleting five obsolete EAS npm caches because
-AGENTS.md requires explicit cleanup approval. No deletion occurred. The
-[750 MiB proposal](cache-cleanup-pending.json) is pending owner approval; the
-physical iPhone connection and organizer sign-in on the new Preview are also pending.
+Three native builds remain. The owner approved the exact five obsolete caches;
+[cleanup completed](cache-cleanup-execution.json). About 19.5 GiB remains below
+the 20 GiB start guard. The [new 4.9 GiB proposal](disposable-device-cleanup-pending.json)
+removes only the two completed disposable deterministic devices and requires
+separate approval; saved staging devices and all artifacts/evidence are preserved.
+The [new organizer session](organizer-session-observation.json) and
+[web account controls](web-account-observation.json) pass. The original cache
+review denial is resolved for those five paths only.
 
 Application source: `2ad48a8d8ec4d3aa9a7bd52061b823bb55960bcd`.
 Focused review digest (SHA-256 of parsed `JSON.stringify` report):

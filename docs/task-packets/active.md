@@ -15,17 +15,23 @@ Hosted staging and Preview now pass the [deployment checks](../evidence/plan-ref
 at exact source 2ad48a8. CI passes 216 JavaScript, 101 Python and four browser
 tests. Production and protection are unchanged. Both CORS origins and canonical
 associations pass; the configured provider backstop is 409, aggregate 329, and
-new-run Places/generation use is zero, with no new sign-in message confirmed.
+new-run Places/generation use is zero, with one organizer sign-in message
+conservatively counted.
 Xcode setup now passes. `readiness-ios` built under Xcode 27.0 and passes source,
 signer, configuration and receipt reinspection; its artifact is not installed.
 The web canary reached both providers once for the exact release. Three builds
-remain. About 19.8 GiB free is below the 20 GiB start guard. Automatic approval
-review rejected the proposed 750 MiB obsolete EAS cache cleanup; no deletion
-occurred. The [exact cleanup plan](../evidence/plan-refresh-staging-2ad48a8/cache-cleanup-pending.json)
-needs owner approval, or the owner can free disk space. Do not bypass that denial.
-The physical iPhone connection and organizer sign-in on the new Preview are also
-pending. After disk headroom returns, recheck the guard and run `readiness-android`;
-reuse the completed iPhone build. Keep native workloads sequential.
+remain. The owner-approved five-cache cleanup completed; about 19.5 GiB free
+still fails the 20 GiB start guard. The separately prepared
+[two disposable device cleanup](../evidence/plan-refresh-staging-2ad48a8/disposable-device-cleanup-pending.json)
+would recover about 4.9 GiB and awaits explicit owner approval. Preserve all
+saved staging devices and all artifacts/evidence.
+The physical iPhone is connected, but the first installation attempt failed with
+ManagedConfiguration's installation prohibition. Ask the owner to resolve the
+Screen Time restriction, then retry the same inspected artifact. No device
+readiness answer has been collected for this source. The new Preview organizer
+session and web export/read-only deletion readiness pass. After disk headroom
+returns, recheck the guard and run `readiness-android`; reuse the completed
+signed iPhone build. Keep native workloads sequential.
 
 ## Completed prerequisites
 
@@ -80,6 +86,7 @@ scrolling. Preserve the observed server write, but do not count it as intentiona
 owner voting. Do not request another reconstruction of gestures.
 
 No production deployment, stores, cohorts, new resources/secrets, migration,
-destructive cleanup or Security Scan is authorized. The two new local test
+additional destructive cleanup or Security Scan is authorized. Only the five
+explicitly approved npm cache removals are complete. The two new local test
 devices remain retained. The source-review policy explicitly requires new
 matching acceptance when a source/report changes.

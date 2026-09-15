@@ -1,0 +1,43 @@
+{
+  "prepared_at": "2026-09-15T21:09:54.120981+00:00",
+  "owner_approval_pending": true,
+  "deletion_performed": false,
+  "reason": "Five approved npm caches were removed, but current free space is still below the 20 GiB build-start guard.",
+  "scope": [
+    {
+      "name": "TableUsRefresh2ad-iOS",
+      "type": "disposable_ios_simulator",
+      "id": "FED2189A-B68C-4E40-A78A-FD7CED91DD7C",
+      "path": "/Users/brianchei/Library/Developer/CoreSimulator/Devices/FED2189A-B68C-4E40-A78A-FD7CED91DD7C",
+      "deletion_method": "xcrun simctl delete exact UUID",
+      "disk_bytes": 2626342912
+    },
+    {
+      "name": "TableUsRefresh2ad_Android",
+      "type": "disposable_android_emulator",
+      "path": "/Users/brianchei/repos/Tableus-ai-agent-dev/.artifacts/plan-refresh-verification-2ad48a8/deterministic-avds",
+      "deletion_method": "remove only isolated AVD directory after confirming emulator stopped",
+      "disk_bytes": 2633891840
+    }
+  ],
+  "accepted_evidence": {
+    "ios": {
+      "path": "/Users/brianchei/repos/Tableus-ai-agent-dev/.worktrees/plan-refresh-controls/docs/evidence/plan-refresh-verification-2ad48a8/ios-deterministic.json",
+      "sha256": "033b3ed5b7791620ad5f81c9c8bf49e9dae3c83b8f829c2604c7d3cfc2154f1e",
+      "artifact_sha256": "9b0488a47bd93bfd8f48d32bdc1a5f69d5e67ea5229ffb92afc908bace531150"
+    },
+    "android": {
+      "path": "/Users/brianchei/repos/Tableus-ai-agent-dev/.worktrees/plan-refresh-controls/docs/evidence/plan-refresh-verification-2ad48a8/android-deterministic.json",
+      "sha256": "f897e0c7e24957abdca0bc14502e05c9fd3dfa1b7966de1a59ecceb2757e2e8e",
+      "artifact_sha256": "18bd6385401641c708c1d58383d3ae3f7c36a74ea1ed4e29ed9039eddc78a38e"
+    }
+  },
+  "both_devices_stopped": true,
+  "preserved": [
+    "saved staging iOS simulator and Android emulator, with account data",
+    "paired physical iPhone and app data",
+    "all accepted artifacts, receipts, raw logs and screenshots",
+    "all unrelated devices, caches and signing material"
+  ],
+  "estimated_reclaimed_gib": 4.899
+}
