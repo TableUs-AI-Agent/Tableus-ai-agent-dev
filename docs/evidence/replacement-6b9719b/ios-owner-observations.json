@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "application_sha": "6b9719b4e63e34803f2e7c2598e45851790df661",
+  "artifact_sha256": "82726f6ba8328135e155a11a27544c55da25013f3ba08dd16f45028fbb2422cb",
+  "source": "Owner observations after replacement installation",
+  "phases": {
+    "returning_authentication": true,
+    "session_persistence": true,
+    "verified_auth_link": true
+  },
+  "complete": false,
+  "observed_at": "2026-09-15T04:18:38.502966+00:00"
+}

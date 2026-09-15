@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
   "application_sha": "6b9719b4e63e34803f2e7c2598e45851790df661",
-  "observed_at": "2026-09-15T03:36:30.566413+00:00",
-  "native_artifacts_inspected": 2,
+  "observed_at": "2026-09-15T04:13:47.527212+00:00",
+  "native_artifacts_inspected": 4,
   "test_ios": {
     "profile": "test-ios",
     "artifact_name": "TableUs.app",
@@ -22,10 +22,10 @@
     "posthog": 1,
     "sentry": 1
   },
-  "places_attempts_this_run": 12,
+  "places_attempts_this_run": 16,
   "gemini_generations_this_run": 0,
   "sign_in_emails_conservatively_consumed": 1,
-  "provider_usage_observed_at": "2026-09-15T03:41:32.492154+00:00",
+  "provider_usage_observed_at": "2026-09-15T04:11:33.423873+00:00",
   "cumulative_acceptance_complete": false,
   "ios_lifecycle_passed": true,
   "ios_offline_passed": true,
@@ -33,8 +33,8 @@
   "web_four_candidates_verified": true,
   "web_google_attribution_verified": true,
   "web_organizer_controls_verified": true,
-  "private_link_rotations": 1,
-  "local_link_handoff_pending": true,
+  "private_link_rotations": 2,
+  "local_link_handoff_pending": false,
   "disposable_ios_simulator_retained": false,
   "test_android": {
     "profile": "test-android",
@@ -55,12 +55,46 @@
   },
   "android_offline_navigation_overlay_recorded": true,
   "native_workload_running": true,
-  "remaining_native_profiles": 4,
-  "remaining_build_status": "readiness-ios-in-progress",
-  "free_disk_gib": 27.706,
+  "remaining_native_profiles": 2,
+  "remaining_build_status": "telemetry-test-ios-in-progress",
+  "free_disk_gib": 18.2,
   "minimum_build_start_gib": 20,
   "disposable_device_cleanup_approval_pending": false,
   "disposable_android_device_retained": false,
   "disposable_test_devices_removed": true,
-  "link_handoff_additional_places": 4
+  "link_handoff_additional_places": 8,
+  "readiness_ios": {
+    "profile": "readiness-ios",
+    "artifact_name": "TableUs.ipa",
+    "artifact_sha256": "82726f6ba8328135e155a11a27544c55da25013f3ba08dd16f45028fbb2422cb",
+    "receipt_and_inspection_validated": true,
+    "source_and_lock_validated": true,
+    "build_started_at": "2026-09-15T03:35:20.523212+00:00",
+    "build_finished_at": "2026-09-15T03:55:51.683502+00:00",
+    "build_duration_seconds": 1231,
+    "compiled_source": {
+      "bundle_sha256": "76f2cf3b2803f9b02ff7d66bf2fe7faffc9a2b037ef8e1baabbb5f9777da0bda",
+      "expected_source_literal_present": true,
+      "inherited_source_literal_present": false,
+      "runtime_delivery_verified": false
+    }
+  },
+  "physical_iphone_installation_pending": false,
+  "readiness_android": {
+    "profile": "readiness-android",
+    "artifact_name": "TableUs.apk",
+    "artifact_sha256": "9c09fad20fd03ef8d671101a484c148be31b1473dec98981adcf8f8fbc2c8d33",
+    "receipt_and_inspection_validated": true,
+    "source_and_lock_validated": true,
+    "build_started_at": "2026-09-15T03:55:52.076598+00:00",
+    "build_finished_at": "2026-09-15T04:04:34.235091+00:00",
+    "build_duration_seconds": 522,
+    "compiled_source": {
+      "bundle_sha256": "9770ddc0dd838f7e89b1c566f5d0149ea89f45ee60109cf698695691c544d82b",
+      "expected_source_literal_present": true,
+      "inherited_source_literal_present": false,
+      "runtime_delivery_verified": false
+    }
+  },
+  "physical_iphone_installation_status": "installed"
 }

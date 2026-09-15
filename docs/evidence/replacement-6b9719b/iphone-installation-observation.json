@@ -1,0 +1,18 @@
+{
+  "application_sha": "6b9719b4e63e34803f2e7c2598e45851790df661",
+  "artifact_sha256": "82726f6ba8328135e155a11a27544c55da25013f3ba08dd16f45028fbb2422cb",
+  "observed_at": "2026-09-15T04:16:20.340141+00:00",
+  "first_attempt": {
+    "artifact_and_association_checks_passed": true,
+    "installed": false,
+    "reported_error": "Installation prohibited by ManagedConfiguration",
+    "owner_identified_cause": "Screen Time installation restriction",
+    "owner_reported_resolved": true
+  },
+  "second_attempt_status": "installed",
+  "settings_changed_by_agent": false,
+  "app_data_reset": false,
+  "live_acceptance_complete": false,
+  "installation_complete": true,
+  "physical_checklist_status": "awaiting-owner-session-observation"
+}

@@ -30,7 +30,7 @@ device or production release acceptance.
 The owner accepted the
 [staging source-review pathway](reviews/2026-09-14-staging-source-review-policy.md)
 and exact 6b9719b report. Replacement hosted/native preflight is complete;
-the owner approved its bounded execution request and execution is starting.
+the owner approved its bounded execution request and execution is in progress.
 No production, store or cohort approval follows. No scan has started.
 The existing Expo Doctor patch-version warning is recorded during native
 execution; dependency patch/advisory review remains a later release requirement.
@@ -38,8 +38,12 @@ Both replacement test artifacts are inspected and lifecycle/offline verification
 passes. Android's accepted offline run records a navigation-only scroll before
 the original retry-button assertion, with earlier failures retained. The owner
 approved cleanup of the two completed disposable test devices; cleanup is complete
-and the remaining four builds resumed with `readiness-ios`. The exact-release web canary reached
-both providers. Native readiness and cumulative acceptance remain the objective.
+and both readiness artifacts now pass inspection. The two telemetry profiles
+remain in progress. The exact-release web canary reached both providers, and the
+repaired local helper accepted the copied private link. The physical iPhone build is installed after the owner resolved a Screen Time
+restriction. Its session restoration, relaunch and canonical auth link pass. Native readiness
+and cumulative acceptance remain the objective, with 16/80 Places attempts and
+one of four emails consumed.
 
 Only `docs/task-packets/active.md` is active. Later rows are queued outcomes,
 not instructions to start concurrent agents, scans or cloud work.

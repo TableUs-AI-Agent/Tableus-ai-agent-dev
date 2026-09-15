@@ -2,6 +2,18 @@
 
 ## Replacement execution approval — 2026-09-14
 
+- Both readiness artifacts pass source, receipt, checksum and signer inspection.
+  Preserve that acceptance separately from live-device verification. The iPhone
+  rejected the first install through ManagedConfiguration; the owner identified
+  and resolved a Screen Time restriction. Installation of the same inspected
+  artifact then succeeded without changing application bytes or resetting app data.
+  The owner confirms restored Plans before and after relaunch, and the canonical
+  auth link opens TableUs.
+- Repair only the private local helper's form policy and validation feedback.
+  Keep exact-origin checking; an unrelated origin remains rejected. The owner
+  reused the copied link successfully. Two web rotations and sixteen Places
+  attempts are now observed, leaving 64 attempts, three emails and zero new
+  generations within the approved run. No additional link rotation is needed.
 - The owner explicitly approved the two-device cleanup in task turn
   `01a0a31f-3572-7852-b2b1-ab0c4a86adba`. [Execution](evidence/replacement-6b9719b/disk-cleanup-execution.json)
   removed only the completed iOS/Android deterministic devices through their

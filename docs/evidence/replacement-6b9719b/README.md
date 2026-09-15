@@ -19,9 +19,13 @@ assertion, supported by reviewed before/after screenshots. The frozen applicatio
 and checkout remain unchanged. After the [disk guard](disk-headroom.json) paused
 work, the owner [approved](disk-cleanup-approval.json) removing the two completed
 disposable test devices. [Cleanup](disk-cleanup-execution.json) preserved artifacts,
-evidence and saved live sessions; the four remaining builds resumed with
-`readiness-ios`. [Web request observations](web-request-observation.json)
-count eight Places attempts; one email is counted and no new generation has run.
+evidence and saved live sessions. Both readiness artifacts now pass inspection;
+the two telemetry profiles remain in progress. [Web request observations](web-request-observation.json)
+count the initial eight Places attempts. [Clipboard recovery](local-helper-observation.json)
+used eight more, for sixteen total, and the repaired helper accepted the owner's
+copied link. One email is counted and no new generation has run. Physical iPhone
+[installation succeeded](iphone-installation-observation.json) after the owner
+resolved a Screen Time restriction.
 [PostHog](posthog-web-observation.json) and [Sentry](sentry-web-observation.json)
 each received the single exact-release web canary. Native readiness, native/API
 telemetry delivery and cumulative acceptance remain outstanding.

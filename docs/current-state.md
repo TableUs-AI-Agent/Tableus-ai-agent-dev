@@ -43,17 +43,23 @@ Application bytes and the frozen checkout are unchanged. The owner approved
 removing the two completed disposable test devices. [Cleanup evidence](evidence/replacement-6b9719b/disk-cleanup-execution.json)
 records only those two removals, with all artifacts/evidence and saved live
 devices preserved. Free space was 27.7 GiB immediately afterward and 30.0 GiB
-when `readiness-ios` started. The remaining four builds have resumed sequentially.
+when `readiness-ios` started. Both readiness artifacts now pass source, checksum,
+receipt and signer inspection; the two telemetry profiles remain in progress.
 [Execution progress](evidence/replacement-6b9719b/execution-progress.json)
 also records web session restoration, read-only account controls and one delivered
 web canary in each provider. The web plan shows four attributed candidates and
-organizer controls. One private-link rotation succeeded; its local clipboard
-handoff is pending. One sign-in email and twelve Places attempts are counted, including four to
-reopen the plan for an owner-operated clipboard handoff;
+organizer controls. Two private-link rotations are recorded, and the
+[repaired local helper](evidence/replacement-6b9719b/local-helper-observation.json)
+accepted the owner's copied link. One sign-in email and sixteen Places attempts
+are counted, including eight for the clipboard recovery;
 new Gemini generation remains zero. [Request timing](evidence/replacement-6b9719b/web-request-observation.json)
 is consistent with a web revision refresh following rotation. Native live-device
 and cumulative acceptance remain incomplete. Saved live-account devices remain
-stopped and accepted artifacts remain intact during native compilation.
+stopped and accepted artifacts remain intact during native compilation. The
+connected iPhone's first installation was blocked by Screen Time. The owner
+resolved the restriction; the same inspected package is now installed. Physical
+session restoration, relaunch and canonical auth-link checks pass; the private
+link, voting and foreground-state checks remain in progress.
 
 The EAS build's Expo Doctor step passes 20/21 checks and reports eleven SDK 57
 patch-version recommendations. The exact same warning appears in the retained

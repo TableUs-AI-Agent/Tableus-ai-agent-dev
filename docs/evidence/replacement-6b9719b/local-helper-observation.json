@@ -1,0 +1,23 @@
+{
+  "application_sha": "6b9719b4e63e34803f2e7c2598e45851790df661",
+  "observed_at": "2026-09-15T04:13:47.527212+00:00",
+  "scope": "Private local verification helper only",
+  "reported_failure": "Owner form submission displayed an HTTP response failure; server remained available and unconfigured.",
+  "origin_cause_status": "Inferred from the prior no-referrer policy and strict Origin check; the original failing request headers were not retained.",
+  "reference": "https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Referrer-Policy#effect_on_the_origin_header",
+  "change": "Use same-origin referrer policy, retain exact Origin validation, and render invalid-input feedback in the form.",
+  "helper_sha256": "367845a244df00a38402e20412b10ae4f16bf8bbbc42cf1410b541c151b0b85b",
+  "checks": {
+    "browser_submission_has_expected_origin": true,
+    "invalid_link_feedback_visible": true,
+    "unrelated_origin_rejected": true,
+    "private_link_handoff_complete": true
+  },
+  "private_link_contents_retained": false,
+  "extra_places_to_prepare_owner_copy": 8,
+  "run_places_total": 16,
+  "configured_at": "2026-09-15T04:07:30.758Z",
+  "owner_confirmation_received": true,
+  "successful_submission_origin": "expected",
+  "private_link_rotations_this_run": 2
+}

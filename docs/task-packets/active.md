@@ -72,10 +72,9 @@ scroll before the unchanged retry-button assertion. Web session reload and read-
 account controls pass, and both providers received one exact-release web canary.
 See the [execution progress](../evidence/replacement-6b9719b/execution-progress.json).
 The existing web plan has four attributed candidates and organizer controls.
-One private-link rotation succeeded; the local clipboard handoff is pending.
-Usage is twelve Places attempts and one counted email, with zero new generation.
-Four additional details were loaded to prepare an owner-operated copy into the
-local helper; up to eight attempts are reserved from the existing allowance.
+Two private-link rotations succeeded; the repaired local helper accepted the
+owner's copied link. Usage is sixteen Places attempts and one counted email,
+with zero new generation. Clipboard recovery used eight of those attempts.
 The second four-detail response followed rotation and is consistent with the
 web revision poll; it is counted, and native live refresh proof remains pending.
 Use isolated deterministic
@@ -86,6 +85,11 @@ The owner approved removing the two completed disposable test devices after
 the disk guard paused execution. [Cleanup is complete](../evidence/replacement-6b9719b/disk-cleanup-execution.json),
 with accepted artifacts, diagnostics and saved live sessions preserved. The four
 remaining builds resumed sequentially at `readiness-ios` with 30.0 GiB free.
+Both readiness artifacts now pass inspection; the two telemetry profiles remain
+in progress. The connected iPhone blocked its first install through Screen Time.
+The owner resolved that restriction, and the same package is installed; physical
+session restoration, relaunch and canonical auth-link checks pass. Remaining
+physical checks are in progress.
 Keep the 20 GiB start guard and stop on failed inspection or resource checks;
 do not restart the two completed deterministic builds or request their approval again.
 
