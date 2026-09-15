@@ -30,9 +30,11 @@ while the source and report remain unchanged.
 - Exact-source CI passes 226 JavaScript, 101 Python and four browser tests.
   API and protected Preview now serve f94a1d9; readiness, served JavaScript,
   CORS and canonical associations pass. See the hosted evidence record.
-- Both additional cache cleanups are approved and complete, with 21.47 GiB
-  free and inactive source status unchanged. Start the five sequential native
-  profiles under the unchanged 20 GiB start and 9 GiB stop guards.
+- Both additional cache cleanups completed and `test-android` passed in about
+  23 minutes. Independent receipt/source/lock/signing inspection passes;
+  artifact SHA-256 is `5ca6c184d0dd716ea80802c3b3d7cd40db6b3b830be7cf5df6249cb7aed4bae7`.
+  Four profiles remain. Post-build disk is 18.20 GiB, below the next 20 GiB
+  start guard; two older root caches (2.92 GiB) are pending cleanup approval.
   Pilot and hosted success do not establish cumulative device acceptance.
 - Both exact cleanup requests completed. Saved devices/account data, source,
   evidence and signed artifacts are preserved; no further cleanup is authorized.

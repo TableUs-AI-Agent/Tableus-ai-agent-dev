@@ -19,9 +19,17 @@ Status: exact-source CI and hosted checks pass. Candidate branch:
 - [Execution record](hosted-execution.json) preserves the initial rejected
   Preview and the branch-scoped metadata correction. No live provider operation,
   new email, generation or canary was requested in this phase.
-- Five native builds remain. Both additional cleanups completed under exact
-  owner approval: [active web cache](web-cache-cleanup.json) and
-  [three inactive Astra caches](inactive-astra-cache-cleanup.json). Disk is
-  21.47 GiB and inactive source status is unchanged. Start `test-android` under
-  the approved guards and inspect it before the next profile. Reuse the signed
-  iOS pilot; cumulative device/live acceptance remains outstanding.
+- `test-android` built successfully in about 23 minutes. Its
+  [build status](test-android-build-status.json) and
+  [independent verification](test-android-verification.json) prove the expected
+  signer, exact source and lock, matching receipt/inspection, ARM64 native code,
+  local-demo configuration, telemetry off and bundled refresh correction.
+  Artifact SHA-256: `5ca6c184d0dd716ea80802c3b3d7cd40db6b3b830be7cf5df6249cb7aed4bae7`.
+- The first cache cleanups completed under owner approval: [active web cache](web-cache-cleanup.json)
+  and [inactive Astra caches](inactive-astra-cache-cleanup.json). Source status
+  remained unchanged. The build started at 21.47 GiB and finished at 18.20 GiB
+  after its temporary workspace cleanup; the 9 GiB stop guard did not trigger.
+- Four native builds and deterministic/live device verification remain. The next
+  build is `test-ios`, but disk is below the 20 GiB start guard. Permission is
+  pending for root `frontend/.next` and root `node_modules` (about 2.92 GiB).
+  Reuse the accepted signed iOS pilot. No live allowance was consumed by this build.
