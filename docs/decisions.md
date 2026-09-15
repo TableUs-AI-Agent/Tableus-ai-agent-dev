@@ -9,9 +9,9 @@ and four browser tests; API and protected Preview both serve f94a1d9.
 [Hosted evidence](evidence/ios27-staging-f94a1d9/README.md) verifies source,
 readiness, origins and unchanged associations/protection. The first native build, `test-android`, passed
 in about 23 minutes and independent source/lock/signing/receipt inspection
-passed. Four builds remain. Post-build disk is 18.20 GiB, below the next
-build’s 20 GiB start guard; permission for two older root caches (2.92 GiB)
-is pending. Saved devices and accepted artifacts remain preserved.
+passed. Four builds remain. The owner approved two older root caches;
+cleanup is complete with source status unchanged and 21.20 GiB free.
+The next profile is `test-ios`. Saved devices and accepted artifacts are preserved.
 
 ## Same-source hosted verification — 2026-09-15
 

@@ -1,0 +1,20 @@
+{
+  "approved": true,
+  "quoted_message": "Approve these two older caches",
+  "targets": [
+    {
+      "path": "/Users/brianchei/repos/Tableus-ai-agent-dev/frontend/.next",
+      "removed": true,
+      "measured_bytes": 1402695680
+    },
+    {
+      "path": "/Users/brianchei/repos/Tableus-ai-agent-dev/node_modules",
+      "removed": true,
+      "measured_bytes": 1733431296
+    }
+  ],
+  "source_status_unchanged": true,
+  "free_gib_before": 18.204,
+  "free_gib_after": 21.196,
+  "observed_at": "2026-09-15T23:27:48.804537+00:00"
+}

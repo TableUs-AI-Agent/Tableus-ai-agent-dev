@@ -30,6 +30,7 @@ Status: exact-source CI and hosted checks pass. Candidate branch:
   remained unchanged. The build started at 21.47 GiB and finished at 18.20 GiB
   after its temporary workspace cleanup; the 9 GiB stop guard did not trigger.
 - Four native builds and deterministic/live device verification remain. The next
-  build is `test-ios`, but disk is below the 20 GiB start guard. Permission is
-  pending for root `frontend/.next` and root `node_modules` (about 2.92 GiB).
+  build is `test-ios`. The owner approved the two older root caches;
+  [cleanup completed](older-root-cache-cleanup.json), source status is unchanged
+  and free disk is 21.20 GiB.
   Reuse the accepted signed iOS pilot. No live allowance was consumed by this build.
