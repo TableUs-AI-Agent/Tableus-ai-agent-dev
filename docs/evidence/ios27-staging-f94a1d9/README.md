@@ -19,9 +19,9 @@ Status: exact-source CI and hosted checks pass. Candidate branch:
 - [Execution record](hosted-execution.json) preserves the initial rejected
   Preview and the branch-scoped metadata correction. No live provider operation,
   new email, generation or canary was requested in this phase.
-- Five native builds remain unstarted. Disk is 19.76 GiB, below the approved
-  20 GiB start guard. Only the generated active worktree `frontend/.next` cache
-  (437 MiB) has been proposed for additional cleanup; permission is pending.
-  After cleanup approval and a fresh disk check, start `test-android` and inspect
-  it before proceeding through the approved five-profile order. Reuse the signed
-  iOS pilot; cumulative device/live acceptance is still outstanding.
+- Five native builds remain. Both additional cleanups completed under exact
+  owner approval: [active web cache](web-cache-cleanup.json) and
+  [three inactive Astra caches](inactive-astra-cache-cleanup.json). Disk is
+  21.47 GiB and inactive source status is unchanged. Start `test-android` under
+  the approved guards and inspect it before the next profile. Reuse the signed
+  iOS pilot; cumulative device/live acceptance remains outstanding.

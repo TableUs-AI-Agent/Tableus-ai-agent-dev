@@ -30,8 +30,9 @@ while the source and report remain unchanged.
 - Exact-source CI passes 226 JavaScript, 101 Python and four browser tests.
   API and protected Preview now serve f94a1d9; readiness, served JavaScript,
   CORS and canonical associations pass. See the hosted evidence record.
-- Five native profiles remain unstarted because disk is 19.76 GiB, below the
-  approved 20 GiB start threshold. Exact generated web-cache cleanup is pending.
+- Both additional cache cleanups are approved and complete, with 21.47 GiB
+  free and inactive source status unchanged. Start the five sequential native
+  profiles under the unchanged 20 GiB start and 9 GiB stop guards.
   Pilot and hosted success do not establish cumulative device acceptance.
 - Both exact cleanup requests completed. Saved devices/account data, source,
   evidence and signed artifacts are preserved; no further cleanup is authorized.

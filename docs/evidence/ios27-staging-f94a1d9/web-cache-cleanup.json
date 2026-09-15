@@ -1,0 +1,10 @@
+{
+  "approved": true,
+  "quoted_message": "approve",
+  "target": "/Users/brianchei/repos/Tableus-ai-agent-dev/.worktrees/ios27-scene-lifecycle/frontend/.next",
+  "removed": true,
+  "measured_bytes": 458010624,
+  "free_gib_before": 18.704,
+  "free_gib_after": 19.131,
+  "observed_at": "2026-09-15T22:58:12.118982+00:00"
+}
