@@ -1,5 +1,12 @@
 # Active packet: staging verification of the refresh correction
 
+Owner approved removal of the two completed disposable deterministic devices.
+[Cleanup completed](../evidence/plan-refresh-staging-2ad48a8/disposable-device-cleanup-execution.json), with 20.967 GiB free immediately afterward.
+All saved staging devices and all artifacts/evidence remain. The owner reports
+the Screen Time restriction removed; the same iPhone artifact now installs
+successfully. Saved-session checks are pending owner observation.
+The next sequential build is `readiness-android`, subject to a fresh disk check.
+
 ## Status and objective
 
 Owner accepted the exact source review and approved execution on 2026-09-15. The authorized deterministic
@@ -18,16 +25,13 @@ associations pass; the configured provider backstop is 409, aggregate 329, and
 new-run Places/generation use is zero, with one organizer sign-in message
 conservatively counted.
 Xcode setup now passes. `readiness-ios` built under Xcode 27.0 and passes source,
-signer, configuration and receipt reinspection; its artifact is not installed.
+signer, configuration and receipt reinspection; the artifact is now installed after the owner resolved Screen Time.
 The web canary reached both providers once for the exact release. Three builds
-remain. The owner-approved five-cache cleanup completed; about 19.5 GiB free
-still fails the 20 GiB start guard. The separately prepared
-[two disposable device cleanup](../evidence/plan-refresh-staging-2ad48a8/disposable-device-cleanup-pending.json)
-would recover about 4.9 GiB and awaits explicit owner approval. Preserve all
-saved staging devices and all artifacts/evidence.
-The physical iPhone is connected, but the first installation attempt failed with
-ManagedConfiguration's installation prohibition. Ask the owner to resolve the
-Screen Time restriction, then retry the same inspected artifact. No device
+remain. Both cleanup stages are owner-approved and complete; disk measured
+20.967 GiB after removal of the two completed disposable test devices. Recheck
+headroom before each build. All saved staging devices and artifacts/evidence remain.
+The physical iPhone installation passed on the second attempt after the owner
+resolved Screen Time. The first ManagedConfiguration failure is preserved. No device
 readiness answer has been collected for this source. The new Preview organizer
 session and web export/read-only deletion readiness pass. After disk headroom
 returns, recheck the guard and run `readiness-android`; reuse the completed
@@ -48,7 +52,8 @@ signed iPhone build. Keep native workloads sequential.
   for the three retained operator failures.
 - Latest full readiness: 220 JavaScript and 98 Python passes, three Postgres
   skips. Later YAML-only input/navigation changes pass parsing and actual native
-  execution. Both new test devices are stopped and retained; test ports closed.
+  execution. Both completed disposable test devices were subsequently removed with explicit
+  owner approval; their evidence/artifacts remain and test ports are closed.
 - The [focused source review](../evidence/source-review-2ad48a8/README.md) validates
   fourteen source hashes/seven areas and transparently carries eleven unchanged
   controls. Exact owner acceptance now validates; no Security Scan is required.
@@ -86,7 +91,6 @@ scrolling. Preserve the observed server write, but do not count it as intentiona
 owner voting. Do not request another reconstruction of gestures.
 
 No production deployment, stores, cohorts, new resources/secrets, migration,
-additional destructive cleanup or Security Scan is authorized. Only the five
-explicitly approved npm cache removals are complete. The two new local test
-devices remain retained. The source-review policy explicitly requires new
+additional destructive cleanup or Security Scan is authorized. The five npm caches and two completed disposable test devices were
+explicitly approved and removed. The source-review policy explicitly requires new
 matching acceptance when a source/report changes.

@@ -2,6 +2,12 @@
 
 ## Approved refresh staging verification — 2026-09-15
 
+- Owner approved deleting exactly the two completed disposable deterministic
+  devices. Both removals completed; disk measured 20.967 GiB immediately after.
+  Preserve all saved staging devices and all artifacts/evidence. The owner also
+  removed the Screen Time restriction. The same re-inspected iPhone artifact
+  installed on the second attempt. Collect owner session observations and
+  continue sequential native builds only while resource guards pass.
 - The owner subsequently approved exactly the five obsolete npm caches. All five
   removals completed, with current versions/devices/artifacts/evidence preserved.
   About 19.5 GiB remains below the 20 GiB guard. Prepare a separate request for

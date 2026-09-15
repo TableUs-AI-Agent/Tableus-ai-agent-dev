@@ -1,5 +1,12 @@
 # Current state
 
+Owner approved removal of the two completed disposable deterministic devices.
+[Cleanup completed](./evidence/plan-refresh-staging-2ad48a8/disposable-device-cleanup-execution.json), with 20.967 GiB free immediately afterward.
+All saved staging devices and all artifacts/evidence remain. The owner reports
+the Screen Time restriction removed; the same iPhone artifact now installs
+successfully. Saved-session checks are pending owner observation.
+The next sequential build is `readiness-android`, subject to a fresh disk check.
+
 Updated 2026-09-15. Development uses GPT-6 Astra; application providers remain
 Gemini and Google Places. Railway staging and the new Vercel Preview now serve
 `2ad48a8d8ec4d3aa9a7bd52061b823bb55960bcd`; production pointers and protection
@@ -18,8 +25,8 @@ iOS and two Android injected errors, with no upstream requests. Every refresh
 phase made zero app writes and preserved the previous vote. Fourteen screenshots
 were reviewed across the [iOS](evidence/plan-refresh-verification-2ad48a8/ios-deterministic.json)
 and [Android](evidence/plan-refresh-verification-2ad48a8/android-deterministic.json)
-records. Both new test devices are stopped and retained; local test ports are
-closed. No live provider or sign-in allowance was consumed.
+records. Both completed disposable test devices were subsequently removed with owner
+approval; their artifacts/evidence remain and local test ports are closed. No live provider or sign-in allowance was consumed.
 
 Android's three failed attempts are retained in the
 [native evidence](evidence/plan-refresh-verification-2ad48a8/README.md): an overly
@@ -41,24 +48,21 @@ Places calls or generations. One new organizer sign-in message is conservatively
 Xcode setup now passes on Xcode 27.0. The signed
 [iPhone readiness artifact](evidence/plan-refresh-staging-2ad48a8/readiness-ios-artifact.json)
 built successfully and passes a second source/signer/configuration/receipt
-inspection. It is not installed. The paired physical iPhone is now connected, but its
+inspection. It is now installed on the paired physical iPhone. Its
 [first installation attempt](evidence/plan-refresh-staging-2ad48a8/iphone-install-attempt-1.json)
-failed because ManagedConfiguration prohibits installation. The owner is asked
-to resolve the previously encountered Screen Time restriction; retry the same
-inspected artifact afterward.
+failed because ManagedConfiguration prohibited installation. The owner resolved
+Screen Time; the same artifact passed reinspection and the second installation.
+Session/readiness checks are pending owner observation.
 The [web canary](evidence/plan-refresh-staging-2ad48a8/web-telemetry-observation.json)
 reached PostHog and Sentry once each for 2ad48a8. Sentry's UI also shows coarse
 geography despite the application sanitizer omitting user fields; the enrichment
 source has not been independently verified and the location value is not retained.
 This remains a provider-side privacy item for production preparation.
 
-Three native builds remain. The owner approved the five obsolete npm caches;
-[cleanup completed](evidence/plan-refresh-staging-2ad48a8/cache-cleanup-execution.json),
-leaving about 19.5 GiB free, still below the 20 GiB start guard. The original
-automatic-review denial is resolved for those five paths only. A separate
-[prepared proposal](evidence/plan-refresh-staging-2ad48a8/disposable-device-cleanup-pending.json)
-would remove only the two completed disposable test devices (about 4.9 GiB);
-that approval is pending. All saved staging devices, artifacts and evidence remain.
+Three native builds remain. Both approved cleanup stages are complete: five
+obsolete npm caches and the two completed disposable deterministic devices.
+Disk measured 20.967 GiB after device cleanup. Recheck the 20 GiB build-start
+guard before each profile. Saved staging devices, artifacts and evidence remain.
 The [new Preview organizer session](evidence/plan-refresh-staging-2ad48a8/organizer-session-observation.json)
 is confirmed. Web export reports downloaded; deletion readiness shows its
 organized-plan blocker with the confirmation empty and deletion disabled.

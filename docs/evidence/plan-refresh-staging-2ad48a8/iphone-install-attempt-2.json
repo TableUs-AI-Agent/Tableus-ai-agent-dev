@@ -1,0 +1,15 @@
+{
+  "observed_at": "2026-09-15T21:21:51.846515+00:00",
+  "application_sha": "2ad48a8d8ec4d3aa9a7bd52061b823bb55960bcd",
+  "operator_sha": "b7728a7efd1d55d07dd07bb86b0b54d7e69af3a0",
+  "artifact_sha256": "e08b7adbce9f848c1638f3fb732a141ce37fe62bacdc5121d5bad5a236382359",
+  "profile": "readiness-ios",
+  "build_id": "local-ios-readiness-2ad48a8",
+  "device_family": "physical iPhone",
+  "preinstall_receipt_inspection_and_associations_passed": true,
+  "install_passed": true,
+  "owner_resolved_screen_time_restriction": true,
+  "same_artifact_reused": true,
+  "account_data_deleted": false,
+  "readiness_phases_confirmed": []
+}

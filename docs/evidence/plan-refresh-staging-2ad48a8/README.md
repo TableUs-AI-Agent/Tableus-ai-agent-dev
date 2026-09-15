@@ -16,20 +16,21 @@ the last observed aggregate remains 329. No new-run Places calls/generations hav
 been made. One organizer sign-in message is conservatively counted. Xcode setup is now complete.
 The [signed iPhone readiness build](readiness-ios-artifact.json) passes source,
 signer, receipt and configuration reinspection under Xcode 27.0. It is not yet
-installed: the connected physical iPhone rejected the first attempt with
-ManagedConfiguration’s installation prohibition. The owner must resolve the
-previously encountered Screen Time restriction before the same artifact is retried.
+installed at that checkpoint. The first attempt was blocked by ManagedConfiguration;
+the owner resolved Screen Time and the [second attempt](iphone-install-attempt-2.json)
+installed the same artifact successfully. Saved-session verification is pending.
 The [single web canary](web-telemetry-observation.json) reached both
 providers with the exact source. Sentry also displays coarse geography despite
 the app omitting user fields; no location value is retained and its enrichment
 source has not been independently verified. The [existing helper link](helper-preflight.json)
 still matches the current four-candidate, three-participant dinner.
 
-Three native builds remain. The owner approved the exact five obsolete caches;
-[cleanup completed](cache-cleanup-execution.json). About 19.5 GiB remains below
-the 20 GiB start guard. The [new 4.9 GiB proposal](disposable-device-cleanup-pending.json)
-removes only the two completed disposable deterministic devices and requires
-separate approval; saved staging devices and all artifacts/evidence are preserved.
+Three native builds remain. The owner approved and completed both exact cleanup
+stages: [five obsolete caches](cache-cleanup-execution.json) and
+[two completed disposable test devices](disposable-device-cleanup-execution.json).
+Disk measured 20.967 GiB after device cleanup; recheck the guard before each build.
+All saved staging devices and artifacts/evidence remain. The owner resolved the
+iPhone installation restriction; the same inspected artifact is now installed.
 The [new organizer session](organizer-session-observation.json) and
 [web account controls](web-account-observation.json) pass. The original cache
 review denial is resolved for those five paths only.
