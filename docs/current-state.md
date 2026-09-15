@@ -40,6 +40,11 @@ is preserved. Verify the title before submission, allowing one clear/retype
 attempt without retrying any request, then repeat only offline/refresh on the
 same APK and retained private AVD. The input duplication's mechanism is not
 established; application source and all acceptance assertions remain unchanged. The
+third attempt passed create/constraint recovery but stopped when the test kept
+trying to center a fully visible finalization retry control at the bottom of the
+page. Its screenshot and repeated 100% visibility measurements are retained.
+Disable centering while keeping 100% visibility and the original assertion;
+prepare one investigated fourth offline/refresh attempt with the same APK. The
 [focused source review](evidence/source-review-2ad48a8/README.md) validates fourteen
 file hashes and seven areas; all eleven prior control files are unchanged. Its
 same two medium risks and exact report still require matching owner acceptance

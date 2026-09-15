@@ -63,6 +63,12 @@ large flow is wrapped in a retry. Parse the changed YAML, then run one investiga
 offline/refresh attempt three with the same APK, private AVD and retained lifecycle.
 No application or JavaScript change requires a rebuild or repeated full suite.
 
+Attempt three passed create/constraint recovery, then the finalization retry
+navigation timed out despite repeated 100% visibility measurements. The control
+could not satisfy forced centering at the bottom of the page. Preserve the
+screenshot/log, disable centering while requiring 100% visibility, and run one
+investigated attempt four. All existing acceptance assertions remain unchanged.
+
 ## Execution order
 
 1. Build `test-ios` as `local-ios-test-2ad48a8`; inspect the actual artifact,

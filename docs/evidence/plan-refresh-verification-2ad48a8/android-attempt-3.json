@@ -1,0 +1,37 @@
+{
+  "application_sha": "2ad48a8d8ec4d3aa9a7bd52061b823bb55960bcd",
+  "operator_sha": "30d14d44c35041fcbe06a1a1ced27c1cdfbfd623",
+  "platform": "android",
+  "attempt": 3,
+  "status": "failed",
+  "started_at": "2026-09-15T09:36:27.357438+00:00",
+  "finished_at": "2026-09-15T09:41:19.604758+00:00",
+  "artifact_sha256": "18bd6385401641c708c1d58383d3ae3f7c36a74ea1ed4e29ed9039eddc78a38e",
+  "lifecycle_operator_sha": "62bef563373e64de144c1998c73d87dc3d18c7b3",
+  "schema_version": 1,
+  "lifecycle_reused": true,
+  "create_and_constraint_recovery_completed": true,
+  "failed_flow": "finalize-failure.yml",
+  "failed_command": "scrollUntilVisible Retry finalizing plan with centering enabled",
+  "observed_retry_label_visibility": 1.0,
+  "repeated_unchanged_label_bounds": [
+    351,
+    1911,
+    377,
+    57
+  ],
+  "viewport_dimensions": [
+    1080,
+    2400
+  ],
+  "failure_screenshot_visually_reviewed": true,
+  "failure_screenshot_sha256": "c248c472146c1e9061003fff432b4b2b4bf851ae582131db52ffb3c1bd6f9029",
+  "maestro_commands_sha256": "84f1e7662f8233b94f9c73e8f234de9d4cd4d0d7049808135dfbf7b56621ecb8",
+  "maestro_log_sha256": "8abe8a5fd835963a14092e5b5edc83bec119724d5534155e645f9f71c9e2f5bd",
+  "screen_hierarchy_sha256": "71c7ba5881d13dda26da7f026f984885f710a879d64ec50e4fbb085d21f567fa",
+  "operator_log_sha256": "17cc4e5edcc1131040bd2f8f14a8ea9f39c919091c649df32e88974795869c1b",
+  "refresh_checks_started": false,
+  "original_attempt_retained": true,
+  "application_changed": false,
+  "retry_scope": "offline and refresh only, same inspected APK, full visibility without forced centering"
+}

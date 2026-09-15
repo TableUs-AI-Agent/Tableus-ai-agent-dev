@@ -50,6 +50,15 @@ All original assertions remain, and the input block contains no request action.
 Parse the changed YAML and run only the affected Android offline/refresh suite
 as attempt three; preserve both previous failures and reuse the same artifact.
 
+[Attempt three](android-attempt-3.json), under operator `30d14d4`, passed the
+create/constraint recovery checks, then stopped in the finalization retry scroll.
+Maestro logged 100% target visibility at unchanged bottom-of-page bounds on
+repeated scrolls; the reviewed screenshot shows the complete retry control.
+The [centering option](https://docs.maestro.dev/reference/commands-available/scrolluntilvisible)
+adds a position requirement beyond visibility. Disable that option while retaining
+100% visibility and the original assertion, then run one investigated attempt four
+with the same APK. No application or JavaScript changed; reuse full readiness.
+
 The owner's request to continue advances the previously identified local device
 verification step. The [execution plan](execution-plan.json) is bounded to two
 sequential local profiles, `test-ios` then `test-android`, with deterministic demo

@@ -2,6 +2,12 @@
 
 ## Deterministic refresh verification continuation — 2026-09-15
 
+- Preserve attempt three's finalization-navigation failure. Maestro repeatedly
+  reported visibility 1.0 for the retry label at the same bottom-of-page bounds,
+  yet kept scrolling with centering enabled until timeout. The screenshot shows
+  the full control. Disable centering and explicitly retain 100% visibility plus
+  the original assertion. Repeat the affected Android suite once on the same APK;
+  no application, JavaScript or existing successful evidence changes.
 - Preserve Android attempt two, which stopped before refresh checks: its visible
   title field contained `OOffline resilience dinner`. Screenshot and hierarchy
   establish the mismatch; the exact input-duplication mechanism is unknown.
