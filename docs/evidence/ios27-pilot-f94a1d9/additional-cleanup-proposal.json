@@ -1,0 +1,20 @@
+{
+  "status": "pending_owner_approval",
+  "targets": [
+    "/Users/brianchei/repos/Tableus-ai-agent-dev/.worktrees/closed-beta-readiness/node_modules",
+    "/Users/brianchei/repos/Tableus-ai-agent-dev/.worktrees/closed-beta-readiness/mobile/node_modules",
+    "/Users/brianchei/repos/Tableus-ai-agent-dev/.worktrees/closed-beta-readiness/frontend/node_modules",
+    "/Users/brianchei/repos/Tableus-ai-agent-dev/.worktrees/closed-beta-readiness/frontend/.next"
+  ],
+  "reported_gib": 2.585,
+  "free_gib": 18.921,
+  "minimum_free_gib": 20,
+  "preserved": [
+    "All tracked source",
+    "Untracked docs/evidence/daa89a0 directory",
+    "Accepted signed artifacts and receipts",
+    "Raw build logs",
+    "Saved devices and account data"
+  ],
+  "note": "Earlier approved six targets removed. Reported disk usage did not translate one-for-one into available space; build remains unstarted."
+}

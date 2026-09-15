@@ -1,8 +1,9 @@
 # Active packet: resolve the iOS 27 launch blocker
 
 Local repair frozen at `f94a1d9d1125e6c9111aa08eda496f014f20d0c0`.
-[Exact-source review](../evidence/source-review-f94a1d9/README.md) and one-build iOS 27 pilot are approved. Build preflight is paused at 15.75 GiB
-free, below the approved 20 GiB minimum; a specific cleanup request is pending.
+[Exact-source review](../evidence/source-review-f94a1d9/README.md) and one-build iOS 27 pilot are approved. The approved six-path cleanup completed, but actual free disk is only 18.99 GiB,
+below the 20 GiB minimum. A second exact four-directory cleanup request is
+pending; no native build has started.
 Local checks pass; no new device/deployment evidence.
 
 ## Status
@@ -36,8 +37,8 @@ Native 0.86.2 and application providers unchanged. The single `make ready` run p
 The owner accepted the exact source report and approved one signed iOS build,
 inspected update installation, Plans/relaunch and canonical auth checks. The
 approved pilot excludes private plan detail, extra emails, canaries, additional
-artifacts, cleanup and hosted deployment. A separate narrowly scoped cleanup
-request is pending because the disk minimum is unmet. Do not restart old-candidate builds or ask the owner
+artifacts, cleanup and hosted deployment. The first approved cleanup is complete and its logs are preserved. The disk
+minimum is still unmet; a second four-directory request is pending. Do not restart old-candidate builds or ask the owner
 to keep reopening the crashing app.
 
 Local validation passes: 226 JavaScript tests, 98 Python tests with three local

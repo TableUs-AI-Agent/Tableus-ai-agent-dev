@@ -1,9 +1,23 @@
 # Decision log
 
 Local repair frozen at `f94a1d9d1125e6c9111aa08eda496f014f20d0c0`.
-[Exact-source review](evidence/source-review-f94a1d9/README.md) and one-build iOS 27 pilot are approved. Build preflight is paused at 15.75 GiB
-free, below the approved 20 GiB minimum; a specific cleanup request is pending.
+[Exact-source review](evidence/source-review-f94a1d9/README.md) and one-build iOS 27 pilot are approved. The approved six-path cleanup completed, but actual free disk is only 18.99 GiB,
+below the 20 GiB minimum. A second exact four-directory cleanup request is
+pending; no native build has started.
 Local checks pass; no new device/deployment evidence.
+
+## Approved pilot cleanup — 2026-09-15
+
+- Owner approved the six exact temporary/generated targets from the pilot's
+  cleanup request. Verified the canceled scratch's tracked source unchanged,
+  retained and hash-checked its raw build log outside scratch, removed only
+  that detached worktree and the listed generated directories. All six targets
+  are removed; artifacts, receipts, source and saved devices are preserved.
+- Actual free space rose from 15.795 to 18.992 GiB, less than reported directory
+  usage implied. Keep the approved 20 GiB start guard. No build started.
+- Propose only four additional generated directories in closed-beta-readiness:
+  root/mobile/frontend node_modules and frontend/.next. Preserve the untracked
+  docs/evidence/daa89a0 directory. Do not expand cleanup without the owner's reply.
 
 ## Approved local scene repair — 2026-09-15
 
