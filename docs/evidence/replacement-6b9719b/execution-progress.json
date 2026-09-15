@@ -162,6 +162,9 @@
   "android_live_links_owner_confirmed": true,
   "android_additional_detail_reads": 4,
   "live_verification_paused": true,
-  "live_pause_reason": "Unexpected Android detail-read count; trigger attribution pending",
-  "remaining_planned_places_maximum": 36
+  "live_pause_reason": "Owner reports unintended plan refresh during scrolling; local client correction and source-bound verification required",
+  "remaining_planned_places_maximum": 36,
+  "android_live_vote_owner_confirmation": false,
+  "android_intentional_voting_check_complete": false,
+  "owner_clarification_recorded_at": "2026-09-15T07:12:42.194081+00:00"
 }

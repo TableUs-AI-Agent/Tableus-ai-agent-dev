@@ -6,6 +6,7 @@ import { type PropsWithChildren, useEffect } from "react";
 import { AppState, type AppStateStatus } from "react-native";
 
 import PlanScreen from "../../app/plans/[id]";
+import * as ui from "@/components/ui";
 import { AppProviders } from "@/providers/app-providers";
 import { AuthProvider, useAuth } from "@/providers/auth-provider";
 
@@ -53,6 +54,16 @@ async function appState(state: AppStateStatus) {
   await flush();
 }
 function detailReads() { return mockGet.mock.calls.filter(([path]) => path === "/api/v1/plans/fixture-plan").length; }
+
+function captureRefreshHandler() {
+  let handler: () => void = () => { throw new Error("Refresh control has not rendered"); };
+  const Button = ui.Button;
+  jest.spyOn(ui, "Button").mockImplementation((props) => {
+    if (props.label === "Refresh plan") handler = props.onPress;
+    return <Button {...props} />;
+  });
+  return () => handler;
+}
 
 beforeEach(() => {
   jest.useFakeTimers();
@@ -124,7 +135,7 @@ test("visible foreground refresh happens once, including a quick return", async 
   expect(detailReads()).toBe(2);
 });
 
-test("offline cached plans remain visible, pull-to-refresh sends nothing until online", async () => {
+test("offline cached plans remain visible, explicit refresh sends nothing until online", async () => {
   const screen = await render(<Tree />);
   await flush();
   mockOnline = false;
@@ -132,18 +143,20 @@ test("offline cached plans remain visible, pull-to-refresh sends nothing until o
   await screen.rerender(<Tree />);
   await appState("background");
   await appState("active");
-  await act(async () => { await screen.getByTestId("plan-screen").props.refreshControl.props.onRefresh(); });
+  await fireEvent.press(screen.getByRole("button", { name: "Refresh plan" }));
   await flush();
   expect(detailReads()).toBe(1);
   expect(screen.getByText("Fixture dinner")).toBeTruthy();
+  expect(screen.getByText("Offline. Showing the most recently loaded data.")).toBeTruthy();
   mockOnline = true;
   await act(async () => { onlineManager.setOnline(true); });
   await screen.rerender(<Tree />);
   await flush();
   expect(detailReads()).toBe(2);
-  await act(async () => { await screen.getByTestId("plan-screen").props.refreshControl.props.onRefresh(); });
+  await fireEvent.press(screen.getByRole("button", { name: "Refresh plan" }));
   await flush();
   expect(detailReads()).toBe(3);
+  expect(screen.queryByText("Offline. Showing the most recently loaded data.")).toBeNull();
 });
 
 test("saving a vote consumes the mutation response without an extra detail fetch", async () => {
@@ -155,6 +168,86 @@ test("saving a vote consumes the mutation response without an extra detail fetch
   expect(mockPut).toHaveBeenCalledTimes(1);
   expect(detailReads()).toBe(1);
   expect(screen.getByText("Ranked vote saved.")).toBeTruthy();
+  await fireEvent.press(screen.getByText("Remove Restaurant 1 from rank 1"));
+  expect(screen.queryByText("Ranked vote saved.")).toBeNull();
+  expect(screen.getByText("Ranking changes are not submitted.")).toBeTruthy();
+  expect(mockPut).toHaveBeenCalledTimes(1);
+});
+
+test("overlapping manual refreshes share one slow detail request", async () => {
+  const getRefresh = captureRefreshHandler();
+  const screen = await render(<Tree />);
+  await flush();
+  let complete!: (value: Plan) => void;
+  const pending = new Promise<Plan>((resolve) => { complete = resolve; });
+  mockGet.mockImplementation(() => pending);
+  // Deliver two callbacks before the disabled state can reach the native control.
+  const refresh = getRefresh();
+  try {
+    await act(async () => { refresh(); refresh(); });
+    expect(detailReads()).toBe(2);
+  } finally {
+    await act(async () => { complete({ ...mockPlan, title: "Refreshed once" }); });
+    await flush();
+  }
+  expect(screen.getByText("Refreshed once")).toBeTruthy();
+  expect(screen.getByRole("button", { name: "Refresh plan" })).toBeEnabled();
+});
+
+test("an existing vote is not presented as a new submission", async () => {
+  mockPlan = { ...mockPlan, my_vote: ["candidate-1", "candidate-2", "candidate-3"] };
+  const screen = await render(<Tree />);
+  await flush();
+  expect(mockPut).not.toHaveBeenCalled();
+  expect(screen.queryByText("Ranked vote saved.")).toBeNull();
+  expect(screen.getByText("Your previous ranked vote is saved.")).toBeTruthy();
+});
+
+test("a queued manual refresh shares a foreground read without a persistent loading indicator", async () => {
+  const getRefresh = captureRefreshHandler();
+  const screen = await render(<Tree />);
+  await flush();
+  const refresh = getRefresh();
+  let complete!: (value: Plan) => void;
+  const pending = new Promise<Plan>((resolve) => { complete = resolve; });
+  mockGet.mockImplementation(() => pending);
+  await appState("background");
+  await appState("active");
+  try {
+    expect(detailReads()).toBe(2);
+    expect(screen.getByText("Refresh plan")).toBeTruthy();
+    expect(screen.getByRole("button", { name: "Refresh plan" })).toBeDisabled();
+    await act(async () => { refresh(); });
+    expect(detailReads()).toBe(2);
+    expect(screen.queryByText("Refresh plan")).toBeNull();
+  } finally {
+    await act(async () => { complete({ ...mockPlan, title: "Fresh foreground result" }); });
+    await flush();
+  }
+  expect(screen.getByText("Fresh foreground result")).toBeTruthy();
+  expect(screen.getByText("Refresh plan")).toBeTruthy();
+  expect(screen.getByRole("button", { name: "Refresh plan" })).toBeEnabled();
+});
+
+test("refresh remains usable after an initial load and a manual retry both fail", async () => {
+  const get = mockGet.getMockImplementation()!;
+  mockGet.mockImplementation((path) => path === "/api/v1/me" ? get(path) : Promise.reject(new Error("Plan unavailable")));
+  const screen = await render(<Tree />);
+  await act(async () => { await jest.advanceTimersByTimeAsync(5_000); });
+  expect(detailReads()).toBe(3);
+  expect(screen.getByText("Plan unavailable")).toBeTruthy();
+  expect(screen.queryByText("Fixture dinner")).toBeNull();
+  await fireEvent.press(screen.getByRole("button", { name: "Refresh plan" }));
+  await act(async () => { await jest.advanceTimersByTimeAsync(5_000); });
+  expect(detailReads()).toBe(6);
+  expect(screen.getByText("Refresh plan")).toBeTruthy();
+  expect(screen.getByRole("button", { name: "Refresh plan" })).toBeEnabled();
+  mockGet.mockImplementation(get);
+  await fireEvent.press(screen.getByRole("button", { name: "Refresh plan" }));
+  await flush();
+  expect(detailReads()).toBe(7);
+  expect(screen.getByText("Fixture dinner")).toBeTruthy();
+  expect(screen.queryByText("Plan unavailable")).toBeNull();
 });
 
 test("a hidden route never fetches on mount, and a quick navigation return refreshes current votes", async () => {
@@ -173,5 +266,5 @@ test("a hidden route never fetches on mount, and a quick navigation return refre
   await screen.rerender(<Tree />);
   await flush();
   expect(detailReads()).toBe(2);
-  expect(screen.getByText("Ranked vote saved.")).toBeTruthy();
+  expect(screen.getByText("Your previous ranked vote is saved.")).toBeTruthy();
 });

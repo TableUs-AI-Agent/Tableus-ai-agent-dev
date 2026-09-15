@@ -16,7 +16,7 @@
   "request_client": "android",
   "new_vote_events": 1,
   "vote_at": "2026-09-15T06:33:34.139929Z",
-  "trigger_attribution": "pending-owner-navigation-observation",
+  "trigger_attribution": "owner-reports-unintended-refresh-during-scroll; per-request-cause-unproven",
   "raw_logs_retained": false,
   "requests": [
     {
@@ -98,5 +98,7 @@
     "places_attempts": 60,
     "latest_places_at": "2026-09-15T06:33:43.488754Z",
     "new_generation_rows": 0
-  }
+  },
+  "owner_deliberate_vote_submission": false,
+  "local_investigation": "../../reviews/2026-09-15-explicit-plan-refresh.md"
 }

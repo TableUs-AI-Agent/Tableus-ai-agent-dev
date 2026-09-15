@@ -3,7 +3,7 @@ import { useQuery, useQueryClient } from "@tanstack/react-query";
 import * as Linking from "expo-linking";
 import { useIsFocused, useLocalSearchParams } from "expo-router";
 import { useState } from "react";
-import { RefreshControl, ScrollView, Share, Text, View } from "react-native";
+import { ScrollView, Share, Text, View } from "react-native";
 
 import { Button, Card, ErrorText, Field } from "@/components/ui";
 import { MutationFeedback } from "@/components/mutation-feedback";
@@ -23,6 +23,7 @@ export default function PlanScreen() {
   const [notes, setNotes] = useState("");
   const [query, setQuery] = useState("group-friendly dinner");
   const [refreshMessage, setRefreshMessage] = useState("");
+  const [isRefreshing, setIsRefreshing] = useState(false);
   const [rankingDraft, setRankingDraft] = useState<{ planId: string; values: string[] } | null>(null);
   const key = ["plan", id];
   const plan = useQuery({
@@ -69,12 +70,19 @@ export default function PlanScreen() {
   };
 
   const refresh = async () => {
-    const refreshed = await refreshWhenOnline(isOnline, plan.refetch);
-    setRefreshMessage(refreshed ? "" : OFFLINE_REFRESH_MESSAGE);
+    setIsRefreshing(true);
+    try {
+      // Reuse a pending read: canceling it here would still consume server work.
+      const refreshed = await refreshWhenOnline(isOnline, () => plan.refetch({ cancelRefetch: false }));
+      setRefreshMessage(refreshed ? "" : OFFLINE_REFRESH_MESSAGE);
+    } finally {
+      setIsRefreshing(false);
+    }
   };
 
   return (
-    <ScrollView testID="plan-screen" contentInsetAdjustmentBehavior="automatic" contentContainerStyle={{ padding: 16, gap: 14 }} refreshControl={<RefreshControl refreshing={plan.isRefetching} onRefresh={() => void refresh()} />}>
+    <ScrollView testID="plan-screen" contentInsetAdjustmentBehavior="automatic" contentContainerStyle={{ padding: 16, gap: 14 }}>
+      <Button label="Refresh plan" onPress={() => void refresh()} disabled={plan.isFetching} loading={isRefreshing} />
       {error ? <ErrorText message={error.message} /> : null}
       {refreshMessage ? <Text selectable accessibilityRole="alert" style={{ color: colors.muted }}>{refreshMessage}</Text> : null}
       {current ? (
@@ -143,7 +151,13 @@ export default function PlanScreen() {
               <Text selectable style={{ color: colors.muted }}>Tap your first, second, and third choices in order.</Text>
               <MutationFeedback failure={vote.failure} canRetry={vote.canRetry} retryLabel="Retry ranked vote" onRetry={vote.retry} onDismiss={vote.reset} />
               <Button label="Submit ranked vote" onPress={() => vote.submit([...ranking])} disabled={ranking.length !== 3 || vote.canRetry} loading={vote.isPending} />
-              {current.my_vote ? <Text selectable accessibilityRole="alert" style={{ color: colors.green }}>Ranked vote saved.</Text> : null}
+              {vote.isSuccess && vote.data?.id === id && current.my_vote ? (
+                <Text selectable accessibilityRole="alert" style={{ color: colors.green }}>Ranked vote saved.</Text>
+              ) : rankingDraft?.planId === id ? (
+                <Text selectable style={{ color: colors.muted }}>Ranking changes are not submitted.</Text>
+              ) : current.my_vote ? (
+                <Text selectable style={{ color: colors.muted }}>Your previous ranked vote is saved.</Text>
+              ) : null}
               {current.viewer_is_organizer ? (
                 <>
                   <MutationFeedback failure={finalize.failure} canRetry={finalize.canRetry} retryLabel="Retry finalizing plan" onRetry={finalize.retry} onDismiss={finalize.reset} />

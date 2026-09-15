@@ -1,12 +1,43 @@
 # Decision log
 
+## Explicit plan refresh and evidence correction — 2026-09-15
+
+- The owner clarified that they saw their previous saved vote and did not
+  deliberately submit another vote. Preserve the observed server write, while
+  withdrawing intentional owner confirmation for the Android voting check.
+  The owner reports a persistent loading indicator and unintended repeated
+  refresh during scrolling. Do not require another reconstruction of gestures.
+- Prepare a bounded local correction on `codex/plan-refresh-controls`: replace
+  the plan-detail pull gesture with an explicit `Refresh plan` button on both
+  native platforms; coalesce pending reads instead of canceling and restarting
+  them; bind the button's spinner to manual activity. Retain automatic visible
+  return/foreground/reconnect behavior and hidden-route inactivity. Other list
+  screens and shared provider architecture are outside this correction.
+- Distinguish previous saved votes, unsubmitted edits and a successful current
+  submission. UI success alone is still insufficient live evidence of a new vote;
+  require deliberate owner action and a matching server event.
+- Two local regression failures establish duplicate overlapping requests and
+  ambiguous old-vote feedback. They do not establish that every observed Android
+  read came from scrolling, or reproduce the native persistent spinner. Record
+  native gesture verification as pending for the new application source.
+- Keep live execution paused at 60/80 Places attempts and 3/4 sign-in messages;
+  the rolling backstop remains 349. Prepare code, focused tests and one local
+  `make ready` before any execution request. Preserve the six 6b9719b artifacts,
+  source-review acceptance and saved device sessions at their actual identities.
+  No additional paid allowance, rebuild, deployment or Security Scan is implied.
+- Local readiness targets all pass after granting the deterministic proxy test
+  loopback-listener access. Retain the initial sandbox failure and resumed-target
+  results; do not rerun the already passing lint/type stages. There are 216
+  JavaScript and 98 Python passes, with three Postgres-only checks skipped locally.
+
 ## Replacement execution approval — 2026-09-14
 
 - Pause live verification after Android join/vote used 28 Places attempts
   against its expected 12. Server metadata confirms one join, one new vote and
   five successful detail reads for the same plan, all from Android. Preserve
-  these facts without attributing the four extra reads to an unproven UI trigger
-  or application defect. Android was stopped without resetting data and the owner
+  these facts without attributing the four extra reads to a particular UI trigger.
+  The later owner clarification and local correction are recorded above.
+  Android was stopped without resetting data and the owner
   closed the physical app. The run is at 60/80 with 36 attempts still allocated;
   resolve the cause and allowance before continuing the remaining live phase.
 - Accept the first isolation direction from the unchanged Android provider

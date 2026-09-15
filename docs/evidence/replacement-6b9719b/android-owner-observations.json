@@ -9,7 +9,7 @@
     "verified_auth_link": true,
     "verified_join_link": true,
     "live_location_and_four_candidates": true,
-    "cross_client_vote": true
+    "cross_client_vote": false
   },
   "complete": false,
   "observed_at": "2026-09-15T06:41:18.920124+00:00",
@@ -18,9 +18,18 @@
   "installed_before_first_readiness_prompt": true,
   "receipt_and_reinspection_passed": true,
   "guest_finalize_control_absent": true,
-  "ranked_vote_status": "owner-and-server-confirmed",
+  "ranked_vote_status": "server-write-observed-owner-reports-no-deliberate-submission",
   "server_new_vote_events": 1,
   "server_vote_at": "2026-09-15T06:33:34.139929Z",
   "returned_to_plans_owner_confirmed": true,
-  "extra_detail_reads_under_investigation": true
+  "extra_detail_reads_under_investigation": true,
+  "owner_clarification_recorded_at": "2026-09-15T07:12:42.194081+00:00",
+  "owner_deliberate_vote_submission": false,
+  "owner_clarification": {
+    "previous_session_vote_was_shown": true,
+    "persistent_loading_on_plan": true,
+    "deliberate_refresh": false,
+    "possible_unintentional_pull": true,
+    "repeated_refresh_while_scrolling_reported": true
+  }
 }

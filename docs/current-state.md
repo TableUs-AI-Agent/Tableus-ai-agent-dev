@@ -4,8 +4,36 @@ Updated 2026-09-15. Development uses GPT-6 Astra. Application providers remain
 Gemini and Google Places. The client correction is published on
 `codex/replacement-6b9719b`, frozen application source
 `6b9719b4e63e34803f2e7c2598e45851790df661`; Railway staging and Vercel Preview
-now serve this source. Native replacement verification is in progress.
+now serve this source. Native replacement verification is paused. The active
+local correction is on `codex/plan-refresh-controls`, based on operator/evidence
+commit `25e0397d7803651d39968f53868a2b73845817c3`; it has not been built or deployed.
 Only [the active packet](task-packets/active.md) directs current implementation.
+
+## Reported scrolling and refresh behavior
+
+The owner clarified that Android displayed a vote saved in the previous session;
+they did not deliberately submit a new vote. They also report a persistent loading
+indicator and unintended repeated refresh while scrolling upward through the plan.
+The server's single vote write remains an observed fact, but intentional owner
+submission is no longer accepted. The Android owner evidence records this correction.
+
+Local component regression tests reproduce overlapping refresh callbacks starting
+two detail requests while the first is unresolved, and an old saved vote displaying
+the same success text as a new submission. The local correction replaces the
+plan's pull gesture with an explicit `Refresh plan` button, shares an in-flight
+query, and separates manual loading from automatic query activity. Existing votes
+and unsent ranking changes receive distinct messages. Hidden-route inactivity,
+foreground updates and offline recovery remain required. See the
+[local investigation](reviews/2026-09-15-explicit-plan-refresh.md) for validation
+and the limits of request attribution. This does not prove an endless native loop
+or establish the origin of every historical request. Native verification of the
+new source remains outstanding; retained 6b9719b artifacts retain their actual SHA.
+All local readiness targets pass: 216 JavaScript and 98 Python tests, with three
+Postgres-only tests skipped. The initial `make ready` passed lint/types but could
+not open the proxy test's loopback listener in the sandbox. The remaining targets
+passed after local-listener access was granted; completed lint/types were reused.
+The [validation record](evidence/plan-refresh-controls/local-validation.json)
+preserves both attempts and log hashes.
 
 ## Product and architecture
 
@@ -64,10 +92,13 @@ organizer controls. Two private-link rotations are recorded, and the
 accepted the owner's copied link. Three sign-in emails are confirmed, and sixty Places
 attempts are counted: sixteen for web/link recovery, sixteen for iPhone
 join/vote and twenty-eight for Android join/vote. Android links, four candidates,
-guest permissions and one new server-confirmed vote pass. The Android phase
+guest permissions pass, and the server records one new vote write. The owner
+subsequently denied deliberate submission, so the intentional Android voting
+check remains incomplete. The Android phase
 expected at most twelve attempts; [its request trace](evidence/replacement-6b9719b/android-request-observation.json)
 shows one join, one vote and five successful detail reads on the same plan.
-Four extra reads are under investigation; their UI triggers are not established.
+Four extra reads are under investigation; the owner reports unintentional refresh
+during scrolling, while attribution of each read is not established.
 Live verification is paused with twenty attempts remaining against thirty-six
 still allocated. The owner closed the physical iPhone app, and Android was
 stopped without resetting data;

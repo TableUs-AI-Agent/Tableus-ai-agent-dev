@@ -21,7 +21,8 @@ device or production release acceptance.
 | 2 | Complete cumulative staging readiness — c5b041c component evidence complete; replacement 6b9719b verification remains | Canonical domains/associations; same-SHA web + physical iPhone + ARM64 Android lifecycle; signed artifact pairs; isolated telemetry; truthful cumulative report | Completed run used 80/100 Places attempts, $0.00056825/$0.25 estimated Gemini and six conservatively counted messages; security review accepted for 6b9719b only; no new scan authorized |
 | 2a | Correct device sign-out and redundant client detail refreshes — `6b9719b` frozen locally; checks and source review complete | Local scope/error recovery; hidden-query and foreground request-count regressions; focused checks and one `make ready`; ordinary source review, then freeze | No live calls/builds/deployment here. Security review accepted; affected native/hosted evidence still required for the replacement |
 | 2b | Staging source-review acceptance — complete; exact report and two medium risks accepted | Strict version-two evidence; seven review areas and verified Git file hashes; fourteen gate tests and full local readiness pass; [report and risks](evidence/source-review-6b9719b/README.md) | Owner acceptance for 6b9719b is recorded and validates. Replacement hosted/native verification follows under its own approved scope |
-| 2c | Verify the replacement on hosted staging and native devices — hosted CI/deployment pass; native execution in progress | Exact-candidate CI, inspected sequential builds, real same-account session isolation and plan focus/foreground observations; new source-bound receipts and cumulative input | [Approved execution](evidence/replacement-6b9719b/README.md): existing staging/Preview deployment, six sequential native profiles, max 80 additional Places attempts/four emails/zero fresh generation |
+| 2c | Verify the replacement on hosted staging and native devices — hosted CI/deployment pass; native execution paused | Exact-candidate CI, inspected sequential builds, real same-account session isolation and plan focus/foreground observations; new source-bound receipts and cumulative input | [Approved execution](evidence/replacement-6b9719b/README.md): 60/80 Places attempts and 3/4 emails consumed; zero fresh generation; retained artifacts bind only 6b9719b |
+| 2d | Correct unintended plan refresh and ambiguous vote feedback — local implementation and checks complete; freeze/handoff in progress | Slow-request reproduction, explicit refresh control, request coalescing, distinct previous-vote/unsent/success messages; all readiness targets pass with 216 JavaScript/98 Python tests and three local Postgres skips | Deterministic local work only; new source requires matching review and native evidence before live verification resumes |
 | 3 | Prepare production privacy and operating boundaries | Account export/deletion including Auth ownership; retention; capability-link decision; one-use invite policy; explicit cohort/spend/quota limits; rollback owner | Significant policy/architecture choices require owner decision before production |
 | 4 | Prepare production release configuration | Source-controlled production origins, isolated credentials, signed-update/OTA policy, store signing associations, source maps and rollback rehearsal | Resource/secret creation, migrations, deployment and builds need explicit applicable approval |
 | 5 | Validate TestFlight and Play closed-testing distribution | Signed install/update, auth and universal links, core journey, explicit native tab presentation, privacy declarations, observed symbolication | Separate store-submission approval |
@@ -47,12 +48,18 @@ correct iOS account is restored after a mismatched first attempt was signed out
 locally. Android readiness is installed, and returning Plans plus relaunch are confirmed. The exact-release web canary also
 reached both providers, and the
 repaired local helper accepted the copied private link. The physical iPhone build is installed after the owner resolved a Screen Time
-restriction. Its session restoration, relaunch and canonical auth link pass. Android links and a new ranked vote also pass, but its phase used twenty-eight
+restriction. Its session restoration, relaunch and canonical auth link pass. Android links pass and the server records a vote write, but the owner later
+clarified that they did not deliberately submit; the old vote was already shown.
+Intentional Android voting is not accepted. Its phase used twenty-eight
 Places attempts against the expected twelve. Four extra successful detail reads
-are traced to Android; their triggers remain unproven. Live checks are paused at
+are traced to Android. The owner reports a persistent loader and unintended
+refresh during scrolling. A local component reproduction establishes overlapping
+refreshes can duplicate requests; it does not attribute every live read. Live checks are paused at
 60/80 attempts with both native devices stopped. Thirty-six attempts remain
 allocated against only twenty available; do not resume the remaining live phase
-until the drift and its budget are resolved. Three of four emails are confirmed.
+until the client correction and source-bound verification plan are ready and
+the remaining budget is resolved. Three of four emails are confirmed. No new
+allowance or native build is requested during the local correction.
 
 Only `docs/task-packets/active.md` is active. Later rows are queued outcomes,
 not instructions to start concurrent agents, scans or cloud work.

@@ -1,0 +1,53 @@
+{
+  "base_commit": "25e0397d7803651d39968f53868a2b73845817c3",
+  "frozen_application_sha": "6b9719b4e63e34803f2e7c2598e45851790df661",
+  "base_plan_file_matches_frozen": true,
+  "base_plan_file_sha256": "c610fb42a1aa638e45af2fc8611cb2f5128ab9c6d0849b00cdb0aaea01c80434",
+  "corrected_plan_file_sha256": "7088fcbe6b4326343f6c5afa6c3696e3e070a9cd8c46d9e59d848fa8e3612937",
+  "before": {
+    "passed": 5,
+    "failed": 2
+  },
+  "after": {
+    "passed": 9,
+    "failed": 0
+  },
+  "native_gesture_verification_complete": false,
+  "live_provider_operations": 0,
+  "schema_version": 1,
+  "javascript_tests_passed": 216,
+  "python_tests_passed": 98,
+  "postgres_tests_skipped_locally": 3,
+  "readiness_targets_passed": [
+    "lint",
+    "typecheck",
+    "test",
+    "contract",
+    "build",
+    "smoke",
+    "perf"
+  ],
+  "initial_readiness_attempt": {
+    "command": "make ready",
+    "exit_code": 2,
+    "completed_targets": [
+      "lint",
+      "typecheck"
+    ],
+    "blocker": "Sandbox denied the deterministic proxy loopback listener"
+  },
+  "remaining_readiness_targets": {
+    "command": "make test contract build smoke perf",
+    "exit_code": 0,
+    "started_at": "2026-09-15T07:18:27.814354+00:00",
+    "finished_at": "2026-09-15T07:19:17.031473+00:00",
+    "local_listener_permission_granted": true
+  },
+  "log_sha256": {
+    "focused-before.json": "186ed71db867c3e2bf25644ee910a5d61a79e357a667a2d34c79ec9c289c6029",
+    "focused-after.json": "2a60d90b57b0d2760b7e73923a6c47e97b6c06d26c0ac7ac579810067ce121df",
+    "make-ready.log": "57f54b7378c6dd7d57f85993540e8e5604884515b14090dfc8ffca736faed230",
+    "make-ready-resume.log": "1e1684bcd13114304a2932f8729a820c8f3d8508999c135cc070b2f1939db0c2"
+  },
+  "corrected_test_file_sha256": "73b44a060477b690c023e25f4f0b5b21bf8002507219930b91bd5991e91a1d58"
+}

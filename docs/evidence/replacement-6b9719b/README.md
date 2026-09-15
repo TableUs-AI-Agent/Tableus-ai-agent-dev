@@ -25,11 +25,16 @@ The [Preview recovered](web-recovery-observation.json) from a later network erro
 with one Retry while retaining the organizer session. [Web request observations](web-request-observation.json)
 count the initial eight Places attempts. [Clipboard recovery](local-helper-observation.json)
 used eight more, and the repaired helper accepted the owner's copied link.
-iPhone join, plan reads and the confirmed vote used sixteen. Android links and
-a new server-confirmed vote pass, but its phase used twenty-eight attempts
+iPhone join, plan reads and the confirmed vote used sixteen. Android links pass
+and the server records one vote write, but the owner later clarified that they
+did not deliberately submit: the prior session's vote was already shown.
+The intentional Android voting check remains incomplete. Its phase used twenty-eight attempts
 instead of twelve, bringing the total to sixty. [The sanitized trace](android-request-observation.json)
-shows four additional successful Android detail reads; the UI triggers remain
-unproven. Both native devices are stopped while this is investigated. Twenty
+shows four additional successful Android detail reads. The owner reports a
+persistent loading indicator and unintended repeated refresh while scrolling;
+per-request attribution remains unproven. [The local correction](../../reviews/2026-09-15-explicit-plan-refresh.md)
+has separate source identity and cannot reuse these artifacts as new-source proof.
+Both native devices are stopped while this is investigated. Twenty
 attempts remain against thirty-six still allocated; live execution stays paused. Three sign-in messages are confirmed, and no new generation has run. Physical iPhone
 [installation succeeded](iphone-installation-observation.json) after the owner
 resolved a Screen Time restriction.

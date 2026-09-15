@@ -1,169 +1,81 @@
-# Active packet: replacement hosted/native verification
+# Active packet: explicit plan refresh correction
 
-## Objective and authority
+## Objective
 
-Execute verification of the frozen replacement's device-only sign-out and
-plan focus/foreground refresh on web, iOS and Android. This is the only active
-implementation packet. Use one primary agent and preserve the existing release
-architecture and provider choices.
+Resolve the reported accidental plan refresh during scrolling, prevent overlapping
+manual reads, and distinguish a previous saved vote from a new submission. Use
+one primary agent and deterministic local providers. This is the only active
+implementation packet; live replacement verification is paused.
 
-The owner accepted the staging source-review policy and exact candidate report,
-including its two medium risks. That decision is complete and must not be asked
-again for unchanged source/report. Separately, the owner approved the prepared
-execution plan on 2026-09-14; its deployment, native-build and live-operation
-limits below now apply without repeated permission requests.
+Local implementation and focused checks are complete. All readiness targets pass:
+216 JavaScript and 98 Python tests, with three local Postgres skips. The first
+`make ready` passed lint/types and stopped when the sandbox denied a test's local
+listener. The remaining targets passed with local-listener access; the initial
+attempt is retained. Source freeze and handoff remain before the next execution
+request. See the [validation record](../evidence/plan-refresh-controls/local-validation.json).
 
 ## Source and evidence
 
-Preparation is complete. The [concrete execution plan](../evidence/replacement-6b9719b/README.md)
-is [approved](../evidence/replacement-6b9719b/execution-approval.json).
-Operator branch: `codex/replacement-verification`; exact
-application publishing ref: `codex/replacement-6b9719b`, now pushed at the exact
-candidate. The operator/evidence branch remains unpublished.
-The approval includes staging/Preview deployment, six sequential native profiles,
-at most 80 additional Places attempts, four new sign-in emails and zero new
-Gemini generation. Lower the current 500-attempt rolling backstop to 349 based
-on the observed 269 baseline; reconcile any drift before executing.
+- Local branch: `codex/plan-refresh-controls`, isolated worktree of the same name.
+- Base operator/evidence commit: `25e0397d7803651d39968f53868a2b73845817c3`.
+- Frozen installed/deployed application: `6b9719b4e63e34803f2e7c2598e45851790df661`.
+- The [local investigation](../reviews/2026-09-15-explicit-plan-refresh.md) records
+  the reproductions, candidate change, validation and remaining native checks.
+- [Replacement execution](../evidence/replacement-6b9719b/README.md) retains all
+  six accepted artifacts, hosted evidence and the accepted source-review report.
+  Those records establish only their actual source, not a later correction.
 
-- Application candidate: `6b9719b4e63e34803f2e7c2598e45851790df661`.
-- Accepted policy/report: [source-review evidence](../evidence/source-review-6b9719b/README.md).
-  Parsed-report SHA-256: `046bba5a771112ef1e49888b6a09235f9c6d259b757b81f90f85607785795122`.
-- Evidence tooling: `1c75832ef421335662319635e1b74888476cdb77`.
-- Previously deployed source and retained older native/telemetry artifacts:
-  `c5b041c85f4f7b959436c13bef48c959622c624f`.
-- The accepted security record passes local validation. The prior full checks
-  remain applicable because this acceptance change alters evidence/docs only.
-  The [completed review packet](../history/2026-09-14/staging-source-review-packet.md)
-  is historical.
+The owner says Android showed a vote from the previous session, with no deliberate
+new submission. Withdraw intentional owner confirmation from Android voting
+acceptance, while retaining the recorded server vote write. The owner reports a
+persistent spinner and unintended refresh during scrolling. Per-request gesture
+attribution remains unknown; do not ask the owner to reconstruct it again.
 
-## Preparation before an execution request
+## Bounded implementation
 
-1. Verify the clean detached 6b9719b source, source/tooling separation, retained
-   artifact inventory, SDK/signing availability, disk headroom and durable
-   private output directory. Reuse accepted bytes only at their actual SHA;
-   older c5b041c receipts do not establish replacement acceptance.
-2. Identify the exact candidate ref, existing Railway staging and Vercel Preview
-   targets and rollback source. A push triggers Preview deployment and needs
-   the same explicit deployment scope. Keep production aliases unchanged.
-3. Scope the narrow real-session checks: two devices using the same already
-   approved account; one device signs out while the other retains its session;
-   repeat for the other platform. Require a successful other-client session
-   refresh after sign-out, not just cached UI or an unexpired access token.
-   Verify restoration, hidden-plan inactivity,
-   visible return/foreground refresh and offline/recovery behavior. Prefer
-   retained sessions; count any required sign-in codes before requesting them.
-4. Prepare a concrete execution request covering deployment/CI, necessary native
-   profiles, owner availability and provider/message ceilings. Full plan reads
-   hydrate Places details, so budget reads as well as mutations. The prior run
-   ended at 80/100 Places attempts, one generation and six conservatively counted
-   sign-in messages; it grants no automatic new allowance. A fresh recommendation
-   generation is not needed merely to prove the two client corrections.
+1. Establish focused failures for overlapping refresh callbacks during a slow
+   request and the ambiguous previous-vote message.
+2. Replace the plan-detail pull gesture with an accessible `Refresh plan` button
+   on iOS and Android. Reuse an in-flight query and track manual loading separately
+   from automatic query activity. Keep refresh available after an initial error.
+3. Clearly label previous saved votes, unsent ranking edits and successful new
+   submissions. Preserve the existing recoverable mutation/idempotency flow.
+4. Verify offline behavior, request coalescing, loading completion, error recovery,
+   mutation response reuse, hidden-route inactivity and visible foreground/return
+   refresh. Run focused checks, then one `make ready` before handoff.
+5. Correct Android evidence and all four current documents. Freeze a reviewable
+   source commit; record its exact identity separately from subsequent evidence.
 
-## Verification after the applicable execution approval
+No backend/provider/contract/dependency changes or other screens' refresh controls
+are in scope. A component request-count reproduction is not proof of a native
+endless loop; report that distinction and keep device acceptance incomplete.
 
-Hosted execution passes: [deployment evidence](../evidence/replacement-6b9719b/deployment.json)
-binds CI run `34905755622`, Railway `69c96019-bedc-4b53-a37d-358a103f7e24`
-and Preview `dpl_2qeefqPhARdErQxUqxLssCintxte` to 6b9719b. Source stamps,
-exact Preview CORS and the 349-attempt backstop are verified; Production is
-unchanged. Both test builds, artifact inspections and deterministic lifecycle/offline
-verification pass. Android acceptance retains its earlier System UI startup failure
-and offline visibility failure; the final offline run uses a recorded operator
-scroll before the unchanged retry-button assertion. Web session reload and read-only
-account controls pass, and both providers received one exact-release web canary.
-See the [execution progress](../evidence/replacement-6b9719b/execution-progress.json).
-The existing web plan has four attributed candidates and organizer controls.
-Two private-link rotations succeeded; the repaired local helper accepted the
-owner's copied link. Usage is sixty Places attempts and three confirmed emails,
-with zero new generation. Web/link recovery used sixteen; iPhone join/vote used
-sixteen; Android join/vote used twenty-eight. Android links, four candidates,
-guest controls and a new server vote pass, but the phase expected twelve attempts.
-Four extra Android detail reads are recorded in the request trace; their triggers
-remain under investigation. Live execution is paused and both native devices
-are stopped with data preserved. Twenty attempts remain, while thirty-six are
-still allocated. Resolve the drift and allowance before proceeding. The earlier
-forty-eight-attempt allocation covered
-Android join/vote, organizer changes, native witnesses and one Android manual
-refresh. Use the finalized-state witness to test hidden-route return, then leave
-the finalized plan backgrounded so the reopen witness tests active-plan foreground
-refresh. These observations share the already allocated full plan reads.
-The second four-detail response followed rotation and is consistent with the
-web revision poll; it is counted, and native live refresh proof remains pending.
-Use isolated deterministic
-test targets because those harnesses reset app data; preserve the existing
-staging simulator/emulator sessions for the same-account refresh checks.
+## Paused live execution
 
-The owner approved removing the two completed disposable test devices after
-the disk guard paused execution. [Cleanup is complete](../evidence/replacement-6b9719b/disk-cleanup-execution.json),
-with accepted artifacts, diagnostics and saved live sessions preserved. The four
-remaining builds resumed sequentially at `readiness-ios` with 30.0 GiB free.
-All six artifacts now pass inspection, with sequential build timing verified.
-The preserved iOS session restored after installation; its single iOS/API canary
-flow passed in the UI and delivered to both providers at the exact release.
-Local iOS sign-out removed that session while the original Android session
-remained in the provider. The first restored iOS account differed from Android;
-local sign-out removed it. The matching iOS account is now restored and its new
-session is retained. iOS is stopped, and the inspected Android readiness build
-is installed. Android's original session refreshed at 06:28:43Z after the original
-iOS sign-out, with returning Plans and relaunch owner-confirmed. The first
-isolation direction passes; continue the reverse direction after Android readiness.
-The fourth and final message remains for Android restoration. Complete
-Android readiness and telemetry before its local sign-out/restoration, then
-require the existing restored iOS session to refresh after Android sign-out.
-Cached UI or a fresh replacement sign-in cannot establish survival. Continue
-these checks one native device at a time. The connected iPhone blocked its first install through Screen Time.
-The owner resolved that restriction, and the same package is installed; physical
-session restoration, relaunch and canonical auth-link checks pass. Remaining
-physical checks are in progress. The private link, four candidates, guest controls,
-new ranked vote and read-only account controls are confirmed. Require a new
-server vote event, since the saved label can also reflect the existing vote.
-Keep the 20 GiB start guard and stop on failed inspection or resource checks;
-do not restart the two completed deterministic builds or request their approval again.
+The approved 6b9719b run remains at **60/80 Places attempts**, **3/4 sign-in
+messages**, zero new Gemini generation and three of five canaries per provider.
+The rolling Places backstop remains 349. Twenty attempts are available while the
+old remaining allocation requires thirty-six; no higher allowance is approved.
+Android and the saved iOS simulator are stopped with data intact. The owner has
+closed TableUs on the physical iPhone. Preserve all sessions, artifacts, receipts,
+private helper state and partial readiness evidence. Do not feed completion
+answers to paused runners or accept a new sign-in as proof of session survival.
 
-EAS Expo Doctor reports 20/21 checks passing and eleven patch recommendations,
-identical to the retained previous build. Keep frozen dependencies for this
-approved staging run and retain the explicit [toolchain observation](../evidence/replacement-6b9719b/build-toolchain-observation.json).
-Do not describe Doctor as entirely passing or claim a fresh advisory review.
+The first iOS-sign-out-to-Android-refresh isolation direction already passes for
+6b9719b. Reverse-direction survival, remaining native readiness, Android/API
+telemetry and cumulative acceptance remain incomplete. Do not repeat completed
+observations merely to fill gaps on a different application SHA.
 
-Build sequentially from the exact clean application source, with logs in files
-and inspected artifacts/receipts retained outside temporary storage. Run and
-accept `test-ios` and `test-android` lifecycle/offline checks first, then the
-`readiness-ios`/`readiness-android` pair and the separate telemetry pair required
-by the unchanged cumulative contract. Stop on a failed prerequisite.
+## Exit and next boundary
 
-Record actual same-account cross-device observations and plan request behavior.
-Use deterministic or retained plan state where it satisfies the check; any
-live reads or messages must stay within the newly approved scope. Preserve
-accounts, sessions and previous artifacts throughout installation and rollback.
+Exit with the local correction, failing-before/passing-after evidence, one full
+local readiness result, exact source SHA and a bounded plan for native gesture
+verification. Prepare a source-impact review and concrete execution scope before
+requesting any further native builds or deployment. A source/report change needs
+matching review acceptance; a Security Scan is never automatic. The owner's
+accepted 6b9719b report remains valid for its unchanged source.
 
-Assemble version-two cumulative staging input with `security.accepted.json`
-only once all other evidence genuinely belongs to 6b9719b. Missing native,
-hosted, association or telemetry fields remain missing until verified. The
-historical c5b041c pending input remains unchanged and incomplete.
-
-## Exit and deferred work
-
-Preparation exits with a concrete, bounded execution request. Verification exits
-with source-bound CI/deployment/device evidence and a truthful cumulative
-validation result. A source/report change requires matching review acceptance;
-a new scanner is never automatic. No application change is currently planned.
-
-Shared provider quotas and private capability URLs remain accepted medium risks
-for isolated staging only. Production/privacy/retention, broader cohorts,
-scaling, store signing/submission, OTA authority and native tab polish remain
-later objectives. No merge, production change, secret/resource creation or
-destructive cleanup is implied.
-
-## Completed preflight — historical snapshot
-
-All six build-input checks pass and the six retained c5b041c artifact/receipt
-sets verify. No replacement artifacts or CI run exist. Existing tools, signing
-identity and Expo/Vercel CLI access are available. Resolved iOS readiness config
-contains 6b9719b and staging endpoints. The build SDK and emulator SDK use
-different installed roots; prepared private inputs reproduce the previously
-working build SDK/Java setup. The physical iPhone is paired but unavailable;
-the simulator and emulator are stopped. Previous six-build compilation took
-about 98 minutes; new duration and session-refresh waiting are not guaranteed.
-
-The preflight and this packet change documentation/evidence only. Prior full
-local validation remains applicable to unchanged application/tooling/test bytes.
-No scan, native build, deployment, sign-in email or paid journey ran.
+Production privacy/retention, broader cohorts, scaling, store signing/submission,
+OTA authority and native tab polish remain queued. No merge, deployment, paid
+operation, secret/resource creation or destructive cleanup is part of this local
+correction.
