@@ -41,6 +41,19 @@ ports are closed. Android is the remaining local phase. Before it starts, the
 operator flow incorporates the previously verified scroll to the finalization
 retry control; all existing assertions and application bytes remain unchanged.
 
+Android's APK and lifecycle now pass. The first offline/refresh attempt passed
+the offline UI flows and initial/scroll/slow phases, then stopped at an exact
+three-HTTP-error expectation after observing two. The error/cached-plan/button
+assertions passed; final recovery was not executed. Preserve this failure.
+The corrected guard requires 1–3 observed injected errors, zero upstream reads
+and writes, and unchanged exact counts elsewhere. The precise lower-count cause
+is unestablished. Safe counters are now journaled before assertions. Four focused
+tests and a new full `make ready` pass 220 JavaScript/98 Python tests, three local
+Postgres skips. Run one prepared Android offline/refresh retry on the retained
+private AVD, re-inspecting and reusing the same APK. Reuse the existing lifecycle
+result and record its older operator SHA separately. Do not overwrite attempt one,
+rebuild, run live traffic or accept the staging review.
+
 ## Execution order
 
 1. Build `test-ios` as `local-ios-test-2ad48a8`; inspect the actual artifact,
@@ -49,7 +62,8 @@ retry control; all existing assertions and application bytes remain unchanged.
 2. Create only the new `TableUsRefresh2ad-iOS` simulator and record its returned
    identifier. Run deterministic lifecycle, then offline plus explicit refresh
    verification. The latter validates local app configuration before installation.
-   It requires zero app writes, exact phase read counts, observed delay/error
+   It requires zero app writes, exact successful/scroll read counts, bounded
+   failed HTTP attempts, observed delay/error
    injection, unchanged prior vote and three screenshots. Stop and retain this
    simulator when done, including on a failure.
 3. Only after iOS passes, build/inspect `test-android` as

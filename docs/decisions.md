@@ -2,6 +2,16 @@
 
 ## Deterministic refresh verification continuation — 2026-09-15
 
+- Preserve Android's first failed attempt: the UI displayed the injected error,
+  cached plan and enabled refresh button, but the probe observed two HTTP
+  requests instead of the three required by its initial expectation. Its exact
+  lower-count cause remains unestablished. Enforce an observable bound of one to
+  three injected HTTP errors, zero upstream requests and zero writes; keep
+  success/scroll counts exact. A query attempt need not reach the HTTP proxy.
+  Retain counter snapshots before assertions. Four focused tests and a new
+  `make ready` pass 220 JavaScript/98 Python tests with three Postgres skips.
+  Prepare one investigated offline/refresh retry with the same APK and retained
+  test AVD; reuse the completed lifecycle and preserve all first-attempt evidence.
 - Accept the inspected iOS test artifact and its completed deterministic
   lifecycle/offline/refresh observations separately from hosted acceptance.
   Operator `cced1728628d594c1e957f9efc48a03428fa8f4a` recorded zero scroll

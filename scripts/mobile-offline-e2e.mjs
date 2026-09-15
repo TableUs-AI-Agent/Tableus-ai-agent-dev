@@ -249,10 +249,21 @@ try {
     const ranking = options.candidates.slice(0, 3).map((candidate) => candidate.id);
     await api(`/api/v1/plans/${refreshId}/vote`, { user: "demo-guest", method: "PUT", body: { ranking } });
     const observations = [];
+    const phaseJournal = [];
+    const measure = async (phase, stage) => {
+      const observed = await stats("GET", `/api/v1/plans/${refreshId}`);
+      phaseJournal.push({ phase, stage, observed });
+      // Keep safe counters even when an assertion stops this native attempt.
+      writeFileSync(join(evidenceDir, `${platform}-refresh-observations.json`), `${JSON.stringify({
+        schema_version: 1, application_sha: refreshSha,
+        operator_sha: commandOutput("git", ["rev-parse", "HEAD"]), observations: phaseJournal,
+      }, null, 2)}\n`, { mode: 0o600 });
+      return assertPlanRefreshPhase(phase, observed);
+    };
     const observe = async (phase) => {
-      assertPlanRefreshPhase(phase, await stats("GET", `/api/v1/plans/${refreshId}`));
+      await measure(phase, "immediate");
       await new Promise((resolvePromise) => setTimeout(resolvePromise, 1500));
-      observations.push(assertPlanRefreshPhase(phase, await stats("GET", `/api/v1/plans/${refreshId}`)));
+      observations.push(await measure(phase, "settled"));
     };
     await control("/reset", {});
     runFlow("refresh-open.yml", { PLAN_ID: refreshId });

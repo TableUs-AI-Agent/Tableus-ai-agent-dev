@@ -1,0 +1,28 @@
+{
+  "schema_version": 1,
+  "application_sha": "2ad48a8d8ec4d3aa9a7bd52061b823bb55960bcd",
+  "operator_sha": "62bef563373e64de144c1998c73d87dc3d18c7b3",
+  "platform": "android",
+  "status": "failed",
+  "attempt": 1,
+  "finished_at": "2026-09-15T09:13:30.622215+00:00",
+  "artifact_sha256": "18bd6385401641c708c1d58383d3ae3f7c36a74ea1ed4e29ed9039eddc78a38e",
+  "lifecycle_passed": true,
+  "completed_refresh_probe_phases": [
+    "initial",
+    "scrolling",
+    "slow_refresh"
+  ],
+  "failure_probe_expected_http_requests": 3,
+  "failure_probe_observed_http_requests": 2,
+  "failure_ui_assertions_passed": true,
+  "failure_screenshot_visually_reviewed": true,
+  "failure_screenshot_sha256": "4c1eaabb854047d8f5ef9d68c9e4cce43f0539635572e2e6aa534aa13b28a8cb",
+  "maestro_commands_sha256": "714d29ac2b2accd43cec58b5ddb206a1006b6fc5dfb4b08d93f50d64d45f3e5c",
+  "operator_log_sha256": "84ffe737c26222f3a2d2cae6c3332b6ff50d3534c643ee9152f485a460a85b20",
+  "final_recovery_executed": false,
+  "exact_lower_count_cause_established": false,
+  "original_attempt_retained": true,
+  "application_changed": false,
+  "retry_scope": "offline and refresh only, same inspected APK, reuse lifecycle"
+}

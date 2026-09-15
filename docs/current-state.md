@@ -23,7 +23,16 @@ request; failed refresh retained the plan and recovered with one explicit read.
 The previous vote stayed unchanged. All seven screenshots were reviewed, and the
 new test simulator is stopped and retained. Android remains pending. Its operator
 flow now includes the previously proven scroll to the finalization retry control;
-application bytes and all assertions remain unchanged. The
+application bytes and all assertions remain unchanged. Android's artifact and
+lifecycle now pass. Its first offline/refresh run stopped after its failure probe
+observed two HTTP requests against an expectation of three; the error/cached-plan
+UI checks had passed. [The failed attempt](evidence/plan-refresh-verification-2ad48a8/android-attempt-1.json)
+is retained, with the lower count's exact cause unestablished. The operator now
+requires one to three observed injected errors, zero upstream requests and writes,
+while retaining exact success/scroll counts and journaling every probe before
+assertion. Four focused checks and a new full readiness run pass 220 JavaScript
+and 98 Python tests, with three local Postgres skips. An offline-only Android
+retry is prepared; the existing APK and lifecycle evidence are reused. The
 [focused source review](evidence/source-review-2ad48a8/README.md) validates fourteen
 file hashes and seven areas; all eleven prior control files are unchanged. Its
 same two medium risks and exact report still require matching owner acceptance

@@ -1,0 +1,24 @@
+{
+  "schema_version": 1,
+  "application_sha": "2ad48a8d8ec4d3aa9a7bd52061b823bb55960bcd",
+  "scope": "operator failure-bound and retained-counter correction",
+  "javascript_tests_passed": 220,
+  "python_tests_passed": 98,
+  "postgres_tests_skipped": 3,
+  "focused_tests_passed": 4,
+  "status": {
+    "command": "make ready",
+    "scope": "operator failure-bound and retained-counter correction",
+    "application_sha": "2ad48a8d8ec4d3aa9a7bd52061b823bb55960bcd",
+    "status": "passed",
+    "started_at": "2026-09-15T09:19:04.524684+00:00",
+    "exit_code": 0,
+    "finished_at": "2026-09-15T09:19:52.454572+00:00"
+  },
+  "log_sha256": "19f22f117f199688343843b162edc0a403950a638de9ab47f2b2b2fe3863a8aa",
+  "validated_operator_files": {
+    "scripts/mobile-plan-refresh-checks.mjs": "0c41882418fb0d89aa8d0898819517f54ac9a42d6cd47d4f7ea3a66cca3c260f",
+    "scripts/mobile-plan-refresh-checks.test.mjs": "3632017545487a1cedadc62e734057ecef528ebb1e0688e55566664b9739d04d",
+    "scripts/mobile-offline-e2e.mjs": "54bca226db986131b855396b79a43cb66218fd219455af543080c8a92796f63e"
+  }
+}

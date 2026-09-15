@@ -33,3 +33,15 @@ test("slow/error evidence requires the intended fault to have actually occurred"
   assert.throws(() => assertPlanRefreshPhase("slow_refresh", { request_count: 1, upstream_request_count: 1, write_request_count: 0, delayed_response_count: 0 }), /delayed_response_count/);
   assert.throws(() => assertPlanRefreshPhase("failed_refresh", { request_count: 3, upstream_request_count: 0, write_request_count: 0, synthetic_error_count: 1 }), /synthetic_error_count/);
 });
+
+test("failed refresh counts observed HTTP errors without requiring every query attempt to reach the proxy", () => {
+  for (const count of [1, 2, 3]) {
+    const observed = { request_count: count, upstream_request_count: 0, write_request_count: 0, synthetic_error_count: count };
+    assert.equal(assertPlanRefreshPhase("failed_refresh", observed).request_count, count);
+    assert.throws(() => assertPlanRefreshPhase("failed_refresh", { ...observed, upstream_request_count: 1 }), /upstream_request_count/);
+    assert.throws(() => assertPlanRefreshPhase("failed_refresh", { ...observed, synthetic_error_count: count - 1 }), /synthetic_error_count/);
+  }
+  for (const count of [0, 4, 1.5, undefined]) {
+    assert.throws(() => assertPlanRefreshPhase("failed_refresh", { request_count: count, upstream_request_count: 0, write_request_count: 0, synthetic_error_count: count }), /request_count/);
+  }
+});
