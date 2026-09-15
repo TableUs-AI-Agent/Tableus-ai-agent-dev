@@ -14,7 +14,7 @@ import {
   selectProfileAuthorizedSigner,
 } from "./mobile-links-inspection-lib.mjs";
 import { validateHostedAppConfig } from "./readiness-inspection-lib.mjs";
-import { embeddedAppConfiguration, inspectionReport } from "./mobile-artifact-security.mjs";
+import { embeddedAppConfiguration, inspectionReport, verifyIosSceneCompatibility } from "./mobile-artifact-security.mjs";
 
 function parseArgs(argv) {
   const result = {};
@@ -128,6 +128,7 @@ const profile = args.profile ?? `links-test-${platform}`;
 const temporaryRoot = mkdtempSync(join(tmpdir(), "tableus-link-inspection-"));
 try {
   const inspectionPath = platform === "ios" ? extractIosApp(artifact, temporaryRoot) : artifact;
+  if (platform === "ios") verifyIosSceneCompatibility(inspectionPath);
   const content = artifactBytes(inspectionPath).toString("latin1");
   const appConfiguration = embeddedAppConfiguration(platform, artifact, inspectionPath);
   const parsedConfiguration = validateHostedAppConfig(appConfiguration, {

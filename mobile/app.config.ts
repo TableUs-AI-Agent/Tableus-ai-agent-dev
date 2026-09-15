@@ -123,6 +123,7 @@ export default ({ config }: ConfigContext): ExpoConfig => {
         },
       ],
       "@sentry/react-native/expo",
+      "./plugins/with-ios-scene-lifecycle.cjs",
     ],
     experiments: { typedRoutes: true, reactCompiler: true },
     extra: {

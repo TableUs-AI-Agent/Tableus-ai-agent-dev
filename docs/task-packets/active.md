@@ -5,7 +5,8 @@
 The frozen `2ad48a8d8ec4d3aa9a7bd52061b823bb55960bcd` staging verification
 is paused after a confirmed physical-iPhone launch crash. Use one primary agent.
 This is the only active packet. The [bounded local repair proposal](../reviews/2026-09-15-ios27-scene-lifecycle.md)
-is prepared; the dependency/lifecycle scope exception awaits owner approval.
+was approved by the owner on 2026-09-15. The local dependency/configuration
+repair is implemented; freeze/review follows deterministic validation.
 
 The signed app installed after the owner resolved Screen Time, but iOS 27 traps
 because the Xcode 27 build lacks scene-lifecycle adoption. Two crash reports
@@ -21,13 +22,23 @@ The two telemetry profiles remain unstarted. Preserve the raw build logs.
 
 ## Next bounded objective
 
-After owner approval of the linked local scope, prepare the minimum SDK 57
-scene-lifecycle repair in a separate worktree. Use the published Expo 57.0.23
-runtime and review the official opt-in plugin integration; its npm package is
-not yet available at the latest check. Validate actual prebuild output, native
-compatibility gates and affected deterministic tests, then run `make ready`
-once. Freeze and review a new source before requesting native/hosted execution.
-Do not restart old-candidate builds or ask the owner to keep reopening the app.
+Complete local validation and freeze/review the minimum SDK 57 scene repair in
+`codex/ios27-scene-lifecycle`. Expo is pinned to 57.0.23; the official plugin was
+still unpublished, so the approved attributed local adaptation is used. Actual
+prebuild comparison now passes before/after/repeated generation. Keep React
+Native 0.86.2 and application providers unchanged. Run `make ready` once.
+
+Prepare exact-source review acceptance and the smallest separate execution
+request: first an inspected signed iOS build and iOS 27 launch/relaunch proof,
+then cold/warm canonical and private links plus lifecycle/refresh regressions.
+Do not start compilation, installation, CI push, deployment or live calls under
+the local repair approval. Do not restart old-candidate builds or ask the owner
+to keep reopening the crashing app.
+
+Local validation passes: 226 JavaScript tests, 98 Python tests with three local
+Postgres skips, actual before/after/repeated prebuild and all `make ready` targets.
+[Evidence](../evidence/ios27-scene-repair/local-validation.json) records limits and retained
+harness failures. No new native build, installation, live call or deployment ran.
 
 ## Preserved acceptance and boundaries
 

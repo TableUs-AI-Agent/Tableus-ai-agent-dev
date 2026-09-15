@@ -3,6 +3,7 @@ import { basename, extname, join } from "node:path";
 import { spawnSync } from "node:child_process";
 
 import { artifactChecksum } from "./evidence-utils.mjs";
+import lifecycle from "../mobile/plugins/ios-scene-lifecycle.cjs";
 
 export const INSPECTION_SCHEMA_VERSION = 1;
 export const RECEIPT_SCHEMA_VERSION = 2;
@@ -186,7 +187,13 @@ export function verifyIosSimulatorBundle(app) {
   if (!statSync(app).isDirectory() || extname(app) !== ".app") throw new Error("iOS simulator artifact must be one .app bundle");
   const bundleId = run("plutil", ["-extract", "CFBundleIdentifier", "raw", join(app, "Info.plist")]);
   if (bundleId !== "com.tableus.app") throw new Error("iOS simulator bundle identifier is not TableUs");
+  verifyIosSceneCompatibility(app);
   return bundleId;
+}
+
+export function verifyIosSceneCompatibility(app) {
+  const info = JSON.parse(run("plutil", ["-convert", "json", "-o", "-", join(app, "Info.plist")]));
+  lifecycle.assertIosSdkSceneCompatibility(info);
 }
 
 export function iosAllowsLocalNetworking(app) {

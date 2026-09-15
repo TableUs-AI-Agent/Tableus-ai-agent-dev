@@ -9,11 +9,19 @@ pass does not certify the new SDK/OS combination.
 
 [Crash evidence](evidence/plan-refresh-staging-2ad48a8/iphone-launch-failure.json)
 and the [bounded local repair proposal](reviews/2026-09-15-ios27-scene-lifecycle.md)
-are recorded. The proposed repair uses the published Expo 57.0.23 scene runtime
-and a reviewed opt-in config integration. The companion official plugin is
-experimental and its npm lookup returned E404; no dependency has been changed.
-Owner approval is pending for the dependency/lifecycle scope exception. Only
-[the active packet](task-packets/active.md) directs work.
+are recorded. The owner approved the bounded local repair on 2026-09-15.
+Implementation uses exact Expo 57.0.23 and a small, attributed config-plugin
+adaptation from the immutable official revision. The npm plugin remained
+unpublished. Installed-runtime, generated AppDelegate and artifact-manifest
+checks reject the old SDK 27 combination. The local prebuild comparison passes,
+including repeat generation and unchanged links/transport/project settings.
+Native compilation and iPhone startup remain unverified for the repair.
+Local validation passes: 226 JavaScript tests, 98 Python tests with three local
+Postgres skips, actual before/after/repeated prebuild and all `make ready` targets.
+[Evidence](evidence/ios27-scene-repair/local-validation.json) records limits and retained
+harness failures. No new native build, installation, live call or deployment ran.
+
+Only [the active packet](task-packets/active.md) directs work.
 
 Both approved cleanup stages completed: five obsolete npm caches and two
 finished disposable deterministic devices. Saved staging devices/account data,
@@ -44,8 +52,9 @@ connector queries failed, so reconcile before resuming live work. The configured
 backstop remains 409. No Security Scan has started.
 
 Development uses GPT-6 Astra. Application AI providers remain Gemini and Places.
-Operator/evidence branch is `codex/plan-refresh-verification` in the isolated
-`plan-refresh-controls` worktree. The frozen application's source and historical
+The local repair branch is `codex/ios27-scene-lifecycle` in the isolated
+`ios27-scene-lifecycle` worktree. Prior operator/evidence work remains in
+`codex/plan-refresh-verification` / `plan-refresh-controls`. The frozen application's source and historical
 receipts remain unchanged. The completed staging work and the prior 6b9719b run
 are not silently promoted into acceptance of a future source.
 

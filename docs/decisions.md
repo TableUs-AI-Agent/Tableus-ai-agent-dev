@@ -1,5 +1,23 @@
 # Decision log
 
+## Approved local scene repair — 2026-09-15
+
+- The owner approved the bounded proposal recorded at 83420fb. Pin Expo to
+  57.0.23 and retain React Native 0.86.2. The official scene plugin remains
+  unpublished; adapt the approved immutable source with MIT provenance. Expo
+  owns the native scene runtime; TableUs only changes generated configuration.
+- Validate the installed patch version, preserve existing link handlers, reject
+  custom/partial startup shapes, and support Expo's null-prototype plist maps.
+  Before native compilation check SDK/runtime/plugin compatibility; before
+  accepting SDK 27 artifacts require the exact single-scene manifest.
+- Actual prebuild comparisons may normalize only Sentry's randomly generated
+  symbol-upload phase UUID; every other project setting and unrelated plist
+  value must match. No Pods installation or native compilation is part of this
+  check. Keep failed harness attempts alongside the successful evidence.
+- The approval covers local code and deterministic checks. Freeze and review
+  the replacement before requesting separate native/hosted execution. Existing
+  source acceptance, artifacts and provider caps do not transfer implicitly.
+
 ## iOS 27 launch failure and repair scope — 2026-09-15
 
 - Owner reported immediate launch crashes after successful installation. Two

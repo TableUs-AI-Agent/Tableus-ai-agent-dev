@@ -120,6 +120,11 @@ try {
   const logFd = openSync(logPath, "wx", 0o600);
   try {
     run("npm", ["ci"], { cwd: workspace, logFd });
+    if (args.platform === "ios") {
+      run(process.execPath, [join(repoRoot, "scripts", "ios-scene-build-preflight.mjs")], {
+        cwd: workspace, logFd, env: { TABLEUS_BUILD_SOURCE_ROOT: workspace },
+      });
+    }
     run(join(workspace, "node_modules", ".bin", "eas"), [
       "build", "--local", "--non-interactive", "--platform", args.platform,
       "--profile", args.profile, "--output", rawArtifact,

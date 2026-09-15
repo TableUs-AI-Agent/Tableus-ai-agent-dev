@@ -30,7 +30,7 @@
     "@tableus/api-client": "*",
     "@tableus/domain": "*",
     "@tanstack/react-query": "^5.101.4",
-    "expo": "~57.0.18",
+    "expo": "57.0.23",
     "expo-build-properties": "~57.0.15",
     "expo-constants": "~57.0.11",
     "expo-file-system": "~57.0.3",
