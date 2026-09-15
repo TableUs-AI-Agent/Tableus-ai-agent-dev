@@ -2,6 +2,19 @@
 
 ## Deterministic refresh verification continuation — 2026-09-15
 
+- Complete the local objective with both platform results bound to application
+  `2ad48a8d8ec4d3aa9a7bd52061b823bb55960bcd`. Android attempt four passed under
+  `ec909733c0242b7a10737dc0dda0402f5d5aa87e`, reusing lifecycle operator
+  `62bef563373e64de144c1998c73d87dc3d18c7b3`; iOS retains
+  `cced1728628d594c1e957f9efc48a03428fa8f4a`. Both platforms show zero scrolling
+  reads/writes, one delayed read and one recovery read, with unchanged votes.
+  Keep all three failed Android attempts. Fourteen screenshots are reviewed;
+  both new devices are stopped/retained and local services are closed.
+- Prepare the next staging request with exact review acceptance, four remaining
+  native profiles, 80 additional Places attempts, four new sign-in messages and
+  zero generation. These are proposed limits, not granted authority. Reuse the
+  two inspected test artifacts, preserve the paused 6b9719b ledger and do not
+  start a Security Scan. Production/stores/cohorts remain later objectives.
 - Preserve attempt three's finalization-navigation failure. Maestro repeatedly
   reported visibility 1.0 for the retry label at the same bottom-of-page bounds,
   yet kept scrolling with centering enabled until timeout. The screenshot shows

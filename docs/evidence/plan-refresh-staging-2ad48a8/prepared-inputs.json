@@ -1,0 +1,33 @@
+{
+  "schema_version": 1,
+  "application_sha": "2ad48a8d8ec4d3aa9a7bd52061b823bb55960bcd",
+  "source_review_report_sha256": "65f9f2e8e0a48f3431cf15633dfe42bf886a2334969a47381dab04325215be0e",
+  "execution_approved": false,
+  "source_review_accepted": false,
+  "profiles": [
+    {
+      "profile": "readiness-ios",
+      "input_preflight_passed": true,
+      "build_started": false,
+      "preflight_log_sha256": "b49d275307c310b8d784d695e651b3779c00cd26c1975177978a992a542089a4"
+    },
+    {
+      "profile": "readiness-android",
+      "input_preflight_passed": true,
+      "build_started": false,
+      "preflight_log_sha256": "3838715a09f008d516b4200c76bf21eb475f6237d67d034824c002b0af54388f"
+    },
+    {
+      "profile": "telemetry-test-ios",
+      "input_preflight_passed": true,
+      "build_started": false,
+      "preflight_log_sha256": "cacda53f9abc2cbf357007f60f8d7c90f72fe9e8bd8ee713e765b366fd0deef8"
+    },
+    {
+      "profile": "telemetry-test-android",
+      "input_preflight_passed": true,
+      "build_started": false,
+      "preflight_log_sha256": "91ad3983bc72294e227316b59c90c10b55499ef82a11d108c6c0ab4fed90d9e7"
+    }
+  ]
+}

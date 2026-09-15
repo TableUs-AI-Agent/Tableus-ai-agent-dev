@@ -1,115 +1,82 @@
 # Deterministic native verification of explicit plan refresh
 
-Application source: `2ad48a8d8ec4d3aa9a7bd52061b823bb55960bcd`.
-Operator branch: `codex/plan-refresh-verification`. The application is frozen;
-new flow/proxy changes run from the operator checkout and have separate identity.
+Complete for application `2ad48a8d8ec4d3aa9a7bd52061b823bb55960bcd`.
+Both inspected test artifacts pass lifecycle, offline recovery and all five
+refresh phases. [iOS evidence](ios-deterministic.json) and
+[Android evidence](android-deterministic.json) bind actual artifact bytes,
+receipts, source, operator identities, reports and fourteen reviewed screenshots.
+Both new test devices are stopped and retained; local test services are closed.
+No live provider calls, sign-in messages or telemetry delivery occurred.
 
-[iOS execution](ios-deterministic.json) passes on the inspected app, under operator
-`cced1728628d594c1e957f9efc48a03428fa8f4a`. Its build took approximately twenty
-minutes; lifecycle, offline recovery and all five refresh phases pass. Scrolling
-caused zero reads/writes, delayed repeated taps made one read, and failure/recovery
-preserved the saved vote and cached plan. All seven retained screenshots were
-visually reviewed. The new iOS simulator is stopped and retained, and its local
-services are stopped. Android execution remains pending.
+## Observed refresh behavior
 
-Before Android, the operator's `finalize-failure.yml` incorporates the navigation
-already proven in the 6b9719b Android run: scroll the retry control fully into view,
-then execute the unchanged visibility assertion. No assertion or request-count
-check is removed, and the frozen application is unchanged. This avoids repeating
-the known clipped-control test failure. Android will record its actual operator
-SHA; the completed iOS evidence retains the operator above.
-
-Android's inspected APK and full lifecycle pass under operator
-`62bef563373e64de144c1998c73d87dc3d18c7b3`. Its first offline/refresh attempt passed
-all offline UI flows, initial load, zero-read/zero-write scrolling and the delayed
-single read. It then stopped because the failure probe required exactly three
-HTTP requests but observed two, after the intended error, enabled refresh control
-and cached plan assertions passed. The [retained failure](android-attempt-1.json)
-is not relabeled as a pass, and the final recovery phase did not execute.
-
-The revised operator guard requires one to three actual injected error responses,
-zero upstream requests and zero writes. A query attempt can fail before reaching
-the HTTP proxy; the precise cause of this run's lower count is unestablished.
-Successful refresh and scrolling still require their exact counts. The guard
-rejects zero evidence, excess requests and mismatched injected-error counts, and
-the runner now retains safe counters before each assertion. Four focused tests
-and one new `make ready` pass: 220 JavaScript, 98 Python and three local Postgres
-skips. This check was rerun because operator JavaScript changed.
-One offline/refresh retry is prepared on the retained Android test emulator,
-reusing the inspected APK and completed lifecycle evidence. No build is repeated.
-
-[Attempt two](android-attempt-2.json), under operator `9fd9eb3`, stopped at the
-retained-title assertion before any refresh phase. The screenshot and hierarchy
-show `OOffline resilience dinner`, fully visible. One create request committed
-and its response was dropped as intended. The input duplication's mechanism is
-unestablished. The flow now validates exact input before submission, with one
-bounded clear/retype correction using Maestro's documented
-[retry](https://docs.maestro.dev/reference/commands-available/retry) and
-[eraseText](https://docs.maestro.dev/api-reference/commands/erasetext) commands.
-All original assertions remain, and the input block contains no request action.
-Parse the changed YAML and run only the affected Android offline/refresh suite
-as attempt three; preserve both previous failures and reuse the same artifact.
-
-[Attempt three](android-attempt-3.json), under operator `30d14d4`, passed the
-create/constraint recovery checks, then stopped in the finalization retry scroll.
-Maestro logged 100% target visibility at unchanged bottom-of-page bounds on
-repeated scrolls; the reviewed screenshot shows the complete retry control.
-The [centering option](https://docs.maestro.dev/reference/commands-available/scrolluntilvisible)
-adds a position requirement beyond visibility. Disable that option while retaining
-100% visibility and the original assertion, then run one investigated attempt four
-with the same APK. No application or JavaScript changed; reuse full readiness.
-
-The owner's request to continue advances the previously identified local device
-verification step. The [execution plan](execution-plan.json) is bounded to two
-sequential local profiles, `test-ios` then `test-android`, with deterministic demo
-data and telemetry off. No paid Places/Gemini calls, sign-in messages, hosted
-deployment or installation on a signed-in device is included. The new staging
-[source review](../source-review-2ad48a8/README.md) remains pending acceptance.
-
-Both exact-source build-input preflights pass. The prepared build identifiers are
-`local-ios-test-2ad48a8` and `local-android-test-2ad48a8`; artifacts, inspections and
-receipts use new private paths under `.artifacts/mobile/<application-sha>/`.
-Start with at least 20 GiB free and stop compilation below 9 GiB. Observed free
-space at preparation is recorded in the execution plan. Native outputs do not
-exist until a build and inspection genuinely complete.
-
-Build and inspect iOS first, then run the existing deterministic lifecycle/offline
-checks and the opt-in refresh investigation on a new `TableUsRefresh2ad-iOS`
-simulator. Only after that passes, build/inspect Android and use a new private
-`TableUsRefresh2ad_Android` emulator with four cores and 2 GiB memory. Stop and
-retain both test devices afterward; deletion has not been requested. Preserve
-the saved staging devices, physical iPhone, original six artifacts and helper state.
-
-The offline runner's opt-in arguments are `--verify-plan-refresh true --refresh-sha
-<application-sha>`. Before touching a device, it validates that the embedded app
-configuration has that SHA, local demo controls, loopback API, disabled updates
-and telemetry off. The new flows use a separate four-candidate fixture with a
-previous vote. Their expected proxy observations are:
-
-| Phase | Detail requests | Upstream detail requests | Additional requirement |
+| Phase | iOS detail requests | Android detail requests | Additional observation |
 | --- | --- | --- | --- |
-| Initial plan open | 1 | 1 | Correct fixture appears |
-| Two full scroll cycles and four top overscroll gestures | 0 | 0 | Previous vote label; no organizer finalize control |
-| Double tap refresh during a delayed response | 1 | 1 | One deliberately delayed response; button recovers |
-| Failed refresh, bounded by the configured query retries | 1–3 | 0 | Every observed request receives a synthetic error; cached plan and usable button |
-| Explicit recovery | 1 | 1 | Error disappears and the button is usable |
+| Initial plan open | 1 | 1 | Correct fixture and enabled refresh button |
+| Two full scroll cycles and four top overscroll gestures | 0 | 0 | Previous-vote label; no organizer finalization control |
+| Repeated refresh taps during delayed response | 1 | 1 | One delayed response; button becomes usable |
+| Injected refresh failure | 3 | 2 | Every observed request failed at the proxy; zero upstream reads; cached plan retained |
+| Explicit recovery | 1 | 1 | Error disappears; refresh remains usable |
 
-Every phase requires **zero app writes**, both immediately and after a short
-quiescence check. The fixture's vote, candidate count and voting status must remain
-unchanged. Three screenshots, phase counts, actual artifact checksum, application
-SHA and operator SHA are recorded separately from the existing offline report.
-Opt-in flow logs/screenshots are retained privately even on failure. Failures stop
-the sequence for investigation; they do not authorize automatic retries or later
-profiles. No native outcome is claimed by preparation alone.
+Every phase produced **zero app writes**, immediately and after the quiescence
+check. The prior vote, four candidates and voting status remained unchanged.
+Failure evidence requires one to three observed HTTP errors, matching injected
+error counts and zero upstream requests. All successful/scroll counts are exact.
+The reason Android observed two rather than three HTTP attempts is unestablished;
+the record does not treat unobserved transport attempts as proxy evidence.
 
-[Local tooling validation](local-validation.json) passes all `make ready` targets:
-219 JavaScript and 98 Python tests, three local Postgres skips. Four focused proxy
-and evidence tests pass, and all five new flow files parse as YAML. These checks
-do not execute Maestro on a device. The flow design uses documented
-[state selectors](https://docs.maestro.dev/reference/selectors/state-selectors) and
-[swipe controls](https://docs.maestro.dev/api-reference/commands/swipe).
+Both offline suites also prove two create attempts with the same key create one
+plan; a known-offline constraint write makes no request before explicit recovery;
+and two finalization attempts with the same key create one finalization event.
+Lifecycle covers two participants, four candidates, votes, finalization/reopening,
+rotated-link rejection and stale-run clearing.
 
-Later hosted work, the other four native profiles, real-session verification and
-cumulative acceptance require their own source-bound execution scope. The paused
-6b9719b live run remains at 60/80 Places attempts and three of four messages; this
-local work does not increase or spend that allowance.
+## Source, reuse and retained failures
+
+- iOS build `local-ios-test-2ad48a8` and all device phases use operator
+  `cced1728628d594c1e957f9efc48a03428fa8f4a`.
+- Android build `local-android-test-2ad48a8` and lifecycle use
+  `62bef563373e64de144c1998c73d87dc3d18c7b3`. Accepted offline/refresh attempt four
+  uses `ec909733c0242b7a10737dc0dda0402f5d5aa87e`. The same APK was re-inspected
+  and reused throughout; neither accepted artifact was rebuilt for test repairs.
+- [Attempt one](android-attempt-1.json) stopped after its error UI passed because
+  the initial guard demanded three arriving HTTP requests and observed two. The
+  corrected bound retains zero upstream reads/writes, validates every injected
+  response, and rejects zero or excess requests. The runner journals counters
+  before assertions. Final recovery did not execute in that failed attempt.
+- [Attempt two](android-attempt-2.json) failed the exact retained-title assertion:
+  the visible field contained `OOffline resilience dinner`. Its input duplication
+  mechanism is unknown. The flow now verifies exact input before submission and
+  permits one clear/retype correction. Original post-failure assertions remain;
+  no request action is wrapped in the input retry. See Maestro's
+  [retry](https://docs.maestro.dev/reference/commands-available/retry) and
+  [eraseText](https://docs.maestro.dev/api-reference/commands/erasetext) references.
+- [Attempt three](android-attempt-3.json) stopped because forced centering kept
+  scrolling a fully visible finalization retry control at the bottom of the page.
+  Repeated visibility measurements were 100%; the screenshot confirms the
+  control. The correction keeps 100% visibility and the original assertion while
+  disabling the extra [centering requirement](https://docs.maestro.dev/reference/commands-available/scrolluntilvisible).
+
+All original failed logs/screenshots/statuses remain separate from the accepted
+fourth attempt. The application stayed frozen through every operator change.
+
+## Checks and remaining boundary
+
+The [initial operator checks](local-validation.json) passed 219 JavaScript and
+98 Python tests, with three Postgres skips. After the counter/journal change,
+[full readiness](retry-local-validation.json) passed 220 JavaScript and 98 Python
+tests, three Postgres skips. Four focused guard tests passed. Later YAML-only
+input/navigation changes passed parsing and the actual affected Android suite;
+no redundant full-suite run or native rebuild was needed.
+
+The iOS build's Expo Doctor result remains 20/21 with an existing dependency
+patch warning; Android uses the same locked dependencies. Dependency/advisory
+review and native tab presentation remain later release work. These fixture
+results do not supply hosted, physical-iPhone association or production evidence.
+Saved staging devices and hosted targets still use 6b9719b.
+
+The [next staging request](../plan-refresh-staging-2ad48a8/README.md) is prepared
+with four remaining input preflights passing. Exact
+[source-review acceptance](../source-review-2ad48a8/README.md) and execution
+approval are pending. No Security Scan, hosted deployment, additional build or
+installation on a saved device is authorized by this completed local objective.

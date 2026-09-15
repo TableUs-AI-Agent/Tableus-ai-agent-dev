@@ -1,54 +1,43 @@
 # Current state
 
-Updated 2026-09-15. Development uses GPT-6 Astra. Application providers remain
-Gemini and Google Places. The client correction is published on
-`codex/replacement-6b9719b`, frozen application source
-`6b9719b4e63e34803f2e7c2598e45851790df661`; Railway staging and Vercel Preview
-now serve this source. Native replacement verification is paused. The active
-local correction is on `codex/plan-refresh-controls`, based on operator/evidence
-commit `25e0397d7803651d39968f53868a2b73845817c3`. Corrected application source is
-frozen locally at `2ad48a8d8ec4d3aa9a7bd52061b823bb55960bcd`; its iOS test artifact
-is built and verified, while Android is next and hosted deployment remains pending. Subsequent evidence commits do not
-change that application identity.
-Only [the active packet](task-packets/active.md) directs current implementation.
+Updated 2026-09-15. Development uses GPT-6 Astra; application providers remain
+Gemini and Google Places. Railway staging, Vercel Preview and the saved staging
+devices remain on `6b9719b4e63e34803f2e7c2598e45851790df661`. That live run is
+paused. The refresh correction is frozen locally at
+`2ad48a8d8ec4d3aa9a7bd52061b823bb55960bcd`, and its deterministic iOS and Android
+verification is complete. Operator/evidence work is on
+`codex/plan-refresh-verification` in the isolated `plan-refresh-controls` worktree.
+Only [the active packet](task-packets/active.md) directs the next objective.
 
-Deterministic device verification is now prepared on `codex/plan-refresh-verification`
-under the owner's request to continue. The [bounded execution plan](evidence/plan-refresh-verification-2ad48a8/README.md)
-covers two local test profiles and new isolated test devices. Both input
-preflights pass, and operator `make ready` passes 219 JavaScript/98 Python tests
-with three local Postgres skips. [iOS deterministic verification](evidence/plan-refresh-verification-2ad48a8/ios-deterministic.json)
-passes lifecycle, offline recovery and all five refresh phases. Scrolling caused
-zero detail reads or writes; a double tap during a delayed response made one
-request; failed refresh retained the plan and recovered with one explicit read.
-The previous vote stayed unchanged. All seven screenshots were reviewed, and the
-new test simulator is stopped and retained. Android remains pending. Its operator
-flow now includes the previously proven scroll to the finalization retry control;
-application bytes and all assertions remain unchanged. Android's artifact and
-lifecycle now pass. Its first offline/refresh run stopped after its failure probe
-observed two HTTP requests against an expectation of three; the error/cached-plan
-UI checks had passed. [The failed attempt](evidence/plan-refresh-verification-2ad48a8/android-attempt-1.json)
-is retained, with the lower count's exact cause unestablished. The operator now
-requires one to three observed injected errors, zero upstream requests and writes,
-while retaining exact success/scroll counts and journaling every probe before
-assertion. Four focused checks and a new full readiness run pass 220 JavaScript
-and 98 Python tests, with three local Postgres skips. An offline-only Android
-retry stopped before refresh checks because automated input produced
-`OOffline resilience dinner`; the exact title assertion correctly failed.
-The screenshot and hierarchy confirm that the field was fully visible. The
-[second attempt](evidence/plan-refresh-verification-2ad48a8/android-attempt-2.json)
-is preserved. Verify the title before submission, allowing one clear/retype
-attempt without retrying any request, then repeat only offline/refresh on the
-same APK and retained private AVD. The input duplication's mechanism is not
-established; application source and all acceptance assertions remain unchanged. The
-third attempt passed create/constraint recovery but stopped when the test kept
-trying to center a fully visible finalization retry control at the bottom of the
-page. Its screenshot and repeated 100% visibility measurements are retained.
-Disable centering while keeping 100% visibility and the original assertion;
-prepare one investigated fourth offline/refresh attempt with the same APK. The
-[focused source review](evidence/source-review-2ad48a8/README.md) validates fourteen
-file hashes and seven areas; all eleven prior control files are unchanged. Its
-same two medium risks and exact report still require matching owner acceptance
-for hosted staging. No new Security Scan is required by this preparation.
+Both exact-source test artifacts pass inspection, lifecycle, offline recovery and
+all five refresh phases. On both platforms, scrolling caused zero detail reads
+or writes, repeated taps during a delayed response made one request, and an
+explicit recovery made one successful read. The failure phase delivered three
+iOS and two Android injected errors, with no upstream requests. Every refresh
+phase made zero app writes and preserved the previous vote. Fourteen screenshots
+were reviewed across the [iOS](evidence/plan-refresh-verification-2ad48a8/ios-deterministic.json)
+and [Android](evidence/plan-refresh-verification-2ad48a8/android-deterministic.json)
+records. Both new test devices are stopped and retained; local test ports are
+closed. No live provider or sign-in allowance was consumed.
+
+Android's three failed attempts are retained in the
+[native evidence](evidence/plan-refresh-verification-2ad48a8/README.md): an overly
+exact failed-request count, duplicated fixture input, and forced centering of a
+fully visible retry control. The corrected operator retains bounded error counts,
+pre-submission exact-input checks, full visibility and all original assertions.
+The fourth offline/refresh attempt passed using the same APK and the already
+completed lifecycle. Latest `make ready`: 220 JavaScript and 98 Python passes,
+three local Postgres skips. Subsequent changes were YAML/navigation and evidence;
+YAML parsing and evidence privacy checks pass. Existing Expo patch warnings remain.
+
+The [next staging verification plan](evidence/plan-refresh-staging-2ad48a8/README.md)
+is concrete and awaits approval. It reuses both test artifacts, builds the four
+remaining profiles, and caps a new run at 80 additional Places attempts, four
+sign-in messages and zero generations. All four input preflights pass. The exact
+[focused source review](evidence/source-review-2ad48a8/README.md), including its
+same two medium risks, still needs matching owner acceptance. No Security Scan,
+hosted deployment, additional build or physical installation followed from the
+local verification request.
 
 ## Reported scrolling and refresh behavior
 
@@ -67,9 +56,8 @@ and unsent ranking changes receive distinct messages. Hidden-route inactivity,
 foreground updates and offline recovery remain required. See the
 [local investigation](reviews/2026-09-15-explicit-plan-refresh.md) for validation
 and the limits of request attribution. This does not prove an endless native loop
-or establish the origin of every historical request. iOS simulator verification
-now passes; Android and hosted/physical verification of the new source remain
-outstanding. Retained 6b9719b artifacts retain their actual SHA.
+or establish the origin of every historical request. Both isolated native platforms now pass; hosted and physical verification of
+the new source remain outstanding. Retained 6b9719b artifacts retain their actual SHA.
 All local readiness targets pass: 216 JavaScript and 98 Python tests, with three
 Postgres-only tests skipped. The initial `make ready` passed lint/types but could
 not open the proxy test's loopback listener in the sandbox. The remaining targets

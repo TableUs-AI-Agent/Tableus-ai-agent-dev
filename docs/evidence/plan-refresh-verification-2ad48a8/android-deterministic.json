@@ -1,0 +1,151 @@
+{
+  "schema_version": 1,
+  "application_sha": "2ad48a8d8ec4d3aa9a7bd52061b823bb55960bcd",
+  "operator_sha": "ec909733c0242b7a10737dc0dda0402f5d5aa87e",
+  "lifecycle_operator_sha": "62bef563373e64de144c1998c73d87dc3d18c7b3",
+  "platform": "android",
+  "accepted_at": "2026-09-15T09:54:37.698421+00:00",
+  "accepted_offline_attempt": 4,
+  "artifact": {
+    "schema_version": 1,
+    "application_sha": "2ad48a8d8ec4d3aa9a7bd52061b823bb55960bcd",
+    "operator_sha": "62bef563373e64de144c1998c73d87dc3d18c7b3",
+    "platform": "android",
+    "profile": "test-android",
+    "build_id": "local-android-test-2ad48a8",
+    "artifact_sha256": "18bd6385401641c708c1d58383d3ae3f7c36a74ea1ed4e29ed9039eddc78a38e",
+    "receipt_sha256": "469069be02e8b5f3e3182e1b57ddb046cfd216342773aa8ba47081f01ce18a13",
+    "inspection_sha256": "a48be56d1ba2cb47c4ffaac94773076a61cf8c8350e37663b4ea355bb25ddf51",
+    "source_tree_sha": "02afc0fc88cc6c9658b452dfcaacd4955b92b6b5",
+    "package_lock_sha256": "ba23ddb7a5b5a8782bcb4efeb8684c92816ff58ad271fbd22c92ca149ada9dd2",
+    "verified_at": "2026-09-15T08:55:59.611Z",
+    "checks": [
+      {
+        "receipt_and_inspection_validated": true,
+        "reinspection_matches": true,
+        "actual_artifact_bytes_match": true,
+        "source_tree_matches": true,
+        "frozen_lock_matches": true,
+        "embedded_source_matches": true,
+        "local_demo_configuration": true,
+        "telemetry_off": true,
+        "native_test_platform_validated": true,
+        "refresh_correction_in_bundle": true
+      }
+    ]
+  },
+  "lifecycle_passed": true,
+  "offline_passed": true,
+  "explicit_refresh_passed": true,
+  "lifecycle_reused_from_first_attempt": true,
+  "lifecycle_summary_sha256": "d94310ecf79ad1042e14d43f2bca76191f48e7c6e33c94dea0a58243a0c2c1be",
+  "offline_summary_sha256": "28e6a201b1ef38b290d67cea91c869511b8ec9ca3402c354b47ce6be7b9069b0",
+  "refresh_summary_sha256": "e72ea341fdb158f4a9fc28372bae603af460eb2db9dff4b6d16e578e8cfb50d8",
+  "refresh_observations_sha256": "eda53fb26793e916d1430cdabdcbd4a776e5aa85b6980e6731ea386dc935870c",
+  "offline": {
+    "create_request_count": 2,
+    "create_same_key_replay": true,
+    "plan_count": 1,
+    "offline_constraint_request_count": 0,
+    "recovered_constraint_request_count": 1,
+    "candidate_count": 4,
+    "finalize_request_count": 2,
+    "finalize_same_key_replay": true,
+    "finalized_event_count": 1
+  },
+  "refresh": {
+    "schema_version": 1,
+    "application_sha": "2ad48a8d8ec4d3aa9a7bd52061b823bb55960bcd",
+    "operator_sha": "ec909733c0242b7a10737dc0dda0402f5d5aa87e",
+    "platform": "android",
+    "build_id": "local-android-test-2ad48a8",
+    "artifact_sha256": "18bd6385401641c708c1d58383d3ae3f7c36a74ea1ed4e29ed9039eddc78a38e",
+    "provider_mode": "deterministic",
+    "auth_mode": "demo",
+    "telemetry_mode": "off",
+    "phases": [
+      {
+        "phase": "initial",
+        "write_request_count": 0,
+        "request_count": 1,
+        "upstream_request_count": 1,
+        "passed": true
+      },
+      {
+        "phase": "scrolling",
+        "write_request_count": 0,
+        "request_count": 0,
+        "upstream_request_count": 0,
+        "passed": true
+      },
+      {
+        "phase": "slow_refresh",
+        "write_request_count": 0,
+        "request_count": 1,
+        "upstream_request_count": 1,
+        "delayed_response_count": 1,
+        "passed": true
+      },
+      {
+        "phase": "failed_refresh",
+        "write_request_count": 0,
+        "upstream_request_count": 0,
+        "request_count": 2,
+        "synthetic_error_count": 2,
+        "passed": true
+      },
+      {
+        "phase": "recovered_refresh",
+        "write_request_count": 0,
+        "request_count": 1,
+        "upstream_request_count": 1,
+        "passed": true
+      }
+    ],
+    "prior_vote_unchanged": true,
+    "screenshots": [
+      "android-refresh-after-scrolling.png",
+      "android-refresh-failure-cached-plan.png",
+      "android-refresh-recovered.png"
+    ]
+  },
+  "screenshots_visually_reviewed": {
+    "android-offline-retry.png": "2a7754606e11adee07decf252a4326ccb9190f7a7f8077ea7039b16183c6462b",
+    "android-recovered-finalized.png": "5bbecfa8328cb239f6fb94d2404396e81f833b6037961077006b0fb64e5ec1ea",
+    "android-refresh-after-scrolling.png": "a727ae66c3ae17e8c3cf78dedd8ab0079c0b5f24bec4fa60ec0791960a143e21",
+    "android-refresh-failure-cached-plan.png": "780984bfff86495f77268eace4a4af98332ae97f67a2831ebfc5b80775679af5",
+    "android-refresh-recovered.png": "f8469d5f5bf328b1b1e90f93a5ce025964629a3a8808bca1156cacd149612709",
+    "android-finalized-plan.png": "0a395c9ca68dc9b0dce2edb4dc138e2744dfe00ff6fbef10cf640d55456a741a",
+    "android-rotated-link.png": "b56f52d15888241687d4a6898a77e8c883c5ce7e19d1503bfdb9999ff3892c60"
+  },
+  "test_device": {
+    "platform": "android",
+    "new_test_device_stopped": true,
+    "new_test_device_retained": true,
+    "ios_test_device_still_stopped_and_retained": true,
+    "local_test_services_stopped": true,
+    "checked_at": "2026-09-15T09:53:43.610323+00:00"
+  },
+  "build": {
+    "profile": "test-android",
+    "application_sha": "2ad48a8d8ec4d3aa9a7bd52061b823bb55960bcd",
+    "status": "passed",
+    "started_at": "2026-09-15T08:45:41.162910+00:00",
+    "free_gib_at_start": 28.686,
+    "pid": 98947,
+    "exit_code": 0,
+    "finished_at": "2026-09-15T08:55:42.595900+00:00",
+    "artifact_exists": true,
+    "inspection_exists": true,
+    "receipt_exists": true,
+    "free_gib_at_finish": 27.515
+  },
+  "offline_execution_started_at": "2026-09-15T09:44:12.730420+00:00",
+  "offline_execution_finished_at": "2026-09-15T09:52:10.419114+00:00",
+  "earlier_failed_attempts_preserved": [
+    1,
+    2,
+    3
+  ],
+  "existing_dependency_patch_warning_retained": true
+}
