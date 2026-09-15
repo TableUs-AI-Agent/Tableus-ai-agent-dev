@@ -1,0 +1,27 @@
+appId: com.tableus.app
+---
+- repeat:
+    times: 2
+    commands:
+      - scrollUntilVisible:
+          element: "Your previous ranked vote is saved."
+          direction: DOWN
+          timeout: 30000
+      - assertNotVisible: "^Ranked vote saved\\.$"
+      - assertNotVisible: "Finalize current winner"
+      - scrollUntilVisible:
+          element: "Refresh plan"
+          direction: UP
+          timeout: 30000
+- repeat:
+    times: 4
+    commands:
+      - swipe:
+          start: 50%, 35%
+          end: 50%, 80%
+          duration: 450
+          waitToSettleTimeoutMs: 500
+- assertVisible:
+    text: "Refresh plan"
+    enabled: true
+- takeScreenshot: "refresh-after-scrolling"

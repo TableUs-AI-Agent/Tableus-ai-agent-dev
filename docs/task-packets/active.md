@@ -1,84 +1,88 @@
-# Active packet: explicit plan refresh correction
+# Active packet: deterministic native refresh verification
 
-## Objective
+## Objective and authority
 
-Resolve the reported accidental plan refresh during scrolling, prevent overlapping
-manual reads, and distinguish a previous saved vote from a new submission. Use
-one primary agent and deterministic local providers. This is the only active
-implementation packet; live replacement verification is paused.
+Verify the frozen plan-refresh correction on isolated local iOS and Android test
+artifacts. The owner's request to continue advances the device-verification step
+identified in the previous handoff. This is the only active implementation packet.
+Use one primary agent, two sequential local test profiles, fixture providers,
+demo identities and telemetry off. Existing signed-in devices stay preserved.
 
-Local implementation and focused checks are complete. All readiness targets pass:
-216 JavaScript and 98 Python tests, with three local Postgres skips. The first
-`make ready` passed lint/types and stopped when the sandbox denied a test's local
-listener. The remaining targets passed with local-listener access; the initial
-attempt is retained. Corrected application source is frozen at
-`2ad48a8d8ec4d3aa9a7bd52061b823bb55960bcd`. The next bounded step is preparing
-deterministic native gesture verification and the required source-review/execution
-request. See the [validation record](../evidence/plan-refresh-controls/local-validation.json).
+This local testing authority does not accept the new staging review, authorize
+hosted deployment or other four native profiles, increase paid limits, send
+sign-in messages or remove persistent devices. Live verification remains paused.
 
-## Source and evidence
+## Source and prepared evidence
 
-- Local branch: `codex/plan-refresh-controls`, isolated worktree of the same name.
-- Base operator/evidence commit: `25e0397d7803651d39968f53868a2b73845817c3`.
-- Corrected application source: `2ad48a8d8ec4d3aa9a7bd52061b823bb55960bcd`.
-- Frozen installed/deployed application: `6b9719b4e63e34803f2e7c2598e45851790df661`.
-- The [local investigation](../reviews/2026-09-15-explicit-plan-refresh.md) records
-  the reproductions, candidate change, validation and remaining native checks.
-- [Replacement execution](../evidence/replacement-6b9719b/README.md) retains all
-  six accepted artifacts, hosted evidence and the accepted source-review report.
-  Those records establish only their actual source, not a later correction.
+- Application: `2ad48a8d8ec4d3aa9a7bd52061b823bb55960bcd`, frozen locally.
+- Operator branch: `codex/plan-refresh-verification`, in the isolated
+  `plan-refresh-controls` worktree. Build from an exact clean detached application
+  checkout; execute the new flows from the separately identified operator source.
+- [Execution plan and phase expectations](../evidence/plan-refresh-verification-2ad48a8/README.md).
+- [Application regression findings](../reviews/2026-09-15-explicit-plan-refresh.md):
+  component tests reproduced overlapping reads and ambiguous previous-vote success.
+- [Focused staging source review](../evidence/source-review-2ad48a8/README.md):
+  fourteen file hashes and seven areas validate, with eleven control files
+  unchanged. Owner acceptance of this exact report remains pending for staging.
+- [Existing replacement evidence](../evidence/replacement-6b9719b/README.md)
+  remains bound to `6b9719b4e63e34803f2e7c2598e45851790df661`.
 
-The owner says Android showed a vote from the previous session, with no deliberate
-new submission. Withdraw intentional owner confirmation from Android voting
-acceptance, while retaining the recorded server vote write. The owner reports a
-persistent spinner and unintended refresh during scrolling. Per-request gesture
-attribution remains unknown; do not ask the owner to reconstruct it again.
+Candidate local readiness passed 216 JavaScript and 98 Python tests, with three
+Postgres skips. New operator tooling passes one `make ready`: 219 JavaScript and
+98 Python tests, three Postgres skips. Four focused probe/evidence tests and YAML
+parsing for all five new flows pass. Both profile input preflights pass. None of
+these preparation checks establishes native execution acceptance.
 
-## Bounded implementation
+## Execution order
 
-1. Establish focused failures for overlapping refresh callbacks during a slow
-   request and the ambiguous previous-vote message.
-2. Replace the plan-detail pull gesture with an accessible `Refresh plan` button
-   on iOS and Android. Reuse an in-flight query and track manual loading separately
-   from automatic query activity. Keep refresh available after an initial error.
-3. Clearly label previous saved votes, unsent ranking edits and successful new
-   submissions. Preserve the existing recoverable mutation/idempotency flow.
-4. Verify offline behavior, request coalescing, loading completion, error recovery,
-   mutation response reuse, hidden-route inactivity and visible foreground/return
-   refresh. Run focused checks, then one `make ready` before handoff.
-5. Correct Android evidence and all four current documents. Freeze a reviewable
-   source commit; record its exact identity separately from subsequent evidence.
+1. Build `test-ios` as `local-ios-test-2ad48a8`; inspect the actual artifact,
+   checksum, embedded source, simulator platform and source-bound receipt. Retain
+   build logs, artifact and receipt in durable private storage.
+2. Create only the new `TableUsRefresh2ad-iOS` simulator and record its returned
+   identifier. Run deterministic lifecycle, then offline plus explicit refresh
+   verification. The latter validates local app configuration before installation.
+   It requires zero app writes, exact phase read counts, observed delay/error
+   injection, unchanged prior vote and three screenshots. Stop and retain this
+   simulator when done, including on a failure.
+3. Only after iOS passes, build/inspect `test-android` as
+   `local-android-test-2ad48a8`. Create the new private
+   `TableUsRefresh2ad_Android` emulator with four cores and 2 GiB memory.
+   Run the same lifecycle/offline/refresh phases, then stop and retain it.
+4. Preserve failed attempts and investigate before preparing any retry. Do not
+   recompile an accepted artifact merely to repair operator flow navigation.
+   A real application change requires a new frozen source and matching evidence.
+5. Record actual application and operator identities separately, update the four
+   current documents, and hand off the observed results and remaining boundaries.
 
-No backend/provider/contract/dependency changes or other screens' refresh controls
-are in scope. A component request-count reproduction is not proof of a native
-endless loop; report that distinction and keep device acceptance incomplete.
+The refresh extension is opt-in through `--verify-plan-refresh true --refresh-sha
+<application-sha>`. It rejects hosted controls, a different embedded SHA and
+telemetry enabled. Its proxy counts all app writes, not only votes. Retain private
+flow diagnostics on success and failure. No fabricated native pass is permitted.
 
-## Paused live execution
+## Resource and live-state boundaries
 
-The approved 6b9719b run remains at **60/80 Places attempts**, **3/4 sign-in
-messages**, zero new Gemini generation and three of five canaries per provider.
-The rolling Places backstop remains 349. Twenty attempts are available while the
-old remaining allocation requires thirty-six; no higher allowance is approved.
-Android and the saved iOS simulator are stopped with data intact. The owner has
-closed TableUs on the physical iPhone. Preserve all sessions, artifacts, receipts,
-private helper state and partial readiness evidence. Do not feed completion
-answers to paused runners or accept a new sign-in as proof of session survival.
+Builds run one at a time with at least 20 GiB free at start and stop below 9 GiB.
+Do not start another build while any native stage is running or a prerequisite
+has failed. Raw logs remain private. Stop on failed inspection or resource guard.
+No cleanup of persistent test devices is authorized by this continuation.
 
-The first iOS-sign-out-to-Android-refresh isolation direction already passes for
-6b9719b. Reverse-direction survival, remaining native readiness, Android/API
-telemetry and cumulative acceptance remain incomplete. Do not repeat completed
-observations merely to fill gaps on a different application SHA.
+The older live run is paused at 60/80 Places attempts and 3/4 sign-in messages,
+zero new generation and three of five canaries per provider. Its backstop remains
+349. Twenty Places attempts remain against an old allocation of thirty-six.
+This local fixture verification spends none of that allowance. Preserve the
+saved iOS simulator, `TableUs_API_36`, physical iPhone state, local helper, six
+accepted old artifacts and partial readiness runners. Do not feed pending
+readiness prompts or treat a new sign-in as proof of session survival.
 
-## Exit and next boundary
+The owner denied deliberate Android voting and reported the old saved vote plus
+persistent loading during scrolling. Preserve the observed server write while
+withdrawing intentional voting acceptance. Do not ask for another gesture
+reconstruction; the new local test measures that behavior directly.
 
-Exit with the local correction, failing-before/passing-after evidence, one full
-local readiness result, exact source SHA and a bounded plan for native gesture
-verification. Prepare a source-impact review and concrete execution scope before
-requesting any further native builds or deployment. A source/report change needs
-matching review acceptance; a Security Scan is never automatic. The owner's
-accepted 6b9719b report remains valid for its unchanged source.
+## Next boundary
 
-Production privacy/retention, broader cohorts, scaling, store signing/submission,
-OTA authority and native tab polish remain queued. No merge, deployment, paid
-operation, secret/resource creation or destructive cleanup is part of this local
-correction.
+After the two deterministic device phases, prepare the required hosted/native
+execution request and matching source-review acceptance for the corrected source.
+The source-review policy explicitly requires new acceptance when a source/report
+changes; a Security Scan is never automatic. Production/privacy/retention, scaling,
+stores, cohorts and native tab polish remain later objectives.

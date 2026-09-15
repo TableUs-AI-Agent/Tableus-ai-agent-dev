@@ -1,5 +1,24 @@
 # Decision log
 
+## Deterministic refresh verification continuation — 2026-09-15
+
+- Continue the identified local device-verification step under the owner's
+  request. Bound execution to two sequential local test profiles with fixture
+  providers, demo identities and telemetry off. This does not accept a staging
+  review, increase live limits, deploy or install on a signed-in device.
+- Keep application source `2ad48a8d8ec4d3aa9a7bd52061b823bb55960bcd` frozen. New
+  proxy faults, flows and evidence checks belong to the operator branch. Require
+  zero app writes throughout scrolling/refresh, exact read counts, actual fault
+  delivery and unchanged fixture voting state. Retain failed flow diagnostics.
+- The new review reuses eleven byte-identical control files transparently and
+  assesses the one-screen change. Its fourteen file hashes and seven areas pass
+  validation. The same two medium risks remain; matching acceptance of the new
+  report is still pending for hosted staging. No scanner was started.
+- Both profile input preflights and one operator `make ready` pass: 219 JavaScript
+  and 98 Python tests, with three local Postgres skips. Native device observations
+  are a separate next phase. Create only new named test targets, run one at a
+  time, stop/retain them afterward, and preserve all existing devices and receipts.
+
 ## Explicit plan refresh and evidence correction — 2026-09-15
 
 - Freeze the corrected application at `2ad48a8d8ec4d3aa9a7bd52061b823bb55960bcd`.

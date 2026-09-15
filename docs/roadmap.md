@@ -23,6 +23,7 @@ device or production release acceptance.
 | 2b | Staging source-review acceptance — complete; exact report and two medium risks accepted | Strict version-two evidence; seven review areas and verified Git file hashes; fourteen gate tests and full local readiness pass; [report and risks](evidence/source-review-6b9719b/README.md) | Owner acceptance for 6b9719b is recorded and validates. Replacement hosted/native verification follows under its own approved scope |
 | 2c | Verify the replacement on hosted staging and native devices — hosted CI/deployment pass; native execution paused | Exact-candidate CI, inspected sequential builds, real same-account session isolation and plan focus/foreground observations; new source-bound receipts and cumulative input | [Approved execution](evidence/replacement-6b9719b/README.md): 60/80 Places attempts and 3/4 emails consumed; zero fresh generation; retained artifacts bind only 6b9719b |
 | 2d | Correct unintended plan refresh and ambiguous vote feedback — complete locally at `2ad48a8` | Slow-request reproduction, explicit refresh control, request coalescing, distinct previous-vote/unsent/success messages; all readiness targets pass with 216 JavaScript/98 Python tests and three local Postgres skips | Deterministic local work only; new source requires matching review and native evidence before live verification resumes |
+| 2e | Verify the frozen refresh correction on isolated devices — prepared; execution requested | Two sequential inspected test artifacts; lifecycle/offline plus scrolling/request-count/error-recovery observations; separate application/operator identities | Owner's continuation covers local deterministic verification; zero live providers/messages/deployments, existing devices preserved; source-review acceptance pending for later staging |
 | 3 | Prepare production privacy and operating boundaries | Account export/deletion including Auth ownership; retention; capability-link decision; one-use invite policy; explicit cohort/spend/quota limits; rollback owner | Significant policy/architecture choices require owner decision before production |
 | 4 | Prepare production release configuration | Source-controlled production origins, isolated credentials, signed-update/OTA policy, store signing associations, source maps and rollback rehearsal | Resource/secret creation, migrations, deployment and builds need explicit applicable approval |
 | 5 | Validate TestFlight and Play closed-testing distribution | Signed install/update, auth and universal links, core journey, explicit native tab presentation, privacy declarations, observed symbolication | Separate store-submission approval |
@@ -63,9 +64,10 @@ allowance or native build is requested during the local correction.
 
 Only `docs/task-packets/active.md` is active. Later rows are queued outcomes,
 not instructions to start concurrent agents, scans or cloud work. The next bounded
-step is preparation for deterministic native verification of exact source
-`2ad48a8d8ec4d3aa9a7bd52061b823bb55960bcd`, followed by its required source-review
-and execution decisions before resuming live acceptance.
+step is deterministic native verification of exact source
+`2ad48a8d8ec4d3aa9a7bd52061b823bb55960bcd`. Its two-profile preflight and operator
+checks pass. Matching source-review acceptance and a new hosted execution scope
+remain required before resuming live acceptance.
 
 ## Validation order and reuse
 

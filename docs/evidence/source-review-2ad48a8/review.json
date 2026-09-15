@@ -1,0 +1,161 @@
+{
+  "schema_version": 1,
+  "kind": "source_review",
+  "sha": "2ad48a8d8ec4d3aa9a7bd52061b823bb55960bcd",
+  "environment": "staging",
+  "reviewer": "primary-codex-gpt-6-astra",
+  "reviewed_at": "2026-09-15T07:44:16.309Z",
+  "files": [
+    {
+      "path": "backend/main.py",
+      "sha256": "ef666ed1b6c0a38a6c0fb3e9aad51707bb4bc701beeadfc8b669b1e72fd48dbf"
+    },
+    {
+      "path": "backend/tableus/api.py",
+      "sha256": "ddb81183008b432785472d5bf4399ba4b8b33a3329e5671da0667774a32dbfdc"
+    },
+    {
+      "path": "backend/tableus/auth.py",
+      "sha256": "3aa402be2daf5a4b7892ba842190c407687f64f4d97b74e61bbe958288f7621e"
+    },
+    {
+      "path": "backend/tableus/config.py",
+      "sha256": "d7b742fdb37ac0bfe6277bd55efa98e78e789055590011a7c60d3858dbdd9248"
+    },
+    {
+      "path": "backend/tableus/request_controls.py",
+      "sha256": "f52590c79a83c99fe869de45115d8b2920f760039bfcd96c54298bb93132f03b"
+    },
+    {
+      "path": "backend/tableus/security.py",
+      "sha256": "3640e708b94296f3c125e7f2c5a37985a949bfb8314c2cff9a127438ac8d7915"
+    },
+    {
+      "path": "backend/tableus/telemetry.py",
+      "sha256": "6bf769d0ad06fa7ca0f4c636163d38a7c47fc03991d03b381be7f76dcec8946f"
+    },
+    {
+      "path": "mobile/src/lib/auth-lifecycle.ts",
+      "sha256": "c4729b6b69a050d362f29d17070c559bf0bc5113515b3bcf3a34963cbabb98ec"
+    },
+    {
+      "path": "mobile/src/providers/auth-provider.tsx",
+      "sha256": "f1ad8763d32aa807e2a327cf7c129da570b5282f9589f0d626ec44442b633c51"
+    },
+    {
+      "path": "packages/domain/src/telemetry.ts",
+      "sha256": "a40285c26e671e7f7ac30239114d60fc2751cea4ab8e72dd1d05bccc52ce98df"
+    },
+    {
+      "path": "scripts/release-origins.mjs",
+      "sha256": "e91ebe8fd77bac445afe01fb360ac5dd5f459253aadd0d57cbb07e76cb46df7d"
+    },
+    {
+      "path": "mobile/app/plans/[id].tsx",
+      "sha256": "7088fcbe6b4326343f6c5afa6c3696e3e070a9cd8c46d9e59d848fa8e3612937"
+    },
+    {
+      "path": "mobile/src/providers/app-providers.tsx",
+      "sha256": "c7c75e9783f2c5473f370d7ec93cf662b268c8425ce6e599e7e63e1632da3195"
+    },
+    {
+      "path": "mobile/src/lib/recoverable-mutation.ts",
+      "sha256": "413017bc2cde4f40ecd331bff6802619a9954a897c9022862af236e831c78301"
+    }
+  ],
+  "coverage": [
+    {
+      "area": "authentication",
+      "files": [
+        "backend/tableus/auth.py",
+        "mobile/src/providers/auth-provider.tsx",
+        "mobile/src/lib/auth-lifecycle.ts"
+      ],
+      "assessment": "The named control files are byte-identical to the accepted 6b9719b review; its scoped assessment is carried forward after Git-blob comparison. Verified hosted identity signature/audience checks, approved-profile lookup, local sign-out scope and subject-change cache clearing. Existing session deadlines and modeled cross-device scope tests are retained."
+    },
+    {
+      "area": "authorization",
+      "files": [
+        "backend/tableus/api.py",
+        "backend/tableus/auth.py",
+        "mobile/app/plans/[id].tsx"
+      ],
+      "assessment": "The named control files are byte-identical to the accepted 6b9719b review; its scoped assessment is carried forward after Git-blob comparison. Reviewed membership checks for plan/detail/vote, organizer checks for finalize/reopen/rotation, active-run vote binding and finalized-plan mutation rejection. This targets those controls, not every API route. Reviewed the changed screen: refresh uses the existing member-protected detail endpoint, and organizer controls and mutation routes are unchanged."
+    },
+    {
+      "area": "private_links",
+      "files": [
+        "backend/tableus/api.py",
+        "backend/tableus/security.py"
+      ],
+      "assessment": "The named control files are byte-identical to the accepted 6b9719b review; its scoped assessment is carried forward after Git-blob comparison. Reviewed random capability generation, hashed storage, approved-profile join dependency, rotation rejection and bounded/email-bound invitation grants. URL capability risk remains explicitly open."
+    },
+    {
+      "area": "idempotency",
+      "files": [
+        "backend/main.py",
+        "backend/tableus/request_controls.py",
+        "mobile/app/plans/[id].tsx",
+        "mobile/src/lib/recoverable-mutation.ts"
+      ],
+      "assessment": "The named control files are byte-identical to the accepted 6b9719b review; its scoped assessment is carried forward after Git-blob comparison. Reviewed replay identity keyed by verified subject/method/path, request-body fingerprint conflicts, fresh approval/membership/organizer checks before replay and one-process serialization. Existing deterministic replay regressions cover these boundaries. New vote feedback does not change the recoverable mutation hook, idempotency keys, request body or cache update path."
+    },
+    {
+      "area": "provider_limits",
+      "files": [
+        "backend/tableus/api.py",
+        "backend/tableus/config.py",
+        "mobile/app/plans/[id].tsx",
+        "mobile/src/providers/app-providers.tsx"
+      ],
+      "assessment": "The named control files are byte-identical to the accepted 6b9719b review; its scoped assessment is carried forward after Git-blob comparison. Reviewed admission before provider work and bounded rolling Places/Gemini reservations. Shared quota fairness and one-process reservation coordination remain staging limits. The changed plan screen removes gesture-triggered reads, disables refresh during fetching and reuses an in-flight query. Nine component regressions establish local request behavior; this reduces accidental work but does not replace server quotas."
+    },
+    {
+      "area": "hosted_origins",
+      "files": [
+        "backend/tableus/config.py",
+        "scripts/release-origins.mjs"
+      ],
+      "assessment": "The named control files are byte-identical to the accepted 6b9719b review; its scoped assessment is carried forward after Git-blob comparison. Reviewed hosted rejection of demo auth, exact staging operator origins, HTTPS-only origins and distinct runtime/migration database roles. No fresh hosted grant/configuration audit is claimed."
+    },
+    {
+      "area": "telemetry",
+      "files": [
+        "backend/tableus/telemetry.py",
+        "packages/domain/src/telemetry.ts"
+      ],
+      "assessment": "The named control files are byte-identical to the accepted 6b9719b review; its scoped assessment is carried forward after Git-blob comparison. Reviewed event property allowlists, random session identifiers, redacted error messages, removal of user/headers/breadcrumb data and URL sanitization. Existing telemetry tests remain deterministic."
+    }
+  ],
+  "checks": [
+    {
+      "name": "Corrected application readiness targets: 216 JavaScript and 98 Python passing; three local Postgres skips. Nine focused plan-refresh tests passed. Initial loopback sandbox failure and resumed targets are retained in the evidence.",
+      "passed": true,
+      "evidence_sha256": "cf4e04a930d9faa0046144e084f3b701a89d478c4dc44ab6e8ff49a674d6fbb9"
+    }
+  ],
+  "findings": [
+    {
+      "id": "staging-shared-quota",
+      "severity": "medium",
+      "runtime": true,
+      "status": "open",
+      "disposition": "One approved participant can consume shared rolling provider limits. Existing minute limits and isolated staging contain exposure. Durable per-actor quotas are required before cohort expansion."
+    },
+    {
+      "id": "staging-capability-url",
+      "severity": "medium",
+      "runtime": true,
+      "status": "open",
+      "disposition": "Private join capability remains in a URL and can be copied from browser history or sharing. Approved authentication, hashed storage, rotation and telemetry redaction reduce exposure. Exchange design or explicit production risk decision is deferred."
+    }
+  ],
+  "limitations": [
+    "Targeted primary-agent delta review plus hash-verified reuse of eleven unchanged control files from the owner-accepted 6b9719b report. Not a fresh whole-repository review, independent audit or Security Scan.",
+    "The runtime delta is one mobile plan screen. No new unresolved critical or high runtime finding was identified in that delta; findings outside the reviewed controls may remain undiscovered.",
+    "Component tests reproduce overlapping callbacks and ambiguous previous-vote feedback. They do not establish the native gesture frequency, the cause of every historical Android request, or device acceptance for 2ad48a8. No corrected native artifact exists yet.",
+    "Provider advisories, hosted configuration and database grants were not freshly audited. Three Postgres-specific checks are skipped locally. Existing 6b9719b source-review acceptance and partial native evidence do not transfer to this source.",
+    "One API process remains required for replay and provider coordination. Shared quotas and private capability URLs remain open medium risks for isolated staging only. Production, retention, Auth deletion, scaling, stores and cohort expansion remain separate decisions.",
+    "The unavailable historical scan contributes no evidence. No Security Scan, live provider operation, sign-in message, native build or deployment ran during this preparation."
+  ]
+}

@@ -12,6 +12,16 @@ built into a native artifact or deployed. Subsequent evidence commits do not
 change that application identity.
 Only [the active packet](task-packets/active.md) directs current implementation.
 
+Deterministic device verification is now prepared on `codex/plan-refresh-verification`
+under the owner's request to continue. The [bounded execution plan](evidence/plan-refresh-verification-2ad48a8/README.md)
+covers two local test profiles and new isolated test devices. Both input
+preflights pass, and operator `make ready` passes 219 JavaScript/98 Python tests
+with three local Postgres skips. Native outcomes remain pending. The
+[focused source review](evidence/source-review-2ad48a8/README.md) validates fourteen
+file hashes and seven areas; all eleven prior control files are unchanged. Its
+same two medium risks and exact report still require matching owner acceptance
+for hosted staging. No new Security Scan is required by this preparation.
+
 ## Reported scrolling and refresh behavior
 
 The owner clarified that Android displayed a vote saved in the previous session;

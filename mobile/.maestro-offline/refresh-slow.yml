@@ -1,0 +1,12 @@
+appId: com.tableus.app
+---
+- doubleTapOn:
+    text: "Refresh plan"
+    enabled: true
+    waitToSettleTimeoutMs: 100
+- extendedWaitUntil:
+    visible:
+      text: "Refresh plan"
+      enabled: true
+    timeout: 30000
+- assertVisible: "Refresh fixture dinner"

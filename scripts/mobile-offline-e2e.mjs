@@ -8,6 +8,9 @@ import { fileURLToPath } from "node:url";
 import { spawn, spawnSync } from "node:child_process";
 
 import { artifactChecksum } from "./evidence-utils.mjs";
+import { embeddedAppConfiguration } from "./mobile-artifact-security.mjs";
+import { validateLocalE2EAppConfig } from "./readiness-inspection-lib.mjs";
+import { assertPlanRefreshPhase, planRefreshSource } from "./mobile-plan-refresh-checks.mjs";
 
 const repoRoot = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const proxyUrl = "http://127.0.0.1:8000";
@@ -92,10 +95,10 @@ async function assertPortsAvailable() {
   }
 }
 
-function collectScreenshots(root, evidenceDir, platform) {
+function collectScreenshots(root, evidenceDir, platform, names = ["offline-retry.png", "recovered-finalized.png"]) {
   if (!evidenceDir) return [];
   mkdirSync(evidenceDir, { recursive: true });
-  const wanted = new Set(["offline-retry.png", "recovered-finalized.png"]);
+  const wanted = new Set(names);
   const found = [];
   const visit = (directory) => {
     for (const entry of readdirSync(directory)) {
@@ -124,6 +127,11 @@ if (!appPath || !existsSync(appPath)) throw new Error("--app must point to an ex
 if (!buildId) throw new Error("--build-id is required");
 if (!evidenceDir) throw new Error("--evidence is required");
 if (new URL(proxyUrl).hostname !== "127.0.0.1" || new URL(upstreamUrl).hostname !== "127.0.0.1") throw new Error("Offline E2E refuses non-loopback APIs");
+const refreshSha = planRefreshSource(args);
+if (refreshSha) {
+  const configuration = validateLocalE2EAppConfig(embeddedAppConfiguration(platform, appPath), { sha: refreshSha });
+  if (configuration.extra.telemetryMode !== "off") throw new Error("Refresh verification requires telemetry to be off");
+}
 
 await assertPortsAvailable();
 run(process.execPath, [
@@ -133,7 +141,9 @@ run(process.execPath, [
   "--app", appPath,
   "--boot", platform === "ios" ? "true" : "false",
 ]);
-const temporaryRoot = mkdtempSync(join(tmpdir(), "tableus-mobile-offline-e2e-"));
+if (refreshSha) mkdirSync(evidenceDir, { recursive: true });
+// Preserve this opt-in investigation's flow logs and screenshots, including failures.
+const temporaryRoot = mkdtempSync(join(refreshSha ? evidenceDir : tmpdir(), "tableus-mobile-offline-e2e-"));
 const flowDir = join(temporaryRoot, "flows");
 cpSync(flowSource, flowDir, { recursive: true });
 const maestroEnv = {
@@ -227,6 +237,56 @@ try {
   const finalEventsAfterRetry = exportAfterRetry.authored_plan_events.filter((event) => event.plan_id === planId && event.event_type === "plan.finalized");
   if (finalizeAfterRetry.request_count !== 2 || !finalizeAfterRetry.same_idempotency_key || finalizeAfterRetry.idempotent_replay_count !== 1 || finalEventsAfterRetry.length !== 1) throw new Error("Finalization retry was not a single-event idempotent replay.");
 
+  if (refreshSha) {
+    // Seed a separate fixture through the upstream, leaving probe counts exclusive to the app.
+    const fixture = await api("/api/v1/plans", { method: "POST", body: {
+      title: "Refresh fixture dinner", location_label: "Boston, MA", latitude: 42.3601, longitude: -71.0589,
+    } });
+    const refreshId = fixture.plan.id;
+    await api(`/api/v1/plans/${refreshId}/join`, { user: "demo-guest", method: "POST", body: { share_token: fixture.share_token } });
+    const options = await api(`/api/v1/plans/${refreshId}/recommendations`, { method: "POST", body: { query: "group-friendly dinner" } });
+    if (options.candidates.length !== 4) throw new Error("Refresh fixture must have four candidates");
+    const ranking = options.candidates.slice(0, 3).map((candidate) => candidate.id);
+    await api(`/api/v1/plans/${refreshId}/vote`, { user: "demo-guest", method: "PUT", body: { ranking } });
+    const observations = [];
+    const observe = async (phase) => {
+      assertPlanRefreshPhase(phase, await stats("GET", `/api/v1/plans/${refreshId}`));
+      await new Promise((resolvePromise) => setTimeout(resolvePromise, 1500));
+      observations.push(assertPlanRefreshPhase(phase, await stats("GET", `/api/v1/plans/${refreshId}`)));
+    };
+    await control("/reset", {});
+    runFlow("refresh-open.yml", { PLAN_ID: refreshId });
+    await observe("initial");
+    await control("/reset", {});
+    runFlow("refresh-scroll.yml");
+    await observe("scrolling");
+    await control("/reset", {});
+    await control("/configure", { mode: "delay-response", method: "GET", path: `/api/v1/plans/${refreshId}`, delay_ms: 2000 });
+    runFlow("refresh-slow.yml");
+    await observe("slow_refresh");
+    await control("/reset", {});
+    await control("/configure", { mode: "respond-error", method: "GET", path: `/api/v1/plans/${refreshId}`, repeat: 3 });
+    runFlow("refresh-failure.yml");
+    await observe("failed_refresh");
+    await control("/reset", {});
+    runFlow("refresh-recovery.yml");
+    await observe("recovered_refresh");
+    const retained = await api(`/api/v1/plans/${refreshId}`, { user: "demo-guest" });
+    if (retained.status !== "voting" || retained.candidates.length !== 4 || JSON.stringify(retained.my_vote) !== JSON.stringify(ranking)) {
+      throw new Error("Scrolling or refresh changed the saved fixture vote or plan");
+    }
+    mkdirSync(evidenceDir, { recursive: true });
+    const refreshScreenshots = collectScreenshots(temporaryRoot, evidenceDir, platform, ["refresh-after-scrolling.png", "refresh-failure-cached-plan.png", "refresh-recovered.png"]);
+    if (refreshScreenshots.length !== 3) throw new Error("Refresh verification requires all three screenshots");
+    writeFileSync(join(evidenceDir, `${platform}-plan-refresh-summary.json`), `${JSON.stringify({
+      schema_version: 1, application_sha: refreshSha, operator_sha: commandOutput("git", ["rev-parse", "HEAD"]),
+      platform, build_id: buildId, artifact_sha256: artifactChecksum(appPath),
+      provider_mode: "deterministic", auth_mode: "demo", telemetry_mode: "off",
+      phases: observations, prior_vote_unchanged: true, screenshots: refreshScreenshots,
+    }, null, 2)}\n`);
+    process.stdout.write(`TableUs ${platform} explicit plan refresh checks passed.\n`);
+  }
+
   const screenshots = collectScreenshots(temporaryRoot, evidenceDir, platform);
   mkdirSync(evidenceDir, { recursive: true });
   writeFileSync(join(evidenceDir, `${platform}-offline-summary.json`), `${JSON.stringify({
@@ -259,5 +319,5 @@ try {
     if (process?.exitCode === null) process.kill("SIGTERM");
   }
   await new Promise((resolvePromise) => setTimeout(resolvePromise, 250));
-  rmSync(temporaryRoot, { recursive: true, force: true });
+  if (!refreshSha) rmSync(temporaryRoot, { recursive: true, force: true });
 }

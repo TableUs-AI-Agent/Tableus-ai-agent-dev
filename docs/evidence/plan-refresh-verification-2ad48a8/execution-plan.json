@@ -1,0 +1,50 @@
+{
+  "schema_version": 1,
+  "application_sha": "2ad48a8d8ec4d3aa9a7bd52061b823bb55960bcd",
+  "operator_branch": "codex/plan-refresh-verification",
+  "authorization": "Owner requested continuation after the handoff identified local device verification as the next step. This authorizes the bounded deterministic test execution below, not staging source-review acceptance or hosted actions.",
+  "profiles": [
+    "test-ios",
+    "test-android"
+  ],
+  "sequential": true,
+  "maximum_new_builds": 2,
+  "provider_mode": "deterministic",
+  "auth_mode": "demo",
+  "telemetry_mode": "off",
+  "new_sign_in_messages": 0,
+  "places_attempts": 0,
+  "gemini_generations": 0,
+  "hosted_deployments": 0,
+  "existing_devices_preserved": true,
+  "source_review_acceptance_pending": true,
+  "new_test_targets": [
+    "TableUsRefresh2ad-iOS",
+    "TableUsRefresh2ad_Android"
+  ],
+  "device_cleanup_authorized": false,
+  "build_start_minimum_free_gib": 20,
+  "build_stop_free_gib": 9,
+  "free_disk_gib_at_preflight": 33.15,
+  "phases": [
+    "Build and inspect iOS test artifact",
+    "Run iOS deterministic lifecycle, offline and explicit-refresh flows on a new test simulator",
+    "Stop and retain the new iOS test device",
+    "Build and inspect Android test artifact after iOS passes",
+    "Run Android deterministic lifecycle, offline and explicit-refresh flows on a new test emulator",
+    "Stop and retain the new Android test device"
+  ],
+  "stop_conditions": [
+    "Failed build or inspection",
+    "Failed deterministic phase",
+    "Insufficient disk or conflicting running build",
+    "Unexpected app read or write count"
+  ],
+  "live_verification_remains_paused": true,
+  "historical_places_attempts": 60,
+  "historical_places_limit": 80,
+  "prepared_input_profiles": [
+    "test-ios",
+    "test-android"
+  ]
+}

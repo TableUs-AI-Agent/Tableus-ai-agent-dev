@@ -1,0 +1,26 @@
+appId: com.tableus.app
+---
+- openLink: "tableus://e2e/identity?user=demo-guest"
+- runFlow:
+    when:
+      visible: ".*Open in.*TableUs.*"
+    commands:
+      - tapOn: "Open"
+- extendedWaitUntil:
+    visible: "Active test identity: Demo Guest"
+    timeout: 30000
+- tapOn: "Continue to plans"
+- openLink: "tableus://plans/${PLAN_ID}"
+- runFlow:
+    when:
+      visible: ".*Open in.*TableUs.*"
+    commands:
+      - tapOn: "Open"
+- extendedWaitUntil:
+    visible: "Refresh fixture dinner"
+    timeout: 30000
+- extendedWaitUntil:
+    visible:
+      text: "Refresh plan"
+      enabled: true
+    timeout: 30000
