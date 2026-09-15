@@ -24,7 +24,7 @@ device or production release acceptance.
 | 2c | Verify the replacement on hosted staging and native devices — hosted CI/deployment pass; native execution paused | Exact-candidate CI, inspected sequential builds, real same-account session isolation and plan focus/foreground observations; new source-bound receipts and cumulative input | [Approved execution](evidence/replacement-6b9719b/README.md): 60/80 Places attempts and 3/4 emails consumed; zero fresh generation; retained artifacts bind only 6b9719b |
 | 2d | Correct unintended plan refresh and ambiguous vote feedback — complete locally at `2ad48a8` | Slow-request reproduction, explicit refresh control, request coalescing, distinct previous-vote/unsent/success messages; all readiness targets pass with 216 JavaScript/98 Python tests and three local Postgres skips | Deterministic local work only; new source requires matching review and native evidence before live verification resumes |
 | 2e | Verify the frozen refresh correction on isolated devices — complete | Both artifacts inspected; iOS and Android lifecycle/offline/refresh pass; zero scroll reads/writes, one delayed read, successful explicit recovery; fourteen reviewed screenshots and all failed attempts retained | No live allowance used; both disposable devices stopped and retained |
-| 2f | Verify the refresh correction on hosted staging and saved devices — hosted CI/deployment pass; native work awaits Xcode setup | [Approved execution](evidence/plan-refresh-staging-2ad48a8/README.md): hosted source/CORS/associations verified; reuse two accepted test artifacts; four remaining profiles and saved-device/session/link/telemetry/cumulative evidence remain | Exact source-review and staging execution approved; zero of 80 Places attempts and four messages used; zero generation; no Security Scan |
+| 2f | Verify the refresh correction on hosted staging and saved devices — hosted checks, iPhone artifact inspection and web telemetry pass | [Approved execution](evidence/plan-refresh-staging-2ad48a8/README.md): three builds remain, followed by saved-device/session/link/native-telemetry/cumulative evidence | Under 20 GiB free; explicit obsolete-cache cleanup approval pending. Zero Places/generations, no new email confirmed; one of five canaries delivered per provider; no Security Scan |
 | 3 | Prepare production privacy and operating boundaries | Account export/deletion including Auth ownership; retention; capability-link decision; one-use invite policy; explicit cohort/spend/quota limits; rollback owner | Significant policy/architecture choices require owner decision before production |
 | 4 | Prepare production release configuration | Source-controlled production origins, isolated credentials, signed-update/OTA policy, store signing associations, source maps and rollback rehearsal | Resource/secret creation, migrations, deployment and builds need explicit applicable approval |
 | 5 | Validate TestFlight and Play closed-testing distribution | Signed install/update, auth and universal links, core journey, explicit native tab presentation, privacy declarations, observed symbolication | Separate store-submission approval |
@@ -70,7 +70,12 @@ both inspected artifacts. Both new test devices are stopped and retained. The
 approved staging execution is underway. Matching exact-review acceptance and
 hosted deployment evidence are recorded. CI passes 216 JavaScript, 101 Python and
 four browser tests. Production is unchanged; the provider aggregate remains 329.
-The four remaining native profiles await owner completion of Xcode license/setup.
+Xcode setup is complete; the signed iPhone readiness artifact passes inspection.
+The other three profiles await disk headroom or approval for the documented
+obsolete-cache cleanup. The physical iPhone connection and organizer sign-in are
+pending. The exact-release web canary reached both providers. Sentry's visible
+coarse-geography enrichment remains a provider-side privacy item for objective 3;
+its source has not been independently verified and no location value is retained.
 
 ## Validation order and reuse
 

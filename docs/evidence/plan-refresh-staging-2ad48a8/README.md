@@ -12,9 +12,21 @@ Hosted execution now passes: [deployment evidence](deployment.json) binds Railwa
 Readiness, served Preview bundles, both CORS origins and canonical associations
 pass; production pointers/protection are unchanged. CI passes 216 JavaScript,
 101 Python and four browser tests. The configured Places backstop is 409 and
-the observed aggregate remains 329. No new-run live allowance has been consumed.
-The host reports an unaccepted Xcode license/setup requirement. Native execution
-awaits owner completion of those prompts; no new native build has started.
+the last observed aggregate remains 329. No new-run Places calls/generations have
+been made, and no new sign-in message is confirmed. Xcode setup is now complete.
+The [signed iPhone readiness build](readiness-ios-artifact.json) passes source,
+signer, receipt and configuration reinspection under Xcode 27.0. It is not yet
+installed. The [single web canary](web-telemetry-observation.json) reached both
+providers with the exact source. Sentry also displays coarse geography despite
+the app omitting user fields; no location value is retained and its enrichment
+source has not been independently verified. The [existing helper link](helper-preflight.json)
+still matches the current four-candidate, three-participant dinner.
+
+Three native builds remain. About 19.8 GiB free fails the 20 GiB start guard.
+Automatic approval review rejected deleting five obsolete EAS npm caches because
+AGENTS.md requires explicit cleanup approval. No deletion occurred. The
+[750 MiB proposal](cache-cleanup-pending.json) is pending owner approval; the
+physical iPhone connection and organizer sign-in on the new Preview are also pending.
 
 Application source: `2ad48a8d8ec4d3aa9a7bd52061b823bb55960bcd`.
 Focused review digest (SHA-256 of parsed `JSON.stringify` report):

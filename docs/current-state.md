@@ -36,10 +36,25 @@ was approved on 2026-09-15. [Hosted deployment checks](evidence/plan-refresh-sta
 pass: exact-source readiness and served Preview bundles, both Preview CORS origins,
 canonical native associations, unchanged production/protection and the configured
 409-attempt backstop. CI run `35016584574` passes 216 JavaScript, 101 Python and
-four browser tests. The provider aggregate remains 329; this new run has used zero
-Places attempts, sign-in messages, generations or canaries. Xcode now requires
-owner completion of its license/setup prompts before native tools can run; no new
-native build has started. The approved plan reuses both test artifacts, builds the four
+four browser tests. The last provider aggregate is 329; this new run has made no
+Places calls or generations, and no new sign-in message is yet confirmed.
+Xcode setup now passes on Xcode 27.0. The signed
+[iPhone readiness artifact](evidence/plan-refresh-staging-2ad48a8/readiness-ios-artifact.json)
+built successfully and passes a second source/signer/configuration/receipt
+inspection. It is not installed; the paired physical iPhone is not detected.
+The [web canary](evidence/plan-refresh-staging-2ad48a8/web-telemetry-observation.json)
+reached PostHog and Sentry once each for 2ad48a8. Sentry's UI also shows coarse
+geography despite the application sanitizer omitting user fields; the enrichment
+source has not been independently verified and the location value is not retained.
+This remains a provider-side privacy item for production preparation.
+
+Three native builds remain. Free disk is about 19.8 GiB, below the required
+20 GiB start guard. Automatic approval review rejected clearing five obsolete,
+re-downloadable EAS caches because the repository requires explicit cleanup
+approval. Nothing was deleted; the [750 MiB cleanup proposal](evidence/plan-refresh-staging-2ad48a8/cache-cleanup-pending.json)
+awaits owner approval. Organizer sign-in on the new Preview and physical-iPhone
+connection are also pending. The existing helper link is still valid for the
+four-candidate, three-participant dinner. The approved plan reuses both test artifacts, builds the four
 remaining profiles, and caps a new run at 80 additional Places attempts, four
 sign-in messages and zero generations. All four input preflights pass. The exact
 [focused source review](evidence/source-review-2ad48a8/README.md), including its

@@ -15,9 +15,17 @@ Hosted staging and Preview now pass the [deployment checks](../evidence/plan-ref
 at exact source 2ad48a8. CI passes 216 JavaScript, 101 Python and four browser
 tests. Production and protection are unchanged. Both CORS origins and canonical
 associations pass; the configured provider backstop is 409, aggregate 329, and
-new-run usage is zero. Xcode requires owner completion of license/setup prompts;
-no native build has started. After that user action, repeat host/resource preflight,
-then build and inspect `readiness-ios` first under the existing approval.
+new-run Places/generation use is zero, with no new sign-in message confirmed.
+Xcode setup now passes. `readiness-ios` built under Xcode 27.0 and passes source,
+signer, configuration and receipt reinspection; its artifact is not installed.
+The web canary reached both providers once for the exact release. Three builds
+remain. About 19.8 GiB free is below the 20 GiB start guard. Automatic approval
+review rejected the proposed 750 MiB obsolete EAS cache cleanup; no deletion
+occurred. The [exact cleanup plan](../evidence/plan-refresh-staging-2ad48a8/cache-cleanup-pending.json)
+needs owner approval, or the owner can free disk space. Do not bypass that denial.
+The physical iPhone connection and organizer sign-in on the new Preview are also
+pending. After disk headroom returns, recheck the guard and run `readiness-android`;
+reuse the completed iPhone build. Keep native workloads sequential.
 
 ## Completed prerequisites
 
@@ -38,7 +46,9 @@ then build and inspect `readiness-ios` first under the existing approval.
 - The [focused source review](../evidence/source-review-2ad48a8/README.md) validates
   fourteen source hashes/seven areas and transparently carries eleven unchanged
   controls. Exact owner acceptance now validates; no Security Scan is required.
-- All four remaining native profile inputs pass preflight; no build has started.
+- All four additional profile inputs pass preflight; the first, `readiness-ios`,
+  now passes build and reinspection. Its actual receipt and build evidence are
+  retained; three additional builds remain unstarted.
 
 ## Approved execution
 

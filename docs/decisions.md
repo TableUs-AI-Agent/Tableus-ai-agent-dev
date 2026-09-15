@@ -2,6 +2,20 @@
 
 ## Approved refresh staging verification — 2026-09-15
 
+- Owner completed Xcode setup. Build and inspect `readiness-ios` with existing
+  signing material under Xcode 27.0; retain its actual receipt and artifact
+  checksum. It passes, but has not been installed. Reuse the existing validated
+  private link. Send the web canary once and verify exact-release delivery in
+  both providers. Retain the additional observation that Sentry displays coarse
+  geography even though the application omits user fields; do not infer its
+  enrichment source or silently change provider settings. Address that operating
+  privacy boundary during production preparation.
+- Honor the 20 GiB build-start guard. At about 19.8 GiB, do not start the next
+  profile. Automatic approval review classed removal of five obsolete npm EAS
+  caches (750 MiB, current versions excluded) as cleanup requiring explicit
+  owner approval under AGENTS.md. No deletion occurred. Preserve the concrete
+  proposal and await that approval or owner-provided disk space; do not use a
+  workaround. All saved devices, signing material, artifacts and logs remain.
 - Hosted deployment of exact source 2ad48a8 passes readiness, served Preview
   bundle/source, CORS and canonical association checks. Production pointers,
   protection and existing credentials are preserved. CI passes 216 JavaScript,
