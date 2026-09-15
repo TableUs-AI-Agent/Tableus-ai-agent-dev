@@ -6,7 +6,10 @@ Gemini and Google Places. The client correction is published on
 `6b9719b4e63e34803f2e7c2598e45851790df661`; Railway staging and Vercel Preview
 now serve this source. Native replacement verification is paused. The active
 local correction is on `codex/plan-refresh-controls`, based on operator/evidence
-commit `25e0397d7803651d39968f53868a2b73845817c3`; it has not been built or deployed.
+commit `25e0397d7803651d39968f53868a2b73845817c3`. Corrected application source is
+frozen locally at `2ad48a8d8ec4d3aa9a7bd52061b823bb55960bcd`; it has not been
+built into a native artifact or deployed. Subsequent evidence commits do not
+change that application identity.
 Only [the active packet](task-packets/active.md) directs current implementation.
 
 ## Reported scrolling and refresh behavior

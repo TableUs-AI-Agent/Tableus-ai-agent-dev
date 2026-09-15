@@ -2,6 +2,10 @@
 
 ## Explicit plan refresh and evidence correction — 2026-09-15
 
+- Freeze the corrected application at `2ad48a8d8ec4d3aa9a7bd52061b823bb55960bcd`.
+  Subsequent documentation/evidence commits record this identity without
+  replacing it. The branch remains local and no installed build has changed.
+
 - The owner clarified that they saw their previous saved vote and did not
   deliberately submit another vote. Preserve the observed server write, while
   withdrawing intentional owner confirmation for the Android voting check.

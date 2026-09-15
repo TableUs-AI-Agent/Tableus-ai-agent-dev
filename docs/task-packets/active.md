@@ -11,13 +11,16 @@ Local implementation and focused checks are complete. All readiness targets pass
 216 JavaScript and 98 Python tests, with three local Postgres skips. The first
 `make ready` passed lint/types and stopped when the sandbox denied a test's local
 listener. The remaining targets passed with local-listener access; the initial
-attempt is retained. Source freeze and handoff remain before the next execution
+attempt is retained. Corrected application source is frozen at
+`2ad48a8d8ec4d3aa9a7bd52061b823bb55960bcd`. The next bounded step is preparing
+deterministic native gesture verification and the required source-review/execution
 request. See the [validation record](../evidence/plan-refresh-controls/local-validation.json).
 
 ## Source and evidence
 
 - Local branch: `codex/plan-refresh-controls`, isolated worktree of the same name.
 - Base operator/evidence commit: `25e0397d7803651d39968f53868a2b73845817c3`.
+- Corrected application source: `2ad48a8d8ec4d3aa9a7bd52061b823bb55960bcd`.
 - Frozen installed/deployed application: `6b9719b4e63e34803f2e7c2598e45851790df661`.
 - The [local investigation](../reviews/2026-09-15-explicit-plan-refresh.md) records
   the reproductions, candidate change, validation and remaining native checks.

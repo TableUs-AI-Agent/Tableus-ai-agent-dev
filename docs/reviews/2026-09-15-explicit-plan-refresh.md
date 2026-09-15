@@ -1,10 +1,11 @@
 # Plan scrolling, explicit refresh and vote feedback
 
-Local candidate on `codex/plan-refresh-controls`, based on
+Corrected application source: **`2ad48a8d8ec4d3aa9a7bd52061b823bb55960bcd`**,
+frozen locally on `codex/plan-refresh-controls`, based on
 `25e0397d7803651d39968f53868a2b73845817c3`. That base's application file matches
 the installed `6b9719b4e63e34803f2e7c2598e45851790df661`. The correction has not
-been compiled into a native artifact or deployed. Exact source identity will be
-recorded at freeze. All local readiness targets now pass.
+been compiled into a native artifact or deployed. Subsequent evidence commits
+record this source without replacing it. All local readiness targets pass.
 
 ## Report and evidence correction
 
