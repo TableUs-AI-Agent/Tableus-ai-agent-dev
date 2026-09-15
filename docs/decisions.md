@@ -2,6 +2,16 @@
 
 ## Replacement execution approval — 2026-09-14
 
+- Accept the first isolation direction from the unchanged Android provider
+  session refreshing at 06:28:43Z after the iOS local sign-out and replacement
+  Android installation. The owner confirms Plans before and after relaunch.
+  Reverse-direction survival remains a separate, incomplete check.
+- The corrected iOS restoration now matches the preserved Android account.
+  Retain its new session for the reverse-direction check; iOS is stopped and
+  the inspected Android readiness build is installed without resetting data.
+  Combine native finalized/reopened-state witnesses with the planned hidden-route
+  return and active-plan foreground observations. Reserve the final four Places
+  attempts for manual refresh instead of duplicating an already witnessed return.
 - Provider metadata identified a different-account iOS restoration before it
   could be counted as session-isolation evidence. Sign that account out locally
   and use the approved contingency message to restore the matching account.

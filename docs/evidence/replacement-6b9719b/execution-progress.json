@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "application_sha": "6b9719b4e63e34803f2e7c2598e45851790df661",
-  "observed_at": "2026-09-15T06:21:56.472888+00:00",
+  "observed_at": "2026-09-15T06:32:02.219792+00:00",
   "native_artifacts_inspected": 6,
   "test_ios": {
     "profile": "test-ios",
@@ -135,8 +135,8 @@
       "runtime_delivery_verified": false
     }
   },
-  "native_workload": "preserved-ios-simulator",
-  "sign_in_emails_owner_confirmed": 2,
+  "native_workload": "preserved-android-emulator",
+  "sign_in_emails_owner_confirmed": 3,
   "ios_telemetry_ui_passed": true,
   "ios_api_canary_delivery": {
     "posthog": {
@@ -149,7 +149,13 @@
     }
   },
   "ios_local_sign_out_confirmed": true,
-  "ios_same_account_restoration_pending": true,
+  "ios_same_account_restoration_pending": false,
   "session_isolation_complete": false,
-  "ios_restoration_account_mismatch_detected": true
+  "ios_restoration_account_mismatch_detected": true,
+  "ios_same_account_restoration_confirmed": true,
+  "android_readiness_installed": true,
+  "android_returning_session_owner_check_pending": false,
+  "android_returning_authentication_passed": true,
+  "android_session_persistence_passed": true,
+  "ios_to_android_session_isolation_passed": true
 }

@@ -26,8 +26,7 @@ with one Retry while retaining the organizer session. [Web request observations]
 count the initial eight Places attempts. [Clipboard recovery](local-helper-observation.json)
 used eight more, and the repaired helper accepted the owner's copied link.
 iPhone join, plan reads and the confirmed vote used sixteen, bringing the run
-total to thirty-two. Three messages are conservatively reserved (two confirmed
-and one pending corrected iOS restoration), and no new generation has run. Physical iPhone
+total to thirty-two. Three sign-in messages are confirmed, and no new generation has run. Physical iPhone
 [installation succeeded](iphone-installation-observation.json) after the owner
 resolved a Screen Time restriction.
 [PostHog](posthog-web-observation.json) and [Sentry](sentry-web-observation.json)
@@ -36,8 +35,10 @@ profile restored its saved session, and [its iOS/API canaries](ios-telemetry-obs
 reached both providers with the exact release. [Session-isolation progress](session-isolation-progress.json)
 records local iOS sign-out and the retained Android provider session. The first
 restoration used a different account, which was signed out locally; matching
-account restoration now uses the reserved contingency message. Android
-refresh survival and the reverse direction are still pending. Native readiness,
+account restoration succeeded using the approved contingency message. Android
+readiness is now installed with its data preserved. Its original session refreshed
+after the iOS sign-out, and the owner confirms restored Plans and relaunch.
+The first isolation direction passes; the reverse direction is still pending. Native readiness,
 Android/API telemetry and cumulative acceptance remain outstanding.
 
 ## Approved preflight snapshot (historical)

@@ -73,11 +73,13 @@ account controls pass, and both providers received one exact-release web canary.
 See the [execution progress](../evidence/replacement-6b9719b/execution-progress.json).
 The existing web plan has four attributed candidates and organizer controls.
 Two private-link rotations succeeded; the repaired local helper accepted the
-owner's copied link. Usage is thirty-two Places attempts and three emails reserved
-(two owner-confirmed and one pending corrected iOS restoration),
+owner's copied link. Usage is thirty-two Places attempts and three confirmed emails,
 with zero new generation. Web/link recovery used sixteen; iPhone join, plan reads
 and the confirmed vote used sixteen. Forty-eight attempts remain allocated to
-Android join/vote, organizer changes, native witnesses and one Android return.
+Android join/vote, organizer changes, native witnesses and one Android manual
+refresh. Use the finalized-state witness to test hidden-route return, then leave
+the finalized plan backgrounded so the reopen witness tests active-plan foreground
+refresh. These observations share the already allocated full plan reads.
 The second four-detail response followed rotation and is consistent with the
 web revision poll; it is counted, and native live refresh proof remains pending.
 Use isolated deterministic
@@ -93,9 +95,12 @@ The preserved iOS session restored after installation; its single iOS/API canary
 flow passed in the UI and delivered to both providers at the exact release.
 Local iOS sign-out removed that session while the original Android session
 remained in the provider. The first restored iOS account differed from Android;
-local sign-out removed it. Restore the matching account with its reserved
-contingency message, leaving the final message for Android restoration,
-then stop iOS and require Android refresh survival after the sign-out. Complete
+local sign-out removed it. The matching iOS account is now restored and its new
+session is retained. iOS is stopped, and the inspected Android readiness build
+is installed. Android's original session refreshed at 06:28:43Z after the original
+iOS sign-out, with returning Plans and relaunch owner-confirmed. The first
+isolation direction passes; continue the reverse direction after Android readiness.
+The fourth and final message remains for Android restoration. Complete
 Android readiness and telemetry before its local sign-out/restoration, then
 require the existing restored iOS session to refresh after Android sign-out.
 Cached UI or a fresh replacement sign-in cannot establish survival. Continue

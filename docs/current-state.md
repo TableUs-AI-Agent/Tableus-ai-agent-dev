@@ -49,24 +49,25 @@ now pass inspection, and their build timestamps verify sequential execution.
 The saved iOS simulator restored its original session after installing the inspected
 telemetry profile. [Its iOS and API canaries](evidence/replacement-6b9719b/ios-telemetry-observation.json)
 reached both providers with the exact source release. [Session isolation](evidence/replacement-6b9719b/session-isolation-progress.json)
-is incomplete: iOS local sign-out removed its own session while the original
-Android session remained; a later Android refresh and the reverse direction
-still require observation. The first restoration used a different account. That account was signed out
-locally; the correct-account restoration is pending using the contingency message.
+is incomplete: iOS local sign-out removed its own session, and the original
+Android session subsequently refreshed after replacement installation. The
+owner confirms Android Plans before and after relaunch. The first direction
+passes; the reverse direction still requires observation. The first restoration used a different account. That account was signed out
+locally; the correct account now matches Android and its new session is retained
+for the reverse-direction check. The inspected Android readiness build is installed.
 [Execution progress](evidence/replacement-6b9719b/execution-progress.json)
 also records web session restoration, read-only account controls and one delivered
 web canary in each provider. A later Preview network error recovered with one
 Retry while retaining the organizer session. The web plan shows four attributed candidates and
 organizer controls. Two private-link rotations are recorded, and the
 [repaired local helper](evidence/replacement-6b9719b/local-helper-observation.json)
-accepted the owner's copied link. Three sign-in emails are conservatively reserved
-(two confirmed, one awaiting owner entry), and thirty-two Places
+accepted the owner's copied link. Three sign-in emails are confirmed, and thirty-two Places
 attempts are counted: sixteen for web/link recovery and sixteen for iPhone
 join, plan reads and the confirmed vote;
 new Gemini generation remains zero. [Request timing](evidence/replacement-6b9719b/web-request-observation.json)
 is consistent with a web revision refresh following rotation. Native live-device
 and cumulative acceptance remain incomplete. Saved live-account devices remain
-preserved, with only the iOS simulator currently running. Accepted artifacts
+preserved, with only the Android emulator currently running. Accepted artifacts
 remain intact. The
 connected iPhone's first installation was blocked by Screen Time. The owner
 resolved the restriction; the same inspected package is now installed. Physical

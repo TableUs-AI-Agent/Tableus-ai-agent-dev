@@ -1,0 +1,16 @@
+{
+  "schema_version": 1,
+  "application_sha": "6b9719b4e63e34803f2e7c2598e45851790df661",
+  "artifact_sha256": "9c09fad20fd03ef8d671101a484c148be31b1473dec98981adcf8f8fbc2c8d33",
+  "source": "Owner observations after replacement installation",
+  "phases": {
+    "returning_authentication": true,
+    "session_persistence": true
+  },
+  "complete": false,
+  "observed_at": "2026-09-15T06:32:02.219792+00:00",
+  "new_sign_in_required": false,
+  "data_reset": false,
+  "installed_before_first_readiness_prompt": true,
+  "receipt_and_reinspection_passed": true
+}

@@ -41,14 +41,15 @@ approved cleanup of the two completed disposable test devices; cleanup is comple
 and all six artifacts now pass inspection with sequential build timing verified.
 The saved iOS session restored and its iOS/API canaries reached both providers
 for the exact release. Its local sign-out removed only its provider session;
-Android refresh survival and the reverse direction remain unverified. The
-owner-operated iOS restoration is pending after the first attempt used a different
-account, which was then signed out locally. The exact-release web canary also
+Android original-session refresh survival now passes; the reverse direction
+remains unverified. The
+correct iOS account is restored after a mismatched first attempt was signed out
+locally. Android readiness is installed, and returning Plans plus relaunch are confirmed. The exact-release web canary also
 reached both providers, and the
 repaired local helper accepted the copied private link. The physical iPhone build is installed after the owner resolved a Screen Time
 restriction. Its session restoration, relaunch and canonical auth link pass. Native readiness
 and cumulative acceptance remain the objective, with 32/80 Places attempts and
-three of four emails conservatively reserved (two owner-confirmed).
+three of four emails owner-confirmed.
 
 Only `docs/task-packets/active.md` is active. Later rows are queued outcomes,
 not instructions to start concurrent agents, scans or cloud work.
