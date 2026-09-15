@@ -1,0 +1,12 @@
+{
+  "application_sha": "f94a1d9d1125e6c9111aa08eda496f014f20d0c0",
+  "ci_run_id": 35031840606,
+  "ci_url": "https://github.com/TableUs-AI-Agent/Tableus-ai-agent-dev/actions/runs/35031840606",
+  "conclusion": "success",
+  "javascript_passed": 226,
+  "python_passed": 101,
+  "browser_passed": 4,
+  "deterministic_ai_cases": 7,
+  "live_generation": false,
+  "log_sha256": "ea3f49bcba0bbe430e184e2795f967faaa02a7a1c8e701d58acca1264aefde9c"
+}

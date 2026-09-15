@@ -3,9 +3,13 @@
 The iOS 27 pilot passed for `f94a1d9d1125e6c9111aa08eda496f014f20d0c0`.
 The signed replacement installs and the owner confirms first launch, relaunch
 with session persistence, and the canonical auth link. [Pilot evidence](evidence/ios27-pilot-f94a1d9/README.md)
-records zero added Places/Gemini usage or emails. The existing API remains
-2ad48a8; [remaining same-source verification](evidence/ios27-pilot-f94a1d9/remaining-verification-plan.md)
-is owner-approved; exact-source CI and existing staging deployment are next.
+records zero added Places/Gemini usage or emails. The owner approved the
+remaining verification. Exact-source CI now passes 226 JavaScript, 101 Python
+and four browser tests; API and protected Preview both serve f94a1d9.
+[Hosted evidence](evidence/ios27-staging-f94a1d9/README.md) verifies source,
+readiness, origins and unchanged associations/protection. Five native builds
+remain unstarted: 19.76 GiB free is below the approved 20 GiB threshold, and
+permission for one generated web-cache cleanup is pending.
 
 Updated 2026-09-15. The previous 2ad48a8 iPhone build crashed at launch on
 iOS 27 because it lacked the required scene lifecycle. The approved replacement
@@ -38,9 +42,8 @@ cancellation, not an Android compilation failure. Both telemetry profiles remain
 unstarted. Do not finish old-source profiles after changing the native runtime.
 [Cancellation evidence](evidence/plan-refresh-staging-2ad48a8/android-build-cancelled.json).
 
-Railway staging and Vercel Preview still serve exact 2ad48a8; production pointers
-and protection are unchanged. CI passed 216 JavaScript, 101 Python and four
-browser tests. Both deterministic native suites passed on their recorded
+Historical 2ad48a8 hosted evidence passed 216 JavaScript, 101 Python and four
+browser tests before the f94a1d9 deployment above. Both deterministic native suites passed on their recorded
 configurations, showing zero scroll reads/writes and coalesced manual requests;
 fourteen screenshots and failed operator attempts remain retained. The physical
 iPhone's new OS/SDK combination introduces the separately recorded launch failure.

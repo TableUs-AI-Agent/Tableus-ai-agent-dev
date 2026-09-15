@@ -1,0 +1,63 @@
+{
+  "application_sha": "f94a1d9d1125e6c9111aa08eda496f014f20d0c0",
+  "passed": true,
+  "observed_at": "2026-09-15T22:56:14.241728+00:00",
+  "api_readiness": {
+    "status": "ready",
+    "provider_mode": "live",
+    "places_provider_mode": "live",
+    "ai_provider_mode": "live",
+    "ai_backend": "agent-platform",
+    "auth_mode": "supabase",
+    "build_sha": "f94a1d9d1125e6c9111aa08eda496f014f20d0c0",
+    "telemetry_mode": "staging",
+    "analytics_mode": "anonymous",
+    "error_reporting_mode": "errors_only",
+    "telemetry_e2e": true
+  },
+  "preview_url": "https://tableus-staging-i6b1exrb3-briancheis-projects.vercel.app",
+  "vercel_deployment_id": "dpl_5iF8xTCbfuJghn2bRuUSGdKoRiJb",
+  "served_source_matches": true,
+  "matching_bundles": [
+    {
+      "path": "/_next/static/chunks/747-f7a00df007955479.js",
+      "sha256": "6a9c80f528688d67b05af95494bac4c1099b9576691f0ceba2eea2a1483d0484"
+    },
+    {
+      "path": "/_next/static/chunks/app/invite/page-547375975e7f9d7c.js",
+      "sha256": "5134ce5c1fc340acd38d91c80b2a782f4dac3d221cd72e2f2e09eec697af5bc2"
+    },
+    {
+      "path": "/_next/static/chunks/app/layout-23e48940989dfe0f.js",
+      "sha256": "ed08561054a30dd3b1d03e5b78b90e0f1871bb7576bb0a85c1f87905f0ed77cf"
+    },
+    {
+      "path": "/_next/static/chunks/main-app-f2429a56a3f8b236.js",
+      "sha256": "033d99af9cb6c7fce40449034179d712f2f1f82d9d02c6bf60682860e66cbeee"
+    }
+  ],
+  "cors": [
+    {
+      "origin": "https://tableus-staging-i6b1exrb3-briancheis-projects.vercel.app",
+      "passed": true
+    },
+    {
+      "origin": "https://tableus-staging-git-codex-ios27-f94a1d9-briancheis-projects.vercel.app",
+      "passed": true
+    }
+  ],
+  "canonical_associations": {
+    "apple": {
+      "sha256": "710eb96b4cb131ad435294629ed493857a0f8d38e9d0cba112fc905f9cc34d63",
+      "http_status": 200
+    },
+    "android": {
+      "sha256": "e2ad9e673a352912bf9782eba015a5bbcfd28069c138d858d37ced66bf411430",
+      "http_status": 200
+    }
+  },
+  "production_target_unchanged": true,
+  "protection_unchanged": true,
+  "new_secrets_created": false,
+  "client_javascript_executed": false
+}

@@ -27,8 +27,12 @@ while the source and report remain unchanged.
 - Native build operator: `d0447b8711109f43fb7a1572cb2b0a275f9901ab`. Xcode 27.0,
   iPhoneOS 27.0 SDK, physical iOS 27.0 / 24A437. New executable UUID:
   `5E8ED08A-6282-3483-90E7-53442A4511A8`. Prior crash evidence remains intact.
-- API and Preview still serve 2ad48a8. Pilot success is bounded startup/session/
-  canonical-link evidence, not cumulative same-SHA or production acceptance.
+- Exact-source CI passes 226 JavaScript, 101 Python and four browser tests.
+  API and protected Preview now serve f94a1d9; readiness, served JavaScript,
+  CORS and canonical associations pass. See the hosted evidence record.
+- Five native profiles remain unstarted because disk is 19.76 GiB, below the
+  approved 20 GiB start threshold. Exact generated web-cache cleanup is pending.
+  Pilot and hosted success do not establish cumulative device acceptance.
 - Both exact cleanup requests completed. Saved devices/account data, source,
   evidence and signed artifacts are preserved; no further cleanup is authorized.
 - Read-only reconciliation at 22:31 UTC: 329 Places attempts, nine Gemini rows,

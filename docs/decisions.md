@@ -3,9 +3,25 @@
 The iOS 27 pilot passed for `f94a1d9d1125e6c9111aa08eda496f014f20d0c0`.
 The signed replacement installs and the owner confirms first launch, relaunch
 with session persistence, and the canonical auth link. [Pilot evidence](evidence/ios27-pilot-f94a1d9/README.md)
-records zero added Places/Gemini usage or emails. The existing API remains
-2ad48a8; [remaining same-source verification](evidence/ios27-pilot-f94a1d9/remaining-verification-plan.md)
-is owner-approved; exact-source CI and existing staging deployment are next.
+records zero added Places/Gemini usage or emails. The owner approved the
+remaining verification. Exact-source CI now passes 226 JavaScript, 101 Python
+and four browser tests; API and protected Preview both serve f94a1d9.
+[Hosted evidence](evidence/ios27-staging-f94a1d9/README.md) verifies source,
+readiness, origins and unchanged associations/protection. Five native builds
+remain unstarted: 19.76 GiB free is below the approved 20 GiB threshold, and
+permission for one generated web-cache cleanup is pending.
+
+## Same-source hosted verification — 2026-09-15
+
+- Require both Git metadata and the source embedded in served JavaScript. The
+  first f94a1d9 Preview failed this check because shared Preview environment
+  values still named 2ad48a8. Preserve the failed attempt; two nonsecret
+  branch-scoped overrides and a fresh deployment now pass.
+- The existing staging API serves f94a1d9 with the replacement Preview origin.
+  Production target, protection and canonical association hashes are unchanged.
+- Keep the approved 20 GiB native start guard and 9 GiB stop guard. No build
+  starts while disk is below the start threshold; additional cache removal
+  requires the exact cleanup permission already requested. No budget is reset.
 
 ## iOS 27 pilot accepted by observed checks — 2026-09-15
 

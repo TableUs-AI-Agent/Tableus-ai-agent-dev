@@ -3,9 +3,13 @@
 The iOS 27 pilot passed for `f94a1d9d1125e6c9111aa08eda496f014f20d0c0`.
 The signed replacement installs and the owner confirms first launch, relaunch
 with session persistence, and the canonical auth link. [Pilot evidence](evidence/ios27-pilot-f94a1d9/README.md)
-records zero added Places/Gemini usage or emails. The existing API remains
-2ad48a8; [remaining same-source verification](evidence/ios27-pilot-f94a1d9/remaining-verification-plan.md)
-is owner-approved; exact-source CI and existing staging deployment are next.
+records zero added Places/Gemini usage or emails. The owner approved the
+remaining verification. Exact-source CI now passes 226 JavaScript, 101 Python
+and four browser tests; API and protected Preview both serve f94a1d9.
+[Hosted evidence](evidence/ios27-staging-f94a1d9/README.md) verifies source,
+readiness, origins and unchanged associations/protection. Five native builds
+remain unstarted: 19.76 GiB free is below the approved 20 GiB threshold, and
+permission for one generated web-cache cleanup is pending.
 
 Reassessed 2026-09-15. The goal remains an invite-only US beta across web, iOS
 and Android. Preserve the implemented architecture and validate the complete
@@ -32,7 +36,7 @@ device or production release acceptance.
 | 2d | Correct unintended plan refresh and ambiguous vote feedback — complete locally at `2ad48a8` | Slow-request reproduction, explicit refresh control, request coalescing, distinct previous-vote/unsent/success messages; all readiness targets pass with 216 JavaScript/98 Python tests and three local Postgres skips | Deterministic local work only; new source requires matching review and native evidence before live verification resumes |
 | 2e | Verify the frozen refresh correction on isolated devices — complete | Both artifacts inspected; iOS and Android lifecycle/offline/refresh pass; zero scroll reads/writes, one delayed read, successful explicit recovery; fourteen reviewed screenshots and all failed attempts retained | No live allowance used; both disposable devices stopped and retained |
 | 2f | Verify refresh correction on hosted staging and saved devices — paused on iOS 27 launch crash | Hosted CI/deployment, deterministic suites and web controls pass; physical startup fails; Android build canceled, telemetry builds unstarted | Evidence remains bound to 2ad48a8; cleanup complete; no further old-candidate execution |
-| 2g | Repair iOS 27 scene lifecycle — local repair and physical pilot pass at f94a1d9 | [Bounded repair](reviews/2026-09-15-ios27-scene-lifecycle.md), actual prebuild/compatibility tests and `make ready` pass (226 JavaScript/98 Python; three skips); exact-source review prepared | Source review and single signed iOS pilot approved and passed; remaining native/hosted execution is proposed separately |
+| 2g | Repair iOS 27 scene lifecycle — local repair and physical pilot pass at f94a1d9 | [Bounded repair](reviews/2026-09-15-ios27-scene-lifecycle.md), actual prebuild/compatibility tests and `make ready` pass (226 JavaScript/98 Python; three skips); exact-source review prepared | Source review and single signed iOS pilot approved and passed; remaining execution approved; exact-source CI and hosted checks pass; five native builds await the disk guard |
 | 3 | Prepare production privacy and operating boundaries | Account export/deletion including Auth ownership; retention; capability-link decision; one-use invite policy; explicit cohort/spend/quota limits; rollback owner | Significant policy/architecture choices require owner decision before production |
 | 4 | Prepare production release configuration | Source-controlled production origins, isolated credentials, signed-update/OTA policy, store signing associations, source maps and rollback rehearsal | Resource/secret creation, migrations, deployment and builds need explicit applicable approval |
 | 5 | Validate TestFlight and Play closed-testing distribution | Signed install/update, auth and universal links, core journey, explicit native tab presentation, privacy declarations, observed symbolication | Separate store-submission approval |
