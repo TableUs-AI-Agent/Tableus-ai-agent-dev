@@ -1,0 +1,19 @@
+{
+  "application_sha": "6b9719b4e63e34803f2e7c2598e45851790df661",
+  "observed_at": "2026-09-15T00:20:12.617523Z",
+  "places_attempts": 8,
+  "initial_detail_read": {
+    "at": "2026-09-15T00:12:05.443455Z",
+    "attempts": 4
+  },
+  "private_link_rotation_at": "2026-09-15T00:15:56.370217Z",
+  "following_detail_read": {
+    "at": "2026-09-15T00:16:11.149069Z",
+    "attempts": 4
+  },
+  "explanation_type": "inference-from-timing-and-source",
+  "explanation": "The second read is consistent with the existing web revision poll after rotation updates the plan. Both four-detail responses count against this run. No native live plan observation has run.",
+  "places_remaining": 72,
+  "new_gemini_generations": 0,
+  "raw_provider_content_retained": false
+}

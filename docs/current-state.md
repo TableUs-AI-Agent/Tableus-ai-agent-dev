@@ -31,12 +31,17 @@ records Railway `69c96019-bedc-4b53-a37d-358a103f7e24` and Preview
 Production pointers/protection are unchanged. CI run `34905755622` passes
 204 JavaScript, 101 Python and four browser tests. The reduced Places backstop
 is verified at 349; starting aggregate remains 269. The first iOS test artifact
-passed source/checksum/receipt inspection; its isolated lifecycle/offline suite
-is running. [Execution progress](evidence/replacement-6b9719b/execution-progress.json)
+passed source/checksum/receipt inspection and both isolated lifecycle/offline
+suites. [iOS evidence](evidence/replacement-6b9719b/ios-deterministic.json)
+binds the reports and reviewed screenshots to that artifact. Android is building.
+[Execution progress](evidence/replacement-6b9719b/execution-progress.json)
 also records web session restoration, read-only account controls and one delivered
-web canary in each provider. One sign-in email is counted; new Places/Gemini usage
-remains zero at the last aggregate check. Native device and cumulative acceptance
-remain incomplete.
+web canary in each provider. The web plan shows four attributed candidates and
+organizer controls. One private-link rotation succeeded; its local clipboard
+handoff is pending. One sign-in email and eight Places attempts are counted;
+new Gemini generation remains zero. [Request timing](evidence/replacement-6b9719b/web-request-observation.json)
+is consistent with a web revision refresh following rotation. Native live-device
+and cumulative acceptance remain incomplete.
 
 The EAS build's Expo Doctor step passes 20/21 checks and reports eleven SDK 57
 patch-version recommendations. The exact same warning appears in the retained

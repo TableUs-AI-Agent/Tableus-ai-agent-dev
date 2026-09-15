@@ -5,6 +5,10 @@
 - The first inspected iOS artifact and delivered web canary do not imply native
   or cumulative acceptance. Retain separate artifact, deterministic, live-device
   and telemetry gates; subsequent native phases stop on any failed prerequisite.
+- Both iOS deterministic suites passed before starting Android. Count the web
+  plan's two four-detail responses against the 80-attempt allowance; the second
+  followed private-link rotation and is consistent with the existing revision
+  poll. Keep 72 attempts available and distinguish this from native refresh proof.
 - Exact-source CI and existing staging/Preview deployments now pass. The
   [deployment record](evidence/replacement-6b9719b/deployment.json) preserves
   the actual IDs, source stamps, CORS and unchanged Production pointers.

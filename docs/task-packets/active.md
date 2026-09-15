@@ -65,10 +65,15 @@ Hosted execution passes: [deployment evidence](../evidence/replacement-6b9719b/d
 binds CI run `34905755622`, Railway `69c96019-bedc-4b53-a37d-358a103f7e24`
 and Preview `dpl_2qeefqPhARdErQxUqxLssCintxte` to 6b9719b. Source stamps,
 exact Preview CORS and the 349-attempt backstop are verified; Production is
-unchanged. The first iOS test build and its artifact inspection pass; its
-deterministic lifecycle/offline suite is running. Web session reload and read-only
+unchanged. The first iOS test build, its artifact inspection and both deterministic
+lifecycle/offline suites pass; Android is building. Web session reload and read-only
 account controls pass, and both providers received one exact-release web canary.
 See the [execution progress](../evidence/replacement-6b9719b/execution-progress.json).
+The existing web plan has four attributed candidates and organizer controls.
+One private-link rotation succeeded; the local clipboard handoff is pending.
+Usage is eight Places attempts and one counted email, with zero new generation.
+The second four-detail response followed rotation and is consistent with the
+web revision poll; it is counted, and native live refresh proof remains pending.
 Use isolated deterministic
 test targets because those harnesses reset app data; preserve the existing
 staging simulator/emulator sessions for the same-account refresh checks.

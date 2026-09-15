@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "application_sha": "6b9719b4e63e34803f2e7c2598e45851790df661",
-  "observed_at": "2026-09-14T23:56:02.010194+00:00",
+  "observed_at": "2026-09-15T00:21:55.135845+00:00",
   "native_artifacts_inspected": 1,
   "test_ios": {
     "profile": "test-ios",
@@ -13,7 +13,7 @@
     "build_finished_at": "2026-09-14T23:41:33.096365+00:00",
     "build_duration_seconds": 3504
   },
-  "ios_deterministic_status": "in-progress",
+  "ios_deterministic_status": "passed",
   "web_session_reload_passed": true,
   "web_account_export_ui_reported_download": true,
   "web_deletion_blocked_on_organized_plans": true,
@@ -22,9 +22,18 @@
     "posthog": 1,
     "sentry": 1
   },
-  "places_attempts_this_run": 0,
+  "places_attempts_this_run": 8,
   "gemini_generations_this_run": 0,
   "sign_in_emails_conservatively_consumed": 1,
-  "provider_usage_observed_at": "2026-09-14T23:41:52.393645Z",
-  "cumulative_acceptance_complete": false
+  "provider_usage_observed_at": "2026-09-15T00:20:12.617523Z",
+  "cumulative_acceptance_complete": false,
+  "ios_lifecycle_passed": true,
+  "ios_offline_passed": true,
+  "android_build_status": "in-progress",
+  "web_four_candidates_verified": true,
+  "web_google_attribution_verified": true,
+  "web_organizer_controls_verified": true,
+  "private_link_rotations": 1,
+  "local_link_handoff_pending": true,
+  "disposable_ios_simulator_retained": true
 }
