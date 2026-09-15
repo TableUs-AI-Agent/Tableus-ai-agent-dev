@@ -1,0 +1,18 @@
+{
+  "schema_version": 1,
+  "approved": true,
+  "application_sha": "f94a1d9d1125e6c9111aa08eda496f014f20d0c0",
+  "preparation_evidence_sha": "7b6a67490e1cc6debe3ec459d2966f0272286f59",
+  "plan_sha256": "9fd593667a01a53a4f08213d1cb651177d73724666eff6f3e87f7005861fe61c",
+  "recorded_at": "2026-09-15T22:36:14.841544+00:00",
+  "quoted_message": "approve",
+  "scope": "Exact-candidate push/CI; existing Railway staging and Vercel Preview; five named sequential native builds; inspected deterministic/live verification using remaining shared limits; reuse signed readiness-ios artifact.",
+  "branch": "codex/ios27-f94a1d9",
+  "places_baseline": 329,
+  "remaining_places_max": 80,
+  "remaining_sign_in_emails_max": 3,
+  "remaining_canaries_per_provider_max": 4,
+  "new_gemini_generations_max": 0,
+  "security_scan_authorized": false,
+  "production_authorized": false
+}

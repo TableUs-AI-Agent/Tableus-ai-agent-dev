@@ -11,12 +11,12 @@ Use one primary agent; no Security Scan or new application-provider migration.
 
 ## Next bounded objective and gate
 
-Obtain owner approval for the [remaining execution plan](../evidence/ios27-pilot-f94a1d9/remaining-verification-plan.md),
-then complete exact-source CI, existing staging/Preview deployment, five remaining
+The owner approved the [remaining execution plan](../evidence/ios27-pilot-f94a1d9/remaining-verification-plan.md).
+Complete exact-source CI, existing staging/Preview deployment, five remaining
 native artifacts and the required deterministic/live lifecycle, links, refresh,
 account and telemetry evidence. Reuse the accepted f94a1d9 signed readiness-ios
 artifact. Its checksum is `9d569309e437b3212a827305e1e119d4424d65c40f1c5fd464a120ad9bcf1798`.
-Do not start those external steps under the completed one-build pilot approval.
+The subsequent owner approval now covers those steps; preserve all stated limits.
 The exact-source review is already accepted; do not request acceptance again
 while the source and report remain unchanged.
 

@@ -5,7 +5,7 @@ The signed replacement installs and the owner confirms first launch, relaunch
 with session persistence, and the canonical auth link. [Pilot evidence](evidence/ios27-pilot-f94a1d9/README.md)
 records zero added Places/Gemini usage or emails. The existing API remains
 2ad48a8; [remaining same-source verification](evidence/ios27-pilot-f94a1d9/remaining-verification-plan.md)
-is prepared and awaits its separate execution approval.
+is owner-approved; exact-source CI and existing staging deployment are next.
 
 Reassessed 2026-09-15. The goal remains an invite-only US beta across web, iOS
 and Android. Preserve the implemented architecture and validate the complete
