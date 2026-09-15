@@ -1,0 +1,58 @@
+{
+  "schema_version": 1,
+  "application_sha": "2ad48a8d8ec4d3aa9a7bd52061b823bb55960bcd",
+  "recorded_at": "2026-09-15T21:30:09.001079+00:00",
+  "owner_observation": "The app crashes when opened.",
+  "artifact_sha256": "e08b7adbce9f848c1638f3fb732a141ce37fe62bacdc5121d5bad5a236382359",
+  "executable_uuid": "afc06200-e863-3fc5-90f8-3f59614c551f",
+  "device_os": "iOS 27.0",
+  "device_os_build": "24A437",
+  "build_sdk": "iphoneos27.0",
+  "build_sdk_build": "24A430",
+  "xcode_build": "27A266a",
+  "scene_manifest_present": false,
+  "crash_reports": [
+    {
+      "report_sha256": "e9de6af88591de9fe510595c9c92ca55bbd07896c0efa2ab97ecc9a24c2ed38a",
+      "capture_time": "2026-09-15 16:23:24.8203 -0500",
+      "exception_type": "EXC_BREAKPOINT",
+      "signal": "SIGTRAP",
+      "faulting_image": "UIKitCore",
+      "faulting_symbol": "___UIApplicationEvaluateRuntimeIssueForNoSceneLifecycleAdoption_block_invoke",
+      "installed_executable_uuid_matched": true
+    },
+    {
+      "report_sha256": "e24a0972d1fdc9ee637b969322f78f5b3b56e66f4999800512a1f128050a79ea",
+      "capture_time": "2026-09-15 16:23:51.1840 -0500",
+      "exception_type": "EXC_BREAKPOINT",
+      "signal": "SIGTRAP",
+      "faulting_image": "UIKitCore",
+      "faulting_symbol": "___UIApplicationEvaluateRuntimeIssueForNoSceneLifecycleAdoption_block_invoke",
+      "installed_executable_uuid_matched": true
+    }
+  ],
+  "diagnosis": "UIKit enforces scene lifecycle for apps built with iOS 27 SDK; the installed Expo 57.0.18 artifact has no scene manifest and traps at the UIKit no-scene lifecycle check.",
+  "physical_readiness_passed": false,
+  "simulator_evidence_limit": "Prior deterministic iOS pass used iOS 26.5 and does not certify this iOS 27 device/SDK combination.",
+  "runtime_patch": {
+    "package": "expo",
+    "installed": "57.0.18",
+    "published_candidate": "57.0.23",
+    "npm_metadata_verified": true
+  },
+  "plugin": {
+    "package": "@config-plugins/expo-uiscene-lifecycle",
+    "upstream_status": "experimental, merged",
+    "upstream_commit": "9d8dccc6fc7c3c529c1d9ab9f2d2df63a7ae61d4",
+    "npm_lookup": "E404 at 2026-09-15T21:27Z; no package installed",
+    "requires": "Expo 57.0.23 and explicit plugin opt-in"
+  },
+  "sources": [
+    "https://developer.apple.com/documentation/uikit/transitioning-to-the-uikit-scene-based-life-cycle",
+    "https://github.com/expo/expo/pull/50191",
+    "https://github.com/expo/config-plugins/pull/326"
+  ],
+  "next_builds_paused": true,
+  "account_data_deleted": false,
+  "raw_reports_retained_privately": true
+}

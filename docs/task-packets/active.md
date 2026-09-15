@@ -1,96 +1,46 @@
-# Active packet: staging verification of the refresh correction
+# Active packet: resolve the iOS 27 launch blocker
 
-Owner approved removal of the two completed disposable deterministic devices.
-[Cleanup completed](../evidence/plan-refresh-staging-2ad48a8/disposable-device-cleanup-execution.json), with 20.967 GiB free immediately afterward.
-All saved staging devices and all artifacts/evidence remain. The owner reports
-the Screen Time restriction removed; the same iPhone artifact now installs
-successfully. Saved-session checks are pending owner observation.
-The next sequential build is `readiness-android`, subject to a fresh disk check.
+## Status
 
-## Status and objective
+The frozen `2ad48a8d8ec4d3aa9a7bd52061b823bb55960bcd` staging verification
+is paused after a confirmed physical-iPhone launch crash. Use one primary agent.
+This is the only active packet. The [bounded local repair proposal](../reviews/2026-09-15-ios27-scene-lifecycle.md)
+is prepared; the dependency/lifecycle scope exception awaits owner approval.
 
-Owner accepted the exact source review and approved execution on 2026-09-15. The authorized deterministic
-local objective is complete. Carry the proven refresh correction into existing
-staging and saved native devices, then finish the source-bound cumulative report.
-Use one primary agent. This is the only active implementation packet.
+The signed app installed after the owner resolved Screen Time, but iOS 27 traps
+because the Xcode 27 build lacks scene-lifecycle adoption. Two crash reports
+match the installed executable. No iPhone readiness phase passed. The earlier
+iOS 26.5 deterministic result does not certify this SDK/OS combination.
 
-The concrete [execution request](../evidence/plan-refresh-staging-2ad48a8/README.md)
-is approved; [the decision](../evidence/plan-refresh-staging-2ad48a8/execution-approval.json)
-binds the original plan and source report. Execute its bounded staging scope.
+Both explicitly approved cleanup stages completed: five obsolete npm caches and
+the two finished disposable deterministic devices. All saved staging devices,
+account data, accepted artifacts/receipts and evidence remain. The Android
+readiness build started with 23.25 GiB free, then was deliberately stopped once
+the required native dependency change was identified; no APK was exported.
+The two telemetry profiles remain unstarted. Preserve the raw build logs.
 
-Hosted staging and Preview now pass the [deployment checks](../evidence/plan-refresh-staging-2ad48a8/deployment.json)
-at exact source 2ad48a8. CI passes 216 JavaScript, 101 Python and four browser
-tests. Production and protection are unchanged. Both CORS origins and canonical
-associations pass; the configured provider backstop is 409, aggregate 329, and
-new-run Places/generation use is zero, with one organizer sign-in message
-conservatively counted.
-Xcode setup now passes. `readiness-ios` built under Xcode 27.0 and passes source,
-signer, configuration and receipt reinspection; the artifact is now installed after the owner resolved Screen Time.
-The web canary reached both providers once for the exact release. Three builds
-remain. Both cleanup stages are owner-approved and complete; disk measured
-20.967 GiB after removal of the two completed disposable test devices. Recheck
-headroom before each build. All saved staging devices and artifacts/evidence remain.
-The physical iPhone installation passed on the second attempt after the owner
-resolved Screen Time. The first ManagedConfiguration failure is preserved. No device
-readiness answer has been collected for this source. The new Preview organizer
-session and web export/read-only deletion readiness pass. After disk headroom
-returns, recheck the guard and run `readiness-android`; reuse the completed
-signed iPhone build. Keep native workloads sequential.
+## Next bounded objective
 
-## Completed prerequisites
+After owner approval of the linked local scope, prepare the minimum SDK 57
+scene-lifecycle repair in a separate worktree. Use the published Expo 57.0.23
+runtime and review the official opt-in plugin integration; its npm package is
+not yet available at the latest check. Validate actual prebuild output, native
+compatibility gates and affected deterministic tests, then run `make ready`
+once. Freeze and review a new source before requesting native/hosted execution.
+Do not restart old-candidate builds or ask the owner to keep reopening the app.
 
-- Application source: `2ad48a8d8ec4d3aa9a7bd52061b823bb55960bcd`, published on
-  `codex/refresh-2ad48a8`; CI and existing hosted deployment checks pass.
-- Operator branch: `codex/plan-refresh-verification` in `plan-refresh-controls`.
-- Both [deterministic native records](../evidence/plan-refresh-verification-2ad48a8/README.md)
-  pass inspection, lifecycle, offline recovery and all refresh phases. Scrolling
-  makes zero reads/writes; delayed repeated taps make one request; explicit
-  recovery makes one read. Votes remain unchanged. Fourteen screenshots reviewed.
-- iOS operator: `cced1728628d594c1e957f9efc48a03428fa8f4a`. Android lifecycle:
-  `62bef563373e64de144c1998c73d87dc3d18c7b3`; accepted offline/refresh:
-  `ec909733c0242b7a10737dc0dda0402f5d5aa87e`. The accepted APK was never rebuilt
-  for the three retained operator failures.
-- Latest full readiness: 220 JavaScript and 98 Python passes, three Postgres
-  skips. Later YAML-only input/navigation changes pass parsing and actual native
-  execution. Both completed disposable test devices were subsequently removed with explicit
-  owner approval; their evidence/artifacts remain and test ports are closed.
-- The [focused source review](../evidence/source-review-2ad48a8/README.md) validates
-  fourteen source hashes/seven areas and transparently carries eleven unchanged
-  controls. Exact owner acceptance now validates; no Security Scan is required.
-- All four additional profile inputs pass preflight; the first, `readiness-ios`,
-  now passes build and reinspection. Its actual receipt and build evidence are
-  retained; three additional builds remain unstarted.
+## Preserved acceptance and boundaries
 
-## Approved execution
+Hosted staging/Preview and CI pass for 2ad48a8. Both deterministic artifacts
+passed on their recorded OS/toolchain. The iPhone readiness artifact passed
+source/config/signing inspection but fails launch on iOS 27. Web organizer
+sign-in, reload restoration, export/read-only deletion readiness and one canary
+in each provider pass. Current ledger: zero observed new Places/generations,
+one of four sign-in messages conservatively counted. Latest verified provider
+aggregate is 329; two later connector reads failed, so reconcile before any new
+live phase. The staging backstop remains 409.
 
-Publish/CI/deploy the frozen
-source only to existing staging/Preview targets. Reuse the two test artifacts;
-build the four remaining profiles sequentially and inspect before installation.
-Verify saved sessions, links, deliberate voting, organizer finalization/reopening,
-rotation, export/read-only deletion readiness, foreground/hidden-route/scroll/manual
-refresh behavior, both directions of real surviving-session refresh, and delivered
-source-bound telemetry. Assemble only genuine current-source cumulative evidence.
-
-Approved caps: 80 additional Places attempts, four new sign-in messages, zero
-Gemini generations, five events per telemetry provider and four native builds.
-These limits are binding. Reconcile the fresh read-only provider baseline first
-and track an independent new-run ledger. The linked request defines allocation,
-backstop, stop conditions and staging-only rollback scope.
-
-## Preserved state and boundaries
-
-The older live run stays paused at 60/80 Places attempts, 3/4 messages, zero new
-generation and three of five canaries per provider; its historical backstop was 349.
-The latest recorded aggregate is 329 and the approved current backstop is 409.
-Saved staging devices remain on 6b9719b; hosted staging now serves 2ad48a8.
-Preserve their accounts, artifacts, helper state and partial
-checklists; do not use newer-source answers to finish older checklists.
-
-The owner denied deliberate Android voting and described persistent loading while
-scrolling. Preserve the observed server write, but do not count it as intentional
-owner voting. Do not request another reconstruction of gestures.
-
-No production deployment, stores, cohorts, new resources/secrets, migration,
-additional destructive cleanup or Security Scan is authorized. The five npm caches and two completed disposable test devices were
-explicitly approved and removed. The source-review policy explicitly requires new
-matching acceptance when a source/report changes.
+No app-data deletion, Security Scan, production/store/cohort change, new
+resources/secrets or migration is authorized. The old source-review acceptance
+and native receipts remain bound to their exact source. Do not turn a canceled
+build or a reported launch crash into successful readiness evidence.

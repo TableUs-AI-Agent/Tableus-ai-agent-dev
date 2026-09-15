@@ -1,80 +1,53 @@
 # Current state
 
-Owner approved removal of the two completed disposable deterministic devices.
-[Cleanup completed](./evidence/plan-refresh-staging-2ad48a8/disposable-device-cleanup-execution.json), with 20.967 GiB free immediately afterward.
-All saved staging devices and all artifacts/evidence remain. The owner reports
-the Screen Time restriction removed; the same iPhone artifact now installs
-successfully. Saved-session checks are pending owner observation.
-The next sequential build is `readiness-android`, subject to a fresh disk check.
+Updated 2026-09-15. Staging verification is paused because the installed
+`2ad48a8d8ec4d3aa9a7bd52061b823bb55960bcd` iPhone app crashes at launch on
+iOS 27. Two crash reports match its executable and trap in UIKit's required
+scene-lifecycle check. The signed artifact was built with Xcode 27/iPhoneOS 27
+and has no scene manifest. Earlier deterministic iOS tests used iOS 26.5; their
+pass does not certify the new SDK/OS combination.
 
-Updated 2026-09-15. Development uses GPT-6 Astra; application providers remain
-Gemini and Google Places. Railway staging and the new Vercel Preview now serve
-`2ad48a8d8ec4d3aa9a7bd52061b823bb55960bcd`; production pointers and protection
-are unchanged. Saved staging devices retain `6b9719b4e63e34803f2e7c2598e45851790df661`.
-That older live run is paused. The refresh correction is frozen at
-`2ad48a8d8ec4d3aa9a7bd52061b823bb55960bcd`, and its deterministic iOS and Android
-verification is complete. Operator/evidence work is on
-`codex/plan-refresh-verification` in the isolated `plan-refresh-controls` worktree.
-Only [the active packet](task-packets/active.md) directs the next objective.
+[Crash evidence](evidence/plan-refresh-staging-2ad48a8/iphone-launch-failure.json)
+and the [bounded local repair proposal](reviews/2026-09-15-ios27-scene-lifecycle.md)
+are recorded. The proposed repair uses the published Expo 57.0.23 scene runtime
+and a reviewed opt-in config integration. The companion official plugin is
+experimental and its npm lookup returned E404; no dependency has been changed.
+Owner approval is pending for the dependency/lifecycle scope exception. Only
+[the active packet](task-packets/active.md) directs work.
 
-Both exact-source test artifacts pass inspection, lifecycle, offline recovery and
-all five refresh phases. On both platforms, scrolling caused zero detail reads
-or writes, repeated taps during a delayed response made one request, and an
-explicit recovery made one successful read. The failure phase delivered three
-iOS and two Android injected errors, with no upstream requests. Every refresh
-phase made zero app writes and preserved the previous vote. Fourteen screenshots
-were reviewed across the [iOS](evidence/plan-refresh-verification-2ad48a8/ios-deterministic.json)
-and [Android](evidence/plan-refresh-verification-2ad48a8/android-deterministic.json)
-records. Both completed disposable test devices were subsequently removed with owner
-approval; their artifacts/evidence remain and local test ports are closed. No live provider or sign-in allowance was consumed.
+Both approved cleanup stages completed: five obsolete npm caches and two
+finished disposable deterministic devices. Saved staging devices/account data,
+all accepted artifacts/receipts and evidence are preserved. The owner resolved
+Screen Time; the same signed artifact installed on the second attempt, then
+failed its first launch check. No successful iPhone readiness phase is claimed.
 
-Android's three failed attempts are retained in the
-[native evidence](evidence/plan-refresh-verification-2ad48a8/README.md): an overly
-exact failed-request count, duplicated fixture input, and forced centering of a
-fully visible retry control. The corrected operator retains bounded error counts,
-pre-submission exact-input checks, full visibility and all original assertions.
-The fourth offline/refresh attempt passed using the same APK and the already
-completed lifecycle. Latest `make ready`: 220 JavaScript and 98 Python passes,
-three local Postgres skips. Subsequent changes were YAML/navigation and evidence;
-YAML parsing and evidence privacy checks pass. Existing Expo patch warnings remain.
+The Android readiness build started at 23.25 GiB free and was intentionally
+stopped after the diagnosis, with no APK exported. This is an operator
+cancellation, not an Android compilation failure. Both telemetry profiles remain
+unstarted. Do not finish old-source profiles after changing the native runtime.
+[Cancellation evidence](evidence/plan-refresh-staging-2ad48a8/android-build-cancelled.json).
 
-The [next staging verification plan](evidence/plan-refresh-staging-2ad48a8/README.md)
-was approved on 2026-09-15. [Hosted deployment checks](evidence/plan-refresh-staging-2ad48a8/deployment.json)
-pass: exact-source readiness and served Preview bundles, both Preview CORS origins,
-canonical native associations, unchanged production/protection and the configured
-409-attempt backstop. CI run `35016584574` passes 216 JavaScript, 101 Python and
-four browser tests. The last provider aggregate is 329; this new run has made no
-Places calls or generations. One new organizer sign-in message is conservatively counted.
-Xcode setup now passes on Xcode 27.0. The signed
-[iPhone readiness artifact](evidence/plan-refresh-staging-2ad48a8/readiness-ios-artifact.json)
-built successfully and passes a second source/signer/configuration/receipt
-inspection. It is now installed on the paired physical iPhone. Its
-[first installation attempt](evidence/plan-refresh-staging-2ad48a8/iphone-install-attempt-1.json)
-failed because ManagedConfiguration prohibited installation. The owner resolved
-Screen Time; the same artifact passed reinspection and the second installation.
-Session/readiness checks are pending owner observation.
-The [web canary](evidence/plan-refresh-staging-2ad48a8/web-telemetry-observation.json)
-reached PostHog and Sentry once each for 2ad48a8. Sentry's UI also shows coarse
-geography despite the application sanitizer omitting user fields; the enrichment
-source has not been independently verified and the location value is not retained.
-This remains a provider-side privacy item for production preparation.
+Railway staging and Vercel Preview still serve exact 2ad48a8; production pointers
+and protection are unchanged. CI passed 216 JavaScript, 101 Python and four
+browser tests. Both deterministic native suites passed on their recorded
+configurations, showing zero scroll reads/writes and coalesced manual requests;
+fourteen screenshots and failed operator attempts remain retained. The physical
+iPhone's new OS/SDK combination introduces the separately recorded launch failure.
 
-Three native builds remain. Both approved cleanup stages are complete: five
-obsolete npm caches and the two completed disposable deterministic devices.
-Disk measured 20.967 GiB after device cleanup. Recheck the 20 GiB build-start
-guard before each profile. Saved staging devices, artifacts and evidence remain.
-The [new Preview organizer session](evidence/plan-refresh-staging-2ad48a8/organizer-session-observation.json)
-is confirmed. Web export reports downloaded; deletion readiness shows its
-organized-plan blocker with the confirmation empty and deletion disabled.
-The existing helper link is still valid for the
-four-candidate, three-participant dinner. The approved plan reuses both test artifacts, builds the four
-remaining profiles, and caps a new run at 80 additional Places attempts, four
-sign-in messages and zero generations. All four input preflights pass. The exact
-[focused source review](evidence/source-review-2ad48a8/README.md), including its
-same two medium risks, now has matching owner acceptance. The new approval
-covers the four remaining builds, staging/Preview deployment and saved-device
-checks under the linked limits. No Security Scan is authorized. The fresh provider
-baseline remains 329 Places attempts, allowing the approved backstop of 409.
+The new Preview organizer session, reload persistence and web account controls
+pass. One web canary reached both providers. Sentry's displayed coarse-geography
+enrichment remains a production privacy follow-up; its source is unverified and
+no location value is retained. Current ledger is zero observed new Places or
+Gemini use, one of four sign-in messages conservatively counted, and one of five
+canaries per provider. Latest successful provider aggregate is 329; two later
+connector queries failed, so reconcile before resuming live work. The configured
+backstop remains 409. No Security Scan has started.
+
+Development uses GPT-6 Astra. Application AI providers remain Gemini and Places.
+Operator/evidence branch is `codex/plan-refresh-verification` in the isolated
+`plan-refresh-controls` worktree. The frozen application's source and historical
+receipts remain unchanged. The completed staging work and the prior 6b9719b run
+are not silently promoted into acceptance of a future source.
 
 ## Reported scrolling and refresh behavior
 

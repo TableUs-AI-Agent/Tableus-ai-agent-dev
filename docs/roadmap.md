@@ -1,12 +1,5 @@
 # Closed-beta roadmap
 
-Owner approved removal of the two completed disposable deterministic devices.
-[Cleanup completed](./evidence/plan-refresh-staging-2ad48a8/disposable-device-cleanup-execution.json), with 20.967 GiB free immediately afterward.
-All saved staging devices and all artifacts/evidence remain. The owner reports
-the Screen Time restriction removed; the same iPhone artifact now installs
-successfully. Saved-session checks are pending owner observation.
-The next sequential build is `readiness-android`, subject to a fresh disk check.
-
 Reassessed 2026-09-15. The goal remains an invite-only US beta across web, iOS
 and Android. Preserve the implemented architecture and validate the complete
 shared-plan journey before adding features or replacing application providers.
@@ -31,7 +24,8 @@ device or production release acceptance.
 | 2c | Verify the replacement on hosted staging and native devices — hosted CI/deployment pass; native execution paused | Exact-candidate CI, inspected sequential builds, real same-account session isolation and plan focus/foreground observations; new source-bound receipts and cumulative input | [Approved execution](evidence/replacement-6b9719b/README.md): 60/80 Places attempts and 3/4 emails consumed; zero fresh generation; retained artifacts bind only 6b9719b |
 | 2d | Correct unintended plan refresh and ambiguous vote feedback — complete locally at `2ad48a8` | Slow-request reproduction, explicit refresh control, request coalescing, distinct previous-vote/unsent/success messages; all readiness targets pass with 216 JavaScript/98 Python tests and three local Postgres skips | Deterministic local work only; new source requires matching review and native evidence before live verification resumes |
 | 2e | Verify the frozen refresh correction on isolated devices — complete | Both artifacts inspected; iOS and Android lifecycle/offline/refresh pass; zero scroll reads/writes, one delayed read, successful explicit recovery; fourteen reviewed screenshots and all failed attempts retained | No live allowance used; both disposable devices stopped and retained |
-| 2f | Verify the refresh correction on hosted staging and saved devices — hosted checks, iPhone artifact inspection and web telemetry pass | [Approved execution](evidence/plan-refresh-staging-2ad48a8/README.md): three builds remain, followed by saved-device/session/link/native-telemetry/cumulative evidence | Both approved cleanup stages complete; disk guard rechecked before builds. iPhone installed after owner resolved Screen Time; session checks pending. Zero Places/generations, one email conservatively counted; one of five canaries delivered per provider; no Security Scan |
+| 2f | Verify refresh correction on hosted staging and saved devices — paused on iOS 27 launch crash | Hosted CI/deployment, deterministic suites and web controls pass; physical startup fails; Android build canceled, telemetry builds unstarted | Evidence remains bound to 2ad48a8; cleanup complete; no further old-candidate execution |
+| 2g | Repair iOS 27 scene lifecycle — local scope proposed | [Bounded repair](reviews/2026-09-15-ios27-scene-lifecycle.md), actual prebuild/compatibility tests, one local readiness pass and a new frozen candidate | Dependency/lifecycle scope approval pending; later native and hosted execution require a concrete source-bound plan |
 | 3 | Prepare production privacy and operating boundaries | Account export/deletion including Auth ownership; retention; capability-link decision; one-use invite policy; explicit cohort/spend/quota limits; rollback owner | Significant policy/architecture choices require owner decision before production |
 | 4 | Prepare production release configuration | Source-controlled production origins, isolated credentials, signed-update/OTA policy, store signing associations, source maps and rollback rehearsal | Resource/secret creation, migrations, deployment and builds need explicit applicable approval |
 | 5 | Validate TestFlight and Play closed-testing distribution | Signed install/update, auth and universal links, core journey, explicit native tab presentation, privacy declarations, observed symbolication | Separate store-submission approval |
@@ -70,19 +64,15 @@ until the client correction and source-bound verification plan are ready and
 the remaining budget is resolved. Three of four emails are confirmed. No new
 allowance or native build is requested during the local correction.
 
-Only `docs/task-packets/active.md` is active. Later rows are queued outcomes,
-not instructions to start concurrent agents, scans or cloud work. Deterministic
-native verification of `2ad48a8d8ec4d3aa9a7bd52061b823bb55960bcd` is complete on
-both inspected artifacts. Both new test devices are stopped and retained. The
-approved staging execution is underway. Matching exact-review acceptance and
-hosted deployment evidence are recorded. CI passes 216 JavaScript, 101 Python and
-four browser tests. Production is unchanged; the provider aggregate remains 329.
-Xcode setup is complete; the signed iPhone readiness artifact passes inspection.
-The five-cache and two disposable-device cleanups completed with owner approval.
-The next build requires a fresh headroom check. The owner resolved the connected
-iPhone’s Screen Time restriction; the same artifact is now installed. New Preview organizer sign-in and web account controls pass. The exact-release web canary reached both providers. Sentry's visible
-coarse-geography enrichment remains a provider-side privacy item for objective 3;
-its source has not been independently verified and no location value is retained.
+Only `docs/task-packets/active.md` is active. The current priority is the confirmed
+iOS 27 launch blocker. Both approved cleanup stages are complete. The physical
+app installed but fails UIKit's scene-lifecycle requirement for iOS 27 SDK builds.
+Earlier iOS 26.5 evidence remains historical, and the Android build was stopped
+without exporting an APK. The targeted SDK 57 runtime patch is published; its
+experimental opt-in plugin requires review and was unavailable from npm at the
+latest check. Prepare the linked local repair after the scope exception is
+approved, then freeze/review the replacement before another native build or
+deployment. Do not run the remaining old-candidate telemetry builds.
 
 ## Validation order and reuse
 

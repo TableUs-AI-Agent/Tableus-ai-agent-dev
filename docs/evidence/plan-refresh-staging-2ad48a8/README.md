@@ -6,34 +6,21 @@ at commit `73ff83b1105bf06a130d209a67a327eee8e77f74`.
 Both isolated native verification phases now pass; see the
 [completed evidence](../plan-refresh-verification-2ad48a8/README.md).
 
-Hosted execution now passes: [deployment evidence](deployment.json) binds Railway
-`6fcc6835-d22a-4125-b80f-df671a415741`, Preview
-`dpl_7WqJNTybVFA425ABS7uB3rWGkPKu` and CI run `35016584574` to the exact source.
-Readiness, served Preview bundles, both CORS origins and canonical associations
-pass; production pointers/protection are unchanged. CI passes 216 JavaScript,
-101 Python and four browser tests. The configured Places backstop is 409 and
-the last observed aggregate remains 329. No new-run Places calls/generations have
-been made. One organizer sign-in message is conservatively counted. Xcode setup is now complete.
-The [signed iPhone readiness build](readiness-ios-artifact.json) passes source,
-signer, receipt and configuration reinspection under Xcode 27.0. It is not yet
-installed at that checkpoint. The first attempt was blocked by ManagedConfiguration;
-the owner resolved Screen Time and the [second attempt](iphone-install-attempt-2.json)
-installed the same artifact successfully. Saved-session verification is pending.
-The [single web canary](web-telemetry-observation.json) reached both
-providers with the exact source. Sentry also displays coarse geography despite
-the app omitting user fields; no location value is retained and its enrichment
-source has not been independently verified. The [existing helper link](helper-preflight.json)
-still matches the current four-candidate, three-participant dinner.
+Current execution is paused after the [physical iPhone launch failure](iphone-launch-failure.json).
+The verified artifact installed after Screen Time was resolved, but iOS 27 rejects
+its missing scene lifecycle. Two crash reports match the executable. Earlier
+iOS 26.5 deterministic evidence remains limited to that tested combination.
+The [Android build was deliberately canceled](android-build-cancelled.json)
+without an exported APK; both telemetry profiles remain unstarted.
 
-Three native builds remain. The owner approved and completed both exact cleanup
-stages: [five obsolete caches](cache-cleanup-execution.json) and
-[two completed disposable test devices](disposable-device-cleanup-execution.json).
-Disk measured 20.967 GiB after device cleanup; recheck the guard before each build.
-All saved staging devices and artifacts/evidence remain. The owner resolved the
-iPhone installation restriction; the same inspected artifact is now installed.
-The [new organizer session](organizer-session-observation.json) and
-[web account controls](web-account-observation.json) pass. The original cache
-review denial is resolved for those five paths only.
+Hosted deployment/CI, web session/export/read-only deletion controls and the
+single web canary remain passed for this exact source. Both approved cleanup
+stages completed; all saved staging devices and accepted artifacts/evidence remain.
+The [local repair proposal](../../reviews/2026-09-15-ios27-scene-lifecycle.md)
+requires a dependency/lifecycle scope exception before implementation. No new
+candidate, dependency, build, deployment or paid allowance is approved by this
+failure report. Latest verified provider total is 329; subsequent connector
+reads failed and must be reconciled before live verification resumes.
 
 Application source: `2ad48a8d8ec4d3aa9a7bd52061b823bb55960bcd`.
 Focused review digest (SHA-256 of parsed `JSON.stringify` report):

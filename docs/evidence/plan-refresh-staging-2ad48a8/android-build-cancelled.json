@@ -1,0 +1,35 @@
+{
+  "schema_version": 1,
+  "application_sha": "2ad48a8d8ec4d3aa9a7bd52061b823bb55960bcd",
+  "build_status": {
+    "profile": "readiness-android",
+    "application_sha": "2ad48a8d8ec4d3aa9a7bd52061b823bb55960bcd",
+    "status": "failed",
+    "started_at": "2026-09-15T21:21:56.529460+00:00",
+    "free_gib_at_start": 23.25,
+    "operator_sha": "5e13a6de4a41215dae9539331944dd102e64937e",
+    "exit_code": -15,
+    "finished_at": "2026-09-15T21:27:11.633632+00:00",
+    "artifact_exists": false,
+    "inspection_exists": false,
+    "receipt_exists": false,
+    "free_gib_at_finish": 16.48
+  },
+  "stop": {
+    "at": "2026-09-15T21:27:10.854489+00:00",
+    "profile": "readiness-android",
+    "application_sha": "2ad48a8d8ec4d3aa9a7bd52061b823bb55960bcd",
+    "reason": "Physical iPhone launch fails iOS 27 scene-lifecycle requirement. Pause frozen candidate; necessary Expo runtime/config repair changes the candidate. Preserve unfinished build logs instead of completing a now-obsolete native profile.",
+    "signal": "SIGTERM",
+    "owner_action": "Reported immediate iPhone launch crash",
+    "preserve_logs_and_artifacts": true
+  },
+  "classification": "operator_cancelled_after_confirmed_ios_launch_blocker",
+  "application_compile_failure_claimed": false,
+  "artifact_exported": false,
+  "raw_logs_preserved": true,
+  "log_hashes": {
+    "readiness-android-build.log": "dff49dd80a93616d70a59d860eb46c6c38645eabc001c2b3d1e44e7d33713da0",
+    "readiness-android-operator.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  }
+}

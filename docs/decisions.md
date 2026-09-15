@@ -1,5 +1,28 @@
 # Decision log
 
+## iOS 27 launch failure and repair scope — 2026-09-15
+
+- Owner reported immediate launch crashes after successful installation. Two
+  TableUs-only device reports match the installed executable UUID and identify
+  UIKit's no-scene-lifecycle trap. Confirm the actual iPhoneOS 27 SDK and absent
+  scene manifest in the signed artifact. The existing simulator pass was on
+  iOS 26.5; do not generalize it to iOS 27 or blame the owner's account.
+- Pause live checks and both unstarted telemetry builds. Stop the identified
+  Android build gracefully after confirming that native dependency/config
+  changes are required; preserve cancellation status and raw logs. Do not report
+  an application compilation failure or fabricate any readiness confirmation.
+- Prepare a separate local SDK 57 repair scope: published Expo 57.0.23 runtime,
+  reviewed official opt-in plugin integration, actual installed-version checks,
+  generated-project validation and a fail-fast scene compatibility gate. The
+  official plugin is experimental and npm returned E404. Do not blindly copy
+  its normalized-sdkVersion patch comparison or move to SDK 58. The previously
+  approved packet explicitly excluded dependency upgrades, so obtain the local
+  scope exception before implementation. Later execution needs a new exact
+  candidate and matching source review; no old evidence is relabeled.
+- Account data and saved staging devices remain intact. Both separately approved
+  cleanup stages completed. Latest successful aggregate is 329 Places attempts;
+  post-crash connector reads failed twice. Reconcile before another live phase.
+
 ## Approved refresh staging verification — 2026-09-15
 
 - Owner approved deleting exactly the two completed disposable deterministic
