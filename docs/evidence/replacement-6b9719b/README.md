@@ -1,7 +1,7 @@
 # Replacement verification execution
 
 Status: owner approved execution on 2026-09-14; hosted CI/deployment pass and
-all six sequential native builds pass; live verification is in progress.
+all six sequential native builds pass; live verification is paused on request-count drift.
 The [approval record](execution-approval.json) binds the owner's direct reply to
 the plan at `9ee4a8035389d2cdd26e2dec2efae0eb39c5ee42`. The preflight remains a
 historical snapshot; source-bound execution evidence follows separately.
@@ -25,8 +25,12 @@ The [Preview recovered](web-recovery-observation.json) from a later network erro
 with one Retry while retaining the organizer session. [Web request observations](web-request-observation.json)
 count the initial eight Places attempts. [Clipboard recovery](local-helper-observation.json)
 used eight more, and the repaired helper accepted the owner's copied link.
-iPhone join, plan reads and the confirmed vote used sixteen, bringing the run
-total to thirty-two. Three sign-in messages are confirmed, and no new generation has run. Physical iPhone
+iPhone join, plan reads and the confirmed vote used sixteen. Android links and
+a new server-confirmed vote pass, but its phase used twenty-eight attempts
+instead of twelve, bringing the total to sixty. [The sanitized trace](android-request-observation.json)
+shows four additional successful Android detail reads; the UI triggers remain
+unproven. Both native devices are stopped while this is investigated. Twenty
+attempts remain against thirty-six still allocated; live execution stays paused. Three sign-in messages are confirmed, and no new generation has run. Physical iPhone
 [installation succeeded](iphone-installation-observation.json) after the owner
 resolved a Screen Time restriction.
 [PostHog](posthog-web-observation.json) and [Sentry](sentry-web-observation.json)

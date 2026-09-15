@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "application_sha": "6b9719b4e63e34803f2e7c2598e45851790df661",
-  "observed_at": "2026-09-15T06:32:02.219792+00:00",
+  "observed_at": "2026-09-15T06:41:18.920124+00:00",
   "native_artifacts_inspected": 6,
   "test_ios": {
     "profile": "test-ios",
@@ -22,10 +22,10 @@
     "posthog": 1,
     "sentry": 1
   },
-  "places_attempts_this_run": 32,
+  "places_attempts_this_run": 60,
   "gemini_generations_this_run": 0,
   "sign_in_emails_conservatively_consumed": 3,
-  "provider_usage_observed_at": "2026-09-15T04:25:48.709671+00:00",
+  "provider_usage_observed_at": "2026-09-15T06:35:59.211989Z",
   "cumulative_acceptance_complete": false,
   "ios_lifecycle_passed": true,
   "ios_offline_passed": true,
@@ -54,7 +54,7 @@
     "offline": 3
   },
   "android_offline_navigation_overlay_recorded": true,
-  "native_workload_running": true,
+  "native_workload_running": false,
   "remaining_native_profiles": 0,
   "remaining_build_status": "complete",
   "free_disk_gib": 31.608,
@@ -100,7 +100,7 @@
   "iphone_live_vote_server_confirmed": true,
   "iphone_live_join_confirmed": true,
   "iphone_live_account_controls_confirmed": true,
-  "remaining_places_attempts": 48,
+  "remaining_places_attempts": 20,
   "telemetry_test_ios": {
     "profile": "telemetry-test-ios",
     "artifact_name": "TableUs.app",
@@ -135,7 +135,7 @@
       "runtime_delivery_verified": false
     }
   },
-  "native_workload": "preserved-android-emulator",
+  "native_workload": "none-paused",
   "sign_in_emails_owner_confirmed": 3,
   "ios_telemetry_ui_passed": true,
   "ios_api_canary_delivery": {
@@ -157,5 +157,11 @@
   "android_returning_session_owner_check_pending": false,
   "android_returning_authentication_passed": true,
   "android_session_persistence_passed": true,
-  "ios_to_android_session_isolation_passed": true
+  "ios_to_android_session_isolation_passed": true,
+  "android_live_vote_server_confirmed": true,
+  "android_live_links_owner_confirmed": true,
+  "android_additional_detail_reads": 4,
+  "live_verification_paused": true,
+  "live_pause_reason": "Unexpected Android detail-read count; trigger attribution pending",
+  "remaining_planned_places_maximum": 36
 }

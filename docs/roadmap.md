@@ -47,9 +47,12 @@ correct iOS account is restored after a mismatched first attempt was signed out
 locally. Android readiness is installed, and returning Plans plus relaunch are confirmed. The exact-release web canary also
 reached both providers, and the
 repaired local helper accepted the copied private link. The physical iPhone build is installed after the owner resolved a Screen Time
-restriction. Its session restoration, relaunch and canonical auth link pass. Native readiness
-and cumulative acceptance remain the objective, with 32/80 Places attempts and
-three of four emails owner-confirmed.
+restriction. Its session restoration, relaunch and canonical auth link pass. Android links and a new ranked vote also pass, but its phase used twenty-eight
+Places attempts against the expected twelve. Four extra successful detail reads
+are traced to Android; their triggers remain unproven. Live checks are paused at
+60/80 attempts with both native devices stopped. Thirty-six attempts remain
+allocated against only twenty available; do not resume the remaining live phase
+until the drift and its budget are resolved. Three of four emails are confirmed.
 
 Only `docs/task-packets/active.md` is active. Later rows are queued outcomes,
 not instructions to start concurrent agents, scans or cloud work.

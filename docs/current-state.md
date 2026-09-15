@@ -61,13 +61,20 @@ web canary in each provider. A later Preview network error recovered with one
 Retry while retaining the organizer session. The web plan shows four attributed candidates and
 organizer controls. Two private-link rotations are recorded, and the
 [repaired local helper](evidence/replacement-6b9719b/local-helper-observation.json)
-accepted the owner's copied link. Three sign-in emails are confirmed, and thirty-two Places
-attempts are counted: sixteen for web/link recovery and sixteen for iPhone
-join, plan reads and the confirmed vote;
+accepted the owner's copied link. Three sign-in emails are confirmed, and sixty Places
+attempts are counted: sixteen for web/link recovery, sixteen for iPhone
+join/vote and twenty-eight for Android join/vote. Android links, four candidates,
+guest permissions and one new server-confirmed vote pass. The Android phase
+expected at most twelve attempts; [its request trace](evidence/replacement-6b9719b/android-request-observation.json)
+shows one join, one vote and five successful detail reads on the same plan.
+Four extra reads are under investigation; their UI triggers are not established.
+Live verification is paused with twenty attempts remaining against thirty-six
+still allocated. The owner closed the physical iPhone app, and Android was
+stopped without resetting data;
 new Gemini generation remains zero. [Request timing](evidence/replacement-6b9719b/web-request-observation.json)
 is consistent with a web revision refresh following rotation. Native live-device
 and cumulative acceptance remain incomplete. Saved live-account devices remain
-preserved, with only the Android emulator currently running. Accepted artifacts
+preserved and stopped during the request investigation. Accepted artifacts
 remain intact. The
 connected iPhone's first installation was blocked by Screen Time. The owner
 resolved the restriction; the same inspected package is now installed. Physical

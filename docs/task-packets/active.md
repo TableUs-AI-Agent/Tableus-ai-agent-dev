@@ -73,9 +73,15 @@ account controls pass, and both providers received one exact-release web canary.
 See the [execution progress](../evidence/replacement-6b9719b/execution-progress.json).
 The existing web plan has four attributed candidates and organizer controls.
 Two private-link rotations succeeded; the repaired local helper accepted the
-owner's copied link. Usage is thirty-two Places attempts and three confirmed emails,
-with zero new generation. Web/link recovery used sixteen; iPhone join, plan reads
-and the confirmed vote used sixteen. Forty-eight attempts remain allocated to
+owner's copied link. Usage is sixty Places attempts and three confirmed emails,
+with zero new generation. Web/link recovery used sixteen; iPhone join/vote used
+sixteen; Android join/vote used twenty-eight. Android links, four candidates,
+guest controls and a new server vote pass, but the phase expected twelve attempts.
+Four extra Android detail reads are recorded in the request trace; their triggers
+remain under investigation. Live execution is paused and both native devices
+are stopped with data preserved. Twenty attempts remain, while thirty-six are
+still allocated. Resolve the drift and allowance before proceeding. The earlier
+forty-eight-attempt allocation covered
 Android join/vote, organizer changes, native witnesses and one Android manual
 refresh. Use the finalized-state witness to test hidden-route return, then leave
 the finalized plan backgrounded so the reopen witness tests active-plan foreground

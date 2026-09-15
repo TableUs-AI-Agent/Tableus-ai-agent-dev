@@ -2,6 +2,13 @@
 
 ## Replacement execution approval — 2026-09-14
 
+- Pause live verification after Android join/vote used 28 Places attempts
+  against its expected 12. Server metadata confirms one join, one new vote and
+  five successful detail reads for the same plan, all from Android. Preserve
+  these facts without attributing the four extra reads to an unproven UI trigger
+  or application defect. Android was stopped without resetting data and the owner
+  closed the physical app. The run is at 60/80 with 36 attempts still allocated;
+  resolve the cause and allowance before continuing the remaining live phase.
 - Accept the first isolation direction from the unchanged Android provider
   session refreshing at 06:28:43Z after the iOS local sign-out and replacement
   Android installation. The owner confirms Plans before and after relaunch.
