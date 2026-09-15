@@ -13,11 +13,11 @@
     "unrelated_origin_rejected": true,
     "private_link_handoff_complete": true
   },
-  "private_link_contents_retained": false,
   "extra_places_to_prepare_owner_copy": 8,
   "run_places_total": 16,
   "configured_at": "2026-09-15T04:07:30.758Z",
   "owner_confirmation_received": true,
   "successful_submission_origin": "expected",
-  "private_link_rotations_this_run": 2
+  "private_link_rotations_this_run": 2,
+  "private_link_contents_retained_in_evidence": false
 }

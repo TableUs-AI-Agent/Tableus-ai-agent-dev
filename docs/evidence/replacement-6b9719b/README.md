@@ -22,8 +22,9 @@ disposable test devices. [Cleanup](disk-cleanup-execution.json) preserved artifa
 evidence and saved live sessions. Both readiness artifacts now pass inspection;
 the two telemetry profiles remain in progress. [Web request observations](web-request-observation.json)
 count the initial eight Places attempts. [Clipboard recovery](local-helper-observation.json)
-used eight more, for sixteen total, and the repaired helper accepted the owner's
-copied link. One email is counted and no new generation has run. Physical iPhone
+used eight more, and the repaired helper accepted the owner's copied link.
+iPhone join, plan reads and the confirmed vote used sixteen, bringing the run
+total to thirty-two. One email is counted and no new generation has run. Physical iPhone
 [installation succeeded](iphone-installation-observation.json) after the owner
 resolved a Screen Time restriction.
 [PostHog](posthog-web-observation.json) and [Sentry](sentry-web-observation.json)

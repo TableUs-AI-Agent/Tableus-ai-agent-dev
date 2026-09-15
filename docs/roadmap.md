@@ -42,7 +42,7 @@ and both readiness artifacts now pass inspection. The two telemetry profiles
 remain in progress. The exact-release web canary reached both providers, and the
 repaired local helper accepted the copied private link. The physical iPhone build is installed after the owner resolved a Screen Time
 restriction. Its session restoration, relaunch and canonical auth link pass. Native readiness
-and cumulative acceptance remain the objective, with 16/80 Places attempts and
+and cumulative acceptance remain the objective, with 32/80 Places attempts and
 one of four emails consumed.
 
 Only `docs/task-packets/active.md` is active. Later rows are queued outcomes,

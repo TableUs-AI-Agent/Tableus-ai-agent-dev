@@ -6,8 +6,19 @@
   "phases": {
     "returning_authentication": true,
     "session_persistence": true,
-    "verified_auth_link": true
+    "verified_auth_link": true,
+    "verified_join_link": true,
+    "live_location_and_four_candidates": true,
+    "cross_client_vote": true,
+    "account_controls_read_only": true
   },
   "complete": false,
-  "observed_at": "2026-09-15T04:18:38.502966+00:00"
+  "observed_at": "2026-09-15T04:28:40.743684+00:00",
+  "guest_finalize_control_absent": true,
+  "ranked_vote_status": "owner-and-server-confirmed",
+  "server_new_vote_events": 1,
+  "server_vote_at": "2026-09-15T04:24:43.970447+00:00",
+  "export_share_sheet_observed": true,
+  "deletion_confirmation_empty": true,
+  "deletion_invoked": false
 }

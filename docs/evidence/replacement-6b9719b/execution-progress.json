@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "application_sha": "6b9719b4e63e34803f2e7c2598e45851790df661",
-  "observed_at": "2026-09-15T04:13:47.527212+00:00",
+  "observed_at": "2026-09-15T04:32:07.246179+00:00",
   "native_artifacts_inspected": 4,
   "test_ios": {
     "profile": "test-ios",
@@ -22,10 +22,10 @@
     "posthog": 1,
     "sentry": 1
   },
-  "places_attempts_this_run": 16,
+  "places_attempts_this_run": 32,
   "gemini_generations_this_run": 0,
   "sign_in_emails_conservatively_consumed": 1,
-  "provider_usage_observed_at": "2026-09-15T04:11:33.423873+00:00",
+  "provider_usage_observed_at": "2026-09-15T04:25:48.709671+00:00",
   "cumulative_acceptance_complete": false,
   "ios_lifecycle_passed": true,
   "ios_offline_passed": true,
@@ -96,5 +96,9 @@
       "runtime_delivery_verified": false
     }
   },
-  "physical_iphone_installation_status": "installed"
+  "physical_iphone_installation_status": "installed",
+  "iphone_live_vote_server_confirmed": true,
+  "iphone_live_join_confirmed": true,
+  "iphone_live_account_controls_confirmed": true,
+  "remaining_places_attempts": 48
 }

@@ -50,16 +50,19 @@ also records web session restoration, read-only account controls and one deliver
 web canary in each provider. The web plan shows four attributed candidates and
 organizer controls. Two private-link rotations are recorded, and the
 [repaired local helper](evidence/replacement-6b9719b/local-helper-observation.json)
-accepted the owner's copied link. One sign-in email and sixteen Places attempts
-are counted, including eight for the clipboard recovery;
+accepted the owner's copied link. One sign-in email and thirty-two Places
+attempts are counted: sixteen for web/link recovery and sixteen for iPhone
+join, plan reads and the confirmed vote;
 new Gemini generation remains zero. [Request timing](evidence/replacement-6b9719b/web-request-observation.json)
 is consistent with a web revision refresh following rotation. Native live-device
 and cumulative acceptance remain incomplete. Saved live-account devices remain
 stopped and accepted artifacts remain intact during native compilation. The
 connected iPhone's first installation was blocked by Screen Time. The owner
 resolved the restriction; the same inspected package is now installed. Physical
-session restoration, relaunch and canonical auth-link checks pass; the private
-link, voting and foreground-state checks remain in progress.
+session restoration, relaunch, canonical auth/private links, four candidates,
+guest permissions and read-only account controls pass. One new iPhone vote is
+confirmed by its server event. Finalize/reopen, foreground state and rotated-link
+rejection remain in progress.
 
 The EAS build's Expo Doctor step passes 20/21 checks and reports eleven SDK 57
 patch-version recommendations. The exact same warning appears in the retained

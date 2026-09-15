@@ -2,6 +2,11 @@
 
 ## Replacement execution approval — 2026-09-14
 
+- A pre-existing saved-vote label does not prove a new submission. The first
+  iPhone observation had no new server event; the subsequent explicit submission
+  produced one `vote.updated` event. Accept that attributable result. The run
+  now uses 32/80 Places attempts and one of four emails, with zero generations.
+  Allocate the remaining 48 attempts before further plan operations.
 - Both readiness artifacts pass source, receipt, checksum and signer inspection.
   Preserve that acceptance separately from live-device verification. The iPhone
   rejected the first install through ManagedConfiguration; the owner identified

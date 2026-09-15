@@ -73,8 +73,10 @@ account controls pass, and both providers received one exact-release web canary.
 See the [execution progress](../evidence/replacement-6b9719b/execution-progress.json).
 The existing web plan has four attributed candidates and organizer controls.
 Two private-link rotations succeeded; the repaired local helper accepted the
-owner's copied link. Usage is sixteen Places attempts and one counted email,
-with zero new generation. Clipboard recovery used eight of those attempts.
+owner's copied link. Usage is thirty-two Places attempts and one counted email,
+with zero new generation. Web/link recovery used sixteen; iPhone join, plan reads
+and the confirmed vote used sixteen. Forty-eight attempts remain allocated to
+Android join/vote, organizer changes, native witnesses and one Android return.
 The second four-detail response followed rotation and is consistent with the
 web revision poll; it is counted, and native live refresh proof remains pending.
 Use isolated deterministic
@@ -89,7 +91,9 @@ Both readiness artifacts now pass inspection; the two telemetry profiles remain
 in progress. The connected iPhone blocked its first install through Screen Time.
 The owner resolved that restriction, and the same package is installed; physical
 session restoration, relaunch and canonical auth-link checks pass. Remaining
-physical checks are in progress.
+physical checks are in progress. The private link, four candidates, guest controls,
+new ranked vote and read-only account controls are confirmed. Require a new
+server vote event, since the saved label can also reflect the existing vote.
 Keep the 20 GiB start guard and stop on failed inspection or resource checks;
 do not restart the two completed deterministic builds or request their approval again.
 
