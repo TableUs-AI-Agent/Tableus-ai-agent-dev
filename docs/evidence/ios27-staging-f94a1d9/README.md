@@ -111,3 +111,13 @@ disabled with an empty confirmation. No web export file was downloaded. The
 [shared ledger](run-ledger.json) counts two of four emails and four of six
 canaries per provider (including the prior web event); Android reserves the two
 remaining canaries. No new Places or Gemini usage was observed at reconciliation.
+
+## Owner refresh and session check, September 16
+
+The owner confirms physical iPhone scrolling and one explicit refresh finish
+with four cards and the prior vote preserved. Android Plans returns both on
+opening and after closing/reopening, without a code. This proves neither a new
+vote submission nor zero live scrolling requests. Aggregate provider usage is
+337 Places attempts (8/80 new), nine historical Gemini rows and $0.0050015.
+See `owner-refresh-session-checks.json`. The local private-link helper is no
+longer listening; restore it before requesting another QR/link check.

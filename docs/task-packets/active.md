@@ -53,7 +53,10 @@ while the source and report remain unchanged.
   companion); the owner approved six total events per provider. New web/iOS/API
   canaries are delivered in both providers; Android remains. iOS saved-session,
   account export, deletion-readiness and relaunch pass. Android readiness is
-  installed with verified app links; owner session checks are pending. Preserve
+  installed with verified app links; the owner confirms first open and relaunch
+  preserve Plans without a code. Physical iPhone scrolling and one explicit
+  refresh pass with cards and the saved vote preserved. New Places usage is
+  8/80 at 22:31 UTC on September 16; no new Gemini generation. Preserve
   the one simulator AppHang: Apple UI-library frames, no reproduced hang in one
   controlled repeat, cause still unestablished. Do not label cumulative readiness
   passed while physical/Android lifecycle and complete telemetry remain pending.

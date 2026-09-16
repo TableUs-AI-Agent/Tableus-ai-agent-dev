@@ -28,7 +28,10 @@ the owner approved six total events per provider. One web, one iOS and one API
 canary at f94a1d9 are delivered in both providers; Android telemetry remains.
 The saved iOS simulator restored its expected account and passed JSON export,
 deletion-readiness and relaunch. Android readiness is installed with verified
-app links; its owner session check is pending. Sentry reported one two-second
+app links; the owner confirms Plans on opening and after closing/reopening without a code.
+The physical iPhone scrolling and explicit refresh check passed with four cards
+and the prior vote preserved. Aggregate Places usage is 337, or 8/80 new attempts;
+this owner observation does not independently attribute requests to scrolling. Sentry reported one two-second
 simulator AppHang in Apple UI libraries; one controlled export/relaunch repeat
 did not reproduce it, but the cause remains unestablished and is not cleared.
 [Live evidence](evidence/ios27-staging-f94a1d9/README.md) retains this finding.

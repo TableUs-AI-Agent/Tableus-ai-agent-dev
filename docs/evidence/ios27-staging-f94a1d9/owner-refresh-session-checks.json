@@ -1,0 +1,26 @@
+{
+  "schema_version": 1,
+  "application_sha": "f94a1d9d1125e6c9111aa08eda496f014f20d0c0",
+  "recorded_at": "2026-09-16T22:32:29Z",
+  "evidence_kind": "owner_report",
+  "iphone": {
+    "profile": "readiness-ios",
+    "scrolling_completed": true,
+    "explicit_refresh_completed": true,
+    "four_cards_and_previous_vote_preserved": true,
+    "persistent_spinner_reported": false
+  },
+  "android": {
+    "profile": "readiness-android",
+    "plans_on_open_without_code": true,
+    "plans_after_close_and_reopen_without_code": true
+  },
+  "new_vote_submission_proven": false,
+  "provider_observation": {
+    "observed_at": "2026-09-16T22:31:34.765744Z",
+    "places_attempts_all_time": 337,
+    "gemini_usage_rows": 9,
+    "gemini_estimated_usd": 0.0050015
+  },
+  "request_attribution": "Aggregate usage increased by eight since prior observation; individual scrolling requests were not instrumented in this owner check."
+}
