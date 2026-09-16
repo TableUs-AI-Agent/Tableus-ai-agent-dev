@@ -4,9 +4,11 @@
 The owner completed deliberate vote submissions on both readiness devices; the
 server recorded exactly two new vote events from two distinct participants.
 Android scrolling and participant-only controls also pass by owner report. The
-web organizer finalized once, with matching UI and database evidence; device
-finalization observations and reopening remain pending. Latest Places aggregate
-is 365 (36/80 new attempts). No new generation or email was needed.
+web organizer finalized once, and both devices show the chosen winner with
+participant voting/reopen controls absent. The organizer then reopened once;
+web and database both show voting with the two saved votes preserved. Device
+reopen/account observations remain pending. Latest Places aggregate is 385
+(56/80 new attempts). No new generation or email was needed.
 
 The iOS 27 pilot passed for `f94a1d9d1125e6c9111aa08eda496f014f20d0c0`.
 The signed replacement installs and the owner confirms first launch, relaunch

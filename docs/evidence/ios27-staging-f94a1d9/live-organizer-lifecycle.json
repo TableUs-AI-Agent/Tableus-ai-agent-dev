@@ -10,6 +10,17 @@
   "new_finalized_events": 1,
   "web_returned_to_plans": true,
   "web_plans_status_updated_to_finalized": true,
-  "physical_and_android_finalized_observation_pending": true,
-  "reopen_pending": true
+  "physical_and_android_finalized_observation_pending": false,
+  "reopen_pending": false,
+  "physical_and_android_finalized_owner_confirmed": true,
+  "physical_and_android_chosen_winner_owner_confirmed": true,
+  "physical_and_android_vote_and_reopen_controls_absent_owner_confirmed": true,
+  "reopen_observed_at": "2026-09-16T22:41:27.701781Z",
+  "reopen_clicked_once": true,
+  "web_voting_state_visible": true,
+  "database_voting_state": true,
+  "database_finalized_winner_cleared": true,
+  "new_reopen_events": 1,
+  "saved_votes_after_reopen": 2,
+  "physical_and_android_reopen_observation_pending": true
 }

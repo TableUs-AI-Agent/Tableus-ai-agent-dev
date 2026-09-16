@@ -132,3 +132,11 @@ finalization observations and reopening remain pending. Latest Places aggregate
 is 365 (36/80 new attempts). No new generation or email was needed.
 
 See `live-vote-submissions.json` and `live-organizer-lifecycle.json`.
+
+## Finalized device confirmation and organizer reopen
+
+The owner confirms both devices show finalized state and the chosen winner,
+with no participant vote/reopen action. One organizer reopen is verified in the
+web UI and database; the finalized winner is cleared and both votes preserved.
+Device reopen/account observations remain pending. Usage is 385 Places attempts
+(56/80 new) at 22:41:27 UTC. See `live-organizer-lifecycle.json`.
