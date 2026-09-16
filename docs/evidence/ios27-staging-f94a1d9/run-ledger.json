@@ -66,5 +66,12 @@
     "approved_shared_total": 6,
     "increase_approval_pending": false,
     "reason": "Each mobile canary sends an API companion."
+  },
+  "android_telemetry_reservation": {
+    "events_per_provider": 2,
+    "includes_api_companion": true,
+    "status": "installed_awaiting_one_owner_ui_send",
+    "approved_shared_cap": 6,
+    "resend_authorized": false
   }
 }

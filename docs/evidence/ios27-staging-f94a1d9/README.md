@@ -149,3 +149,10 @@ Usage is 397 Places attempts (68/80 new). Restaurant-page checks are paused;
 telemetry can continue without Places requests. Canonical/private-link phases,
 rotation rejection, local sign-out isolation, Android telemetry delivery and
 final cumulative acceptance remain outstanding. See `owner-reopen-account-checks.json`.
+
+The accepted f94a1d9 Android telemetry artifact is installed over the readiness
+app with saved data preserved. Its telemetry route launched successfully; one
+owner button press is pending. Two events per provider are reserved within the
+approved six-event shared cap. No Android canary has been confirmed sent yet.
+Readiness link checks remain incomplete; this telemetry install does not supply
+those missing observations.

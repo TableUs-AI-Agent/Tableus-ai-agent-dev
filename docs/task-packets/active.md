@@ -83,3 +83,10 @@ now confirm reopened voting, preserved selections, JSON export share sheets and
 deletion-readiness with empty confirmation fields. Latest Places aggregate is
 397 (68/80 new attempts); pause restaurant-page checks pending the remaining
 link-check allowance reconciliation. No new generation or email was needed.
+
+The accepted f94a1d9 Android telemetry artifact is installed over the readiness
+app with saved data preserved. Its telemetry route launched successfully; one
+owner button press is pending. Two events per provider are reserved within the
+approved six-event shared cap. No Android canary has been confirmed sent yet.
+Readiness link checks remain incomplete; this telemetry install does not supply
+those missing observations.

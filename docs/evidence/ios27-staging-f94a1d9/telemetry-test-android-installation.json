@@ -1,0 +1,10 @@
+{
+  "application_sha": "f94a1d9d1125e6c9111aa08eda496f014f20d0c0",
+  "operator_sha": "6f42a087e7b8ad6d4964d1659e259b85c97ae0c2",
+  "profile": "telemetry-test-android",
+  "artifact_sha256": "e751a178d92aff237b2a357a8c512a7bdfde24d4fc289249d3f19624a65f8f1b",
+  "installed": true,
+  "saved_device_data_preserved": true,
+  "canaries_sent": false,
+  "observed_at": "2026-09-16T22:45:35.396Z"
+}

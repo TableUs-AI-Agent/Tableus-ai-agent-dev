@@ -186,3 +186,10 @@ API, multi-agent application orchestration, and horizontal scaling have no
 demonstrated need for this beta. Durable idempotency/budget coordination becomes
 mandatory before scaling beyond one process. Reconsider other additions using
 beta observations and a bounded acceptance criterion.
+
+The accepted f94a1d9 Android telemetry artifact is installed over the readiness
+app with saved data preserved. Its telemetry route launched successfully; one
+owner button press is pending. Two events per provider are reserved within the
+approved six-event shared cap. No Android canary has been confirmed sent yet.
+Readiness link checks remain incomplete; this telemetry install does not supply
+those missing observations.

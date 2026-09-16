@@ -325,3 +325,10 @@ The client candidate and prior validation remain on `codex/device-session-plan-r
 `codex/astra-project-reassessment` preserves that evidence checkpoint. The
 separate `.worktrees/native-c5b041c` checkout remains clean at the deployed SHA.
 The original checkout and its unrelated/untracked work are preserved.
+
+The accepted f94a1d9 Android telemetry artifact is installed over the readiness
+app with saved data preserved. Its telemetry route launched successfully; one
+owner button press is pending. Two events per provider are reserved within the
+approved six-event shared cap. No Android canary has been confirmed sent yet.
+Readiness link checks remain incomplete; this telemetry install does not supply
+those missing observations.
