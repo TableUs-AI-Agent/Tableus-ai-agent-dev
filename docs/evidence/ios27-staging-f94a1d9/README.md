@@ -104,3 +104,10 @@ count remained one. Cause is unestablished, so this remains an unresolved findin
 preserved staging emulator and its canonical domain verifies. Owner session and
 physical iPhone refresh observations remain pending. Provider reconciliation at
 02:10:56 UTC still showed 329 Places attempts and nine Gemini records.
+
+The organizer [session survives web reload](web-account-persistence.json). Its
+account page displays export and deletion-readiness controls; deletion remains
+disabled with an empty confirmation. No web export file was downloaded. The
+[shared ledger](run-ledger.json) counts two of four emails and four of six
+canaries per provider (including the prior web event); Android reserves the two
+remaining canaries. No new Places or Gemini usage was observed at reconciliation.
