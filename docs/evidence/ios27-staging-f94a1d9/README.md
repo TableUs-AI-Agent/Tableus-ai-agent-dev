@@ -140,3 +140,12 @@ with no participant vote/reopen action. One organizer reopen is verified in the
 web UI and database; the finalized winner is cleared and both votes preserved.
 Device reopen/account observations remain pending. Usage is 385 Places attempts
 (56/80 new) at 22:41:27 UTC. See `live-organizer-lifecycle.json`.
+
+## Reopened devices and account controls
+
+Both devices pass the owner-observed reopened voting, preserved selections,
+export share-sheet and deletion-readiness checks. No deletion was performed.
+Usage is 397 Places attempts (68/80 new). Restaurant-page checks are paused;
+telemetry can continue without Places requests. Canonical/private-link phases,
+rotation rejection, local sign-out isolation, Android telemetry delivery and
+final cumulative acceptance remain outstanding. See `owner-reopen-account-checks.json`.

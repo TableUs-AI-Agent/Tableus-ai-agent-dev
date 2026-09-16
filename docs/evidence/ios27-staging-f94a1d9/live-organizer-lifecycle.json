@@ -22,5 +22,6 @@
   "database_finalized_winner_cleared": true,
   "new_reopen_events": 1,
   "saved_votes_after_reopen": 2,
-  "physical_and_android_reopen_observation_pending": true
+  "physical_and_android_reopen_observation_pending": false,
+  "physical_and_android_reopen_owner_confirmed": true
 }
