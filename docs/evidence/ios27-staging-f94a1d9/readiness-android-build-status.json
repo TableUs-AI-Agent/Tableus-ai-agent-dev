@@ -1,0 +1,15 @@
+{
+  "profile": "readiness-android",
+  "application_sha": "f94a1d9d1125e6c9111aa08eda496f014f20d0c0",
+  "status": "passed",
+  "started_at": "2026-09-16T00:06:29.310244+00:00",
+  "free_gib_at_start": 24.404,
+  "operator_sha": "7cab4402f1864795b262fa3ea8e5a1e6521855d0",
+  "pid": 56216,
+  "exit_code": 0,
+  "finished_at": "2026-09-16T00:18:35.853688+00:00",
+  "artifact_exists": true,
+  "inspection_exists": true,
+  "receipt_exists": true,
+  "free_gib_at_finish": 24.089
+}

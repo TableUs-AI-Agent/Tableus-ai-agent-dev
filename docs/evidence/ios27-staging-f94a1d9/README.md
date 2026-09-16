@@ -37,6 +37,11 @@ Status: exact-source CI and hosted checks pass. Candidate branch:
   deterministic configuration, telemetry off and the refresh correction pass.
 - The two older root caches were [approved and removed](older-root-cache-cleanup.json),
   preserving source status. The iOS build finished with 24.37 GiB free.
-  Three hosted profiles remain, beginning with `readiness-android`. Both native
+  `readiness-android` subsequently passed its 12-minute build and
+  [independent inspection](readiness-android-verification.json); the
+  [build status](readiness-android-build-status.json) records 24.09 GiB free.
+  Exact source, lock, receipt, signer, staging configuration and transport pass.
+  Its checksum is `d06a893df1cfc5e1ffd91a3bb6f8e9c309b80bfcb7389a82974fccd2ad061000`.
+  Two telemetry profiles remain, beginning with `telemetry-test-ios`. Both native
   deterministic device suites and cumulative live checks remain pending.
   Reuse the accepted signed iOS pilot. No live allowance was consumed by these builds.

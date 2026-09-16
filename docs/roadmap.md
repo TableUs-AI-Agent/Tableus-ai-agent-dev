@@ -9,9 +9,10 @@ and four browser tests; API and protected Preview both serve f94a1d9.
 [Hosted evidence](evidence/ios27-staging-f94a1d9/README.md) verifies source,
 readiness, origins and unchanged associations/protection. Both deterministic native artifacts, `test-android`
 and `test-ios`, built and passed independent source/lock/receipt/configuration
-inspection. Android took about 23 minutes and iOS about 37 minutes. Three
-hosted profiles remain; next is `readiness-android`. Disk recovered to 24.37 GiB.
-Deterministic device suites and cumulative live verification are still pending.
+inspection. The signed `readiness-android` staging artifact also passes
+independent source/lock/receipt/signing/transport checks after a 12-minute build.
+Two telemetry profiles remain, starting with `telemetry-test-ios`; disk is
+24.09 GiB. Deterministic device suites and cumulative live checks remain pending.
 
 Reassessed 2026-09-15. The goal remains an invite-only US beta across web, iOS
 and Android. Preserve the implemented architecture and validate the complete
