@@ -121,3 +121,14 @@ vote submission nor zero live scrolling requests. Aggregate provider usage is
 337 Places attempts (8/80 new), nine historical Gemini rows and $0.0050015.
 See `owner-refresh-session-checks.json`. The local private-link helper is no
 longer listening; restore it before requesting another QR/link check.
+
+## Deliberate voting and organizer finalization
+
+The owner completed deliberate vote submissions on both readiness devices; the
+server recorded exactly two new vote events from two distinct participants.
+Android scrolling and participant-only controls also pass by owner report. The
+web organizer finalized once, with matching UI and database evidence; device
+finalization observations and reopening remain pending. Latest Places aggregate
+is 365 (36/80 new attempts). No new generation or email was needed.
+
+See `live-vote-submissions.json` and `live-organizer-lifecycle.json`.

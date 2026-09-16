@@ -72,3 +72,10 @@ while the source and report remain unchanged.
 - No production/store/cohort action, new resource/secret, migration, scan or
   dependency change is included. Any future application change requires a new
   frozen source review and correctly bound execution evidence.
+
+The owner completed deliberate vote submissions on both readiness devices; the
+server recorded exactly two new vote events from two distinct participants.
+Android scrolling and participant-only controls also pass by owner report. The
+web organizer finalized once, with matching UI and database evidence; device
+finalization observations and reopening remain pending. Latest Places aggregate
+is 365 (36/80 new attempts). No new generation or email was needed.

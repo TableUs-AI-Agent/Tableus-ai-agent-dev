@@ -15,7 +15,7 @@
     "approved_backstop": 409,
     "new_run_places_limit": 80
   },
-  "places_attempts_used": 8,
+  "places_attempts_used": 36,
   "places_attempts_limit": 80,
   "sign_in_messages_used": 2,
   "sign_in_messages_limit": 4,
@@ -51,8 +51,8 @@
   "native_builds_completed": 6,
   "native_builds_remaining": 0,
   "latest_provider_observation": {
-    "observed_at": "2026-09-16T22:31:34.765744Z",
-    "places_attempts_all_time": 337,
+    "observed_at": "2026-09-16T22:37:16.853741Z",
+    "places_attempts_all_time": 365,
     "gemini_usage_rows": 9,
     "gemini_estimated_usd": 0.0050015
   },

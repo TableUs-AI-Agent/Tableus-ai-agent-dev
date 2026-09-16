@@ -1,0 +1,19 @@
+{
+  "application_sha": "f94a1d9d1125e6c9111aa08eda496f014f20d0c0",
+  "observed_at": "2026-09-16T22:35:29.417493Z",
+  "owner_confirmed_both_requested_checks": true,
+  "iphone_new_vote_submission": true,
+  "android_new_vote_submission": true,
+  "participant_finalize_button_absent_owner_report": true,
+  "android_scrolling_passed_owner_report": true,
+  "vote_updated_event_count_before": 4,
+  "vote_updated_event_count_after": 6,
+  "new_distinct_voters": 2,
+  "latest_vote_updated_at": "2026-09-16T22:34:44.613175Z",
+  "provider_observation": {
+    "observed_at": "2026-09-16T22:35:29.417493Z",
+    "places_attempts_all_time": 353,
+    "gemini_usage_rows": 9,
+    "gemini_estimated_usd": 0.0050015
+  }
+}
