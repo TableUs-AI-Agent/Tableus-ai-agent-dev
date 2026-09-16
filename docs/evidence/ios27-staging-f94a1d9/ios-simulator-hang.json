@@ -19,5 +19,7 @@
   "controlled_repeat_export_passed": true,
   "controlled_repeat_session_persisted": true,
   "matching_event_count_after_repeat": 1,
-  "rechecked_at": "2026-09-16T02:09:51.175443+00:00"
+  "rechecked_at": "2026-09-16T02:09:51.175443+00:00",
+  "matching_event_count_latest": 1,
+  "latest_rechecked_at": "2026-09-16T22:49:05Z"
 }

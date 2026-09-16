@@ -21,8 +21,8 @@
   "sign_in_messages_limit": 4,
   "gemini_generations_used": 0,
   "gemini_generations_limit": 0,
-  "analytics_canaries_delivered": 4,
-  "error_canaries_delivered": 4,
+  "analytics_canaries_delivered": 6,
+  "error_canaries_delivered": 6,
   "events_per_provider_limit": 6,
   "phase_events": [
     {
@@ -36,22 +36,22 @@
       "events_reserved_per_provider": 2,
       "includes_api_companion": true,
       "observed_at": "2026-09-16T02:01:47.984357+00:00",
-      "status": "single_ui_send_passed_delivery_pending"
+      "status": "single_ui_send_passed_both_providers_delivered"
     },
     {
       "phase": "web_telemetry",
       "events_reserved_per_provider": 1,
       "includes_api_companion": false,
       "observed_at": "2026-09-16T02:03:58.843405+00:00",
-      "status": "single_ui_send_sent_delivery_pending"
+      "status": "single_ui_send_passed_both_providers_delivered"
     }
   ],
-  "analytics_canaries_attempted": 4,
-  "error_canaries_attempted": 4,
+  "analytics_canaries_attempted": 6,
+  "error_canaries_attempted": 6,
   "native_builds_completed": 6,
   "native_builds_remaining": 0,
   "latest_provider_observation": {
-    "observed_at": "2026-09-16T22:43:59.001828Z",
+    "observed_at": "2026-09-16T22:48:38.261974Z",
     "places_attempts_all_time": 397,
     "gemini_usage_rows": 9,
     "gemini_estimated_usd": 0.0050015
@@ -70,7 +70,7 @@
   "android_telemetry_reservation": {
     "events_per_provider": 2,
     "includes_api_companion": true,
-    "status": "installed_awaiting_one_owner_ui_send",
+    "status": "single_owner_send_passed_both_providers_delivered",
     "approved_shared_cap": 6,
     "resend_authorized": false
   }

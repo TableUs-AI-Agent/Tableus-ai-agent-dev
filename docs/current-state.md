@@ -332,3 +332,11 @@ owner button press is pending. Two events per provider are reserved within the
 approved six-event shared cap. No Android canary has been confirmed sent yet.
 Readiness link checks remain incomplete; this telemetry install does not supply
 those missing observations.
+
+Telemetry is now complete for exact source f94a1d9: PostHog has web 1, iOS 1,
+Android 1 and API 2 events; release/environment-filtered Sentry has web 1, mobile
+2 and API 2 canaries. Including one carried-forward event, both providers used
+6/6 approved events. No more canary sends are authorized. The simulator AppHang
+remains at one matching event; its cause remains unestablished. Places stayed
+at 397 (68/80 new) through telemetry. Remaining live links/session isolation and
+final evidence acceptance are not implied by telemetry completion.
