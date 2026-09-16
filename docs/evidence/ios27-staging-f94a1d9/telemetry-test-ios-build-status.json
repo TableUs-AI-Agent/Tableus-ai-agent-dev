@@ -1,0 +1,15 @@
+{
+  "profile": "telemetry-test-ios",
+  "application_sha": "f94a1d9d1125e6c9111aa08eda496f014f20d0c0",
+  "status": "passed",
+  "started_at": "2026-09-16T00:19:46.103444+00:00",
+  "free_gib_at_start": 23.96,
+  "operator_sha": "825b25854ea26b720d9e6aef395acedf29a10a27",
+  "pid": 63157,
+  "exit_code": 0,
+  "finished_at": "2026-09-16T00:38:39.639803+00:00",
+  "artifact_exists": true,
+  "inspection_exists": true,
+  "receipt_exists": true,
+  "free_gib_at_finish": 21.716
+}

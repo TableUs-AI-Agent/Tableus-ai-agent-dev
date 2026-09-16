@@ -42,6 +42,10 @@ Status: exact-source CI and hosted checks pass. Candidate branch:
   [build status](readiness-android-build-status.json) records 24.09 GiB free.
   Exact source, lock, receipt, signer, staging configuration and transport pass.
   Its checksum is `d06a893df1cfc5e1ffd91a3bb6f8e9c309b80bfcb7389a82974fccd2ad061000`.
-  Two telemetry profiles remain, beginning with `telemetry-test-ios`. Both native
-  deterministic device suites and cumulative live checks remain pending.
+  `telemetry-test-ios` subsequently built in about 19 minutes and passed
+  [independent inspection](telemetry-test-ios-verification.json); its
+  [build status](telemetry-test-ios-build-status.json) records 21.72 GiB free.
+  Checksum: `81075451eb36d6c5d583df8322f48eea98ec7d9eda3fdb932ecf37e2716af5eb`.
+  Only `telemetry-test-android` remains to build. Both native deterministic
+  device suites and cumulative live checks remain pending.
   Reuse the accepted signed iOS pilot. No live allowance was consumed by these builds.
