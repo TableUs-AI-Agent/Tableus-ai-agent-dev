@@ -1,0 +1,36 @@
+{
+  "screenshots": [
+    {
+      "path": "/Users/brianchei/repos/Tableus-ai-agent-dev/.artifacts/mobile/f94a1d9d1125e6c9111aa08eda496f014f20d0c0/evidence/android/attempt-2/offline/android-offline-retry.png",
+      "sha256": "92ab294a4b73b5c9eaf8cac6d16e3a71d8c15fff385d06fda13cbbeb84e9ecd0",
+      "visually_reviewed": true,
+      "observation": "Uncertain create result offers safe retry; duplicate create disabled. Bottom tab icons render as placeholders; labels remain readable."
+    },
+    {
+      "path": "/Users/brianchei/repos/Tableus-ai-agent-dev/.artifacts/mobile/f94a1d9d1125e6c9111aa08eda496f014f20d0c0/evidence/android/attempt-2/offline/android-recovered-finalized.png",
+      "sha256": "a11a8f94c0f4cce000a7c16d29e08eafcb8f5786e1b41f4b75d4670fa12c726e",
+      "visually_reviewed": true,
+      "observation": "Recovered finalized plan displays two fixture participants and chosen Sakura Table."
+    },
+    {
+      "path": "/Users/brianchei/repos/Tableus-ai-agent-dev/.artifacts/mobile/f94a1d9d1125e6c9111aa08eda496f014f20d0c0/evidence/android/attempt-2/offline/android-refresh-after-scrolling.png",
+      "sha256": "b447d05b49f10c71b293112f380f74d19544f6eed91415c9c42b2a507c4d069a",
+      "visually_reviewed": true,
+      "observation": "Explicit refresh button idle; voting plan and existing ranks visible."
+    },
+    {
+      "path": "/Users/brianchei/repos/Tableus-ai-agent-dev/.artifacts/mobile/f94a1d9d1125e6c9111aa08eda496f014f20d0c0/evidence/android/attempt-2/offline/android-refresh-failure-cached-plan.png",
+      "sha256": "06a18282c1b9e03e6f227d37b62b9516be52e1c39ea19f2a6ab92b3a1ca61bec",
+      "visually_reviewed": true,
+      "observation": "Refresh error visible while cached plan and existing ranking remain visible; refresh button available."
+    },
+    {
+      "path": "/Users/brianchei/repos/Tableus-ai-agent-dev/.artifacts/mobile/f94a1d9d1125e6c9111aa08eda496f014f20d0c0/evidence/android/attempt-2/offline/android-refresh-recovered.png",
+      "sha256": "2731fe166e5179605a10066d30bea88241b1eaf5f54d6f6cac876b480c2d6f35",
+      "visually_reviewed": true,
+      "observation": "Error cleared, refresh button idle, plan and existing ranks visible."
+    }
+  ],
+  "scope": "Five offline/refresh screenshots reviewed directly; lifecycle screenshots reviewed earlier.",
+  "residual_visual_issue": "Placeholder bottom-tab icons on Plans; no cause established."
+}

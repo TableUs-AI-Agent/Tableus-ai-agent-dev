@@ -41,9 +41,12 @@ while the source and report remain unchanged.
   Checksum: `81075451eb36d6c5d583df8322f48eea98ec7d9eda3fdb932ecf37e2716af5eb`.
   `telemetry-test-android` passed build and independent inspection in 11 minutes.
   Checksum: `e751a178d92aff237b2a357a8c512a7bdfde24d4fc289249d3f19624a65f8f1b`.
-  All five new artifacts plus the reused iPhone pilot are accepted. Disk is
-  23.51 GiB. Run isolated Android and iOS deterministic suites next.
-  Device lifecycle/offline/refresh suites and bounded live checks remain pending.
+  All five new artifacts plus the reused iPhone pilot are accepted.
+  Android lifecycle/offline and all five refresh phases pass on attempt 2;
+  scrolling caused zero requests and prior votes stayed unchanged. Preserve the
+  first local-backend startup timeout and later successful 1.57-second probe;
+  its original cause is unestablished. Screenshots retain a placeholder tab-icon
+  issue. Run isolated iOS suites next, then bounded live checks.
   Pilot and hosted success do not establish cumulative device acceptance.
 - Both exact cleanup requests completed. Saved devices/account data, source,
   evidence and signed artifacts are preserved; no further cleanup is authorized.

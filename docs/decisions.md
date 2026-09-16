@@ -13,8 +13,13 @@ inspection. The signed `readiness-android` staging artifact also passes
 independent source/lock/receipt/signing/transport checks after a 12-minute build.
 Both telemetry profiles also passed build and independent inspection.
 All five new artifacts are accepted, and the signed iPhone pilot is reused: six
-artifacts total at f94a1d9. Disk is 23.51 GiB. Proceed with isolated deterministic
-device suites, then bounded saved-session/live checks; neither is claimed complete.
+artifacts total at f94a1d9. Android deterministic lifecycle, offline recovery and
+all five refresh phases pass on attempt 2: scrolling causes zero reads or writes
+and the prior vote is unchanged. Attempt 1 timed out starting the local backend;
+a subsequent probe passed in 1.57 seconds, with the original cause unestablished.
+[Android evidence](evidence/ios27-staging-f94a1d9/android-deterministic/attempt-2-status.json)
+is retained alongside the failed attempt. Placeholder tab icons remain a visual
+issue. Isolated iOS suites and bounded live checks remain pending.
 
 ## Same-source hosted verification — 2026-09-15
 

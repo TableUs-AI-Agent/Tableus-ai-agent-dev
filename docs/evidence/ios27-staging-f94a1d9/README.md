@@ -53,5 +53,16 @@ Status: exact-source CI and hosted checks pass. Candidate branch:
   inspected artifacts and the reused signed iPhone pilot.
   Disk is 23.51 GiB. [Available test runtimes](deterministic-device-preflight.json)
   are iOS Simulator 26.5/23F77 and Android API 36 ARM64; iOS 27 physical evidence
-  remains separate. Both deterministic suites and cumulative live checks remain pending.
+  remains separate. iOS deterministic suites and cumulative live checks remain pending.
   Reuse the accepted signed iOS pilot. No live allowance was consumed by these builds.
+
+Android deterministic attempt 2 passed lifecycle, offline recovery and all five
+refresh phases. [Results](android-deterministic/attempt-2-status.json) bind the
+accepted APK to operator `cf26de100e68e4f0ea8a448ba2f9ec433ee2f2f8`. Scrolling
+made zero reads/writes; failed refresh preserved cached content and prior votes.
+The first attempt timed out starting the local backend before app tests; its
+cause remains unestablished after a subsequent 1.57-second successful probe.
+Both attempts are retained. The isolated Android device is stopped and retained.
+[Visual review](android-deterministic/visual-review.json) confirms the refresh
+states and records placeholder bottom-tab icons as a residual visual issue.
+No live provider calls, emails, generation or explicit canaries were used.
