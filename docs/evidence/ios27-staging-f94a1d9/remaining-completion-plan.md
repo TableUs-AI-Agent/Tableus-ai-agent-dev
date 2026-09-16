@@ -1,6 +1,6 @@
 # Remaining bounded completion plan for f94a1d9
 
-Status: extra Places allowance proposed, not approved.
+Status: owner approved the 20-attempt increase on September 16, 2026.
 
 Current source remains f94a1d9d1125e6c9111aa08eda496f014f20d0c0.
 At 2026-09-16T22:48:38Z, Places total is 397: 68 of 80 new attempts used
@@ -12,7 +12,7 @@ telemetry is complete at 6/6 per provider. No new generation is allowed.
 1. Restore the inspected readiness Android artifact without clearing data and
    restore the loopback-only helper using existing dependencies. Prepare one
    fresh private join link from the signed-in web organizer; keep tokens out of
-   chat and tracked evidence. A helper restart lost the prior in-memory link.
+   chat and tracked evidence. Correction: the earlier sandboxed connection failure did not prove the helper stopped. The existing helper is reachable with host network access and retains its link. Reuse after a hash match instead of issuing an unnecessary new link.
 2. Verify cold/warm canonical and private-link opening on the two readiness
    devices. Use one actual existing-member join per device, then stop on Plans.
    Do not resubmit votes, regenerate recommendations, or repeat account exports.

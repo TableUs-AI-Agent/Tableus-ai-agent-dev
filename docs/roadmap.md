@@ -201,3 +201,11 @@ Android 1 and API 2 events; release/environment-filtered Sentry has web 1, mobil
 remains at one matching event; its cause remains unestablished. Places stayed
 at 397 (68/80 new) through telemetry. Remaining live links/session isolation and
 final evidence acceptance are not implied by telemetry completion.
+
+The owner approved 20 additional Places attempts: 100 new attempts relative to
+baseline 329, staging backstop 429. Emails remain 4, canaries remain 6/provider
+(exhausted), and new generations remain zero. The same-source staging redeploy passed; readiness and the 429 backstop
+are verified. Android readiness was restored without clearing data. Correction:
+the previous sandboxed helper connection failure did not establish it stopped;
+host-network access confirms the original helper and retained capability remain.
+No private URL was saved in tracked evidence. See `places-cap-100-approval.json`.

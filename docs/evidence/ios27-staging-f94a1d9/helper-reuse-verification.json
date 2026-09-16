@@ -1,0 +1,11 @@
+{
+  "application_sha": "f94a1d9d1125e6c9111aa08eda496f014f20d0c0",
+  "observed_at": "2026-09-16T22:53:22.790497Z",
+  "existing_helper_reachable_with_host_network_access": true,
+  "current_capability_matches_database": true,
+  "new_link_rotation_not_needed": true,
+  "helper_header_old_source_label_not_artifact_evidence": true,
+  "attempted_new_helper_start_failed_port_in_use": true,
+  "original_helper_untouched": true,
+  "raw_private_link_retained_in_evidence": false
+}

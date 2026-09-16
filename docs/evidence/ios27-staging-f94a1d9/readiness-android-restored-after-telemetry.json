@@ -1,0 +1,11 @@
+{
+  "application_sha": "f94a1d9d1125e6c9111aa08eda496f014f20d0c0",
+  "operator_sha": "7e7fdd3835efa41a5d7e3abc81d9d9e1578f2f77",
+  "profile": "readiness-android",
+  "artifact_sha256": "d06a893df1cfc5e1ffd91a3bb6f8e9c309b80bfcb7389a82974fccd2ad061000",
+  "installed": true,
+  "restored_after_telemetry": true,
+  "saved_device_data_preserved": true,
+  "canaries_sent": false,
+  "observed_at": "2026-09-16T22:52:15.426Z"
+}

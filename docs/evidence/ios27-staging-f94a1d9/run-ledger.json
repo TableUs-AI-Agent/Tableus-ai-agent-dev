@@ -12,11 +12,11 @@
     "gemini_estimated_usd": 0.0050015,
     "latest_usage_at": "2026-09-15 06:33:43.488754+00",
     "prior_backstop": 349,
-    "approved_backstop": 409,
+    "approved_backstop": 429,
     "new_run_places_limit": 80
   },
   "places_attempts_used": 68,
-  "places_attempts_limit": 80,
+  "places_attempts_limit": 100,
   "sign_in_messages_used": 2,
   "sign_in_messages_limit": 4,
   "gemini_generations_used": 0,
@@ -73,5 +73,6 @@
     "status": "single_owner_send_passed_both_providers_delivered",
     "approved_shared_cap": 6,
     "resend_authorized": false
-  }
+  },
+  "places_cap_amendment": "places-cap-100-approval.json"
 }
