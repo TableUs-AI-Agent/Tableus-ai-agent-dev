@@ -50,7 +50,13 @@ while the source and report remain unchanged.
   scrolling causes zero requests and prior votes stay unchanged. Both isolated
   devices are stopped and retained. Bounded live checks remain pending.
   Telemetry requires six shared events per provider (each mobile sends an API
-  companion); the one-event increase from five is requested, not yet approved.
+  companion); the owner approved six total events per provider. New web/iOS/API
+  canaries are delivered in both providers; Android remains. iOS saved-session,
+  account export, deletion-readiness and relaunch pass. Android readiness is
+  installed with verified app links; owner session checks are pending. Preserve
+  the one simulator AppHang: Apple UI-library frames, no reproduced hang in one
+  controlled repeat, cause still unestablished. Do not label cumulative readiness
+  passed while physical/Android lifecycle and complete telemetry remain pending.
   Pilot and hosted success do not establish cumulative device acceptance.
 - Both exact cleanup requests completed. Saved devices/account data, source,
   evidence and signed artifacts are preserved; no further cleanup is authorized.

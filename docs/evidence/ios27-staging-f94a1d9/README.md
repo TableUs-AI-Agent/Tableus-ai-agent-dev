@@ -81,4 +81,26 @@ votes. [Provider totals](provider-before-live.json) remain 329 Places attempts
 and nine Gemini records. No new explicit canaries have been sent. Each mobile
 canary also sends an API companion, so the complete remaining telemetry sequence
 requires six shared events per provider including the prior web event. The
-approved cap remains five; one additional event per provider awaits owner approval.
+owner subsequently approved six total events per provider; see the approval below.
+
+## Partial live checks
+
+The owner [approved six shared telemetry events per provider](telemetry-cap-approval.json).
+The new organizer Preview sign-in used one email; cumulative email usage is two
+of four. [Web](web-session-telemetry.json) and [iOS](ios-saved-session.json) sent
+one explicit client canary each, with one API companion from iOS. [Delivery](telemetry-delivery-partial.json)
+is confirmed in PostHog and all three Sentry projects at exact release f94a1d9.
+Android remains pending; the prior web event still counts in the shared allowance.
+
+The saved iOS simulator retained the expected approved second account after the
+[update](ios-live-installation.json) and controlled relaunch. JSON export opened
+and was dismissed; deletion readiness displayed with an empty confirmation.
+Sentry also reported [one non-canary AppHang](ios-simulator-hang.json) on the
+iOS 26.5 simulator, with Apple UI-library frames and missing native app symbols.
+A single controlled account/export repeat completed normally; the matching event
+count remained one. Cause is unestablished, so this remains an unresolved finding.
+
+[Android readiness](readiness-android-installation.json) is installed on the
+preserved staging emulator and its canonical domain verifies. Owner session and
+physical iPhone refresh observations remain pending. Provider reconciliation at
+02:10:56 UTC still showed 329 Places attempts and nine Gemini records.

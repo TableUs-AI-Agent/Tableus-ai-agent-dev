@@ -1,0 +1,12 @@
+{
+  "application_sha": "f94a1d9d1125e6c9111aa08eda496f014f20d0c0",
+  "operator_sha": "990b3ba17f0f49254250550b1ae606d666a53a76",
+  "profile": "telemetry-test-ios",
+  "artifact_sha256": "81075451eb36d6c5d583df8322f48eea98ec7d9eda3fdb932ecf37e2716af5eb",
+  "device": "CBA2F87D-A080-4898-83A2-748B600225D6",
+  "installed": true,
+  "saved_device_data_preserved": true,
+  "canaries_sent": false,
+  "authentication_observed": false,
+  "observed_at": "2026-09-16T01:39:19.697Z"
+}

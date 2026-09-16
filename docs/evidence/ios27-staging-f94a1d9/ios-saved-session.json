@@ -1,0 +1,18 @@
+{
+  "application_sha": "f94a1d9d1125e6c9111aa08eda496f014f20d0c0",
+  "profile": "telemetry-test-ios",
+  "observed_at": "2026-09-16T02:02:28.512428+00:00",
+  "plans_restored_without_code": true,
+  "expected_second_account_confirmed": true,
+  "json_share_sheet_opened_and_dismissed": true,
+  "deletion_readiness_shown": true,
+  "deletion_confirmation_empty": true,
+  "account_not_deleted": true,
+  "canary_send_count": 1,
+  "canary_api_companion_count": 1,
+  "canary_ui_passed": true,
+  "provider_delivery_pending": true,
+  "physical_ios_readiness_substitute": false,
+  "controlled_relaunch_preserved_session": true,
+  "relaunch_observed_at": "2026-09-16T02:07:06.911304+00:00"
+}

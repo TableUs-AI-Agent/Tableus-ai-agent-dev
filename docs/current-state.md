@@ -24,7 +24,14 @@ deterministic lifecycle/offline and all five refresh phases also pass; scrolling
 caused zero requests and prior votes stayed unchanged. Both isolated devices are
 stopped and retained. Bounded live checks remain pending. Telemetry needs six
 shared events per provider because each mobile check sends an API companion;
-the approved cap remains five while the one-event increase awaits owner approval.
+the owner approved six total events per provider. One web, one iOS and one API
+canary at f94a1d9 are delivered in both providers; Android telemetry remains.
+The saved iOS simulator restored its expected account and passed JSON export,
+deletion-readiness and relaunch. Android readiness is installed with verified
+app links; its owner session check is pending. Sentry reported one two-second
+simulator AppHang in Apple UI libraries; one controlled export/relaunch repeat
+did not reproduce it, but the cause remains unestablished and is not cleared.
+[Live evidence](evidence/ios27-staging-f94a1d9/README.md) retains this finding.
 
 Updated 2026-09-15. The previous 2ad48a8 iPhone build crashed at launch on
 iOS 27 because it lacked the required scene lifecycle. The approved replacement

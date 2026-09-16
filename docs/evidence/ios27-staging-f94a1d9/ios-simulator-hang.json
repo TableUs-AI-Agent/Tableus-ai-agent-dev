@@ -1,0 +1,23 @@
+{
+  "application_sha": "f94a1d9d1125e6c9111aa08eda496f014f20d0c0",
+  "issue_id": "7734692742",
+  "event_id": "1e6bfb6edc314c53a86579b16bb6cf9c",
+  "kind": "AppHang",
+  "threshold_ms": 2000,
+  "environment": "staging",
+  "runtime": "iOS 26.5 simulator",
+  "app_start_at": "2026-09-16T01:39:48Z",
+  "event_at": "2026-09-16T02:00:41.235Z",
+  "top_library": "libswiftCore",
+  "caller_library": "UIKitCore",
+  "app_symbols_missing": true,
+  "cause_established": false,
+  "canary": false,
+  "status": "not_reproduced_in_one_repeat_cause_unestablished",
+  "observed_at": "2026-09-16T02:05:53.712589+00:00",
+  "controlled_repeat_started_at": "2026-09-16T02:06:11.749446+00:00",
+  "controlled_repeat_export_passed": true,
+  "controlled_repeat_session_persisted": true,
+  "matching_event_count_after_repeat": 1,
+  "rechecked_at": "2026-09-16T02:09:51.175443+00:00"
+}
