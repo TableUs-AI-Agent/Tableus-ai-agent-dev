@@ -19,7 +19,12 @@ and the prior vote is unchanged. Attempt 1 timed out starting the local backend;
 a subsequent probe passed in 1.57 seconds, with the original cause unestablished.
 [Android evidence](evidence/ios27-staging-f94a1d9/android-deterministic/attempt-2-status.json)
 is retained alongside the failed attempt. Placeholder tab icons remain a visual
-issue. Isolated iOS suites and bounded live checks remain pending.
+issue (the current tab layout defines labels without custom icons). iOS 26.5
+deterministic lifecycle/offline and all five refresh phases also pass; scrolling
+caused zero requests and prior votes stayed unchanged. Both isolated devices are
+stopped and retained. Bounded live checks remain pending. Telemetry needs six
+shared events per provider because each mobile check sends an API companion;
+the approved cap remains five while the one-event increase awaits owner approval.
 
 Updated 2026-09-15. The previous 2ad48a8 iPhone build crashed at launch on
 iOS 27 because it lacked the required scene lifecycle. The approved replacement

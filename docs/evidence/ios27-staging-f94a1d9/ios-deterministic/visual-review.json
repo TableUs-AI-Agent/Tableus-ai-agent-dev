@@ -1,0 +1,46 @@
+{
+  "screenshots": [
+    {
+      "path": ".artifacts/mobile/f94a1d9d1125e6c9111aa08eda496f014f20d0c0/evidence/ios/lifecycle/ios-finalized-plan.png",
+      "sha256": "03dbc985b485aa43c736458e2efbf5c204941ea99490e9a8dd27f925146329e6",
+      "visually_reviewed": true,
+      "observation": "Finalized plan has two fixture participants, Sakura Table chosen at five points, remaining ranked scores visible and refresh button idle."
+    },
+    {
+      "path": ".artifacts/mobile/f94a1d9d1125e6c9111aa08eda496f014f20d0c0/evidence/ios/lifecycle/ios-rotated-link.png",
+      "sha256": "159433e875b14e43fb0f8ab91e9c722a128e32e4c77a254f7f05b0a4d91204e0",
+      "visually_reviewed": true,
+      "observation": "Invalid, expired or rotated link message is visible; Join this plan button is disabled."
+    },
+    {
+      "path": "/Users/brianchei/repos/Tableus-ai-agent-dev/.artifacts/mobile/f94a1d9d1125e6c9111aa08eda496f014f20d0c0/evidence/ios/offline/ios-offline-retry.png",
+      "sha256": "2b1c67f138d2449d6e8a33779541dddf501a58ffc383123e162295b587f0c5d5",
+      "visually_reviewed": true,
+      "observation": "Uncertain create response offers safe retry with duplicate create disabled; default triangle tab icons and readable labels."
+    },
+    {
+      "path": "/Users/brianchei/repos/Tableus-ai-agent-dev/.artifacts/mobile/f94a1d9d1125e6c9111aa08eda496f014f20d0c0/evidence/ios/offline/ios-recovered-finalized.png",
+      "sha256": "581b8e1d886e76cda9d2eb4c29a4491a5e284669f9cf3a255911404f8354fcee",
+      "visually_reviewed": true,
+      "observation": "Recovered finalized fixture plan shows two participants and chosen Sakura Table."
+    },
+    {
+      "path": "/Users/brianchei/repos/Tableus-ai-agent-dev/.artifacts/mobile/f94a1d9d1125e6c9111aa08eda496f014f20d0c0/evidence/ios/offline/ios-refresh-after-scrolling.png",
+      "sha256": "eff624ae3949b976922508243c755f043b0f629fbdcd8f00d22706618b051485",
+      "visually_reviewed": true,
+      "observation": "Refresh button idle, cached plan and prior ranking visible after scrolling."
+    },
+    {
+      "path": "/Users/brianchei/repos/Tableus-ai-agent-dev/.artifacts/mobile/f94a1d9d1125e6c9111aa08eda496f014f20d0c0/evidence/ios/offline/ios-refresh-failure-cached-plan.png",
+      "sha256": "d9b81b6b8643f76b310037dcd1d25592bab7a2ce47002c854f1ba9faad1b6949",
+      "visually_reviewed": true,
+      "observation": "Refresh error shown while cached plan and prior rank remain visible; retry button available."
+    },
+    {
+      "path": "/Users/brianchei/repos/Tableus-ai-agent-dev/.artifacts/mobile/f94a1d9d1125e6c9111aa08eda496f014f20d0c0/evidence/ios/offline/ios-refresh-recovered.png",
+      "sha256": "250d71cde15b07f34742b7b07a3c822d63eb38e2b2bcd5db23e4e949ecdd2853",
+      "visually_reviewed": true,
+      "observation": "Error cleared; refresh button idle, cached plan and prior rank remain visible."
+    }
+  ]
+}

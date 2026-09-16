@@ -1,0 +1,14 @@
+{
+  "application_sha": "f94a1d9d1125e6c9111aa08eda496f014f20d0c0",
+  "observed_at": "2026-09-16T01:34:22.375081Z",
+  "helper_responds": true,
+  "current_capability_matches_database": true,
+  "canonical_auth_link_present": true,
+  "installed_telemetry_link_present": true,
+  "existing_plan_status": "voting",
+  "candidate_count": 4,
+  "participant_count": 3,
+  "saved_vote_count": 2,
+  "private_link_retained_in_chat": false,
+  "provider_requests_made": 0
+}

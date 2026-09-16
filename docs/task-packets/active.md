@@ -46,7 +46,11 @@ while the source and report remain unchanged.
   scrolling caused zero requests and prior votes stayed unchanged. Preserve the
   first local-backend startup timeout and later successful 1.57-second probe;
   its original cause is unestablished. Screenshots retain a placeholder tab-icon
-  issue. Run isolated iOS suites next, then bounded live checks.
+  issue. iOS lifecycle/offline and all five refresh phases now pass on iOS 26.5;
+  scrolling causes zero requests and prior votes stay unchanged. Both isolated
+  devices are stopped and retained. Bounded live checks remain pending.
+  Telemetry requires six shared events per provider (each mobile sends an API
+  companion); the one-event increase from five is requested, not yet approved.
   Pilot and hosted success do not establish cumulative device acceptance.
 - Both exact cleanup requests completed. Saved devices/account data, source,
   evidence and signed artifacts are preserved; no further cleanup is authorized.

@@ -1,0 +1,56 @@
+{
+  "schema_version": 1,
+  "application_sha": "f94a1d9d1125e6c9111aa08eda496f014f20d0c0",
+  "operator_sha": "fecefa9d51f1e1901495ac304978caec6eb88a1d",
+  "platform": "ios",
+  "build_id": "local-ios-test-f94a1d9",
+  "artifact_sha256": "66f17d41fd32cb3664de1c9da747c35a789c8c0d39a6db24cd6aab13320ab5d9",
+  "provider_mode": "deterministic",
+  "auth_mode": "demo",
+  "telemetry_mode": "off",
+  "phases": [
+    {
+      "phase": "initial",
+      "write_request_count": 0,
+      "request_count": 1,
+      "upstream_request_count": 1,
+      "passed": true
+    },
+    {
+      "phase": "scrolling",
+      "write_request_count": 0,
+      "request_count": 0,
+      "upstream_request_count": 0,
+      "passed": true
+    },
+    {
+      "phase": "slow_refresh",
+      "write_request_count": 0,
+      "request_count": 1,
+      "upstream_request_count": 1,
+      "delayed_response_count": 1,
+      "passed": true
+    },
+    {
+      "phase": "failed_refresh",
+      "write_request_count": 0,
+      "upstream_request_count": 0,
+      "request_count": 3,
+      "synthetic_error_count": 3,
+      "passed": true
+    },
+    {
+      "phase": "recovered_refresh",
+      "write_request_count": 0,
+      "request_count": 1,
+      "upstream_request_count": 1,
+      "passed": true
+    }
+  ],
+  "prior_vote_unchanged": true,
+  "screenshots": [
+    "ios-refresh-after-scrolling.png",
+    "ios-refresh-failure-cached-plan.png",
+    "ios-refresh-recovered.png"
+  ]
+}

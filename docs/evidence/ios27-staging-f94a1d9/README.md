@@ -53,7 +53,7 @@ Status: exact-source CI and hosted checks pass. Candidate branch:
   inspected artifacts and the reused signed iPhone pilot.
   Disk is 23.51 GiB. [Available test runtimes](deterministic-device-preflight.json)
   are iOS Simulator 26.5/23F77 and Android API 36 ARM64; iOS 27 physical evidence
-  remains separate. iOS deterministic suites and cumulative live checks remain pending.
+  remains separate. Cumulative live checks remain pending.
   Reuse the accepted signed iOS pilot. No live allowance was consumed by these builds.
 
 Android deterministic attempt 2 passed lifecycle, offline recovery and all five
@@ -66,3 +66,19 @@ Both attempts are retained. The isolated Android device is stopped and retained.
 [Visual review](android-deterministic/visual-review.json) confirms the refresh
 states and records placeholder bottom-tab icons as a residual visual issue.
 No live provider calls, emails, generation or explicit canaries were used.
+
+iOS 26.5 deterministic lifecycle/offline suites and all five refresh phases
+passed in about 19 minutes on operator `fecefa9d51f1e1901495ac304978caec6eb88a1d`.
+[Status](ios-deterministic/status.json), [refresh results](ios-deterministic/ios-plan-refresh-summary.json)
+and [visual review](ios-deterministic/visual-review.json) preserve the actual
+observations. Scrolling produced zero requests; slow refresh coalesced to one;
+three synthetic failed reads made no upstream requests; recovery needed one read.
+Prior votes stayed unchanged. Both isolated devices are stopped and retained.
+
+[Live preflight](helper-preflight.json) confirms the existing private link still
+matches the dinner plan with four candidates, three participants and two saved
+votes. [Provider totals](provider-before-live.json) remain 329 Places attempts
+and nine Gemini records. No new explicit canaries have been sent. Each mobile
+canary also sends an API companion, so the complete remaining telemetry sequence
+requires six shared events per provider including the prior web event. The
+approved cap remains five; one additional event per provider awaits owner approval.
