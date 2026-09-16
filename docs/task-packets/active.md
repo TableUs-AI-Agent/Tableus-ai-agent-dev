@@ -39,7 +39,10 @@ while the source and report remain unchanged.
   Checksum: `d06a893df1cfc5e1ffd91a3bb6f8e9c309b80bfcb7389a82974fccd2ad061000`.
   `telemetry-test-ios` also passed build and independent inspection in 19 minutes.
   Checksum: `81075451eb36d6c5d583df8322f48eea98ec7d9eda3fdb932ecf37e2716af5eb`.
-  Disk is 21.72 GiB. The final build is `telemetry-test-android`.
+  `telemetry-test-android` passed build and independent inspection in 11 minutes.
+  Checksum: `e751a178d92aff237b2a357a8c512a7bdfde24d4fc289249d3f19624a65f8f1b`.
+  All five new artifacts plus the reused iPhone pilot are accepted. Disk is
+  23.51 GiB. Run isolated Android and iOS deterministic suites next.
   Device lifecycle/offline/refresh suites and bounded live checks remain pending.
   Pilot and hosted success do not establish cumulative device acceptance.
 - Both exact cleanup requests completed. Saved devices/account data, source,

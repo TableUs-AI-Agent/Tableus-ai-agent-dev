@@ -1,0 +1,63 @@
+{
+  "application_sha": "f94a1d9d1125e6c9111aa08eda496f014f20d0c0",
+  "new_artifacts": [
+    {
+      "profile": "test-android",
+      "artifact_sha256": "5ca6c184d0dd716ea80802c3b3d7cd40db6b3b830be7cf5df6249cb7aed4bae7",
+      "build_id": "local-android-test-f94a1d9",
+      "operator_sha": "4e515268386150ab5c26b92c978b72a366612c54",
+      "inspection_passed": true,
+      "receipt_sha256": "9348557d801225aa89dba58d5c22c8cbb5233011bdd99a2d9155e015dd5171ab",
+      "duration_seconds": 1362
+    },
+    {
+      "profile": "test-ios",
+      "artifact_sha256": "66f17d41fd32cb3664de1c9da747c35a789c8c0d39a6db24cd6aab13320ab5d9",
+      "build_id": "local-ios-test-f94a1d9",
+      "operator_sha": "19e7a5ccadef92ab54bb186a9c6067c3b410c8ee",
+      "inspection_passed": true,
+      "receipt_sha256": "ecc385a6914b34d7dffcd205557c1ccf5c977b25ba88c93ce529b0b55775b701",
+      "duration_seconds": 2219
+    },
+    {
+      "profile": "readiness-android",
+      "artifact_sha256": "d06a893df1cfc5e1ffd91a3bb6f8e9c309b80bfcb7389a82974fccd2ad061000",
+      "build_id": "local-android-readiness-f94a1d9",
+      "operator_sha": "7cab4402f1864795b262fa3ea8e5a1e6521855d0",
+      "inspection_passed": true,
+      "receipt_sha256": "f2b8570229984eb7a66e5ff086c3d93cf1de4e035292c75b644776ef2eba93e9",
+      "duration_seconds": 727
+    },
+    {
+      "profile": "telemetry-test-ios",
+      "artifact_sha256": "81075451eb36d6c5d583df8322f48eea98ec7d9eda3fdb932ecf37e2716af5eb",
+      "build_id": "local-ios-telemetry-test-f94a1d9",
+      "operator_sha": "825b25854ea26b720d9e6aef395acedf29a10a27",
+      "inspection_passed": true,
+      "receipt_sha256": "8f1a502c46cb855d17413188d87c37d2b6b5426f069c96a336282d277ffbb583",
+      "duration_seconds": 1134
+    },
+    {
+      "profile": "telemetry-test-android",
+      "artifact_sha256": "e751a178d92aff237b2a357a8c512a7bdfde24d4fc289249d3f19624a65f8f1b",
+      "build_id": "local-android-telemetry-test-f94a1d9",
+      "operator_sha": "3de41a536d8a8ed11cdaef9fab6281e92d8c31cb",
+      "inspection_passed": true,
+      "receipt_sha256": "3250385aa24f5f0178d787d7708f71a88e36f6c247f9d4407a47d4b621be85e9",
+      "duration_seconds": 665
+    }
+  ],
+  "reused_readiness_ios_sha256": "9d569309e437b3212a827305e1e119d4424d65c40f1c5fd464a120ad9bcf1798",
+  "accepted_artifact_count": 6,
+  "all_builds_sequential": true,
+  "all_new_builds_and_reinspection_passed": true,
+  "device_suites_passed": false,
+  "live_acceptance_claimed": false,
+  "new_provider_operations": 0,
+  "new_sign_in_emails": 0,
+  "new_canaries": 0,
+  "private_runner_sha256": {
+    "run-deterministic.py": "655c7f80a2be5868aaa599a4ebb8c8f301582c9fec5e10c245e5d42241189596",
+    "stage-test-artifact.mjs": "e8967d15fb93f5037972cfeeadd051d7e0c8cf537ff24f6b0afa4b2aed4d5e5e"
+  }
+}

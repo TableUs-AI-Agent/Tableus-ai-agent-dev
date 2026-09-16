@@ -46,6 +46,12 @@ Status: exact-source CI and hosted checks pass. Candidate branch:
   [independent inspection](telemetry-test-ios-verification.json); its
   [build status](telemetry-test-ios-build-status.json) records 21.72 GiB free.
   Checksum: `81075451eb36d6c5d583df8322f48eea98ec7d9eda3fdb932ecf37e2716af5eb`.
-  Only `telemetry-test-android` remains to build. Both native deterministic
-  device suites and cumulative live checks remain pending.
+  `telemetry-test-android` passed its 11-minute build and
+  [independent inspection](telemetry-test-android-verification.json). Checksum:
+  `e751a178d92aff237b2a357a8c512a7bdfde24d4fc289249d3f19624a65f8f1b`.
+  The [six-artifact summary](native-builds-summary.json) records all five new
+  inspected artifacts and the reused signed iPhone pilot.
+  Disk is 23.51 GiB. [Available test runtimes](deterministic-device-preflight.json)
+  are iOS Simulator 26.5/23F77 and Android API 36 ARM64; iOS 27 physical evidence
+  remains separate. Both deterministic suites and cumulative live checks remain pending.
   Reuse the accepted signed iOS pilot. No live allowance was consumed by these builds.

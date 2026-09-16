@@ -11,9 +11,10 @@ readiness, origins and unchanged associations/protection. Both deterministic nat
 and `test-ios`, built and passed independent source/lock/receipt/configuration
 inspection. The signed `readiness-android` staging artifact also passes
 independent source/lock/receipt/signing/transport checks after a 12-minute build.
-`telemetry-test-ios` also built in about 19 minutes and passed independent
-inspection. Only `telemetry-test-android` remains to build; disk is 21.72 GiB.
-Deterministic device suites and cumulative live checks remain pending.
+Both telemetry profiles also passed build and independent inspection.
+All five new artifacts are accepted, and the signed iPhone pilot is reused: six
+artifacts total at f94a1d9. Disk is 23.51 GiB. Proceed with isolated deterministic
+device suites, then bounded saved-session/live checks; neither is claimed complete.
 
 Updated 2026-09-15. The previous 2ad48a8 iPhone build crashed at launch on
 iOS 27 because it lacked the required scene lifecycle. The approved replacement
