@@ -29,8 +29,14 @@ Status: exact-source CI and hosted checks pass. Candidate branch:
   and [inactive Astra caches](inactive-astra-cache-cleanup.json). Source status
   remained unchanged. The build started at 21.47 GiB and finished at 18.20 GiB
   after its temporary workspace cleanup; the 9 GiB stop guard did not trigger.
-- Four native builds and deterministic/live device verification remain. The next
-  build is `test-ios`. The owner approved the two older root caches;
-  [cleanup completed](older-root-cache-cleanup.json), source status is unchanged
-  and free disk is 21.20 GiB.
-  Reuse the accepted signed iOS pilot. No live allowance was consumed by this build.
+- `test-ios` built successfully in about 37 minutes and passed
+  [independent verification](test-ios-verification.json); its
+  [build status](test-ios-build-status.json) records a clean export and receipt.
+  Artifact SHA-256: `66f17d41fd32cb3664de1c9da747c35a789c8c0d39a6db24cd6aab13320ab5d9`.
+  Exact source/lock, matching receipts/inspections, simulator platform,
+  deterministic configuration, telemetry off and the refresh correction pass.
+- The two older root caches were [approved and removed](older-root-cache-cleanup.json),
+  preserving source status. The iOS build finished with 24.37 GiB free.
+  Three hosted profiles remain, beginning with `readiness-android`. Both native
+  deterministic device suites and cumulative live checks remain pending.
+  Reuse the accepted signed iOS pilot. No live allowance was consumed by these builds.

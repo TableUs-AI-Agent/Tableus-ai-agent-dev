@@ -7,11 +7,11 @@ records zero added Places/Gemini usage or emails. The owner approved the
 remaining verification. Exact-source CI now passes 226 JavaScript, 101 Python
 and four browser tests; API and protected Preview both serve f94a1d9.
 [Hosted evidence](evidence/ios27-staging-f94a1d9/README.md) verifies source,
-readiness, origins and unchanged associations/protection. The first native build, `test-android`, passed
-in about 23 minutes and independent source/lock/signing/receipt inspection
-passed. Four builds remain. The owner approved two older root caches;
-cleanup is complete with source status unchanged and 21.20 GiB free.
-The next profile is `test-ios`. Saved devices and accepted artifacts are preserved.
+readiness, origins and unchanged associations/protection. Both deterministic native artifacts, `test-android`
+and `test-ios`, built and passed independent source/lock/receipt/configuration
+inspection. Android took about 23 minutes and iOS about 37 minutes. Three
+hosted profiles remain; next is `readiness-android`. Disk recovered to 24.37 GiB.
+Deterministic device suites and cumulative live verification are still pending.
 
 Reassessed 2026-09-15. The goal remains an invite-only US beta across web, iOS
 and Android. Preserve the implemented architecture and validate the complete

@@ -33,8 +33,10 @@ while the source and report remain unchanged.
 - Both additional cache cleanups completed and `test-android` passed in about
   23 minutes. Independent receipt/source/lock/signing inspection passes;
   artifact SHA-256 is `5ca6c184d0dd716ea80802c3b3d7cd40db6b3b830be7cf5df6249cb7aed4bae7`.
-  Four profiles remain. The two older root caches were approved and removed;
-  source status is unchanged and 21.20 GiB is free. Proceed to `test-ios`.
+  `test-ios` also passed build and independent verification in about 37 minutes.
+  Its checksum is `66f17d41fd32cb3664de1c9da747c35a789c8c0d39a6db24cd6aab13320ab5d9`.
+  Disk recovered to 24.37 GiB. Three hosted profiles remain, beginning with
+  `readiness-android`; device lifecycle/offline/refresh suites remain pending.
   Pilot and hosted success do not establish cumulative device acceptance.
 - Both exact cleanup requests completed. Saved devices/account data, source,
   evidence and signed artifacts are preserved; no further cleanup is authorized.
