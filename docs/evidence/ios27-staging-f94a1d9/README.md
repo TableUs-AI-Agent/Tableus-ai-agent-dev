@@ -177,3 +177,12 @@ The existing helper capability matches the current plan. Reuse avoids an
 unnecessary link rotation. Both devices now await cold/warm private-link
 observations with exactly one existing-member join per platform. The old helper
 header is not used as artifact evidence. See `helper-reuse-verification.json`.
+
+The owner confirms private-link cold and warm opening on both readiness devices,
+with one existing-member join per device preserving four cards and saved votes.
+The organizer then rotated once; one database event confirms the old helper
+capability is invalid. Device rejection and canonical cold/warm observations
+are pending. Usage is 421 Places attempts (92/100 new), leaving eight attempts.
+No new vote, generation, email or telemetry send was requested. Local sign-out
+isolation still requires a successful post-sign-out refresh on the other device;
+cached Plans alone will not be accepted.

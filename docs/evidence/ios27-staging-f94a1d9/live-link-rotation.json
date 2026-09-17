@@ -1,0 +1,11 @@
+{
+  "application_sha": "f94a1d9d1125e6c9111aa08eda496f014f20d0c0",
+  "observed_at": "2026-09-17T00:45:32.165446Z",
+  "organizer_rotation_clicked_once": true,
+  "database_new_rotation_events": 1,
+  "old_helper_capability_invalidated": true,
+  "helper_left_unchanged_for_rejection_checks": true,
+  "owner_device_rejections_pending": true,
+  "owner_canonical_cold_warm_checks_pending": true,
+  "raw_capability_retained": false
+}

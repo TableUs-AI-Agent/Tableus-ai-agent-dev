@@ -348,3 +348,12 @@ are verified. Android readiness was restored without clearing data. Correction:
 the previous sandboxed helper connection failure did not establish it stopped;
 host-network access confirms the original helper and retained capability remain.
 No private URL was saved in tracked evidence. See `places-cap-100-approval.json`.
+
+The owner confirms private-link cold and warm opening on both readiness devices,
+with one existing-member join per device preserving four cards and saved votes.
+The organizer then rotated once; one database event confirms the old helper
+capability is invalid. Device rejection and canonical cold/warm observations
+are pending. Usage is 421 Places attempts (92/100 new), leaving eight attempts.
+No new vote, generation, email or telemetry send was requested. Local sign-out
+isolation still requires a successful post-sign-out refresh on the other device;
+cached Plans alone will not be accepted.
