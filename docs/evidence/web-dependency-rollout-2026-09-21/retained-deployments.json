@@ -1,0 +1,606 @@
+{
+  "observed_at": "2026-09-21T21:56:50.056010+00:00",
+  "scope": "Read-only inventory; no deletion or exposure claim for unprobed URLs.",
+  "pagination": {
+    "count": 85,
+    "next": null,
+    "prev": 1789512779937
+  },
+  "deployments": [
+    {
+      "id": "dpl_5iF8xTCbfuJghn2bRuUSGdKoRiJb",
+      "url": "tableus-staging-i6b1exrb3-briancheis-projects.vercel.app",
+      "git_sha": "f94a1d9d1125e6c9111aa08eda496f014f20d0c0",
+      "target": null,
+      "state": "READY"
+    },
+    {
+      "id": "dpl_JAB7DRA2MnojnjkKycfR8dQDLhnw",
+      "url": "tableus-staging-le68rjle9-briancheis-projects.vercel.app",
+      "git_sha": "f94a1d9d1125e6c9111aa08eda496f014f20d0c0",
+      "target": null,
+      "state": "READY"
+    },
+    {
+      "id": "dpl_7WqJNTybVFA425ABS7uB3rWGkPKu",
+      "url": "tableus-staging-rk6jt0id1-briancheis-projects.vercel.app",
+      "git_sha": "2ad48a8d8ec4d3aa9a7bd52061b823bb55960bcd",
+      "target": null,
+      "state": "READY"
+    },
+    {
+      "id": "dpl_2qeefqPhARdErQxUqxLssCintxte",
+      "url": "tableus-staging-949ez84u1-briancheis-projects.vercel.app",
+      "git_sha": "6b9719b4e63e34803f2e7c2598e45851790df661",
+      "target": null,
+      "state": "READY"
+    },
+    {
+      "id": "dpl_9zGVqXpFNQkCzSXBaecR18hqMs2M",
+      "url": "tableus-staging-3e0h7umke-briancheis-projects.vercel.app",
+      "git_sha": "c5b041c85f4f7b959436c13bef48c959622c624f",
+      "target": null,
+      "state": "READY"
+    },
+    {
+      "id": "dpl_GyjWpv94HjR853H4uAzZg2AQvc2L",
+      "url": "tableus-staging-au6loiegv-briancheis-projects.vercel.app",
+      "git_sha": "c5b041c85f4f7b959436c13bef48c959622c624f",
+      "target": null,
+      "state": "READY"
+    },
+    {
+      "id": "dpl_7yiJcGeeVGHBRzFggodNCLzoiAeX",
+      "url": "tableus-staging-dwuhnprja-briancheis-projects.vercel.app",
+      "git_sha": "daa89a03e1ba09b4249125476c5d28b7f2a98f31",
+      "target": null,
+      "state": "READY"
+    },
+    {
+      "id": "dpl_2kjtkTVh3xx6cW5Tq43JRMad3oMv",
+      "url": "tableus-staging-8y1gj9ciw-briancheis-projects.vercel.app",
+      "git_sha": "daa89a03e1ba09b4249125476c5d28b7f2a98f31",
+      "target": null,
+      "state": "READY"
+    },
+    {
+      "id": "dpl_7hBm4R9ytKmxt1GjHGzfv4uG4nQ9",
+      "url": "tableus-staging-m1kzu1nia-briancheis-projects.vercel.app",
+      "git_sha": "c917ca347bfc7508b5b6892f658a8cc537e49b97",
+      "target": null,
+      "state": "READY"
+    },
+    {
+      "id": "dpl_6TGexWd8Ntgi8HBjnajVeAX2fvTC",
+      "url": "tableus-staging-qm8mqach3-briancheis-projects.vercel.app",
+      "git_sha": "c917ca347bfc7508b5b6892f658a8cc537e49b97",
+      "target": null,
+      "state": "READY"
+    },
+    {
+      "id": "dpl_7qCect6XjwFHWsJTDsBV4WBaJEPL",
+      "url": "tableus-staging-1sa8jvyde-briancheis-projects.vercel.app",
+      "git_sha": "006d27c2307016317eb92e78af7dea98e3e53b35",
+      "target": null,
+      "state": "READY"
+    },
+    {
+      "id": "dpl_6RmkLqCkFkB9Urro4X8Z3ZhM3dCH",
+      "url": "tableus-staging-34aohwivp-briancheis-projects.vercel.app",
+      "git_sha": "006d27c2307016317eb92e78af7dea98e3e53b35",
+      "target": null,
+      "state": "READY"
+    },
+    {
+      "id": "dpl_EpX2TtZRH3BDeyuPwXDZbuFiZAFB",
+      "url": "tableus-staging-lmu4i1aoz-briancheis-projects.vercel.app",
+      "git_sha": "f496e6713d671e799082578af835047b59925208",
+      "target": null,
+      "state": "READY"
+    },
+    {
+      "id": "dpl_gnojfix2ZE9rPHpbXFRqNNMbGa32",
+      "url": "tableus-staging-bof7oyudz-briancheis-projects.vercel.app",
+      "git_sha": "f496e6713d671e799082578af835047b59925208",
+      "target": null,
+      "state": "READY"
+    },
+    {
+      "id": "dpl_2vLb8tcfH3TuQEQUJWwhuHxx7zBn",
+      "url": "tableus-staging-78r5iusws-briancheis-projects.vercel.app",
+      "git_sha": "d025b567447cb2226233e49aca33994c1945aae9",
+      "target": null,
+      "state": "READY"
+    },
+    {
+      "id": "dpl_DWgC2sp38f5QkZw6AzEqryb5gZos",
+      "url": "tableus-staging-6heggh6we-briancheis-projects.vercel.app",
+      "git_sha": "d025b567447cb2226233e49aca33994c1945aae9",
+      "target": null,
+      "state": "ERROR"
+    },
+    {
+      "id": "dpl_CrQvksKSzgNSi21eTaMv3uP9iKEk",
+      "url": "tableus-staging-k5f9yuxj8-briancheis-projects.vercel.app",
+      "git_sha": "069473c24e7921e5b4b2ad51faa04e71899721ad",
+      "target": null,
+      "state": "ERROR"
+    },
+    {
+      "id": "dpl_6KHTRhyUS9qTAeJ7eXw3UvaghQmz",
+      "url": "tableus-staging-d03vwuphu-briancheis-projects.vercel.app",
+      "git_sha": "d0955f5d08537b3251341720ed3a28453a70e13b",
+      "target": null,
+      "state": "READY"
+    },
+    {
+      "id": "dpl_B9CJ2SegjS5Q2udWRcH4XCEnc1uM",
+      "url": "tableus-staging-2moukx21m-briancheis-projects.vercel.app",
+      "git_sha": "d0955f5d08537b3251341720ed3a28453a70e13b",
+      "target": null,
+      "state": "READY"
+    },
+    {
+      "id": "dpl_DiEJak7j3vYzVQEZ16MwsiRc3Nm1",
+      "url": "tableus-staging-4fq0d15ap-briancheis-projects.vercel.app",
+      "git_sha": "0de0c34c0806e25e6b0cea664159e0800fd2accf",
+      "target": null,
+      "state": "READY"
+    },
+    {
+      "id": "dpl_57BkSBQS6xgfBdRB1FGdrE4LQtsA",
+      "url": "tableus-staging-nw45aa1gc-briancheis-projects.vercel.app",
+      "git_sha": "0de0c34c0806e25e6b0cea664159e0800fd2accf",
+      "target": null,
+      "state": "READY"
+    },
+    {
+      "id": "dpl_ZQPN8ar36aXr1UQDnaejypWPNrVi",
+      "url": "tableus-staging-2vrti4jez-briancheis-projects.vercel.app",
+      "git_sha": "ac099f37f38a959f3c5d86c51ce78a225a836d09",
+      "target": null,
+      "state": "READY"
+    },
+    {
+      "id": "dpl_6e8zfPN3XbuDG4Xp5QvvRmwFAfYZ",
+      "url": "tableus-staging-92gzmd7ep-briancheis-projects.vercel.app",
+      "git_sha": "ac099f37f38a959f3c5d86c51ce78a225a836d09",
+      "target": null,
+      "state": "READY"
+    },
+    {
+      "id": "dpl_GnMhJ36miLSbYYTdRQTuCYGmJx4x",
+      "url": "tableus-staging-788q4zhfs-briancheis-projects.vercel.app",
+      "git_sha": "017c40f7ad96fa9e241ec833392f321ab63421b7",
+      "target": null,
+      "state": "READY"
+    },
+    {
+      "id": "dpl_3tiC3vyXRY2JRPAC8pUkPgWVCPfe",
+      "url": "tableus-staging-nqpmz6nwj-briancheis-projects.vercel.app",
+      "git_sha": "017c40f7ad96fa9e241ec833392f321ab63421b7",
+      "target": null,
+      "state": "READY"
+    },
+    {
+      "id": "dpl_9LChLbjNH1qJtrJJ9oHA5U3v2fpW",
+      "url": "tableus-staging-bx0w4n90b-briancheis-projects.vercel.app",
+      "git_sha": "c8a506fcfb0add43b2a156321628653e177fc1bf",
+      "target": null,
+      "state": "READY"
+    },
+    {
+      "id": "dpl_HLad1veXNVj6RpcprzCqz6R39znN",
+      "url": "tableus-staging-d46kypbqn-briancheis-projects.vercel.app",
+      "git_sha": "c8a506fcfb0add43b2a156321628653e177fc1bf",
+      "target": null,
+      "state": "READY"
+    },
+    {
+      "id": "dpl_DVvcq29sLCEp93McXAe4Gc3pBr1M",
+      "url": "tableus-staging-kev9oukxn-briancheis-projects.vercel.app",
+      "git_sha": "38aab2d49088416a26704a391bcf2bf21288ee2b",
+      "target": null,
+      "state": "READY"
+    },
+    {
+      "id": "dpl_5XjBDyANBcm5SsyGe7GCAZywVLyf",
+      "url": "tableus-staging-ot2cs5wu5-briancheis-projects.vercel.app",
+      "git_sha": "38aab2d49088416a26704a391bcf2bf21288ee2b",
+      "target": null,
+      "state": "READY"
+    },
+    {
+      "id": "dpl_BroLnaTcibkjXzSi7mCq5WR4U9Bz",
+      "url": "tableus-staging-lpchxzasl-briancheis-projects.vercel.app",
+      "git_sha": "ed7820b92a22a4f754e1bbaa1e5177411801675f",
+      "target": null,
+      "state": "READY"
+    },
+    {
+      "id": "dpl_7QS5Er33PBqt3eyz8RKdu7Xd1nNQ",
+      "url": "tableus-staging-6xrx0nfew-briancheis-projects.vercel.app",
+      "git_sha": "f7399b29ae23fff5d385107e775b413feba20e3d",
+      "target": null,
+      "state": "READY"
+    },
+    {
+      "id": "dpl_4BFp6gSrY1eKX1G4X8t2ogyg2wct",
+      "url": "tableus-staging-jikvzaigs-briancheis-projects.vercel.app",
+      "git_sha": "f7399b29ae23fff5d385107e775b413feba20e3d",
+      "target": null,
+      "state": "READY"
+    },
+    {
+      "id": "dpl_5vPNZDsApkj2LunbkbKw5epEimR5",
+      "url": "tableus-staging-p32pyo5o0-briancheis-projects.vercel.app",
+      "git_sha": "c52d723eb7b310d316cd7890e5a2d6362f764126",
+      "target": null,
+      "state": "READY"
+    },
+    {
+      "id": "dpl_JDuKnXvJn6veXq5yuZBUAjuM12jS",
+      "url": "tableus-staging-cbzpke6e1-briancheis-projects.vercel.app",
+      "git_sha": "c52d723eb7b310d316cd7890e5a2d6362f764126",
+      "target": null,
+      "state": "READY"
+    },
+    {
+      "id": "dpl_7csJvHoJH9qgFZDijbwu3w36r2sK",
+      "url": "tableus-staging-eck69x9mb-briancheis-projects.vercel.app",
+      "git_sha": "e1184eca9b73e1a9f26d1007ab543df9d54c7124",
+      "target": "production",
+      "state": "READY"
+    },
+    {
+      "id": "dpl_5YLd4XGn1hfVMsa5fspbPreZYTgY",
+      "url": "tableus-staging-fp4ujw4mo-briancheis-projects.vercel.app",
+      "git_sha": "8e9625ee1c8beda16e1302ef4ec25cfa856b4592",
+      "target": null,
+      "state": "READY"
+    },
+    {
+      "id": "dpl_4M7eSvsht9UNB2wqmCjZ1pVUmHiD",
+      "url": "tableus-staging-5bs8p4elx-briancheis-projects.vercel.app",
+      "git_sha": null,
+      "target": null,
+      "state": "READY"
+    },
+    {
+      "id": "dpl_9eBdXTRnDqtvA2BcDU3x5sJ2ZtBa",
+      "url": "tableus-staging-mcg3g3cf8-briancheis-projects.vercel.app",
+      "git_sha": "4920d99b11b06c4e0aa1c4afc3f91763bb53ee1c",
+      "target": null,
+      "state": "READY"
+    },
+    {
+      "id": "dpl_D4cVZtJw21eT9MwMjGn4a3J69y6y",
+      "url": "tableus-staging-94yt5jmcd-briancheis-projects.vercel.app",
+      "git_sha": null,
+      "target": null,
+      "state": "READY"
+    },
+    {
+      "id": "dpl_4UVgirJ4VQNg78opaQPte5LaZAks",
+      "url": "tableus-staging-3d7lb5u71-briancheis-projects.vercel.app",
+      "git_sha": "932ac249421b190f932fc23f6e489593de88fe2a",
+      "target": null,
+      "state": "READY"
+    },
+    {
+      "id": "dpl_D7As8AZR5XyojNdHUzffKiFwVJ2e",
+      "url": "tableus-staging-121nmtmh8-briancheis-projects.vercel.app",
+      "git_sha": "24be75a3f4c1d2bebf81e2a0e0d8035ca924a2d4",
+      "target": null,
+      "state": "READY"
+    },
+    {
+      "id": "dpl_8eVv2GgHhXrbLSWcg6V3bTio7DRz",
+      "url": "tableus-staging-4mslu9ncx-briancheis-projects.vercel.app",
+      "git_sha": "24be75a3f4c1d2bebf81e2a0e0d8035ca924a2d4",
+      "target": null,
+      "state": "READY"
+    },
+    {
+      "id": "dpl_29gm9hzdzahLryACm8w8qsuhSMav",
+      "url": "tableus-staging-dek87jt8v-briancheis-projects.vercel.app",
+      "git_sha": "24be75a3f4c1d2bebf81e2a0e0d8035ca924a2d4",
+      "target": null,
+      "state": "READY"
+    },
+    {
+      "id": "dpl_ppTsncJC6a8ZZMSoG77m8JqoH29e",
+      "url": "tableus-staging-i4xto54qw-briancheis-projects.vercel.app",
+      "git_sha": "24be75a3f4c1d2bebf81e2a0e0d8035ca924a2d4",
+      "target": null,
+      "state": "READY"
+    },
+    {
+      "id": "dpl_3X3robVpgURRdMWBtThvzt7xDfx1",
+      "url": "tableus-staging-hju8twi76-briancheis-projects.vercel.app",
+      "git_sha": "3820297ff3a91a04695a4f7187bd8fc850a234dd",
+      "target": "production",
+      "state": "READY"
+    },
+    {
+      "id": "dpl_FuKWFf1ArCd1JP3cD4L4BKK1hXvT",
+      "url": "tableus-staging-7dlcrgtr1-briancheis-projects.vercel.app",
+      "git_sha": "38ccfeb18ff3a27975822114d7cb03ce7b05e712",
+      "target": null,
+      "state": "READY"
+    },
+    {
+      "id": "dpl_Ad4H9FqVAQJviSkP2KYTKWMkKxbt",
+      "url": "tableus-staging-bzs59vfgl-briancheis-projects.vercel.app",
+      "git_sha": "2eb428a05913c60dd1af1ae59fdd79fb233c5ede",
+      "target": null,
+      "state": "READY"
+    },
+    {
+      "id": "dpl_CbhdtEJcAhUx5dWUceA5pCkZ9V4X",
+      "url": "tableus-staging-565p1z4nt-briancheis-projects.vercel.app",
+      "git_sha": "2eb428a05913c60dd1af1ae59fdd79fb233c5ede",
+      "target": null,
+      "state": "READY"
+    },
+    {
+      "id": "dpl_DSyvQXhZt9fM1vS7qMyZTAiaXL84",
+      "url": "tableus-staging-g5bcov7bu-briancheis-projects.vercel.app",
+      "git_sha": "2eb428a05913c60dd1af1ae59fdd79fb233c5ede",
+      "target": null,
+      "state": "READY"
+    },
+    {
+      "id": "dpl_HZMBnHbtYRh3fnRP6uU1EtiXgt9y",
+      "url": "tableus-staging-e2imsha9r-briancheis-projects.vercel.app",
+      "git_sha": "0b7de266d4b053d49267b2ac22bd85052ab3ab8f",
+      "target": null,
+      "state": "READY"
+    },
+    {
+      "id": "dpl_7McMcaJ2MNiX3mX6x7EhKFcjD5L3",
+      "url": "tableus-staging-6ttco8ntj-briancheis-projects.vercel.app",
+      "git_sha": "82c1d45f010a686df8802ab4b8a502731aa1be6f",
+      "target": null,
+      "state": "READY"
+    },
+    {
+      "id": "dpl_7uCBp4NWMtGYiRCKFY5pMDbAiVPs",
+      "url": "tableus-staging-r8r25sc46-briancheis-projects.vercel.app",
+      "git_sha": "e89d5c4f1664ab0ec0e7d5bec3dd196439283aeb",
+      "target": null,
+      "state": "READY"
+    },
+    {
+      "id": "dpl_pYx4yMV6E44fUAf5WmVB85n81AUw",
+      "url": "tableus-staging-p9x0iusy7-briancheis-projects.vercel.app",
+      "git_sha": "90691b1c53812fc140da465e1b5e362c781f1139",
+      "target": null,
+      "state": "READY"
+    },
+    {
+      "id": "dpl_GNkWuBRS1jhbwZ1RDw5YK6BMykQ7",
+      "url": "tableus-staging-6q7o0u415-briancheis-projects.vercel.app",
+      "git_sha": "6606771383b2a991f3a787dbc612ecc710d31195",
+      "target": "production",
+      "state": "READY"
+    },
+    {
+      "id": "dpl_BtLW1z2kJFha9a3HV6g5orpiNBWa",
+      "url": "tableus-staging-i3ub2mn2w-briancheis-projects.vercel.app",
+      "git_sha": "314245c422f3b32952a456b21f12db7981057775",
+      "target": null,
+      "state": "READY"
+    },
+    {
+      "id": "dpl_9Wi52YwPznPx7PjDhFs42JkpS7Hd",
+      "url": "tableus-staging-ns1u0fqym-briancheis-projects.vercel.app",
+      "git_sha": "7109cdcde86bd125c86c38980e823ab0a07abdc9",
+      "target": "production",
+      "state": "READY"
+    },
+    {
+      "id": "dpl_DbNsw5euzKxDjoDVBUdj2r9dwXFn",
+      "url": "tableus-staging-2fskk2zjd-briancheis-projects.vercel.app",
+      "git_sha": "87a2a00c2917f45ca8888a1fe48e4fd00883be15",
+      "target": null,
+      "state": "READY"
+    },
+    {
+      "id": "dpl_GRdJeZMAfKc7e4dPJESvaYZVnou6",
+      "url": "tableus-staging-5k9hbnlj0-briancheis-projects.vercel.app",
+      "git_sha": "4a790b4ee40a12cdba8540fb12da586b3373a895",
+      "target": "production",
+      "state": "READY"
+    },
+    {
+      "id": "dpl_AFJWS6begmhUcBnkZAiaUZ8WjBXH",
+      "url": "tableus-staging-2jemxda9c-briancheis-projects.vercel.app",
+      "git_sha": "4a790b4ee40a12cdba8540fb12da586b3373a895",
+      "target": null,
+      "state": "READY"
+    },
+    {
+      "id": "dpl_f1hkFWZbHWg6Z8TJ6aoT7GqTCZH5",
+      "url": "tableus-staging-607udqqdy-briancheis-projects.vercel.app",
+      "git_sha": "ce8adf60d95d2b0aaf02d2d6101ea7978c8295c5",
+      "target": "production",
+      "state": "READY"
+    },
+    {
+      "id": "dpl_88WV5hBGEFzmH9wVPVhpZsZE1VnQ",
+      "url": "tableus-staging-kybcovcmw-briancheis-projects.vercel.app",
+      "git_sha": "ce8adf60d95d2b0aaf02d2d6101ea7978c8295c5",
+      "target": null,
+      "state": "READY"
+    },
+    {
+      "id": "dpl_8Vg9PexWm1ePgSUzyQGCspSUvC3o",
+      "url": "tableus-staging-1ffeamgem-briancheis-projects.vercel.app",
+      "git_sha": "3d7e38fd2aa0967fd891e863eaf133732b9fb0be",
+      "target": null,
+      "state": "READY"
+    },
+    {
+      "id": "dpl_GWDyPgfxyggxrr47WVRDH5vnM8Tf",
+      "url": "tableus-staging-ro0e4ak5l-briancheis-projects.vercel.app",
+      "git_sha": "2169338d3edc760b9df0d045551745c2b91b45c0",
+      "target": "production",
+      "state": "READY"
+    },
+    {
+      "id": "dpl_5URAwg42Wh2bXGafcmZDh6J32veg",
+      "url": "tableus-staging-k3afr7knf-briancheis-projects.vercel.app",
+      "git_sha": "3ae01b09b6aeb4af857ee5ae0b6ef6b084112c04",
+      "target": null,
+      "state": "READY"
+    },
+    {
+      "id": "dpl_6zMnVLJbd72MjCijGky2171A121T",
+      "url": "tableus-staging-el7ccn01b-briancheis-projects.vercel.app",
+      "git_sha": "341d67ec73c96f96f19c6e0e2911677e973a7d61",
+      "target": "production",
+      "state": "READY"
+    },
+    {
+      "id": "dpl_AQfqb5gWVhCtWsCugaQJro648eFn",
+      "url": "tableus-staging-6kmdf0bz1-briancheis-projects.vercel.app",
+      "git_sha": "341d67ec73c96f96f19c6e0e2911677e973a7d61",
+      "target": null,
+      "state": "READY"
+    },
+    {
+      "id": "dpl_GEoxj42WC6D6skki75yymgH6HzcL",
+      "url": "tableus-staging-m5yn4huv4-briancheis-projects.vercel.app",
+      "git_sha": "4c7f69b0fc9bfbd08e4e765a2c783c4251c1775b",
+      "target": "production",
+      "state": "READY"
+    },
+    {
+      "id": "dpl_G1ysRESizybPTUCEXMSoLwaJpAKZ",
+      "url": "tableus-staging-q7488s295-briancheis-projects.vercel.app",
+      "git_sha": "4c7f69b0fc9bfbd08e4e765a2c783c4251c1775b",
+      "target": null,
+      "state": "READY"
+    },
+    {
+      "id": "dpl_AQ659D843AKTKxaXYZFn1TeatoiY",
+      "url": "tableus-staging-ikl7c16vu-briancheis-projects.vercel.app",
+      "git_sha": "63b33b2a239f8164bf8d936e7ea6361ba55c8ee4",
+      "target": "production",
+      "state": "READY"
+    },
+    {
+      "id": "dpl_D5SwGr86Lm6Q3xqtMfTNwiApyov3",
+      "url": "tableus-staging-gbkrzhe5o-briancheis-projects.vercel.app",
+      "git_sha": "63b33b2a239f8164bf8d936e7ea6361ba55c8ee4",
+      "target": null,
+      "state": "READY"
+    },
+    {
+      "id": "dpl_G5YqEMs977pMLL4QTbs2onGg7MKF",
+      "url": "tableus-staging-r9zo6rkyt-briancheis-projects.vercel.app",
+      "git_sha": "6e9e893c6b4d75758b1f6abd979a8aff8cde460c",
+      "target": "production",
+      "state": "READY"
+    },
+    {
+      "id": "dpl_6JNbR9wLvNSwVcVyHUkQTv4SPckg",
+      "url": "tableus-staging-js0yj8db6-briancheis-projects.vercel.app",
+      "git_sha": "6e9e893c6b4d75758b1f6abd979a8aff8cde460c",
+      "target": "production",
+      "state": "READY"
+    },
+    {
+      "id": "dpl_EZkYiECBU3L4einawgzV7oEodCMh",
+      "url": "tableus-staging-rbwb712a7-briancheis-projects.vercel.app",
+      "git_sha": "6e9e893c6b4d75758b1f6abd979a8aff8cde460c",
+      "target": "production",
+      "state": "READY"
+    },
+    {
+      "id": "dpl_FcvzHnM8bhbEbeSxLMokqCh6cj9o",
+      "url": "tableus-staging-aru5eqprp-briancheis-projects.vercel.app",
+      "git_sha": "6e9e893c6b4d75758b1f6abd979a8aff8cde460c",
+      "target": "production",
+      "state": "READY"
+    },
+    {
+      "id": "dpl_H4x1mZevg6EP9ZYW39ahd1m53SuU",
+      "url": "tableus-staging-7nzzopyba-briancheis-projects.vercel.app",
+      "git_sha": "6e9e893c6b4d75758b1f6abd979a8aff8cde460c",
+      "target": "production",
+      "state": "READY"
+    },
+    {
+      "id": "dpl_CVG2keDVdjuDBXFF8fjQn2Rgqv1e",
+      "url": "tableus-staging-2l7637lrf-briancheis-projects.vercel.app",
+      "git_sha": "6e9e893c6b4d75758b1f6abd979a8aff8cde460c",
+      "target": null,
+      "state": "READY"
+    },
+    {
+      "id": "dpl_Gf69w5q4X2gTSfYaBbQuUMPjBxL8",
+      "url": "tableus-staging-ci0kqge6w-briancheis-projects.vercel.app",
+      "git_sha": "faf6ff0bd029e11f86a99231282ce11737d86868",
+      "target": "production",
+      "state": "READY"
+    },
+    {
+      "id": "dpl_JDaXBMoZr5ja5skLMDLeMQuENa88",
+      "url": "tableus-staging-ftfvw35bo-briancheis-projects.vercel.app",
+      "git_sha": "6edb1fef7f631c0cf2ce5545bf411af687e30378",
+      "target": null,
+      "state": "READY"
+    },
+    {
+      "id": "dpl_DA4hszWBTGUfijUPgoQBYbgaxEw2",
+      "url": "tableus-staging-dore2poa4-briancheis-projects.vercel.app",
+      "git_sha": "347154543f7eb48715c3eb036b7c4e301434e34f",
+      "target": null,
+      "state": "READY"
+    },
+    {
+      "id": "dpl_95cZPhF5XADkeYDHTiMjeaBK3sx2",
+      "url": "tableus-staging-gwthupoeh-briancheis-projects.vercel.app",
+      "git_sha": "e1e9b2263541346db19f535c90c4f985b6b34d97",
+      "target": null,
+      "state": "READY"
+    },
+    {
+      "id": "dpl_2FPR5ujdnzkC75aokSnJJv4MGpYz",
+      "url": "tableus-staging-na2d9zhlw-briancheis-projects.vercel.app",
+      "git_sha": "4226c5e8b537da49c3e5e8810f27ecfb451599d0",
+      "target": null,
+      "state": "READY"
+    },
+    {
+      "id": "dpl_EFxAPMBZRC4dn6yrvkKHJH9JBhzo",
+      "url": "tableus-staging-13ywp2f1o-briancheis-projects.vercel.app",
+      "git_sha": "4226c5e8b537da49c3e5e8810f27ecfb451599d0",
+      "target": null,
+      "state": "READY"
+    },
+    {
+      "id": "dpl_6kXTLs2J77kkrvquUTaK95BcsPS9",
+      "url": "tableus-staging-kopv3vwjh-briancheis-projects.vercel.app",
+      "git_sha": "89a1c93d2b4f5894ed7f41704b4e58a427dfa5b3",
+      "target": null,
+      "state": "READY"
+    },
+    {
+      "id": "dpl_43nHJhdwFRzm7oN6YDRAPWjFZtZ7",
+      "url": "tableus-staging-ja0se5tv8-briancheis-projects.vercel.app",
+      "git_sha": "2809c1ab3961b39528f596214ff54e600c6454bb",
+      "target": null,
+      "state": "READY"
+    },
+    {
+      "id": "dpl_AVXkSNJj9BT1AZR3SxJFyZM4eLhS",
+      "url": "tableus-staging-mvliv9wrk-briancheis-projects.vercel.app",
+      "git_sha": "4e626817c2cea25f972ae7502a8b753b0275c1fc",
+      "target": null,
+      "state": "READY"
+    }
+  ]
+}

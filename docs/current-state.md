@@ -5,7 +5,8 @@ Updated 2026-09-21. Cumulative isolated-staging acceptance remains complete for
 the owner-accepted unresolved simulator AppHang risk. A local dependency
 remediation now has zero critical/high npm findings; hosted/native bytes have not
 changed. The replacement impact review and phased rollout proposal are prepared;
-owner approval and release actions remain pending.
+Phase W is owner-approved, but publication is blocked by Vercel branch/stamp
+ordering and inherited source-map upload settings. No hosted bytes changed.
 Only [the active packet](task-packets/active.md) directs
 implementation. [Historical snapshots](history/2026-09-21/README.md) preserve the
 previous narrative without making it an active checklist.
@@ -14,17 +15,18 @@ previous narrative without making it an active checklist.
 
 | Role | Value |
 | --- | --- |
-| Frozen application candidate | `f94a1d9d1125e6c9111aa08eda496f014f20d0c0` |
-| Current task branch / worktree | `codex/dependency-rollout-proposal` / `/Users/brianchei/.codex/worktrees/83b4/Tableus-ai-agent-dev` |
-| Review base / proposed replacement application | `ed8330a766b3c4b80a505e075535678394e275e9`; completed dependency remediation |
-| Previous task | `01a0c571-6045-7643-ac66-ff2e208fbd7f` (bounded retrieval) |
+| Accepted API/native and retained Preview candidate | `f94a1d9d1125e6c9111aa08eda496f014f20d0c0` |
+| Current task branch / worktree | `codex/web-dependency-rollout` / `/Users/brianchei/.codex/worktrees/90bd/Tableus-ai-agent-dev` |
+| Replacement application / repository operator | `ed8330a766b3c4b80a505e075535678394e275e9`; completed dependency remediation |
+| Previous task / evidence base | `01a0c5de-c4a5-7cf2-8a2c-76494dd98c3b` (approval retrieved); `89dac2d4f9deb428668c0bcf62828e31100b2968` |
 | Evidence index | [Current candidate](evidence/ios27-staging-f94a1d9/closeout.md) |
 
 The root checkout is an older branch and is not the implementation base.
-Application, operator and evidence commits are distinct. This task changes
-review/planning documents only. Application and reviewed operator bytes remain
-ed8330a; the evidence commit does not replace that application identity. Existing
-staging artifacts prove only their original application SHA.
+Application, operator and evidence commits are distinct. This task records Phase W
+preflight and local Linux evidence; application and repository operator bytes remain
+ed8330a. The evidence commit does not replace that identity. Detached application
+source is `.artifacts/phase-w/source` in the active worktree. Existing staging
+artifacts prove only their original application SHA.
 
 ## Implemented product
 
@@ -82,7 +84,17 @@ review matched eight source hashes, nine private logs, nine installed consumers
 and both Metro maps; backend/shared/config source objects are unchanged.
 [Impact review and approval proposal](evidence/dependency-rollout-2026-09-21/README.md):
 web-first exact-source CI/one Preview and conditional staging alias replacement;
-API/native keep their real f94a1d9 identities. No hosted/native execution occurred.
+API/native keep their real f94a1d9 identities. The owner approved Phase W only;
+[fresh preflight/checkpoint](evidence/web-dependency-rollout-2026-09-21/README.md)
+found actual staging aliases still serving daa89a0, production e1184ec, and the
+accepted f94a1d9 Preview retained separately. API d929fba2 remains ready at f94a1d9.
+New local Linux ARM64 benign PNG/JPEG/AVIF, error and cache checks pass with
+Next 16.3.5 / sharp 0.35.4 / libvips 8.18.6 / libheif 1.23.2. No push, CI,
+Preview or remote configuration change occurred. Vercel refuses branch stamps
+before the branch exists; sensitive Sentry build credentials also require a
+branch upload-disable exception. A concrete publication amendment is pending.
+Exact new Preview CORS needs a later separate API configuration/restart approval.
+Keep this incomplete rollout in the current task.
 Next 16.3.4 re-enabled AVIF, so the new image check must test the patched stack,
 not expect AVIF rejection. Native builds first need an operator fix: the current
 helper deletes logs and does not preserve symbols/maps. Later verification is
