@@ -2,10 +2,10 @@
 
 Updated 2026-09-21. Original f94a1d9 isolated-staging acceptance remains intact,
 including the unresolved simulator AppHang risk. Replacement application ed8330a
-is published, exact-source CI passed and one Vercel Preview is verified. Phase W
-remains incomplete: exact Preview CORS needs separately approved API configuration
-and redeployment before staging aliases can move. API/native, existing staging
-aliases and production remain unchanged.
+is published and serves both staging aliases after exact-source CI, Preview and
+activation checks. **Phase W is complete.** The approved CORS append and one API
+redeploy retain f94a1d9 source with a newly built image. Native and production
+remain unchanged; this is component staging evidence, not cumulative replacement acceptance.
 Only [the active packet](task-packets/active.md) directs
 implementation. [Historical snapshots](history/2026-09-21/README.md) preserve the
 previous narrative without making it an active checklist.
@@ -22,7 +22,7 @@ previous narrative without making it an active checklist.
 
 The root checkout is an older branch and is not the implementation base.
 Application, operator and evidence commits are distinct. This task records Phase W
-preflight and local Linux evidence; application and repository operator bytes remain
+activation and local Linux evidence; application and repository operator bytes remain
 ed8330a. The evidence commit does not replace that identity. Detached application
 source is `.artifacts/phase-w/source` in the active worktree. Existing staging
 artifacts prove only their original application SHA.
@@ -91,15 +91,18 @@ Measured local Linux ARM64 and x64 image stacks pass; hosted sharp/libvips versi
 are lock-derived, not directly introspected. Discovery's automatic nearby request
 was blocked by the browser guard; live data behavior is not part of this proof.
 
-Only the new exact Preview origin fails API CORS. The [concrete request](evidence/web-dependency-rollout-2026-09-21/cors-approval-request.json)
-adds that one origin and redeploys existing f94a1d9 once; approval is pending.
-API d929fba2 remains f94a1d9; actual staging aliases remain daa89a0; production
-remains e1184ec. The accepted f94a1d9 Preview is retained separately. Three
-branch-only nonsecret overrides are verified (two stamps and empty Sentry upload
-token); Preview auto-deploy was restored and previous settings/protection preserved.
-One CI / one Preview allowance is consumed. Keep this incomplete rollout in this task.
-Next 16.3.4 re-enabled AVIF, so the new image check must test the patched stack,
-not expect AVIF rejection. Native builds first need an operator fix: the current
+The owner-approved [CORS action](evidence/web-dependency-rollout-2026-09-21/cors-approval-request.json)
+is complete. API `24eefe75-9583-4a90-8d3e-48450818dec0` is ready at f94a1d9;
+the new image has matching pinned base inputs and frozen dependencies, with fresh
+readiness/CORS evidence rather than transferred artifact acceptance. Both
+`tableus-staging.vercel.app` and `links.table-us.com` now serve ed8330a from the
+verified Preview. [Activation evidence](evidence/web-dependency-rollout-2026-09-21/activation.json)
+records 24 public HTTP and four anonymous browser checks, exact bundle/attribution
+hashes, unchanged associations and preserved production e1184ec. All eleven prior
+origins, other API variables, Vercel project settings/protection and 85 old web
+deployments are retained. One CI, one Preview and one API redeploy were consumed;
+no live-provider allowance was used. See the [completion handoff](handoffs/2026-09-21-phase-w-complete.md).
+AVIF decoding was verified on the patched stack. Native builds first need an operator fix: the current
 helper deletes logs and does not preserve symbols/maps. Later verification is
 proposed as two deterministic and two readiness artifacts, with separate approvals
 and unresolved telemetry/live-read gates. No cumulative replacement acceptance.
@@ -113,7 +116,7 @@ execution-ledger/delivery provenance. A new task resets none of these limits.
 The configured staging backstop was verified at 429.
 
 The unexplained simulator AppHang, placeholder tab glyphs, eight Expo package
-patch recommendations, replacement dependency rollout, privacy/retention/Auth deletion,
+patch recommendations, remaining native/production dependency rollout, privacy/retention/Auth deletion,
 capability and quota controls, signing and symbolication remain tracked in the
 [release checklist](release-readiness-checklist.md). A single-process API is still
 required. Passed staging observations do not authorize production or distribution.

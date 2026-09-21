@@ -1,0 +1,671 @@
+{
+  "private_root": "/Users/brianchei/.codex/worktrees/90bd/Tableus-ai-agent-dev/.artifacts/phase-w",
+  "note": "Activation raw files may contain credentials. Keep private; task-local harness hashes are separate from repository operator SHA.",
+  "files": [
+    {
+      "path": "activation/alias-after-first-table-us.com-receipt.json",
+      "bytes": 158,
+      "sha256": "13b3e9ed664beef0a80cc9c5a7165e4ad7801eaae132cc3c229a857dd3a5293c"
+    },
+    {
+      "path": "activation/alias-after-first-table-us.com.json",
+      "bytes": 641,
+      "sha256": "71d587b439983a7e79cca84408ddbbbb7f9168f56df39530e1da5ca1df7e6588"
+    },
+    {
+      "path": "activation/alias-after-first-table-us.com.stderr",
+      "bytes": 68,
+      "sha256": "32b8ef8040534478604940be925df5f5e06826caf96d4b7f883469d555cd632f"
+    },
+    {
+      "path": "activation/alias-after-first-tableus-staging.vercel.app-receipt.json",
+      "bytes": 172,
+      "sha256": "57bb38c662389ff564e36aa0be8ed3f6c0056b9f702139c0dc3c124c26e9cc6d"
+    },
+    {
+      "path": "activation/alias-after-first-tableus-staging.vercel.app.json",
+      "bytes": 642,
+      "sha256": "d03df87d93ef86d0d866506dad85662ff74160b3d1e59c96502339eb9e21f39b"
+    },
+    {
+      "path": "activation/alias-after-first-tableus-staging.vercel.app.stderr",
+      "bytes": 68,
+      "sha256": "32b8ef8040534478604940be925df5f5e06826caf96d4b7f883469d555cd632f"
+    },
+    {
+      "path": "activation/alias-after-first-www.table-us.com-receipt.json",
+      "bytes": 162,
+      "sha256": "b156a3b31c4066f2805731f9e7cd3d269602319d6cbbc17683b7a514847d2d38"
+    },
+    {
+      "path": "activation/alias-after-first-www.table-us.com.json",
+      "bytes": 632,
+      "sha256": "4048fa24acba6afbd5a0283e32d298c5648a2cef718370ee8bd3500f0ea38cd9"
+    },
+    {
+      "path": "activation/alias-after-first-www.table-us.com.stderr",
+      "bytes": 68,
+      "sha256": "32b8ef8040534478604940be925df5f5e06826caf96d4b7f883469d555cd632f"
+    },
+    {
+      "path": "activation/alias-before-links.table-us.com-receipt.json",
+      "bytes": 164,
+      "sha256": "f52b511db828dc8cd25be973652b7d3e698708a5335041613c04f797e5304ddd"
+    },
+    {
+      "path": "activation/alias-before-links.table-us.com.json",
+      "bytes": 634,
+      "sha256": "a1a03033698548637d071a5bde348f4be8080d37eb40252d10e22fa392686a47"
+    },
+    {
+      "path": "activation/alias-before-links.table-us.com.stderr",
+      "bytes": 68,
+      "sha256": "32b8ef8040534478604940be925df5f5e06826caf96d4b7f883469d555cd632f"
+    },
+    {
+      "path": "activation/alias-before-table-us.com-receipt.json",
+      "bytes": 158,
+      "sha256": "552d4e41a3f0e4f6f69ca268c9809524b9f9f429ef0a192e15fb641ccf99f4ed"
+    },
+    {
+      "path": "activation/alias-before-table-us.com.json",
+      "bytes": 641,
+      "sha256": "71d587b439983a7e79cca84408ddbbbb7f9168f56df39530e1da5ca1df7e6588"
+    },
+    {
+      "path": "activation/alias-before-table-us.com.stderr",
+      "bytes": 68,
+      "sha256": "32b8ef8040534478604940be925df5f5e06826caf96d4b7f883469d555cd632f"
+    },
+    {
+      "path": "activation/alias-before-tableus-staging.vercel.app-receipt.json",
+      "bytes": 172,
+      "sha256": "247b6a9fe35bacd4162557a393dccfe6ca0b186cc7788d9e1f8751293589bcdb"
+    },
+    {
+      "path": "activation/alias-before-tableus-staging.vercel.app.json",
+      "bytes": 642,
+      "sha256": "99e57cde017d22504b1395b5718106e780431469a218f7db928d7a42a30028d8"
+    },
+    {
+      "path": "activation/alias-before-tableus-staging.vercel.app.stderr",
+      "bytes": 68,
+      "sha256": "32b8ef8040534478604940be925df5f5e06826caf96d4b7f883469d555cd632f"
+    },
+    {
+      "path": "activation/alias-before-www.table-us.com-receipt.json",
+      "bytes": 162,
+      "sha256": "0628885264459bc70d246939d10c53dfdcb90b8fcc005846b8c823f62b0d2095"
+    },
+    {
+      "path": "activation/alias-before-www.table-us.com.json",
+      "bytes": 632,
+      "sha256": "4048fa24acba6afbd5a0283e32d298c5648a2cef718370ee8bd3500f0ea38cd9"
+    },
+    {
+      "path": "activation/alias-before-www.table-us.com.stderr",
+      "bytes": 68,
+      "sha256": "32b8ef8040534478604940be925df5f5e06826caf96d4b7f883469d555cd632f"
+    },
+    {
+      "path": "activation/alias-check.py",
+      "bytes": 3483,
+      "sha256": "cc71fe33ac0f7b819f99249a99b2a55b64bae8105e18aebd9d5a249cbd7f54e8"
+    },
+    {
+      "path": "activation/alias-final-links.table-us.com.json",
+      "bytes": 634,
+      "sha256": "c2ea8484e4eec12929926cfccc67356e6cad9a0f0ea51d7c537a14b57caa12bf"
+    },
+    {
+      "path": "activation/alias-final-links.table-us.com.stderr",
+      "bytes": 68,
+      "sha256": "32b8ef8040534478604940be925df5f5e06826caf96d4b7f883469d555cd632f"
+    },
+    {
+      "path": "activation/alias-final-table-us.com.json",
+      "bytes": 641,
+      "sha256": "71d587b439983a7e79cca84408ddbbbb7f9168f56df39530e1da5ca1df7e6588"
+    },
+    {
+      "path": "activation/alias-final-table-us.com.stderr",
+      "bytes": 68,
+      "sha256": "32b8ef8040534478604940be925df5f5e06826caf96d4b7f883469d555cd632f"
+    },
+    {
+      "path": "activation/alias-final-tableus-staging.vercel.app.json",
+      "bytes": 642,
+      "sha256": "d03df87d93ef86d0d866506dad85662ff74160b3d1e59c96502339eb9e21f39b"
+    },
+    {
+      "path": "activation/alias-final-tableus-staging.vercel.app.stderr",
+      "bytes": 68,
+      "sha256": "32b8ef8040534478604940be925df5f5e06826caf96d4b7f883469d555cd632f"
+    },
+    {
+      "path": "activation/alias-final-www.table-us.com.json",
+      "bytes": 632,
+      "sha256": "4048fa24acba6afbd5a0283e32d298c5648a2cef718370ee8bd3500f0ea38cd9"
+    },
+    {
+      "path": "activation/alias-final-www.table-us.com.stderr",
+      "bytes": 68,
+      "sha256": "32b8ef8040534478604940be925df5f5e06826caf96d4b7f883469d555cd632f"
+    },
+    {
+      "path": "activation/api-build-new-receipt.json",
+      "bytes": 368,
+      "sha256": "582bc21f0ba7749c02d03b924e7b77ee0162b7e2f230b0bff52e5bf8e9916325"
+    },
+    {
+      "path": "activation/api-build-new.jsonl",
+      "bytes": 32420,
+      "sha256": "fbb9299ffea95438ed917de75b1dfa5d193d8a22f9154566e089c571d8c08332"
+    },
+    {
+      "path": "activation/api-build-new.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "activation/api-build-old-receipt.json",
+      "bytes": 368,
+      "sha256": "0f6e8b62003f2b30aa56dfd110a00474999945bf5bb8653bf5ec35d8ba314d69"
+    },
+    {
+      "path": "activation/api-build-old.jsonl",
+      "bytes": 41138,
+      "sha256": "0ca2908470e371fea21e5dec019891a6318776025e7a1fb033bdbb39c79207f8"
+    },
+    {
+      "path": "activation/api-build-old.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "activation/api-check.json",
+      "bytes": 1697,
+      "sha256": "5eaf8a6f71e9740f6a9c50fb16cfef408134e90e7974fa42dc3f95136d3fcb39"
+    },
+    {
+      "path": "activation/api-check.py",
+      "bytes": 2086,
+      "sha256": "ce86e749028a2e4a6fca10ab633aca6b5cea0dd3113f2c1cda9a2fc46830e642"
+    },
+    {
+      "path": "activation/api-provenance.json",
+      "bytes": 4520,
+      "sha256": "d9f998a9fba32412fa141972f0dba13930642259e3b2a45edbacb8e5fe79646f"
+    },
+    {
+      "path": "activation/api-ready.body",
+      "bytes": 319,
+      "sha256": "bd16fa6cfab0eee91e125bc89d7d2f7b121c9865cddd2d14df13e87f3af583c5"
+    },
+    {
+      "path": "activation/api-runtime-new-receipt.json",
+      "bytes": 371,
+      "sha256": "15b624f62c8b44646971cc990eb63ced07dfb8f0b09594f5273d0f2a3ec4adb0"
+    },
+    {
+      "path": "activation/api-runtime-new.jsonl",
+      "bytes": 1444,
+      "sha256": "b658af60e7f323c295d062b76b1afdd16d33f19da443499a9cf2321d902bfa11"
+    },
+    {
+      "path": "activation/api-runtime-new.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "activation/api.py",
+      "bytes": 736,
+      "sha256": "11fbee05344e0dfe0dd6a811d60d825ce613a67fe90ce9eff1dac266edc49b1a"
+    },
+    {
+      "path": "activation/assign-links.table-us.com-body.json",
+      "bytes": 32,
+      "sha256": "8c2e4d0f21a01b5f3af35fd0b9eabe0f6404cea50a6286e25d1bcbf673844a50"
+    },
+    {
+      "path": "activation/assign-links.table-us.com-receipt.json",
+      "bytes": 191,
+      "sha256": "97bbd24a72aa05e33cb22bc9cc86336c733eb60758b4e903d6c22418b1296c1d"
+    },
+    {
+      "path": "activation/assign-links.table-us.com.json",
+      "bytes": 258,
+      "sha256": "07c26cab751937b534d4b8499f5295d0d8f012de4e33cdf31cd5a6b65eea02db"
+    },
+    {
+      "path": "activation/assign-links.table-us.com.stderr",
+      "bytes": 68,
+      "sha256": "32b8ef8040534478604940be925df5f5e06826caf96d4b7f883469d555cd632f"
+    },
+    {
+      "path": "activation/assign-tableus-staging.vercel.app-body.json",
+      "bytes": 40,
+      "sha256": "df326c091f72fe5e3cc21c924a2157f1addd8f42e11bd470e20f32207be164f3"
+    },
+    {
+      "path": "activation/assign-tableus-staging.vercel.app-receipt.json",
+      "bytes": 191,
+      "sha256": "26800355811588f4c89f53bb5a75761e3b4bc926707e384e7803422aca02b2b9"
+    },
+    {
+      "path": "activation/assign-tableus-staging.vercel.app.json",
+      "bytes": 266,
+      "sha256": "77cdc7ac96a2cd932d9d3868ba4dd8529aab05740112271031fd31051671ef48"
+    },
+    {
+      "path": "activation/assign-tableus-staging.vercel.app.stderr",
+      "bytes": 68,
+      "sha256": "32b8ef8040534478604940be925df5f5e06826caf96d4b7f883469d555cd632f"
+    },
+    {
+      "path": "activation/browser-check.cjs",
+      "bytes": 2728,
+      "sha256": "1e681a8845f67e9a2010013f8ebe64e36a16a816e5416fba722ee434115ec6dc"
+    },
+    {
+      "path": "activation/browser-check.json",
+      "bytes": 4954,
+      "sha256": "9a67c10a18639d581e760596e73ef91e777f76021fb72a020aaa93e048c591a8"
+    },
+    {
+      "path": "activation/cors-links.body",
+      "bytes": 2,
+      "sha256": "565339bc4d33d72817b583024112eb7f5cdf3e5eef0252d6ec1b9c9a94e12bb3"
+    },
+    {
+      "path": "activation/cors-preview.body",
+      "bytes": 2,
+      "sha256": "565339bc4d33d72817b583024112eb7f5cdf3e5eef0252d6ec1b9c9a94e12bb3"
+    },
+    {
+      "path": "activation/cors-set-receipt.json",
+      "bytes": 357,
+      "sha256": "af9670409da5b0a9fa9abdbbc6fbe78ec38efbea7377c99673707335ea7a2aff"
+    },
+    {
+      "path": "activation/cors-set.json",
+      "bytes": 40,
+      "sha256": "141b7a29f115ef05691841e2c3d108ae5d619d32ca9b23e3b8c05e48f4d12a68"
+    },
+    {
+      "path": "activation/cors-set.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "activation/cors-staging.body",
+      "bytes": 2,
+      "sha256": "565339bc4d33d72817b583024112eb7f5cdf3e5eef0252d6ec1b9c9a94e12bb3"
+    },
+    {
+      "path": "activation/cors-unapproved.body",
+      "bytes": 22,
+      "sha256": "f80399859bbd7b2cb1cac34d88e0f01461619f351b476926e2465eea789098d4"
+    },
+    {
+      "path": "activation/deployments-final.json",
+      "bytes": 146291,
+      "sha256": "44da9ccebf405ac98a0b78ee4aea3370fb0e77411d715db9aa53de983f409388"
+    },
+    {
+      "path": "activation/deployments-final.stderr",
+      "bytes": 68,
+      "sha256": "32b8ef8040534478604940be925df5f5e06826caf96d4b7f883469d555cd632f"
+    },
+    {
+      "path": "activation/links.table-us.com-android.body",
+      "bytes": 258,
+      "sha256": "e2ad9e673a352912bf9782eba015a5bbcfd28069c138d858d37ced66bf411430"
+    },
+    {
+      "path": "activation/links.table-us.com-apple.body",
+      "bytes": 123,
+      "sha256": "710eb96b4cb131ad435294629ed493857a0f8d38e9d0cba112fc905f9cc34d63"
+    },
+    {
+      "path": "activation/links.table-us.com-attribution.body",
+      "bytes": 5275,
+      "sha256": "62c52df68d8f450c860d5d65068fc96d63c2dfaec849b91ac64b3256a898936e"
+    },
+    {
+      "path": "activation/links.table-us.com-auth-confirm.body",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "activation/links.table-us.com-auth.body",
+      "bytes": 6671,
+      "sha256": "0d6391bf237347cf1701326ac0f73e8f8ecc4c3936329304047abae265b8cf0d"
+    },
+    {
+      "path": "activation/links.table-us.com-check.json",
+      "bytes": 4943,
+      "sha256": "52e847a7d2a3587aebf5ed3f912cc2fd53368fdb6a4045a5eecd8ac52634ea2d"
+    },
+    {
+      "path": "activation/links.table-us.com-invalid-join-browser.png",
+      "bytes": 123647,
+      "sha256": "713d9771f4a09cd3f14910335bf5c87181765bcf02af495ed63ef3eb3368373b"
+    },
+    {
+      "path": "activation/links.table-us.com-invalid-join-browser.txt",
+      "bytes": 297,
+      "sha256": "1196199646fe131d875e5c0dca34928e35f4458831630cd9612b0dd655f28e5f"
+    },
+    {
+      "path": "activation/links.table-us.com-invalid-join.body",
+      "bytes": 18617,
+      "sha256": "64cd76019214ee8b9ebc03087c41b29eeff624d5f4f7412ca55cf2b4e2bfb057"
+    },
+    {
+      "path": "activation/links.table-us.com-invite-browser.png",
+      "bytes": 118329,
+      "sha256": "68999eb800bc3c15487ca590b2684d3789858db234b6f273f8842104b9811353"
+    },
+    {
+      "path": "activation/links.table-us.com-invite-browser.txt",
+      "bytes": 244,
+      "sha256": "23c8b2088104bf5f47af0e675e635d51159de21d4d7be840eac9e4f01e79aa5e"
+    },
+    {
+      "path": "activation/links.table-us.com-invite.body",
+      "bytes": 18576,
+      "sha256": "28cc90f62793d80b85c4efcd5d31815747db07fb0be12ea2565d732dcc2e718a"
+    },
+    {
+      "path": "activation/links.table-us.com-landing.body",
+      "bytes": 6106,
+      "sha256": "043b5933af9355e271b0ae412b47742becbd5492bab20e9afb0fa952fbe6d948"
+    },
+    {
+      "path": "activation/links.table-us.com-missing-token.body",
+      "bytes": 18582,
+      "sha256": "63b5d706eaf2bd53c38fbdc41b78a0bc6366fa7a546978ebdef82b6cf73899b5"
+    },
+    {
+      "path": "activation/links.table-us.com-source-bundle-0.body",
+      "bytes": 9088,
+      "sha256": "af7991482a97a5847bcc3ba749f2d37bb47afb2933da05d2022b3f6ab90ba0f2"
+    },
+    {
+      "path": "activation/links.table-us.com-source-bundle-1.body",
+      "bytes": 15382,
+      "sha256": "45ba3114400c6a7c281e49b0ee500320171275de9a2f8abdf2c430982c134430"
+    },
+    {
+      "path": "activation/links.table-us.com-source-bundle-2.body",
+      "bytes": 6589,
+      "sha256": "b773d56e611075ec170a5790d9bfddd92cdb086714044c3cd5c236d85b8765ab"
+    },
+    {
+      "path": "activation/preservation-http.json",
+      "bytes": 1402,
+      "sha256": "2e65138334fa0e119d3b56d643f57031a7cf3772885d32752cd8c00ebe28f7ba"
+    },
+    {
+      "path": "activation/preserved-table-us.com.body",
+      "bytes": 15,
+      "sha256": "7c040f8633b8823d72ed63da9b3b2dfe9846e912c66a64c9433ec9c4815d76c2"
+    },
+    {
+      "path": "activation/preserved-tableus-staging-dwuhnprja-briancheis-projects.vercel.app.body",
+      "bytes": 15,
+      "sha256": "7c040f8633b8823d72ed63da9b3b2dfe9846e912c66a64c9433ec9c4815d76c2"
+    },
+    {
+      "path": "activation/preserved-tableus-staging-i6b1exrb3-briancheis-projects.vercel.app.body",
+      "bytes": 15,
+      "sha256": "7c040f8633b8823d72ed63da9b3b2dfe9846e912c66a64c9433ec9c4815d76c2"
+    },
+    {
+      "path": "activation/preserved-www.table-us.com.body",
+      "bytes": 6106,
+      "sha256": "9a6421765f33c511286915f39c1864c12dcdc9b94fa1681ade58e774654cdab7"
+    },
+    {
+      "path": "activation/preview-before-receipt.json",
+      "bytes": 183,
+      "sha256": "66724a538f5a499aee2835e3301adf6732b930ee37f3b29ca4d3ef18ef7c455f"
+    },
+    {
+      "path": "activation/preview-before.json",
+      "bytes": 15261,
+      "sha256": "124d0a5e50764f750144fb0a8962eaa89bbd998e48152ac7b4705f44a80cbf24"
+    },
+    {
+      "path": "activation/preview-before.stderr",
+      "bytes": 68,
+      "sha256": "32b8ef8040534478604940be925df5f5e06826caf96d4b7f883469d555cd632f"
+    },
+    {
+      "path": "activation/project-after-first-receipt.json",
+      "bytes": 179,
+      "sha256": "2f4f7f2612a431a2d77a0a6f94a6ece1fc28f905b1c8db9ffe030590d34a4acc"
+    },
+    {
+      "path": "activation/project-after-first.json",
+      "bytes": 41467,
+      "sha256": "6dde56ed1fe0571f464ecb05959a9863de4fdddbf3a1e5199c399ab5cc90300b"
+    },
+    {
+      "path": "activation/project-after-first.stderr",
+      "bytes": 68,
+      "sha256": "32b8ef8040534478604940be925df5f5e06826caf96d4b7f883469d555cd632f"
+    },
+    {
+      "path": "activation/project-before-receipt.json",
+      "bytes": 234,
+      "sha256": "bdacbd77c3d1de757cf9641c8ceafacf8040190d09e832ed95d449693ac94b79"
+    },
+    {
+      "path": "activation/project-before.json",
+      "bytes": 41467,
+      "sha256": "6dde56ed1fe0571f464ecb05959a9863de4fdddbf3a1e5199c399ab5cc90300b"
+    },
+    {
+      "path": "activation/project-before.stderr",
+      "bytes": 68,
+      "sha256": "32b8ef8040534478604940be925df5f5e06826caf96d4b7f883469d555cd632f"
+    },
+    {
+      "path": "activation/project-final.json",
+      "bytes": 41467,
+      "sha256": "6dde56ed1fe0571f464ecb05959a9863de4fdddbf3a1e5199c399ab5cc90300b"
+    },
+    {
+      "path": "activation/project-final.stderr",
+      "bytes": 68,
+      "sha256": "32b8ef8040534478604940be925df5f5e06826caf96d4b7f883469d555cd632f"
+    },
+    {
+      "path": "activation/railway-status-after-set.json",
+      "bytes": 10734,
+      "sha256": "5ac169af99c6704dde41a967334c787d4f64e08b7db54750ebd8ff951a66fd8a"
+    },
+    {
+      "path": "activation/railway-status-after-set.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "activation/railway-status-before-receipt.json",
+      "bytes": 230,
+      "sha256": "d628ec0e3660a7ceda46da2bcec7c8deb8ef3c0edd4d27d81009f9571133e7f2"
+    },
+    {
+      "path": "activation/railway-status-before.json",
+      "bytes": 10734,
+      "sha256": "5ac169af99c6704dde41a967334c787d4f64e08b7db54750ebd8ff951a66fd8a"
+    },
+    {
+      "path": "activation/railway-status-before.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "activation/railway-status-final.json",
+      "bytes": 10734,
+      "sha256": "80d91b8568007ec8c84855882f18a847dd58f548f16dc1281d27be7bb9647ddd"
+    },
+    {
+      "path": "activation/railway-status-final.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "activation/railway-status-redeploy-1.json",
+      "bytes": 14820,
+      "sha256": "102fb634d4406d00348de79df8478b07ff7af7625aa6a13f16bd2ea09aa2b331"
+    },
+    {
+      "path": "activation/railway-status-redeploy-2.json",
+      "bytes": 10734,
+      "sha256": "80d91b8568007ec8c84855882f18a847dd58f548f16dc1281d27be7bb9647ddd"
+    },
+    {
+      "path": "activation/railway-vars-after-set.json",
+      "bytes": 3034,
+      "sha256": "adc5acf3ab3779424823a47313184ffbb22105e1e05b4ed4740a88e43e8cda0a"
+    },
+    {
+      "path": "activation/railway-vars-after-set.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "activation/railway-vars-before-receipt.json",
+      "bytes": 298,
+      "sha256": "3233a7489f39888a9153d879d9cfd1b6002fa716e11c1f487bc23db9d3f24ef0"
+    },
+    {
+      "path": "activation/railway-vars-before.json",
+      "bytes": 2969,
+      "sha256": "01fff2b9f0cff686519776b4a4fa7886454ff5b573ae5ba194eec89f0bf38c03"
+    },
+    {
+      "path": "activation/railway-vars-before.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "activation/railway-vars-final.json",
+      "bytes": 3034,
+      "sha256": "adc5acf3ab3779424823a47313184ffbb22105e1e05b4ed4740a88e43e8cda0a"
+    },
+    {
+      "path": "activation/railway-vars-final.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "activation/record-activation.py",
+      "bytes": 8424,
+      "sha256": "b35a8665fd954f61215c1aefd331d39a327abfedd33a9efdd7e0d12ba7a6a867"
+    },
+    {
+      "path": "activation/redeploy-receipt.json",
+      "bytes": 348,
+      "sha256": "46ddb491b29f026c672b34880d7b435e1bfe54cec885ee61648ba9637e59e813"
+    },
+    {
+      "path": "activation/redeploy.json",
+      "bytes": 46,
+      "sha256": "ee2301f81db186f7f0b4978bc77566b854b37ffff21f7b522c81d6570e10abf3"
+    },
+    {
+      "path": "activation/redeploy.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "activation/tableus-staging.vercel.app-android.body",
+      "bytes": 258,
+      "sha256": "e2ad9e673a352912bf9782eba015a5bbcfd28069c138d858d37ced66bf411430"
+    },
+    {
+      "path": "activation/tableus-staging.vercel.app-apple.body",
+      "bytes": 123,
+      "sha256": "710eb96b4cb131ad435294629ed493857a0f8d38e9d0cba112fc905f9cc34d63"
+    },
+    {
+      "path": "activation/tableus-staging.vercel.app-attribution.body",
+      "bytes": 5275,
+      "sha256": "62c52df68d8f450c860d5d65068fc96d63c2dfaec849b91ac64b3256a898936e"
+    },
+    {
+      "path": "activation/tableus-staging.vercel.app-auth-confirm.body",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "activation/tableus-staging.vercel.app-auth.body",
+      "bytes": 6671,
+      "sha256": "0d6391bf237347cf1701326ac0f73e8f8ecc4c3936329304047abae265b8cf0d"
+    },
+    {
+      "path": "activation/tableus-staging.vercel.app-check.json",
+      "bytes": 4959,
+      "sha256": "1b8e8265c30c0de83837e214f179f3055db4b7a508e43e32a79c80c40ea744ea"
+    },
+    {
+      "path": "activation/tableus-staging.vercel.app-invalid-join-browser.png",
+      "bytes": 123647,
+      "sha256": "713d9771f4a09cd3f14910335bf5c87181765bcf02af495ed63ef3eb3368373b"
+    },
+    {
+      "path": "activation/tableus-staging.vercel.app-invalid-join-browser.txt",
+      "bytes": 297,
+      "sha256": "1196199646fe131d875e5c0dca34928e35f4458831630cd9612b0dd655f28e5f"
+    },
+    {
+      "path": "activation/tableus-staging.vercel.app-invalid-join.body",
+      "bytes": 18617,
+      "sha256": "64cd76019214ee8b9ebc03087c41b29eeff624d5f4f7412ca55cf2b4e2bfb057"
+    },
+    {
+      "path": "activation/tableus-staging.vercel.app-invite-browser.png",
+      "bytes": 118329,
+      "sha256": "68999eb800bc3c15487ca590b2684d3789858db234b6f273f8842104b9811353"
+    },
+    {
+      "path": "activation/tableus-staging.vercel.app-invite-browser.txt",
+      "bytes": 244,
+      "sha256": "23c8b2088104bf5f47af0e675e635d51159de21d4d7be840eac9e4f01e79aa5e"
+    },
+    {
+      "path": "activation/tableus-staging.vercel.app-invite.body",
+      "bytes": 18576,
+      "sha256": "28cc90f62793d80b85c4efcd5d31815747db07fb0be12ea2565d732dcc2e718a"
+    },
+    {
+      "path": "activation/tableus-staging.vercel.app-landing.body",
+      "bytes": 6106,
+      "sha256": "043b5933af9355e271b0ae412b47742becbd5492bab20e9afb0fa952fbe6d948"
+    },
+    {
+      "path": "activation/tableus-staging.vercel.app-missing-token.body",
+      "bytes": 18582,
+      "sha256": "63b5d706eaf2bd53c38fbdc41b78a0bc6366fa7a546978ebdef82b6cf73899b5"
+    },
+    {
+      "path": "activation/tableus-staging.vercel.app-source-bundle-0.body",
+      "bytes": 9088,
+      "sha256": "af7991482a97a5847bcc3ba749f2d37bb47afb2933da05d2022b3f6ab90ba0f2"
+    },
+    {
+      "path": "activation/tableus-staging.vercel.app-source-bundle-1.body",
+      "bytes": 15382,
+      "sha256": "45ba3114400c6a7c281e49b0ee500320171275de9a2f8abdf2c430982c134430"
+    },
+    {
+      "path": "activation/tableus-staging.vercel.app-source-bundle-2.body",
+      "bytes": 6589,
+      "sha256": "b773d56e611075ec170a5790d9bfddd92cdb086714044c3cd5c236d85b8765ab"
+    }
+  ]
+}

@@ -40,7 +40,7 @@ implementation work; the active packet alone authorizes the current objective.
 | One unexplained simulator AppHang | Owner accepted isolated-staging risk September 21; one repeat passed; cause unknown | Usable symbols and focused affected-journey check before distribution; reopen on recurrence |
 | Local sign-out isolation | Simulator session removed; same original Android session renewed; owner account-read passes | Preserve scoped proof; reverify affected behavior if changed |
 | Every full plan response hydrates Places | No polling/gesture refresh; hidden-query/coalescing tests pass; fixed run backstop | Cohort spend sizing and an explicit new live scope before expansion |
-| Dependency/toolchain disposition | [Local replacement graph assessed/patched](evidence/dependency-toolchain-2026-09-21/README.md): zero critical/high npm findings; three exact-use tooling dispositions; eight Expo patch recommendations retained | [Phase W Preview verified; exact CORS/API gate pending](evidence/web-dependency-rollout-2026-09-21/README.md); approve exact-origin API configuration before conditional alias activation and later native gates; old f94a1d9 bytes remain potentially affected by Next image-optimizer advisory. No extension beyond September 30 or production; no native acceptance transfer |
+| Dependency/toolchain disposition | [Local replacement graph assessed/patched](evidence/dependency-toolchain-2026-09-21/README.md): zero critical/high npm findings; three exact-use tooling dispositions; [Phase W staging aliases activated](evidence/web-dependency-rollout-2026-09-21/README.md) | Native gates and eight Expo patch recommendations remain; production e1184ec and retained immutable web bytes were not patched by Phase W. No extension beyond September 30 or production waiver; no native acceptance transfer |
 | Process-local idempotency/provider coordination | One API process, row locks, bounded replay/admission and explicit retries | Durable coordination before horizontal scaling |
 | Private capability in canonical URL | Approval also required; random/hashed tokens, rotation and redaction | Reviewed exchange or explicit production risk acceptance |
 | Shared provider quota fairness | Per-user/minute and global/rolling ceilings | Durable per-actor quotas before cohort expansion |
@@ -58,9 +58,10 @@ implementation work; the active packet alone authorizes the current objective.
 
 ## Release decision
 
-API/native and the retained accepted Preview remain `f94a1d9`; actual staging
-aliases still serve `daa89a0` and production `e1184ec`. The ed8330a replacement is
-verified in one Preview on `codex/web-dependency-rollout`; exact Preview CORS
-blocks staging alias activation. Merging, production deployment, store submission
+API/native source and the retained accepted Preview remain `f94a1d9`; both staging
+aliases now serve `ed8330a` and production remains `e1184ec`. Phase W is complete:
+one exact-source CI/Preview, approved CORS append, one existing-source API rebuild
+with a separately recorded new image, and public alias verification.
+Merging, production deployment, store submission
 and cohort activation are not authorized by a checked staging component.
 The completed staging matrix does not clear the listed production obligations.

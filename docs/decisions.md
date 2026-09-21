@@ -137,7 +137,7 @@ changed. The [staging handoff](handoffs/2026-09-21-staging-closeout.md) remains 
 evidence. Continue from the [dependency handoff](handoffs/2026-09-21-dependency-toolchain.md)
 for replacement-candidate review, not stale main.
 
-## Replacement rollout — Phase W approved 2026-09-21
+## Replacement rollout — Phase W completed 2026-09-21
 
 The [impact review](evidence/dependency-rollout-2026-09-21/README.md) freezes
 application ed8330a and keeps API/native f94a1d9 identities during a proposed
@@ -148,9 +148,15 @@ CI, one Preview and conditional staging aliases, with no live allowance.
 The owner also approved the [publication amendment](evidence/web-dependency-rollout-2026-09-21/publication-amendment.json):
 temporary Preview pause, exact-ref publication, branch stamps and empty Sentry
 upload token, then restore Preview triggers. It is executed with one passing CI
-and one READY Preview. Exact-origin API configuration/redeploy remains a separate
-gate before conditional staging alias activation. Current native tooling does not
-preserve diagnostic logs/symbols, so
+and one READY Preview. A subsequent owner approval authorized the exact-origin
+CORS append and one existing-source API redeploy. Both staging aliases now serve
+ed8330a; production/native remain unchanged. Railway rebuilt f94a1d9 with the same
+pinned inputs into a new image, which retains its own identity and fresh
+readiness/CORS evidence. Per-alias assignment did not change project settings or
+domain bindings; future production deployments may reclaim unbound aliases.
+The [completion evidence](evidence/web-dependency-rollout-2026-09-21/activation.json)
+does not authorize more deployments, live use or production exposure changes.
+Current native tooling does not preserve diagnostic logs/symbols, so
 repair it under a separate operator SHA before new builds. Local symbol matching
 and an app-frame resolution check precede the focused export/relaunch diagnostic;
 store symbol upload/delivery evidence remains separately gated.

@@ -1,10 +1,10 @@
 {
-  "observed_at": "2026-09-21T22:24:40.388894+00:00",
-  "status": "ci_and_preview_verified_activation_blocked_on_exact_preview_cors",
-  "phase_w_complete": false,
+  "observed_at": "2026-09-21T23:28:39.857490+00:00",
+  "status": "phase_w_complete_staging_web_activated",
+  "phase_w_complete": true,
   "application_sha": "ed8330a766b3c4b80a505e075535678394e275e9",
   "repository_operator_sha": "ed8330a766b3c4b80a505e075535678394e275e9",
-  "prior_checkpoint": "7357b5f263c59ba2f5b4f46125c487e332bba8d9",
+  "prior_checkpoint": "514a0136e1eb2ea0c52c315bf92efaf92809dfc9",
   "published_ref": "refs/heads/codex/web-deps-ed8330a",
   "remote_ref_verified": "ed8330a766b3c4b80a505e075535678394e275e9\trefs/heads/codex/web-deps-ed8330a",
   "amendment_approved": true,
@@ -95,8 +95,9 @@
     "build_log_sha256": "31c9179c11ff082e4dc0e906a7aa20dedd23c4bb513b77f68480176617af7b10"
   },
   "current_api": {
-    "deployment_id": "d929fba2-9c1e-4428-8379-ffaae6a3c4d2",
+    "deployment_id": "24eefe75-9583-4a90-8d3e-48450818dec0",
     "source_sha": "f94a1d9d1125e6c9111aa08eda496f014f20d0c0",
+    "image_digest": "sha256:92d1605c9100bd54b84c5e5295a93d6eef32c138e00984c2c2788d6a27b82272",
     "ready": {
       "status": "ready",
       "provider_mode": "live",
@@ -110,7 +111,9 @@
       "error_reporting_mode": "errors_only",
       "telemetry_e2e": true
     },
-    "variables_unchanged": true
+    "only_allowed_origins_changed": true,
+    "image_rebuilt": true,
+    "provenance_evidence": "activation.json"
   },
   "native": {
     "source_sha": "f94a1d9d1125e6c9111aa08eda496f014f20d0c0",
@@ -118,61 +121,57 @@
   },
   "aliases": [
     {
-      "alias": "tableus-staging.vercel.app",
-      "deploymentId": "dpl_7yiJcGeeVGHBRzFggodNCLzoiAeX",
-      "deployment": {
-        "id": "dpl_7yiJcGeeVGHBRzFggodNCLzoiAeX",
-        "url": "tableus-staging-dwuhnprja-briancheis-projects.vercel.app"
-      },
-      "redirect": null
+      "host": "tableus-staging.vercel.app",
+      "before_deployment_id": "dpl_7yiJcGeeVGHBRzFggodNCLzoiAeX",
+      "deployment_id": "dpl_3ec5bdvridE1meArFaYWAp8yabKM",
+      "redirect": null,
+      "redirect_status": null
     },
     {
-      "alias": "links.table-us.com",
-      "deploymentId": "dpl_7yiJcGeeVGHBRzFggodNCLzoiAeX",
-      "deployment": {
-        "id": "dpl_7yiJcGeeVGHBRzFggodNCLzoiAeX",
-        "url": "tableus-staging-dwuhnprja-briancheis-projects.vercel.app"
-      },
-      "redirect": null
+      "host": "links.table-us.com",
+      "before_deployment_id": "dpl_7yiJcGeeVGHBRzFggodNCLzoiAeX",
+      "deployment_id": "dpl_3ec5bdvridE1meArFaYWAp8yabKM",
+      "redirect": null,
+      "redirect_status": null
     },
     {
-      "alias": "table-us.com",
-      "deploymentId": "dpl_7csJvHoJH9qgFZDijbwu3w36r2sK",
-      "deployment": {
-        "id": "dpl_7csJvHoJH9qgFZDijbwu3w36r2sK",
-        "url": "tableus-staging-eck69x9mb-briancheis-projects.vercel.app"
-      },
-      "redirect": "www.table-us.com"
+      "host": "table-us.com",
+      "before_deployment_id": "dpl_7csJvHoJH9qgFZDijbwu3w36r2sK",
+      "deployment_id": "dpl_7csJvHoJH9qgFZDijbwu3w36r2sK",
+      "redirect": "www.table-us.com",
+      "redirect_status": 308
     },
     {
-      "alias": "www.table-us.com",
-      "deploymentId": "dpl_7csJvHoJH9qgFZDijbwu3w36r2sK",
-      "deployment": {
-        "id": "dpl_7csJvHoJH9qgFZDijbwu3w36r2sK",
-        "url": "tableus-staging-eck69x9mb-briancheis-projects.vercel.app"
-      },
-      "redirect": null
+      "host": "www.table-us.com",
+      "before_deployment_id": "dpl_7csJvHoJH9qgFZDijbwu3w36r2sK",
+      "deployment_id": "dpl_7csJvHoJH9qgFZDijbwu3w36r2sK",
+      "redirect": null,
+      "redirect_status": null
     }
   ],
   "counts": {
     "ci_runs": 1,
     "preview_deployments": 1,
     "successful_vercel_configuration_mutations": 5,
-    "railway_mutations": 0,
-    "alias_moves": 0,
+    "railway_mutations": 2,
+    "alias_moves": 2,
     "live_places": 0,
     "live_gemini": 0,
     "otp_emails": 0,
     "deliberate_canaries": 0,
     "native_builds": 0,
     "symbol_uploads_initiated": 0,
-    "local_full_suite_reruns": 0
+    "local_full_suite_reruns": 0,
+    "railway_variable_updates": 1,
+    "api_redeployments": 1
   },
-  "remaining_gate": "Approve exact ALLOWED_ORIGINS addition and one existing-source API redeploy as detailed in cors-approval-request.json; then verify CORS/readiness, reconfirm production alias separation and activate only already-approved staging aliases.",
+  "remaining_gate": null,
   "residual_risks": [
-    "Old staging daa89a0 and production e1184ec remain public; original f94a1d9 and older immutable URLs retained.",
+    "Production e1184ec remains public and unpatched by this staging rollout; original f94a1d9 and older immutable deployments remain retained. Sampled immutable URLs require SSO, but authorized/bypass access remains.",
     "No direct hosted sharp/libvips introspection or live browser data/provider verification.",
     "Future production domain reassignment remains possible because project domains have no preview branch binding.",
-    "Simulator AppHang remains unresolved and isolated-staging-only; September 30 dependency deadline unextended."
-  ]
+    "Simulator AppHang remains unresolved and isolated-staging-only; September 30 dependency deadline unextended.",
+    "Railway rebuilt the approved existing f94a1d9 source into a new image with matching pinned inputs; fresh API verification covers readiness/CORS, not a full authenticated/live journey."
+  ],
+  "activation_evidence": "activation.json"
 }
