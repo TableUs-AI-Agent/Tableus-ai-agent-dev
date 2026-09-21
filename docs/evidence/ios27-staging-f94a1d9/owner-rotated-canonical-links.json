@@ -1,0 +1,16 @@
+{
+  "application_sha": "f94a1d9d1125e6c9111aa08eda496f014f20d0c0",
+  "recorded_at": "2026-09-17T00:51:31.021450Z",
+  "evidence_kind": "owner_confirmation_of_requested_steps",
+  "profiles": [
+    "readiness-ios",
+    "readiness-android"
+  ],
+  "old_rotated_link_rejected_both": true,
+  "canonical_auth_cold_open_passed_both": true,
+  "canonical_auth_warm_open_passed_both": true,
+  "returned_to_plans_both": true,
+  "new_codes_requested": false,
+  "places_aggregate_before": 421,
+  "places_aggregate_after": 421
+}

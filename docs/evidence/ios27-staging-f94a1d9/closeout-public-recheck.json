@@ -1,0 +1,24 @@
+{
+  "application_sha": "f94a1d9d1125e6c9111aa08eda496f014f20d0c0",
+  "observed_at": "2026-09-21T19:08:31.648Z",
+  "request_scope": "public health and association GETs only",
+  "no_product_or_provider_operation_requested": true,
+  "staging_readiness": {
+    "exact_sha": true,
+    "supabase_auth": true,
+    "live_places": true,
+    "live_ai": true,
+    "anonymous_analytics": true,
+    "error_only_reporting": true
+  },
+  "associations": {
+    "apple": {
+      "sha256": "710eb96b4cb131ad435294629ed493857a0f8d38e9d0cba112fc905f9cc34d63",
+      "matches_accepted_manifest": true
+    },
+    "android": {
+      "sha256": "e2ad9e673a352912bf9782eba015a5bbcfd28069c138d858d37ced66bf411430",
+      "matches_accepted_manifest": true
+    }
+  }
+}

@@ -5,7 +5,9 @@
   "database_new_rotation_events": 1,
   "old_helper_capability_invalidated": true,
   "helper_left_unchanged_for_rejection_checks": true,
-  "owner_device_rejections_pending": true,
-  "owner_canonical_cold_warm_checks_pending": true,
-  "raw_capability_retained": false
+  "owner_device_rejections_pending": false,
+  "owner_canonical_cold_warm_checks_pending": false,
+  "raw_capability_retained": false,
+  "owner_device_rejections_confirmed": true,
+  "owner_canonical_cold_warm_confirmed": true
 }

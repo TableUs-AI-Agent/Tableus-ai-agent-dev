@@ -21,7 +21,16 @@ Update these documents in the same change when their truth changes.
   application's AI provider is a separate architecture decision.
 - Read the four current documents above first. Historical packets and chat
   transcripts are context, not additional active requirements.
-- Use a `codex/<objective>` branch and an isolated worktree for concurrent work.
+- Use one feature/fix per Codex task, with a named `codex/<objective>` branch
+  and isolated worktree. Record the base and active worktree in the active packet;
+  do not assume the task's default checkout is current.
+- Follow `docs/development-workflow.md`. On completion, hand off the exact commit,
+  remaining gates/budget and next bounded objective to a fresh task. Preserve an
+  incomplete objective in its current task; do not mistake a checkpoint for done.
+- Keep current documents concise. Replace stale status rather than appending
+  the same phase narrative to every document; retain detailed history in evidence.
+- Read referenced prior tasks with bounded retrieval before relying on them;
+  load older turns only for a concrete unresolved question, not the entire log.
 - Keep one objective bounded enough to review and validate continuously.
 - Preserve user changes and never rewrite unrelated work.
 - Prefer deterministic providers locally and in CI. Live provider evaluation is

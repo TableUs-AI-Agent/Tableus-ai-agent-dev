@@ -1,18 +1,21 @@
 # Closed-beta release runbook
 
-Updated 2026-09-21. Start with [current state](current-state.md) and the
+Updated 2026-09-14. Start with [current state](current-state.md) and the
 [active packet](task-packets/active.md). The recipes here do not grant authority
 to create resources, send mail, deploy or start paid calls.
 
 ## 1. Establish what already exists
 
-The frozen staging source is `f94a1d9d1125e6c9111aa08eda496f014f20d0c0`.
-Its recorded CI, hosted rollout, six inspected artifacts and completed device
-observations are indexed in [closeout evidence](evidence/ios27-staging-f94a1d9/closeout.md).
-Reconcile current external state before resuming live work; do not repeat a
-successful operation merely because a task or coding model changed. Older
-candidates and their evidence are historical, not replacement instructions.
-Use `.worktrees/staging-closeout` for the current task; preserve old worktrees.
+The deployed staging source is `c5b041c85f4f7b959436c13bef48c959622c624f`.
+The owner-approved push/CI and existing Railway staging/Vercel Preview rollout
+are complete. [Evidence](evidence/c5b041c/README.md) records exact deployment
+IDs, readiness, Preview CORS and preservation of production targets.
+The previous `daa89a0` live-smoke report was recovered and remains historical.
+Those four historical daa89a0 completions had no recovered files/receipts.
+The six newer c5b041c artifact/receipt pairs are now retained and reverified.
+The frozen 6b9719b replacement changes client bytes and needs its own artifacts;
+see the [preflight and execution request](evidence/replacement-6b9719b/README.md).
+Do not repeat successful external operations solely because a coding model changed.
 
 Keep three identities separate:
 
@@ -28,10 +31,10 @@ work. Never relabel old evidence with that new source.
 
 ## 2. Complete cheap local work first
 
-Local verification for the current application is recorded in the
-[scene-repair validation](evidence/ios27-scene-repair/local-validation.json).
-The [workflow](development-workflow.md) distinguishes fresh checks from reuse
-when application, tooling and test bytes remain unchanged.
+The frozen local device-session and plan-refresh correction is described in the
+[review](reviews/2026-09-14-device-session-plan-refresh.md). Local verification
+passed for 6b9719b. Evidence-only updates reuse those checks when the actual
+application, tooling and test bytes remain unchanged.
 
 For implementation changes, run focused tests while iterating, then `make ready` once. Check generated
 OpenAPI drift explicitly:
@@ -62,8 +65,8 @@ evidence, not authorization to spend again. A replacement deployment/live smoke
 requires a matching, concrete approved scope and budget. Preserve completed
 approvals, their exact source/scope and remaining limited-call allowances.
 
-Before any new deployment, resolve its explicit approval and account for
-Vercel's automatic branch-push trigger,
+The `c5b041c` approval covered push/CI and the existing staging targets only.
+Before another deployment, account for Vercel's automatic branch-push trigger,
 set source-stamp inputs before the build, and verify the exact Preview URLs in
 the API CORS allowlist. Keep the existing production target/aliases intact.
 Do not push an evidence-only descendant merely to publish receipts if that
@@ -71,8 +74,8 @@ would automatically create an unapproved replacement Preview.
 
 The [source delta](reviews/2026-09-12-security-delta.md) retains the older
 `069473c` scan association. Version-one cumulative input retains its scan contract;
-version two uses the distinct [accepted staging source review](evidence/source-review-f94a1d9/README.md)
-for f94a1d9. Bind its exact report/owner acceptance and preserve all remaining
+version two uses the distinct [accepted staging source review](evidence/source-review-6b9719b/README.md)
+for 6b9719b. Bind its exact report/owner acceptance and preserve all remaining
 source-bound gates. The report digest uses parsed JSON; native inspection receipts
 hash their raw inspection-file bytes. Do not restart a scan for a stale checkbox.
 
