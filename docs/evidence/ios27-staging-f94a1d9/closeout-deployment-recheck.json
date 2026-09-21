@@ -1,0 +1,26 @@
+{
+  "application_sha": "f94a1d9d1125e6c9111aa08eda496f014f20d0c0",
+  "recorded_at": "2026-09-21T19:24:42.799918+00:00",
+  "railway": {
+    "source": "authenticated_cli_project_status",
+    "deployment_id": "d929fba2-9c1e-4428-8379-ffaae6a3c4d2",
+    "status": "SUCCESS",
+    "instance_status": "RUNNING",
+    "source_sha": "f94a1d9d1125e6c9111aa08eda496f014f20d0c0",
+    "active_deployment_matches_accepted": true
+  },
+  "vercel": {
+    "observed_at": "2026-09-21T19:23:02.674280+00:00",
+    "id": "dpl_5iF8xTCbfuJghn2bRuUSGdKoRiJb",
+    "url": "tableus-staging-i6b1exrb3-briancheis-projects.vercel.app",
+    "readyState": "READY",
+    "target": "preview",
+    "source_sha": null,
+    "aliases": [],
+    "source": "authenticated_vercel_cli",
+    "connector_initial_result": "deployment_not_found",
+    "source_sha_provenance": "CLI omitted source metadata; identical immutable deployment ID matches retained exact-source hosted and served-bundle evidence",
+    "matches_accepted_deployment": true
+  },
+  "deployments_requested": 0
+}

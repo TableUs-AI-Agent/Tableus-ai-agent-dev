@@ -1,7 +1,7 @@
 # Current state
 
-Updated 2026-09-21. TableUs is implemented for isolated staging; cumulative
-staging acceptance is still incomplete. Production, stores and cohort activation
+Updated 2026-09-21. Cumulative isolated-staging acceptance is complete for
+`f94a1d9`, including the owner-accepted unresolved simulator AppHang risk. Production, stores and cohort activation
 are separate objectives. Only [the active packet](task-packets/active.md) directs
 implementation. [Historical snapshots](history/2026-09-21/README.md) preserve the
 previous narrative without making it an active checklist.
@@ -51,20 +51,26 @@ startup with pinned Expo 57.0.23 and a reviewed local config plugin.
   staging-only source review are accepted. No new scan or canary is needed.
 - Simulator local sign-out removed its server session while Android's remained.
   On September 21 the owner confirmed Android's subsequent relaunch and account
-  read succeeded without a code. Server proof of its post-sign-out token renewal
-  remains open; a cached screen alone is not renewal evidence.
+  read succeeded without a code. Read-only reconciliation matches the same original
+  Android session and proves renewal at September 17, 01:17:33 UTC, after the
+  simulator sign-out at 00:55:07 UTC. No reverse-direction result is claimed.
 
-## Remaining work and limits
+## Completed closeout and next work
 
-The Supabase connector denied read-only reconciliation on September 21. The owner
-is restoring access. Final session-renewal proof, provider totals, AppHang risk
-disposition and source-bound cumulative validation remain. No final acceptance
-report has been issued. See [closeout status](evidence/ios27-staging-f94a1d9/closeout.md).
+The owner restored Supabase access and accepted the simulator hang as an
+unresolved isolated-staging risk. Session renewal and provider totals are verified;
+the existing cumulative validator and fresh public readiness check pass. The
+[final report](evidence/ios27-staging-f94a1d9/final/closed-beta-readiness-summary.json)
+and [handoff](handoffs/2026-09-21-staging-closeout.md) close this objective.
 
-Last verified provider observation: September 17, 00:51:31 UTC. Places totals
+Next: a fresh task for targeted dependency/toolchain exception assessment before
+September 30. Merge and all production/store/cohort gates remain separate.
+
+Latest provider observation: September 21, 19:20:36 UTC. Places totals
 421 against baseline 329: **92/100 used, 8 remaining**. Emails **2/4**;
 explicit telemetry **6/6 per provider**, exhausted; fresh Gemini generations
-**0/0**. These counts are historical until reconciled; a new task resets none.
+**0/0**. Provider totals are freshly reconciled; email/canary counts retain their
+execution-ledger/delivery provenance. A new task resets none of these limits.
 The configured staging backstop was verified at 429.
 
 The unexplained simulator AppHang, placeholder tab glyphs, developer-toolchain

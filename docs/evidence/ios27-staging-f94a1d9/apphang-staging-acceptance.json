@@ -1,0 +1,23 @@
+{
+  "schema_version": 1,
+  "application_sha": "f94a1d9d1125e6c9111aa08eda496f014f20d0c0",
+  "accepted_on": "2026-09-21",
+  "source_task_id": "01a0c555-30b1-7403-9ac2-83d272d7ff62",
+  "owner_response": "Supabase access has been restored. Continue, with the recommendation for the iOS simulator hang",
+  "scope": "isolated_staging_only",
+  "observed_issue": "single simulator AppHang with unknown cause and one passing controlled repeat",
+  "observation_file": "ios-simulator-hang.json",
+  "observation_sha256": "ebe20d618a6965ce3e751d2eb5040b48234a18f2360c5f0021f4077a773c768e",
+  "accepted_as_unresolved_risk": true,
+  "fixed_claimed": false,
+  "production_or_distribution_acceptance": false,
+  "before_distribution": [
+    "restore usable native symbols",
+    "perform focused account export and relaunch diagnostic check"
+  ],
+  "reopen_conditions": [
+    "recurrence",
+    "physical-device occurrence",
+    "blocked user action"
+  ]
+}

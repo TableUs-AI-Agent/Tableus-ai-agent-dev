@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "application_sha": "f94a1d9d1125e6c9111aa08eda496f014f20d0c0",
-  "status": "closeout_pending_server_reconciliation",
+  "status": "completed_with_owner_accepted_staging_risk",
   "baseline": {
     "schema_version": 1,
     "application_sha": "2ad48a8d8ec4d3aa9a7bd52061b823bb55960bcd",
@@ -51,7 +51,7 @@
   "native_builds_completed": 6,
   "native_builds_remaining": 0,
   "latest_provider_observation": {
-    "observed_at": "2026-09-17T00:51:31.021450Z",
+    "observed_at": "2026-09-21T19:20:36.506907Z",
     "places_attempts_all_time": 421,
     "gemini_usage_rows": 9,
     "gemini_estimated_usd": 0.0050015
@@ -81,5 +81,7 @@
     "result": "permission_denied",
     "fresh_totals_available": false,
     "new_consuming_actions_requested": false
-  }
+  },
+  "final_reconciliation": "final-provider-reconciliation.json",
+  "closure_consuming_operations": 0
 }

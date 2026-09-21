@@ -1,0 +1,26 @@
+{
+  "schema_version": 1,
+  "application_sha": "f94a1d9d1125e6c9111aa08eda496f014f20d0c0",
+  "observed_at": "2026-09-21T19:27:34.456104+00:00",
+  "cumulative_validator_passed": true,
+  "staging_acceptance": "complete_with_owner_accepted_unresolved_simulator_risk",
+  "production_acceptance": false,
+  "same_original_android_session_renewal_proven": true,
+  "usage_reconciled": true,
+  "retained_make_ready_record": "closeout-local-validation.json",
+  "executables_unchanged_since_passing_make_ready": true,
+  "fresh_full_suite_run": false,
+  "evidence_sha256": {
+    "cumulative-readiness-input.accepted.json": "b2e5262e589811b4aaf97a42b936835c7be4072cdab4e36e15078599792402f1",
+    "final/closed-beta-readiness-summary.json": "8fe400c0aad28d1bbfdd4ee6b58cb5982622ddc53b5885106d1789f914c1d416",
+    "apphang-staging-acceptance.json": "d8ab1354cbe076fe7208d3e5871835e90a486b1b694fda1c1eb8338ac2e22e3f",
+    "session-isolation.json": "2ebc6b7f11f7f6ce6aca666a71364fff80ea9e04c6dd60da2553364b21ee2168",
+    "final-provider-reconciliation.json": "d591c6067f65ced94ff88668288ef15ce74f2ffb6a2432479c30a1d7376fb5c4",
+    "closeout-deployment-recheck.json": "e35f74b8bd0c6303cee264e9be9252af312d969d20206a85ae1f1a16d6a4d805"
+  },
+  "retained_historical_rejection": "closeout-validation.json",
+  "new_provider_operations": 0,
+  "new_sign_in_messages": 0,
+  "new_explicit_canaries": 0,
+  "new_native_builds": 0
+}

@@ -1,6 +1,6 @@
 {
   "application_sha": "f94a1d9d1125e6c9111aa08eda496f014f20d0c0",
-  "status": "android_owner_read_passed_server_renewal_pending",
+  "status": "passed_original_android_session_renewed_after_simulator_local_signout",
   "ios_profile": "telemetry-test-ios",
   "android_profile": "readiness-android",
   "same_account_confirmed_from_ui_and_database": true,
@@ -11,7 +11,7 @@
   "simulator_session_remaining": 0,
   "android_session_remaining": 1,
   "android_last_refresh_before_simulator_signout": "2026-09-17T00:19:27.236532Z",
-  "android_session_renewal_after_signout_proven": false,
+  "android_session_renewal_after_signout_proven": true,
   "physical_iphone_session_untouched": true,
   "simulator_stopped_without_wipe": true,
   "android_resumed_without_wipe": true,
@@ -20,5 +20,13 @@
   "owner_confirmed_android_reopened_without_code": true,
   "owner_confirmed_android_account_and_deletion_readiness_loaded": true,
   "owner_confirmation_kind": "retrospective_confirmation_of_previous_task_check",
-  "fresh_server_reconciliation": "connector_permission_denied"
+  "fresh_server_reconciliation": "passed",
+  "final_server_observed_at": "2026-09-21T19:21:31.582905Z",
+  "original_android_latest_refresh": "2026-09-17T01:17:33.906842Z",
+  "original_android_session_remaining": 1,
+  "original_simulator_session_remaining": 0,
+  "original_android_sessions_renewed_after_simulator_signout": 1,
+  "exact_preexisting_session_matched": true,
+  "session_match_provenance": "Exact creation timestamps recovered from the prior task SQL selectors; one matching Android row and zero original simulator rows; no identifiers retained",
+  "verification_scope": "iOS simulator local signout leaves same-account Android session usable and renewable; no reverse-direction claim"
 }

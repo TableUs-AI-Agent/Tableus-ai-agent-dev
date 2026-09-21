@@ -1,8 +1,8 @@
 # Closed-beta readiness checklist
 
 Updated 2026-09-21. Candidate:
-`f94a1d9d1125e6c9111aa08eda496f014f20d0c0`. **Cumulative staging acceptance is
-incomplete.** The [candidate matrix](evidence/ios27-staging-f94a1d9/closeout.md)
+`f94a1d9d1125e6c9111aa08eda496f014f20d0c0`. **Cumulative isolated-staging acceptance is
+complete, with the owner-accepted unresolved simulator hang.** The [candidate matrix](evidence/ios27-staging-f94a1d9/closeout.md)
 owns detailed status and provenance. The [old checklist](history/2026-09-21/release-readiness-checklist.md)
 is historical and does not direct current execution.
 
@@ -18,10 +18,10 @@ is historical and does not direct current execution.
 - [x] Exact-release web/iOS/Android/API telemetry delivery, no remaining canary budget.
 - [x] Exact-source staging review accepted; immutable source/report validation passes.
 - [x] Android post-sign-out relaunch/account-read owner confirmation received.
-- [ ] Server proof that the same Android session renewed after simulator sign-out.
-- [ ] Final aggregate provider/email/telemetry budget reconciliation.
-- [ ] Explicit disposition of the unexplained simulator AppHang.
-- [ ] Complete cumulative input accepted by the validator with truthful observations.
+- [x] Server proof that the same Android session renewed after simulator sign-out.
+- [x] Final aggregate provider/email/telemetry budget reconciliation.
+- [x] Explicit disposition of the unexplained simulator AppHang.
+- [x] Complete cumulative input accepted by the validator with truthful observations.
 
 Historical owner legal/privacy/attribution approval, mailbox delivery, template
 correction and rollback ownership retain their August 26 provenance. Do not
@@ -37,9 +37,9 @@ implementation work; the active packet alone authorizes the current objective.
 
 | Risk or obligation | Current control/evidence | Required before broader release |
 | --- | --- | --- |
-| One unexplained simulator AppHang | One controlled repeat passed; missing native app symbols; cause unknown | Explicit staging disposition; usable symbols and affected journey reassessment before distribution |
-| Local sign-out isolation | Local-scope implementation/tests; simulator session removed, Android read passes | Same-session post-sign-out renewal evidence for this candidate |
-| Every full plan response hydrates Places | No polling/gesture refresh; hidden-query/coalescing tests pass; fixed run backstop | Fresh budget reconciliation and cohort spend sizing |
+| One unexplained simulator AppHang | Owner accepted isolated-staging risk September 21; one repeat passed; cause unknown | Usable symbols and focused affected-journey check before distribution; reopen on recurrence |
+| Local sign-out isolation | Simulator session removed; same original Android session renewed; owner account-read passes | Preserve scoped proof; reverify affected behavior if changed |
+| Every full plan response hydrates Places | No polling/gesture refresh; hidden-query/coalescing tests pass; fixed run backstop | Cohort spend sizing and an explicit new live scope before expansion |
 | Developer-toolchain/advisory exception | Locked inputs; prior patch warnings retained as historical observations | Current reachability/compatible-patch assessment before September 30, 2026 or production, whichever is earlier |
 | Process-local idempotency/provider coordination | One API process, row locks, bounded replay/admission and explicit retries | Durable coordination before horizontal scaling |
 | Private capability in canonical URL | Approval also required; random/hashed tokens, rotation and redaction | Reviewed exchange or explicit production risk acceptance |
@@ -61,4 +61,4 @@ implementation work; the active packet alone authorizes the current objective.
 Current staging application remains `f94a1d9`; recovery is documentation/evidence
 work on `codex/staging-closeout`. Merging, production deployment, store submission
 and cohort activation are not authorized by a checked staging component.
-Missing phases stay open; older candidate evidence cannot fill them.
+The completed staging matrix does not clear the listed production obligations.

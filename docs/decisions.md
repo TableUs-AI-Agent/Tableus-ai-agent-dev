@@ -111,3 +111,18 @@ handoff for the next task. Read a referenced previous task before relying on it;
 retrieve only needed turns. One primary agent, no unrequested delegation. Preserve
 budgets/approvals across tasks and distinguish measured usage from assumptions
 about model cost. See [development workflow](development-workflow.md).
+
+## Staging closeout — accepted 2026-09-21
+
+The owner accepted the single unexplained iOS simulator AppHang as an unresolved
+**isolated-staging** risk, with usable native symbols and a focused diagnostic
+check required before TestFlight/distribution. Recurrence, physical-device
+occurrence or a blocked user action reopens investigation. This is not a fix
+or production acceptance. [Risk acceptance](evidence/ios27-staging-f94a1d9/apphang-staging-acceptance.json).
+
+The original Android session renewed after simulator-local sign-out; provider
+usage remains within the approved run limit. The cumulative validator passes for
+f94a1d9. Preserve all prior failed/pending evidence and reuse the earlier passing
+`make ready` for this documentation/evidence-only completion; no executable bytes
+changed. Start the dependency/toolchain objective in a fresh task from the
+[completed handoff](handoffs/2026-09-21-staging-closeout.md), not stale main.
