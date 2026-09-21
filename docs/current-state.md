@@ -1,12 +1,11 @@
 # Current state
 
-Updated 2026-09-21. Cumulative isolated-staging acceptance remains complete for
-`f94a1d9`, including
-the owner-accepted unresolved simulator AppHang risk. A local dependency
-remediation now has zero critical/high npm findings; hosted/native bytes have not
-changed. The replacement impact review and phased rollout proposal are prepared;
-Phase W is owner-approved, but publication is blocked by Vercel branch/stamp
-ordering and inherited source-map upload settings. No hosted bytes changed.
+Updated 2026-09-21. Original f94a1d9 isolated-staging acceptance remains intact,
+including the unresolved simulator AppHang risk. Replacement application ed8330a
+is published, exact-source CI passed and one Vercel Preview is verified. Phase W
+remains incomplete: exact Preview CORS needs separately approved API configuration
+and redeployment before staging aliases can move. API/native, existing staging
+aliases and production remain unchanged.
 Only [the active packet](task-packets/active.md) directs
 implementation. [Historical snapshots](history/2026-09-21/README.md) preserve the
 previous narrative without making it an active checklist.
@@ -82,19 +81,23 @@ The prior `make ready` (234 JavaScript, 98 Python passes, three PostgreSQL skips
 router/EAS regressions, Metro exports and four Chrome journeys are reused. Fresh
 review matched eight source hashes, nine private logs, nine installed consumers
 and both Metro maps; backend/shared/config source objects are unchanged.
-[Impact review and approval proposal](evidence/dependency-rollout-2026-09-21/README.md):
-web-first exact-source CI/one Preview and conditional staging alias replacement;
-API/native keep their real f94a1d9 identities. The owner approved Phase W only;
-[fresh preflight/checkpoint](evidence/web-dependency-rollout-2026-09-21/README.md)
-found actual staging aliases still serving daa89a0, production e1184ec, and the
-accepted f94a1d9 Preview retained separately. API d929fba2 remains ready at f94a1d9.
-New local Linux ARM64 benign PNG/JPEG/AVIF, error and cache checks pass with
-Next 16.3.5 / sharp 0.35.4 / libvips 8.18.6 / libheif 1.23.2. No push, CI,
-Preview or remote configuration change occurred. Vercel refuses branch stamps
-before the branch exists; sensitive Sentry build credentials also require a
-branch upload-disable exception. A concrete publication amendment is pending.
-Exact new Preview CORS needs a later separate API configuration/restart approval.
-Keep this incomplete rollout in the current task.
+[Phase W execution](evidence/web-dependency-rollout-2026-09-21/README.md): owner
+approved the original scope and the temporary Preview-pause/publication amendment.
+Application ed8330a is on `codex/web-deps-ed8330a`; CI 35661503170 passed with
+234 JS / 101 Python / four browser / seven deterministic AI cases. Preview
+`dpl_3ec5bdvridE1meArFaYWAp8yabKM` is READY with exact served source stamps,
+provider-free browser, benign hosted image/cache/error and association checks.
+Measured local Linux ARM64 and x64 image stacks pass; hosted sharp/libvips versions
+are lock-derived, not directly introspected. Discovery's automatic nearby request
+was blocked by the browser guard; live data behavior is not part of this proof.
+
+Only the new exact Preview origin fails API CORS. The [concrete request](evidence/web-dependency-rollout-2026-09-21/cors-approval-request.json)
+adds that one origin and redeploys existing f94a1d9 once; approval is pending.
+API d929fba2 remains f94a1d9; actual staging aliases remain daa89a0; production
+remains e1184ec. The accepted f94a1d9 Preview is retained separately. Three
+branch-only nonsecret overrides are verified (two stamps and empty Sentry upload
+token); Preview auto-deploy was restored and previous settings/protection preserved.
+One CI / one Preview allowance is consumed. Keep this incomplete rollout in this task.
 Next 16.3.4 re-enabled AVIF, so the new image check must test the patched stack,
 not expect AVIF rejection. Native builds first need an operator fix: the current
 helper deletes logs and does not preserve symbols/maps. Later verification is

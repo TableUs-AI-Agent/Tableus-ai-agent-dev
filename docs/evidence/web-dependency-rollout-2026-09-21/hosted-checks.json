@@ -1,0 +1,533 @@
+{
+  "observed_at": "2026-09-21T22:18:00.778129+00:00",
+  "deployment_id": "dpl_3ec5bdvridE1meArFaYWAp8yabKM",
+  "application_sha": "ed8330a766b3c4b80a505e075535678394e275e9",
+  "existing_protection_credential_reused": true,
+  "credential_sent_only_to_exact_preview_host": true,
+  "fixture_url": "https://images.unsplash.com/photo-1579584425555-c3ce17fd4351?w=32&h=24&fit=crop&fm=jpg",
+  "rows": [
+    {
+      "label": "landing",
+      "url": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app/",
+      "method": "GET",
+      "status": 307,
+      "headers": {
+        "access-control-allow-origin": "*",
+        "cache-control": "public, max-age=0, must-revalidate",
+        "content-type": "text/html; charset=utf-8",
+        "etag": "\"87428a1f8a39476736fae6e74e620e37\"",
+        "location": "/discover",
+        "vary": "rsc, next-router-state-tree, next-router-prefetch, next-router-segment-prefetch",
+        "x-vercel-cache": "PRERENDER"
+      },
+      "bytes": 6106,
+      "sha256": "043b5933af9355e271b0ae412b47742becbd5492bab20e9afb0fa952fbe6d948"
+    },
+    {
+      "label": "invite",
+      "url": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app/invite",
+      "method": "GET",
+      "status": 200,
+      "headers": {
+        "cache-control": "private, no-cache, no-store, max-age=0, must-revalidate",
+        "content-type": "text/html; charset=utf-8",
+        "vary": "rsc, next-router-state-tree, next-router-prefetch, next-router-segment-prefetch",
+        "x-vercel-cache": "MISS"
+      },
+      "bytes": 18576,
+      "sha256": "28cc90f62793d80b85c4efcd5d31815747db07fb0be12ea2565d732dcc2e718a"
+    },
+    {
+      "label": "auth",
+      "url": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app/auth?mode=sign-in",
+      "method": "GET",
+      "status": 307,
+      "headers": {
+        "cache-control": "private, no-cache, no-store, max-age=0, must-revalidate",
+        "content-type": "text/html; charset=utf-8",
+        "location": "/invite?mode=sign-in",
+        "vary": "rsc, next-router-state-tree, next-router-prefetch, next-router-segment-prefetch",
+        "x-vercel-cache": "MISS"
+      },
+      "bytes": 6671,
+      "sha256": "0d6391bf237347cf1701326ac0f73e8f8ecc4c3936329304047abae265b8cf0d"
+    },
+    {
+      "label": "auth-confirm",
+      "url": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app/auth/confirm",
+      "method": "GET",
+      "status": 307,
+      "headers": {
+        "cache-control": "public, max-age=0, must-revalidate",
+        "location": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app/invite?error=invalid_callback",
+        "x-vercel-cache": "MISS"
+      },
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "label": "invalid-join",
+      "url": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app/join/not-a-uuid?token=phase-w-invalid",
+      "method": "GET",
+      "status": 200,
+      "headers": {
+        "cache-control": "private, no-cache, no-store, max-age=0, must-revalidate",
+        "content-type": "text/html; charset=utf-8",
+        "vary": "rsc, next-router-state-tree, next-router-prefetch, next-router-segment-prefetch",
+        "x-vercel-cache": "MISS"
+      },
+      "bytes": 18617,
+      "sha256": "64cd76019214ee8b9ebc03087c41b29eeff624d5f4f7412ca55cf2b4e2bfb057"
+    },
+    {
+      "label": "missing-token",
+      "url": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app/join/00000000-0000-4000-8000-000000000000",
+      "method": "GET",
+      "status": 200,
+      "headers": {
+        "cache-control": "private, no-cache, no-store, max-age=0, must-revalidate",
+        "content-type": "text/html; charset=utf-8",
+        "vary": "rsc, next-router-state-tree, next-router-prefetch, next-router-segment-prefetch",
+        "x-vercel-cache": "MISS"
+      },
+      "bytes": 18582,
+      "sha256": "63b5d706eaf2bd53c38fbdc41b78a0bc6366fa7a546978ebdef82b6cf73899b5"
+    },
+    {
+      "label": "attribution",
+      "url": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app/google-maps-attribution.svg",
+      "method": "GET",
+      "status": 200,
+      "headers": {
+        "access-control-allow-origin": "*",
+        "cache-control": "public, max-age=0, must-revalidate",
+        "content-type": "image/svg+xml",
+        "etag": "\"ae231dc1f75a3caa531b6bbc6bb96f24\"",
+        "x-vercel-cache": "MISS"
+      },
+      "bytes": 5275,
+      "sha256": "62c52df68d8f450c860d5d65068fc96d63c2dfaec849b91ac64b3256a898936e"
+    },
+    {
+      "label": "apple",
+      "url": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app/.well-known/apple-app-site-association",
+      "method": "GET",
+      "status": 200,
+      "headers": {
+        "cache-control": "public, max-age=300",
+        "content-type": "application/json",
+        "x-vercel-cache": "MISS"
+      },
+      "bytes": 123,
+      "sha256": "710eb96b4cb131ad435294629ed493857a0f8d38e9d0cba112fc905f9cc34d63"
+    },
+    {
+      "label": "android",
+      "url": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app/.well-known/assetlinks.json",
+      "method": "GET",
+      "status": 200,
+      "headers": {
+        "cache-control": "public, max-age=300",
+        "content-type": "application/json",
+        "x-vercel-cache": "MISS"
+      },
+      "bytes": 258,
+      "sha256": "e2ad9e673a352912bf9782eba015a5bbcfd28069c138d858d37ced66bf411430"
+    },
+    {
+      "label": "bundle-0",
+      "url": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app/_next/static/chunks/568-b6bb8ec70c5b4785.js",
+      "method": "GET",
+      "status": 200,
+      "headers": {
+        "access-control-allow-origin": "*",
+        "cache-control": "public,max-age=31536000,immutable",
+        "content-type": "application/javascript; charset=utf-8",
+        "etag": "\"9ea98c0fcc8a8eb5fa59f28e35389915\"",
+        "x-vercel-cache": "MISS"
+      },
+      "bytes": 4158,
+      "sha256": "4b2d8ad361b8e74c0cf7049d6f6c1fe5f1275526d7be7f3757a040db2ec97f1a",
+      "contains_source_sha": false
+    },
+    {
+      "label": "bundle-1",
+      "url": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app/_next/static/chunks/628-6c1c193164d7c953.js",
+      "method": "GET",
+      "status": 200,
+      "headers": {
+        "access-control-allow-origin": "*",
+        "cache-control": "public,max-age=31536000,immutable",
+        "content-type": "application/javascript; charset=utf-8",
+        "etag": "\"785071ebccebcf21e0fe484dcd561cf7\"",
+        "x-vercel-cache": "MISS"
+      },
+      "bytes": 191088,
+      "sha256": "edd2f09768986bf8aacb0fb55fb6ebcd595fe27131d7e35c0254d85fe744c142",
+      "contains_source_sha": false
+    },
+    {
+      "label": "bundle-2",
+      "url": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app/_next/static/chunks/685-5580a06f47a01a4d.js",
+      "method": "GET",
+      "status": 200,
+      "headers": {
+        "access-control-allow-origin": "*",
+        "cache-control": "public,max-age=31536000,immutable",
+        "content-type": "application/javascript; charset=utf-8",
+        "etag": "\"e49d002c6821bdf860396d450c2e865a\"",
+        "x-vercel-cache": "MISS"
+      },
+      "bytes": 11478,
+      "sha256": "83ef26c025905608d5566abb2131fe7c4cbb4db3c3a2fd943e97ae8db2b663c2",
+      "contains_source_sha": false
+    },
+    {
+      "label": "bundle-3",
+      "url": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app/_next/static/chunks/747-0d821b06bc4bf4c6.js",
+      "method": "GET",
+      "status": 200,
+      "headers": {
+        "access-control-allow-origin": "*",
+        "cache-control": "public,max-age=31536000,immutable",
+        "content-type": "application/javascript; charset=utf-8",
+        "etag": "\"811213e714bf72e5af403642ad5492e0\"",
+        "x-vercel-cache": "MISS"
+      },
+      "bytes": 495167,
+      "sha256": "d203187d8dcb84bb2e207b8b879989dba0b5b2490bff727b350c541a503bed3b",
+      "contains_source_sha": false
+    },
+    {
+      "label": "bundle-4",
+      "url": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app/_next/static/chunks/922-d7683125cf6c60d3.js",
+      "method": "GET",
+      "status": 200,
+      "headers": {
+        "access-control-allow-origin": "*",
+        "cache-control": "public,max-age=31536000,immutable",
+        "content-type": "application/javascript; charset=utf-8",
+        "etag": "\"7b89d8b7c706470f8b53d5a0aa3768f6\"",
+        "x-vercel-cache": "MISS"
+      },
+      "bytes": 17862,
+      "sha256": "fd35d50c5570f57d93234d889c607429656356198fa02746ad3c707517143ac5",
+      "contains_source_sha": false
+    },
+    {
+      "label": "bundle-5",
+      "url": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app/_next/static/chunks/97e9ee5f-57eadbfa66ee070f.js",
+      "method": "GET",
+      "status": 200,
+      "headers": {
+        "access-control-allow-origin": "*",
+        "cache-control": "public,max-age=31536000,immutable",
+        "content-type": "application/javascript; charset=utf-8",
+        "etag": "\"60c0f92125435bacdebc318e6453e31b\"",
+        "x-vercel-cache": "MISS"
+      },
+      "bytes": 272,
+      "sha256": "7433b9142f37d6fbe41b1616f50554aeef63e0a09619c3a3052f5c8cf1ea409a",
+      "contains_source_sha": false
+    },
+    {
+      "label": "bundle-6",
+      "url": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app/_next/static/chunks/app/global-error-e9769d1775b5bd1a.js",
+      "method": "GET",
+      "status": 200,
+      "headers": {
+        "access-control-allow-origin": "*",
+        "cache-control": "public,max-age=31536000,immutable",
+        "content-type": "application/javascript; charset=utf-8",
+        "etag": "\"8fb24590083bab9ade9da38f17c16f65\"",
+        "x-vercel-cache": "MISS"
+      },
+      "bytes": 699,
+      "sha256": "b8a4d8427d47f536b90ae04b4d1f9fdffecb1257a30f2c9d02774acd1f13ab6e",
+      "contains_source_sha": false
+    },
+    {
+      "label": "bundle-7",
+      "url": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app/_next/static/chunks/app/invite/page-382cae1aee686465.js",
+      "method": "GET",
+      "status": 200,
+      "headers": {
+        "access-control-allow-origin": "*",
+        "cache-control": "public,max-age=31536000,immutable",
+        "content-type": "application/javascript; charset=utf-8",
+        "etag": "\"978e890ef2d2fa286a8a730eb3973cdb\"",
+        "x-vercel-cache": "MISS"
+      },
+      "bytes": 9088,
+      "sha256": "af7991482a97a5847bcc3ba749f2d37bb47afb2933da05d2022b3f6ab90ba0f2",
+      "contains_source_sha": true
+    },
+    {
+      "label": "bundle-8",
+      "url": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app/_next/static/chunks/app/layout-139aecc5216eb721.js",
+      "method": "GET",
+      "status": 200,
+      "headers": {
+        "access-control-allow-origin": "*",
+        "cache-control": "public,max-age=31536000,immutable",
+        "content-type": "application/javascript; charset=utf-8",
+        "etag": "\"07d93b5b5aa16ddd7950b86f2ea14e03\"",
+        "x-vercel-cache": "MISS"
+      },
+      "bytes": 15382,
+      "sha256": "45ba3114400c6a7c281e49b0ee500320171275de9a2f8abdf2c430982c134430",
+      "contains_source_sha": true
+    },
+    {
+      "label": "bundle-9",
+      "url": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app/_next/static/chunks/c7879cf7-8d04bf519bc81a2d.js",
+      "method": "GET",
+      "status": 200,
+      "headers": {
+        "access-control-allow-origin": "*",
+        "cache-control": "public,max-age=31536000,immutable",
+        "content-type": "application/javascript; charset=utf-8",
+        "etag": "\"1b2466b5bd458f0f614c8ba7eb1541d3\"",
+        "x-vercel-cache": "MISS"
+      },
+      "bytes": 201058,
+      "sha256": "4a85eb553def28cdd7ea2c256c8471f01a63acf9d74e03a60302c7b76665bbc3",
+      "contains_source_sha": false
+    },
+    {
+      "label": "bundle-10",
+      "url": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app/_next/static/chunks/d28dc9c7-9b3bb30f583875ae.js",
+      "method": "GET",
+      "status": 200,
+      "headers": {
+        "access-control-allow-origin": "*",
+        "cache-control": "public,max-age=31536000,immutable",
+        "content-type": "application/javascript; charset=utf-8",
+        "etag": "\"bc7e10067fac89880ae0c64fadc678a3\"",
+        "x-vercel-cache": "MISS"
+      },
+      "bytes": 64213,
+      "sha256": "e86eeda546a12d6f9504c633f204f1e59d6ccd35a336fcd8bd2065c7b9b8ad17",
+      "contains_source_sha": false
+    },
+    {
+      "label": "bundle-11",
+      "url": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app/_next/static/chunks/main-app-ceba052889cbb13f.js",
+      "method": "GET",
+      "status": 200,
+      "headers": {
+        "access-control-allow-origin": "*",
+        "cache-control": "public,max-age=31536000,immutable",
+        "content-type": "application/javascript; charset=utf-8",
+        "etag": "\"15505f4d409a0a04a63d9a443df66dad\"",
+        "x-vercel-cache": "MISS"
+      },
+      "bytes": 6589,
+      "sha256": "b773d56e611075ec170a5790d9bfddd92cdb086714044c3cd5c236d85b8765ab",
+      "contains_source_sha": true
+    },
+    {
+      "label": "bundle-12",
+      "url": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app/_next/static/chunks/polyfills-42372ed130431b0a.js",
+      "method": "GET",
+      "status": 200,
+      "headers": {
+        "access-control-allow-origin": "*",
+        "cache-control": "public,max-age=31536000,immutable",
+        "content-type": "application/javascript; charset=utf-8",
+        "etag": "\"846118c33b2c0e922d7b3a7676f81f6f\"",
+        "x-vercel-cache": "MISS"
+      },
+      "bytes": 112594,
+      "sha256": "0973c1d64c88adc8e3c950410cb58b288f72118d5965b78049438deb8f2f9683",
+      "contains_source_sha": false
+    },
+    {
+      "label": "bundle-13",
+      "url": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app/_next/static/chunks/webpack-d65839e3567f7b9c.js",
+      "method": "GET",
+      "status": 200,
+      "headers": {
+        "access-control-allow-origin": "*",
+        "cache-control": "public,max-age=31536000,immutable",
+        "content-type": "application/javascript; charset=utf-8",
+        "etag": "\"ecc5dd34558b46a1a13de7ec1a650e20\"",
+        "x-vercel-cache": "MISS"
+      },
+      "bytes": 3519,
+      "sha256": "6b368d53939863d12ca166dd45e5d1513e1db7d6f434ba27985f60c033f074d8",
+      "contains_source_sha": false
+    },
+    {
+      "label": "api-ready",
+      "url": "https://api-staging-3795.up.railway.app/health/ready",
+      "method": "GET",
+      "status": 200,
+      "headers": {
+        "content-type": "application/json",
+        "vary": "accept-encoding"
+      },
+      "bytes": 319,
+      "sha256": "bd16fa6cfab0eee91e125bc89d7d2f7b121c9865cddd2d14df13e87f3af583c5"
+    },
+    {
+      "label": "cors-new-preview",
+      "url": "https://api-staging-3795.up.railway.app/api/v1/me",
+      "method": "OPTIONS",
+      "status": 400,
+      "headers": {
+        "access-control-allow-credentials": "true",
+        "content-type": "text/plain; charset=utf-8",
+        "vary": "Origin"
+      },
+      "bytes": 22,
+      "sha256": "f80399859bbd7b2cb1cac34d88e0f01461619f351b476926e2465eea789098d4"
+    },
+    {
+      "label": "cors-staging",
+      "url": "https://api-staging-3795.up.railway.app/api/v1/me",
+      "method": "OPTIONS",
+      "status": 200,
+      "headers": {
+        "access-control-allow-credentials": "true",
+        "access-control-allow-origin": "https://tableus-staging.vercel.app",
+        "content-type": "text/plain; charset=utf-8",
+        "vary": "Origin"
+      },
+      "bytes": 2,
+      "sha256": "565339bc4d33d72817b583024112eb7f5cdf3e5eef0252d6ec1b9c9a94e12bb3"
+    },
+    {
+      "label": "cors-links",
+      "url": "https://api-staging-3795.up.railway.app/api/v1/me",
+      "method": "OPTIONS",
+      "status": 200,
+      "headers": {
+        "access-control-allow-credentials": "true",
+        "access-control-allow-origin": "https://links.table-us.com",
+        "content-type": "text/plain; charset=utf-8",
+        "vary": "Origin"
+      },
+      "bytes": 2,
+      "sha256": "565339bc4d33d72817b583024112eb7f5cdf3e5eef0252d6ec1b9c9a94e12bb3"
+    },
+    {
+      "label": "cors-unapproved",
+      "url": "https://api-staging-3795.up.railway.app/api/v1/me",
+      "method": "OPTIONS",
+      "status": 400,
+      "headers": {
+        "access-control-allow-credentials": "true",
+        "content-type": "text/plain; charset=utf-8",
+        "vary": "Origin"
+      },
+      "bytes": 22,
+      "sha256": "f80399859bbd7b2cb1cac34d88e0f01461619f351b476926e2465eea789098d4"
+    },
+    {
+      "label": "fixture-jpeg",
+      "url": "https://images.unsplash.com/photo-1579584425555-c3ce17fd4351?w=32&h=24&fit=crop&fm=jpg",
+      "method": "GET",
+      "status": 200,
+      "headers": {
+        "cache-control": "public, max-age=31536000",
+        "content-type": "image/jpeg",
+        "access-control-allow-origin": "*"
+      },
+      "bytes": 1297,
+      "sha256": "01849588dad98b902eee2d36cd3b596f314f8d4d8de3f052cc4fd4fab04457f6"
+    },
+    {
+      "label": "hosted-image-first",
+      "url": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app/_next/image?url=https%3A%2F%2Fimages.unsplash.com%2Fphoto-1579584425555-c3ce17fd4351%3Fw%3D32%26h%3D24%26fit%3Dcrop%26fm%3Djpg&w=64&q=75",
+      "method": "GET",
+      "status": 200,
+      "headers": {
+        "cache-control": "public, max-age=31536000, must-revalidate",
+        "content-type": "image/webp",
+        "vary": "Accept",
+        "x-vercel-cache": "MISS"
+      },
+      "bytes": 374,
+      "sha256": "e5724380edf5ff09da856a52d911b59fefdae21fe504fee9c00d347b9b35030b"
+    },
+    {
+      "label": "hosted-image-repeat",
+      "url": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app/_next/image?url=https%3A%2F%2Fimages.unsplash.com%2Fphoto-1579584425555-c3ce17fd4351%3Fw%3D32%26h%3D24%26fit%3Dcrop%26fm%3Djpg&w=64&q=75",
+      "method": "GET",
+      "status": 200,
+      "headers": {
+        "cache-control": "public, max-age=31536000, must-revalidate",
+        "content-type": "image/webp",
+        "vary": "Accept",
+        "x-vercel-cache": "HIT"
+      },
+      "bytes": 374,
+      "sha256": "e5724380edf5ff09da856a52d911b59fefdae21fe504fee9c00d347b9b35030b"
+    },
+    {
+      "label": "hosted-image-unallowed",
+      "url": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app/_next/image?url=https%3A%2F%2Fexample.com%2Fbenign.png&w=64&q=75",
+      "method": "GET",
+      "status": 400,
+      "headers": {
+        "cache-control": "public, max-age=0, must-revalidate",
+        "content-type": "text/plain; charset=utf-8"
+      },
+      "bytes": 84,
+      "sha256": "c04f3b398d2c877bab55c3b9dcdb6a8f6489e84a6da39c06703a7aaa2a6ac0f2"
+    }
+  ],
+  "source_stamp_bundle_count": 3,
+  "no_live_application_provider_calls": true,
+  "validation": {
+    "public_http_routes": true,
+    "exact_sha_served_in_three_bundles": true,
+    "all_bundles_200": true,
+    "attribution_matches_source": true,
+    "hosted_jpeg_to_webp": true,
+    "hosted_cache_hit_same_bytes": true,
+    "unapproved_image_origin_400": true,
+    "exact_preview_cors": false,
+    "staging_and_canonical_cors": true,
+    "unapproved_cors_rejected": true,
+    "associations_match_retained_signers_and_paths": true
+  },
+  "associations": {
+    "apple": {
+      "applinks": {
+        "apps": [],
+        "details": [
+          {
+            "appIDs": [
+              "6MHJN5V9UJ.com.tableus.app"
+            ],
+            "components": [
+              {
+                "/": "/join/*"
+              },
+              {
+                "/": "/auth"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    "android": [
+      {
+        "relation": [
+          "delegate_permission/common.handle_all_urls"
+        ],
+        "target": {
+          "namespace": "android_app",
+          "package_name": "com.tableus.app",
+          "sha256_cert_fingerprints": [
+            "02:FC:F9:A8:5F:EF:26:D4:61:43:F4:D8:28:7A:32:5B:05:21:1B:B6:77:23:91:32:4C:12:AA:78:60:C6:65:68"
+          ]
+        }
+      }
+    ]
+  },
+  "passed_except_exact_preview_cors": true
+}

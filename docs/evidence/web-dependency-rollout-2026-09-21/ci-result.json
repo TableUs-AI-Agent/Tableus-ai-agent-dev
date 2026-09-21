@@ -1,0 +1,244 @@
+{
+  "observed_at": "2026-09-21T22:24:40.381533+00:00",
+  "run_id": 35661503170,
+  "url": "https://github.com/TableUs-AI-Agent/Tableus-ai-agent-dev/actions/runs/35661503170",
+  "event": "workflow_dispatch",
+  "application_sha": "ed8330a766b3c4b80a505e075535678394e275e9",
+  "checked_out_sha_verified_in_log": true,
+  "conclusion": "success",
+  "node": "22.23.2",
+  "npm": "10.9.8",
+  "javascript_passed": 234,
+  "python_passed": 101,
+  "browser_passed": 4,
+  "deterministic_ai_passed": 7,
+  "deterministic_ai_cost_usd": 0,
+  "whole_repository_frozen_install": true,
+  "disposable_postgresql_migrations": true,
+  "contract_check": true,
+  "web_build_next": "16.3.5",
+  "jobs": [
+    {
+      "completedAt": "2026-09-21T22:18:21Z",
+      "conclusion": "success",
+      "databaseId": 106537577248,
+      "name": "ci",
+      "startedAt": "2026-09-21T22:13:45Z",
+      "status": "completed",
+      "steps": [
+        {
+          "completedAt": "2026-09-21T22:13:47Z",
+          "conclusion": "success",
+          "name": "Set up job",
+          "number": 1,
+          "startedAt": "2026-09-21T22:13:46Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-21T22:13:59Z",
+          "conclusion": "success",
+          "name": "Initialize containers",
+          "number": 2,
+          "startedAt": "2026-09-21T22:13:47Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-21T22:14:00Z",
+          "conclusion": "success",
+          "name": "Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262",
+          "number": 3,
+          "startedAt": "2026-09-21T22:13:59Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-21T22:14:01Z",
+          "conclusion": "success",
+          "name": "Run actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020",
+          "number": 4,
+          "startedAt": "2026-09-21T22:14:00Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-21T22:14:02Z",
+          "conclusion": "success",
+          "name": "Run astral-sh/setup-uv@d0d8abe699bfb85fec6de9f7adb5ae17292296ff",
+          "number": 5,
+          "startedAt": "2026-09-21T22:14:01Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-21T22:14:58Z",
+          "conclusion": "success",
+          "name": "Run npm ci",
+          "number": 6,
+          "startedAt": "2026-09-21T22:14:02Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-21T22:14:59Z",
+          "conclusion": "success",
+          "name": "Run uv sync --frozen --extra dev",
+          "number": 7,
+          "startedAt": "2026-09-21T22:14:58Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-21T22:15:01Z",
+          "conclusion": "success",
+          "name": "Run uv run alembic upgrade head",
+          "number": 8,
+          "startedAt": "2026-09-21T22:14:59Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-21T22:15:13Z",
+          "conclusion": "success",
+          "name": "Run npm run lint",
+          "number": 9,
+          "startedAt": "2026-09-21T22:15:01Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-21T22:15:27Z",
+          "conclusion": "success",
+          "name": "Run npm run typecheck",
+          "number": 10,
+          "startedAt": "2026-09-21T22:15:13Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-21T22:15:27Z",
+          "conclusion": "success",
+          "name": "Run uv run ruff check .",
+          "number": 11,
+          "startedAt": "2026-09-21T22:15:27Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-21T22:15:41Z",
+          "conclusion": "success",
+          "name": "Run uv run mypy tableus",
+          "number": 12,
+          "startedAt": "2026-09-21T22:15:27Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-21T22:15:53Z",
+          "conclusion": "success",
+          "name": "Run npm run test",
+          "number": 13,
+          "startedAt": "2026-09-21T22:15:41Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-21T22:15:59Z",
+          "conclusion": "success",
+          "name": "Run uv run pytest",
+          "number": 14,
+          "startedAt": "2026-09-21T22:15:53Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-21T22:16:01Z",
+          "conclusion": "success",
+          "name": "Run uv run python scripts/ai_eval.py",
+          "number": 15,
+          "startedAt": "2026-09-21T22:16:00Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-21T22:16:02Z",
+          "conclusion": "success",
+          "name": "Run uv run python scripts/export_openapi.py",
+          "number": 16,
+          "startedAt": "2026-09-21T22:16:01Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-21T22:16:04Z",
+          "conclusion": "success",
+          "name": "Run npm run contract:check",
+          "number": 17,
+          "startedAt": "2026-09-21T22:16:02Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-21T22:17:32Z",
+          "conclusion": "success",
+          "name": "Run npm run build",
+          "number": 18,
+          "startedAt": "2026-09-21T22:16:04Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-21T22:17:54Z",
+          "conclusion": "success",
+          "name": "Run npx playwright install --with-deps chromium",
+          "number": 19,
+          "startedAt": "2026-09-21T22:17:32Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-21T22:18:14Z",
+          "conclusion": "success",
+          "name": "Run npm run test:e2e",
+          "number": 20,
+          "startedAt": "2026-09-21T22:17:54Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-21T22:18:16Z",
+          "conclusion": "success",
+          "name": "Run uv run python scripts/smoke.py",
+          "number": 21,
+          "startedAt": "2026-09-21T22:18:14Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-21T22:18:16Z",
+          "conclusion": "success",
+          "name": "Post Run astral-sh/setup-uv@d0d8abe699bfb85fec6de9f7adb5ae17292296ff",
+          "number": 39,
+          "startedAt": "2026-09-21T22:18:16Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-21T22:18:19Z",
+          "conclusion": "success",
+          "name": "Post Run actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020",
+          "number": 40,
+          "startedAt": "2026-09-21T22:18:16Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-21T22:18:19Z",
+          "conclusion": "success",
+          "name": "Post Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262",
+          "number": 41,
+          "startedAt": "2026-09-21T22:18:19Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-21T22:18:21Z",
+          "conclusion": "success",
+          "name": "Stop containers",
+          "number": 42,
+          "startedAt": "2026-09-21T22:18:19Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-21T22:18:21Z",
+          "conclusion": "success",
+          "name": "Complete job",
+          "number": 43,
+          "startedAt": "2026-09-21T22:18:21Z",
+          "status": "completed"
+        }
+      ],
+      "url": "https://github.com/TableUs-AI-Agent/Tableus-ai-agent-dev/actions/runs/35661503170/job/106537577248"
+    }
+  ],
+  "log_sha256": "8fa1d68cf0a2a0a13227987ca007d41541254a673f460e70aea4537d441f98c7",
+  "ci_runs_used": 1,
+  "ci_runs_cap": 1
+}

@@ -145,8 +145,11 @@ web-first patch. Mixed component evidence cannot satisfy the existing single-SHA
 cumulative validator; do not relabel reports or weaken it. Brian approved only
 [Phase W](evidence/web-dependency-rollout-2026-09-21/approval.json): one exact-source
 CI, one Preview and conditional staging aliases, with no live allowance.
-Publication ordering/configuration exceptions and API restart remain separate
-gates; the current preflight is incomplete. Current native tooling does not
+The owner also approved the [publication amendment](evidence/web-dependency-rollout-2026-09-21/publication-amendment.json):
+temporary Preview pause, exact-ref publication, branch stamps and empty Sentry
+upload token, then restore Preview triggers. It is executed with one passing CI
+and one READY Preview. Exact-origin API configuration/redeploy remains a separate
+gate before conditional staging alias activation. Current native tooling does not
 preserve diagnostic logs/symbols, so
 repair it under a separate operator SHA before new builds. Local symbol matching
 and an app-frame resolution check precede the focused export/relaunch diagnostic;

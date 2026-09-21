@@ -1,7 +1,6 @@
 # Active packet: approved Phase W web dependency rollout
 
-Started 2026-09-21. One primary agent; no Security Scan. **Incomplete: blocked
-before publication; continue in this task after the additional decision.**
+Started 2026-09-21. One primary agent; no Security Scan. **Incomplete: CI and Preview verified; exact Preview CORS/API action awaits approval.**
 
 ## Identities and authority
 
@@ -20,9 +19,11 @@ before publication; continue in this task after the additional decision.**
 
 ## Outcome and acceptance
 
-Publish exact ed8330a, run one exact-source CI workflow and reuse one automatically
-triggered existing-project Vercel Preview. Prepare only the two branch-scoped
-nonsecret source stamps before publication. Preserve all other configuration.
+The owner approved the full publication amendment: temporary Preview pause, exact
+branch publication, two stamps and empty branch Sentry upload token, restore
+Preview triggers, create/reuse one Preview and dispatch one CI. This sequence is
+complete; no automatic Preview existed, so one exact-Git Preview was created.
+Preserve all other configuration.
 Require exact source, Linux image-stack and benign image behavior, provider-free
 browser routes, attribution, assets, CORS and association checks. Move only
 `tableus-staging.vercel.app` and `links.table-us.com` after all checks pass and
@@ -52,22 +53,36 @@ emails 2/4, canaries 6/6 per provider, fresh Gemini 0/0; backstop 429. Existing
 AppHang acceptance remains isolated-staging-only. September 30 is unextended.
 Native diagnostic-retention repair and later native validation are future tasks.
 
-## Current observations
+## Current result and next action
 
-API d929fba2 is active at f94a1d9. Accepted Preview dpl_5iF8xTCbfuJghn2bRuUSGdKoRiJb
-is READY at f94a1d9. Actual staging aliases still point to dpl_7yiJcGeeVGHBRzFggodNCLzoiAeX
-(application daa89a0); production remains dpl_7csJvHoJH9qgFZDijbwu3w36r2sK (e1184ec).
-Vercel root install is npm ci and Node 22.x. Sensitive inherited Sentry build
-credentials cannot be read back; exact application enables uploads if populated.
-Publication awaits a narrow branch-scoped empty SENTRY_AUTH_TOKEN override
-approval so the explicit no-symbol-upload boundary is enforceable. The API
-allowlist also lacks a future exact Preview origin; alias activation remains gated.
+[Execution evidence](../evidence/web-dependency-rollout-2026-09-21/README.md) records
+publication of exact ed8330a on `codex/web-deps-ed8330a`, CI 35661503170 success
+(234 JS / 101 Python / four browser / seven deterministic AI cases), and READY
+Preview `dpl_3ec5bdvridE1meArFaYWAp8yabKM` at
+`https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app`.
+Hosted source/bundle, attribution, benign image/cache/error, public browser and
+association checks pass. Local Linux x64 and ARM64 stacks pass; do not claim
+direct hosted sharp/libvips introspection. Browser network guards blocked live
+nearby requests and telemetry; saved sessions were untouched. Retain harness
+failures separately from application results. No new source or full-suite rerun.
 
-Source-stamp requests were rejected because the release branch does not exist;
-final readback proves no remote configuration changed. Local Linux ARM64 frozen
-install and benign PNG/JPEG/AVIF/error/cache checks passed. One CI / one Preview
-allowances remain unused. [Checkpoint](../evidence/web-dependency-rollout-2026-09-21/README.md)
-and [concrete publication amendment](../evidence/web-dependency-rollout-2026-09-21/publication-amendment.json)
-request a temporary Preview pause, reordered publication, empty branch upload
-credential override, then restoration and exactly one Preview. No additional
-approval has arrived. The same task remains active; do not create the native task.
+One CI and one Preview cap are consumed; no retry or extra deployment authorized.
+Three branch overrides are verified; temporary Preview pause restored. Original
+settings/protection preserved. API d929fba2 is still f94a1d9, native unchanged,
+staging aliases dpl_7yiJcGeeVGHBRzFggodNCLzoiAeX / daa89a0, production
+dpl_7csJvHoJH9qgFZDijbwu3w36r2sK / e1184ec, accepted f94a1d9 Preview retained.
+
+Exact new Preview CORS returns 400 without allow-origin. All other probed CORS
+and association checks pass. [Prepared API action](../evidence/web-dependency-rollout-2026-09-21/cors-approval-request.json)
+requires **separate owner approval**: preserve all eleven origins, append only the
+new immutable Preview origin, set ALLOWED_ORIGINS with --skip-deploys, then
+redeploy existing f94a1d9 once without --from-source. Reconfirm deployment and
+image before action; verify source/readiness/CORS after it. No API change is
+approved by the preceding publication amendment. Only then recheck production
+preservation and execute the already-approved conditional staging alias moves.
+Future production deployments may reassign custom domains with no branch binding;
+do not change bindings, promote production or weaken checks without authority.
+
+Keep this objective in this task until activation checks are complete. No fresh
+native task, budget, merge or rollout-complete claim. Preserve prior evidence and
+all private files/local containers under `.artifacts/phase-w`.
