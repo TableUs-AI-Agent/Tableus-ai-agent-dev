@@ -1,46 +1,63 @@
-# Completed packet: dependency/toolchain disposition
+# Review packet: dependency rollout proposal — prepared
 
-Completed locally 2026-09-21. Branch `codex/dependency-toolchain-exception`;
-worktree `/Users/brianchei/.codex/worktrees/14a6/Tableus-ai-agent-dev`.
-Base: `5375e3389823b9c0736328709aab1cdc9be6ef98`. The task began clean at the
-provisioned older `e1184ec`, then branched from the verified staging handoff.
-Previous task `01a0c555-30b1-7403-9ac2-83d272d7ff62` was retrieved narrowly.
+Prepared 2026-09-21; owner execution decision pending. One primary agent;
+planning/review only, no Security Scan.
 
-## Outcome
+## Identities
 
-- Patched Next.js/eslint to 16.3.5, EAS's affected compatible transitives and
-  Redocly/js-yaml. Kept EAS 23.2.0, Expo 57.0.23 and React Native 0.86.2.
-- Added a small module adapter to the unmodified fixed decoder 0.5.0, preserving
-  Expo Router/query-string interfaces. Node minimum is now 22.12 within Node 22.
-- Full npm graph: zero critical/high; 17 remaining package entries propagate
-  three underlying tooling advisories with documented unaffected/unused paths.
-  The production-labelled graph's 12 entries all concern xcode/UUID build tooling.
-- Fresh frozen installation and dependency consistency passed. Eight focused
-  regressions, iOS/Android JavaScript exports and four deterministic Chrome
-  browser tests passed. One `make ready` passed 234 JavaScript and 98 Python tests,
-  with three local PostgreSQL skips; generated contract unchanged.
-- No exception extension. Dispositions apply only to the reviewed replacement
-  graph/usage. Reassess on dependency, consumer, command or trust-boundary changes.
+- Branch: `codex/dependency-rollout-proposal`.
+- Active worktree: `/Users/brianchei/.codex/worktrees/83b4/Tableus-ai-agent-dev`.
+- Base and proposed application/operator SHA: `ed8330a766b3c4b80a505e075535678394e275e9`.
+- Provisioned checkout was clean and detached at that exact base; established the
+  named branch before edits. Prior worktrees remain unchanged.
+- Previous task: `01a0c571-6045-7643-ac66-ff2e208fbd7f`, retrieved narrowly;
+  committed [handoff](../handoffs/2026-09-21-dependency-toolchain.md) is authoritative.
+- Frozen staging application: `f94a1d9d1125e6c9111aa08eda496f014f20d0c0`.
+- The commit containing this packet records review/evidence only; it is not a new
+  application candidate or deployment.
 
-[Assessment](../evidence/dependency-toolchain-2026-09-21/README.md) ·
-[Machine-readable disposition](../evidence/dependency-toolchain-2026-09-21/assessment.json) ·
-[Verification](../evidence/dependency-toolchain-2026-09-21/verification.json) ·
-[Next-task handoff](../handoffs/2026-09-21-dependency-toolchain.md).
+## Observable outcome
 
-## Remaining boundary and next objective
+Commit an exact-source impact review and minimal phased web/native rollout and
+affected-release verification proposal that the owner can approve concretely.
+Replace stale current status and preserve the original source/evidence identities.
 
-Frozen staging application `f94a1d9d1125e6c9111aa08eda496f014f20d0c0` remains
-unchanged and potentially affected by the old Next image-optimizer advisory.
-Local remediation is complete; rollout and release acceptance are not. Review
-this replacement source in a fresh task and prepare a concrete bounded web/native
-verification and rollout proposal for owner approval. Broader Expo patch alignment
-has eight recommendations and needs affected native evidence; no clean Doctor
-claim is made. Symbols and a focused simulator-hang diagnostic remain required
-before distribution. The cause of the old hang remains unknown.
+## Work and acceptance
 
-No merge, push, deployment, resource/secret creation, paid/live-AI evaluation,
-native build, Security Scan, migration, destructive cleanup, account deletion,
-store submission or cohort activation occurred. All original worktrees/artifacts
-and saved sessions remain intact. Places 92/100, emails 2/4, explicit canaries
-6/6 per provider, new Gemini 0/0 are preserved closed-run limits, not a fresh
-allowance. This completed packet is replaced only by the next task's own objective.
+1. Review the exact dependency/runtime/tooling delta and bind prior validation
+   source/log hashes to the completed commit. Distinguish reuse from fresh checks.
+2. Define web deployment targets, CI/hosted checks, native profile/device scope,
+   link parsing cases, EAS packaging implications, symbols and the focused
+   account-export/relaunch AppHang diagnostic, with stop and rollback criteria.
+3. Record explicit approval choices, spend limits and remaining release gates.
+   Check changed-file scope, Markdown links, JSON and evidence/source associations.
+   Reuse the original `make ready` while executable bytes are unchanged.
+4. Commit the review/planning result and hand off its exact SHA plus one next
+   bounded objective. Approval-dependent execution remains pending, not passed.
+
+## Authority and stop conditions
+
+No merge, deployment-triggering push, deployment, resources/secrets, live-AI
+evaluation, native build, Security Scan, migration, destructive cleanup, account
+deletion, store submission or cohort activation. Do not silently expand scope on
+a failed check. Preserve original private artifacts, worktrees and saved sessions.
+An application/tooling change needs a separate bounded implementation objective.
+
+Closed-run limits persist: Places 92/100 from baseline 329 (8 unused, no fresh
+allowance), emails 2/4, canaries 6/6 per provider, fresh Gemini 0/0. The old
+AppHang acceptance is isolated-staging-only; usable symbols and focused diagnosis
+remain required before distribution. The old dependency deadline is not extended.
+
+## Prepared result
+
+[Proposal](../evidence/dependency-rollout-2026-09-21/README.md) and
+[source associations](../evidence/dependency-rollout-2026-09-21/source-association.json)
+are complete: web-first Phase W, operator symbol/log retention prerequisite, then
+two deterministic and two readiness native artifacts with separate gates. The
+earlier AVIF-disable interpretation is corrected for Next 16.3.5. Fresh hash and
+planning checks passed; original local application tests are reused.
+
+The only requested execution decision is Phase W. No gate has been approved and
+no deployment/build/live check has run. After the owner decision, use a fresh
+task for the approved next bounded objective; preserve this proposal branch.
+See the [handoff](../handoffs/2026-09-21-dependency-rollout.md).

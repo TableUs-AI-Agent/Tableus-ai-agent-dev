@@ -1,0 +1,360 @@
+{
+  "schema_version": 1,
+  "observed_at": "2026-09-21T21:38:01.131627+00:00",
+  "kind": "planning_source_association_not_release_acceptance",
+  "application_sha": "ed8330a766b3c4b80a505e075535678394e275e9",
+  "operator_sha_reviewed": "ed8330a766b3c4b80a505e075535678394e275e9",
+  "frozen_staging_sha": "f94a1d9d1125e6c9111aa08eda496f014f20d0c0",
+  "implementation_base": "5375e3389823b9c0736328709aab1cdc9be6ef98",
+  "application_tree": "b2525521411b122fb0f96aeecdcc650e6f04cf61",
+  "private_evidence_root": "/Users/brianchei/.codex/worktrees/14a6/Tableus-ai-agent-dev",
+  "source_validation_file": "docs/evidence/dependency-toolchain-2026-09-21/verification.json",
+  "source_validation_sha256": "d8c54a004e25e4c7e565d071fe1759afb708785ac01dbeffca43331b9894e39f",
+  "source_files": [
+    {
+      "file": "package.json",
+      "sha256": "981864193ebb31ef7fbd8227621ab60d4edf6785a90927afda96b10912e3a59b",
+      "commit_matches": true,
+      "worktree_matches": true
+    },
+    {
+      "file": "package-lock.json",
+      "sha256": "c2b5dff8fe1f95cf1fb6e0eb6ba2b85ac92712266cf6fbdf946880b866fb1413",
+      "commit_matches": true,
+      "worktree_matches": true
+    },
+    {
+      "file": "frontend/package.json",
+      "sha256": "94b26fbded9da4d2a5a02027da1db73ccc48bc3d77dbcf67f624671028488274",
+      "commit_matches": true,
+      "worktree_matches": true
+    },
+    {
+      "file": "mobile/jest.config.cjs",
+      "sha256": "dc3840261e88d9ce8fc8c2db056738afd54695bc7e704530337029b1951111fa",
+      "commit_matches": true,
+      "worktree_matches": true
+    },
+    {
+      "file": "mobile/src/lib/router-dependency.component.test.tsx",
+      "sha256": "db1961b7c432c57e514f0bf5a97e4eef29ab6c35c20a40255942727b65118777",
+      "commit_matches": true,
+      "worktree_matches": true
+    },
+    {
+      "file": "scripts/dependency-compat.test.mjs",
+      "sha256": "bdcbb39ed5af28bf4df7a2d33d8b1103576b56fb82af84d33182ccc880942ce8",
+      "commit_matches": true,
+      "worktree_matches": true
+    },
+    {
+      "file": "vendor/decode-uri-component-compat/package.json",
+      "sha256": "4bf01697c51c8333b20c3829a42740ce51a452bafafd5f1ba7a0efe3419e9c5b",
+      "commit_matches": true,
+      "worktree_matches": true
+    },
+    {
+      "file": "vendor/decode-uri-component-compat/index.cjs",
+      "sha256": "6a47dafc28e6645cf165319739dad2bdea43b67ebb5b5e0689f403323afee6db",
+      "commit_matches": true,
+      "worktree_matches": true
+    }
+  ],
+  "private_logs": [
+    {
+      "file": ".artifacts/dependency-toolchain/npm-ci-verified.log",
+      "sha256": "a8d949623dc822f69a08f5ff0fcee9d9fed29c4f486e18458a4feeccbe926d07",
+      "actual_sha256": "a8d949623dc822f69a08f5ff0fcee9d9fed29c4f486e18458a4feeccbe926d07",
+      "matches": true
+    },
+    {
+      "file": ".artifacts/dependency-toolchain/npm-ls-verified.json",
+      "sha256": "dac4ec68c76280004c99dbca309db31dd86055ee7b282edf5f11997b55325847",
+      "actual_sha256": "dac4ec68c76280004c99dbca309db31dd86055ee7b282edf5f11997b55325847",
+      "matches": true
+    },
+    {
+      "file": ".artifacts/dependency-toolchain/focused-node.log",
+      "sha256": "2d26376363f49122586efe3760bc5fedd11f7b7875eb0fa923fa3f28f01fe643",
+      "actual_sha256": "2d26376363f49122586efe3760bc5fedd11f7b7875eb0fa923fa3f28f01fe643",
+      "matches": true
+    },
+    {
+      "file": ".artifacts/dependency-toolchain/focused-router.log",
+      "sha256": "747cb445e67e7aca6d0afd5c75f4b0de882f8d81b9cd913b4835988d45aa712b",
+      "actual_sha256": "747cb445e67e7aca6d0afd5c75f4b0de882f8d81b9cd913b4835988d45aa712b",
+      "matches": true
+    },
+    {
+      "file": ".artifacts/dependency-toolchain/mobile-typecheck.log",
+      "sha256": "78987d055a36d8022d1ecc204119b3f23fdf556aaaf57fcb4241008c48e896d9",
+      "actual_sha256": "78987d055a36d8022d1ecc204119b3f23fdf556aaaf57fcb4241008c48e896d9",
+      "matches": true
+    },
+    {
+      "file": ".artifacts/dependency-toolchain/mobile-export.log",
+      "sha256": "15fe857cffec3efb6140742f544703a67930d22d024c5ce7ed0060f97edeeaf6",
+      "actual_sha256": "15fe857cffec3efb6140742f544703a67930d22d024c5ce7ed0060f97edeeaf6",
+      "matches": true
+    },
+    {
+      "file": ".artifacts/dependency-toolchain/make-ready.log",
+      "sha256": "4b59e8fd298d8c86ef83f9ba54ce3af3419965b200e53f72ccf46bc25882a833",
+      "actual_sha256": "4b59e8fd298d8c86ef83f9ba54ce3af3419965b200e53f72ccf46bc25882a833",
+      "matches": true
+    },
+    {
+      "file": ".artifacts/dependency-toolchain/contract-check.log",
+      "sha256": "de3bb19551d593111e2ac14a7b332da54f26559ec46109339b02884d547bc037",
+      "actual_sha256": "de3bb19551d593111e2ac14a7b332da54f26559ec46109339b02884d547bc037",
+      "matches": true
+    },
+    {
+      "file": ".artifacts/dependency-toolchain/browser.log",
+      "sha256": "510664e402916a9cce3e38306303e39adeca8d0cfcb78677aa92b73b315276be",
+      "actual_sha256": "510664e402916a9cce3e38306303e39adeca8d0cfcb78677aa92b73b315276be",
+      "matches": true
+    }
+  ],
+  "reviewed_consumers": [
+    {
+      "path": "node_modules/eas-cli/build/fingerprint/diff.js",
+      "sha256": "6c752b7a1d805f1e051ab72414c81c6aa13309973fbc01bbaa95eb23d0a3dc00",
+      "actual_sha256": "6c752b7a1d805f1e051ab72414c81c6aa13309973fbc01bbaa95eb23d0a3dc00",
+      "matches": true
+    },
+    {
+      "path": "node_modules/eas-cli/build/commandUtils/new/projectFiles.js",
+      "sha256": "b61e6791d125d548662d8bd142adde7f2966d58f5bbcdc43346e710d2e02740d",
+      "actual_sha256": "b61e6791d125d548662d8bd142adde7f2966d58f5bbcdc43346e710d2e02740d",
+      "matches": true
+    },
+    {
+      "path": "node_modules/xcode/lib/pbxProject.js",
+      "sha256": "c4e97f21f0c4aed9a818b3f011ee0ad577a7899db8af2be243d1d7c08ba403fc",
+      "actual_sha256": "c4e97f21f0c4aed9a818b3f011ee0ad577a7899db8af2be243d1d7c08ba403fc",
+      "matches": true
+    },
+    {
+      "path": "node_modules/@expo/bunyan/lib/bunyan.js",
+      "sha256": "27fc4e227ba64df8c9d072ba563421af6c89bba372dec9f0dc08b59c6b25948b",
+      "actual_sha256": "27fc4e227ba64df8c9d072ba563421af6c89bba372dec9f0dc08b59c6b25948b",
+      "matches": true
+    },
+    {
+      "path": "node_modules/@expo/rudder-sdk-node/index.js",
+      "sha256": "eb7d39bc3a920d9f6c044a6de67f4dd82283d9d964e61c328d5fc847bd956302",
+      "actual_sha256": "eb7d39bc3a920d9f6c044a6de67f4dd82283d9d964e61c328d5fc847bd956302",
+      "matches": true
+    },
+    {
+      "path": "node_modules/expo/bundledNativeModules.json",
+      "sha256": "ec886e2783063cdf4850abdb0a1fd1c59614722efc4fb9e3beb41f5fd4b1e158",
+      "actual_sha256": "ec886e2783063cdf4850abdb0a1fd1c59614722efc4fb9e3beb41f5fd4b1e158",
+      "matches": true
+    },
+    {
+      "path": "mobile/node_modules/expo-router/build/react-navigation/core/getStateFromPath.js",
+      "sha256": "52b4b0f01dd87c2753dfa4ef907566117d38eed2654e348afc9e0547277fd024",
+      "actual_sha256": "52b4b0f01dd87c2753dfa4ef907566117d38eed2654e348afc9e0547277fd024",
+      "matches": true
+    },
+    {
+      "path": "node_modules/query-string/index.js",
+      "sha256": "caa3f2c8b45dfe1e91db22ae10743af68de8d96f26515132bb52485ec0f037fa",
+      "actual_sha256": "caa3f2c8b45dfe1e91db22ae10743af68de8d96f26515132bb52485ec0f037fa",
+      "matches": true
+    },
+    {
+      "path": "node_modules/decode-uri-component-upstream/index.js",
+      "sha256": "9401353df38f8010ad7035fe8d666bce6a4902bc1cff809afc4ab23fa2e0bdaa",
+      "actual_sha256": "9401353df38f8010ad7035fe8d666bce6a4902bc1cff809afc4ab23fa2e0bdaa",
+      "matches": true
+    }
+  ],
+  "metro_maps": [
+    {
+      "platform": "ios",
+      "path": ".artifacts/dependency-toolchain/mobile-export/_expo/static/js/ios/entry-8e3099ef58be39c0cb159781ddb0372d.js.map",
+      "sha256": "a64f48a6e229afcc39fee5d647f211ba73e7b871746ef56387739c4ed014d2d6",
+      "matches": true
+    },
+    {
+      "platform": "android",
+      "path": ".artifacts/dependency-toolchain/mobile-export/_expo/static/js/android/entry-18e776356869e878bd851e9a56987760.js.map",
+      "sha256": "53164d6e9e0abb718e913fdaa694fe02acab2a2d4d2ecdafab02f93689f3ef08",
+      "matches": true
+    }
+  ],
+  "complete_non_document_delta_from_frozen": [
+    {
+      "path": ".gitignore",
+      "frozen_sha256": "fc8952ef6be4a4a1f6c2b1234d7fd24fd4e23d72de160e3eb15a091a19d49e21",
+      "candidate_sha256": "917e5bfa32bb5d418fafa3c960a2b52b2c6ab07293b87a539e90d0820956a789"
+    },
+    {
+      "path": "AGENTS.md",
+      "frozen_sha256": "3181c4a29966b806a2ae6b9f4edeca08389941066c4872fb1856417bebc0bb24",
+      "candidate_sha256": "221971158e138cb0ab03d8f5eafcf26ccd193732d3db8c7edf24ed35bdf33298"
+    },
+    {
+      "path": "frontend/package.json",
+      "frozen_sha256": "08a24f312e0eb6757af5f76e6cbbb114a913a798db56a91279c16502c819c915",
+      "candidate_sha256": "94b26fbded9da4d2a5a02027da1db73ccc48bc3d77dbcf67f624671028488274"
+    },
+    {
+      "path": "mobile/jest.config.cjs",
+      "frozen_sha256": "d2bddbef93842df0013bb57505e7ffec8b771d8f8a4e45c89442b490f92aaafd",
+      "candidate_sha256": "dc3840261e88d9ce8fc8c2db056738afd54695bc7e704530337029b1951111fa"
+    },
+    {
+      "path": "mobile/src/lib/router-dependency.component.test.tsx",
+      "frozen_sha256": null,
+      "candidate_sha256": "db1961b7c432c57e514f0bf5a97e4eef29ab6c35c20a40255942727b65118777"
+    },
+    {
+      "path": "package-lock.json",
+      "frozen_sha256": "7af3277d19094e0275e35b39b5a04c195b7ddf75d4b517983f120bf72fe299f3",
+      "candidate_sha256": "c2b5dff8fe1f95cf1fb6e0eb6ba2b85ac92712266cf6fbdf946880b866fb1413"
+    },
+    {
+      "path": "package.json",
+      "frozen_sha256": "eb3dfe1aab0be0c1e6435ee3d462dd59485004d747731a94e8f15d3566bc2bfd",
+      "candidate_sha256": "981864193ebb31ef7fbd8227621ab60d4edf6785a90927afda96b10912e3a59b"
+    },
+    {
+      "path": "scripts/dependency-compat.test.mjs",
+      "frozen_sha256": null,
+      "candidate_sha256": "bdcbb39ed5af28bf4df7a2d33d8b1103576b56fb82af84d33182ccc880942ce8"
+    },
+    {
+      "path": "vendor/decode-uri-component-compat/README.md",
+      "frozen_sha256": null,
+      "candidate_sha256": "de33ecff30ada0dd2cc2ea0e8853c208fdfb469c5ed3ff02c5325213ac623a46"
+    },
+    {
+      "path": "vendor/decode-uri-component-compat/index.cjs",
+      "frozen_sha256": null,
+      "candidate_sha256": "6a47dafc28e6645cf165319739dad2bdea43b67ebb5b5e0689f403323afee6db"
+    },
+    {
+      "path": "vendor/decode-uri-component-compat/package.json",
+      "frozen_sha256": null,
+      "candidate_sha256": "4bf01697c51c8333b20c3829a42740ce51a452bafafd5f1ba7a0efe3419e9c5b"
+    }
+  ],
+  "unchanged_source_objects": [
+    {
+      "path": "backend",
+      "frozen_git_object": "fc576d49099aa378c5b21f6796e47f5aea156de2",
+      "candidate_git_object": "fc576d49099aa378c5b21f6796e47f5aea156de2",
+      "matches": true
+    },
+    {
+      "path": "packages",
+      "frozen_git_object": "ea8a044159b46b6578c3755a6da904fbfa241e7e",
+      "candidate_git_object": "ea8a044159b46b6578c3755a6da904fbfa241e7e",
+      "matches": true
+    },
+    {
+      "path": "frontend/app",
+      "frozen_git_object": "2bea6f843c026d72baf5db20f4c8cd8ea003a079",
+      "candidate_git_object": "2bea6f843c026d72baf5db20f4c8cd8ea003a079",
+      "matches": true
+    },
+    {
+      "path": "frontend/next.config.ts",
+      "frozen_git_object": "90fc6e0103e88c3b12761d1f29e3121626283402",
+      "candidate_git_object": "90fc6e0103e88c3b12761d1f29e3121626283402",
+      "matches": true
+    },
+    {
+      "path": "frontend/public",
+      "frozen_git_object": "56dd68905a6b21d2911a527f6c05134bf5e8950d",
+      "candidate_git_object": "56dd68905a6b21d2911a527f6c05134bf5e8950d",
+      "matches": true
+    },
+    {
+      "path": "mobile/app",
+      "frozen_git_object": "5e38a30db0afb73c945f9c454778bada2d6a82f9",
+      "candidate_git_object": "5e38a30db0afb73c945f9c454778bada2d6a82f9",
+      "matches": true
+    },
+    {
+      "path": "mobile/app.config.ts",
+      "frozen_git_object": "a26c7cd5a5f95c1b96ce1a229e691d878b8de514",
+      "candidate_git_object": "a26c7cd5a5f95c1b96ce1a229e691d878b8de514",
+      "matches": true
+    },
+    {
+      "path": "mobile/eas.json",
+      "frozen_git_object": "ed37643a76e952e554e73638af0ddb48dec6f38f",
+      "candidate_git_object": "ed37643a76e952e554e73638af0ddb48dec6f38f",
+      "matches": true
+    },
+    {
+      "path": "mobile/plugins",
+      "frozen_git_object": "896f28831003c02be6c3feed576ffd16e51ba825",
+      "candidate_git_object": "896f28831003c02be6c3feed576ffd16e51ba825",
+      "matches": true
+    },
+    {
+      "path": "mobile/.eas",
+      "frozen_git_object": "43fa3a6f31658ca999dbcdcdb4be850e58dadc38",
+      "candidate_git_object": "43fa3a6f31658ca999dbcdcdb4be850e58dadc38",
+      "matches": true
+    },
+    {
+      "path": "scripts/local-mobile-build.mjs",
+      "frozen_git_object": "da362242cfec4a335acf59f6a8fa73e4f18a2058",
+      "candidate_git_object": "da362242cfec4a335acf59f6a8fa73e4f18a2058",
+      "matches": true
+    },
+    {
+      "path": ".github/workflows/ci.yml",
+      "frozen_git_object": "8f898d9959ef6b9717318dab6e1b26c934ccd814",
+      "candidate_git_object": "8f898d9959ef6b9717318dab6e1b26c934ccd814",
+      "matches": true
+    },
+    {
+      "path": "docs/openapi.json",
+      "frozen_git_object": "03b85c8ab1761c11825b93a63b6d3d7baf33e25a",
+      "candidate_git_object": "03b85c8ab1761c11825b93a63b6d3d7baf33e25a",
+      "matches": true
+    },
+    {
+      "path": ".nvmrc",
+      "frozen_git_object": "2bd5a0a98a36cc08ada88b804d3be047e6aa5b8a",
+      "candidate_git_object": "2bd5a0a98a36cc08ada88b804d3be047e6aa5b8a",
+      "matches": true
+    }
+  ],
+  "additional_reviewed_installed_sources": [
+    {
+      "path": "node_modules/next/package.json",
+      "sha256": "73192ad53e2c6f25f5f81177819607dff0b254548932a0a225aad09307fd6772"
+    },
+    {
+      "path": "node_modules/next/dist/server/image-optimizer.js",
+      "sha256": "d005f98c0e82235b16f422427c43dfea578f5303887ea69b690237c7649aa987"
+    },
+    {
+      "path": "node_modules/sharp/package.json",
+      "sha256": "27b5a6c6e1e1f27c527b09a963c932979403837d0f5f013ab5bdfb4a0ef2269a"
+    },
+    {
+      "path": "node_modules/@img/sharp-libvips-darwin-arm64/versions.json",
+      "sha256": "adddf5e76ac1cc03b503a17c488b8591dd9eb5ec3faf689a3852d02d1b5fbb10"
+    }
+  ],
+  "image_stack_note": "Installed macOS Next 16.3.5/sharp 0.35.4/sharp-libvips 1.3.3 reports heif 1.23.2. AVIF was re-enabled in Next 16.3.4. Linux/hosted runtime still requires its own evidence.",
+  "native_operator_gap": "Current helper sets EAS_LOCAL_BUILD_SKIP_CLEANUP=0, removes its temp root including logs, and exports no symbol/map artifacts. Repair before new native compilation.",
+  "prior_worktree_clean": true,
+  "fresh_test_runs": 0,
+  "security_scan_performed": false,
+  "native_builds": 0,
+  "deployments": 0,
+  "provider_calls": 0,
+  "approval_status": "pending",
+  "method": "Read-only git object comparison and SHA-256 of recorded source, private logs/consumers/maps; review of checked-in workflows, build/evidence helpers and package-lock. No installed package mutation."
+}

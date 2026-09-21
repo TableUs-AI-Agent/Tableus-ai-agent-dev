@@ -136,3 +136,14 @@ f94a1d9. Preserve all prior failed/pending evidence and reuse the earlier passin
 changed. The [staging handoff](handoffs/2026-09-21-staging-closeout.md) remains historical
 evidence. Continue from the [dependency handoff](handoffs/2026-09-21-dependency-toolchain.md)
 for replacement-candidate review, not stale main.
+
+## Replacement rollout proposal — prepared 2026-09-21
+
+The [impact review](evidence/dependency-rollout-2026-09-21/README.md) freezes
+application ed8330a and keeps API/native f94a1d9 identities during a proposed
+web-first patch. Mixed component evidence cannot satisfy the existing single-SHA
+cumulative validator; do not relabel reports or weaken it. Execution is not
+approved. Current native tooling does not preserve diagnostic logs/symbols, so
+repair it under a separate operator SHA before new builds. Local symbol matching
+and an app-frame resolution check precede the focused export/relaunch diagnostic;
+store symbol upload/delivery evidence remains separately gated.

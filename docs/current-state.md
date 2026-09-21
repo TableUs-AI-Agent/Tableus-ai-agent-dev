@@ -4,7 +4,8 @@ Updated 2026-09-21. Cumulative isolated-staging acceptance remains complete for
 `f94a1d9`, including
 the owner-accepted unresolved simulator AppHang risk. A local dependency
 remediation now has zero critical/high npm findings; hosted/native bytes have not
-changed. Replacement review and release actions remain separate objectives.
+changed. The replacement impact review and phased rollout proposal are prepared;
+owner approval and release actions remain pending.
 Only [the active packet](task-packets/active.md) directs
 implementation. [Historical snapshots](history/2026-09-21/README.md) preserve the
 previous narrative without making it an active checklist.
@@ -14,14 +15,15 @@ previous narrative without making it an active checklist.
 | Role | Value |
 | --- | --- |
 | Frozen application candidate | `f94a1d9d1125e6c9111aa08eda496f014f20d0c0` |
-| Current task branch / worktree | `codex/dependency-toolchain-exception` / `/Users/brianchei/.codex/worktrees/14a6/Tableus-ai-agent-dev` |
-| Implementation base | `5375e3389823b9c0736328709aab1cdc9be6ef98`; completed staging closeout |
-| Previous task | `01a0c555-30b1-7403-9ac2-83d272d7ff62` (bounded retrieval) |
+| Current task branch / worktree | `codex/dependency-rollout-proposal` / `/Users/brianchei/.codex/worktrees/83b4/Tableus-ai-agent-dev` |
+| Review base / proposed replacement application | `ed8330a766b3c4b80a505e075535678394e275e9`; completed dependency remediation |
+| Previous task | `01a0c571-6045-7643-ac66-ff2e208fbd7f` (bounded retrieval) |
 | Evidence index | [Current candidate](evidence/ios27-staging-f94a1d9/closeout.md) |
 
 The root checkout is an older branch and is not the implementation base.
 Application, operator and evidence commits are distinct. This task changes
-dependencies and tests; its source requires replacement-candidate review. Existing
+review/planning documents only. Application and reviewed operator bytes remain
+ed8330a; the evidence commit does not replace that application identity. Existing
 staging artifacts prove only their original application SHA.
 
 ## Implemented product
@@ -74,12 +76,18 @@ replace the blanket exception for this graph only: 17 audit entries arise from
 three tooling advisories outside the used vulnerable paths. No expiry extension
 or production waiver; f94a1d9 still contains its original dependencies.
 
-Fresh `make ready`: 234 JavaScript and 98 Python passes, three PostgreSQL skips;
-contract unchanged. Actual router/EAS regressions and iOS/Android JavaScript
-exports and four Chrome browser regressions pass. No new native artifact or
-hosted check is claimed. Next: review the
-replacement source and prepare a bounded rollout/verification proposal for owner
-approval, prioritizing the potentially reachable old Next image-optimizer advisory.
+The prior `make ready` (234 JavaScript, 98 Python passes, three PostgreSQL skips),
+router/EAS regressions, Metro exports and four Chrome journeys are reused. Fresh
+review matched eight source hashes, nine private logs, nine installed consumers
+and both Metro maps; backend/shared/config source objects are unchanged.
+[Impact review and approval proposal](evidence/dependency-rollout-2026-09-21/README.md):
+web-first exact-source CI/one Preview and conditional staging alias replacement;
+API/native keep their real f94a1d9 identities. No hosted/native execution occurred.
+Next 16.3.4 re-enabled AVIF, so the new image check must test the patched stack,
+not expect AVIF rejection. Native builds first need an operator fix: the current
+helper deletes logs and does not preserve symbols/maps. Later verification is
+proposed as two deterministic and two readiness artifacts, with separate approvals
+and unresolved telemetry/live-read gates. No cumulative replacement acceptance.
 Merge and release gates remain separate.
 
 Latest provider observation: September 21, 19:20:36 UTC. Places totals

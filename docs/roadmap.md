@@ -9,7 +9,10 @@ its acceptance cannot be reviewed in one change. Only the active packet executes
 | --- | --- | --- | --- |
 | 1 — complete | Close frozen `f94a1d9` staging verification | Original Android session renewed; final totals verified; owner accepted isolated-staging AppHang risk; cumulative validator passed; [handoff](handoffs/2026-09-21-staging-closeout.md) | Isolated staging only; remaining allowance is not a new evaluation budget |
 | 2 — locally complete | Resolve dependency/toolchain exception for replacement graph | Zero critical/high npm findings; compatible fixes and three exact-use dispositions; focused checks and one passing `make ready`; [assessment](evidence/dependency-toolchain-2026-09-21/README.md) | No exception extension; old staging bytes still need replacement |
-| 2a — next task | Review replacement candidate and prepare rollout approval | Exact source/lock impact review; bounded web/native verification proposal, symbols/hang diagnostic obligation, explicit owner decision | No merge, deployment, native build or fresh live allowance implied; prioritize old Next image-optimizer exposure |
+| 2a — proposal prepared | Review replacement candidate and prepare rollout approval | [Exact-source review and phased proposal](evidence/dependency-rollout-2026-09-21/README.md); source/log/map hashes verified | Planning complete; owner approval and execution pending |
+| 2b — owner decision | Replace affected staging web | Approve Phase W: ed8330a exact-source CI, one Preview, served-source/image/origin checks and conditional staging alias replacement | No merge or API redeploy; old immutable URL exposure remains explicit |
+| 2c | Preserve native diagnostic artifacts | Separate operator commit; durable success/failure logs, symbols/maps and exact-source binding; focused checks and one make ready | Local tooling fix before native compilation; no SDK migration |
+| 2d | Validate affected native replacement | Separately approve two deterministic builds, then two readiness builds/installs; link parsing, usable symbols and focused export/relaunch diagnostic | Real-link provider reads need a new explicit scope; canaries exhausted; no cumulative acceptance transfer |
 | 3 | Complete account lifecycle and retention | Concrete Auth/application deletion ownership and behavior, retention/archival policy, export/deletion recovery evidence | Approve significant policy decisions before implementation; production migration remains gated |
 | 4 | Bound cohort access and resource consumption | Operator-only usage visibility, per-actor quotas, lifetime plan limits, named one-use invites, reviewed capability exchange or explicit risk acceptance | Isolated staging risk acceptance does not cover broader cohort activation |
 | 5 | Prepare production release configuration and native presentation | Reviewed production origins/signing/update policy, usable symbols/source maps, contact/privacy review, tab icons, rollback rehearsal and measured performance criteria | Resources, secrets, deployment and cleanup require their explicit gates |
@@ -26,7 +29,7 @@ and [runbook](release-runbook.md) define the checks and handoff.
 
 The dependency objective has a local remediation and explicit dispositions for
 the replacement graph. The September 30 deadline is not extended for frozen
-staging bytes. Review the new source and prepare a concrete owner-approved rollout
+staging bytes. The source review and concrete proposal are prepared; obtain Phase W approval
 next: the old Next image optimizer is potentially runtime-reachable. Preserve
 f94a1d9 receipts; local fixes and external deployment remain separate decisions.
 A fresh task grants no additional live allowance.
