@@ -1,0 +1,12 @@
+{
+  "name": "@tableus/decode-uri-component-compat",
+  "version": "0.2.3",
+  "private": true,
+  "main": "index.cjs",
+  "dependencies": {
+    "decode-uri-component-upstream": "npm:decode-uri-component@0.5.0"
+  },
+  "engines": {
+    "node": ">=22.12 <23"
+  }
+}

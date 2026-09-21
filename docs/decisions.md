@@ -92,9 +92,18 @@ when changing a subsystem; it is not a second active task packet.
 - Production trust origins, signing, store associations and credential policy are
   separate gates. Expo Updates remains disabled until signed-update authority is
   approved. Local source-map/native-symbol upload exception does not apply to stores.
-- Toolchain/advisory exception expires before production or 2026-09-30. Assess
-  reachable advisories and compatible patches before release; old counts are not
-  a fresh audit. Do not force upgrades inside a frozen verification run.
+- The [September 21 dependency disposition](evidence/dependency-toolchain-2026-09-21/README.md)
+  replaces the blanket toolchain exception for the remediated graph only. Zero
+  critical/high npm findings; retain UUID, diff and EAS new-project deep-merge
+  advisories only for the documented unaffected/unused call paths. Reassess on
+  graph, consumer or input-trust changes. No extension beyond September 30 or
+  production for the old frozen graph. Local remediation does not patch staging.
+- Keep Next on the reviewed 16.3.5 patch; preserve EAS 23.2.0 with scoped patched
+  transitives and its nested minimatch 9 consumer. The root decoder adapter keeps
+  Expo Router 57/query-string 7 compatible with unmodified upstream decoder 0.5.0;
+  Node >=22.12 <23 is required. Remove the adapter when supported upstream packages
+  provide the compatible fix. Broader Expo patch alignment needs affected native
+  evidence; eight current recommendations are not waived Doctor checks.
 - Brian Chei owns legal/contact review and rollback. Preserve the August 26
   legal/attribution/mailbox attestations unless their scope changes. Contact
   details and Google's unmodified attribution assets remain source-controlled.
@@ -124,5 +133,6 @@ The original Android session renewed after simulator-local sign-out; provider
 usage remains within the approved run limit. The cumulative validator passes for
 f94a1d9. Preserve all prior failed/pending evidence and reuse the earlier passing
 `make ready` for this documentation/evidence-only completion; no executable bytes
-changed. Start the dependency/toolchain objective in a fresh task from the
-[completed handoff](handoffs/2026-09-21-staging-closeout.md), not stale main.
+changed. The [staging handoff](handoffs/2026-09-21-staging-closeout.md) remains historical
+evidence. Continue from the [dependency handoff](handoffs/2026-09-21-dependency-toolchain.md)
+for replacement-candidate review, not stale main.

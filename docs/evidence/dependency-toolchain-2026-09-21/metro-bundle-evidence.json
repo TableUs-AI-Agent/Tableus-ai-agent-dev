@@ -1,0 +1,29 @@
+{
+  "native_build": false,
+  "bytecode": false,
+  "method": "Local deterministic Metro exports with external source maps; no device/runtime acceptance",
+  "bundles": [
+    {
+      "platform": "ios",
+      "source_map_sha256": "a64f48a6e229afcc39fee5d647f211ba73e7b871746ef56387739c4ed014d2d6",
+      "decoder_sources": [
+        "/node_modules/query-string/index.js",
+        "/vendor/decode-uri-component-compat/index.cjs",
+        "/node_modules/decode-uri-component-upstream/index.js"
+      ],
+      "excluded_tooling_sources": [],
+      "total_sources": 2569
+    },
+    {
+      "platform": "android",
+      "source_map_sha256": "53164d6e9e0abb718e913fdaa694fe02acab2a2d4d2ecdafab02f93689f3ef08",
+      "decoder_sources": [
+        "/node_modules/query-string/index.js",
+        "/vendor/decode-uri-component-compat/index.cjs",
+        "/node_modules/decode-uri-component-upstream/index.js"
+      ],
+      "excluded_tooling_sources": [],
+      "total_sources": 2704
+    }
+  ]
+}

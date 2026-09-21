@@ -1,0 +1,938 @@
+{
+  "auditReportVersion": 2,
+  "vulnerabilities": {
+    "@expo/bunyan": {
+      "name": "@expo/bunyan",
+      "severity": "moderate",
+      "isDirect": false,
+      "via": [
+        "uuid"
+      ],
+      "effects": [
+        "@expo/rudder-sdk-node"
+      ],
+      "range": ">=3.0.0",
+      "nodes": [
+        "node_modules/@expo/bunyan"
+      ],
+      "fixAvailable": {
+        "name": "eas-cli",
+        "version": "0.24.1",
+        "isSemVerMajor": true
+      }
+    },
+    "@expo/cli": {
+      "name": "@expo/cli",
+      "severity": "moderate",
+      "isDirect": false,
+      "via": [
+        "@expo/config",
+        "@expo/config-plugins",
+        "@expo/inline-modules",
+        "@expo/metro-config",
+        "@expo/prebuild-config"
+      ],
+      "effects": [
+        "expo"
+      ],
+      "range": "<=0.0.0-canary-20231123-1b19f96-4 || >=0.0.1-canary-20231125-d600e44",
+      "nodes": [
+        "node_modules/expo/node_modules/@expo/cli"
+      ],
+      "fixAvailable": {
+        "name": "expo",
+        "version": "46.0.21",
+        "isSemVerMajor": true
+      }
+    },
+    "@expo/config": {
+      "name": "@expo/config",
+      "severity": "moderate",
+      "isDirect": false,
+      "via": [
+        "@expo/config-plugins"
+      ],
+      "effects": [
+        "@expo/local-build-cache-provider",
+        "@expo/metro-config",
+        "eas-cli",
+        "expo"
+      ],
+      "range": "<=0.0.1-canary-20240418-8d74597 || >=3.3.23-alpha.0",
+      "nodes": [
+        "node_modules/@expo/config",
+        "node_modules/eas-cli/node_modules/@expo/config",
+        "node_modules/eas-cli/node_modules/@expo/prebuild-config/node_modules/@expo/config"
+      ],
+      "fixAvailable": {
+        "name": "eas-cli",
+        "version": "0.24.1",
+        "isSemVerMajor": true
+      }
+    },
+    "@expo/config-plugins": {
+      "name": "@expo/config-plugins",
+      "severity": "moderate",
+      "isDirect": false,
+      "via": [
+        "xcode"
+      ],
+      "effects": [
+        "@expo/cli",
+        "@expo/config",
+        "@expo/inline-modules",
+        "@expo/prebuild-config",
+        "expo",
+        "expo-sharing"
+      ],
+      "range": "*",
+      "nodes": [
+        "node_modules/@expo/config-plugins",
+        "node_modules/eas-cli/node_modules/@expo/config-plugins",
+        "node_modules/eas-cli/node_modules/@expo/prebuild-config/node_modules/@expo/config-plugins"
+      ],
+      "fixAvailable": {
+        "name": "expo-sharing",
+        "version": "14.0.8",
+        "isSemVerMajor": true
+      }
+    },
+    "@expo/eas-json": {
+      "name": "@expo/eas-json",
+      "severity": "moderate",
+      "isDirect": false,
+      "via": [
+        "joi"
+      ],
+      "effects": [],
+      "range": ">=0.25.0",
+      "nodes": [
+        "node_modules/@expo/eas-json"
+      ],
+      "fixAvailable": true
+    },
+    "@expo/inline-modules": {
+      "name": "@expo/inline-modules",
+      "severity": "moderate",
+      "isDirect": false,
+      "via": [
+        "@expo/config-plugins"
+      ],
+      "effects": [
+        "@expo/cli"
+      ],
+      "range": ">=0.0.2-canary-20260409-6fc2991",
+      "nodes": [
+        "node_modules/@expo/inline-modules"
+      ],
+      "fixAvailable": {
+        "name": "expo",
+        "version": "46.0.21",
+        "isSemVerMajor": true
+      }
+    },
+    "@expo/local-build-cache-provider": {
+      "name": "@expo/local-build-cache-provider",
+      "severity": "moderate",
+      "isDirect": false,
+      "via": [
+        "@expo/config"
+      ],
+      "effects": [
+        "expo"
+      ],
+      "range": "*",
+      "nodes": [
+        "node_modules/@expo/local-build-cache-provider"
+      ],
+      "fixAvailable": {
+        "name": "expo",
+        "version": "46.0.21",
+        "isSemVerMajor": true
+      }
+    },
+    "@expo/metro-config": {
+      "name": "@expo/metro-config",
+      "severity": "moderate",
+      "isDirect": false,
+      "via": [
+        "@expo/config"
+      ],
+      "effects": [
+        "expo"
+      ],
+      "range": "<=0.0.1-canary-20240418-8d74597 || >=0.1.49-alpha.0",
+      "nodes": [
+        "node_modules/@expo/metro-config"
+      ],
+      "fixAvailable": {
+        "name": "expo",
+        "version": "46.0.21",
+        "isSemVerMajor": true
+      }
+    },
+    "@expo/prebuild-config": {
+      "name": "@expo/prebuild-config",
+      "severity": "moderate",
+      "isDirect": false,
+      "via": [
+        "@expo/config",
+        "@expo/config-plugins"
+      ],
+      "effects": [
+        "eas-cli"
+      ],
+      "range": "*",
+      "nodes": [
+        "node_modules/@expo/prebuild-config",
+        "node_modules/eas-cli/node_modules/@expo/prebuild-config"
+      ],
+      "fixAvailable": {
+        "name": "eas-cli",
+        "version": "0.24.1",
+        "isSemVerMajor": true
+      }
+    },
+    "@expo/rudder-sdk-node": {
+      "name": "@expo/rudder-sdk-node",
+      "severity": "moderate",
+      "isDirect": false,
+      "via": [
+        "@expo/bunyan",
+        "uuid"
+      ],
+      "effects": [
+        "eas-cli"
+      ],
+      "range": "*",
+      "nodes": [
+        "node_modules/@expo/rudder-sdk-node"
+      ],
+      "fixAvailable": {
+        "name": "eas-cli",
+        "version": "0.24.1",
+        "isSemVerMajor": true
+      }
+    },
+    "@redocly/openapi-core": {
+      "name": "@redocly/openapi-core",
+      "severity": "high",
+      "isDirect": false,
+      "via": [
+        "js-yaml"
+      ],
+      "effects": [],
+      "range": "<=0.0.0-snapshot.1782825774 || 1.34.8 - 1.34.19",
+      "nodes": [
+        "node_modules/@redocly/openapi-core"
+      ],
+      "fixAvailable": true
+    },
+    "@sentry/react-native": {
+      "name": "@sentry/react-native",
+      "severity": "moderate",
+      "isDirect": true,
+      "via": [
+        "expo"
+      ],
+      "effects": [],
+      "range": ">=5.16.0-alpha.1",
+      "nodes": [
+        "node_modules/@sentry/react-native"
+      ],
+      "fixAvailable": {
+        "name": "@sentry/react-native",
+        "version": "5.15.2",
+        "isSemVerMajor": true
+      }
+    },
+    "ajv": {
+      "name": "ajv",
+      "severity": "moderate",
+      "isDirect": false,
+      "via": [
+        {
+          "source": 1113715,
+          "name": "ajv",
+          "dependency": "ajv",
+          "title": "ajv has ReDoS when using `$data` option",
+          "url": "https://github.com/advisories/GHSA-2g4f-4pwh-qvx6",
+          "severity": "moderate",
+          "cwe": [
+            "CWE-400",
+            "CWE-1333"
+          ],
+          "cvss": {
+            "score": 0,
+            "vectorString": null
+          },
+          "range": ">=7.0.0-alpha.0 <8.18.0"
+        }
+      ],
+      "effects": [
+        "eas-cli"
+      ],
+      "range": "7.0.0-alpha.0 - 8.17.1",
+      "nodes": [
+        "node_modules/eas-cli/node_modules/ajv"
+      ],
+      "fixAvailable": {
+        "name": "eas-cli",
+        "version": "0.24.1",
+        "isSemVerMajor": true
+      }
+    },
+    "decode-uri-component": {
+      "name": "decode-uri-component",
+      "severity": "moderate",
+      "isDirect": false,
+      "via": [
+        {
+          "source": 1147955,
+          "name": "decode-uri-component",
+          "dependency": "decode-uri-component",
+          "title": "decode-uri-component: Denial of service via exponential decoding of malformed percent-encoded input",
+          "url": "https://github.com/advisories/GHSA-vcc3-ghjq-m6fr",
+          "severity": "moderate",
+          "cwe": [
+            "CWE-400",
+            "CWE-405",
+            "CWE-407",
+            "CWE-1176"
+          ],
+          "cvss": {
+            "score": 0,
+            "vectorString": null
+          },
+          "range": "<=0.4.2"
+        }
+      ],
+      "effects": [
+        "query-string"
+      ],
+      "range": "<=0.4.2",
+      "nodes": [
+        "node_modules/decode-uri-component"
+      ],
+      "fixAvailable": {
+        "name": "expo-router",
+        "version": "5.1.11",
+        "isSemVerMajor": true
+      }
+    },
+    "diff": {
+      "name": "diff",
+      "severity": "low",
+      "isDirect": false,
+      "via": [
+        {
+          "source": 1112706,
+          "name": "diff",
+          "dependency": "diff",
+          "title": "jsdiff has a Denial of Service vulnerability in parsePatch and applyPatch",
+          "url": "https://github.com/advisories/GHSA-73rr-hh4g-fpgx",
+          "severity": "low",
+          "cwe": [
+            "CWE-400",
+            "CWE-1333"
+          ],
+          "cvss": {
+            "score": 0,
+            "vectorString": null
+          },
+          "range": ">=6.0.0 <8.0.3"
+        }
+      ],
+      "effects": [
+        "eas-cli"
+      ],
+      "range": "6.0.0 - 8.0.2",
+      "nodes": [
+        "node_modules/diff"
+      ],
+      "fixAvailable": {
+        "name": "eas-cli",
+        "version": "0.24.1",
+        "isSemVerMajor": true
+      }
+    },
+    "eas-cli": {
+      "name": "eas-cli",
+      "severity": "high",
+      "isDirect": true,
+      "via": [
+        "@expo/config",
+        "@expo/config-plugins",
+        "@expo/eas-json",
+        "@expo/prebuild-config",
+        "@expo/rudder-sdk-node",
+        "ajv",
+        "diff",
+        "joi",
+        "minimatch",
+        "nanoid",
+        "tar",
+        "ts-deepmerge",
+        "yaml"
+      ],
+      "effects": [],
+      "range": ">=0.1.0-alpha.10",
+      "nodes": [
+        "node_modules/eas-cli"
+      ],
+      "fixAvailable": {
+        "name": "eas-cli",
+        "version": "0.24.1",
+        "isSemVerMajor": true
+      }
+    },
+    "expo": {
+      "name": "expo",
+      "severity": "moderate",
+      "isDirect": true,
+      "via": [
+        "@expo/cli",
+        "@expo/config",
+        "@expo/config-plugins",
+        "@expo/local-build-cache-provider",
+        "@expo/metro-config"
+      ],
+      "effects": [
+        "@sentry/react-native"
+      ],
+      "range": "40.0.0-alpha.0 - 40.0.0-beta.5 || >=41.0.0-alpha.0",
+      "nodes": [
+        "node_modules/expo"
+      ],
+      "fixAvailable": {
+        "name": "expo",
+        "version": "46.0.21",
+        "isSemVerMajor": true
+      }
+    },
+    "expo-router": {
+      "name": "expo-router",
+      "severity": "moderate",
+      "isDirect": true,
+      "via": [
+        "query-string"
+      ],
+      "effects": [],
+      "range": "1.2.2 - 3.1.2 || >=5.2.0-canary-20250611-f0afe80",
+      "nodes": [
+        "mobile/node_modules/expo-router"
+      ],
+      "fixAvailable": {
+        "name": "expo-router",
+        "version": "5.1.11",
+        "isSemVerMajor": true
+      }
+    },
+    "expo-sharing": {
+      "name": "expo-sharing",
+      "severity": "moderate",
+      "isDirect": true,
+      "via": [
+        "@expo/config-plugins"
+      ],
+      "effects": [],
+      "range": ">=14.0.9-canary-20251205-756eb7a",
+      "nodes": [
+        "node_modules/expo-sharing"
+      ],
+      "fixAvailable": {
+        "name": "expo-sharing",
+        "version": "14.0.8",
+        "isSemVerMajor": true
+      }
+    },
+    "joi": {
+      "name": "joi",
+      "severity": "moderate",
+      "isDirect": false,
+      "via": [
+        {
+          "source": 1120656,
+          "name": "joi",
+          "dependency": "joi",
+          "title": "joi has an uncaught RangeError on deeply nested input through recursive `link()` schemas",
+          "url": "https://github.com/advisories/GHSA-q7cg-457f-vx79",
+          "severity": "moderate",
+          "cwe": [
+            "CWE-248",
+            "CWE-400"
+          ],
+          "cvss": {
+            "score": 5.3,
+            "vectorString": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:L"
+          },
+          "range": "<17.13.4"
+        },
+        {
+          "source": 1193674,
+          "name": "joi",
+          "dependency": "joi",
+          "title": "joi: Prototype pollution via a `__proto__` language key in custom messages",
+          "url": "https://github.com/advisories/GHSA-6w3j-5fw6-r9vr",
+          "severity": "low",
+          "cwe": [
+            "CWE-1321"
+          ],
+          "cvss": {
+            "score": 3.7,
+            "vectorString": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:N/I:L/A:N"
+          },
+          "range": ">=17.2.0 <17.13.6"
+        },
+        {
+          "source": 1193679,
+          "name": "joi",
+          "dependency": "joi",
+          "title": "joi: object().rename() with a template target can set the validated object's prototype",
+          "url": "https://github.com/advisories/GHSA-gg4h-3hg2-grpc",
+          "severity": "low",
+          "cwe": [
+            "CWE-1321"
+          ],
+          "cvss": {
+            "score": 3.7,
+            "vectorString": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:N/I:L/A:N"
+          },
+          "range": ">=16.0.0 <17.13.5"
+        }
+      ],
+      "effects": [
+        "@expo/eas-json",
+        "eas-cli"
+      ],
+      "range": "<=17.13.5",
+      "nodes": [
+        "node_modules/joi"
+      ],
+      "fixAvailable": {
+        "name": "eas-cli",
+        "version": "0.24.1",
+        "isSemVerMajor": true
+      }
+    },
+    "js-yaml": {
+      "name": "js-yaml",
+      "severity": "high",
+      "isDirect": false,
+      "via": [
+        {
+          "source": 1193727,
+          "name": "js-yaml",
+          "dependency": "js-yaml",
+          "title": "js-yaml: maxTotalMergeKeys does not limit CPU use for empty merge sources",
+          "url": "https://github.com/advisories/GHSA-2883-xcg3-v3hh",
+          "severity": "high",
+          "cwe": [
+            "CWE-400",
+            "CWE-407"
+          ],
+          "cvss": {
+            "score": 7.5,
+            "vectorString": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H"
+          },
+          "range": ">=4.0.0 <4.3.2"
+        }
+      ],
+      "effects": [
+        "@redocly/openapi-core"
+      ],
+      "range": "4.0.0 - 4.3.1",
+      "nodes": [
+        "node_modules/@redocly/openapi-core/node_modules/js-yaml"
+      ],
+      "fixAvailable": true
+    },
+    "minimatch": {
+      "name": "minimatch",
+      "severity": "high",
+      "isDirect": false,
+      "via": [
+        {
+          "source": 1113461,
+          "name": "minimatch",
+          "dependency": "minimatch",
+          "title": "minimatch has a ReDoS via repeated wildcards with non-matching literal in pattern",
+          "url": "https://github.com/advisories/GHSA-3ppc-4f35-3m26",
+          "severity": "high",
+          "cwe": [
+            "CWE-1333"
+          ],
+          "cvss": {
+            "score": 0,
+            "vectorString": null
+          },
+          "range": ">=5.0.0 <5.1.7"
+        },
+        {
+          "source": 1113540,
+          "name": "minimatch",
+          "dependency": "minimatch",
+          "title": "minimatch has ReDoS: matchOne() combinatorial backtracking via multiple non-adjacent GLOBSTAR segments",
+          "url": "https://github.com/advisories/GHSA-7r86-cg39-jmmj",
+          "severity": "high",
+          "cwe": [
+            "CWE-407"
+          ],
+          "cvss": {
+            "score": 7.5,
+            "vectorString": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H"
+          },
+          "range": ">=5.0.0 <5.1.8"
+        },
+        {
+          "source": 1113548,
+          "name": "minimatch",
+          "dependency": "minimatch",
+          "title": "minimatch ReDoS: nested *() extglobs generate catastrophically backtracking regular expressions",
+          "url": "https://github.com/advisories/GHSA-23c5-xmqv-rm74",
+          "severity": "high",
+          "cwe": [
+            "CWE-1333"
+          ],
+          "cvss": {
+            "score": 7.5,
+            "vectorString": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H"
+          },
+          "range": ">=5.0.0 <5.1.8"
+        }
+      ],
+      "effects": [
+        "eas-cli"
+      ],
+      "range": "5.0.0 - 5.1.7",
+      "nodes": [
+        "node_modules/eas-cli/node_modules/minimatch"
+      ],
+      "fixAvailable": {
+        "name": "eas-cli",
+        "version": "0.24.1",
+        "isSemVerMajor": true
+      }
+    },
+    "nanoid": {
+      "name": "nanoid",
+      "severity": "high",
+      "isDirect": false,
+      "via": [
+        {
+          "source": 1138811,
+          "name": "nanoid",
+          "dependency": "nanoid",
+          "title": "nanoid: non-secure generators can loop indefinitely with negative size",
+          "url": "https://github.com/advisories/GHSA-28wg-ghj8-5hjv",
+          "severity": "high",
+          "cwe": [
+            "CWE-835"
+          ],
+          "cvss": {
+            "score": 5.9,
+            "vectorString": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:N/I:N/A:H"
+          },
+          "range": "<3.3.16"
+        },
+        {
+          "source": 1139427,
+          "name": "nanoid",
+          "dependency": "nanoid",
+          "title": "nanoid: custom generators can loop indefinitely when size is zero",
+          "url": "https://github.com/advisories/GHSA-2v37-7h3g-55p8",
+          "severity": "high",
+          "cwe": [
+            "CWE-835"
+          ],
+          "cvss": {
+            "score": 5.9,
+            "vectorString": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:N/I:N/A:H"
+          },
+          "range": "<3.3.18"
+        },
+        {
+          "source": 1153189,
+          "name": "nanoid",
+          "dependency": "nanoid",
+          "title": "nanoid: Integer Overflow or Wraparound",
+          "url": "https://github.com/advisories/GHSA-xwg4-73v4-xw9w",
+          "severity": "high",
+          "cwe": [
+            "CWE-190"
+          ],
+          "cvss": {
+            "score": 7.4,
+            "vectorString": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:H/A:N"
+          },
+          "range": "<3.3.12"
+        }
+      ],
+      "effects": [
+        "eas-cli"
+      ],
+      "range": "<=3.3.17",
+      "nodes": [
+        "node_modules/eas-cli/node_modules/nanoid"
+      ],
+      "fixAvailable": {
+        "name": "eas-cli",
+        "version": "0.24.1",
+        "isSemVerMajor": true
+      }
+    },
+    "next": {
+      "name": "next",
+      "severity": "critical",
+      "isDirect": true,
+      "via": [
+        {
+          "source": 1193676,
+          "name": "next",
+          "dependency": "next",
+          "title": "Next.js: Unauthenticated Remote Code Execution on windows-hosted servers",
+          "url": "https://github.com/advisories/GHSA-p293-qw3h-jr36",
+          "severity": "critical",
+          "cwe": [
+            "CWE-22"
+          ],
+          "cvss": {
+            "score": 9,
+            "vectorString": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:C/C:H/I:H/A:H"
+          },
+          "range": ">=16.0.0 <16.3.3"
+        },
+        {
+          "source": 1193732,
+          "name": "next",
+          "dependency": "next",
+          "title": "Next.js: Unauthenticated Remote Code Execution in Image Optimization API when AVIF files are used",
+          "url": "https://github.com/advisories/GHSA-2xp9-vwfh-vxw4",
+          "severity": "critical",
+          "cwe": [
+            "CWE-1395"
+          ],
+          "cvss": {
+            "score": 0,
+            "vectorString": null
+          },
+          "range": ">=16.0.0 <16.3.3"
+        }
+      ],
+      "effects": [],
+      "range": "16.0.0 - 16.3.2",
+      "nodes": [
+        "node_modules/next"
+      ],
+      "fixAvailable": {
+        "name": "next",
+        "version": "16.3.5",
+        "isSemVerMajor": false
+      }
+    },
+    "query-string": {
+      "name": "query-string",
+      "severity": "moderate",
+      "isDirect": false,
+      "via": [
+        "decode-uri-component"
+      ],
+      "effects": [
+        "expo-router"
+      ],
+      "range": "5.0.0 - 9.4.1",
+      "nodes": [
+        "node_modules/query-string"
+      ],
+      "fixAvailable": {
+        "name": "expo-router",
+        "version": "5.1.11",
+        "isSemVerMajor": true
+      }
+    },
+    "tar": {
+      "name": "tar",
+      "severity": "high",
+      "isDirect": false,
+      "via": [
+        {
+          "source": 1145647,
+          "name": "tar",
+          "dependency": "tar",
+          "title": "node-tar: Uncontrolled recursion in mapHas/filesFilter allows uncatchable stack-overflow DoS via crafted long-path tar with member selection",
+          "url": "https://github.com/advisories/GHSA-r292-9mhp-454m",
+          "severity": "high",
+          "cwe": [
+            "CWE-400",
+            "CWE-674"
+          ],
+          "cvss": {
+            "score": 7.5,
+            "vectorString": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H"
+          },
+          "range": "<=7.5.20"
+        }
+      ],
+      "effects": [
+        "eas-cli"
+      ],
+      "range": "<=7.5.20",
+      "nodes": [
+        "node_modules/tar"
+      ],
+      "fixAvailable": {
+        "name": "eas-cli",
+        "version": "0.24.1",
+        "isSemVerMajor": true
+      }
+    },
+    "ts-deepmerge": {
+      "name": "ts-deepmerge",
+      "severity": "moderate",
+      "isDirect": false,
+      "via": [
+        {
+          "source": 1121318,
+          "name": "ts-deepmerge",
+          "dependency": "ts-deepmerge",
+          "title": "ts-deepmerge: Prototype Method Override leads to DoS",
+          "url": "https://github.com/advisories/GHSA-87mf-gv2c-c62c",
+          "severity": "moderate",
+          "cwe": [
+            "CWE-248"
+          ],
+          "cvss": {
+            "score": 5.3,
+            "vectorString": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:L"
+          },
+          "range": "<8.0.0"
+        }
+      ],
+      "effects": [
+        "eas-cli"
+      ],
+      "range": "<8.0.0",
+      "nodes": [
+        "node_modules/ts-deepmerge"
+      ],
+      "fixAvailable": {
+        "name": "eas-cli",
+        "version": "0.24.1",
+        "isSemVerMajor": true
+      }
+    },
+    "uuid": {
+      "name": "uuid",
+      "severity": "moderate",
+      "isDirect": false,
+      "via": [
+        {
+          "source": 1119441,
+          "name": "uuid",
+          "dependency": "uuid",
+          "title": "uuid: Missing buffer bounds check in v3/v5/v6 when buf is provided",
+          "url": "https://github.com/advisories/GHSA-w5hq-g745-h8pq",
+          "severity": "moderate",
+          "cwe": [
+            "CWE-787",
+            "CWE-1285"
+          ],
+          "cvss": {
+            "score": 7.5,
+            "vectorString": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:H/A:N"
+          },
+          "range": "<11.1.1"
+        }
+      ],
+      "effects": [
+        "@expo/bunyan",
+        "@expo/rudder-sdk-node",
+        "xcode"
+      ],
+      "range": "<11.1.1",
+      "nodes": [
+        "node_modules/@expo/bunyan/node_modules/uuid",
+        "node_modules/@expo/rudder-sdk-node/node_modules/uuid",
+        "node_modules/uuid"
+      ],
+      "fixAvailable": {
+        "name": "eas-cli",
+        "version": "0.24.1",
+        "isSemVerMajor": true
+      }
+    },
+    "xcode": {
+      "name": "xcode",
+      "severity": "moderate",
+      "isDirect": false,
+      "via": [
+        "uuid"
+      ],
+      "effects": [
+        "@expo/config-plugins"
+      ],
+      "range": ">=0.9.2",
+      "nodes": [
+        "node_modules/xcode"
+      ],
+      "fixAvailable": {
+        "name": "expo-sharing",
+        "version": "14.0.8",
+        "isSemVerMajor": true
+      }
+    },
+    "yaml": {
+      "name": "yaml",
+      "severity": "moderate",
+      "isDirect": false,
+      "via": [
+        {
+          "source": 1115556,
+          "name": "yaml",
+          "dependency": "yaml",
+          "title": "yaml is vulnerable to Stack Overflow via deeply nested YAML collections",
+          "url": "https://github.com/advisories/GHSA-48c2-rrv3-qjmp",
+          "severity": "moderate",
+          "cwe": [
+            "CWE-674"
+          ],
+          "cvss": {
+            "score": 4.3,
+            "vectorString": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:N/A:L"
+          },
+          "range": ">=2.0.0 <2.8.3"
+        }
+      ],
+      "effects": [
+        "eas-cli"
+      ],
+      "range": "2.0.0 - 2.8.2",
+      "nodes": [
+        "node_modules/eas-cli/node_modules/yaml"
+      ],
+      "fixAvailable": {
+        "name": "eas-cli",
+        "version": "0.24.1",
+        "isSemVerMajor": true
+      }
+    }
+  },
+  "metadata": {
+    "vulnerabilities": {
+      "info": 0,
+      "low": 1,
+      "moderate": 22,
+      "high": 6,
+      "critical": 1,
+      "total": 30
+    },
+    "dependencies": {
+      "prod": 844,
+      "dev": 1073,
+      "optional": 149,
+      "peer": 101,
+      "peerOptional": 0,
+      "total": 2054
+    }
+  }
+}

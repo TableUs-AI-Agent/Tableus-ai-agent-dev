@@ -1,8 +1,11 @@
 # Current state
 
-Updated 2026-09-21. Cumulative isolated-staging acceptance is complete for
-`f94a1d9`, including the owner-accepted unresolved simulator AppHang risk. Production, stores and cohort activation
-are separate objectives. Only [the active packet](task-packets/active.md) directs
+Updated 2026-09-21. Cumulative isolated-staging acceptance remains complete for
+`f94a1d9`, including
+the owner-accepted unresolved simulator AppHang risk. A local dependency
+remediation now has zero critical/high npm findings; hosted/native bytes have not
+changed. Replacement review and release actions remain separate objectives.
+Only [the active packet](task-packets/active.md) directs
 implementation. [Historical snapshots](history/2026-09-21/README.md) preserve the
 previous narrative without making it an active checklist.
 
@@ -11,14 +14,15 @@ previous narrative without making it an active checklist.
 | Role | Value |
 | --- | --- |
 | Frozen application candidate | `f94a1d9d1125e6c9111aa08eda496f014f20d0c0` |
-| Current task branch / worktree | `codex/staging-closeout` / `.worktrees/staging-closeout` |
-| Recovery base | `33d79b6` on `codex/ios27-scene-lifecycle`; original worktree and its uncommitted files preserved |
-| Previous task | `01a097ad-4b11-7d62-9813-6ae4cf75f3f5` (read during recovery) |
+| Current task branch / worktree | `codex/dependency-toolchain-exception` / `/Users/brianchei/.codex/worktrees/14a6/Tableus-ai-agent-dev` |
+| Implementation base | `5375e3389823b9c0736328709aab1cdc9be6ef98`; completed staging closeout |
+| Previous task | `01a0c555-30b1-7403-9ac2-83d272d7ff62` (bounded retrieval) |
 | Evidence index | [Current candidate](evidence/ios27-staging-f94a1d9/closeout.md) |
 
 The root checkout is an older branch and is not the implementation base.
-Application, operator and evidence commits are distinct. This recovery changes
-planning/evidence only; it does not create a new application candidate.
+Application, operator and evidence commits are distinct. This task changes
+dependencies and tests; its source requires replacement-candidate review. Existing
+staging artifacts prove only their original application SHA.
 
 ## Implemented product
 
@@ -34,7 +38,7 @@ sign-out. The plan uses explicit refresh, coalesces in-flight reads and distingu
 previous votes from new submissions. The candidate also repairs iOS 27 scene
 startup with pinned Expo 57.0.23 and a reviewed local config plugin.
 
-## Candidate evidence
+## Frozen f94a1d9 evidence
 
 - Local candidate `make ready`: 226 JavaScript and 98 Python tests; three local
   PostgreSQL skips. Exact-source CI adds PostgreSQL/browser coverage: 101 Python,
@@ -55,26 +59,38 @@ startup with pinned Expo 57.0.23 and a reviewed local config plugin.
   Android session and proves renewal at September 17, 01:17:33 UTC, after the
   simulator sign-out at 00:55:07 UTC. No reverse-direction result is claimed.
 
-## Completed closeout and next work
+## Dependency remediation and next work
 
 The owner restored Supabase access and accepted the simulator hang as an
 unresolved isolated-staging risk. Session renewal and provider totals are verified;
-the existing cumulative validator and fresh public readiness check pass. The
+the closeout cumulative validator and public readiness check passed. The
 [final report](evidence/ios27-staging-f94a1d9/final/closed-beta-readiness-summary.json)
-and [handoff](handoffs/2026-09-21-staging-closeout.md) close this objective.
+and [handoff](handoffs/2026-09-21-staging-closeout.md) closed that objective.
 
-Next: a fresh task for targeted dependency/toolchain exception assessment before
-September 30. Merge and all production/store/cohort gates remain separate.
+Local fixes: Next.js 16.3.5, scoped EAS transitive patches, Redocly/js-yaml patch
+and a CommonJS adapter to the unmodified patched URL decoder. Expo/React Native
+pins are unchanged. [Assessment and exact-use dispositions](evidence/dependency-toolchain-2026-09-21/README.md)
+replace the blanket exception for this graph only: 17 audit entries arise from
+three tooling advisories outside the used vulnerable paths. No expiry extension
+or production waiver; f94a1d9 still contains its original dependencies.
+
+Fresh `make ready`: 234 JavaScript and 98 Python passes, three PostgreSQL skips;
+contract unchanged. Actual router/EAS regressions and iOS/Android JavaScript
+exports and four Chrome browser regressions pass. No new native artifact or
+hosted check is claimed. Next: review the
+replacement source and prepare a bounded rollout/verification proposal for owner
+approval, prioritizing the potentially reachable old Next image-optimizer advisory.
+Merge and release gates remain separate.
 
 Latest provider observation: September 21, 19:20:36 UTC. Places totals
 421 against baseline 329: **92/100 used, 8 remaining**. Emails **2/4**;
 explicit telemetry **6/6 per provider**, exhausted; fresh Gemini generations
-**0/0**. Provider totals are freshly reconciled; email/canary counts retain their
+**0/0**. The closeout reconciled provider totals; email/canary counts retain their
 execution-ledger/delivery provenance. A new task resets none of these limits.
 The configured staging backstop was verified at 429.
 
-The unexplained simulator AppHang, placeholder tab glyphs, developer-toolchain
-exception expiring September 30, production privacy/retention/Auth deletion,
+The unexplained simulator AppHang, placeholder tab glyphs, eight Expo package
+patch recommendations, replacement dependency rollout, privacy/retention/Auth deletion,
 capability and quota controls, signing and symbolication remain tracked in the
 [release checklist](release-readiness-checklist.md). A single-process API is still
 required. Passed staging observations do not authorize production or distribution.

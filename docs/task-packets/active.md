@@ -1,44 +1,46 @@
-# Completed packet: f94a1d9 staging closeout
+# Completed packet: dependency/toolchain disposition
 
-Completed 2026-09-21 in `codex/staging-closeout`, worktree
-`.worktrees/staging-closeout`. Application candidate:
-`f94a1d9d1125e6c9111aa08eda496f014f20d0c0`. No implementation objective remains
-active in this task. The next task will replace this packet for its own scope.
+Completed locally 2026-09-21. Branch `codex/dependency-toolchain-exception`;
+worktree `/Users/brianchei/.codex/worktrees/14a6/Tableus-ai-agent-dev`.
+Base: `5375e3389823b9c0736328709aab1cdc9be6ef98`. The task began clean at the
+provisioned older `e1184ec`, then branched from the verified staging handoff.
+Previous task `01a0c555-30b1-7403-9ac2-83d272d7ff62` was retrieved narrowly.
 
 ## Outcome
 
-- Recovered the previous task's uncommitted evidence without modifying its worktree.
-- Consolidated planning and adopted one feature/fix per task with compact handoffs.
-- Verified all six retained artifact/receipt sets and accepted source-review hashes.
-- Completed `make ready`: 226 JavaScript, 98 Python passes; three local PostgreSQL
-  skips. Executable source is unchanged, so the final evidence checkpoint reuses it.
-- The owner confirmed Android's post-sign-out account read. Restored Supabase access
-  proves that the same original Android session renewed at September 17, 01:17:33
-  UTC after the simulator sign-out at 00:55:07 UTC; original simulator session absent.
-- Reconciled provider totals and existing deployments. Public readiness and
-  canonical associations match. The cumulative evidence validator passes.
-- Owner accepted the unexplained simulator hang for isolated staging only;
-  symbols and a focused check remain required before distribution.
+- Patched Next.js/eslint to 16.3.5, EAS's affected compatible transitives and
+  Redocly/js-yaml. Kept EAS 23.2.0, Expo 57.0.23 and React Native 0.86.2.
+- Added a small module adapter to the unmodified fixed decoder 0.5.0, preserving
+  Expo Router/query-string interfaces. Node minimum is now 22.12 within Node 22.
+- Full npm graph: zero critical/high; 17 remaining package entries propagate
+  three underlying tooling advisories with documented unaffected/unused paths.
+  The production-labelled graph's 12 entries all concern xcode/UUID build tooling.
+- Fresh frozen installation and dependency consistency passed. Eight focused
+  regressions, iOS/Android JavaScript exports and four deterministic Chrome
+  browser tests passed. One `make ready` passed 234 JavaScript and 98 Python tests,
+  with three local PostgreSQL skips; generated contract unchanged.
+- No exception extension. Dispositions apply only to the reviewed replacement
+  graph/usage. Reassess on dependency, consumer, command or trust-boundary changes.
 
-[Final evidence matrix](../evidence/ios27-staging-f94a1d9/closeout.md) ·
-[Final report](../evidence/ios27-staging-f94a1d9/final/closed-beta-readiness-summary.json) ·
-[Next-task handoff](../handoffs/2026-09-21-staging-closeout.md).
+[Assessment](../evidence/dependency-toolchain-2026-09-21/README.md) ·
+[Machine-readable disposition](../evidence/dependency-toolchain-2026-09-21/assessment.json) ·
+[Verification](../evidence/dependency-toolchain-2026-09-21/verification.json) ·
+[Next-task handoff](../handoffs/2026-09-21-dependency-toolchain.md).
 
-## Preserved boundaries
+## Remaining boundary and next objective
 
-Final Places 92/100 from baseline 329, emails 2/4, explicit canaries 6/6 per
-provider, new Gemini generations 0/0. Closeout consumed none. No fresh task
-replenishes these limits or extends the completed run into new paid evaluation.
-No new build, scan, resource/secret, deployment, migration, cleanup, deletion,
-merge, store or cohort action occurred. All retained artifacts and sessions
-remain under their original source identities. Production obligations remain
-in the release checklist and roadmap.
+Frozen staging application `f94a1d9d1125e6c9111aa08eda496f014f20d0c0` remains
+unchanged and potentially affected by the old Next image-optimizer advisory.
+Local remediation is complete; rollout and release acceptance are not. Review
+this replacement source in a fresh task and prepare a concrete bounded web/native
+verification and rollout proposal for owner approval. Broader Expo patch alignment
+has eight recommendations and needs affected native evidence; no clean Doctor
+claim is made. Symbols and a focused simulator-hang diagnostic remain required
+before distribution. The cause of the old hang remains unknown.
 
-## Next bounded objective
-
-Resolve the dependency/toolchain exception expiring September 30 or before
-production. Use a fresh task and isolated branch based on this completed handoff.
-Start with targeted current advisory/reachability assessment and compatible
-patch options; local source fixes and deterministic checks are authorized. No
-new Security Scan, framework/provider migration, deployment or native build is
-implied. Preserve f94a1d9 staging evidence and all original worktrees.
+No merge, push, deployment, resource/secret creation, paid/live-AI evaluation,
+native build, Security Scan, migration, destructive cleanup, account deletion,
+store submission or cohort activation occurred. All original worktrees/artifacts
+and saved sessions remain intact. Places 92/100, emails 2/4, explicit canaries
+6/6 per provider, new Gemini 0/0 are preserved closed-run limits, not a fresh
+allowance. This completed packet is replaced only by the next task's own objective.

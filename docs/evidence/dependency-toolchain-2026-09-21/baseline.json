@@ -1,0 +1,734 @@
+{
+  "schema_version": 1,
+  "observed_at": "2026-09-21T21:03:50.190Z",
+  "base_sha": "5375e3389823b9c0736328709aab1cdc9be6ef98",
+  "application_sha": "f94a1d9d1125e6c9111aa08eda496f014f20d0c0",
+  "node": "v22.23.1",
+  "npm": "10.9.8",
+  "package_lock_sha256": "7af3277d19094e0275e35b39b5a04c195b7ddf75d4b517983f120bf72fe299f3",
+  "scope": "Targeted npm dependency exception assessment; not a Security Scan or a Python/native/system dependency audit",
+  "audit_command": "npm audit --package-lock-only --ignore-scripts --json",
+  "audit_exit_code": 1,
+  "affected_packages": [
+    {
+      "name": "@expo/bunyan",
+      "severity": "moderate",
+      "paths": [
+        {
+          "path": "node_modules/@expo/bunyan",
+          "version": "4.0.1",
+          "dev": true
+        }
+      ],
+      "advisories": []
+    },
+    {
+      "name": "@expo/cli",
+      "severity": "moderate",
+      "paths": [
+        {
+          "path": "node_modules/expo/node_modules/@expo/cli",
+          "version": "57.0.25",
+          "dev": false
+        }
+      ],
+      "advisories": []
+    },
+    {
+      "name": "@expo/config",
+      "severity": "moderate",
+      "paths": [
+        {
+          "path": "node_modules/@expo/config",
+          "version": "57.0.9",
+          "dev": false
+        },
+        {
+          "path": "node_modules/eas-cli/node_modules/@expo/config",
+          "version": "55.0.10",
+          "dev": true
+        },
+        {
+          "path": "node_modules/eas-cli/node_modules/@expo/prebuild-config/node_modules/@expo/config",
+          "version": "11.0.13",
+          "dev": true
+        }
+      ],
+      "advisories": []
+    },
+    {
+      "name": "@expo/config-plugins",
+      "severity": "moderate",
+      "paths": [
+        {
+          "path": "node_modules/@expo/config-plugins",
+          "version": "57.0.9",
+          "dev": false
+        },
+        {
+          "path": "node_modules/eas-cli/node_modules/@expo/config-plugins",
+          "version": "55.0.7",
+          "dev": true
+        },
+        {
+          "path": "node_modules/eas-cli/node_modules/@expo/prebuild-config/node_modules/@expo/config-plugins",
+          "version": "10.1.2",
+          "dev": true
+        }
+      ],
+      "advisories": []
+    },
+    {
+      "name": "@expo/eas-json",
+      "severity": "moderate",
+      "paths": [
+        {
+          "path": "node_modules/@expo/eas-json",
+          "version": "23.1.0",
+          "dev": true
+        }
+      ],
+      "advisories": []
+    },
+    {
+      "name": "@expo/inline-modules",
+      "severity": "moderate",
+      "paths": [
+        {
+          "path": "node_modules/@expo/inline-modules",
+          "version": "0.1.7",
+          "dev": false
+        }
+      ],
+      "advisories": []
+    },
+    {
+      "name": "@expo/local-build-cache-provider",
+      "severity": "moderate",
+      "paths": [
+        {
+          "path": "node_modules/@expo/local-build-cache-provider",
+          "version": "57.0.8",
+          "dev": false
+        }
+      ],
+      "advisories": []
+    },
+    {
+      "name": "@expo/metro-config",
+      "severity": "moderate",
+      "paths": [
+        {
+          "path": "node_modules/@expo/metro-config",
+          "version": "57.0.12",
+          "dev": false
+        }
+      ],
+      "advisories": []
+    },
+    {
+      "name": "@expo/prebuild-config",
+      "severity": "moderate",
+      "paths": [
+        {
+          "path": "node_modules/@expo/prebuild-config",
+          "version": "57.0.16",
+          "dev": false
+        },
+        {
+          "path": "node_modules/eas-cli/node_modules/@expo/prebuild-config",
+          "version": "9.0.12",
+          "dev": true
+        }
+      ],
+      "advisories": []
+    },
+    {
+      "name": "@expo/rudder-sdk-node",
+      "severity": "moderate",
+      "paths": [
+        {
+          "path": "node_modules/@expo/rudder-sdk-node",
+          "version": "1.1.1",
+          "dev": true
+        }
+      ],
+      "advisories": []
+    },
+    {
+      "name": "@redocly/openapi-core",
+      "severity": "high",
+      "paths": [
+        {
+          "path": "node_modules/@redocly/openapi-core",
+          "version": "1.34.19",
+          "dev": true
+        }
+      ],
+      "advisories": []
+    },
+    {
+      "name": "@sentry/react-native",
+      "severity": "moderate",
+      "paths": [
+        {
+          "path": "node_modules/@sentry/react-native",
+          "version": "7.11.0",
+          "dev": false
+        }
+      ],
+      "advisories": []
+    },
+    {
+      "name": "ajv",
+      "severity": "moderate",
+      "paths": [
+        {
+          "path": "node_modules/eas-cli/node_modules/ajv",
+          "version": "8.11.0",
+          "dev": true
+        }
+      ],
+      "advisories": [
+        {
+          "source": 1113715,
+          "name": "ajv",
+          "dependency": "ajv",
+          "title": "ajv has ReDoS when using `$data` option",
+          "url": "https://github.com/advisories/GHSA-2g4f-4pwh-qvx6",
+          "severity": "moderate",
+          "cwe": [
+            "CWE-400",
+            "CWE-1333"
+          ],
+          "cvss": {
+            "score": 0,
+            "vectorString": null
+          },
+          "range": ">=7.0.0-alpha.0 <8.18.0"
+        }
+      ]
+    },
+    {
+      "name": "decode-uri-component",
+      "severity": "moderate",
+      "paths": [
+        {
+          "path": "node_modules/decode-uri-component",
+          "version": "0.2.2",
+          "dev": false
+        }
+      ],
+      "advisories": [
+        {
+          "source": 1147955,
+          "name": "decode-uri-component",
+          "dependency": "decode-uri-component",
+          "title": "decode-uri-component: Denial of service via exponential decoding of malformed percent-encoded input",
+          "url": "https://github.com/advisories/GHSA-vcc3-ghjq-m6fr",
+          "severity": "moderate",
+          "cwe": [
+            "CWE-400",
+            "CWE-405",
+            "CWE-407",
+            "CWE-1176"
+          ],
+          "cvss": {
+            "score": 0,
+            "vectorString": null
+          },
+          "range": "<=0.4.2"
+        }
+      ]
+    },
+    {
+      "name": "diff",
+      "severity": "low",
+      "paths": [
+        {
+          "path": "node_modules/diff",
+          "version": "7.0.0",
+          "dev": true
+        }
+      ],
+      "advisories": [
+        {
+          "source": 1112706,
+          "name": "diff",
+          "dependency": "diff",
+          "title": "jsdiff has a Denial of Service vulnerability in parsePatch and applyPatch",
+          "url": "https://github.com/advisories/GHSA-73rr-hh4g-fpgx",
+          "severity": "low",
+          "cwe": [
+            "CWE-400",
+            "CWE-1333"
+          ],
+          "cvss": {
+            "score": 0,
+            "vectorString": null
+          },
+          "range": ">=6.0.0 <8.0.3"
+        }
+      ]
+    },
+    {
+      "name": "eas-cli",
+      "severity": "high",
+      "paths": [
+        {
+          "path": "node_modules/eas-cli",
+          "version": "23.2.0",
+          "dev": true
+        }
+      ],
+      "advisories": []
+    },
+    {
+      "name": "expo",
+      "severity": "moderate",
+      "paths": [
+        {
+          "path": "node_modules/expo",
+          "version": "57.0.23",
+          "dev": false
+        }
+      ],
+      "advisories": []
+    },
+    {
+      "name": "expo-router",
+      "severity": "moderate",
+      "paths": [
+        {
+          "path": "mobile/node_modules/expo-router",
+          "version": "57.0.17",
+          "dev": false
+        }
+      ],
+      "advisories": []
+    },
+    {
+      "name": "expo-sharing",
+      "severity": "moderate",
+      "paths": [
+        {
+          "path": "node_modules/expo-sharing",
+          "version": "57.0.16",
+          "dev": false
+        }
+      ],
+      "advisories": []
+    },
+    {
+      "name": "joi",
+      "severity": "moderate",
+      "paths": [
+        {
+          "path": "node_modules/joi",
+          "version": "17.11.0",
+          "dev": true
+        }
+      ],
+      "advisories": [
+        {
+          "source": 1120656,
+          "name": "joi",
+          "dependency": "joi",
+          "title": "joi has an uncaught RangeError on deeply nested input through recursive `link()` schemas",
+          "url": "https://github.com/advisories/GHSA-q7cg-457f-vx79",
+          "severity": "moderate",
+          "cwe": [
+            "CWE-248",
+            "CWE-400"
+          ],
+          "cvss": {
+            "score": 5.3,
+            "vectorString": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:L"
+          },
+          "range": "<17.13.4"
+        },
+        {
+          "source": 1193674,
+          "name": "joi",
+          "dependency": "joi",
+          "title": "joi: Prototype pollution via a `__proto__` language key in custom messages",
+          "url": "https://github.com/advisories/GHSA-6w3j-5fw6-r9vr",
+          "severity": "low",
+          "cwe": [
+            "CWE-1321"
+          ],
+          "cvss": {
+            "score": 3.7,
+            "vectorString": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:N/I:L/A:N"
+          },
+          "range": ">=17.2.0 <17.13.6"
+        },
+        {
+          "source": 1193679,
+          "name": "joi",
+          "dependency": "joi",
+          "title": "joi: object().rename() with a template target can set the validated object's prototype",
+          "url": "https://github.com/advisories/GHSA-gg4h-3hg2-grpc",
+          "severity": "low",
+          "cwe": [
+            "CWE-1321"
+          ],
+          "cvss": {
+            "score": 3.7,
+            "vectorString": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:N/I:L/A:N"
+          },
+          "range": ">=16.0.0 <17.13.5"
+        }
+      ]
+    },
+    {
+      "name": "js-yaml",
+      "severity": "high",
+      "paths": [
+        {
+          "path": "node_modules/@redocly/openapi-core/node_modules/js-yaml",
+          "version": "4.3.1",
+          "dev": true
+        }
+      ],
+      "advisories": [
+        {
+          "source": 1193727,
+          "name": "js-yaml",
+          "dependency": "js-yaml",
+          "title": "js-yaml: maxTotalMergeKeys does not limit CPU use for empty merge sources",
+          "url": "https://github.com/advisories/GHSA-2883-xcg3-v3hh",
+          "severity": "high",
+          "cwe": [
+            "CWE-400",
+            "CWE-407"
+          ],
+          "cvss": {
+            "score": 7.5,
+            "vectorString": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H"
+          },
+          "range": ">=4.0.0 <4.3.2"
+        }
+      ]
+    },
+    {
+      "name": "minimatch",
+      "severity": "high",
+      "paths": [
+        {
+          "path": "node_modules/eas-cli/node_modules/minimatch",
+          "version": "5.1.2",
+          "dev": true
+        }
+      ],
+      "advisories": [
+        {
+          "source": 1113461,
+          "name": "minimatch",
+          "dependency": "minimatch",
+          "title": "minimatch has a ReDoS via repeated wildcards with non-matching literal in pattern",
+          "url": "https://github.com/advisories/GHSA-3ppc-4f35-3m26",
+          "severity": "high",
+          "cwe": [
+            "CWE-1333"
+          ],
+          "cvss": {
+            "score": 0,
+            "vectorString": null
+          },
+          "range": ">=5.0.0 <5.1.7"
+        },
+        {
+          "source": 1113540,
+          "name": "minimatch",
+          "dependency": "minimatch",
+          "title": "minimatch has ReDoS: matchOne() combinatorial backtracking via multiple non-adjacent GLOBSTAR segments",
+          "url": "https://github.com/advisories/GHSA-7r86-cg39-jmmj",
+          "severity": "high",
+          "cwe": [
+            "CWE-407"
+          ],
+          "cvss": {
+            "score": 7.5,
+            "vectorString": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H"
+          },
+          "range": ">=5.0.0 <5.1.8"
+        },
+        {
+          "source": 1113548,
+          "name": "minimatch",
+          "dependency": "minimatch",
+          "title": "minimatch ReDoS: nested *() extglobs generate catastrophically backtracking regular expressions",
+          "url": "https://github.com/advisories/GHSA-23c5-xmqv-rm74",
+          "severity": "high",
+          "cwe": [
+            "CWE-1333"
+          ],
+          "cvss": {
+            "score": 7.5,
+            "vectorString": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H"
+          },
+          "range": ">=5.0.0 <5.1.8"
+        }
+      ]
+    },
+    {
+      "name": "nanoid",
+      "severity": "high",
+      "paths": [
+        {
+          "path": "node_modules/eas-cli/node_modules/nanoid",
+          "version": "3.3.8",
+          "dev": true
+        }
+      ],
+      "advisories": [
+        {
+          "source": 1138811,
+          "name": "nanoid",
+          "dependency": "nanoid",
+          "title": "nanoid: non-secure generators can loop indefinitely with negative size",
+          "url": "https://github.com/advisories/GHSA-28wg-ghj8-5hjv",
+          "severity": "high",
+          "cwe": [
+            "CWE-835"
+          ],
+          "cvss": {
+            "score": 5.9,
+            "vectorString": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:N/I:N/A:H"
+          },
+          "range": "<3.3.16"
+        },
+        {
+          "source": 1139427,
+          "name": "nanoid",
+          "dependency": "nanoid",
+          "title": "nanoid: custom generators can loop indefinitely when size is zero",
+          "url": "https://github.com/advisories/GHSA-2v37-7h3g-55p8",
+          "severity": "high",
+          "cwe": [
+            "CWE-835"
+          ],
+          "cvss": {
+            "score": 5.9,
+            "vectorString": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:N/I:N/A:H"
+          },
+          "range": "<3.3.18"
+        },
+        {
+          "source": 1153189,
+          "name": "nanoid",
+          "dependency": "nanoid",
+          "title": "nanoid: Integer Overflow or Wraparound",
+          "url": "https://github.com/advisories/GHSA-xwg4-73v4-xw9w",
+          "severity": "high",
+          "cwe": [
+            "CWE-190"
+          ],
+          "cvss": {
+            "score": 7.4,
+            "vectorString": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:H/A:N"
+          },
+          "range": "<3.3.12"
+        }
+      ]
+    },
+    {
+      "name": "next",
+      "severity": "critical",
+      "paths": [
+        {
+          "path": "node_modules/next",
+          "version": "16.3.1",
+          "dev": false
+        }
+      ],
+      "advisories": [
+        {
+          "source": 1193676,
+          "name": "next",
+          "dependency": "next",
+          "title": "Next.js: Unauthenticated Remote Code Execution on windows-hosted servers",
+          "url": "https://github.com/advisories/GHSA-p293-qw3h-jr36",
+          "severity": "critical",
+          "cwe": [
+            "CWE-22"
+          ],
+          "cvss": {
+            "score": 9,
+            "vectorString": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:C/C:H/I:H/A:H"
+          },
+          "range": ">=16.0.0 <16.3.3"
+        },
+        {
+          "source": 1193732,
+          "name": "next",
+          "dependency": "next",
+          "title": "Next.js: Unauthenticated Remote Code Execution in Image Optimization API when AVIF files are used",
+          "url": "https://github.com/advisories/GHSA-2xp9-vwfh-vxw4",
+          "severity": "critical",
+          "cwe": [
+            "CWE-1395"
+          ],
+          "cvss": {
+            "score": 0,
+            "vectorString": null
+          },
+          "range": ">=16.0.0 <16.3.3"
+        }
+      ]
+    },
+    {
+      "name": "query-string",
+      "severity": "moderate",
+      "paths": [
+        {
+          "path": "node_modules/query-string",
+          "version": "7.1.3",
+          "dev": false
+        }
+      ],
+      "advisories": []
+    },
+    {
+      "name": "tar",
+      "severity": "high",
+      "paths": [
+        {
+          "path": "node_modules/tar",
+          "version": "7.5.19",
+          "dev": true
+        }
+      ],
+      "advisories": [
+        {
+          "source": 1145647,
+          "name": "tar",
+          "dependency": "tar",
+          "title": "node-tar: Uncontrolled recursion in mapHas/filesFilter allows uncatchable stack-overflow DoS via crafted long-path tar with member selection",
+          "url": "https://github.com/advisories/GHSA-r292-9mhp-454m",
+          "severity": "high",
+          "cwe": [
+            "CWE-400",
+            "CWE-674"
+          ],
+          "cvss": {
+            "score": 7.5,
+            "vectorString": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H"
+          },
+          "range": "<=7.5.20"
+        }
+      ]
+    },
+    {
+      "name": "ts-deepmerge",
+      "severity": "moderate",
+      "paths": [
+        {
+          "path": "node_modules/ts-deepmerge",
+          "version": "6.2.0",
+          "dev": true
+        }
+      ],
+      "advisories": [
+        {
+          "source": 1121318,
+          "name": "ts-deepmerge",
+          "dependency": "ts-deepmerge",
+          "title": "ts-deepmerge: Prototype Method Override leads to DoS",
+          "url": "https://github.com/advisories/GHSA-87mf-gv2c-c62c",
+          "severity": "moderate",
+          "cwe": [
+            "CWE-248"
+          ],
+          "cvss": {
+            "score": 5.3,
+            "vectorString": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:L"
+          },
+          "range": "<8.0.0"
+        }
+      ]
+    },
+    {
+      "name": "uuid",
+      "severity": "moderate",
+      "paths": [
+        {
+          "path": "node_modules/@expo/bunyan/node_modules/uuid",
+          "version": "8.3.2",
+          "dev": true
+        },
+        {
+          "path": "node_modules/@expo/rudder-sdk-node/node_modules/uuid",
+          "version": "8.3.2",
+          "dev": true
+        },
+        {
+          "path": "node_modules/uuid",
+          "version": "7.0.3",
+          "dev": false
+        }
+      ],
+      "advisories": [
+        {
+          "source": 1119441,
+          "name": "uuid",
+          "dependency": "uuid",
+          "title": "uuid: Missing buffer bounds check in v3/v5/v6 when buf is provided",
+          "url": "https://github.com/advisories/GHSA-w5hq-g745-h8pq",
+          "severity": "moderate",
+          "cwe": [
+            "CWE-787",
+            "CWE-1285"
+          ],
+          "cvss": {
+            "score": 7.5,
+            "vectorString": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:H/A:N"
+          },
+          "range": "<11.1.1"
+        }
+      ]
+    },
+    {
+      "name": "xcode",
+      "severity": "moderate",
+      "paths": [
+        {
+          "path": "node_modules/xcode",
+          "version": "3.0.1",
+          "dev": false
+        }
+      ],
+      "advisories": []
+    },
+    {
+      "name": "yaml",
+      "severity": "moderate",
+      "paths": [
+        {
+          "path": "node_modules/eas-cli/node_modules/yaml",
+          "version": "2.6.0",
+          "dev": true
+        }
+      ],
+      "advisories": [
+        {
+          "source": 1115556,
+          "name": "yaml",
+          "dependency": "yaml",
+          "title": "yaml is vulnerable to Stack Overflow via deeply nested YAML collections",
+          "url": "https://github.com/advisories/GHSA-48c2-rrv3-qjmp",
+          "severity": "moderate",
+          "cwe": [
+            "CWE-674"
+          ],
+          "cvss": {
+            "score": 4.3,
+            "vectorString": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:N/A:L"
+          },
+          "range": ">=2.0.0 <2.8.3"
+        }
+      ]
+    }
+  ]
+}

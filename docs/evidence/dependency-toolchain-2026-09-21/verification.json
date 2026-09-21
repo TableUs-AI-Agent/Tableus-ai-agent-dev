@@ -1,0 +1,179 @@
+{
+  "schema_version": 1,
+  "completed_at": "2026-09-21T21:25:07.416Z",
+  "source_identity": "Pre-commit working tree, bound by file hashes below. The commit containing the handoff freezes these bytes; no deployed/native candidate identity claimed.",
+  "source_base": "5375e3389823b9c0736328709aab1cdc9be6ef98",
+  "frozen_staging_source": "f94a1d9d1125e6c9111aa08eda496f014f20d0c0",
+  "node": "v22.23.1",
+  "npm": "10.9.8",
+  "fresh_checks": [
+    {
+      "command": "npm ci --ignore-scripts --no-audit --no-fund --offline",
+      "exit_code": 0,
+      "note": "Clean frozen install; lifecycle scripts deliberately disabled. No native compilation."
+    },
+    {
+      "command": "npm ls --all --json",
+      "exit_code": 0,
+      "note": "No invalid/missing/extraneous dependency diagnostics."
+    },
+    {
+      "command": "node --test scripts/dependency-compat.test.mjs",
+      "exit_code": 0,
+      "passed": 6
+    },
+    {
+      "command": "npm run test:components --workspace @tableus/mobile -- --runTestsByPath src/lib/router-dependency.component.test.tsx",
+      "exit_code": 0,
+      "passed": 2
+    },
+    {
+      "command": "npm run typecheck --workspace @tableus/mobile",
+      "exit_code": 0
+    },
+    {
+      "command": "CI=1 EXPO_OFFLINE=1 EXPO_NO_TELEMETRY=1 npm exec --workspace @tableus/mobile -- expo export --platform ios --platform android --no-bytecode --source-maps --max-workers 2 --output-dir ../.artifacts/dependency-toolchain/mobile-export",
+      "exit_code": 0,
+      "native_build": false
+    },
+    {
+      "command": "CI=1 EXPO_OFFLINE=1 EXPO_NO_TELEMETRY=1 make ready",
+      "exit_code": 0,
+      "invocations": 1,
+      "javascript_node_tests": [
+        98,
+        19,
+        56,
+        25,
+        14
+      ],
+      "javascript_jest_tests": 22,
+      "javascript_total": 234,
+      "python_passed": 98,
+      "python_skipped": 3,
+      "includes": [
+        "lint",
+        "typecheck",
+        "tests",
+        "contract generation",
+        "Next webpack build",
+        "Expo web export",
+        "deterministic smoke",
+        "report-only performance baseline"
+      ]
+    },
+    {
+      "command": "npm run contract:check; git diff --exit-code -- docs/openapi.json packages/api-client/src/schema.ts",
+      "exit_code": 0
+    },
+    {
+      "command": "CI=1 NEXT_TELEMETRY_DISABLED=1 EXPO_NO_TELEMETRY=1 ENVIRONMENT=test TABLEUS_AUTH_MODE=demo TABLEUS_PROVIDER_MODE=deterministic TABLEUS_DEMO_MODE=true DATABASE_URL=sqlite+aiosqlite:///./tableus-dev.db npm exec -- playwright test --config .artifacts/dependency-toolchain/playwright.local.config.ts",
+      "exit_code": 0,
+      "browser": "Installed Google Chrome via channel chrome; bundled Playwright Chromium absent",
+      "stats": {
+        "startTime": "2026-09-21T21:20:45.214Z",
+        "duration": 17513.115,
+        "expected": 4,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "configuration": "Existing four tests and loopback services, temporary local config selects installed Chrome and disables server reuse.",
+      "configuration_sha256": "099b359e61b6c8e3ab5ada26308b4d378ecaf7bffb6215addc5dda458727cf6e"
+    }
+  ],
+  "advisory_checks": {
+    "before_exit_code": 1,
+    "after_exit_code": 1,
+    "production_exit_code": 1,
+    "note": "Exit 1 reflects recorded remaining advisories, not transport failure."
+  },
+  "nonpassing_exploration": [
+    "Initial sandbox npm advisory request lacked DNS; successful public-registry query superseded it.",
+    "npm lock-only updates retained stale override records; normal npm install reconciled them and final frozen install/npm ls passed. A broad dedupe attempt stopped on React peer resolution; no force or legacy-peer-deps used.",
+    "Initial test expectation for a mixed BOM sequence was incorrect; isolated known BOM/malformed-byte cases now pass.",
+    "Initial Jest ESM transform and missing explicit Jest type imports were fixed before make ready.",
+    "Offline Expo compatibility check exits 1 with eight patch recommendations and a reliability warning; not reported as a passing Doctor check."
+  ],
+  "reused_checks": [],
+  "not_performed": [
+    "Security Scan",
+    "native compilation or new signed artifact",
+    "public CI/PostgreSQL validation",
+    "hosted deployment/verification",
+    "live providers/canaries/sign-in",
+    "AppHang diagnostic"
+  ],
+  "source_files": [
+    {
+      "file": "package.json",
+      "sha256": "981864193ebb31ef7fbd8227621ab60d4edf6785a90927afda96b10912e3a59b"
+    },
+    {
+      "file": "package-lock.json",
+      "sha256": "c2b5dff8fe1f95cf1fb6e0eb6ba2b85ac92712266cf6fbdf946880b866fb1413"
+    },
+    {
+      "file": "frontend/package.json",
+      "sha256": "94b26fbded9da4d2a5a02027da1db73ccc48bc3d77dbcf67f624671028488274"
+    },
+    {
+      "file": "mobile/jest.config.cjs",
+      "sha256": "dc3840261e88d9ce8fc8c2db056738afd54695bc7e704530337029b1951111fa"
+    },
+    {
+      "file": "mobile/src/lib/router-dependency.component.test.tsx",
+      "sha256": "db1961b7c432c57e514f0bf5a97e4eef29ab6c35c20a40255942727b65118777"
+    },
+    {
+      "file": "scripts/dependency-compat.test.mjs",
+      "sha256": "bdcbb39ed5af28bf4df7a2d33d8b1103576b56fb82af84d33182ccc880942ce8"
+    },
+    {
+      "file": "vendor/decode-uri-component-compat/package.json",
+      "sha256": "4bf01697c51c8333b20c3829a42740ce51a452bafafd5f1ba7a0efe3419e9c5b"
+    },
+    {
+      "file": "vendor/decode-uri-component-compat/index.cjs",
+      "sha256": "6a47dafc28e6645cf165319739dad2bdea43b67ebb5b5e0689f403323afee6db"
+    }
+  ],
+  "local_log_hashes": [
+    {
+      "file": ".artifacts/dependency-toolchain/npm-ci-verified.log",
+      "sha256": "a8d949623dc822f69a08f5ff0fcee9d9fed29c4f486e18458a4feeccbe926d07"
+    },
+    {
+      "file": ".artifacts/dependency-toolchain/npm-ls-verified.json",
+      "sha256": "dac4ec68c76280004c99dbca309db31dd86055ee7b282edf5f11997b55325847"
+    },
+    {
+      "file": ".artifacts/dependency-toolchain/focused-node.log",
+      "sha256": "2d26376363f49122586efe3760bc5fedd11f7b7875eb0fa923fa3f28f01fe643"
+    },
+    {
+      "file": ".artifacts/dependency-toolchain/focused-router.log",
+      "sha256": "747cb445e67e7aca6d0afd5c75f4b0de882f8d81b9cd913b4835988d45aa712b"
+    },
+    {
+      "file": ".artifacts/dependency-toolchain/mobile-typecheck.log",
+      "sha256": "78987d055a36d8022d1ecc204119b3f23fdf556aaaf57fcb4241008c48e896d9"
+    },
+    {
+      "file": ".artifacts/dependency-toolchain/mobile-export.log",
+      "sha256": "15fe857cffec3efb6140742f544703a67930d22d024c5ce7ed0060f97edeeaf6"
+    },
+    {
+      "file": ".artifacts/dependency-toolchain/make-ready.log",
+      "sha256": "4b59e8fd298d8c86ef83f9ba54ce3af3419965b200e53f72ccf46bc25882a833"
+    },
+    {
+      "file": ".artifacts/dependency-toolchain/contract-check.log",
+      "sha256": "de3bb19551d593111e2ac14a7b332da54f26559ec46109339b02884d547bc037"
+    },
+    {
+      "file": ".artifacts/dependency-toolchain/browser.log",
+      "sha256": "510664e402916a9cce3e38306303e39adeca8d0cfcb78677aa92b73b315276be"
+    }
+  ]
+}

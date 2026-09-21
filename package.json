@@ -27,6 +27,23 @@
     "react-dom": "19.2.3"
   },
   "engines": {
-    "node": ">=22 <23"
+    "node": ">=22.12 <23"
+  },
+  "overrides": {
+    "next": "16.3.5",
+    "eas-cli": {
+      "ajv": "8.18.0",
+      "joi": "17.13.6",
+      "minimatch": "5.1.9",
+      "nanoid": "3.3.18",
+      "tar": "7.5.21",
+      "yaml": "2.8.3",
+      "@expo/prebuild-config": {
+        "minimatch": "9.0.9"
+      }
+    }
+  },
+  "dependencies": {
+    "decode-uri-component": "file:vendor/decode-uri-component-compat"
   }
 }
