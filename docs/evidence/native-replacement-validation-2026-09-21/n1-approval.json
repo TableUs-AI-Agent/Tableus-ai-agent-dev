@@ -1,0 +1,29 @@
+{
+  "schema_version": 1,
+  "recorded_at": "2026-09-22T00:24:51.901674+00:00",
+  "proposal_commit": "fd944372104603e72f158f43cc505da5947618fa",
+  "proposal_sha256": "4cfec4aed6493f8ea10be98bde18e8992a875caea1f1339975dfccb451215889",
+  "owner_response": "approve",
+  "approved_phase": "N1",
+  "scope": "Two sequential deterministic native build attempts, limited existing Expo/dependency access, disposable test devices and bounded symbol/link/export/relaunch checks, conditional on storage and device-isolation gates.",
+  "application_sha": "ed8330a766b3c4b80a505e075535678394e275e9",
+  "build_operator_sha": "16603dd0cf36d27b492e57a02d3c6c438a2563c4",
+  "attempts_consumed": {
+    "test-ios": 0,
+    "test-android": 0
+  },
+  "disk_preflight": {
+    "command": "df -k /Users/brianchei/repos/Tableus-ai-agent-dev",
+    "available_kib": 22320000,
+    "available_gib": 21.29,
+    "required_gib": 40,
+    "passed": false
+  },
+  "status": "approved; execution blocked on storage",
+  "native_execution": false,
+  "operator_setup_started": false,
+  "devices_created": false,
+  "cleanup_authorized": false,
+  "N2_approved": false,
+  "live_budget_change": false
+}

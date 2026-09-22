@@ -1,6 +1,6 @@
-# Active packet: native replacement validation preparation (2d)
+# Active packet: native replacement validation (2d)
 
-Started 2026-09-21. Proposal prepared; **execution pending approval and capacity**.
+Started 2026-09-21. N1 approved; **execution blocked on disk capacity**.
 One primary Astra agent; no delegation or canceled scans.
 
 ## Identities
@@ -26,12 +26,14 @@ No executable bytes changed; do not repeat make ready for this checkpoint.
 
 ## Next action within this task
 
-Obtain explicit N1 approval for two sequential deterministic attempts, limited
-existing Expo/dependency access, new disposable simulator/emulator and bounded local
-checks. Resolve capacity first: observed 21.25 GiB is below proposed 40 GiB floor;
-no cleanup authorized. Require symbols/maps to match and resolve app frames before
+The owner approved N1: two sequential deterministic attempts, limited existing
+Expo/dependency access, new disposable simulator/emulator and bounded local checks.
+[Approval receipt](../evidence/native-replacement-validation-2026-09-21/n1-approval.json)
+binds the exact proposal. Resolve capacity first: freshly observed 21.29 GiB is below
+the approved 40 GiB floor; no cleanup authorized. Both attempts remain unused;
+operator setup and device creation have not started. Require symbols/maps to match and resolve app frames before
 moving to the next artifact; helper success alone is insufficient. Preserve failed
-attempts and stop, no automatic rebuild. N1 is not approved by “continue.”
+attempts and stop, no automatic rebuild. The N1 approval persists; do not request it again.
 
 Only after N1 evidence passes, request separate N2 approval for two readiness
 builds and in-place staging updates, acknowledging replacement of installed
@@ -48,6 +50,7 @@ production e1184ec; API rebuilt-image provenance unchanged. No cumulative transf
 One CI/Preview/API redeploy consumed. Closed Places 92/100 (baseline 329; 8 unused,
 not reopened), emails 2/4, canaries 6/6 per provider, fresh Gemini 0/0; backstop 429.
 September 30 unextended; AppHang risk accepted only for isolated staging.
-No compilation, install/device action, upload, CI, deployment, merge, live request,
-OTP, canary, resource/secret change, migration, cleanup, store or cohort action is
-currently authorized. Preparation does not change durable decisions.
+Only the scoped N1 compilation, disposable-device actions and deterministic checks
+are authorized after the recorded gates pass. N2, upload, CI, deployment, merge,
+live product requests, OTP, canary, resource/secret change, migration, cleanup, store
+and cohort actions remain unapproved. No durable architecture decision changed.
