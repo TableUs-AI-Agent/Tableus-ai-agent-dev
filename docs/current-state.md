@@ -16,14 +16,15 @@ previous narrative without making it an active checklist.
 | --- | --- |
 | Accepted API/native and retained Preview candidate | `f94a1d9d1125e6c9111aa08eda496f014f20d0c0` |
 | Current task branch / worktree | `codex/native-replacement-validation` / `/Users/brianchei/.codex/worktrees/ea6d/Tableus-ai-agent-dev` |
-| Replacement application / prior operator | `ed8330a766b3c4b80a505e075535678394e275e9`; completed dependency remediation |
+| Staging web / prior native application | `ed8330a766b3c4b80a505e075535678394e275e9`; completed dependency remediation |
 | Native diagnostic operator | `16603dd0cf36d27b492e57a02d3c6c438a2563c4`; application bytes unchanged |
 | Previous task / exact base | `01a0c661-7b3f-7403-906c-0f60f60a3dd4`; `5b39d937b905691798a585b4aced79f91c7e97bf` |
 | Evidence index | [Current candidate](evidence/ios27-staging-f94a1d9/closeout.md) |
 
 The root checkout is an older branch and is not the implementation base.
 Application, operator and evidence commits are distinct. Phase W deployed ed8330a;
-this task validates native replacement without changing application or operator bytes. The previous worktree
+this task has a locally verified N1-F1 mobile fix awaiting its exact candidate freeze.
+Build operator 16603dd is unchanged. The previous worktree
 `/Users/brianchei/.codex/worktrees/90bd/Tableus-ai-agent-dev` retains its private
 `.artifacts/phase-w/source` and evidence. Existing staging artifacts prove only
 their original application SHA.
@@ -128,11 +129,17 @@ Its first cold join case reached the screen but sent `a b/c=` for encoded
 run. An offline reproduction with three exact bundle-map source matches traces
 the corruption to custom-scheme extraction followed by another query parse.
 Remaining links and export cycles did not run; no new target crash was found.
-A bounded local fix/test proposal (N1-F1) is prepared, not applied. Canonical HTTPS
-delivery, auth-mode presentation and historical AppHang clearance remain unverified.
+The owner approved [N1-F1](evidence/native-replacement-validation-2026-09-21/n1-f1-result.md).
+Its local fix preserves encoded custom-scheme tokens and avoids a second decode
+in the join hook; duplicate/malformed tokens fail closed. All 48 routing checks
+and the complete make-ready target set pass (292 JavaScript, 98 Python; three
+PostgreSQL skips), with unchanged generated contracts. Exact candidate freeze and
+impact/revalidation preparation follow; no native build or replay ran for F1.
+Canonical HTTPS delivery, auth-mode presentation and historical AppHang clearance
+remain unverified.
 Only the new disposable iOS 26.5 simulator received this byte-identical artifact;
 accepted native installations remain f94a1d9. Android is unbuilt: remaining iOS
-gates and 20.18 GiB free versus the 40 GiB build floor block it. N2/live reads
+gates and roughly 21 GiB free versus the 40 GiB build floor block it. N2/live reads
 stay separately gated.
 Preserve all new diagnostics, 63bd retention evidence and 90bd Phase W evidence.
 No cumulative replacement acceptance.

@@ -163,3 +163,15 @@ application and operator identities. Missing diagnostics remain explicit and
 retained files alone do not establish usable symbolication. Local symbol matching
 and an app-frame resolution check precede the focused export/relaunch diagnostic;
 store symbol upload/delivery evidence remains separately gated.
+
+## Native private-link decoding — N1-F1, 2026-09-21
+
+Validate owned join links from the original query before Expo native extraction,
+normalize them to internal paths, and consume already-decoded route parameters
+without another URI decode. Preserve valid capability text exactly; reject
+ambiguous duplicate tokens, malformed encoding and non-string route values before
+any join write. Exercise the actual native extractor, active parser, public hook
+and join-button/API boundary in local regressions; the legacy decoder alone does
+not establish native link behavior. [F1 evidence](evidence/native-replacement-validation-2026-09-21/n1-f1-result.md).
+This local decision does not establish OS association delivery, clear historical
+crashes or authorize a native rebuild; freeze changed application bytes separately.

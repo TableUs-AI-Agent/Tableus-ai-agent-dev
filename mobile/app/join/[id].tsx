@@ -1,6 +1,6 @@
 import { requireCanonicalUuid, type Plan } from "@tableus/domain";
 import { ApiError } from "@tableus/api-client";
-import { router, useLocalSearchParams } from "expo-router";
+import { router, useRoute } from "expo-router";
 import { ScrollView, Text } from "react-native";
 
 import { Button, Card } from "@/components/ui";
@@ -11,10 +11,17 @@ import { useAuth } from "@/providers/auth-provider";
 import { colors } from "@/theme";
 
 export default function JoinPlanScreen() {
-  const { id, token } = useLocalSearchParams<{ id: string; token?: string }>();
+  // The router already decoded query values. useLocalSearchParams decodes again
+  // and would change a literal token escape such as %2F into a slash.
+  const { id, token } = useRoute<{
+    key: string;
+    name: string;
+    params?: { id?: unknown; token?: unknown };
+  }>().params ?? {};
+  const shareToken = typeof token === "string" && token ? token : null;
   let planId: string | null = null;
   try {
-    planId = requireCanonicalUuid(id ?? "", "Plan ID");
+    planId = requireCanonicalUuid(typeof id === "string" ? id : "", "Plan ID");
   } catch {
     planId = null;
   }
@@ -26,7 +33,7 @@ export default function JoinPlanScreen() {
     },
     onSuccess: () => router.replace({ pathname: "/plans/[id]", params: { id: planId! } }),
   });
-  const invalidLink = !planId || !token || (join.failure?.error instanceof ApiError && join.failure.error.status === 404);
+  const invalidLink = !planId || !shareToken || (join.failure?.error instanceof ApiError && join.failure.error.status === 404);
   return (
     <ScrollView contentInsetAdjustmentBehavior="automatic" contentContainerStyle={{ padding: 20, gap: 16 }}>
       <Card>
@@ -40,7 +47,7 @@ export default function JoinPlanScreen() {
         ) : (
           <>
             {invalidLink ? <Text selectable accessibilityRole="alert" accessibilityLiveRegion="assertive" style={{ color: colors.danger }}>This private link is invalid, expired, or has been rotated.</Text> : <MutationFeedback failure={join.failure} canRetry={join.canRetry} retryLabel="Retry joining plan" onRetry={join.retry} onDismiss={join.reset} />}
-            <Button label="Join this plan" onPress={() => token && join.submit(token)} loading={join.isPending} disabled={invalidLink || join.canRetry} />
+            <Button label="Join this plan" onPress={() => shareToken && join.submit(shareToken)} loading={join.isPending} disabled={invalidLink || join.canRetry} />
           </>
         )}
       </Card>

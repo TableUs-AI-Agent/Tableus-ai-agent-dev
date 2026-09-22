@@ -47,4 +47,29 @@ test("native path rewriting leaves other origins and development schemes alone",
   assert.equal(rewriteCanonicalSystemPath("https://example.com/auth?mode=sign-in"), "https://example.com/auth?mode=sign-in");
   assert.equal(rewriteCanonicalSystemPath("tableus://auth?mode=sign-in"), "tableus://auth?mode=sign-in");
   assert.equal(rewriteCanonicalSystemPath("https://links.table-us.com/privacy"), "https://links.table-us.com/privacy");
+  assert.equal(rewriteCanonicalSystemPath("tableus://e2e/identity?user=demo-guest"), "tableus://e2e/identity?user=demo-guest");
+  assert.equal(rewriteCanonicalSystemPath("exp://127.0.0.1:8081/--/join/fixture?token=dev"), "exp://127.0.0.1:8081/--/join/fixture?token=dev");
+});
+
+test("custom-scheme joins become internal paths without changing encoded token values", () => {
+  const id = "123e4567-e89b-42d3-a456-426614174000";
+  assert.equal(
+    rewriteCanonicalSystemPath(`tableus://join/${id}?token=a%2Bb%2Fc%3D&extra=drop`),
+    `/join/${id}?token=a%2Bb%2Fc%3D`,
+  );
+  assert.equal(
+    rewriteCanonicalSystemPath(`/join/${id}?token=literal%252F%25&extra=drop`),
+    `/join/${id}?token=literal%252F%25`,
+  );
+  assert.equal(rewriteCanonicalSystemPath(`tableus://user@join/${id}?token=value`), "/join/invalid");
+  assert.equal(rewriteCanonicalSystemPath(`tableus://join:123/${id}?token=value`), "/join/invalid");
+});
+
+test("duplicate and malformed tokens are rejected instead of normalized into a different capability", () => {
+  const id = "123e4567-e89b-42d3-a456-426614174000";
+  for (const query of ["token=one&token=two", "token=&token=two", "token=one&%74oken=two", "token=%FF%41", "token=%E2%82", "token=trailing%", "token=%GG"]) {
+    for (const origin of ["tableus://join", "https://links.table-us.com/join"]) {
+      assert.equal(rewriteCanonicalSystemPath(`${origin}/${id}?${query}`), "/join/invalid", query);
+    }
+  }
 });
