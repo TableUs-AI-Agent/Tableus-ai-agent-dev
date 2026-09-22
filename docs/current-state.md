@@ -115,13 +115,19 @@ no trace and one unresolved native crash, the owner-approved [D1 capture](eviden
 completed without an observed new crash: 9,339 runtime samples, 841 stack frames,
 and actual app/route frames resolved with the exact composed map. Fifty
 app/shared/decoder map contents match retained source; no direct decoder function
-was sampled. The earlier crash remains unresolved. Remaining lifecycle,
-offline/refresh, synthetic links and export/relaunch checks await the prepared
-N1-R resumption approval. Neither historical AppHang recurrence nor clearance is
-established by D1.
+was sampled. The earlier crash remains unresolved. The owner-approved
+[N1-R run](evidence/native-replacement-validation-2026-09-21/n1-r-result.md)
+passed all seven lifecycle and eleven offline/refresh flows once, including
+retry idempotency and all five refresh phases. The link harness then stopped at
+its first cold auth assertion: it incorrectly expected a sign-in screen for an
+already-approved demo actor whose route guard shows Plans. The screenshot/source
+support a harness expectation error, not an established application regression.
+No join case or export cycle ran. No new target crash report was found. The
+prepared N1-R2 correction awaits approval; canonical HTTPS delivery and auth-mode
+presentation remain unverified. Historical AppHang clearance is not established.
 Only the new disposable iOS 26.5 simulator received this byte-identical artifact;
 accepted native installations remain f94a1d9. Android is unbuilt: remaining iOS
-gates and 26.93 GiB free versus the 40 GiB build floor block it. N2/live reads
+gates and 19.91 GiB free versus the 40 GiB build floor block it. N2/live reads
 stay separately gated.
 Preserve all new diagnostics, 63bd retention evidence and 90bd Phase W evidence.
 No cumulative replacement acceptance.

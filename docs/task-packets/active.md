@@ -1,6 +1,6 @@
 # Active packet: native replacement validation (2d)
 
-N1 approved, **D1 complete; remaining iOS checks await N1-R resumption approval.**
+N1 and N1-R approved, **lifecycle/offline passed; stopped at link harness failure.**
 One primary Astra agent; no delegation or canceled scans. Keep this objective in this task.
 
 ## Identities
@@ -29,25 +29,41 @@ new crash. Metro 0.84.5 resolves captured app/route frames to exact source;
 50 app/shared/decoder map contents and 57 sampled app/Router source files match.
 No direct decoder frame or malformed-link behavior is claimed. The earlier
 crash is not dismissed as harmless and the historical AppHang remains unresolved.
-No lifecycle/offline/link/export journey has run.
+[N1-R result](../evidence/native-replacement-validation-2026-09-21/n1-r-result.md):
+lifecycle passed once in 378.973 seconds (seven flows), offline/refresh passed
+once in 308.743 seconds (eleven flows, all five refresh phases). Idempotent create/
+finalize retries and no offline queued write passed. The link harness restored
+Demo Guest, then failed its first cold auth assertion. It incorrectly expected
+`Welcome back.` for an approved actor; the screenshot shows Plans and exact source
+guards auth behind `!auth.approved`. This is a harness expectation error, not an
+established application regression or proof of auth-mode parsing. The app made
+two local GETs and zero writes. No join case, warm matrix or export cycle ran.
+No new target crash report was found. All evidence and 200 private hashes are
+retained. The local backend/proxy stopped and disposable app was terminated.
 
 A new disposable iOS 26.5 simulator was booted and received the inspected app for
 native/JS diagnostic capture. App terminated afterward; simulator retained. Original
 accepted apps/sessions untouched. One iOS build attempt consumed; Android's single
 attempt unused. D1's one diagnostic attempt is consumed. Current free disk
-26.93 GiB is below Android's 40 GiB start gate.
+19.91 GiB is below Android's 40 GiB start gate.
 
 ## Next actions and stop conditions
 
-The original N1 approval persists; D1 did not authorize behavioral resumption
-after the crash stop. [N1-R](../evidence/native-replacement-validation-2026-09-21/n1-ios-resumption.md)
-is prepared for approval: one lifecycle runner, one offline runner with five
-refresh phases, the original cold/warm synthetic-link matrix and two bounded
-export/relaunch cycles, using the unchanged inspected app and disposable device.
-No injected debugger/profiler calls during those checks. Retain passive samples,
-enforce original time limits and stop on the first failure, crash, qualifying
-stall, blocked action, invalid session or unexpected provider request. No repeats
-to green, build retry or risk acceptance. Do not rerun D1 automatically.
+[N1-R](../evidence/native-replacement-validation-2026-09-21/n1-ios-resumption.md)
+requires a stop on the first failure and no automatic repeat. That stop is now
+in force. [N1-R2](../evidence/native-replacement-validation-2026-09-21/n1-r2-resumption.md)
+is prepared, not approved: exact correction/diff retained with hashes; removes
+the impossible auth assertion, preserves the failure, proposes only the thirteen
+unexecuted join cases once cold and once warm, then the two unused export cycles.
+The private harness has an explicit approval guard and passed syntax review;
+it has not run. Do not repeat lifecycle, offline, D1 or the consumed cold auth case.
+
+Canonical HTTPS auth/join, wrong-origin and web-only auth-confirm delivery remain
+unverified: signed simulator entitlements are empty and no approved local forced
+dispatch was established. The demo guard prevents sign-in-mode presentation.
+Even a passing resumed subset would not complete N1; prepare a separate bounded
+solution for this coverage gap, without adding a build, instrumentation or real
+auth automatically. Retain original crash/AppHang and all time/stop limits.
 
 Android waits for the iOS gates and capacity. No additional cleanup is authorized.
 Keep all attempts/artifacts/private logs. N2 remains a separate future approval
@@ -57,7 +73,8 @@ scope must be explicit. No fresh provider/OTP/canary allowance exists.
 ## Verification and boundaries
 
 Fresh artifact/source/receipt/symbol/map checks and diagnostic logs are linked
-above. No application or committed executable operator changes; reuse 2c's
+above. Auxiliary retention/link harnesses have separate private hashes; the
+application and committed executable operators are unchanged. Reuse 2c's
 24 fixtures, make ready 244 JS / 98 Python
 (three PostgreSQL skips), and contract drift. Documentation links/JSON/diff checked.
 Preserve 63bd, 90bd and their private evidence, plus this attempt's durable root:
