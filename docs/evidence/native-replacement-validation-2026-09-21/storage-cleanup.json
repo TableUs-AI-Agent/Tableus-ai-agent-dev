@@ -24,7 +24,7 @@
     "accepted native apps and device sessions",
     "Codex task history"
   ],
-  "N1": "Operator setup complete; 39.67 GiB free is below 40 GiB pre-build gate. No native attempt started.",
+  "N1": "Fresh 40 GiB gate and exact clean operator/input preflight passed; one test-ios attempt started. No device operation yet.",
   "operator_setup": {
     "sha": "16603dd0cf36d27b492e57a02d3c6c438a2563c4",
     "clean": true,
@@ -38,5 +38,11 @@
     "storage_gate_passed": false,
     "build_attempts_consumed": 0,
     "devices_created": 0
+  },
+  "additional_cache_cleanup": {
+    "owner_response": "yes",
+    "path": "/Users/brianchei/Library/Application Support/Cursor/CachedData",
+    "removed": true,
+    "free_gib_after": 41.31
   }
 }

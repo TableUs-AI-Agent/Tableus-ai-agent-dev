@@ -23,7 +23,7 @@ previous narrative without making it an active checklist.
 
 The root checkout is an older branch and is not the implementation base.
 Application, operator and evidence commits are distinct. Phase W deployed ed8330a;
-this task prepares native validation without changing executable bytes. The previous worktree
+this task validates native replacement without changing application or operator bytes. The previous worktree
 `/Users/brianchei/.codex/worktrees/90bd/Tableus-ai-agent-dev` retains its private
 `.artifacts/phase-w/source` and evidence. Existing staging artifacts prove only
 their original application SHA.
@@ -107,18 +107,17 @@ AVIF decoding was verified on the patched stack. The native helper now retains
 private attempt logs, working files, available symbols/maps and hashed diagnostic
 inventories bound to separate application/operator identities. [Local verification](evidence/native-diagnostic-retention-2026-09-21/README.md)
 passed: 24 focused checks, 244 JavaScript / 98 Python tests (three PostgreSQL
-skips), contract drift, builds and smoke. No native compilation or symbol usability
-is claimed. The [2d proposal](evidence/native-replacement-validation-2026-09-21/README.md)
-is approved for N1: two sequential deterministic attempts on new disposable
-devices; N2 builds/updates remain a separate approval. Owner-approved
-[storage cleanup](evidence/native-replacement-validation-2026-09-21/storage-cleanup.json)
-freed about 13.26 GiB; frozen operator setup then passed. Free space is now
-39.67 GiB, below the approved 40 GiB floor. Storage blocks compilation; neither
-attempt has started. [Approval and disk receipt](evidence/native-replacement-validation-2026-09-21/n1-approval.json)
-records the N1 decision. Cleanup was limited to the named Ollama models, old
-Cursor versions and empty Docker installer staging; no further cleanup is authorized.
-Required symbol/map matching remains unverified; telemetry/live reads stay gated.
-Preserve 63bd retention evidence as well as 90bd. No cumulative replacement acceptance.
+skips), contract drift, builds and smoke. The approved [N1 iOS attempt](evidence/native-replacement-validation-2026-09-21/n1-checkpoint.md)
+compiled ed8330a using operator 16603dd and passed artifact inspection/receipt
+export. Actual dSYM UUIDs match both architectures; an app-owned runtime frame
+resolves to AppDelegate.swift:18. The composed map is retained and 46 app/decoder
+sources match, but runtime JS-frame resolution remains pending. Lifecycle, links
+and focused export/relaunch checks have not run; no AppHang acceptance follows.
+Only the new disposable iOS 26.5 simulator received this build; accepted native
+installations remain f94a1d9. Android is unbuilt: remaining iOS gates and 29.56 GiB
+free versus the 40 GiB build floor block it. N2/live reads stay separately gated.
+Preserve all new diagnostics, 63bd retention evidence and 90bd Phase W evidence.
+No cumulative replacement acceptance.
 Merge and release gates remain separate.
 
 Latest provider observation: September 21, 19:20:36 UTC. Places totals
