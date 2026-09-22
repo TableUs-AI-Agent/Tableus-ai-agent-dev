@@ -1,5 +1,8 @@
 # N1 JavaScript runtime diagnostic — stopped
 
+Subsequent result: [approved D1 captured and resolved runtime app/route frames](d1-result.md).
+The observations below retain the failed initial investigation and crash evidence.
+
 The existing ed8330a iOS artifact remains byte-identical. JavaScript runtime
 symbolication is **not established**. Five local debugger launches on the same
 disposable iOS simulator produced no usable sampled JS trace. A crash report from

@@ -1,0 +1,235 @@
+{
+  "schema_version": 1,
+  "recorded_at": "2026-09-22T02:52:15.195476+00:00",
+  "approval": "d1-approval.json",
+  "application_sha": "ed8330a766b3c4b80a505e075535678394e275e9",
+  "build_operator_sha": "16603dd0cf36d27b492e57a02d3c6c438a2563c4",
+  "build_id": "local-ios-test-ed8330a-2d-01",
+  "artifact_sha256": "fda161a75d1d895ef88e3530847d9b7dde5dad3a5f1f01680c9ea0c06c9db0b9",
+  "status": "D1 completed; captured app and route frames resolve to matching source",
+  "driver": {
+    "status": "captured",
+    "max_seconds": 120,
+    "new_build": false,
+    "pid": 30788,
+    "samples": 9339,
+    "frames": 841,
+    "terminate_exit": 0,
+    "new_crash_reports": [],
+    "elapsed_seconds": 33.331
+  },
+  "sampling": {
+    "target_hz": 1000,
+    "scheduled_disable_delay_seconds": 12,
+    "observed_sample_span_seconds": 12.434069,
+    "detached_during_sampling": true,
+    "fresh_debugger_for_dump": true,
+    "samples": 9339,
+    "stack_frames": 841,
+    "app_frames": 16,
+    "expo_router_tree_frames": 67,
+    "decoder_frames": 0
+  },
+  "symbolication": {
+    "tool": "candidate-installed metro-symbolicate",
+    "version": "0.84.5",
+    "exit_code": 0,
+    "raw_trace_preserved": true,
+    "sample_and_parent_relationships_preserved": true,
+    "app_route_sampled_source_files_match": 57,
+    "app_shared_decoder_map_sources_match": 50,
+    "captured_runtime_app_frame_resolved": true,
+    "captured_runtime_route_frame_resolved": true,
+    "captured_runtime_decoder_frame_resolved": false,
+    "decoder_limit": "Both decoder sourceContents match retained source; no direct decoder runtime sample or malformed-link behavior is claimed.",
+    "representative_frames": [
+      {
+        "frame_id": "282",
+        "samples_containing_frame": 26,
+        "runtime_frame": {
+          "funcVirtAddr": "1382156",
+          "offset": "59",
+          "name": "getRoutes",
+          "category": "JavaScript",
+          "parent": 281
+        },
+        "resolved": "getRoutes(/mobile/node_modules/expo-router/build/getRoutes.js:20:40)",
+        "source_sha256": "335e4721714747d1565454f16ca976490cd2f8f15bce895f29b90d0239f81d0a",
+        "source_line": "    return (0, getRoutesCore_1.getRoutes)(contextModule, {"
+      },
+      {
+        "frame_id": "284",
+        "samples_containing_frame": 25,
+        "runtime_frame": {
+          "funcVirtAddr": "1382762",
+          "offset": "499",
+          "name": "getDirectoryTree",
+          "category": "JavaScript",
+          "parent": 283
+        },
+        "resolved": "getDirectoryTree(/mobile/node_modules/expo-router/build/getRoutesCore.js:216:38)",
+        "source_sha256": "51dfa8f379f2a08d532a300e12db37bb965d0fd3f1a53a0d66c4fd847d8c8f67",
+        "source_line": "    for (const filePath of contextKeys) {"
+      },
+      {
+        "frame_id": "287",
+        "samples_containing_frame": 25,
+        "runtime_frame": {
+          "funcVirtAddr": "3138977",
+          "offset": "31",
+          "name": "loadRoute",
+          "category": "JavaScript",
+          "parent": 286
+        },
+        "resolved": "node.loadRoute(/mobile/node_modules/expo-router/build/getRoutesCore.js:239:47)",
+        "source_sha256": "51dfa8f379f2a08d532a300e12db37bb965d0fd3f1a53a0d66c4fd847d8c8f67",
+        "source_line": "                    routeModule = contextModule(filePath);"
+      },
+      {
+        "frame_id": "663",
+        "samples_containing_frame": 2,
+        "runtime_frame": {
+          "funcVirtAddr": "1459912",
+          "offset": "16",
+          "name": "getItem",
+          "category": "JavaScript",
+          "parent": 662
+        },
+        "resolved": "secureAuthStorage.getItem(/mobile/src/lib/supabase.ts:19:52)",
+        "source_sha256": "b1a7e453a8b90c80a9f20fdde329f52905f3d4cd45a87551752a7579f85a4bc2",
+        "source_line": "  getItem: (key: string) => SecureStore.getItemAsync(key),"
+      },
+      {
+        "frame_id": "689",
+        "samples_containing_frame": 1,
+        "runtime_frame": {
+          "funcVirtAddr": "1227566",
+          "offset": "15",
+          "name": "matchDynamicName",
+          "category": "JavaScript",
+          "parent": 688
+        },
+        "resolved": "matchDynamicName(/mobile/node_modules/expo-router/build/matchers.js:20:32)",
+        "source_sha256": "a55b1ae3f637299b689b4c1ee409c32c613e175cbdbb35fd4ac98e6320e64812",
+        "source_line": "    const paramName = name.match(dynamicNameRe)?.[1];"
+      },
+      {
+        "frame_id": "733",
+        "samples_containing_frame": 1,
+        "runtime_frame": {
+          "funcVirtAddr": "2661543",
+          "offset": "14",
+          "name": "",
+          "category": "JavaScript",
+          "parent": 732
+        },
+        "resolved": "<anonymous>(/mobile/node_modules/expo-router/build/fork/useLinking.native.js:178:24)",
+        "source_sha256": "0fbfda707ec97b73bd6cc2305aab6db4c327cf92c9e526dd0c40d59a0d909546",
+        "source_line": "        return subscribe(listener);"
+      },
+      {
+        "frame_id": "734",
+        "samples_containing_frame": 1,
+        "runtime_frame": {
+          "funcVirtAddr": "2659187",
+          "offset": "87",
+          "name": "",
+          "category": "JavaScript",
+          "parent": 733
+        },
+        "resolved": "<anonymous>(/mobile/node_modules/expo-router/build/link/linking.js:127:53)",
+        "source_sha256": "9ae3c62d94e9dab1076a29430edf548899e9459d23fd7f2e82a21a8eaae49abc",
+        "source_line": "        const subscription = Linking.addEventListener('url', callback);"
+      },
+      {
+        "frame_id": "780",
+        "samples_containing_frame": 1,
+        "runtime_frame": {
+          "funcVirtAddr": "1585561",
+          "offset": "0",
+          "name": "PlansScreen",
+          "category": "JavaScript",
+          "parent": 745
+        },
+        "resolved": "PlansScreen(/mobile/app/(tabs)/plans.tsx:16:15)",
+        "source_sha256": "79f8a4ea1f7db292ab6f22ef9bcd49ba88a4e5f0318fd94d328b60c9c8e2082a",
+        "source_line": "export default function PlansScreen() {"
+      },
+      {
+        "frame_id": "825",
+        "samples_containing_frame": 2,
+        "runtime_frame": {
+          "funcVirtAddr": "1589100",
+          "offset": "22",
+          "name": "_temp",
+          "category": "JavaScript",
+          "parent": 824
+        },
+        "resolved": "useQuery$argument_0.queryFn(/mobile/app/(tabs)/plans.tsx:23:70)",
+        "source_sha256": "79f8a4ea1f7db292ab6f22ef9bcd49ba88a4e5f0318fd94d328b60c9c8e2082a",
+        "source_line": "  const plans = useQuery({ queryKey: [\"plans\"], queryFn: () => api.get<PlanSummary[]>(\"/api/v1/plans\") });"
+      }
+    ]
+  },
+  "crash_review": {
+    "D1_crash_report_found": false,
+    "delayed_report_check_at": "2026-09-22T02:51:01.298977+00:00",
+    "D1_readout_threads": "Main and JS threads idle in run-loop waits; no named Hermes sampling thread in captured thread list.",
+    "earlier_capture_04_crash_cause": "unresolved; sampler waits and interrupted debugger expressions retained; D1 success does not establish cause or acceptance",
+    "historical_f94a1d9_AppHang": "neither reproduced nor cleared"
+  },
+  "checks_not_run": [
+    "lifecycle runner",
+    "offline/refresh runner",
+    "synthetic link matrix",
+    "export/relaunch diagnostic",
+    "Android build/device checks",
+    "N2"
+  ],
+  "new_builds": 0,
+  "D1_attempts_consumed": 1,
+  "D1_attempts_remaining": 0,
+  "build_attempts_consumed": {
+    "test-ios": 1,
+    "test-android": 0
+  },
+  "accepted_devices_untouched": true,
+  "embedded_source_verified": true,
+  "telemetry_mode": "off",
+  "api_url": "http://127.0.0.1:8000",
+  "demo_mode": true,
+  "N1_complete": false,
+  "N1_behavioral_resumption_approved": false,
+  "N2_approved": false,
+  "free_disk": {
+    "available_kib": 28240000,
+    "available_gib": 26.93,
+    "android_minimum_gib": 40
+  },
+  "private_root": "/Users/brianchei/repos/Tableus-ai-agent-dev/.artifacts/mobile/ed8330a766b3c4b80a505e075535678394e275e9/native-validation-2d",
+  "private_file_sha256": {
+    "d1-driver-execution.log": "c13d6671547b2cf0ea05786c31b5a00735715bd31956177969af7786587c4adc",
+    "js-runtime-trace-06/app.stderr.log": "45e7c6636f780665db11f9dc1c261a3ade760cf6ee7aafe6ee020ee5b94082e9",
+    "js-runtime-trace-06/app.stdout.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "js-runtime-trace-06/capture.py": "ebc3d31524516ab4a5a2cd7c7480a1957978baed22b30d9bd435ce815cdb4a2f",
+    "js-runtime-trace-06/driver-result.json": "81f507e9f3daae053aa0f1304b0c7e345c5a353680bc1b9ffe21a455f0215133",
+    "js-runtime-trace-06/dump-result.json": "8faec25527a194fb8569643b919e613b922c586e85c4d1a75aca411f3cb78bb0",
+    "js-runtime-trace-06/dump.log": "a5319dcb0bd9f44a91a8ea17e7e7bd3f734a9bf74109a8e002e21c8eb655f002",
+    "js-runtime-trace-06/installed-container.log": "64e367f35adbffec8f735e50cdc917ad5d04a913730f88547d7b0ca8fb7d16da",
+    "js-runtime-trace-06/launch.log": "d05e846be195693a420fd35f8196624006a5fc83cb4f2b916e8769be35596f22",
+    "js-runtime-trace-06/runtime-trace.raw.json": "22fb1c16d2443c8e971176d82ec666725c59e59bef68e7aa1f19dfd32a126dca",
+    "js-runtime-trace-06/runtime-trace.symbolicated.cpuprofile": "157b4a4998be8829652948feffea257744605082b8ec444fea342c57edabd07d",
+    "js-runtime-trace-06/start-result.json": "d04fa00bb7cd3186fad576fb2ad3523fca60ace96301591ecd616b2d37db9cad",
+    "js-runtime-trace-06/start.log": "8b8933ed307a58fef9a9d76a4e3f056153a1867a08cc35517f31c9e248680ad4",
+    "js-runtime-trace-06/symbolication.log": "ec1a4ccd8b690e75ff7fc3ad6b5a1107f6001c8dcf8218827660f60af8371562",
+    "js-runtime-trace-06/terminate.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "js-runtime-trace-06-proposed/capture.py": "ebc3d31524516ab4a5a2cd7c7480a1957978baed22b30d9bd435ce815cdb4a2f",
+    "js-runtime-trace-06-proposed/driver.py": "9a8b58400a355dc6cd9aebedd6c82ef3ee6e6bae0dbdedef240aa8fa3e622048",
+    "test-ios.app/Frameworks/hermesvm.framework/hermesvm": "94803d207c51b8a07744a66f718a2d2c6cd9e4355eb47f2b335f963e59189ece",
+    "test-ios.app/main.jsbundle": "09ebe6bf8078002b82d514de6c3522e81b640f59274d94347ba22cc29b7adff9",
+    "test-ios.diagnostics/application.js.map": "b290603d25a94b5b7042b8008481a4b53d58ca11cc1b9ca2549a721ff519da2c",
+    "test-ios.diagnostics/workspace/node_modules/metro-symbolicate/package.json": "5cca07baf0608caa3de0536d3d3c674033dafc6793ec4a51bd9c576827b9caca",
+    "test-ios.diagnostics/workspace/node_modules/metro-symbolicate/src/Symbolication.js": "3422d0838641596f65b39aad6d6cac839deb6a8099b6459286a0adaf2fa27d2c",
+    "test-ios.diagnostics/workspace/node_modules/metro-symbolicate/src/index.js": "894109f961ef293f42a9564abcddb3a338ed4b3840981e89925262c6d7bb1b10"
+  }
+}

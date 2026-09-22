@@ -1,6 +1,6 @@
 # Active packet: native replacement validation (2d)
 
-N1 approved, **stopped after a diagnostic crash; D1 amendment pending.**
+N1 approved, **D1 complete; remaining iOS checks await N1-R resumption approval.**
 One primary Astra agent; no delegation or canceled scans. Keep this objective in this task.
 
 ## Identities
@@ -22,31 +22,32 @@ Approved named storage cleanup completed; after the additional approved Cursor
 cache deletion, 41.31 GiB passed the build start floor. iOS compiled, passed
 inspection/receipt export, retained diagnostics without missing families/errors.
 Executable/dSYM UUIDs match; a captured app frame resolves independently to
-AppDelegate.swift:18. Map retains 46 matching app/decoder sources; runtime JS-frame
-resolution is not yet demonstrated. [Subsequent diagnostic investigation](../evidence/native-replacement-validation-2026-09-21/n1-js-runtime-diagnostic.md)
-found internal Hermes profiling APIs, but five local debugger launches produced
-no usable trace. A launch-four native crash report was found after launch five;
-further simulator execution stopped. All attempts/report retained. Cause remains
-unresolved; do not dismiss it as harmless debugger behavior or claim historical
-AppHang recurrence. No lifecycle/offline/link/export journey has run.
+AppDelegate.swift:18. Five initial debugger launches yielded no trace and one
+unresolved crash. The owner approved D1 after that stop. [D1 result](../evidence/native-replacement-validation-2026-09-21/d1-result.md):
+one capture completed in 33.331 seconds, 9,339 samples/841 frames, no observed
+new crash. Metro 0.84.5 resolves captured app/route frames to exact source;
+50 app/shared/decoder map contents and 57 sampled app/Router source files match.
+No direct decoder frame or malformed-link behavior is claimed. The earlier
+crash is not dismissed as harmless and the historical AppHang remains unresolved.
+No lifecycle/offline/link/export journey has run.
 
 A new disposable iOS 26.5 simulator was booted and received the inspected app for
 native/JS diagnostic capture. App terminated afterward; simulator retained. Original
 accepted apps/sessions untouched. One iOS build attempt consumed; Android's single
-attempt unused. Current free disk 27.62 GiB is below Android's 40 GiB start gate.
+attempt unused. D1's one diagnostic attempt is consumed. Current free disk
+26.93 GiB is below Android's 40 GiB start gate.
 
 ## Next actions and stop conditions
 
-The original N1 approval persists, but its crash stop condition now applies.
-[D1 amendment](../evidence/native-replacement-validation-2026-09-21/n1-js-diagnostic-amendment.md)
-is prepared: one additional launch using separate setup/readout debuggers and
-scheduled profiler shutdown, no rebuild or app-byte change, 120-second execution
-limit plus 10-second cleanup. Private scripts are hashed and syntax-checked,
-unexecuted and approval-guarded. Obtain explicit approval for this bounded
-follow-up after the crash stop; do not ask to reapprove N1 generally. Stop after
-any new failure; no automatic repeat. Review resulting evidence/crash before
-proposing behavioral validation resumption. Runtime JS proof remains mandatory;
-no synthetic frame, telemetry canary or preemptive app instrumentation substitute.
+The original N1 approval persists; D1 did not authorize behavioral resumption
+after the crash stop. [N1-R](../evidence/native-replacement-validation-2026-09-21/n1-ios-resumption.md)
+is prepared for approval: one lifecycle runner, one offline runner with five
+refresh phases, the original cold/warm synthetic-link matrix and two bounded
+export/relaunch cycles, using the unchanged inspected app and disposable device.
+No injected debugger/profiler calls during those checks. Retain passive samples,
+enforce original time limits and stop on the first failure, crash, qualifying
+stall, blocked action, invalid session or unexpected provider request. No repeats
+to green, build retry or risk acceptance. Do not rerun D1 automatically.
 
 Android waits for the iOS gates and capacity. No additional cleanup is authorized.
 Keep all attempts/artifacts/private logs. N2 remains a separate future approval
