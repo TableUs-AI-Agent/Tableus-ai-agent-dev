@@ -62,7 +62,7 @@ test("CLI rejects invalid input without creating a build workspace or invoking E
 });
 
 test("CLI preflight-only checks the commit but starts no build", (t) => {
-  const root = mkdtempSync(join(tmpdir(), "tableus-build-preflight-only-"));
+  const root = mkdtempSync(new URL("../.preflight-test-", import.meta.url).pathname);
   t.after(() => rmSync(root, { recursive: true, force: true }));
   const repo = new URL("..", import.meta.url).pathname;
   const sha = spawnSync("git", ["rev-parse", "HEAD"], { cwd: repo, encoding: "utf8" }).stdout.trim();
@@ -72,7 +72,7 @@ test("CLI preflight-only checks the commit but starts no build", (t) => {
     "--build-id", valid["build-id"], "--artifact", join(root, "output.app"),
     "--inspection-report", join(root, "inspection.json"), "--receipt", join(root, "receipt.json"),
     "--preflight-only", "true",
-  ], { encoding: "utf8", env: { ...process.env, TMPDIR: root } });
+  ], { encoding: "utf8", env: { ...process.env } });
   assert.equal(result.status, 0, result.stderr);
   assert.match(result.stdout, /no build started/);
   assert.deepEqual(readdirSync(root), []);

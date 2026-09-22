@@ -1,0 +1,33 @@
+{
+  "schema_version": 1,
+  "date": "2026-09-21",
+  "base_sha": "a556c572d038c034267f098dd5bed877d104ea5f",
+  "application_sha": "ed8330a766b3c4b80a505e075535678394e275e9",
+  "operator_commit_resolution": "git log -1 --format=%H -- scripts/local-mobile-diagnostics.mjs",
+  "focused_tests": 24,
+  "make_ready": {
+    "status": "passed",
+    "javascript_tests": 244,
+    "python_passed": 98,
+    "python_skipped": 3,
+    "initial_attempt": "sandbox EPERM on local HTTP listener; retained and rerun with local execution permission"
+  },
+  "contract_drift": "passed",
+  "native_compilation": false,
+  "external_operations": false,
+  "source_sha256": {
+    "Makefile": "4108f3649d023bf3879986e0b5b6b71098a8b57ec4dff148f59fb3d58a7cc8f7",
+    "scripts/local-mobile-build.mjs": "a2266c6a187b25f69b5af137daefcfc7b48e6e1dd9c9a20dd9ea8efb6f723941",
+    "scripts/local-mobile-diagnostics.mjs": "ffc99a61284d2ebaa0df8fd1209ec9d3f3f372caffd35b4595a4ed50e4a07194",
+    "scripts/local-mobile-build.test.mjs": "82749b0fb93c4f331781babb4898bf9c42a3b8a55be2fbea9b836d527a357755",
+    "scripts/local-mobile-diagnostics.test.mjs": "77f0f94ccf6ecb3666247ca61a6f770d9d1869d544f55a14538b99e132dd47da",
+    "scripts/local-mobile-build-integration.test.mjs": "adfa8067f85c2028d5d3d5e52f084c7b1b7c7ddbe9431aaab15eddc65d122e8d",
+    "scripts/local-mobile-build-preflight.test.mjs": "b328ad541b9f82823042cb22ee65bff6b1d4aa4731a12b78f3bbcc9c31e08f01"
+  },
+  "private_log_sha256": {
+    ".artifacts/native-diagnostic-retention/focused.log": "9857f1a150c22779e16b9d4cf43b7f6ab25c05b98882450b6d33ead29db91364",
+    ".artifacts/native-diagnostic-retention/make-ready-sandbox-blocked.log": "5226b143067600ef90eb686dfe5ce72e78c17e8d393fe57ad1e623dd15525f08",
+    ".artifacts/native-diagnostic-retention/make-ready.log": "da92fc79269a83af19e28cae86958da216e94d92d91d7c62637c99e24d5073ad",
+    ".artifacts/native-diagnostic-retention/contract-check.log": "33004905d7fb90dcfe23794aefb69990d48d210803fa04c4330da64eaf19452e"
+  }
+}

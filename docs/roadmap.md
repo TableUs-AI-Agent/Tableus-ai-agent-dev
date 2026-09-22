@@ -11,7 +11,7 @@ its acceptance cannot be reviewed in one change. Only the active packet executes
 | 2 — locally complete | Resolve dependency/toolchain exception for replacement graph | Zero critical/high npm findings; compatible fixes and three exact-use dispositions; focused checks and one passing `make ready`; [assessment](evidence/dependency-toolchain-2026-09-21/README.md) | No exception extension; old native/production and retained immutable web bytes remain |
 | 2a — complete | Review replacement candidate and prepare rollout approval | [Exact-source review and phased proposal](evidence/dependency-rollout-2026-09-21/README.md); source/log/map hashes verified | Planning complete; owner approved Phase W only |
 | 2b — complete | Replace affected staging web | [Exact-source CI, Preview and activation passed](evidence/web-dependency-rollout-2026-09-21/README.md); both staging aliases serve ed8330a; approved one-origin CORS append and one f94a1d9 API redeploy verified | Production/native unchanged; new API image recorded separately; one CI/Preview/API redeploy consumed; no cumulative mixed-SHA acceptance |
-| 2c | Preserve native diagnostic artifacts | Separate operator commit; durable success/failure logs, symbols/maps and exact-source binding; focused checks and one make ready | Local tooling fix before native compilation; no SDK migration |
+| 2c — locally complete | Preserve native diagnostic artifacts | [Retention evidence](evidence/native-diagnostic-retention-2026-09-21/README.md); durable success/failure/interruption attempts, hashed symbols/maps and separate operator/application binding; 24 focused checks and passing make ready | No native compilation or symbol usability acceptance; no SDK migration |
 | 2d | Validate affected native replacement | Separately approve two deterministic builds, then two readiness builds/installs; link parsing, usable symbols and focused export/relaunch diagnostic | Real-link provider reads need a new explicit scope; canaries exhausted; no cumulative acceptance transfer |
 | 3 | Complete account lifecycle and retention | Concrete Auth/application deletion ownership and behavior, retention/archival policy, export/deletion recovery evidence | Approve significant policy decisions before implementation; production migration remains gated |
 | 4 | Bound cohort access and resource consumption | Operator-only usage visibility, per-actor quotas, lifetime plan limits, named one-use invites, reviewed capability exchange or explicit risk acceptance | Isolated staging risk acceptance does not cover broader cohort activation |
@@ -31,8 +31,8 @@ The dependency objective has a local remediation and explicit dispositions for
 the replacement graph. The September 30 deadline is not extended for frozen
 staging bytes. Phase W replaced both staging web aliases; production e1184ec and
 retained immutable deployments remain outside that patch. Preserve f94a1d9
-receipts. Next is the separate local native diagnostic-retention tooling fix;
-native compilation and subsequent external rollout require their own approvals.
+receipts. Local native diagnostic retention is complete. Next is separately approved native
+replacement validation (2d); compilation and subsequent rollout remain gated.
 A fresh task grants no additional live allowance.
 
 ## Completed foundations

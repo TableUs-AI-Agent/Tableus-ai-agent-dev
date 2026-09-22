@@ -1,21 +1,18 @@
 #!/usr/bin/env node
 
 import {
-  closeSync,
+  chmodSync,
   cpSync,
   existsSync,
   mkdirSync,
-  mkdtempSync,
-  openSync,
   readdirSync,
-  rmSync,
   statSync,
 } from "node:fs";
 import { dirname, extname, join, resolve } from "node:path";
-import { tmpdir } from "node:os";
 import { fileURLToPath } from "node:url";
 import { spawnSync } from "node:child_process";
 
+import { assertDurableOutputs, withDiagnosticAttempt } from "./local-mobile-diagnostics.mjs";
 import { artifactChecksum } from "./evidence-utils.mjs";
 import { assertLocalBuildPreflight } from "./local-mobile-build-preflight.mjs";
 
@@ -47,7 +44,7 @@ function run(command, commandArgs, { cwd = repoRoot, env = {}, logFd } = {}) {
     maxBuffer: 32 * 1024 * 1024,
   });
   if (result.error) throw result.error;
-  if (result.status !== 0) throw new Error(`${command} failed with status ${result.status}; raw build logs were deleted`);
+  if (result.status !== 0) throw new Error(`${command} failed with status ${result.status}; command failed before build execution`);
   return String(result.stdout ?? "").trim();
 }
 
@@ -61,12 +58,12 @@ function visit(directory, matches) {
   }
 }
 
-function normalizeArtifact(platform, profile, rawArtifact, root) {
+async function normalizeArtifact(platform, profile, rawArtifact, root, runLogged) {
   if (platform === "android" || !simulatorProfiles.has(profile)) return rawArtifact;
   if (statSync(rawArtifact).isDirectory() && extname(rawArtifact) === ".app") return rawArtifact;
   const extraction = join(root, "ios-simulator-artifact");
   mkdirSync(extraction, { mode: 0o700 });
-  run("tar", ["-xzf", rawArtifact, "-C", extraction]);
+  await runLogged("tar", ["-xzf", rawArtifact, "-C", extraction], { cwd: repoRoot });
   const apps = [];
   visit(extraction, apps);
   if (apps.length !== 1) throw new Error("iOS simulator build must contain exactly one .app bundle");
@@ -97,46 +94,57 @@ if (args["preflight-only"] !== undefined && args["preflight-only"] !== "true") {
   throw new Error("--preflight-only accepts only true");
 }
 assertLocalBuildPreflight(args);
+const diagnosticRoot = resolve(args.diagnostics ?? `${args.artifact}.diagnostics`);
+assertDurableOutputs([args.artifact, args["inspection-report"], args.receipt, diagnosticRoot]);
 run("git", ["cat-file", "-e", `${args.sha}^{commit}`]);
 if (args["preflight-only"] === "true") {
   process.stdout.write(`Local ${args.profile} input preflight passed; no build started.\n`);
   process.exit(0);
 }
 
-const temporaryRoot = mkdtempSync(join(tmpdir(), "tableus-exact-sha-build-"));
-const workspace = join(temporaryRoot, "workspace");
-const rawArtifact = join(temporaryRoot, args.platform === "android" ? "build.apk" : simulatorProfiles.has(args.profile) ? "build.tar.gz" : "build.ipa");
-const inspection = join(temporaryRoot, "inspection.json");
-const receipt = join(temporaryRoot, "receipt.json");
-const logPath = join(temporaryRoot, "build.log");
-let worktreeAdded = false;
-
-try {
-  run("git", ["worktree", "add", "--detach", workspace, args.sha]);
-  worktreeAdded = true;
+// Operator must be committed independently of the requested application source.
+const operatorSha = run("git", ["rev-parse", "HEAD"]);
+if (run("git", ["status", "--porcelain=v1", "--untracked-files=all"])) {
+  throw new Error("Operator worktree must be clean and committed before building");
+}
+process.umask(0o077);
+mkdirSync(dirname(diagnosticRoot), { recursive: true, mode: 0o700 });
+const retainedRoot = diagnosticRoot;
+const workspace = join(retainedRoot, "workspace");
+const rawArtifact = join(retainedRoot, args.platform === "android" ? "build.apk" : simulatorProfiles.has(args.profile) ? "build.tar.gz" : "build.ipa");
+const inspection = join(retainedRoot, "inspection.json");
+const receipt = join(retainedRoot, "receipt.json");
+const identity = {
+  application_sha: args.sha, operator_tooling_sha: operatorSha,
+  application_tree_sha: run("git", ["rev-parse", `${args.sha}^{tree}`]),
+  build_id: args["build-id"], platform: args.platform, profile: args.profile,
+};
+const result = await withDiagnosticAttempt({ root: diagnosticRoot, identity }, async ({ run: runLogged, inventory }) => {
+  await runLogged("git", ["worktree", "add", "--detach", workspace, args.sha], { cwd: repoRoot });
   if (run("git", ["status", "--porcelain=v1", "--untracked-files=all"], { cwd: workspace })) {
     throw new Error("Fresh detached build worktree is not clean");
   }
-  const logFd = openSync(logPath, "wx", 0o600);
-  try {
-    run("npm", ["ci"], { cwd: workspace, logFd });
+  inventory.package_lock_sha256 = artifactChecksum(join(workspace, "package-lock.json"));
+  {
+    await runLogged("npm", ["ci"], { cwd: workspace });
     if (args.platform === "ios") {
-      run(process.execPath, [join(repoRoot, "scripts", "ios-scene-build-preflight.mjs")], {
-        cwd: workspace, logFd, env: { TABLEUS_BUILD_SOURCE_ROOT: workspace },
+      await runLogged(process.execPath, [join(repoRoot, "scripts", "ios-scene-build-preflight.mjs")], {
+        cwd: workspace, env: { TABLEUS_BUILD_SOURCE_ROOT: workspace },
       });
     }
-    run(join(workspace, "node_modules", ".bin", "eas"), [
+    await runLogged(join(workspace, "node_modules", ".bin", "eas"), [
       "build", "--local", "--non-interactive", "--platform", args.platform,
       "--profile", args.profile, "--output", rawArtifact,
     ], {
       cwd: join(workspace, "mobile"),
-      logFd,
       env: {
         EAS_BUILD_GIT_COMMIT_HASH: args.sha,
         EXPO_PUBLIC_SOURCE_SHA: args.sha,
         NODE_OPTIONS: process.env.NODE_OPTIONS || "--max-old-space-size=4096",
         GRADLE_OPTS: process.env.GRADLE_OPTS || "-Dorg.gradle.jvmargs=-Xmx3072m -Dorg.gradle.workers.max=2",
-        EAS_LOCAL_BUILD_SKIP_CLEANUP: "0",
+        EAS_LOCAL_BUILD_SKIP_CLEANUP: "1",
+        EAS_LOCAL_BUILD_WORKINGDIR: join(diagnosticRoot, "eas-work"),
+        SOURCEMAP_FILE: join(diagnosticRoot, "application.js.map"),
         // Local evidence validates runtime telemetry separately. Sentry's
         // uploader requires cloud/build-only organization context and can fail
         // before Expo finishes the JavaScript bundle. Hosted production and
@@ -144,11 +152,10 @@ try {
         SENTRY_DISABLE_AUTO_UPLOAD: "true",
       },
     });
-  } finally {
-    closeSync(logFd);
   }
 
-  const builtArtifact = normalizeArtifact(args.platform, args.profile, rawArtifact, temporaryRoot);
+  const builtArtifact = await normalizeArtifact(args.platform, args.profile, rawArtifact, retainedRoot, runLogged);
+  inventory.artifact_sha256 = artifactChecksum(builtArtifact);
   const common = ["--platform", args.platform, "--artifact", builtArtifact, "--sha", args.sha, "--output", inspection];
   let inspector;
   if (args.profile.startsWith("test-")) {
@@ -169,22 +176,28 @@ try {
   if (args["apple-team-id"]) common.push("--apple-team-id", args["apple-team-id"]);
   if (args["android-fingerprint"]) common.push("--android-fingerprint", args["android-fingerprint"]);
   if (args["forbidden-origins"]) common.push("--forbidden-origins", args["forbidden-origins"]);
-  run(process.execPath, [join(workspace, "scripts", inspector), ...common], { cwd: workspace });
+  await runLogged(process.execPath, [join(workspace, "scripts", inspector), ...common], { cwd: workspace });
 
-  run(process.execPath, [
+  await runLogged(process.execPath, [
     join(workspace, "scripts", "local-mobile-build-receipt.mjs"),
     "--platform", args.platform, "--profile", args.profile, "--artifact", builtArtifact,
     "--sha", args.sha, "--build-id", args["build-id"], "--inspection-report", inspection,
     "--output", receipt,
   ], { cwd: workspace, env: { TABLEUS_ISOLATED_BUILD: "1" } });
 
+  inventory.inspection_report_sha256 = artifactChecksum(inspection);
+  inventory.receipt_sha256 = artifactChecksum(receipt);
   for (const target of [args.artifact, args["inspection-report"], args.receipt]) mkdirSync(dirname(resolve(target)), { recursive: true });
-  cpSync(builtArtifact, resolve(args.artifact), { recursive: statSync(builtArtifact).isDirectory(), errorOnExist: true });
-  cpSync(inspection, resolve(args["inspection-report"]), { errorOnExist: true });
-  cpSync(receipt, resolve(args.receipt), { errorOnExist: true });
+  cpSync(builtArtifact, resolve(args.artifact), { recursive: statSync(builtArtifact).isDirectory(), errorOnExist: true, force: false });
+  cpSync(inspection, resolve(args["inspection-report"]), { errorOnExist: true, force: false });
+  cpSync(receipt, resolve(args.receipt), { errorOnExist: true, force: false });
+  chmodSync(resolve(args.artifact), statSync(resolve(args.artifact)).isDirectory() ? 0o700 : 0o600);
+  chmodSync(resolve(args["inspection-report"]), 0o600);
+  chmodSync(resolve(args.receipt), 0o600);
   if (artifactChecksum(resolve(args.artifact)) !== artifactChecksum(builtArtifact)) throw new Error("Exported artifact differs from the inspected build");
   process.stdout.write(`Exact-SHA ${args.profile} artifact, inspection, and receipt exported.\n`);
-} finally {
-  if (worktreeAdded) spawnSync("git", ["worktree", "remove", "--force", workspace], { cwd: repoRoot, stdio: "ignore" });
-  rmSync(temporaryRoot, { recursive: true, force: true });
+});
+process.stdout.write(`Private diagnostic inventory retained at ${join(diagnosticRoot, "inventory.json")}\n`);
+if (result.diagnostics.missing.length || result.diagnostics.errors.length) {
+  process.stderr.write(`Diagnostics incomplete: missing ${result.diagnostics.missing.join(", ") || "none"}; scan errors ${result.diagnostics.errors.length}. See inventory.\n`);
 }

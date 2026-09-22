@@ -1,69 +1,46 @@
-# Active packet: Phase W complete
+# Active packet: native diagnostic retention (2c)
 
-Started and completed 2026-09-21. One primary agent; no Security Scan.
-The approved web dependency rollout is complete. This packet has no remaining
-implementation action; use a fresh task for the next bounded objective.
+Started and completed 2026-09-21. One primary agent; local tooling and deterministic fixtures only.
 
-## Identities
+## Identities and outcome
 
-- Evidence branch: `codex/web-dependency-rollout`.
-- Active worktree: `/Users/brianchei/.codex/worktrees/90bd/Tableus-ai-agent-dev`.
-- Review base: `89dac2d4f9deb428668c0bcf62828e31100b2968`.
-- Prior evidence checkpoint: `514a0136e1eb2ea0c52c315bf92efaf92809dfc9`.
-- Application / repository operator: `ed8330a766b3c4b80a505e075535678394e275e9`.
-- Clean detached application: `.artifacts/phase-w/source` under this worktree.
-- Published release ref: `codex/web-deps-ed8330a`, exact ed8330a.
-- Prior proposal/task: [proposal](../evidence/dependency-rollout-2026-09-21/README.md),
-  `01a0c5de-c4a5-7cf2-8a2c-76494dd98c3b`; approval retrieved with bounded scope.
-- Exact completion commit is supplied by the final response and resolvable via
-  `git log -1 --format=%H -- docs/handoffs/2026-09-21-phase-w-complete.md`.
+- Branch: `codex/native-diagnostic-retention`.
+- Worktree: `/Users/brianchei/.codex/worktrees/63bd/Tableus-ai-agent-dev`.
+- Exact base: `a556c572d038c034267f098dd5bed877d104ea5f` (Phase W complete).
+- Prior task: `01a0c5ec-b7f9-77d1-b739-0f49a238de16`; its completion handoff
+  provides the required context without unresolved questions requiring retrieval.
+- Application remains `ed8330a766b3c4b80a505e075535678394e275e9`;
+  prior operator ed8330a. This change receives a separate operator commit, resolved with
+  `git log -1 --format=%H -- scripts/local-mobile-diagnostics.mjs`.
+- Preserve prior worktree `/Users/brianchei/.codex/worktrees/90bd/Tableus-ai-agent-dev`,
+  private Phase W evidence, artifacts and sessions.
 
-## Completed authority and result
+## Completed result
 
-The original [Phase W approval](../evidence/web-dependency-rollout-2026-09-21/approval.json),
-[publication amendment](../evidence/web-dependency-rollout-2026-09-21/publication-amendment.json)
-and [CORS/API amendment](../evidence/web-dependency-rollout-2026-09-21/cors-approval-request.json)
-are executed. Do not request those approvals again or infer additional allowance.
-One CI 35661503170 passed and one exact-source Preview
-`dpl_3ec5bdvridE1meArFaYWAp8yabKM` is READY. Both `tableus-staging.vercel.app` and
-`links.table-us.com` now point to that Preview and serve verified ed8330a bundles.
+Success/failure/interruption logs and available diagnostic files survive in
+private durable per-attempt storage. Inventory binds source tree/lock, separate
+operator SHA, build ID, artifact and unchanged version-two receipt hashes.
+Missing families are explicit; symbol/map usability is not inferred.
 
-Eleven existing API origins were preserved and the exact immutable Preview origin
-was appended. One redeploy without `--from-source` produced API
-`24eefe75-9583-4a90-8d3e-48450818dec0`, ready at f94a1d9. Railway rebuilt the
-same source/pinned inputs into a new image; artifact equivalence is not claimed.
-Only ALLOWED_ORIGINS changed. Production target/apex/www remain
-`dpl_7csJvHoJH9qgFZDijbwu3w36r2sK` / e1184ec; native and original f94a1d9 evidence
-are unchanged. Vercel project settings/protection and all 85 old deployments remain.
+Fresh: 24 focused fixture/stub tests; `make ready` passed with 244 JavaScript and
+98 Python tests (three PostgreSQL skips), builds, deterministic smoke and report-only
+performance. The first readiness attempt was stopped by sandbox EPERM on the
+existing local HTTP fixture; the permission-enabled run passed. Contract drift
+check passed. No native compiler, device, external CI or live operation ran.
+[Detailed evidence](../evidence/native-diagnostic-retention-2026-09-21/README.md)
+and [handoff](../handoffs/2026-09-21-native-diagnostic-retention.md).
 
-[Execution evidence](../evidence/web-dependency-rollout-2026-09-21/README.md) binds
-CI, measured local Linux x64/ARM64 stacks, hosted image/cache/error behavior,
-source/bundle hashes, seven guarded Preview browser checks and final readiness,
-four CORS cases, 24 public alias HTTP checks and four anonymous browser checks.
-Hosted sharp/libvips versions remain lock inference. Live discovery requests were
-blocked; no new authenticated/live journey or cumulative mixed-SHA acceptance.
-Original compatibility/Metro/contract/browser and one passing `make ready` are
-reused; no full-suite rerun for unchanged source. Task-local harnesses have their
-own hashes. [Completion handoff](../handoffs/2026-09-21-phase-w-complete.md).
+This objective is complete; preserve this worktree and private evidence. Next is
+roadmap 2d in a fresh task, beginning with exact-commit review and an approval
+proposal for two deterministic native builds, then two readiness builds/installs.
+No native execution is authorized by this completed packet.
 
-## Remaining boundaries and next objective
+## Boundaries
 
-One CI, one Preview and one API redeploy are consumed. No further deployment,
-merge, production/domain-binding change, new resources/secrets, live provider
-use, OTP email, canary, native build/install, symbol upload, migration, cleanup,
-store submission, cohort activation or Security Scan is authorized by this packet.
-Brian Chei owns rollback; do not automatically restore vulnerable web.
-
-Places 92/100 from baseline 329 (8 unused, no reopened allowance), emails 2/4,
-canaries 6/6 per provider, fresh Gemini 0/0; configured backstop remains 429.
-AppHang acceptance remains isolated-staging-only. September 30 is unextended.
-Production and retained immutable web bytes remain outside this patch; authorized
-holders can access retained deployments. Future production deployments may reclaim
-unbound aliases. Preserve worktrees, saved sessions and `.artifacts/phase-w` files
-and containers until separately authorized cleanup.
-
-Next proposed objective: local native diagnostic-retention helper repair in a
-fresh task/worktree starting from this completion commit, with a distinct operator
-SHA. Preserve success/failure logs, symbols/maps and exact-source receipts; focused
-checks and one `make ready`. No native compilation or external operations in that
-objective. Do not begin it from stale main or merge this branch implicitly.
+No compilation, installs/device operations, uploads, CI, deployments, merges,
+live requests, OTP emails, canaries, resources/secrets, migrations, destructive
+cleanup, store submission, cohort activation or canceled security scans.
+One CI/Preview/API redeploy consumed in Phase W. Closed ledger: Places 92/100
+from baseline 329 (8 unused, not reopened), emails 2/4, canaries 6/6 per provider,
+fresh Gemini 0/0; backstop 429. September 30 is unextended; AppHang acceptance
+remains isolated-staging-only. Native replacement is a later approved objective.

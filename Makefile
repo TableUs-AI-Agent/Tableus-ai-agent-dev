@@ -128,7 +128,7 @@ local-mobile-build:
 	@test -n "$(BUILD_ID)" || (echo "BUILD_ID=<sanitized-local-build-id> is required" && exit 2)
 	@test -n "$(RECEIPT)" || (echo "RECEIPT=<new-receipt-json-path> is required" && exit 2)
 	@test -n "$(INSPECTION_REPORT)" || (echo "INSPECTION_REPORT=<new-inspection-json-path> is required" && exit 2)
-	node scripts/local-mobile-build.mjs --platform "$(PLATFORM)" --profile "$(PROFILE)" --sha "$(SHA)" --build-id "$(BUILD_ID)" --artifact "$(APP)" --inspection-report "$(INSPECTION_REPORT)" --receipt "$(RECEIPT)" $(if $(API_URL),--api-url "$(API_URL)",) $(if $(SUPABASE_URL),--supabase-url "$(SUPABASE_URL)",) $(if $(LINK_HOST),--link-host "$(LINK_HOST)",) $(if $(APPLE_TEAM_ID),--apple-team-id "$(APPLE_TEAM_ID)",) $(if $(ANDROID_FINGERPRINT),--android-fingerprint "$(ANDROID_FINGERPRINT)",) $(if $(FORBIDDEN_ORIGINS),--forbidden-origins "$(FORBIDDEN_ORIGINS)",) $(if $(PREFLIGHT_ONLY),--preflight-only "$(PREFLIGHT_ONLY)",)
+	node scripts/local-mobile-build.mjs --platform "$(PLATFORM)" --profile "$(PROFILE)" --sha "$(SHA)" --build-id "$(BUILD_ID)" --artifact "$(APP)" --inspection-report "$(INSPECTION_REPORT)" --receipt "$(RECEIPT)" $(if $(API_URL),--api-url "$(API_URL)",) $(if $(SUPABASE_URL),--supabase-url "$(SUPABASE_URL)",) $(if $(LINK_HOST),--link-host "$(LINK_HOST)",) $(if $(APPLE_TEAM_ID),--apple-team-id "$(APPLE_TEAM_ID)",) $(if $(ANDROID_FINGERPRINT),--android-fingerprint "$(ANDROID_FINGERPRINT)",) $(if $(FORBIDDEN_ORIGINS),--forbidden-origins "$(FORBIDDEN_ORIGINS)",) $(if $(DIAGNOSTICS),--diagnostics "$(DIAGNOSTICS)",) $(if $(PREFLIGHT_ONLY),--preflight-only "$(PREFLIGHT_ONLY)",)
 
 mobile-account-e2e:
 	@test -n "$(PLATFORM)" || (echo "PLATFORM=ios or PLATFORM=android is required" && exit 2)

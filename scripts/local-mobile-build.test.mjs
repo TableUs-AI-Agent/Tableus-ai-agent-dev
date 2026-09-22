@@ -32,7 +32,9 @@ test("inspection and receipt are emitted before the artifact is exported", () =>
   assert.equal(receiptSource.includes('args["inspection-passed"]'), false);
 });
 
-test("raw build logs are file-backed and deleted with the isolated workspace", () => {
-  assert.equal(source.includes('openSync(logPath, "wx", 0o600)'), true);
-  assert.equal(source.includes('rmSync(temporaryRoot, { recursive: true, force: true })'), true);
+test("local builds retain EAS working files and use the durable diagnostic attempt runner", () => {
+  assert.equal(source.includes('EAS_LOCAL_BUILD_SKIP_CLEANUP: "1"'), true);
+  assert.equal(source.includes('EAS_LOCAL_BUILD_WORKINGDIR: join(diagnosticRoot, "eas-work")'), true);
+  assert.equal(source.includes('await withDiagnosticAttempt('), true);
+  assert.equal(source.includes('rmSync('), false);
 });

@@ -119,11 +119,42 @@ still creates a clean detached checkout of the requested application SHA,
 installs that source's lockfile, builds, runs its inspector and emits its
 version-two receipt before export. Post-build attestation remains authoritative.
 
-Build logs stay private and file-backed. On failure, record the phase and minimal
-sanitized diagnosis; do not promote raw logs. Do not repeat identical builds
-after the same unexplained failure. Preserve accepted artifacts before any
-authorized cleanup. Existing unrelated temporary directories are not cleanup
-authorization.
+The operator checkout must be clean and committed. Its SHA is recorded separately
+from the application SHA; invoke the repaired operator with the requested
+application SHA rather than copying helpers into that application checkout.
+`DIAGNOSTICS=<new-durable-directory>` (CLI `--diagnostics`) optionally sets the
+retention directory; default is `<APP>.diagnostics`. All four outputs must be
+new, disjoint paths outside OS temp, including through symlinks. Prefer the
+original checkout's private ignored artifact storage above.
+
+Each attempt keeps its detached source, EAS working directory, raw artifact,
+file-backed `build.log` and atomic `inventory.json`. Nothing is automatically
+removed on success, build/inspection/export failure, SIGINT, SIGTERM or SIGHUP.
+The attempt directory is mode 0700; log/inventory/exported report files are 0600.
+Retained working files may contain credentials or signing material: keep the
+whole directory private, outside tracked evidence, until authorized cleanup.
+The inventory binds application SHA/tree/lock, operator SHA, platform/profile,
+build ID, raw/exported artifact hashes and inspection/receipt hashes. Existing
+version-two receipts and inspection consumers are unchanged; the inventory is
+the hashed receipt's diagnostic sidecar, not replacement acceptance.
+
+EAS cleanup is disabled and its working directory is explicitly retained.
+`SOURCEMAP_FILE` requests the React Native iOS composed map; generated Android
+maps are discovered in the retained build tree. Inventory entries hash available
+maps, dSYM contents, native symbol/shared-library files, mapping files and logs;
+missing/empty diagnostic families and scan errors are explicit. Dependency
+folders and symlinks are excluded from discovery. Retention does not establish
+that a `.so` is unstripped or that a map/dSYM matches the installed executable.
+UUID/build-ID matching and app-frame resolution remain native validation gates.
+
+Catchable interrupts stop the child process group before final inventory. A
+SIGKILL, host crash or power loss cannot finalize: `status: running` is incomplete
+evidence, never success. Preserve that attempt and use a new directory/build ID
+for any separately authorized retry; do not invent a receipt for partial output.
+On failure, record the phase and minimal sanitized diagnosis; do not promote raw
+logs or repeat identical builds after the same unexplained failure. Preserving
+these directories consumes disk; check capacity before each approved build.
+Existing unrelated temporary directories are not cleanup authorization.
 
 ## 5. Validate each artifact family before moving on
 

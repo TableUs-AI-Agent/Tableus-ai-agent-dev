@@ -156,7 +156,10 @@ readiness/CORS evidence. Per-alias assignment did not change project settings or
 domain bindings; future production deployments may reclaim unbound aliases.
 The [completion evidence](evidence/web-dependency-rollout-2026-09-21/activation.json)
 does not authorize more deployments, live use or production exposure changes.
-Current native tooling does not preserve diagnostic logs/symbols, so
-repair it under a separate operator SHA before new builds. Local symbol matching
+Native diagnostic retention uses a separate committed operator SHA and durable
+private per-attempt storage, including failed/interrupted runs. Preserve existing
+version-two receipts; the diagnostic inventory binds their raw hashes to the
+application and operator identities. Missing diagnostics remain explicit and
+retained files alone do not establish usable symbolication. Local symbol matching
 and an app-frame resolution check precede the focused export/relaunch diagnostic;
 store symbol upload/delivery evidence remains separately gated.

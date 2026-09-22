@@ -15,17 +15,18 @@ previous narrative without making it an active checklist.
 | Role | Value |
 | --- | --- |
 | Accepted API/native and retained Preview candidate | `f94a1d9d1125e6c9111aa08eda496f014f20d0c0` |
-| Current task branch / worktree | `codex/web-dependency-rollout` / `/Users/brianchei/.codex/worktrees/90bd/Tableus-ai-agent-dev` |
-| Replacement application / repository operator | `ed8330a766b3c4b80a505e075535678394e275e9`; completed dependency remediation |
-| Previous task / evidence base | `01a0c5de-c4a5-7cf2-8a2c-76494dd98c3b` (approval retrieved); `89dac2d4f9deb428668c0bcf62828e31100b2968` |
+| Current task branch / worktree | `codex/native-diagnostic-retention` / `/Users/brianchei/.codex/worktrees/63bd/Tableus-ai-agent-dev` |
+| Replacement application / prior operator | `ed8330a766b3c4b80a505e075535678394e275e9`; completed dependency remediation |
+| Native diagnostic operator | Separate retention implementation commit (resolve via `git log -1 --format=%H -- scripts/local-mobile-diagnostics.mjs`); application bytes unchanged |
+| Previous task / exact base | `01a0c5ec-b7f9-77d1-b739-0f49a238de16`; `a556c572d038c034267f098dd5bed877d104ea5f` |
 | Evidence index | [Current candidate](evidence/ios27-staging-f94a1d9/closeout.md) |
 
 The root checkout is an older branch and is not the implementation base.
-Application, operator and evidence commits are distinct. This task records Phase W
-activation and local Linux evidence; application and repository operator bytes remain
-ed8330a. The evidence commit does not replace that identity. Detached application
-source is `.artifacts/phase-w/source` in the active worktree. Existing staging
-artifacts prove only their original application SHA.
+Application, operator and evidence commits are distinct. Phase W deployed ed8330a;
+this task changes only native operator tooling. The previous worktree
+`/Users/brianchei/.codex/worktrees/90bd/Tableus-ai-agent-dev` retains its private
+`.artifacts/phase-w/source` and evidence. Existing staging artifacts prove only
+their original application SHA.
 
 ## Implemented product
 
@@ -102,8 +103,12 @@ hashes, unchanged associations and preserved production e1184ec. All eleven prio
 origins, other API variables, Vercel project settings/protection and 85 old web
 deployments are retained. One CI, one Preview and one API redeploy were consumed;
 no live-provider allowance was used. See the [completion handoff](handoffs/2026-09-21-phase-w-complete.md).
-AVIF decoding was verified on the patched stack. Native builds first need an operator fix: the current
-helper deletes logs and does not preserve symbols/maps. Later verification is
+AVIF decoding was verified on the patched stack. The native helper now retains
+private attempt logs, working files, available symbols/maps and hashed diagnostic
+inventories bound to separate application/operator identities. [Local verification](evidence/native-diagnostic-retention-2026-09-21/README.md)
+passed: 24 focused checks, 244 JavaScript / 98 Python tests (three PostgreSQL
+skips), contract drift, builds and smoke. No native compilation or symbol usability
+is claimed. Later verification is
 proposed as two deterministic and two readiness artifacts, with separate approvals
 and unresolved telemetry/live-read gates. No cumulative replacement acceptance.
 Merge and release gates remain separate.
