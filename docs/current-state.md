@@ -110,10 +110,13 @@ passed: 24 focused checks, 244 JavaScript / 98 Python tests (three PostgreSQL
 skips), contract drift, builds and smoke. No native compilation or symbol usability
 is claimed. The [2d proposal](evidence/native-replacement-validation-2026-09-21/README.md)
 is approved for N1: two sequential deterministic attempts on new disposable
-devices; N2 builds/updates remain a separate approval. The fresh disk check found
-21.29 GiB free, below the approved 40 GiB floor. Storage blocks execution; neither
+devices; N2 builds/updates remain a separate approval. Owner-approved
+[storage cleanup](evidence/native-replacement-validation-2026-09-21/storage-cleanup.json)
+freed about 13.26 GiB; frozen operator setup then passed. Free space is now
+39.67 GiB, below the approved 40 GiB floor. Storage blocks compilation; neither
 attempt has started. [Approval and disk receipt](evidence/native-replacement-validation-2026-09-21/n1-approval.json)
-records the owner decision. No cleanup is authorized.
+records the N1 decision. Cleanup was limited to the named Ollama models, old
+Cursor versions and empty Docker installer staging; no further cleanup is authorized.
 Required symbol/map matching remains unverified; telemetry/live reads stay gated.
 Preserve 63bd retention evidence as well as 90bd. No cumulative replacement acceptance.
 Merge and release gates remain separate.

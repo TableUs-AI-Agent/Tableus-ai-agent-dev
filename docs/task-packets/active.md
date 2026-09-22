@@ -29,9 +29,12 @@ No executable bytes changed; do not repeat make ready for this checkpoint.
 The owner approved N1: two sequential deterministic attempts, limited existing
 Expo/dependency access, new disposable simulator/emulator and bounded local checks.
 [Approval receipt](../evidence/native-replacement-validation-2026-09-21/n1-approval.json)
-binds the exact proposal. Resolve capacity first: freshly observed 21.29 GiB is below
-the approved 40 GiB floor; no cleanup authorized. Both attempts remain unused;
-operator setup and device creation have not started. Require symbols/maps to match and resolve app frames before
+binds the exact proposal. [Approved storage cleanup](../evidence/native-replacement-validation-2026-09-21/storage-cleanup.json)
+removed the two unwanted Ollama models and old Cursor versions; Docker update had
+already removed its staged app. Active Cursor and one fallback remain. Frozen
+operator setup passed offline at 16603dd, clean, EAS 23.2.0. After setup, 39.67 GiB
+is free, below the 40 GiB pre-build floor. Both build attempts remain unused; no
+devices were created. Additional cleanup requires a specific owner approval. Require symbols/maps to match and resolve app frames before
 moving to the next artifact; helper success alone is insufficient. Preserve failed
 attempts and stop, no automatic rebuild. The N1 approval persists; do not request it again.
 
