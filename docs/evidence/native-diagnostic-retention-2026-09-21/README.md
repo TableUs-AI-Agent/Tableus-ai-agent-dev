@@ -5,7 +5,7 @@ Completed 2026-09-21 from Phase W completion
 `codex/native-diagnostic-retention` in worktree
 `/Users/brianchei/.codex/worktrees/63bd/Tableus-ai-agent-dev`.
 Application remains `ed8330a766b3c4b80a505e075535678394e275e9`;
-operator code is a separate commit. See the [handoff](../../handoffs/2026-09-21-native-diagnostic-retention.md)
+operator code is separate commit `16603dd0cf36d27b492e57a02d3c6c438a2563c4`. See the [handoff](../../handoffs/2026-09-21-native-diagnostic-retention.md)
 for exact identities and remaining authority.
 
 ## Observable change

@@ -10,8 +10,7 @@ Started and completed 2026-09-21. One primary agent; local tooling and determini
 - Prior task: `01a0c5ec-b7f9-77d1-b739-0f49a238de16`; its completion handoff
   provides the required context without unresolved questions requiring retrieval.
 - Application remains `ed8330a766b3c4b80a505e075535678394e275e9`;
-  prior operator ed8330a. This change receives a separate operator commit, resolved with
-  `git log -1 --format=%H -- scripts/local-mobile-diagnostics.mjs`.
+  prior operator ed8330a. Retention operator implementation: `16603dd0cf36d27b492e57a02d3c6c438a2563c4`.
 - Preserve prior worktree `/Users/brianchei/.codex/worktrees/90bd/Tableus-ai-agent-dev`,
   private Phase W evidence, artifacts and sessions.
 

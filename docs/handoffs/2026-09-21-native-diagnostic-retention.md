@@ -5,8 +5,9 @@ Completed 2026-09-21. Branch `codex/native-diagnostic-retention`; worktree
 Base `a556c572d038c034267f098dd5bed877d104ea5f` (Phase W complete).
 The final response supplies the exact completion/evidence commit; resolve with
 `git log -1 --format=%H -- docs/handoffs/2026-09-21-native-diagnostic-retention.md`.
-The distinct implementation operator commit resolves with
-`git log -1 --format=%H -- scripts/local-mobile-diagnostics.mjs`.
+The distinct implementation operator commit is
+`16603dd0cf36d27b492e57a02d3c6c438a2563c4`. This handoff
+checkpoint changes documentation only; verification source hashes are unchanged.
 Application remains `ed8330a766b3c4b80a505e075535678394e275e9`; prior operator ed8330a.
 
 ## Result and verification

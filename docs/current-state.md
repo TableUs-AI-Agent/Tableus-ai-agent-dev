@@ -17,7 +17,7 @@ previous narrative without making it an active checklist.
 | Accepted API/native and retained Preview candidate | `f94a1d9d1125e6c9111aa08eda496f014f20d0c0` |
 | Current task branch / worktree | `codex/native-diagnostic-retention` / `/Users/brianchei/.codex/worktrees/63bd/Tableus-ai-agent-dev` |
 | Replacement application / prior operator | `ed8330a766b3c4b80a505e075535678394e275e9`; completed dependency remediation |
-| Native diagnostic operator | Separate retention implementation commit (resolve via `git log -1 --format=%H -- scripts/local-mobile-diagnostics.mjs`); application bytes unchanged |
+| Native diagnostic operator | `16603dd0cf36d27b492e57a02d3c6c438a2563c4`; application bytes unchanged |
 | Previous task / exact base | `01a0c5ec-b7f9-77d1-b739-0f49a238de16`; `a556c572d038c034267f098dd5bed877d104ea5f` |
 | Evidence index | [Current candidate](evidence/ios27-staging-f94a1d9/closeout.md) |
 

@@ -29,5 +29,6 @@
     ".artifacts/native-diagnostic-retention/make-ready-sandbox-blocked.log": "5226b143067600ef90eb686dfe5ce72e78c17e8d393fe57ad1e623dd15525f08",
     ".artifacts/native-diagnostic-retention/make-ready.log": "da92fc79269a83af19e28cae86958da216e94d92d91d7c62637c99e24d5073ad",
     ".artifacts/native-diagnostic-retention/contract-check.log": "33004905d7fb90dcfe23794aefb69990d48d210803fa04c4330da64eaf19452e"
-  }
+  },
+  "operator_implementation_sha": "16603dd0cf36d27b492e57a02d3c6c438a2563c4"
 }
