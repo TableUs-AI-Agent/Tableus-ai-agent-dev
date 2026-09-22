@@ -1,9 +1,10 @@
 # N1-F1 local remediation result
 
 The owner [approved](n1-f1-approval.json) the exact [F1 scope](n1-f1-local-remediation.md).
-The local application fix and checks pass. Application freeze and the impact /
-native revalidation proposal follow in an evidence-only checkpoint. This is not
-N1 completion or permission to execute native work.
+The local application fix and checks pass. Application **`8972865893a3f018a064594457dc9cc664f8a61f`**
+is frozen; [impact and native revalidation](n1-f1-native-revalidation.md) are prepared
+and [source/capacity bindings](n1-f1-freeze.json) are recorded. This completes F1
+local work, not N1 or permission to execute native work.
 
 ## Result and review
 
@@ -24,8 +25,8 @@ mutation idempotency and server capability validation stay in their existing pat
 
 Review scope is two application files and two test files. No dependencies,
 backend/API contract, web source, app profile, entitlements or executable build
-operators changed. Other origins and unrelated development/E2E routes retain
-existing behavior; this is not a new origin-dispatch acceptance claim. The real
+operators changed. The intent normalizer passes through other origins and
+unrelated development/E2E routes; this is not a new origin-dispatch acceptance claim. The real
 route/hook component tests replace only API calls, auth/connectivity context and
 imperative navigation. They assert the body from the real join button, and that
 invalid cases cannot write. They are not OS delivery or native runtime proof.

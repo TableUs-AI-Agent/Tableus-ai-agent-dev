@@ -1,6 +1,6 @@
 # Active packet: native replacement validation (2d)
 
-N1-F1 approved; **local token remediation and checks pass, candidate freeze next.**
+N1-F1 approved; **local token remediation complete; candidate 8972865 frozen.**
 N1 native execution remains stopped after the R2 token-corruption failure.
 One primary Astra agent; no delegation or canceled scans. Keep this objective in this task.
 
@@ -11,7 +11,7 @@ One primary Astra agent; no delegation or canceled scans. Keep this objective in
 - Worktree: `/Users/brianchei/.codex/worktrees/ea6d/Tableus-ai-agent-dev`.
 - Previous task: `01a0c661-7b3f-7403-906c-0f60f60a3dd4`.
 - Prior native application: `ed8330a766b3c4b80a505e075535678394e275e9`.
-- F1 application candidate: the commit containing this local fix; exact freeze follows.
+- Frozen F1 application: `8972865893a3f018a064594457dc9cc664f8a61f`.
 - Actually invoked build operator: `16603dd0cf36d27b492e57a02d3c6c438a2563c4`.
 - Build: `local-ios-test-ed8330a-2d-01`; artifact/receipt/source/symbol hashes in
   [checkpoint](../evidence/native-replacement-validation-2026-09-21/n1-ios-checkpoint.json).
@@ -63,17 +63,23 @@ roughly 21 GiB is below the 40 GiB native build start gate.
 
 ## Next actions and stop conditions
 
-F1 local implementation and verification are complete. Commit/freeze the exact
-application SHA and finish the impact/revalidation proposal in an evidence-only
-checkpoint. F1 includes no native build/retry. Keep the native stop in force:
+F1 local implementation, verification, exact candidate freeze and
+[impact/revalidation proposal](../evidence/native-replacement-validation-2026-09-21/n1-f1-native-revalidation.md)
+are complete. Next bounded action is resolving the 40 GiB capacity gate and
+approving an exact-candidate native scope; F1 includes no native build/retry.
+Keep the native stop in force:
 do not start exports, replay ed8330a or reuse its passing checks for new bytes.
 
 Canonical HTTPS auth/join, wrong-origin and web-only auth-confirm delivery remain
 unverified: signed simulator entitlements are empty and no approved local forced
-dispatch was established. The demo guard prevents sign-in-mode presentation.
-The local fix does not complete N1; prepare a separate bounded solution for
-this coverage gap and the changed candidate, without adding a build,
-instrumentation or real auth automatically. Retain original crash/AppHang and
+dispatch has executed. The proposal identifies an iOS-available XCTest API for a
+separate feasibility probe, plus an existing auth profile for signed-out
+presentation; neither has been compiled or operated. The demo guard prevents
+sign-in-mode presentation.
+The local fix does not complete N1; the linked proposal separates
+local dispatch/auth probes from signed physical association checks, without
+adding a build, instrumentation or real auth automatically. Retain original
+crash/AppHang and
 all time/stop limits. The failing synthetic plus case does not establish failure
 of issued canonical HTTPS/URL-safe links or when the defect was introduced.
 
