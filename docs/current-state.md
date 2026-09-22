@@ -111,11 +111,16 @@ skips), contract drift, builds and smoke. The approved [N1 iOS attempt](evidence
 compiled ed8330a using operator 16603dd and passed artifact inspection/receipt
 export. Actual dSYM UUIDs match both architectures; an app-owned runtime frame
 resolves to AppDelegate.swift:18. The composed map is retained and 46 app/decoder
-sources match, but runtime JS-frame resolution remains pending. Lifecycle, links
-and focused export/relaunch checks have not run; no AppHang acceptance follows.
-Only the new disposable iOS 26.5 simulator received this build; accepted native
-installations remain f94a1d9. Android is unbuilt: remaining iOS gates and 29.56 GiB
-free versus the 40 GiB build floor block it. N2/live reads stay separately gated.
+sources match. [Local JS capture investigation](evidence/native-replacement-validation-2026-09-21/n1-js-runtime-diagnostic.md)
+found callable internal Hermes profiling functions, but five debugger launches
+produced no usable JS trace. A native crash report from launch four was discovered
+after launch five; N1 stopped. Its cause is unresolved. A bounded D1 diagnostic
+amendment is prepared but unapproved. Lifecycle, links and export/relaunch checks
+have not run; neither recurrence nor clearance of the old AppHang is established.
+Only the new disposable iOS 26.5 simulator received this byte-identical artifact;
+accepted native installations remain f94a1d9. Android is unbuilt: remaining iOS
+gates and 27.62 GiB free versus the 40 GiB build floor block it. N2/live reads
+stay separately gated.
 Preserve all new diagnostics, 63bd retention evidence and 90bd Phase W evidence.
 No cumulative replacement acceptance.
 Merge and release gates remain separate.

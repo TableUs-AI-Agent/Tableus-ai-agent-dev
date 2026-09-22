@@ -1,7 +1,7 @@
 # Active packet: native replacement validation (2d)
 
-N1 approved. **iOS built; validation incomplete.** One primary Astra agent;
-no delegation or canceled scans. Keep this objective in this task.
+N1 approved, **stopped after a diagnostic crash; D1 amendment pending.**
+One primary Astra agent; no delegation or canceled scans. Keep this objective in this task.
 
 ## Identities
 
@@ -17,29 +17,36 @@ no delegation or canceled scans. Keep this objective in this task.
 
 ## Current result
 
-[Execution details and limits](../evidence/native-replacement-validation-2026-09-21/n1-checkpoint.md).
+[Original build checkpoint](../evidence/native-replacement-validation-2026-09-21/n1-checkpoint.md).
 Approved named storage cleanup completed; after the additional approved Cursor
 cache deletion, 41.31 GiB passed the build start floor. iOS compiled, passed
 inspection/receipt export, retained diagnostics without missing families/errors.
 Executable/dSYM UUIDs match; a captured app frame resolves independently to
 AppDelegate.swift:18. Map retains 46 matching app/decoder sources; runtime JS-frame
-resolution is not yet demonstrated. One debugger option error was corrected;
-both logs retained. No lifecycle/offline/link/export journey has run.
+resolution is not yet demonstrated. [Subsequent diagnostic investigation](../evidence/native-replacement-validation-2026-09-21/n1-js-runtime-diagnostic.md)
+found internal Hermes profiling APIs, but five local debugger launches produced
+no usable trace. A launch-four native crash report was found after launch five;
+further simulator execution stopped. All attempts/report retained. Cause remains
+unresolved; do not dismiss it as harmless debugger behavior or claim historical
+AppHang recurrence. No lifecycle/offline/link/export journey has run.
 
 A new disposable iOS 26.5 simulator was booted and received the inspected app for
-native frame capture. App terminated afterward; simulator retained. Original
+native/JS diagnostic capture. App terminated afterward; simulator retained. Original
 accepted apps/sessions untouched. One iOS build attempt consumed; Android's single
-attempt unused. Current free disk 29.56 GiB is below Android's 40 GiB start gate.
+attempt unused. Current free disk 27.62 GiB is below Android's 40 GiB start gate.
 
 ## Next actions and stop conditions
 
-N1 approval persists; do not request it again. Establish a bounded local method
-to capture an app-owned JS frame without changing application bytes or enabling
-telemetry, then verify its composed map resolution. The existing explicit error
-emitter is a gated telemetry canary, not a local diagnostic outlet. If application
-instrumentation is needed, prepare a concrete candidate/scope amendment first;
-no automatic rebuild. Do not weaken the symbol gate or claim synthetic frames
-prove runtime usability. Then run the approved bounded iOS behavioral checks.
+The original N1 approval persists, but its crash stop condition now applies.
+[D1 amendment](../evidence/native-replacement-validation-2026-09-21/n1-js-diagnostic-amendment.md)
+is prepared: one additional launch using separate setup/readout debuggers and
+scheduled profiler shutdown, no rebuild or app-byte change, 120-second execution
+limit plus 10-second cleanup. Private scripts are hashed and syntax-checked,
+unexecuted and approval-guarded. Obtain explicit approval for this bounded
+follow-up after the crash stop; do not ask to reapprove N1 generally. Stop after
+any new failure; no automatic repeat. Review resulting evidence/crash before
+proposing behavioral validation resumption. Runtime JS proof remains mandatory;
+no synthetic frame, telemetry canary or preemptive app instrumentation substitute.
 
 Android waits for the iOS gates and capacity. No additional cleanup is authorized.
 Keep all attempts/artifacts/private logs. N2 remains a separate future approval
@@ -48,8 +55,9 @@ scope must be explicit. No fresh provider/OTP/canary allowance exists.
 
 ## Verification and boundaries
 
-Fresh artifact/source/receipt/symbol/map checks are linked above. No application
-or executable operator changes; reuse 2c's 24 fixtures, make ready 244 JS / 98 Python
+Fresh artifact/source/receipt/symbol/map checks and diagnostic logs are linked
+above. No application or committed executable operator changes; reuse 2c's
+24 fixtures, make ready 244 JS / 98 Python
 (three PostgreSQL skips), and contract drift. Documentation links/JSON/diff checked.
 Preserve 63bd, 90bd and their private evidence, plus this attempt's durable root:
 `/Users/brianchei/repos/Tableus-ai-agent-dev/.artifacts/mobile/ed8330a766b3c4b80a505e075535678394e275e9/native-validation-2d`.

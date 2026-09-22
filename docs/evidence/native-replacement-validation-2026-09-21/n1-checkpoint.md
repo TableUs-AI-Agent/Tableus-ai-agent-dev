@@ -1,5 +1,9 @@
 # N1 iOS checkpoint — incomplete validation
 
+Subsequent status: [JS runtime diagnostic stopped after a debugger-run crash](n1-js-runtime-diagnostic.md).
+The observations below retain their original checkpoint meaning; current next
+actions are in the active packet and the proposed D1 amendment.
+
 Owner-approved Cursor compiled-cache cleanup completed. Free space passed the
 40 GiB start gate at 41.31 GiB. One `test-ios` attempt then ran from application
 `ed8330a766b3c4b80a505e075535678394e275e9`, using the clean committed operator

@@ -1,0 +1,131 @@
+{
+  "schema_version": 1,
+  "recorded_at": "2026-09-22T02:39:58.369001+00:00",
+  "application_sha": "ed8330a766b3c4b80a505e075535678394e275e9",
+  "build_operator_sha": "16603dd0cf36d27b492e57a02d3c6c438a2563c4",
+  "build_id": "local-ios-test-ed8330a-2d-01",
+  "artifact_sha256": "fda161a75d1d895ef88e3530847d9b7dde5dad3a5f1f01680c9ea0c06c9db0b9",
+  "installed_executable_bundle_and_hermes_match_exported_artifact": true,
+  "embedded_config": {
+    "source_sha": "ed8330a766b3c4b80a505e075535678394e275e9",
+    "api_url": "http://127.0.0.1:8000",
+    "demo_mode": true,
+    "telemetry_mode": "off"
+  },
+  "status": "N1 stopped after diagnostic crash; JS runtime proof incomplete",
+  "attempts": [
+    {
+      "attempt": 1,
+      "status": "failed",
+      "error": "enable: unexpected addresses []",
+      "hermes_uuid": null,
+      "raw_trace_captured": false
+    },
+    {
+      "attempt": 2,
+      "status": "failed",
+      "error": "error: Ran expression as 'ISO C++'.\nerror: <user expression 0>:1:6: no type named 'string' in namespace 'std'\n    1 | std::string $traceFile = \"/Users/brianchei/Library/Developer/CoreSimulator/Devices/2408A54F-A1C5-4388-8B46-6A987FE3B578/data/Containers/Data/Application/ACD7CEB1-779C-4E62-88E8-6F7AF5985D4B/tmp/n1-js-runtime-trace-02.json\"\n      | ~~~~~^",
+      "hermes_uuid": "75872184-F738-3E5C-B47A-FD4BCE09605A",
+      "raw_trace_captured": false
+    },
+    {
+      "attempt": 3,
+      "status": "failed",
+      "error": "error: unknown error",
+      "hermes_uuid": "75872184-F738-3E5C-B47A-FD4BCE09605A",
+      "raw_trace_captured": false
+    },
+    {
+      "attempt": 4,
+      "status": "failed",
+      "error": "error: Expression execution was interrupted.\nThe process has been returned to the state before expression evaluation.\n",
+      "hermes_uuid": "75872184-F738-3E5C-B47A-FD4BCE09605A",
+      "raw_trace_captured": false
+    },
+    {
+      "attempt": 5,
+      "status": "failed",
+      "error": "error: unable to evaluate expression while the process is exited: the process must be stopped because the expression might require allocating memory.\n",
+      "hermes_uuid": "75872184-F738-3E5C-B47A-FD4BCE09605A",
+      "raw_trace_captured": false
+    }
+  ],
+  "crash": {
+    "attempt": 4,
+    "pid": 28631,
+    "report_discovered_after_attempt": 5,
+    "report": "js-runtime-trace-04/TableUs-2026-09-21-213111.ips",
+    "exception": "EXC_BREAKPOINT / SIGTRAP",
+    "faulting_thread": "com.apple.main-thread",
+    "top_frame": "__CFRunLoopServiceMachPort.cold.1",
+    "sampling_thread": "waiting in Sampler::platformSuspendVMAndWalkStack",
+    "javascript_thread": "waiting for a mutex in Sampler::enabled during GC",
+    "cause": "unresolved; observed during profiler/debugger experiment, not a normal export/relaunch journey",
+    "not_claimed": "Not proof of recurrence or clearance of the historical f94a1d9 AppHang."
+  },
+  "captured_runtime_JS_frame_resolved": false,
+  "new_builds_this_followup": 0,
+  "build_attempts_consumed": {
+    "test-ios": 1,
+    "test-android": 0
+  },
+  "lifecycle_offline_links_export_run": false,
+  "app_terminated_after_each_attempt": true,
+  "accepted_devices_untouched": true,
+  "new_telemetry_provider_or_otp_allowance_used": false,
+  "N1_complete": false,
+  "N2_approved": false,
+  "free_disk": {
+    "available_kib": 28960000,
+    "available_gib": 27.62,
+    "android_minimum_gib": 40
+  },
+  "next_proposal": {
+    "id": "D1",
+    "document": "n1-js-diagnostic-amendment.md",
+    "approved": false,
+    "executed": false,
+    "one_diagnostic_launch": true,
+    "new_build": false
+  },
+  "private_root": "/Users/brianchei/repos/Tableus-ai-agent-dev/.artifacts/mobile/ed8330a766b3c4b80a505e075535678394e275e9/native-validation-2d",
+  "private_file_sha256": {
+    "js-runtime-trace-01/capture-result.json": "fd59bde408cfb6dd009d8b5b9147f5620e6c0c9f321a1705f8e8ba515568225d",
+    "js-runtime-trace-01/capture.py": "05d00cb37ae96523293bf337a49d9c921ac2bc7d728c2fa8e328e6ddb798218a",
+    "js-runtime-trace-01/launch.log": "079b35ac9f3bd40ba7ea460d0920def6eefbac360b911cf96d1ba0b8f7b9c1ec",
+    "js-runtime-trace-01/lldb.log": "9722022e21cb71dd0e9e7d2626d236e98a7d180fc4298a03180202fec1632c56",
+    "js-runtime-trace-01/terminate.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "js-runtime-trace-02/capture-result.json": "b4b022f60a4a701f57539e390541a15f853953bf9da322781747b8272ced7bfe",
+    "js-runtime-trace-02/capture.py": "2b9edb43a963a7a1ed99dd94ff7596ec6487abab319c0265e6ef036a600075c0",
+    "js-runtime-trace-02/launch.log": "6b26e6bf2074cbd41ec13e11e037a5add93026bd474142cb628c28b22355e24b",
+    "js-runtime-trace-02/lldb.log": "5532dcd57d37c9498f68ba356e6eae41cf39db21a67d2aed3c0af2fe6d400ace",
+    "js-runtime-trace-02/terminate.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "js-runtime-trace-03/app.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "js-runtime-trace-03/app.stdout.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "js-runtime-trace-03/capture-result.json": "c4bb65fa84341e3151b98e0f36434933be34b5b424b112ebac3b26a40ccd5b41",
+    "js-runtime-trace-03/capture.py": "929c786e810e5a5897ed0232ade0d923d354de7e015c8ddd25547f304ae6f3ed",
+    "js-runtime-trace-03/launch.log": "97941b3668dd9568f6559c3bff7382cfcd4797117639fac16ccf8d3b71ed41a1",
+    "js-runtime-trace-03/lldb.log": "6f6db5beb077389ec285d14290d905e0c52fce68aaaa74a78853f6dc7bf5b0c4",
+    "js-runtime-trace-03/terminate.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "js-runtime-trace-04/TableUs-2026-09-21-213111.ips": "e4b9b517b151431c27100ba0d9933107f989c4c54427483a5b3703c047baa4fc",
+    "js-runtime-trace-04/app.stderr.log": "9b4adf4e36722f7be1a442271238e3e0bb273b36ed062f0d4c2c5c90d47a4f4b",
+    "js-runtime-trace-04/app.stdout.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "js-runtime-trace-04/capture-result.json": "9bd63efaeb64f665dde4b2fc9f88df897208a5984c92668c416860f9a3aa4912",
+    "js-runtime-trace-04/capture.py": "b491157ad60cbe98d175fbf30a3baa955da3a6f79b09be01cd51a73210f3e7e1",
+    "js-runtime-trace-04/launch.log": "f22ef055e857d6dddf715f7522f131dfd40cbfb0401641c446dff318cc7d45d4",
+    "js-runtime-trace-04/lldb.log": "a42d33f06ed7ef6b714ca473b651f379617af2073962df67bfb409fd2a94ecca",
+    "js-runtime-trace-04/terminate.log": "62c40bed95e3b6ce716d4565145ebc53f5f3e464e729d90974786c5768b11a6c",
+    "js-runtime-trace-05/app.stderr.log": "f13a7b185fd0488c8214d5b613cb7703f2f31267f21352e1794c42f1cee155dd",
+    "js-runtime-trace-05/app.stdout.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "js-runtime-trace-05/capture-result.json": "f860dd2278a9988487bbc26180f1dcb80bd71671a2834a81eca2271761052575",
+    "js-runtime-trace-05/capture.py": "da32cc60d3ed6d75d1da21720655862840dbacffab38dc458fabe15530baf9f7",
+    "js-runtime-trace-05/launch.log": "7ea2aa6512720d52e71976fe312967f82e03f33cdcb8c20e21b020a2283f5284",
+    "js-runtime-trace-05/lldb.log": "7460e55d1d476c68de6ff7f73669ae6129a0191d58aeaa98e7cd4cb0d2b7588f",
+    "js-runtime-trace-05/terminate.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "js-runtime-trace-06-proposed/capture.py": "ebc3d31524516ab4a5a2cd7c7480a1957978baed22b30d9bd435ce815cdb4a2f",
+    "js-runtime-trace-06-proposed/driver.py": "9a8b58400a355dc6cd9aebedd6c82ef3ee6e6bae0dbdedef240aa8fa3e622048",
+    "test-ios.app/Frameworks/hermesvm.framework/hermesvm": "94803d207c51b8a07744a66f718a2d2c6cd9e4355eb47f2b335f963e59189ece",
+    "test-ios.app/main.jsbundle": "09ebe6bf8078002b82d514de6c3522e81b640f59274d94347ba22cc29b7adff9",
+    "test-ios.diagnostics/application.js.map": "b290603d25a94b5b7042b8008481a4b53d58ca11cc1b9ca2549a721ff519da2c"
+  }
+}
