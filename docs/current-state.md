@@ -15,15 +15,15 @@ previous narrative without making it an active checklist.
 | Role | Value |
 | --- | --- |
 | Accepted API/native and retained Preview candidate | `f94a1d9d1125e6c9111aa08eda496f014f20d0c0` |
-| Current task branch / worktree | `codex/native-diagnostic-retention` / `/Users/brianchei/.codex/worktrees/63bd/Tableus-ai-agent-dev` |
+| Current task branch / worktree | `codex/native-replacement-validation` / `/Users/brianchei/.codex/worktrees/ea6d/Tableus-ai-agent-dev` |
 | Replacement application / prior operator | `ed8330a766b3c4b80a505e075535678394e275e9`; completed dependency remediation |
 | Native diagnostic operator | `16603dd0cf36d27b492e57a02d3c6c438a2563c4`; application bytes unchanged |
-| Previous task / exact base | `01a0c5ec-b7f9-77d1-b739-0f49a238de16`; `a556c572d038c034267f098dd5bed877d104ea5f` |
+| Previous task / exact base | `01a0c661-7b3f-7403-906c-0f60f60a3dd4`; `5b39d937b905691798a585b4aced79f91c7e97bf` |
 | Evidence index | [Current candidate](evidence/ios27-staging-f94a1d9/closeout.md) |
 
 The root checkout is an older branch and is not the implementation base.
 Application, operator and evidence commits are distinct. Phase W deployed ed8330a;
-this task changes only native operator tooling. The previous worktree
+this task prepares native validation without changing executable bytes. The previous worktree
 `/Users/brianchei/.codex/worktrees/90bd/Tableus-ai-agent-dev` retains its private
 `.artifacts/phase-w/source` and evidence. Existing staging artifacts prove only
 their original application SHA.
@@ -108,9 +108,12 @@ private attempt logs, working files, available symbols/maps and hashed diagnosti
 inventories bound to separate application/operator identities. [Local verification](evidence/native-diagnostic-retention-2026-09-21/README.md)
 passed: 24 focused checks, 244 JavaScript / 98 Python tests (three PostgreSQL
 skips), contract drift, builds and smoke. No native compilation or symbol usability
-is claimed. Later verification is
-proposed as two deterministic and two readiness artifacts, with separate approvals
-and unresolved telemetry/live-read gates. No cumulative replacement acceptance.
+is claimed. The [2d proposal](evidence/native-replacement-validation-2026-09-21/README.md)
+is prepared: N1 requests two sequential deterministic attempts on new disposable
+devices; N2 builds/updates remain a separate approval. About 21.25 GiB free is below
+the proposed 40 GiB retention floor. Approval and disk capacity block execution.
+Required symbol/map matching remains unverified; telemetry/live reads stay gated.
+Preserve 63bd retention evidence as well as 90bd. No cumulative replacement acceptance.
 Merge and release gates remain separate.
 
 Latest provider observation: September 21, 19:20:36 UTC. Places totals

@@ -1,45 +1,53 @@
-# Active packet: native diagnostic retention (2c)
+# Active packet: native replacement validation preparation (2d)
 
-Started and completed 2026-09-21. One primary agent; local tooling and deterministic fixtures only.
+Started 2026-09-21. Proposal prepared; **execution pending approval and capacity**.
+One primary Astra agent; no delegation or canceled scans.
 
-## Identities and outcome
+## Identities
 
-- Branch: `codex/native-diagnostic-retention`.
-- Worktree: `/Users/brianchei/.codex/worktrees/63bd/Tableus-ai-agent-dev`.
-- Exact base: `a556c572d038c034267f098dd5bed877d104ea5f` (Phase W complete).
-- Prior task: `01a0c5ec-b7f9-77d1-b739-0f49a238de16`; its completion handoff
-  provides the required context without unresolved questions requiring retrieval.
-- Application remains `ed8330a766b3c4b80a505e075535678394e275e9`;
-  prior operator ed8330a. Retention operator implementation: `16603dd0cf36d27b492e57a02d3c6c438a2563c4`.
-- Preserve prior worktree `/Users/brianchei/.codex/worktrees/90bd/Tableus-ai-agent-dev`,
-  private Phase W evidence, artifacts and sessions.
+- Base: `5b39d937b905691798a585b4aced79f91c7e97bf`.
+- Branch: `codex/native-replacement-validation`.
+- Worktree: `/Users/brianchei/.codex/worktrees/ea6d/Tableus-ai-agent-dev`.
+- Previous task: `01a0c661-7b3f-7403-906c-0f60f60a3dd4`; one recent turn read.
+- Application: `ed8330a766b3c4b80a505e075535678394e275e9`.
+- Retention implementation / proposed build operator:
+  `16603dd0cf36d27b492e57a02d3c6c438a2563c4`.
+- Evidence checkpoint: commit containing the linked proposal; never substitute it
+  for the app or actually invoked operator SHA. No build operator invoked yet.
 
-## Completed result
+## Reviewable result and checks
 
-Success/failure/interruption logs and available diagnostic files survive in
-private durable per-attempt storage. Inventory binds source tree/lock, separate
-operator SHA, build ID, artifact and unchanged version-two receipt hashes.
-Missing families are explicit; symbol/map usability is not inferred.
+[Proposal, exact command templates and stop conditions](../evidence/native-replacement-validation-2026-09-21/README.md).
+Fresh: source/log associations, local host metadata, profile/signing/source review,
+no-build input checks and documentation validation. Reused unchanged 2c manifest:
+24 focused fixtures; make ready 244 JavaScript / 98 Python, three PostgreSQL skips;
+contract drift. No compiler, device or external execution; no usable-symbol claim.
+No executable bytes changed; do not repeat make ready for this checkpoint.
 
-Fresh: 24 focused fixture/stub tests; `make ready` passed with 244 JavaScript and
-98 Python tests (three PostgreSQL skips), builds, deterministic smoke and report-only
-performance. The first readiness attempt was stopped by sandbox EPERM on the
-existing local HTTP fixture; the permission-enabled run passed. Contract drift
-check passed. No native compiler, device, external CI or live operation ran.
-[Detailed evidence](../evidence/native-diagnostic-retention-2026-09-21/README.md)
-and [handoff](../handoffs/2026-09-21-native-diagnostic-retention.md).
+## Next action within this task
 
-This objective is complete; preserve this worktree and private evidence. Next is
-roadmap 2d in a fresh task, beginning with exact-commit review and an approval
-proposal for two deterministic native builds, then two readiness builds/installs.
-No native execution is authorized by this completed packet.
+Obtain explicit N1 approval for two sequential deterministic attempts, limited
+existing Expo/dependency access, new disposable simulator/emulator and bounded local
+checks. Resolve capacity first: observed 21.25 GiB is below proposed 40 GiB floor;
+no cleanup authorized. Require symbols/maps to match and resolve app frames before
+moving to the next artifact; helper success alone is insufficient. Preserve failed
+attempts and stop, no automatic rebuild. N1 is not approved by “continue.”
 
-## Boundaries
+Only after N1 evidence passes, request separate N2 approval for two readiness
+builds and in-place staging updates, acknowledging replacement of installed
+f94a1d9. Live plan reads/passive telemetry need explicit scope; no OTP or canaries.
+Roadmap 2d remains incomplete. Keep this task for the pending gate; do not create
+a fresh task or claim native replacement completion at this preparation checkpoint.
 
-No compilation, installs/device operations, uploads, CI, deployments, merges,
-live requests, OTP emails, canaries, resources/secrets, migrations, destructive
-cleanup, store submission, cohort activation or canceled security scans.
-One CI/Preview/API redeploy consumed in Phase W. Closed ledger: Places 92/100
-from baseline 329 (8 unused, not reopened), emails 2/4, canaries 6/6 per provider,
-fresh Gemini 0/0; backstop 429. September 30 is unextended; AppHang acceptance
-remains isolated-staging-only. Native replacement is a later approved objective.
+## Preserved boundaries
+
+Preserve `/Users/brianchei/.codex/worktrees/63bd/Tableus-ai-agent-dev` and all
+retention logs, `/Users/brianchei/.codex/worktrees/90bd/Tableus-ai-agent-dev` and all
+Phase W evidence, accepted artifacts and sessions. Web ed8330a; API/native f94a1d9;
+production e1184ec; API rebuilt-image provenance unchanged. No cumulative transfer.
+One CI/Preview/API redeploy consumed. Closed Places 92/100 (baseline 329; 8 unused,
+not reopened), emails 2/4, canaries 6/6 per provider, fresh Gemini 0/0; backstop 429.
+September 30 unextended; AppHang risk accepted only for isolated staging.
+No compilation, install/device action, upload, CI, deployment, merge, live request,
+OTP, canary, resource/secret change, migration, cleanup, store or cohort action is
+currently authorized. Preparation does not change durable decisions.
