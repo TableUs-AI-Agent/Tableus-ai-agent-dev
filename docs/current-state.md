@@ -122,12 +122,17 @@ retry idempotency and all five refresh phases. The link harness then stopped at
 its first cold auth assertion: it incorrectly expected a sign-in screen for an
 already-approved demo actor whose route guard shows Plans. The screenshot/source
 support a harness expectation error, not an established application regression.
-No join case or export cycle ran. No new target crash report was found. The
-prepared N1-R2 correction awaits approval; canonical HTTPS delivery and auth-mode
-presentation remain unverified. Historical AppHang clearance is not established.
+The owner then approved [N1-R2](evidence/native-replacement-validation-2026-09-21/n1-r2-result.md).
+Its first cold join case reached the screen but sent `a b/c=` for encoded
+`a+b/c=`. The local proxy blocked the request before the backend and stopped the
+run. An offline reproduction with three exact bundle-map source matches traces
+the corruption to custom-scheme extraction followed by another query parse.
+Remaining links and export cycles did not run; no new target crash was found.
+A bounded local fix/test proposal (N1-F1) is prepared, not applied. Canonical HTTPS
+delivery, auth-mode presentation and historical AppHang clearance remain unverified.
 Only the new disposable iOS 26.5 simulator received this byte-identical artifact;
 accepted native installations remain f94a1d9. Android is unbuilt: remaining iOS
-gates and 19.91 GiB free versus the 40 GiB build floor block it. N2/live reads
+gates and 20.18 GiB free versus the 40 GiB build floor block it. N2/live reads
 stay separately gated.
 Preserve all new diagnostics, 63bd retention evidence and 90bd Phase W evidence.
 No cumulative replacement acceptance.

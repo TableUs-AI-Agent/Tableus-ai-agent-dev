@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "approved_amendment": "N1-R2",
+  "owner_response": "approve",
+  "recorded_at": "2026-09-22T03:34:44.399642+00:00",
+  "proposal_commit": "b93f037e0b408b42260a5a413df23579ad8507a5",
+  "proposal_sha256": "94e52361df0cdd669ca2df6bf2f851278961ebb31c38235eb590c81373b8d99f",
+  "harness_sha256": "bc661bd1e4630553e7e5f75f0dfddc746ba344802941976d8c5ff337b1ef2b71",
+  "scope": "Run the prepared remaining thirteen local join cases once cold and once warm. If the executable subset passes, perform the two unused export/relaunch cycles. Stop on the first failure; no automatic repeat. Keep canonical HTTPS/auth coverage explicitly unverified.",
+  "application_sha": "ed8330a766b3c4b80a505e075535678394e275e9",
+  "native_builds_authorized": 0,
+  "live_budget_change": false,
+  "N2_approved": false,
+  "cleanup_authorized": false
+}

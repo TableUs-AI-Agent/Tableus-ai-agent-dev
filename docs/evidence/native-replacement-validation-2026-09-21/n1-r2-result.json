@@ -1,0 +1,321 @@
+{
+  "schema_version": 1,
+  "recorded_at": "2026-09-22T03:43:09.546250+00:00",
+  "approval": "n1-r2-approval.json",
+  "proposal_commit": "b93f037e0b408b42260a5a413df23579ad8507a5",
+  "application_sha": "ed8330a766b3c4b80a505e075535678394e275e9",
+  "build_operator_sha": "16603dd0cf36d27b492e57a02d3c6c438a2563c4",
+  "build_id": "local-ios-test-ed8330a-2d-01",
+  "artifact_sha256": "fda161a75d1d895ef88e3530847d9b7dde5dad3a5f1f01680c9ea0c06c9db0b9",
+  "status": "stopped_on_custom_scheme_token_corruption",
+  "driver": {
+    "status": "failed",
+    "application_sha": "ed8330a766b3c4b80a505e075535678394e275e9",
+    "device": "2408A54F-A1C5-4388-8B46-6A987FE3B578",
+    "started_at": "2026-09-22T03:34:47.952253+00:00",
+    "cases": [],
+    "blocked_cases": [
+      {
+        "case": "canonical HTTPS auth sign-in",
+        "cold": "not delivered",
+        "warm": "not delivered",
+        "reason": "This profile has no verified local forced HTTPS dispatch; opening canonical/wrong-origin web URLs risks unapproved hosted navigation. Custom-scheme cases below do not establish canonical origin rewriting or universal-link association."
+      },
+      {
+        "case": "canonical HTTPS join",
+        "cold": "not delivered",
+        "warm": "not delivered",
+        "reason": "This profile has no verified local forced HTTPS dispatch; opening canonical/wrong-origin web URLs risks unapproved hosted navigation. Custom-scheme cases below do not establish canonical origin rewriting or universal-link association."
+      },
+      {
+        "case": "wrong HTTPS origin",
+        "cold": "not delivered",
+        "warm": "not delivered",
+        "reason": "This profile has no verified local forced HTTPS dispatch; opening canonical/wrong-origin web URLs risks unapproved hosted navigation. Custom-scheme cases below do not establish canonical origin rewriting or universal-link association."
+      },
+      {
+        "case": "web-only HTTPS auth-confirm",
+        "cold": "not delivered",
+        "warm": "not delivered",
+        "reason": "This profile has no verified local forced HTTPS dispatch; opening canonical/wrong-origin web URLs risks unapproved hosted navigation. Custom-scheme cases below do not establish canonical origin rewriting or universal-link association."
+      }
+    ],
+    "new_crash_reports": [],
+    "auth_mode_presentation": "unobservable with the approved demo identity; prior cold auth attempt retained as a failed harness assertion, no rerun",
+    "approval_id": "N1-R2",
+    "flows": [
+      {
+        "name": "identity",
+        "status": "passed",
+        "elapsed_seconds": 27.116
+      }
+    ],
+    "error": "Unexpected local app write or decoded value: /api/v1/plans/531f80a8-348b-463d-bd9d-26bc585f3fe8/join",
+    "finished_at": "2026-09-22T03:35:34.605488+00:00",
+    "api_request_count": 2,
+    "boundary_failures": [
+      "Unexpected local app write or decoded value: /api/v1/plans/531f80a8-348b-463d-bd9d-26bc585f3fe8/join"
+    ]
+  },
+  "native_observation": {
+    "case": "cold encoded plus/slash/equals token",
+    "expected_token": "a+b/c=",
+    "observed_token": "a b/c=",
+    "join_screen_visible": true,
+    "join_taps": 1,
+    "api_requests": [
+      {
+        "at": "2026-09-22T03:35:11.060837+00:00",
+        "method": "GET",
+        "path": "/api/v1/plans",
+        "body": null,
+        "demo_identity": "demo-guest",
+        "status": 200
+      },
+      {
+        "at": "2026-09-22T03:35:33.604803+00:00",
+        "method": "POST",
+        "path": "/api/v1/plans/531f80a8-348b-463d-bd9d-26bc585f3fe8/join",
+        "body": {
+          "share_token": "a b/c="
+        },
+        "demo_identity": "demo-guest",
+        "error": "Unexpected local app write or decoded value: /api/v1/plans/531f80a8-348b-463d-bd9d-26bc585f3fe8/join"
+      }
+    ],
+    "request_blocked_before_upstream": true,
+    "backend_join_request_count": 0,
+    "local_fixture_plan_creates": 13,
+    "local_fixture_token_rotations": 1,
+    "post_matrix_snapshot_comparison_ran": false,
+    "completed_native_cases": 0,
+    "failed_native_cases": 1,
+    "remaining_cold_cases": 12,
+    "warm_matrix_started": false,
+    "export_cycles_started": 0,
+    "cold_flow_completed_manifest_retained": false,
+    "reason": "Stop-on-boundary-mismatch interrupted Maestro during tap; live log and API event retained."
+  },
+  "offline_diagnosis": {
+    "scope": "Offline pure-function reproduction with exact retained Expo Router modules; no simulator run, API request, network, application edit or claim of full route/session coverage.",
+    "result": "reproduces native API-boundary plus-to-space corruption",
+    "rows": [
+      {
+        "name": "encoded-plus",
+        "type": "custom",
+        "input": "tableus://join/11111111-1111-4111-8111-111111111111?token=a%2Bb%2Fc%3D",
+        "extracted_path": "join/11111111-1111-4111-8111-111111111111?token=a+b/c=",
+        "parsed_token": "a b/c="
+      },
+      {
+        "name": "encoded-plus",
+        "type": "canonical-control",
+        "input": "https://links.table-us.com/join/11111111-1111-4111-8111-111111111111?token=a%2Bb%2Fc%3D",
+        "extracted_path": "join/11111111-1111-4111-8111-111111111111?token=a%2Bb%2Fc%3D",
+        "parsed_token": "a+b/c="
+      },
+      {
+        "name": "encoded-plus",
+        "type": "relative-control",
+        "input": "/join/11111111-1111-4111-8111-111111111111?token=a%2Bb%2Fc%3D",
+        "extracted_path": "join/11111111-1111-4111-8111-111111111111?token=a%2Bb%2Fc%3D",
+        "parsed_token": "a+b/c="
+      },
+      {
+        "name": "unicode",
+        "type": "custom",
+        "input": "tableus://join/11111111-1111-4111-8111-111111111111?token=%E6%9D%B1%E4%BA%AC%20%2F%20caf%C3%A9",
+        "extracted_path": "join/11111111-1111-4111-8111-111111111111?token=\u6771\u4eac / caf\u00e9",
+        "parsed_token": "\u6771\u4eac / caf\u00e9"
+      },
+      {
+        "name": "unicode",
+        "type": "canonical-control",
+        "input": "https://links.table-us.com/join/11111111-1111-4111-8111-111111111111?token=%E6%9D%B1%E4%BA%AC%20%2F%20caf%C3%A9",
+        "extracted_path": "join/11111111-1111-4111-8111-111111111111?token=%E6%9D%B1%E4%BA%AC%20%2F%20caf%C3%A9",
+        "parsed_token": "\u6771\u4eac / caf\u00e9"
+      },
+      {
+        "name": "unicode",
+        "type": "relative-control",
+        "input": "/join/11111111-1111-4111-8111-111111111111?token=%E6%9D%B1%E4%BA%AC%20%2F%20caf%C3%A9",
+        "extracted_path": "join/11111111-1111-4111-8111-111111111111?token=%E6%9D%B1%E4%BA%AC%20%2F%20caf%C3%A9",
+        "parsed_token": "\u6771\u4eac / caf\u00e9"
+      },
+      {
+        "name": "plus-space",
+        "type": "custom",
+        "input": "tableus://join/11111111-1111-4111-8111-111111111111?token=a+b%20c%2Bd",
+        "extracted_path": "join/11111111-1111-4111-8111-111111111111?token=a b c+d",
+        "parsed_token": "a b c d"
+      },
+      {
+        "name": "plus-space",
+        "type": "canonical-control",
+        "input": "https://links.table-us.com/join/11111111-1111-4111-8111-111111111111?token=a+b%20c%2Bd",
+        "extracted_path": "join/11111111-1111-4111-8111-111111111111?token=a+b%20c%2Bd",
+        "parsed_token": "a b c+d"
+      },
+      {
+        "name": "plus-space",
+        "type": "relative-control",
+        "input": "/join/11111111-1111-4111-8111-111111111111?token=a+b%20c%2Bd",
+        "extracted_path": "join/11111111-1111-4111-8111-111111111111?token=a+b%20c%2Bd",
+        "parsed_token": "a b c+d"
+      },
+      {
+        "name": "malformed-byte",
+        "type": "custom",
+        "input": "tableus://join/11111111-1111-4111-8111-111111111111?token=%FF%41",
+        "extracted_path": "join/11111111-1111-4111-8111-111111111111?token=\ufffdA",
+        "parsed_token": "\ufffdA"
+      },
+      {
+        "name": "malformed-byte",
+        "type": "canonical-control",
+        "input": "https://links.table-us.com/join/11111111-1111-4111-8111-111111111111?token=%FF%41",
+        "extracted_path": "join/11111111-1111-4111-8111-111111111111?token=%FF%41",
+        "parsed_token": "\ufffdA"
+      },
+      {
+        "name": "malformed-byte",
+        "type": "relative-control",
+        "input": "/join/11111111-1111-4111-8111-111111111111?token=%FF%41",
+        "extracted_path": "join/11111111-1111-4111-8111-111111111111?token=%FF%41",
+        "parsed_token": "\ufffdA"
+      },
+      {
+        "name": "trailing-percent",
+        "type": "custom",
+        "input": "tableus://join/11111111-1111-4111-8111-111111111111?token=trailing%",
+        "extracted_path": "join/11111111-1111-4111-8111-111111111111?token=trailing%",
+        "parsed_token": "trailing%"
+      },
+      {
+        "name": "trailing-percent",
+        "type": "canonical-control",
+        "input": "https://links.table-us.com/join/11111111-1111-4111-8111-111111111111?token=trailing%",
+        "extracted_path": "join/11111111-1111-4111-8111-111111111111?token=trailing%",
+        "parsed_token": "trailing%"
+      },
+      {
+        "name": "trailing-percent",
+        "type": "relative-control",
+        "input": "/join/11111111-1111-4111-8111-111111111111?token=trailing%",
+        "extracted_path": "join/11111111-1111-4111-8111-111111111111?token=trailing%",
+        "parsed_token": "trailing%"
+      },
+      {
+        "name": "incomplete-utf8",
+        "type": "custom",
+        "input": "tableus://join/11111111-1111-4111-8111-111111111111?token=%E2%82",
+        "extracted_path": "join/11111111-1111-4111-8111-111111111111?token=\ufffd",
+        "parsed_token": "\ufffd"
+      },
+      {
+        "name": "incomplete-utf8",
+        "type": "canonical-control",
+        "input": "https://links.table-us.com/join/11111111-1111-4111-8111-111111111111?token=%E2%82",
+        "extracted_path": "join/11111111-1111-4111-8111-111111111111?token=%E2%82",
+        "parsed_token": "\ufffd"
+      },
+      {
+        "name": "incomplete-utf8",
+        "type": "relative-control",
+        "input": "/join/11111111-1111-4111-8111-111111111111?token=%E2%82",
+        "extracted_path": "join/11111111-1111-4111-8111-111111111111?token=%E2%82",
+        "parsed_token": "\ufffd"
+      }
+    ],
+    "source_bindings": [
+      {
+        "file": "/Users/brianchei/repos/Tableus-ai-agent-dev/.artifacts/mobile/ed8330a766b3c4b80a505e075535678394e275e9/native-validation-2d/test-ios.diagnostics/workspace/mobile/node_modules/expo-router/build/fork/extractPathFromURL.js",
+        "sha256": "400721a35f4efc545d4a27b89bff0ade6026ca95b3749fc405f5703d975347ce",
+        "composed_map_exact_source_match": true
+      },
+      {
+        "file": "/Users/brianchei/repos/Tableus-ai-agent-dev/.artifacts/mobile/ed8330a766b3c4b80a505e075535678394e275e9/native-validation-2d/test-ios.diagnostics/workspace/mobile/node_modules/expo-router/build/fork/getStateFromPath-forks.js",
+        "sha256": "6a88433291fb2e25233b58eed5e2c0b2358dcfe2e1ce0b91b822c28e7ae4c119",
+        "composed_map_exact_source_match": true
+      },
+      {
+        "file": "/Users/brianchei/repos/Tableus-ai-agent-dev/.artifacts/mobile/ed8330a766b3c4b80a505e075535678394e275e9/native-validation-2d/test-ios.diagnostics/workspace/mobile/node_modules/expo-router/build/hooks/useLocalSearchParams.js",
+        "sha256": "1bd88e8a2317436e24aab0cc804b716dacd9c1be0b5a29a45cfd56ebac31fd15",
+        "composed_map_exact_source_match": true
+      }
+    ]
+  },
+  "new_target_crash_reports_through_recorded_at": [],
+  "post_stop": {
+    "recorded_at": "2026-09-22T03:36:46.223925+00:00",
+    "terminate_exit": 0,
+    "stdout": "",
+    "stderr": "",
+    "ports": ""
+  },
+  "frozen_application_workspace_clean": true,
+  "retained_application_source_sha256": {
+    "mobile/src/lib/links.ts": "19d48e0086347c47b9e5859f4bef4e6e86968ea215448b8e9b877f2f7f30ccb9",
+    "mobile/app/+native-intent.tsx": "cefcf2d1b96f8cf94a4ab72787852d8569b4d189b01a85abdfd69953fc97ff96",
+    "mobile/app/join/[id].tsx": "a31d01392b0e277a48e4ee5d45fafe345d93f1e4152e1332d70cc65389612e51",
+    "mobile/src/lib/router-dependency.component.test.tsx": "db1961b7c432c57e514f0bf5a97e4eef29ab6c35c20a40255942727b65118777",
+    "backend/tableus/security.py": "3640e708b94296f3c125e7f2c5a37985a949bfb8314c2cff9a127438ac8d7915"
+  },
+  "free_disk": {
+    "available_kib": 21160000,
+    "available_gib": 20.18,
+    "android_required_gib": 40
+  },
+  "new_builds": 0,
+  "build_attempts_consumed": {
+    "ios": 1,
+    "android": 0
+  },
+  "N1_complete": false,
+  "N2_approved": false,
+  "accepted_devices_untouched": true,
+  "new_live_budget": false,
+  "additional_cleanup": false,
+  "application_patch_applied": false,
+  "private_root": "/Users/brianchei/repos/Tableus-ai-agent-dev/.artifacts/mobile/ed8330a766b3c4b80a505e075535678394e275e9/native-validation-2d",
+  "private_file_sha256": {
+    "test-ios-links-resumption-01/api-boundaries.jsonl": "6a7c06c2233a12a056d90ff74cbedb84446eb387c064c67f12ad736b7c11217b",
+    "test-ios-links-resumption-01/backend.log": "cb9f7c12014a6353b07c6c15bbb4105f86a55ab5f4c6f0bf138efa59d3d584b4",
+    "test-ios-links-resumption-01/cold-fixtures.json": "7d38999b1c41f2add960a844917a355d4da625a28a2abefb236c8772acf5df31",
+    "test-ios-links-resumption-01/cold-matrix-syntax.log": "a12b7cb43c9d9134b5bb1b35e9096b66775d9e92e7611d1cc92b02edd6782a87",
+    "test-ios-links-resumption-01/cold-matrix.log": "514f44640917a45ce98cf27e54b63462511d32aea196e856d68eb78891f1b4aa",
+    "test-ios-links-resumption-01/cold-matrix.yml": "cf49975d316dfa86dd935eb3fa1601f45dbaec2e062da18ba9f45ee0d039faa5",
+    "test-ios-links-resumption-01/driver-result.json": "af586eccd7b7475cef4c038a9eb9922780496cbd971225d639b47df0c7439933",
+    "test-ios-links-resumption-01/identity-syntax.log": "a12b7cb43c9d9134b5bb1b35e9096b66775d9e92e7611d1cc92b02edd6782a87",
+    "test-ios-links-resumption-01/identity.log": "45df6b9ba0476305a7c2fd8729f7f25ae8eb0bfdbd6a0072b6910d558169876a",
+    "test-ios-links-resumption-01/identity.yml": "338f014762fd76c86c91d79f356147e6a4d5883e8cf554310cfc965f85d64bea",
+    "test-ios-links-resumption-01/maestro-results/cold-matrix-ui4ot9yg/2026-09-21_223521/cold-matrix/logs/maestro.log": "212689695ee1c2235719dc2f3d4d498f4bbada4d8170bf8809a6e71ea2033c12",
+    "test-ios-links-resumption-01/maestro-results/cold-matrix-ui4ot9yg/2026-09-21_223521/xctest_runner_2026-09-21_223523.log": "145b229f222452071a3648516af33d9fa3ece1b866c379fdb26245d42738b852",
+    "test-ios-links-resumption-01/maestro-results/cold-matrix-ui4ot9yg/operator-invocation.json": "748883b071df5142a878d452b7a14f87daacdbfcb32cd97b0ca06abee526ed99",
+    "test-ios-links-resumption-01/maestro-results/identity-sevrc1rm/2026-09-21_223451/identity/commands.json": "19e632353016c9c371b0d190b777ee4b26161722a320e98cc99ca665cccc6aff",
+    "test-ios-links-resumption-01/maestro-results/identity-sevrc1rm/2026-09-21_223451/identity/logs/device-simulator.log": "9c3d940a6432a3113e2c579c04eb517d3746385a3cb26b12cc95fb849c02b4b5",
+    "test-ios-links-resumption-01/maestro-results/identity-sevrc1rm/2026-09-21_223451/identity/logs/device-xctest.log": "aa4fe2131a39228c2d2fc385f6ef737883bf987d5108713761e44895e3780738",
+    "test-ios-links-resumption-01/maestro-results/identity-sevrc1rm/2026-09-21_223451/identity/logs/maestro.log": "cfe448207aa0e20d25b7253bb7335700a5bee11e8584988053ae729cec82b6e8",
+    "test-ios-links-resumption-01/maestro-results/identity-sevrc1rm/2026-09-21_223451/identity/manifest.json": "5716af07361a5511279db5be87b08f1dec95039bc98cf9e8c101d530b84c738a",
+    "test-ios-links-resumption-01/maestro-results/identity-sevrc1rm/2026-09-21_223451/xctest_runner_2026-09-21_223453.log": "2df340441153eeac3467a8c49fb49724a0c22ab7edef416ff24c890b83ba893b",
+    "test-ios-links-resumption-01/maestro-results/identity-sevrc1rm/operator-invocation.json": "b88633ffcccbf44e4e7d02512dffef01d004c5b0ea609f3a4080c5d787380335",
+    "test-ios-links-resumption-01/offline-parser-repro.cjs": "be216628fe3561d15d5bf358538f9e09af7cb889d44da3853b3add3fbd72c48c",
+    "test-ios-links-resumption-01/offline-parser-repro.json": "7c36f20a2bdec1becdc2a2d7ca2f2fb1f1e62bf1eb4a3cbbb58ff0abaeb1f1d2",
+    "test-ios-links-resumption-01/post-stop-state.json": "6c496934d79f26d620e33864a75c64427f252ea53c04857f8d314454a8471341",
+    "n1-r-tools/links-resumption-01-proposed.py": "bc661bd1e4630553e7e5f75f0dfddc746ba344802941976d8c5ff337b1ef2b71",
+    "n1-r-tools/links-resumption-01-proposed.diff": "ccff6f9b0c4f141c8d30d25700485cca65753c25102109eda3e9855c9796b0fc",
+    "n1-r-tools/maestro": "58c5d552c36a8ee04aa1c8a4f6e6b139111491997634293df9867177e1cd8e5a",
+    "test-ios.receipt.json": "4e4eb1348d4c80df606a35d488bfdf53ccf5241bd5dfc240fb1fd05f7fd3f4da",
+    "test-ios.inspection.json": "67f20bed5d7c570375ce9bdd3b5090c3f191699f640a133cc904c2daa4501fe5",
+    "test-ios.app/main.jsbundle": "09ebe6bf8078002b82d514de6c3522e81b640f59274d94347ba22cc29b7adff9",
+    "test-ios.diagnostics/application.js.map": "b290603d25a94b5b7042b8008481a4b53d58ca11cc1b9ca2549a721ff519da2c"
+  },
+  "next_proposal": {
+    "id": "N1-F1",
+    "document": "n1-f1-local-remediation.md",
+    "sha256": "62f26d01d439ce153ea3c6175e2f1539ed5a6e549e2532b59681a2353abec55c",
+    "approved": false,
+    "executed": false,
+    "native_attempts_included": 0
+  }
+}
