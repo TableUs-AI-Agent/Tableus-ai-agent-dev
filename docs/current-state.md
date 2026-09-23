@@ -188,9 +188,13 @@ device and OS. The [O3 operation](evidence/native-replacement-validation-2026-09
 created and booted its iOS 27 target, then stopped after 143.997 seconds when the
 initial process query exceeded eight seconds. No app install, launch or offline
 runner occurred. The target is shut down; services/ports are clear. Five system
-service reports during shutdown are distinct from O1/O2. The [O4 proposal](evidence/native-replacement-validation-2026-09-21/n1-f1-o4-proposal.md)
-prepares a measured control query on the retained target before a conditional
-offline run; new native allowance required. No targeted Maestro upgrade fix was found.
+service reports during shutdown are distinct from O1/O2. The approved [O4 operation](evidence/native-replacement-validation-2026-09-21/n1-f1-o4-result.md)
+passed its control query in 9.465 seconds, then stopped after 113.791 seconds on a
+host process-query timeout during runner setup. No UI execution is retained;
+install/launch and app traffic are unproved. Cleanup is independently confirmed.
+[H1](evidence/native-replacement-validation-2026-09-21/n1-f1-h1-proposal.md) prepares
+shutdown of two older TableUs simulators and host observations, with data retained
+and no test replay; approval required. No targeted Maestro upgrade fix was found.
 Accepted native remains
 f94a1d9. Android still requires all iOS gates and fresh 40 GiB capacity;
 N2/live reads and canonical/auth/physical probes remain separately gated.

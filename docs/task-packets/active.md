@@ -1,6 +1,6 @@
 # Active packet: native replacement validation (2d)
 
-N1-F1 approved; **candidate 8972865 built; D2/lifecycle and P2 Settings probe passed; O1/O2 platform crashes and refresh failure unresolved; O2/O3 stopped; O3 created its target but ran no app tests; no further native execution authorized.**
+N1-F1 approved; **candidate 8972865 built; D2/lifecycle and P2 Settings probe passed; O1/O2 platform crashes and refresh failure unresolved; O2/O3/O4 stopped; O4 passed control but hit a host-query timeout during runner setup; H1 host recovery prepared, no further native execution authorized.**
 The owner authorized F1 native resumption and safe regenerable-cache cleanup on
 2026-09-22; exact scope is recorded in the [amendment](../evidence/native-replacement-validation-2026-09-21/n1-f1-resumption-approval.json).
 Capacity and fresh-input checks still govern execution; prior attempts remain consumed.
@@ -162,12 +162,17 @@ cap. No app install/launch or offline runner occurred. Shutdown and independent
 process/port checks confirm cleanup. Five system-service shutdown reports remain
 retained, distinct from O1/O2; the cause of the control delay is unproved.
 The one O3 operation is consumed at its first failure. Its uninvoked offline
-portion grants no continuation. The [O4 proposal](../evidence/native-replacement-validation-2026-09-21/n1-f1-o4-proposal.md)
-prepares one measured 30-second control query on the retained target, then allows
-one unchanged offline run only if control and all original prerequisites pass.
-The 35-minute total and 30-minute runner caps remain; a new allowance is required.
-No O4 operation has occurred. Any pass is diagnostic only, with no downstream
-continuation or inherited iOS 26.5 D2/lifecycle acceptance.
+portion grants no continuation. The owner [approved O4](../evidence/native-replacement-validation-2026-09-21/n1-f1-o4-approval.json).
+Its [one operation](../evidence/native-replacement-validation-2026-09-21/n1-f1-o4-result.md)
+passed the control query in 9.465 seconds, then stopped after 113.791 seconds when
+the host process query exceeded five seconds during runner setup. No UI execution
+is retained; install/launch and traffic remain unproved. Owned processes are gone,
+ports idle and retained target Shutdown. Five system-service shutdown reports
+are preserved. The 35-minute total/30-minute runner caps were respected; no retry
+is authorized and no iOS 26.5 acceptance transfers. Post-run high load/swap and
+two older booted TableUs targets motivate [H1 host recovery](../evidence/native-replacement-validation-2026-09-21/n1-f1-h1-proposal.md):
+shutdown only those two named targets, retain data/evidence and measure host-query
+latency. This is prepared only, requires approval and includes no test replay.
 Do not change app bytes, fault counts, assertions or timeouts to
 obtain a pass. Links and the two exports wait for passing preceding gates; no
 automatic replay. Never use ed8330a evidence as proof for changed bytes.

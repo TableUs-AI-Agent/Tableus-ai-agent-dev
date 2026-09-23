@@ -1,6 +1,8 @@
 # F1-O4 — measured simulator control before conditional offline comparison
 
-**Preparation only; no approval or native execution.** [O3](n1-f1-o3-result.md)
+**Executed once after [owner approval](n1-f1-o4-approval.json); [O4 result](n1-f1-o4-result.md) stopped on a host-monitor timeout.** The original proposal below remains the scope record; its JSON is unchanged.
+
+[O3](n1-f1-o3-result.md)
 stopped before any app operation: its control process was spawned at the
 eight-second timeout boundary, but query completion was not established. This
 proposal measures that exact control step with a bounded larger allowance before
@@ -59,10 +61,10 @@ Driver SHA-256:
 Thirteen mocked/static preparation checks and Python/Node syntax pass. They
 verify timeout/partial-output retention, rejection of late results, blocked
 runner launch after failed control or host binding, exact-target-only cleanup,
-unchanged runner assertions/proxy, and reused process-group cleanup. No O4 native
-operation has run; the larger query allowance remains an untested measurement.
+unchanged runner assertions/proxy, and reused process-group cleanup. These were
+preparation checks; the subsequent actual execution is recorded in the result.
 
-A new allowance is required because O3's first-failure stop ended its single
+A new allowance was required because O3's first-failure stop ended its single
 operation even though its conditional offline runner never started. The proposed
 approval covers both the control gate and its conditional offline run, with no
 additional confirmation between them if every prerequisite passes.
