@@ -17,7 +17,7 @@ previous narrative without making it an active checklist.
 | Accepted API/native and retained Preview candidate | `f94a1d9d1125e6c9111aa08eda496f014f20d0c0` |
 | Current task branch / worktree | `codex/native-replacement-validation` / `/Users/brianchei/.codex/worktrees/ea6d/Tableus-ai-agent-dev` |
 | Staging web / prior native application | `ed8330a766b3c4b80a505e075535678394e275e9`; completed dependency remediation |
-| Local F1 mobile candidate | `8972865893a3f018a064594457dc9cc664f8a61f`; iOS/D2/lifecycle passed; O1 stopped on SpringBoard crash, offline/links/exports incomplete |
+| Local F1 mobile candidate | `8972865893a3f018a064594457dc9cc664f8a61f`; iOS/D2/lifecycle passed; O1 SpringBoard crash unresolved, P1 monitor timeout inconclusive; offline/links/exports incomplete |
 | Native diagnostic operator | `16603dd0cf36d27b492e57a02d3c6c438a2563c4`; operator unchanged |
 | Previous task / exact base | `01a0c661-7b3f-7403-906c-0f60f60a3dd4`; `5b39d937b905691798a585b4aced79f91c7e97bf` |
 | Evidence index | [Current candidate](evidence/ios27-staging-f94a1d9/closeout.md) |
@@ -168,9 +168,13 @@ XCTest accessibility support before create-retry's first assertion. The failure
 screenshot shows the iOS home screen; TableUs survived until cleanup. One create
 POST and no retry POST were observed. The original refresh failure was not reached
 and remains unresolved. O1's one extra attempt is consumed; app/services are stopped.
-The [F1-P1 Settings-only platform probe](evidence/native-replacement-validation-2026-09-21/n1-f1-platform-probe.md)
-is prepared, awaiting authorization under the existing first-failure stop. It
-would test automation stability without starting TableUs or resuming its suite.
+The approved [F1-P1 Settings-only probe](evidence/native-replacement-validation-2026-09-21/n1-f1-p1-result.md)
+stopped after 84.869 seconds when its repeated simulator-monitor call timed out.
+Both attempted flows completed their UI commands, but only the first passed the
+whole flow/observation gate. SpringBoard stayed at PID 17600; no new crash or
+TableUs launch was observed. Cleanup is confirmed. The probe is inconclusive,
+its allowance is consumed, and [P2 host-process monitoring](evidence/native-replacement-validation-2026-09-21/n1-f1-p2-proposal.md)
+is prepared only; another native run requires approval.
 Accepted native remains
 f94a1d9. Android still requires all iOS gates and fresh 40 GiB capacity;
 N2/live reads and canonical/auth/physical probes remain separately gated.

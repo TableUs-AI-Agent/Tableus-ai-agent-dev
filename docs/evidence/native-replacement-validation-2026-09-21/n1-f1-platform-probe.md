@@ -1,6 +1,6 @@
 # F1-P1 — proposed Settings-only platform diagnostic
 
-**Prepared only; not approved or executed.** This follows the platform failure
+**Historical proposal: subsequently approved and executed; see [P1 result](n1-f1-p1-result.md).** This follows the platform failure
 recorded in [F1-O1](n1-f1-o1-result.md). The exhausted O1 allowance and its
 first-failure stop do not authorize this additional native probe.
 
@@ -25,9 +25,9 @@ The fixed fresh output is
 `/Users/brianchei/repos/Tableus-ai-agent-dev/.artifacts/mobile/8972865893a3f018a064594457dc9cc664f8a61f/native-validation-f1/test-ios-settings-platform-probe-01`.
 The [machine-readable proposal](n1-f1-platform-probe.json) pins the reviewed
 operator bundle and its offline checks. Execution requires the explicit
-`TABLEUS_F1_PLATFORM_PROBE_APPROVED=1` gate. Read-only inventory confirmed Settings
-is installed and the target's launchd label is `com.apple.SpringBoard`; the
-probe itself has not run.
+`TABLEUS_F1_PLATFORM_PROBE_APPROVED=1` gate. Pre-proposal inventory confirmed
+Settings is installed and the target's launchd label is `com.apple.SpringBoard`.
+The subsequent approved execution is recorded separately in the P1 result.
 
 This isolates basic serial automation from the TableUs application. A reproduced
 crash would establish failure with a system app too. Three healthy flows would

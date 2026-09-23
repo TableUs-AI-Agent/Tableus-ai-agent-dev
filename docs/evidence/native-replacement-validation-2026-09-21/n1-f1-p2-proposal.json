@@ -1,0 +1,82 @@
+{
+  "schema_version": 1,
+  "amendment": "F1-P2",
+  "recorded_at": "2026-09-23T04:32:44.496882+00:00",
+  "status": "prepared_unapproved_unexecuted",
+  "evidence_base_sha": "01cac2b802ce0615d1fdd95694185d522a42384f",
+  "previous_result": "n1-f1-p1-result.json",
+  "application_sha_unchanged": "8972865893a3f018a064594457dc9cc664f8a61f",
+  "build_operator_sha_unchanged": "16603dd0cf36d27b492e57a02d3c6c438a2563c4",
+  "probe_bundle": "/Users/brianchei/repos/Tableus-ai-agent-dev/.artifacts/mobile/8972865893a3f018a064594457dc9cc664f8a61f/native-validation-f1/runtime-preparation-p1/f1-p2-preparation",
+  "probe_manifest_sha256": "490b582dde6823594d1816fef705f70117b58a13c6a6cc28220e470ed26a33af",
+  "files_sha256": {
+    "offline_check.py": "b5d9ed5bd97a318212ed3685fe874bb1e4335101ebb248ad551ec5c8fcee94c7",
+    "README.md": "a88e9fed859c0427fb7ece8b6c7a5bdc3353da4df50e5c01b597090906105c93",
+    "settings-1.yml": "c14ad3ac7cdfe4f99facfff070f3c40abe80a6d1471e6a07425ae6dbfadf68eb",
+    "settings-2.yml": "1a24facbbe075a3a77fa3f8de6c89920e73ace60a2b7b9a2d45d80eda817c578",
+    "driver.py": "25dac7bf07a2892ab9e079d345b975491c28eadc276f714e176ba28da286219c",
+    "settings-3.yml": "76b33c3783c55f5fcdf4b04ce8e6108adb07a92324e45c8b8b9da9d18425bbca"
+  },
+  "archive_index": "/Users/brianchei/repos/Tableus-ai-agent-dev/.artifacts/mobile/8972865893a3f018a064594457dc9cc664f8a61f/native-validation-f1/runtime-preparation-p1/index.json",
+  "archive_index_sha256": "58a3a81ff4b19adf456ef01048578f4453f2c4e02ac93af2feed781b5a82db64",
+  "device_id": "CBB4FAB4-734C-413C-9F10-850329AC9A01",
+  "runtime": "iOS 26.5 (23F77)",
+  "settings_app_id": "com.apple.Preferences",
+  "settings_version": "1353.5.5",
+  "maestro_version": "2.8.0",
+  "additional_runs": 1,
+  "max_serial_maestro_invocations": 3,
+  "max_seconds_including_cleanup": 300,
+  "per_flow_max_seconds": 85,
+  "post_flow_observation_seconds": 5,
+  "cleanup_reserve_seconds": 20,
+  "monitor_change": "One target simulator bind before Maestro; host ps identity snapshots during flows/grace/final health. No simctl call in active observer.",
+  "identity_fields": [
+    "PID",
+    "PPID",
+    "lstart",
+    "comm"
+  ],
+  "stop_conditions": [
+    "SpringBoard or launchd_sim identity changes/disappears",
+    "replacement SpringBoard under bound parent",
+    "unexpected TableUs",
+    "new relevant crash",
+    "command/assertion failure",
+    "interruption",
+    "deadline"
+  ],
+  "YAML_bytes_identical_to_P1": true,
+  "automatic_retry": false,
+  "automatic_tableus_continuation": false,
+  "fresh_output": "/Users/brianchei/repos/Tableus-ai-agent-dev/.artifacts/mobile/8972865893a3f018a064594457dc9cc664f8a61f/native-validation-f1/test-ios-settings-platform-probe-02",
+  "command": [
+    "python3",
+    "/Users/brianchei/repos/Tableus-ai-agent-dev/.artifacts/mobile/8972865893a3f018a064594457dc9cc664f8a61f/native-validation-f1/runtime-preparation-p1/f1-p2-preparation/driver.py",
+    "--output",
+    "/Users/brianchei/repos/Tableus-ai-agent-dev/.artifacts/mobile/8972865893a3f018a064594457dc9cc664f8a61f/native-validation-f1/test-ios-settings-platform-probe-02"
+  ],
+  "required_approval_environment": {
+    "TABLEUS_F1_P2_APPROVED": "1"
+  },
+  "preflight": [
+    "fresh output absent",
+    "bundle/wrapper hashes match",
+    "intended target already booted on exact runtime",
+    "Settings version unchanged",
+    "TableUs/local services stopped",
+    "at least 20 GiB free"
+  ],
+  "latest_read_only_capacity_gib": 21.953,
+  "cleanup_of_caches_or_artifacts_included": false,
+  "tableus_launches": 0,
+  "tableus_builds_or_installs": 0,
+  "backend_starts": 0,
+  "offline_replays": 0,
+  "links": 0,
+  "exports": 0,
+  "runtime_or_toolchain_updates": 0,
+  "live_product_requests": 0,
+  "checks": "Synthetic observed host ps shape, PID reuse/replacement, parent loss, other device, unexpected TableUs, deadline, no-approval gate, no-simctl observer, AST, manifest hashes and unchanged YAML bytes.",
+  "interpretation": "A healthy run does not explain or clear O1, original refresh failure, historical AppHang, or authorize TableUs continuation. P1 polling as a source of contention remains an unproved hypothesis."
+}

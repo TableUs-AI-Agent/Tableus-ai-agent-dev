@@ -1,6 +1,6 @@
 # Active packet: native replacement validation (2d)
 
-N1-F1 approved; **candidate 8972865 built; D2/lifecycle passed; O1 stopped on SpringBoard crash; F1-P1 prepared, unapproved.**
+N1-F1 approved; **candidate 8972865 built; D2/lifecycle passed; O1 crash unresolved; P1 monitor timeout; P2 prepared, unapproved.**
 The owner authorized F1 native resumption and safe regenerable-cache cleanup on
 2026-09-22; exact scope is recorded in the [amendment](../evidence/native-replacement-validation-2026-09-21/n1-f1-resumption-approval.json).
 Capacity and fresh-input checks still govern execution; prior attempts remain consumed.
@@ -95,6 +95,14 @@ contains one create POST and no retry POST. No refresh phase was reached. The
 original refresh failure remains unresolved. O1's additional offline attempt is
 consumed, and the post-stop check confirms app/services stopped.
 
+The subsequently approved [F1-P1 Settings-only probe](../evidence/native-replacement-validation-2026-09-21/n1-f1-p1-result.md)
+stopped after 84.869 seconds on an eight-second simulator-monitor timeout. The
+first flow passed. Both attempted flows completed their UI commands, but the
+second lacked a passing process exit/post-flow observation. No third flow ran.
+SpringBoard remained PID 17600 and no new crash or TableUs launch was observed.
+Cleanup is confirmed; P1's one run is consumed. This is an inconclusive diagnostic,
+not a reproduced crash or application acceptance.
+
 ## Development workflow prerequisite
 
 The owner requested the GPT-6 workflow refresh before resuming native work.
@@ -119,13 +127,16 @@ was [approved](../evidence/native-replacement-validation-2026-09-21/n1-f1-o1-app
 for one additional offline run with durable failed-phase request/control events.
 Fresh artifact/source/UUID/map and target/port checks passed; that exact archived
 operator ran once and failed as recorded above. No extra offline attempt remains.
-Read-only diagnosis and preparation are complete. The proposed
-[F1-P1 platform probe](../evidence/native-replacement-validation-2026-09-21/n1-f1-platform-probe.md)
-uses Settings on the existing disposable simulator, at most three serial Maestro
-flows within 300 seconds, stopping on any failure or SpringBoard restart. It is
-prepared only and requires authorization under the existing native stop rule.
-A healthy probe would be inconclusive about TableUs and would not authorize an
-offline replay. Do not change app bytes, fault counts, assertions or timeouts to
+The owner [approved P1](../evidence/native-replacement-validation-2026-09-21/n1-f1-p1-approval.json);
+its exact archived driver ran once and stopped as recorded above. Read-only
+assessment places the monitor stall during active UI work; repeated simulator
+polling is only a possible contributor. The prepared
+[P2 amendment](../evidence/native-replacement-validation-2026-09-21/n1-f1-p2-proposal.md)
+observes SpringBoard and its simulator parent from the host during flows, without
+repeated simulator control calls. Same Settings UI flows, 300-second limit and
+first-failure stop; one new run requires approval. P2 has not executed.
+A healthy probe would remain inconclusive about TableUs and would not authorize
+an offline replay. Do not change app bytes, fault counts, assertions or timeouts to
 obtain a pass. Links and the two exports wait for passing preceding gates; no
 automatic replay. Never use ed8330a evidence as proof for changed bytes.
 
