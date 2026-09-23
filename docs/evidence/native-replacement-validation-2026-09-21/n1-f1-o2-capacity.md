@@ -1,5 +1,9 @@
 # F1-O2 — approved, waiting for disk capacity
 
+Historical proposal: its exact two-cache cleanup was subsequently approved and
+completed. See the [current storage follow-up](n1-f1-o2-storage-followup.md); O2
+remains unused because capacity is still below the required floor.
+
 The owner approved [O2](n1-f1-o2-approval.json), including conditional continuation
 through the 44 link cases and exactly two exports after preceding checks pass.
 The read-only preflight stopped before the native driver: **19.37 GiB free**, below

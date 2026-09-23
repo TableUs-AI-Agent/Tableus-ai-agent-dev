@@ -178,11 +178,14 @@ passed three Settings flows in 130.308 seconds with 105 healthy host observation
 no new crash and confirmed cleanup. Both probe allowances are consumed. These
 Settings results do not clear O1 or validate TableUs. The
 [O2 offline amendment](evidence/native-replacement-validation-2026-09-21/n1-f1-o2-proposal.md)
-is now approved with conditional links/exports. Its read-only preflight stopped
-at 19.37 GiB free, below the 20 GiB floor; no native attempt was consumed. The
-[capacity checkpoint](evidence/native-replacement-validation-2026-09-21/n1-f1-o2-capacity.md)
-prepares deletion of about 1.437 GiB of idle npm/CocoaPods download caches for
-separate approval. The O2 allowance remains unused.
+is now approved with conditional links/exports. Its initial read-only preflight stopped below
+the 20 GiB floor. The separately approved npm/CocoaPods cleanup completed with
+1.444 GiB observed gain, but other changes in disk usage left 18.77 GiB at repeated
+preflight (19.78 GiB later). No native attempt was consumed. The
+[storage follow-up](evidence/native-replacement-validation-2026-09-21/n1-f1-o2-storage-followup.md)
+proposes removal of one idle older iOS 26.6.1 system-support cache (5.685 GiB) for
+separate approval; current support and native evidence remain protected. O2 stays
+authorized and unused.
 Accepted native remains
 f94a1d9. Android still requires all iOS gates and fresh 40 GiB capacity;
 N2/live reads and canonical/auth/physical probes remain separately gated.

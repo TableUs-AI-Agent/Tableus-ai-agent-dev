@@ -1,7 +1,7 @@
 # F1-O2 — resume the offline diagnostic with host monitoring
 
 **Approved; execution blocked before launch by disk capacity.** See the
-[approval](n1-f1-o2-approval.json) and [capacity checkpoint](n1-f1-o2-capacity.md).
+[approval](n1-f1-o2-approval.json) and [current storage checkpoint](n1-f1-o2-storage-followup.md).
 The scope below is the approved proposal; its structured JSON remains the
 immutable pre-approval snapshot. [P2](n1-f1-p2-result.md) passed
 three Settings flows with the revised host observer. O1's platform crash and the
