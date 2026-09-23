@@ -1,6 +1,6 @@
 # Active packet: native replacement validation (2d)
 
-N1-F1 approved; **candidate 8972865 built; D2/lifecycle and P2 Settings probe passed; O1/O2 platform crashes and refresh failure unresolved; O2/O3/O4 stopped; O4 passed control but hit a host-query timeout during runner setup; H1 shut down both older targets with data retained; O5 prepared, no further native test authorized.**
+N1-F1 approved; **candidate 8972865 built; D2/lifecycle and P2 Settings probe passed on iOS 26.5; O1/O2 platform crashes and refresh failure unresolved. O5 installed the app on iOS 27 but failed on XCTest initialization before UI commands; cleanup verified. No further native test is authorized. Next is local-only operator preparation for startup evidence and cleanup.**
 The owner authorized F1 native resumption and safe regenerable-cache cleanup on
 2026-09-22; exact scope is recorded in the [amendment](../evidence/native-replacement-validation-2026-09-21/n1-f1-resumption-approval.json).
 Capacity and fresh-input checks still govern execution; prior attempts remain consumed.
@@ -175,13 +175,26 @@ completed in 28.499 seconds: both older targets shut down once each, data retain
 three host queries below 0.07 seconds and idle test ports. Process rows fell from
 1,215 to 803 and swap use fell by 408 MiB during the window. Pre-shutdown queries
 were already fast; no causal or stability acceptance follows. No app tests ran.
-The [O5 proposal](../evidence/native-replacement-validation-2026-09-21/n1-f1-o5-proposal.md)
-is prepared and archived: one conditional diagnostic with H1 provenance, older
-targets Shutdown before boot/UI, required setup-command events and a stricter
-single-boot guard. Nineteen Python mocks, five Node journal cases and syntax
-checks pass. Existing 35-minute total, 30-minute runner, five-second host monitor,
-behavioral assertions and fault limits remain. New approval is required; H1
-grants no replay, and no O5 operation has occurred.
+The owner [approved O5](../evidence/native-replacement-validation-2026-09-21/n1-f1-o5-approval.json).
+Its [single diagnostic](../evidence/native-replacement-validation-2026-09-21/n1-f1-o5-result.md)
+failed after 452.002 seconds. Control, preflight, uninstall and installation
+passed. The first Maestro invocation returned exit 1 without UI command results;
+zero flows/phases were accepted and no app requests were recorded. Retained
+system logs establish iOS killed XCTest PID 58071 for an expired “XCTRunner
+Initialization” assertion (`0x2182BAAD`); the underlying stall is unproved.
+The narrow monitor kept stable SpringBoard identity but did not detect XCTest
+startup death. Root retained the child diagnostics, stopped the separately
+grouped owned collector and independently confirmed cleanup at 07:09:43 UTC.
+Nine other system-service reports remain retained. All total/runner limits were
+respected. No iOS 26.5 acceptance transfers and no native retry remains.
+
+Next bounded objective: prepare local-only operator changes that detect XCTest
+startup failure, retain child diagnostics during execution and clean up proven
+owned collectors. Validate using retained O5 evidence and mocked fixtures; no
+native execution, application change, timeout increase or upgrade is included.
+This addresses observation/cleanup gaps, not the cause of the initialization
+stall. A future native comparison needs a concrete hypothesis and separately
+bounded authorization. Keep the incomplete native objective in this task.
 Do not change app bytes, fault counts, assertions or timeouts to
 obtain a pass. Links and the two exports wait for passing preceding gates; no
 automatic replay. Never use ed8330a evidence as proof for changed bytes.

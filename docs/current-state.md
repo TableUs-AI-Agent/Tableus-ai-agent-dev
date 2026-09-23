@@ -196,9 +196,17 @@ The approved [H1 recovery](evidence/native-replacement-validation-2026-09-21/n1-
 shut down both older TableUs simulators in 28.499 seconds, with data retained and
 three successful host queries. Process rows fell from 1,215 to 803 and swap use
 fell by 408 MiB during the observation window; this does not establish causality
-or stability. No app test ran. The [O5 proposal](evidence/native-replacement-validation-2026-09-21/n1-f1-o5-proposal.md)
-adds H1 provenance, a single-boot guard and setup-command evidence to one conditional
-offline diagnostic; new approval required. No targeted Maestro upgrade fix was found.
+or stability. No app test ran. The approved [O5 diagnostic](evidence/native-replacement-validation-2026-09-21/n1-f1-o5-result.md)
+failed after 452.002 seconds. Installation passed, but iOS killed Maestro's
+XCTest runner when its initialization assertion timed out (`0x2182BAAD`), before
+the test connection or retained UI commands. Zero flows/phases were accepted;
+no TableUs process or application request was recorded. The underlying stall is
+unproved. Root stopped the leftover owned diagnostic collector, retained its
+logs and confirmed target Shutdown, absent target/runner processes and idle
+ports. Nine other service reports are retained; the SpringBoard/TableUs monitor
+does not cover them. O5 is consumed. Next is local-only operator preparation for
+XCTest startup detection, durable diagnostics and owned-collector cleanup; no
+new native attempt or timeout increase is authorized.
 Accepted native remains
 f94a1d9. Android still requires all iOS gates and fresh 40 GiB capacity;
 N2/live reads and canonical/auth/physical probes remain separately gated.

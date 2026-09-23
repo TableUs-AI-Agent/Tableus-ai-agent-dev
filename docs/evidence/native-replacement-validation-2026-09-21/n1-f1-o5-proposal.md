@@ -1,6 +1,8 @@
 # F1-O5 — offline diagnostic after the two older simulators were shut down
 
-**Preparation only; no approval or execution.** [H1](n1-f1-h1-result.md) completed
+**Approved and executed once; failed before application testing.** See the
+[O5 result](n1-f1-o5-result.md). The remaining proposal text records the approved
+scope; its JSON and archived operator remain immutable. [H1](n1-f1-h1-result.md) completed
 the two exact older-target shutdowns and three host queries. It supplies resource
 observations, not proof that O4's host timeout is fixed. [O4](n1-f1-o4-result.md)
 remains a failed attempt with no retained UI execution.
@@ -64,7 +66,7 @@ the proposed operation. Manifest SHA-256:
 Driver SHA-256:
 `6a7a70b45aca3a2735162fe73da81359067c7cff83c69b17e886551c5ca3a296`.
 
-New approval is required because O4's first-failure stop consumed its one
-operation and H1 explicitly authorizes zero offline attempts. Approval would
-cover the complete conditional O5 operation without another confirmation between
-its passing prerequisite checks and the offline runner.
+The owner [approved](n1-f1-o5-approval.json) the complete conditional operation.
+It ran once and is consumed at its first required subprocess failure. The unused
+later flows grant no continuation; any new native attempt requires a separately
+bounded proposal and approval.

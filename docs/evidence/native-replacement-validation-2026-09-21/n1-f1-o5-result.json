@@ -1,0 +1,438 @@
+{
+  "schema_version": 1,
+  "recorded_at": "2026-09-23T07:13:11.793463+00:00",
+  "amendment": "F1-O5",
+  "status": "failed_xctest_initialization_diagnostic_only",
+  "evidence_base_sha": "0adce595e25ce20b6a6e71bcc859057c7570dc76",
+  "evidence_commit": "Commit containing this result, separate from frozen application and build operator.",
+  "approval": "n1-f1-o5-approval.json",
+  "application_sha": "8972865893a3f018a064594457dc9cc664f8a61f",
+  "build_operator_sha": "16603dd0cf36d27b492e57a02d3c6c438a2563c4",
+  "build_id": "local-ios-test-8972865-f1-01",
+  "artifact_sha256": "98c1535bfe6f7cad0c8e467454f5128c71f4aae21b8b41a5aba1c1a33f1e391d",
+  "operator_archive": "/Users/brianchei/repos/Tableus-ai-agent-dev/.artifacts/mobile/8972865893a3f018a064594457dc9cc664f8a61f/native-validation-f1/runtime-preparation-o5",
+  "manifest_sha256": "cd72d3a6815f746581775a2c9b6a18a43d135105bab8a39b5ff0bb4ea35a643f",
+  "driver_sha256": "6a7a70b45aca3a2735162fe73da81359067c7cff83c69b17e886551c5ca3a296",
+  "raw_driver_result_sha256": "c593089bff2a38bb6720da91b533b79163b4eb893ed48f66a6f0619d8bc33199",
+  "device_id": "0EFFA766-DCDD-49E5-84B0-D3593B68709A",
+  "runtime_id": "com.apple.CoreSimulator.SimRuntime.iOS-27-0",
+  "runtime_build": "24A434",
+  "started_at": "2026-09-23T06:58:02.409793+00:00",
+  "finished_at": "2026-09-23T07:05:34.414239+00:00",
+  "elapsed_seconds": 452.002,
+  "limits_seconds": {
+    "total": 2100,
+    "runner": 1800,
+    "control_query": 30,
+    "host_ps": 5
+  },
+  "attempts": {
+    "operation": 1,
+    "device_create": 0,
+    "boot": 1,
+    "control_query": 1,
+    "offline_runner": 1,
+    "maestro_flow": 1
+  },
+  "control_query_seconds": 10.39,
+  "preboot_host_ps": {
+    "elapsed_seconds": 0.062,
+    "row_count": 721,
+    "cap_seconds": 5
+  },
+  "free_gib_before_boot": 25.57628631591797,
+  "free_gib_before_runner": 24.57744598388672,
+  "setup": {
+    "device_preflight_exit": 0,
+    "uninstall_exit": 0,
+    "uninstall_seconds": 31.012099375,
+    "install_exit": 0,
+    "install_seconds": 17.834839583,
+    "first_maestro_flow": "create-failure",
+    "maestro_exit": 1,
+    "maestro_seconds": 321.259935375,
+    "journal_events": 8,
+    "completed_command_pairs": 4
+  },
+  "xctest_startup": {
+    "runner_pid": 58071,
+    "launch_at": "2026-09-23T07:01:29.796Z",
+    "running_tests_at": "2026-09-23T07:01:57.615160Z",
+    "termination_at": "2026-09-23T07:02:36.258Z",
+    "signal": 9,
+    "sender": "runningboardd",
+    "reason_code": "0x2182BAAD",
+    "reason": "Timed out waiting for XCTest runner to invalidate its XCTRunner Initialization assertion.",
+    "assertion_id": "57245-58071-979",
+    "evidence": "test-ios-offline-f1-o5/xctest-unified-log-review.txt",
+    "evidence_lines": [
+      664,
+      691
+    ],
+    "underlying_initialization_stall_cause_proved": false,
+    "xctest_no_restart_reported": true,
+    "maestro_connection_established": false
+  },
+  "behavior": {
+    "app_install_confirmed": true,
+    "tableus_process_observed": false,
+    "app_launch_confirmed": false,
+    "maestro_ui_command_records": 0,
+    "accepted_flows": 0,
+    "expected_flows": 11,
+    "refresh_phases": 0,
+    "expected_refresh_phases": 5,
+    "proxy_app_requests": 0,
+    "upstream_requests": 0,
+    "dropped_committed_responses": 0,
+    "basis": "Setup journal, wrapper invocation, failed runner counters, proxy event journal and backend log. No TableUs/UI acceptance."
+  },
+  "platform_observation": {
+    "host_samples": 269,
+    "springboard_pid": 57242,
+    "parent_pid": 57238,
+    "identity_stable_in_samples": true,
+    "monitor_crash_name_scope": [
+      "SpringBoard",
+      "TableUs"
+    ],
+    "in_scope_reports": 0,
+    "post_stop_target_system_service_reports": [
+      {
+        "file": "nsurlsessiond-2026-09-23-020536.ips",
+        "sha256": "c3f06ef8b689c4eb074440245041aab28e52c1547e807b7251b01856bc6a5918",
+        "captureTime": "2026-09-23 02:05:33.7314 -0500",
+        "procName": "nsurlsessiond",
+        "pid": 57314,
+        "parentPid": 57238,
+        "exception": {
+          "codes": "0x0000000000000000, 0x0000000000000000",
+          "rawCodes": [
+            0,
+            0
+          ],
+          "type": "EXC_CRASH",
+          "signal": "SIGKILL"
+        },
+        "termination": {
+          "flags": 6,
+          "code": 4,
+          "namespace": "LIBXPC",
+          "indicator": "XPC_EXIT_REASON_SIGTERM_TIMEOUT"
+        }
+      },
+      {
+        "file": "EmojiPosterExtension-2026-09-23-020435.ips",
+        "sha256": "e3f0d9ed1e77091da4c84b5505476bca4fe3d0024a9403fcd9bd462bc5ed9654",
+        "captureTime": "2026-09-23 02:03:24.2621 -0500",
+        "procName": "EmojiPosterExtension",
+        "pid": 58096,
+        "parentPid": 57238,
+        "exception": {
+          "codes": "0x0000000000000000, 0x0000000000000000",
+          "rawCodes": [
+            0,
+            0
+          ],
+          "type": "EXC_CRASH",
+          "signal": "SIGKILL"
+        },
+        "termination": {
+          "code": 2343432205,
+          "flags": 6,
+          "namespace": "FRONTBOARD",
+          "reasons": [
+            "<RBSTerminateContext| domain:10 code:0x8BADF00D explanation:scene-update watchdog transgression: extension<com.apple.EmojiPoster.EmojiPosterExtension[config:6E69CA09-34E3-3493-B8FC-B5021E1ACB71]((null):57421)>[uuid:959B4A07-C426-9A4C-231A-E1BF034C41D5]:58096 exhausted real (wall clock) time allowance of 10.00 seconds",
+            "ProcessVisibility: Unknown",
+            "ProcessState: Running",
+            "WatchdogEvent: scene-update",
+            "WatchdogVisibility: Background reportType:CrashLog maxTerminationResistance:Interactive>"
+          ]
+        }
+      },
+      {
+        "file": "assetsd-2026-09-23-020537.000.ips",
+        "sha256": "f8503ffa691931e3affd2037e421d81fe2ffb48ff2de9c66d1d978e8516953b8",
+        "captureTime": "2026-09-23 02:05:33.7316 -0500",
+        "procName": "assetsd",
+        "pid": 57527,
+        "parentPid": 57238,
+        "exception": {
+          "codes": "0x0000000000000000, 0x0000000000000000",
+          "rawCodes": [
+            0,
+            0
+          ],
+          "type": "EXC_CRASH",
+          "signal": "SIGKILL"
+        },
+        "termination": {
+          "flags": 6,
+          "code": 4,
+          "namespace": "LIBXPC",
+          "indicator": "XPC_EXIT_REASON_SIGTERM_TIMEOUT"
+        }
+      },
+      {
+        "file": "EmojiPosterExtension-2026-09-23-020435.000.ips",
+        "sha256": "b09bf32a091133e5597e388a7510224777e0deb15279756d83093fa19518be80",
+        "captureTime": "2026-09-23 02:03:24.2621 -0500",
+        "procName": "EmojiPosterExtension",
+        "pid": 58095,
+        "parentPid": 57238,
+        "exception": {
+          "codes": "0x0000000000000000, 0x0000000000000000",
+          "rawCodes": [
+            0,
+            0
+          ],
+          "type": "EXC_CRASH",
+          "signal": "SIGKILL"
+        },
+        "termination": {
+          "code": 2343432205,
+          "flags": 6,
+          "namespace": "FRONTBOARD",
+          "reasons": [
+            "<RBSTerminateContext| domain:10 code:0x8BADF00D explanation:scene-update watchdog transgression: extension<com.apple.EmojiPoster.EmojiPosterExtension[config:6E69CA09-34E3-3493-B8FC-B5021E1ACB71]((null):57421)>[uuid:F011875F-4CC7-8C9C-8245-341FBD4580CE]:58095 exhausted real (wall clock) time allowance of 10.00 seconds",
+            "ProcessVisibility: Unknown",
+            "ProcessState: Running",
+            "WatchdogEvent: scene-update",
+            "WatchdogVisibility: Background reportType:CrashLog maxTerminationResistance:Interactive>"
+          ]
+        }
+      },
+      {
+        "file": "AppIntentsLiveEntityService-2026-09-23-020120.ips",
+        "sha256": "9c564bde0da3192167bc3f59333b73bb76d9c4a3cc55a661f330760b0f36c940",
+        "captureTime": "2026-09-23 02:01:18.9037 -0500",
+        "procName": "AppIntentsLiveEntityService",
+        "pid": 57968,
+        "parentPid": 57238,
+        "exception": {
+          "codes": "0x0000000000000001, 0x00000001c16c415c",
+          "rawCodes": [
+            1,
+            7540064604
+          ],
+          "type": "EXC_BREAKPOINT",
+          "signal": "SIGTRAP"
+        },
+        "termination": {
+          "flags": 0,
+          "code": 5,
+          "namespace": "SIGNAL",
+          "indicator": "Trace/BPT trap: 5",
+          "byProc": "exc handler",
+          "byPid": 57968
+        }
+      },
+      {
+        "file": "AppIntentsLiveEntityService-2026-09-23-020119.ips",
+        "sha256": "b9824690b6442c0c4f699f07eb58c3f000416664d4d7fb57193ec32716760fbe",
+        "captureTime": "2026-09-23 02:00:50.2114 -0500",
+        "procName": "AppIntentsLiveEntityService",
+        "pid": 57947,
+        "parentPid": 57238,
+        "exception": {
+          "codes": "0x0000000000000001, 0x00000001c16c415c",
+          "rawCodes": [
+            1,
+            7540064604
+          ],
+          "type": "EXC_BREAKPOINT",
+          "signal": "SIGTRAP"
+        },
+        "termination": {
+          "flags": 0,
+          "code": 5,
+          "namespace": "SIGNAL",
+          "indicator": "Trace/BPT trap: 5",
+          "byProc": "exc handler",
+          "byPid": 57947
+        }
+      },
+      {
+        "file": "sirittsd-2026-09-23-020537.ips",
+        "sha256": "61f0a38f0a64d58a9c9c2a1cb9d8f2563e22a91fb9f5bac5f9238f7021c99785",
+        "captureTime": "2026-09-23 02:05:33.7315 -0500",
+        "procName": "sirittsd",
+        "pid": 57468,
+        "parentPid": 57238,
+        "exception": {
+          "codes": "0x0000000000000000, 0x0000000000000000",
+          "rawCodes": [
+            0,
+            0
+          ],
+          "type": "EXC_CRASH",
+          "signal": "SIGKILL"
+        },
+        "termination": {
+          "flags": 6,
+          "code": 4,
+          "namespace": "LIBXPC",
+          "indicator": "XPC_EXIT_REASON_SIGTERM_TIMEOUT"
+        }
+      },
+      {
+        "file": "calaccessd-2026-09-23-020552.ips",
+        "sha256": "36dac8fa26a552c610ecaf514406285343c166902cb872630c91b3cedf3d5ddd",
+        "captureTime": "2026-09-23 02:05:33.7496 -0500",
+        "procName": "calaccessd",
+        "pid": 57494,
+        "parentPid": 57238,
+        "exception": {
+          "codes": "0x0000000000000000, 0x0000000000000000",
+          "rawCodes": [
+            0,
+            0
+          ],
+          "type": "EXC_CRASH",
+          "signal": "SIGKILL"
+        },
+        "termination": {
+          "flags": 6,
+          "code": 4,
+          "namespace": "LIBXPC",
+          "indicator": "XPC_EXIT_REASON_SIGTERM_TIMEOUT"
+        }
+      },
+      {
+        "file": "logd-2026-09-23-020535.ips",
+        "sha256": "630b757974982ded4b3b26d1c973edc9fe936d9121f748e5ab3cd6aa212745eb",
+        "captureTime": "2026-09-23 02:05:33.7314 -0500",
+        "procName": "logd",
+        "pid": 57243,
+        "parentPid": 57238,
+        "exception": {
+          "codes": "0x0000000000000000, 0x0000000000000000",
+          "rawCodes": [
+            0,
+            0
+          ],
+          "type": "EXC_CRASH",
+          "signal": "SIGKILL"
+        },
+        "termination": {
+          "flags": 6,
+          "code": 4,
+          "namespace": "LIBXPC",
+          "indicator": "XPC_EXIT_REASON_SIGTERM_TIMEOUT"
+        }
+      }
+    ],
+    "interpretation": "Narrow monitor success is not broad platform health. Nine other target service reports are retained, including four before cleanup and five at shutdown; causal connection to XCTest startup is not established."
+  },
+  "cleanup": {
+    "driver_owned_group_stopped": true,
+    "driver_app_terminate_exit": 3,
+    "driver_app_terminate_message": "found nothing to terminate",
+    "initial_postcheck_collector_pid": 58201,
+    "collector_owned_by_run": true,
+    "collector_started_at": "2026-09-23T07:02:38Z",
+    "collector_cleanup_at": "2026-09-23T07:09:21.666391+00:00",
+    "collector_cleanup_signal": "SIGTERM",
+    "collector_group_remaining": [],
+    "independent_final_check_at": "2026-09-23T07:09:43.988818+00:00",
+    "target_shutdown": true,
+    "remaining_target_runner_or_known_children": [],
+    "ports_idle": [
+      7999,
+      8000,
+      8001
+    ],
+    "free_gib_after_evidence_retention": 22.796077728271484,
+    "data_and_artifacts_retained": true
+  },
+  "observability_limitations": [
+    "XCTest died before Maestro returned nonzero; existing monitor only checked SpringBoard/TableUs and did not surface XCTest startup death.",
+    "Driver group cleanup missed the automatic simctl diagnose collector that had its own process group and was reparented; root verified ownership and stopped it separately.",
+    "Retained xcresult is an interrupted diagnostic staging bundle, not a completed test result.",
+    "Older-device Shutdown prerequisites were enforced by exact archived code; raw preboot/pre-UI inventories were not separately retained.",
+    "Initial retention record said SIGKILL cause was unproved; later existing unified-log extraction establishes the immediate initialization-timeout kill reason, not the underlying stall."
+  ],
+  "native_attempt_consumed": true,
+  "further_native_tests_authorized": false,
+  "downstream_acceptance": false,
+  "cumulative_replacement_acceptance": false,
+  "fresh_checks": [
+    "Approved archive and exact artifact/source provenance reverified by driver",
+    "Required setup journal and actual flow/platform/traffic evidence reviewed",
+    "Root independent initial/final shutdown/process/port/crash checks",
+    "340 retained XCTest/Maestro diagnostic file hashes",
+    "Nine read-only closeout parser regression tests rerun by root",
+    "Luna bounded read-only audit, supplemented by root unified-log termination evidence"
+  ],
+  "source_validation_reused": {
+    "application_sha": "8972865893a3f018a064594457dc9cc664f8a61f",
+    "javascript_tests": 292,
+    "python_tests": 98,
+    "postgres_skips": 3,
+    "application_and_tracked_tooling_unchanged": true
+  },
+  "closeout_archive": "/Users/brianchei/repos/Tableus-ai-agent-dev/.artifacts/mobile/8972865893a3f018a064594457dc9cc664f8a61f/native-validation-f1/runtime-closeout-o5",
+  "closeout_index_sha256": "0eaef92c1e3a6f6598a25258582975cb64b9b8128474d2f8dc0b27dbf1d9dde9",
+  "private_files_sha256": {
+    "test-ios-offline-f1-o5/AppIntentsLiveEntityService-2026-09-23-020119.ips": "b9824690b6442c0c4f699f07eb58c3f000416664d4d7fb57193ec32716760fbe",
+    "test-ios-offline-f1-o5/AppIntentsLiveEntityService-2026-09-23-020120.ips": "9c564bde0da3192167bc3f59333b73bb76d9c4a3cc55a661f330760b0f36c940",
+    "test-ios-offline-f1-o5/CoreSimulator-o5-excerpt.log": "bba0f49330d48fd361a1b6a8bce69f29e5fdd94d6d47a09d27e52b10de8bdb1d",
+    "test-ios-offline-f1-o5/EmojiPosterExtension-2026-09-23-020435.000.ips": "b09bf32a091133e5597e388a7510224777e0deb15279756d83093fa19518be80",
+    "test-ios-offline-f1-o5/EmojiPosterExtension-2026-09-23-020435.ips": "e3f0d9ed1e77091da4c84b5505476bca4fe3d0024a9403fcd9bd462bc5ed9654",
+    "test-ios-offline-f1-o5/app-terminate.json": "1b0fc4ef1db8ae246ad587f1d603af77e5b0538e60d0bb4ffa5cccc084c18a15",
+    "test-ios-offline-f1-o5/assetsd-2026-09-23-020537.000.ips": "f8503ffa691931e3affd2037e421d81fe2ffb48ff2de9c66d1d978e8516953b8",
+    "test-ios-offline-f1-o5/backend.log": "75773bafcc8063936f6a1889bef778cd2efa2dd759c0c8c48e7ec7a17272bf45",
+    "test-ios-offline-f1-o5/calaccessd-2026-09-23-020552.ips": "36dac8fa26a552c610ecaf514406285343c166902cb872630c91b3cedf3d5ddd",
+    "test-ios-offline-f1-o5/control-query.json": "88c924c48c7d865985c88e5dd2dfbdada595610c57ff4d07b406fab6ffbe0488",
+    "test-ios-offline-f1-o5/device-mobile_installation.log.0": "ca0643f51ab012837b50923b0c1666f5eca4e4c06835c8fa2e11d680923e552a",
+    "test-ios-offline-f1-o5/device-system.log": "0c712f3c6e575866c216c2d975fe9f657521ca0e6bef759efb5c3ae70ea1ad39",
+    "test-ios-offline-f1-o5/driver-result.json": "c593089bff2a38bb6720da91b533b79163b4eb893ed48f66a6f0619d8bc33199",
+    "test-ios-offline-f1-o5/fault-proxy-events.ndjson": "baa272c6ef8b8fc8644ef81b0e7e8fc71496d9499f701d71151e71eb96c4fca6",
+    "test-ios-offline-f1-o5/fault-proxy.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "test-ios-offline-f1-o5/log-retention.json": "d6aa30dba0e9aabb6f941644d5f9f5af7b52b95721b2c61248ed32b5d01080d6",
+    "test-ios-offline-f1-o5/logd-2026-09-23-020535.ips": "630b757974982ded4b3b26d1c973edc9fe936d9121f748e5ab3cd6aa212745eb",
+    "test-ios-offline-f1-o5/maestro-results/create-failure-rg72m6gw/2026-09-23_020005/xctest_runner_2026-09-23_020015.log": "0cfd844d53a88d5019a739c219bcfb020614fd35d0fe79fabc60cd6495623c3f",
+    "test-ios-offline-f1-o5/maestro-results/create-failure-rg72m6gw/operator-invocation.json": "cb6afd0158e6b7ecd74a635b7acb0157d2107e433a2ba839212e84b6b4558945",
+    "test-ios-offline-f1-o5/nsurlsessiond-2026-09-23-020536.ips": "c3f06ef8b689c4eb074440245041aab28e52c1547e807b7251b01856bc6a5918",
+    "test-ios-offline-f1-o5/post-stop-check-delayed.json": "45ffdda019e124f884aa8c7761c89752af9593fbf70ec17f18f7792671ba0005",
+    "test-ios-offline-f1-o5/post-stop-check.json": "1a6c944d3331292d82e0f7e4a82c7678797856660d44d9e290cc270d24c5b21e",
+    "test-ios-offline-f1-o5/retained-device-shutdown.json": "0765c95806b10addb2925536a0666d0b35b8703c31ba49a46d8b52c83412f8be",
+    "test-ios-offline-f1-o5/runner.log": "197e3729111ddf0ef4b192f76675c1513c12993028bf7838837284546f70cb2f",
+    "test-ios-offline-f1-o5/setup-commands.ndjson": "c8f0fe5ad78e88b294b0c5aa3312f6e1d915ff7d7a3fc1061405fdc0de5e544a",
+    "test-ios-offline-f1-o5/sirittsd-2026-09-23-020537.ips": "61f0a38f0a64d58a9c9c2a1cb9d8f2563e22a91fb9f5bac5f9238f7021c99785",
+    "test-ios-offline-f1-o5/tableus-mobile-offline-e2e-KxAR7A/flows/constraints-offline.yml": "1de8312716851e8809e82daa202587f6ac0892601d099ad5a6d3852a6c66c53e",
+    "test-ios-offline-f1-o5/tableus-mobile-offline-e2e-KxAR7A/flows/constraints-retry.yml": "7f9d9e067f33b9023b71b9cdddbe2eeefc87191dcbe73d3aba201a8e9a07e08b",
+    "test-ios-offline-f1-o5/tableus-mobile-offline-e2e-KxAR7A/flows/create-failure.yml": "79f94557fa32d38487ffde0976d6e6e828da71c6e3fb827df7c84787113a4e46",
+    "test-ios-offline-f1-o5/tableus-mobile-offline-e2e-KxAR7A/flows/create-retry.yml": "8a7b3e3f909226fb6398ee0cf524f9ff9ce189c2f22e804f7bc6c266c33783d1",
+    "test-ios-offline-f1-o5/tableus-mobile-offline-e2e-KxAR7A/flows/finalize-failure.yml": "e88a5b2bb0de806a6abc3a01ef4fe96ead3c6bd2e59c203af14997af605d2149",
+    "test-ios-offline-f1-o5/tableus-mobile-offline-e2e-KxAR7A/flows/finalize-retry.yml": "01132a941f5617c3d291e555d284f7e41d29b3c59e48ad8bdcb3f5f14aaa5922",
+    "test-ios-offline-f1-o5/tableus-mobile-offline-e2e-KxAR7A/flows/refresh-failure.yml": "4fc82933becd81fea4dc26839883f2f78344cc455a60e1079a714f50ca927a8c",
+    "test-ios-offline-f1-o5/tableus-mobile-offline-e2e-KxAR7A/flows/refresh-open.yml": "b549bf867d5c168a32e4e10b48e4a5acea926dd75a2953708090bfcde1288047",
+    "test-ios-offline-f1-o5/tableus-mobile-offline-e2e-KxAR7A/flows/refresh-recovery.yml": "7c43fb3fa0546c1c849d0d119f781b3dbe01f9e87f2f1123cfa0db8248bd6805",
+    "test-ios-offline-f1-o5/tableus-mobile-offline-e2e-KxAR7A/flows/refresh-scroll.yml": "1b903e242b50a707e5499d81ab1d31ee001e11b9c87a2db3bec224107e6d8573",
+    "test-ios-offline-f1-o5/tableus-mobile-offline-e2e-KxAR7A/flows/refresh-slow.yml": "c3d733b6829a453552e5ef0153988d9f58e655b1e63680d33e818980cf47dd2f",
+    "test-ios-offline-f1-o5/xctest-retention.json": "20f72c80451df8a0a6abb131bd646bd2ba48d88cde8518314278d3197162aec6",
+    "test-ios-offline-f1-o5/xctest-unified-log-review.json": "e3e26ec5f005abcbf0418c0cfb3b014f659799edc25c23b0bd12032ac82aeeeb",
+    "test-ios-offline-f1-o5/xctest-unified-log-review.txt": "d3e54254dc8b538329402cef2f0796718b89ff1a26ca9c35805ea204e66e01ea",
+    "o5-execution/approval.json": "b4a24b22e0c69c22ec216121ee1ecb699ce7b91f348f4206409d33e5894adc27",
+    "o5-execution/execution.log": "6116fbeb6fe62aad4ab520222a94ec53c09c6909f04afe31ebead0c6425f8160",
+    "o5-execution/invocation.json": "f8a002fb09b767ca56537423aa74011e8d5acf7a05940e8b28c984920d74acf2",
+    "o5-execution/invoker.py": "5e15ec749cec5d26d7f9fc3695df9c682daf3574a6a69546b617d0609bd0843b",
+    "o5-execution/proposal.json": "c75921a4b26391cda17c75cd4d16ee4e990ceb7fa4baefc816feca6b76984707"
+  },
+  "nested_xctest_retention": {
+    "index": "test-ios-offline-f1-o5/xctest-retention.json",
+    "file_count": 340,
+    "bytes": 158722310
+  },
+  "next_bounded_objective": "Prepare local-only operator improvements for XCTest startup failure detection, durable child diagnostics and cleanup of proven owned collectors, validated against the retained O5 evidence and mocked fixtures. No native replay or timeout increase is authorized; underlying startup stall remains unresolved.",
+  "unchanged_gates": "Original refresh failure, O1/O2 SpringBoard crashes, iOS27 runtime/lifecycle acceptance, links/exports, canonical/auth gates, Android and N2 remain unresolved/gated. No live/provider/OTP, deployment, merge, new build, upgrade or storage cleanup.",
+  "checkpoint_verification": {
+    "status": "passed",
+    "changed_documents": 7,
+    "json_files": 2,
+    "local_links_checked": 89,
+    "private_hashes_verified": 497,
+    "application_and_tracked_tooling_unchanged": true
+  }
+}
