@@ -1,0 +1,38 @@
+{
+  "schema_version": 1,
+  "recorded_at": "2026-09-23T04:55:25.298334+00:00",
+  "owner_response": "approve",
+  "amendment": "F1-O2",
+  "proposal_sha256": "c56aea2d80fc17245c0a6fda03fab8f9d0d0c09881eb89088b68f5f66cb66055",
+  "evidence_base_sha": "346e7efbdc447c7d7368832d10824787608d8bf2",
+  "operator_manifest_sha256": "8687de880aa59053005497933f09ce20e9a61bbbc1203963bd8ec06a151da67f",
+  "archive_index_sha256": "8d8521d52b0e7adbe8a16d1216a7b38fec88fea9a1b9eb8eb05bcb367ef08e14",
+  "device_id": "CBB4FAB4-734C-413C-9F10-850329AC9A01",
+  "application_sha": "8972865893a3f018a064594457dc9cc664f8a61f",
+  "additional_offline_runs": 1,
+  "max_offline_seconds_including_cleanup": 1800,
+  "conditional_continuation": {
+    "scope_origin": "n1-f1-resumption-approval.json, as continued conditionally in n1-f1-o1-approval.json",
+    "gate": "Root reviews complete O2 command/phase/settled-observation/journal/provenance/platform proof before downstream use; adapters reject stale or incomplete evidence.",
+    "links": {
+      "cold_cases": 22,
+      "warm_cases": 22,
+      "runs_per_case": 1,
+      "maximum_seconds": 1800,
+      "oracles_unchanged": true
+    },
+    "exports": {
+      "cycles": 2,
+      "app_export_GETs_per_cycle": 1,
+      "root_observed_selector_and_dismissal_required": true,
+      "external_sharing": false,
+      "native_main_thread_sampling_required": true,
+      "stop_on_measured_stall_seconds": 2,
+      "file_schema_and_identity_required": true
+    },
+    "stop_between_phases_on_failure": true,
+    "additional_routine_approval_required_after_each_success": false
+  },
+  "automatic_retry": false,
+  "all_other_limits_unchanged": true
+}

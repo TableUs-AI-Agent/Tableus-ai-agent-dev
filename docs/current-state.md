@@ -1,6 +1,6 @@
 # Current state
 
-Updated 2026-09-22. Original f94a1d9 isolated-staging acceptance remains intact,
+Updated 2026-09-23. Original f94a1d9 isolated-staging acceptance remains intact,
 including the unresolved simulator AppHang risk. Replacement application ed8330a
 is published and serves both staging aliases after exact-source CI, Preview and
 activation checks. **Phase W is complete.** The approved CORS append and one API
@@ -178,7 +178,11 @@ passed three Settings flows in 130.308 seconds with 105 healthy host observation
 no new crash and confirmed cleanup. Both probe allowances are consumed. These
 Settings results do not clear O1 or validate TableUs. The
 [O2 offline amendment](evidence/native-replacement-validation-2026-09-21/n1-f1-o2-proposal.md)
-is prepared only; one additional offline run requires approval.
+is now approved with conditional links/exports. Its read-only preflight stopped
+at 19.37 GiB free, below the 20 GiB floor; no native attempt was consumed. The
+[capacity checkpoint](evidence/native-replacement-validation-2026-09-21/n1-f1-o2-capacity.md)
+prepares deletion of about 1.437 GiB of idle npm/CocoaPods download caches for
+separate approval. The O2 allowance remains unused.
 Accepted native remains
 f94a1d9. Android still requires all iOS gates and fresh 40 GiB capacity;
 N2/live reads and canonical/auth/physical probes remain separately gated.

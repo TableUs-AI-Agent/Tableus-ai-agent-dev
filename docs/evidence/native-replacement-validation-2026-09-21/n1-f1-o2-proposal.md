@@ -1,6 +1,9 @@
 # F1-O2 — resume the offline diagnostic with host monitoring
 
-**Prepared only; unapproved and unexecuted.** [P2](n1-f1-p2-result.md) passed
+**Approved; execution blocked before launch by disk capacity.** See the
+[approval](n1-f1-o2-approval.json) and [capacity checkpoint](n1-f1-o2-capacity.md).
+The scope below is the approved proposal; its structured JSON remains the
+immutable pre-approval snapshot. [P2](n1-f1-p2-result.md) passed
 three Settings flows with the revised host observer. O1's platform crash and the
 original TableUs refresh failure remain unresolved. This amendment requests
 **one additional offline/refresh run, at most 30 minutes**, with conditional

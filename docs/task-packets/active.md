@@ -1,6 +1,6 @@
 # Active packet: native replacement validation (2d)
 
-N1-F1 approved; **candidate 8972865 built; D2/lifecycle and P2 Settings probe passed; O1/refresh failures unresolved; O2 prepared, unapproved.**
+N1-F1 approved; **candidate 8972865 built; D2/lifecycle and P2 Settings probe passed; O1/refresh failures unresolved; O2 approved, blocked before execution by disk capacity.**
 The owner authorized F1 native resumption and safe regenerable-cache cleanup on
 2026-09-22; exact scope is recorded in the [amendment](../evidence/native-replacement-validation-2026-09-21/n1-f1-resumption-approval.json).
 Capacity and fresh-input checks still govern execution; prior attempts remain consumed.
@@ -142,10 +142,14 @@ first-failure stop. The owner [approved P2](../evidence/native-replacement-valid
 and its exact archived driver passed as recorded above. The prepared
 [O2 offline amendment](../evidence/native-replacement-validation-2026-09-21/n1-f1-o2-proposal.md)
 adds host platform observation to the retained diagnostic offline operator,
-preserving app bytes and behavioral checks. One additional offline run needs
-approval; no O2 or downstream operation has executed. Its conditional downstream
-scope retains the original cold/warm links and exactly two export cycles, with
-root evidence review and the first-failure stop between phases.
+preserving app bytes and behavioral checks. The owner [approved O2](../evidence/native-replacement-validation-2026-09-21/n1-f1-o2-approval.json),
+including conditional cold/warm links and exactly two exports. The read-only
+preflight stopped at 19.37 GiB, below 20 GiB, before any native operation; the
+single O2 allowance remains unused. The [capacity action](../evidence/native-replacement-validation-2026-09-21/n1-f1-o2-capacity.md)
+prepares deletion of two exact idle npm/CocoaPods download caches (1.437 GiB)
+for separate approval, because O2 excludes cleanup. After approved cleanup,
+repeat fresh preflight and complete O2 and successful downstream phases under
+the existing authorization, with root review and first-failure stops.
 Do not change app bytes, fault counts, assertions or timeouts to
 obtain a pass. Links and the two exports wait for passing preceding gates; no
 automatic replay. Never use ed8330a evidence as proof for changed bytes.
