@@ -17,7 +17,7 @@ previous narrative without making it an active checklist.
 | Accepted API/native and retained Preview candidate | `f94a1d9d1125e6c9111aa08eda496f014f20d0c0` |
 | Current task branch / worktree | `codex/native-replacement-validation` / `/Users/brianchei/.codex/worktrees/ea6d/Tableus-ai-agent-dev` |
 | Staging web / prior native application | `ed8330a766b3c4b80a505e075535678394e275e9`; completed dependency remediation |
-| Local F1 mobile candidate | `8972865893a3f018a064594457dc9cc664f8a61f`; iOS build/artifact passed, diagnostic timed out; behavior pending |
+| Local F1 mobile candidate | `8972865893a3f018a064594457dc9cc664f8a61f`; iOS/D2/lifecycle passed; offline refresh stopped, links/exports pending |
 | Native diagnostic operator | `16603dd0cf36d27b492e57a02d3c6c438a2563c4`; operator unchanged |
 | Previous task / exact base | `01a0c661-7b3f-7403-906c-0f60f60a3dd4`; `5b39d937b905691798a585b4aced79f91c7e97bf` |
 | Evidence index | [Current candidate](evidence/ios27-staging-f94a1d9/closeout.md) |
@@ -153,11 +153,20 @@ disposable iOS 26.5 target received it. After a corrected pre-launch Python
 setup error, the single actual diagnostic attempt hit the 45-second LLDB start
 cap before a breakpoint hit or sampled trace. The app was terminated; initial
 and delayed checks found no matching crash, and no target/debugger remains.
-Cause unresolved; no F1 lifecycle, offline, link or export run followed.
-Accepted native installations remain f94a1d9. The [proposed diagnostic amendment](evidence/native-replacement-validation-2026-09-21/n1-f1-diagnostic-amendment.md)
-requires one additional capture approval and no rebuild. Android remains unbuilt,
-conditional on all iOS gates and fresh 40 GiB capacity. N2/live reads and separate
-canonical/auth/physical probes remain gated.
+The cause remains unresolved. The owner then approved [D2](evidence/native-replacement-validation-2026-09-21/n1-f1-d2-approval.json).
+Its [runtime proof](evidence/native-replacement-validation-2026-09-21/n1-f1-d2-result.md)
+passed in 39.147 seconds with 8,661 samples, 1,644 frames and 55 exact matching
+sampled source files. [F1 runtime result](evidence/native-replacement-validation-2026-09-21/n1-f1-runtime-result.md):
+lifecycle passed all seven flows in 526.029 seconds. Offline stopped after
+483.490 seconds: nine flows passed, then the refresh-error message assertion
+failed. Three of five refresh phases have passed counters; failed-phase request
+counts were not retained, so the cause remains unproved. No new crash report;
+the disposable app and local services are stopped. Links, exports and Android
+did not run. The [F1-O1 diagnostic amendment](evidence/native-replacement-validation-2026-09-21/n1-f1-offline-amendment.md)
+is prepared for one additional offline run with durable failure counters; the
+first-failure stop prohibits automatic native replay. Accepted native remains
+f94a1d9. Android still requires all iOS gates and fresh 40 GiB capacity;
+N2/live reads and canonical/auth/physical probes remain separately gated.
 Preserve all new diagnostics, 63bd retention evidence and 90bd Phase W evidence.
 No cumulative replacement acceptance.
 Merge and release gates remain separate.
