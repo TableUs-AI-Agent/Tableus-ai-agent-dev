@@ -1,6 +1,6 @@
 # Active packet: native replacement validation (2d)
 
-N1-F1 approved; **candidate 8972865 built; D2/lifecycle passed; O1 crash unresolved; P1 monitor timeout; P2 prepared, unapproved.**
+N1-F1 approved; **candidate 8972865 built; D2/lifecycle and P2 Settings probe passed; O1/refresh failures unresolved; O2 prepared, unapproved.**
 The owner authorized F1 native resumption and safe regenerable-cache cleanup on
 2026-09-22; exact scope is recorded in the [amendment](../evidence/native-replacement-validation-2026-09-21/n1-f1-resumption-approval.json).
 Capacity and fresh-input checks still govern execution; prior attempts remain consumed.
@@ -100,8 +100,12 @@ stopped after 84.869 seconds on an eight-second simulator-monitor timeout. The
 first flow passed. Both attempted flows completed their UI commands, but the
 second lacked a passing process exit/post-flow observation. No third flow ran.
 SpringBoard remained PID 17600 and no new crash or TableUs launch was observed.
-Cleanup is confirmed; P1's one run is consumed. This is an inconclusive diagnostic,
-not a reproduced crash or application acceptance.
+Cleanup is confirmed; P1's one run is consumed. The subsequent
+[approved P2 probe](../evidence/native-replacement-validation-2026-09-21/n1-f1-p2-result.md)
+passed all three Settings flows in 130.308 seconds with 105 healthy host samples,
+stable SpringBoard/parent identity and no new crash. Settings cleanup and later
+process/port checks pass. P2's one run is consumed; it validates only the bounded
+Settings probe, not TableUs or the causes of earlier failures.
 
 ## Development workflow prerequisite
 
@@ -134,9 +138,15 @@ polling is only a possible contributor. The prepared
 [P2 amendment](../evidence/native-replacement-validation-2026-09-21/n1-f1-p2-proposal.md)
 observes SpringBoard and its simulator parent from the host during flows, without
 repeated simulator control calls. Same Settings UI flows, 300-second limit and
-first-failure stop; one new run requires approval. P2 has not executed.
-A healthy probe would remain inconclusive about TableUs and would not authorize
-an offline replay. Do not change app bytes, fault counts, assertions or timeouts to
+first-failure stop. The owner [approved P2](../evidence/native-replacement-validation-2026-09-21/n1-f1-p2-approval.json),
+and its exact archived driver passed as recorded above. The prepared
+[O2 offline amendment](../evidence/native-replacement-validation-2026-09-21/n1-f1-o2-proposal.md)
+adds host platform observation to the retained diagnostic offline operator,
+preserving app bytes and behavioral checks. One additional offline run needs
+approval; no O2 or downstream operation has executed. Its conditional downstream
+scope retains the original cold/warm links and exactly two export cycles, with
+root evidence review and the first-failure stop between phases.
+Do not change app bytes, fault counts, assertions or timeouts to
 obtain a pass. Links and the two exports wait for passing preceding gates; no
 automatic replay. Never use ed8330a evidence as proof for changed bytes.
 

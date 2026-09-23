@@ -17,7 +17,7 @@ previous narrative without making it an active checklist.
 | Accepted API/native and retained Preview candidate | `f94a1d9d1125e6c9111aa08eda496f014f20d0c0` |
 | Current task branch / worktree | `codex/native-replacement-validation` / `/Users/brianchei/.codex/worktrees/ea6d/Tableus-ai-agent-dev` |
 | Staging web / prior native application | `ed8330a766b3c4b80a505e075535678394e275e9`; completed dependency remediation |
-| Local F1 mobile candidate | `8972865893a3f018a064594457dc9cc664f8a61f`; iOS/D2/lifecycle passed; O1 SpringBoard crash unresolved, P1 monitor timeout inconclusive; offline/links/exports incomplete |
+| Local F1 mobile candidate | `8972865893a3f018a064594457dc9cc664f8a61f`; iOS/D2/lifecycle and P2 Settings probe passed; O1 crash/refresh failure unresolved; offline/links/exports incomplete |
 | Native diagnostic operator | `16603dd0cf36d27b492e57a02d3c6c438a2563c4`; operator unchanged |
 | Previous task / exact base | `01a0c661-7b3f-7403-906c-0f60f60a3dd4`; `5b39d937b905691798a585b4aced79f91c7e97bf` |
 | Evidence index | [Current candidate](evidence/ios27-staging-f94a1d9/closeout.md) |
@@ -172,9 +172,13 @@ The approved [F1-P1 Settings-only probe](evidence/native-replacement-validation-
 stopped after 84.869 seconds when its repeated simulator-monitor call timed out.
 Both attempted flows completed their UI commands, but only the first passed the
 whole flow/observation gate. SpringBoard stayed at PID 17600; no new crash or
-TableUs launch was observed. Cleanup is confirmed. The probe is inconclusive,
-its allowance is consumed, and [P2 host-process monitoring](evidence/native-replacement-validation-2026-09-21/n1-f1-p2-proposal.md)
-is prepared only; another native run requires approval.
+TableUs launch was observed. The subsequently approved
+[P2 host-monitor probe](evidence/native-replacement-validation-2026-09-21/n1-f1-p2-result.md)
+passed three Settings flows in 130.308 seconds with 105 healthy host observations,
+no new crash and confirmed cleanup. Both probe allowances are consumed. These
+Settings results do not clear O1 or validate TableUs. The
+[O2 offline amendment](evidence/native-replacement-validation-2026-09-21/n1-f1-o2-proposal.md)
+is prepared only; one additional offline run requires approval.
 Accepted native remains
 f94a1d9. Android still requires all iOS gates and fresh 40 GiB capacity;
 N2/live reads and canonical/auth/physical probes remain separately gated.

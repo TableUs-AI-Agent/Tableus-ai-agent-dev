@@ -1,6 +1,6 @@
 # F1-P2 — Settings probe with host process monitoring
 
-**Prepared only; unapproved and unexecuted.** The [P1 result](n1-f1-p1-result.md)
+**Historical proposal: approved and executed; see [P2 result](n1-f1-p2-result.md).** The [P1 result](n1-f1-p1-result.md)
 is inconclusive because a monitor subprocess timed out while the second flow's
 Settings commands completed. The revised monitor removes repeated simulator
 control calls during automation. This is an operator amendment, not a demonstrated
@@ -33,6 +33,6 @@ performed or is included in this proposal; recheck capacity before execution.
 Synthetic checks cover the observed process format, PID reuse/replacement,
 parent loss, another simulator, unexpected TableUs, deadline and refusal without
 approval. Root reviewed the operator diff, matching YAML bytes, archive hashes
-and syntax. No P2 native operation has run. A healthy result would mean these
+and syntax. The subsequent P2 execution is recorded separately. A healthy result means these
 three flows did not reproduce the crash; it would not explain O1, resolve the
 original refresh failure/historical AppHang or authorize a TableUs replay.

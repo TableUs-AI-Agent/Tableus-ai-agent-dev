@@ -1,0 +1,17 @@
+{
+  "schema_version": 1,
+  "recorded_at": "2026-09-23T04:35:23.603194+00:00",
+  "owner_response": "approve",
+  "amendment": "F1-P2",
+  "proposal_sha256": "27865e7254423cf04745dd0feed1c27b49037e151fd4136ffd3ed5410537f1c8",
+  "evidence_base_sha": "64d4e18e4b0d13ab4002de08997085593e8e604a",
+  "probe_manifest_sha256": "490b582dde6823594d1816fef705f70117b58a13c6a6cc28220e470ed26a33af",
+  "device_id": "CBB4FAB4-734C-413C-9F10-850329AC9A01",
+  "additional_runs": 1,
+  "max_seconds_including_cleanup": 300,
+  "max_serial_maestro_invocations": 3,
+  "automatic_retry": false,
+  "automatic_tableus_continuation": false,
+  "cleanup_of_caches_or_artifacts_included": false,
+  "all_other_limits_unchanged": true
+}

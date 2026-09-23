@@ -1,0 +1,108 @@
+{
+  "schema_version": 1,
+  "amendment": "F1-O2",
+  "recorded_at": "2026-09-23T04:49:36.298688+00:00",
+  "status": "prepared_unapproved_unexecuted",
+  "evidence_base_sha": "64d4e18e4b0d13ab4002de08997085593e8e604a",
+  "prior_settings_result": "n1-f1-p2-result.json",
+  "prior_offline_result": "n1-f1-o1-result.json",
+  "application_sha": "8972865893a3f018a064594457dc9cc664f8a61f",
+  "artifact_sha256": "98c1535bfe6f7cad0c8e467454f5128c71f4aae21b8b41a5aba1c1a33f1e391d",
+  "build_operator_sha": "16603dd0cf36d27b492e57a02d3c6c438a2563c4",
+  "build_id": "local-ios-test-8972865-f1-01",
+  "operator_bundle": "/Users/brianchei/repos/Tableus-ai-agent-dev/.artifacts/mobile/8972865893a3f018a064594457dc9cc664f8a61f/native-validation-f1/runtime-preparation-p2/f1-o2-preparation",
+  "operator_manifest_sha256": "8687de880aa59053005497933f09ce20e9a61bbbc1203963bd8ec06a151da67f",
+  "files_sha256": {
+    "offline_check.py": "0a9e543e113a346dbf52a479efc596ca977f093a9d6df5b6ce58d418deb964f6",
+    "platform_monitor.py": "c146ef091e8be5066e65838de39bd00b2c4749346f8288e615fc2c29cbf200f8",
+    "README.md": "853105fb8e89bac5739721d53a99af370e5da174e8cf5a1ce970eba75c0bfe1c",
+    "p2_gate.py": "f0040afe7c94f50581dec10a89da405653a0f4441c7e172cd0b4375d57e18d48",
+    "driver.py": "be0ac16f4fe2eb183a001d0ad3d0cb6c6259092830f19cc6a097a1d99c606b7c",
+    "operator/mobile-fault-proxy.mjs": "98c33b5d88f3aa2bd2baa58ab44c127105075ba28ade0d9f1872c35a6905eef0",
+    "operator/mobile-offline-e2e.mjs": "b7d3e3ae92e1ea15d0b627619f43b585819c7a3af3c4e85eb1fd5c0052e45cff"
+  },
+  "downstream_bundle": "/Users/brianchei/repos/Tableus-ai-agent-dev/.artifacts/mobile/8972865893a3f018a064594457dc9cc664f8a61f/native-validation-f1/runtime-preparation-p2/f1-o2-downstream",
+  "downstream_files_sha256": {
+    "README.md": "b309e1c2eda5ceefc9049274b3daee8517c023b6c28766aefc56b0a426c407d2",
+    "export_support.py": "78d24706700b475091d1764e947e4cae7d1bf1c3a037c1110830e1a2319e7c1c",
+    "f1_links.py": "008ffec9b05da40da7fadc86e77388461cc2395a13276f107886883a21f9c84a",
+    "gate_selftest.py": "8f1f5fb29aac7251ec9d4f0f253397642ac816c925bf3814da30f045b3d930b9",
+    "offline_gate.py": "46f0261a3d297f84b9b40294f6a249ba4886ec2507e65218980783bfdc40a19d",
+    "runtime-config.json": "8106b921d22c230b91dfe7ece41528872f3b35cfe6efa30ab51d67ecc729185a"
+  },
+  "archive_index": "/Users/brianchei/repos/Tableus-ai-agent-dev/.artifacts/mobile/8972865893a3f018a064594457dc9cc664f8a61f/native-validation-f1/runtime-preparation-p2/index.json",
+  "archive_index_sha256": "8d8521d52b0e7adbe8a16d1216a7b38fec88fea9a1b9eb8eb05bcb367ef08e14",
+  "device_id": "CBB4FAB4-734C-413C-9F10-850329AC9A01",
+  "runtime": "iOS 26.5 (23F77)",
+  "additional_offline_runs": 1,
+  "max_offline_seconds_including_cleanup": 1800,
+  "cleanup_reserve_seconds": 30,
+  "fresh_output": "/Users/brianchei/repos/Tableus-ai-agent-dev/.artifacts/mobile/8972865893a3f018a064594457dc9cc664f8a61f/native-validation-f1/test-ios-offline-f1-o2",
+  "command": [
+    "python3",
+    "-B",
+    "/Users/brianchei/repos/Tableus-ai-agent-dev/.artifacts/mobile/8972865893a3f018a064594457dc9cc664f8a61f/native-validation-f1/runtime-preparation-p2/f1-o2-preparation/driver.py"
+  ],
+  "required_approval_environment": {
+    "TABLEUS_F1_O2_APPROVED": "1"
+  },
+  "unchanged_behavior": {
+    "flows": 11,
+    "refresh_phases": 5,
+    "fault_counts": true,
+    "UI_assertions": true,
+    "observation_timeouts": true,
+    "proxy_bytes": true
+  },
+  "new_monitor": "One target SpringBoard bind before runner, host process identity/crash observation during runner; expected TableUs processes allowed, including changed container after reinstall.",
+  "preflight": [
+    "exact fresh artifact/source/receipt and clean frozen workspace",
+    "matching passed D2/lifecycle/P2 evidence",
+    "operator/wrapper/adapter hashes match",
+    "target stopped and local ports idle",
+    "fresh output absent",
+    "at least 20 GiB free"
+  ],
+  "stop_conditions": [
+    "first native or behavioral failure",
+    "SpringBoard/parent identity change",
+    "new relevant target crash",
+    "command failure",
+    "interruption",
+    "deadline",
+    "unexpected traffic",
+    "incomplete required evidence"
+  ],
+  "automatic_retry": false,
+  "conditional_continuation": {
+    "scope_origin": "n1-f1-resumption-approval.json, as continued conditionally in n1-f1-o1-approval.json",
+    "gate": "Root reviews complete O2 command/phase/settled-observation/journal/provenance/platform proof before downstream use; adapters reject stale or incomplete evidence.",
+    "links": {
+      "cold_cases": 22,
+      "warm_cases": 22,
+      "runs_per_case": 1,
+      "maximum_seconds": 1800,
+      "oracles_unchanged": true
+    },
+    "exports": {
+      "cycles": 2,
+      "app_export_GETs_per_cycle": 1,
+      "root_observed_selector_and_dismissal_required": true,
+      "external_sharing": false,
+      "native_main_thread_sampling_required": true,
+      "stop_on_measured_stall_seconds": 2,
+      "file_schema_and_identity_required": true
+    },
+    "stop_between_phases_on_failure": true,
+    "additional_routine_approval_required_after_each_success": false
+  },
+  "new_builds": 0,
+  "lifecycle_reruns": 0,
+  "additional_LLDB_or_Hermes_captures": 0,
+  "settings_probe_reruns": 0,
+  "cache_or_artifact_cleanup": false,
+  "live_provider_OTP_canary_allowance": 0,
+  "other_gates": "Android still waits for all iOS gates and fresh40GiB; canonical/auth/physical probes, N2, deployments, merges, stores and closed live budgets unchanged.",
+  "checks": "Operator/adapter Python AST, Node syntax, exact O1->O2 provenance-only runner transform, identical proxy, mock P2/host-monitor/changed-container/late-failure cleanup/deadline/noapproval, real downstream gate positive/negative fixtures and unchanged 22x2 link matrix static check.",
+  "interpretation": "A pass does not explain earlier failures, clear historical AppHang or confer cumulative native acceptance."
+}
