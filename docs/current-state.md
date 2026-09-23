@@ -204,9 +204,12 @@ no TableUs process or application request was recorded. The underlying stall is
 unproved. Root stopped the leftover owned diagnostic collector, retained its
 logs and confirmed target Shutdown, absent target/runner processes and idle
 ports. Nine other service reports are retained; the SpringBoard/TableUs monitor
-does not cover them. O5 is consumed. Next is local-only operator preparation for
-XCTest startup detection, durable diagnostics and owned-collector cleanup; no
-new native attempt or timeout increase is authorized.
+does not cover them. O5 is consumed. [T1 local operator preparation](evidence/native-replacement-validation-2026-09-21/n1-f1-t1-result.md)
+now detects startup failure, retains diagnostics and bounds cleanup to proven
+owned collectors. Synthetic/mocked checks and a structural O5 file replay pass;
+its native entry points are disabled. The underlying stall remains unresolved.
+Next is one evidence-based comparison proposal with exact inputs and limits;
+no new native attempt or timeout increase is authorized.
 Accepted native remains
 f94a1d9. Android still requires all iOS gates and fresh 40 GiB capacity;
 N2/live reads and canonical/auth/physical probes remain separately gated.

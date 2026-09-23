@@ -1,0 +1,126 @@
+{
+  "schema_version": 1,
+  "recorded_at": "2026-09-23T08:22:49.791005+00:00",
+  "phase": "F1-T1",
+  "status": "local_operator_preparation_complete_native_unverified",
+  "authority": {
+    "local_implementation_and_deterministic_checks": "authorized by continue within active T1 packet",
+    "native_execution_enabled": false,
+    "native_attempts": 0,
+    "native_builds": 0,
+    "simulator_mutations": 0,
+    "signals": 0,
+    "live_provider_calls": 0,
+    "prior_attempt_budgets_reset": false
+  },
+  "identities": {
+    "branch": "codex/native-replacement-validation",
+    "worktree": "/Users/brianchei/.codex/worktrees/ea6d/Tableus-ai-agent-dev",
+    "base_sha": "c043a3ae00baf1a4f18d083b74c2d43cb62962e6",
+    "application_sha": "8972865893a3f018a064594457dc9cc664f8a61f",
+    "build_operator_sha": "16603dd0cf36d27b492e57a02d3c6c438a2563c4",
+    "application_artifact_sha256": "98c1535bfe6f7cad0c8e467454f5128c71f4aae21b8b41a5aba1c1a33f1e391d",
+    "build_id": "local-ios-test-8972865-f1-01",
+    "tooling_and_evidence_commit": "The commit containing this result; exact SHA supplied in the task handoff. This does not replace application/build-operator identities.",
+    "unchanged_application_git_objects": {
+      "mobile": "5608c78fc1200ca25bac8b0c6e7bf2795669dfcc",
+      "frontend": "d8a2a4f71b2de57e4898570d5676747d0c28fb45",
+      "backend": "fc576d49099aa378c5b21f6796e47f5aea156de2",
+      "packages": "ea8a044159b46b6578c3755a6da904fbfa241e7e",
+      "vendor": "1bd9b5b4cdc9a354a9abcbb94263676cf5fe051a",
+      "package.json": "3d021ed178393f864cd1f155944ec88acd608ccf",
+      "package-lock.json": "c8b71c3a621e53232c44b3540fd87f39e1fcf9e8"
+    }
+  },
+  "implementation": {
+    "source_sha256": {
+      "scripts/maestro_xctest_diagnostics.py": "267ac6d9c51fa7313ff10aa9ca7253ed2b5404723fc9583df6e19c6aac997759",
+      "scripts/maestro_xctest_diagnostics_test.py": "927621d82b7598df520ad8a80f87689f501c3fc4a329857ccb0e1ca877130cb9",
+      "scripts/maestro-xctest-diagnostics.test.mjs": "9a2275d5e40cd456dac22e7adf10acdaf62d1edc9469a4d66e628f0ed4bdb9e9"
+    },
+    "prepared_driver_sha256": "5de80781f2fe091547dbdb4ed397bad066868266f04726d9637f2a318c9adf86",
+    "prepared_wrapper_sha256": "4ab186f9f029a0c5372e0e1384c283086e960a4bed476f0d31235835423f84c8",
+    "helper_copy_matches_tracked_source": true,
+    "native_cli_entry_points": "refuse execution before subprocess or simulator action",
+    "behavior": [
+      "Registered Session/scheduling logs observed before host monitor; failed host observation still triggers read-only exit snapshot before child stop.",
+      "Known XCTest bootstrap failure latches across deletion/truncation/helper restart; no marker never means pass.",
+      "Private immutable content-addressed snapshots retained before acknowledgment, with file/depth/byte bounds.",
+      "Collector ownership requires exact executable, UUID, invocation output tree and start time; per-PID identity/deadline/evidence rechecked before signaling.",
+      "Original flow/assertion/fault semantics and 2100s total,1800s runner,5s host-query caps retained."
+    ]
+  },
+  "checks": {
+    "fresh": {
+      "helper_python": {
+        "passed": 13,
+        "log": "checks/helper-python-tests.log"
+      },
+      "node_bridge": {
+        "passed": 1,
+        "log": "checks/helper-tests.log",
+        "included_in_javascript_total": true
+      },
+      "operator_python_mocks": {
+        "passed": 25,
+        "legacy_guard_cases": 19,
+        "new_integration_cases": 6,
+        "log": "checks/operator-tests.log"
+      },
+      "setup_journal_mock_cases": {
+        "passed": 5,
+        "log": "checks/setup-journal-tests.log"
+      },
+      "o5_structural_file_replay": {
+        "status": "passed_local_replay_only",
+        "source_logs": 2,
+        "startup_failure_latched": true,
+        "matching_collector_selected": true,
+        "process_queries": 0,
+        "signals": 0,
+        "report": "checks/o5-replay.json"
+      },
+      "readiness": {
+        "status": "all_target_checks_passed_after_test_launcher_repairs",
+        "single_make_ready_invocation": "make-ready.json",
+        "first_failure": "Split provider overrides contaminated configuration fallback tests: 4 failed, 94 passed, 3 skipped. No source fix required.",
+        "first_resume": "make-ready-resume.json",
+        "first_resume_failure": "Reused file-backed SQLite fixture caused duplicate data: 11 failed, 87 passed, 3 skipped. No source fix required.",
+        "completed_resume": "make-ready-resume-fresh.json",
+        "javascript_passed": 293,
+        "backend_python_passed": 98,
+        "backend_python_skipped": 3,
+        "helper_python_passed": 13,
+        "contracts_unchanged": true,
+        "unnecessary_full_reruns": 0
+      },
+      "review": "Sol helper implementation; Astra integration/source review and fresh verification; Luna read-only check of observation/exit ordering passed."
+    },
+    "reused": "Historical native results remain bound to their original application, device and OS. T1 claims no new native compatibility or acceptance.",
+    "readiness_logs": [
+      "checks/make-ready.log",
+      "checks/make-ready-resume.log",
+      "checks/make-ready-resume-fresh.log"
+    ],
+    "contract_check": "npm run contract:check passed against docs/openapi.json and packages/api-client/src/schema.ts; generated bytes unchanged",
+    "perf": "Report-only JS chunk size 2820194 bytes; no measured performance claim"
+  },
+  "private_evidence": {
+    "archive_root": "/Users/brianchei/repos/Tableus-ai-agent-dev/.artifacts/mobile/8972865893a3f018a064594457dc9cc664f8a61f/native-validation-f1/runtime-preparation-t1",
+    "index_sha256": "111da732db070c94fcb199467438a74880e6378bf35571b87b38a301d496249c",
+    "operator_manifest_sha256": "75e9272a5e4b620f2e870630f897d9d57fdf604a7aabf076aa4dbee8730b41e9",
+    "retained_files": 44,
+    "retained_bytes": 455389,
+    "source_o5_manifest_sha256": "cd72d3a6815f746581775a2c9b6a18a43d135105bab8a39b5ff0bb4ea35a643f",
+    "source_o5_unchanged": true,
+    "original_test_failure_logs_retained": true,
+    "fixture_databases_omitted": true
+  },
+  "limitations": [
+    "Underlying XCTest initialization stall remains unresolved.",
+    "New temp/debug output layout and supervision have only offline/mock evidence; native compatibility remains unverified.",
+    "O5 is consumed. No retry, upgrade, timeout increase, new build, merge, deployment or live-provider operation is authorized by T1.",
+    "Original refresh, O1/O2 crashes, remaining iOS/link/export, canonical/auth, Android and N2 gates remain; no cumulative replacement acceptance."
+  ],
+  "next_bounded_objective": "Use retained startup evidence to define one native comparison hypothesis and prepare exact operator/inputs/stop conditions for separately bounded approval. Preserve incomplete native objective in this task."
+}

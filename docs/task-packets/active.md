@@ -1,6 +1,6 @@
 # Active packet: native replacement validation (2d)
 
-N1-F1 approved; **candidate 8972865 built; D2/lifecycle and P2 Settings probe passed on iOS 26.5; O1/O2 platform crashes and refresh failure unresolved. O5 installed the app on iOS 27 but failed on XCTest initialization before UI commands; cleanup verified. No further native test is authorized. Next is local-only operator preparation for startup evidence and cleanup.**
+N1-F1 approved; **candidate 8972865 built; D2/lifecycle and P2 Settings probe passed on iOS 26.5; O1/O2 platform crashes and refresh failure unresolved. O5 installed the app on iOS 27 but failed on XCTest initialization before UI commands; cleanup verified. Local T1 startup detection, durable diagnostics and owned-collector cleanup preparation is complete; no further native test is authorized.**
 The owner authorized F1 native resumption and safe regenerable-cache cleanup on
 2026-09-22; exact scope is recorded in the [amendment](../evidence/native-replacement-validation-2026-09-21/n1-f1-resumption-approval.json).
 Capacity and fresh-input checks still govern execution; prior attempts remain consumed.
@@ -22,6 +22,7 @@ Keep this incomplete native objective here; canceled scans remain canceled.
 - New F1 build: `local-ios-test-8972865-f1-01`; fresh proof and diagnostic stop in
   [resumption result](../evidence/native-replacement-validation-2026-09-21/n1-f1-native-result.json).
 - Evidence commit is the commit containing this checkpoint, not app/operator SHA.
+- Local XCTest operator preparation (T1) base: `c043a3ae00baf1a4f18d083b74c2d43cb62962e6`; same active branch/worktree and frozen application.
 
 ## Current result
 
@@ -188,13 +189,17 @@ grouped owned collector and independently confirmed cleanup at 07:09:43 UTC.
 Nine other system-service reports remain retained. All total/runner limits were
 respected. No iOS 26.5 acceptance transfers and no native retry remains.
 
-Next bounded objective: prepare local-only operator changes that detect XCTest
-startup failure, retain child diagnostics during execution and clean up proven
-owned collectors. Validate using retained O5 evidence and mocked fixtures; no
-native execution, application change, timeout increase or upgrade is included.
-This addresses observation/cleanup gaps, not the cause of the initialization
-stall. A future native comparison needs a concrete hypothesis and separately
-bounded authorization. Keep the incomplete native objective in this task.
+[T1 local operator preparation](../evidence/native-replacement-validation-2026-09-21/n1-f1-t1-result.md)
+is complete: startup failures latch from retained logs before the host query,
+exit capture preserves diagnostics, and collector cleanup requires fresh exact
+ownership proof inside the original deadline. Synthetic checks, mocked integration
+and a structural replay of O5 files pass. Both derivative CLI entry points refuse
+native execution. Application bytes, assertions and timeouts are unchanged; the
+initialization stall and runtime compatibility remain unproved.
+Next bounded objective: use the retained startup evidence to define one native
+comparison hypothesis and prepare its exact operator/inputs and stop conditions
+for separately bounded approval. Do not execute it under T1. Keep the incomplete
+native objective in this task.
 Do not change app bytes, fault counts, assertions or timeouts to
 obtain a pass. Links and the two exports wait for passing preceding gates; no
 automatic replay. Never use ed8330a evidence as proof for changed bytes.
