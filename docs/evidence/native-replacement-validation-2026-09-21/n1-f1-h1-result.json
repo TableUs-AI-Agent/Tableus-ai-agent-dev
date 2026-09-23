@@ -1,0 +1,258 @@
+{
+  "schema_version": 1,
+  "recorded_at": "2026-09-23T06:42:36.666933+00:00",
+  "amendment": "F1-H1",
+  "status": "completed_resource_recovery_only",
+  "evidence_base_sha": "14e8e61b40a61694da909e87074ca9e41382ff66",
+  "evidence_commit": "Commit containing this result; separate from frozen application and build operator.",
+  "approval": "n1-f1-h1-approval.json",
+  "application_sha_unchanged": "8972865893a3f018a064594457dc9cc664f8a61f",
+  "build_operator_sha_unchanged": "16603dd0cf36d27b492e57a02d3c6c438a2563c4",
+  "operator_archive": "/Users/brianchei/repos/Tableus-ai-agent-dev/.artifacts/mobile/8972865893a3f018a064594457dc9cc664f8a61f/native-validation-f1/runtime-preparation-h1",
+  "manifest_sha256": "2e1da294a40b99de4988a2ef360461516188ee77042bb6756dad4e8f2adf35b6",
+  "driver_sha256": "5ae06515e935adfa43bb24c6fd295634fff8eaefd3524e41e78c9e726d053ec7",
+  "raw_result_sha256": "b693f558c7fd7db99fa96d5e3d4ae08196afc84d9d993a01c6a9aa0f8a248dd2",
+  "started_at": "2026-09-23T06:39:07.709908+00:00",
+  "finished_at": "2026-09-23T06:39:36.208969+00:00",
+  "elapsed_seconds": 28.499,
+  "limit_seconds": 300,
+  "target_results": [
+    {
+      "udid": "2408A54F-A1C5-4388-8B46-6A987FE3B578",
+      "name": "TableUs-N1-ed8330a",
+      "initial_state": "Booted",
+      "final_state": "Shutdown",
+      "shutdown_attempts": 1,
+      "shutdown_exit_code": 0,
+      "shutdown_seconds": 3.315
+    },
+    {
+      "udid": "CBB4FAB4-734C-413C-9F10-850329AC9A01",
+      "name": "TableUs-N1-F1-8972865",
+      "initial_state": "Booted",
+      "final_state": "Shutdown",
+      "shutdown_attempts": 1,
+      "shutdown_exit_code": 0,
+      "shutdown_seconds": 3.288
+    }
+  ],
+  "command_count": 20,
+  "all_commands_within_caps_and_zero_exit": true,
+  "before_ps": {
+    "at": "2026-09-23T06:39:08.307224+00:00",
+    "latency_seconds": 0.074,
+    "row_count": 1215,
+    "stdout_sha256": "35faced6709a889052ae9fc407e0f0fad8435bef3831f73ee311570b16dc2133"
+  },
+  "post_probes": [
+    {
+      "at": "2026-09-23T06:39:15.665747+00:00",
+      "latency_seconds": 0.039,
+      "row_count": 804,
+      "stdout_sha256": "d59697e005262626901de4920ce4790cc6c1fd30978b882e457c79959915a05a",
+      "uuid_process_check": {
+        "at": "2026-09-23T06:39:15.708924+00:00",
+        "scope": "exact target UUID in process command line only",
+        "target_uuid_process_count": 0,
+        "target_uuid_process_pids": []
+      }
+    },
+    {
+      "at": "2026-09-23T06:39:25.758843+00:00",
+      "latency_seconds": 0.045,
+      "row_count": 803,
+      "stdout_sha256": "f978c11e3b9d1f16c8fea0a414a0b6b27397eadfbf2cb3eb9e205aa22461e4bf",
+      "uuid_process_check": {
+        "at": "2026-09-23T06:39:25.805836+00:00",
+        "scope": "exact target UUID in process command line only",
+        "target_uuid_process_count": 0,
+        "target_uuid_process_pids": []
+      }
+    },
+    {
+      "at": "2026-09-23T06:39:35.877712+00:00",
+      "latency_seconds": 0.067,
+      "row_count": 803,
+      "stdout_sha256": "02334951a0f1fcf164659535a51a0b4f20fcd7d0017dc8c15e82b3891c3c00b9",
+      "uuid_process_check": {
+        "at": "2026-09-23T06:39:35.922748+00:00",
+        "scope": "exact target UUID in process command line only",
+        "target_uuid_process_count": 0,
+        "target_uuid_process_pids": []
+      }
+    }
+  ],
+  "load_comparison": {
+    "ps_latency_before_seconds": 0.074,
+    "ps_latency_after_seconds": 0.067,
+    "load_before_1_5_15": [
+      5.8623046875,
+      7.9169921875,
+      13.095703125
+    ],
+    "load_after_1_5_15": [
+      4.4736328125,
+      7.4248046875,
+      12.76708984375
+    ],
+    "interpretation": "Measured before/after only; no causal or stability claim"
+  },
+  "swap_used_mib": {
+    "before": 20601.88,
+    "after": 20193.88,
+    "decrease": 408.0
+  },
+  "process_rows": {
+    "before": 1215,
+    "after": 803,
+    "decrease": 412
+  },
+  "ports_idle_before": {
+    "7999": true,
+    "8000": true,
+    "8001": true
+  },
+  "ports_idle_after": {
+    "7999": true,
+    "8000": true,
+    "8001": true
+  },
+  "post_check": {
+    "recorded_at": "2026-09-23T06:41:27.469750+00:00",
+    "read_only": true,
+    "devices": [
+      {
+        "dataPath": "/Users/brianchei/Library/Developer/CoreSimulator/Devices/0EFFA766-DCDD-49E5-84B0-D3593B68709A/data",
+        "dataPathSize": 367931392,
+        "logPath": "/Users/brianchei/Library/Logs/CoreSimulator/0EFFA766-DCDD-49E5-84B0-D3593B68709A",
+        "udid": "0EFFA766-DCDD-49E5-84B0-D3593B68709A",
+        "lastUsedAt": "2026-09-23T06:21:20Z",
+        "isAvailable": true,
+        "logPathSize": 81920,
+        "deviceTypeIdentifier": "com.apple.CoreSimulator.SimDeviceType.iPhone-17-Pro",
+        "state": "Shutdown",
+        "name": "TableUs-N1-F1-O3-iOS27-8972865",
+        "runtime": "com.apple.CoreSimulator.SimRuntime.iOS-27-0"
+      },
+      {
+        "dataPath": "/Users/brianchei/Library/Developer/CoreSimulator/Devices/2408A54F-A1C5-4388-8B46-6A987FE3B578/data",
+        "dataPathSize": 2327027712,
+        "logPath": "/Users/brianchei/Library/Logs/CoreSimulator/2408A54F-A1C5-4388-8B46-6A987FE3B578",
+        "udid": "2408A54F-A1C5-4388-8B46-6A987FE3B578",
+        "lastUsedAt": "2026-09-22T02:02:45Z",
+        "isAvailable": true,
+        "logPathSize": 585728,
+        "deviceTypeIdentifier": "com.apple.CoreSimulator.SimDeviceType.iPhone-17-Pro",
+        "state": "Shutdown",
+        "name": "TableUs-N1-ed8330a",
+        "runtime": "com.apple.CoreSimulator.SimRuntime.iOS-26-5"
+      },
+      {
+        "dataPath": "/Users/brianchei/Library/Developer/CoreSimulator/Devices/CBB4FAB4-734C-413C-9F10-850329AC9A01/data",
+        "dataPathSize": 2144813056,
+        "logPath": "/Users/brianchei/Library/Logs/CoreSimulator/CBB4FAB4-734C-413C-9F10-850329AC9A01",
+        "udid": "CBB4FAB4-734C-413C-9F10-850329AC9A01",
+        "lastUsedAt": "2026-09-23T02:07:12Z",
+        "isAvailable": true,
+        "logPathSize": 376832,
+        "deviceTypeIdentifier": "com.apple.CoreSimulator.SimDeviceType.iPhone-17-Pro",
+        "state": "Shutdown",
+        "name": "TableUs-N1-F1-8972865",
+        "runtime": "com.apple.CoreSimulator.SimRuntime.iOS-26-5"
+      }
+    ],
+    "retained_data": {
+      "2408A54F-A1C5-4388-8B46-6A987FE3B578": {
+        "device_directory_exists": true,
+        "data_directory_exists": true,
+        "isDeleted": false,
+        "name": "TableUs-N1-ed8330a",
+        "device_plist_sha256": "09bbaa6ab35d4191cd4b30d8b6374f748d3c94e7e9cd98a8503ae90a573f4e4b"
+      },
+      "CBB4FAB4-734C-413C-9F10-850329AC9A01": {
+        "device_directory_exists": true,
+        "data_directory_exists": true,
+        "isDeleted": false,
+        "name": "TableUs-N1-F1-8972865",
+        "device_plist_sha256": "39218eab6f0ce63137e0721c37a9e9fba8c5e3c830a095db4bb21aaadc975933"
+      }
+    },
+    "known_pre_shutdown_pids": [
+      18255,
+      94306
+    ],
+    "remaining_known_pids_children_or_uuid_matches": [],
+    "ports": {
+      "7999": {
+        "command": [
+          "lsof",
+          "-nP",
+          "-iTCP:7999",
+          "-sTCP:LISTEN"
+        ],
+        "exit_code": 1,
+        "stdout": "",
+        "stderr": ""
+      },
+      "8000": {
+        "command": [
+          "lsof",
+          "-nP",
+          "-iTCP:8000",
+          "-sTCP:LISTEN"
+        ],
+        "exit_code": 1,
+        "stdout": "",
+        "stderr": ""
+      },
+      "8001": {
+        "command": [
+          "lsof",
+          "-nP",
+          "-iTCP:8001",
+          "-sTCP:LISTEN"
+        ],
+        "exit_code": 1,
+        "stdout": "",
+        "stderr": ""
+      }
+    },
+    "new_target_crash_reports": [],
+    "unparsed_relevant_reports": [],
+    "free_gib": 25.89861297607422,
+    "cleanup_confirmed": true
+  },
+  "device_and_saved_data_directories_retained": true,
+  "device_erase_delete_create_or_boot": false,
+  "offline_attempts": 0,
+  "app_launches_or_tests": 0,
+  "further_native_tests_authorized": false,
+  "causal_or_stability_claim": false,
+  "interpretation": "The two exact older devices were shut down once each. Lower process-row and swap observations and short queries are resource observations only; pre-shutdown ps was already fast. No proof that O4 timeout or historical app/platform failures are fixed.",
+  "fresh_checks": [
+    "Pinned proposal/operator files and explicit owner approval",
+    "Both device/runtime identities, pre/post idle ports",
+    "20 successful commands within caps, 3 post-shutdown host queries",
+    "Independent final inventory/data-directory/process/port/crash check",
+    "Independent Luna read-only outcome/scope audit"
+  ],
+  "source_validation_reused": {
+    "javascript_tests": 292,
+    "python_tests": 98,
+    "postgres_skips": 3,
+    "application_and_tracked_tooling_unchanged": true
+  },
+  "closeout_archive": "/Users/brianchei/repos/Tableus-ai-agent-dev/.artifacts/mobile/8972865893a3f018a064594457dc9cc664f8a61f/native-validation-f1/runtime-closeout-h1",
+  "closeout_index_sha256": "c5660cf3ed8ad81c3c4e0f7b2d7cb4f7b641a52f47b615a798fb5efa90b1c078",
+  "private_files_sha256": {
+    "host-recovery-h1/post-check.json": "82ee596733ef6012c41e90a1e7f91772f4db999cdba46f8165988b11900e1f59",
+    "host-recovery-h1/result.json": "b693f558c7fd7db99fa96d5e3d4ae08196afc84d9d993a01c6a9aa0f8a248dd2",
+    "h1-execution/approval.json": "d8d2a8e0d81adc704bc3f499bbbecb29ebb1d517fca95b89f57a5d6b75b505a7",
+    "h1-execution/execution.log": "37f7a1a5f96517ffb5a881f33643a1d63c089949743e8bcc3ba05a8c67e7026c",
+    "h1-execution/invocation.json": "686f4387c0f9cc42bd507e71abdfc007826fbaf68d9015ad164da50d4514d17d",
+    "h1-execution/invoker.py": "bb87d0b5906ef666ef38b920f5c8b6b97cc57a6f9d485ffdb14af2428c99e2dc",
+    "h1-execution/proposal.json": "80234a31c83cb1812c69e693957f0818c28c49c4a11b5d5d193ca680a549ee22"
+  },
+  "next_action": "Review prepared and archived O5 proposal for one conditional diagnostic with H1 provenance, older-target Shutdown gates, required setup journal and no automatic second boot. New owner approval required; no O5 execution.",
+  "next_proposal": "n1-f1-o5-proposal.json"
+}

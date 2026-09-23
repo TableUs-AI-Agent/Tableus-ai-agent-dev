@@ -192,9 +192,13 @@ service reports during shutdown are distinct from O1/O2. The approved [O4 operat
 passed its control query in 9.465 seconds, then stopped after 113.791 seconds on a
 host process-query timeout during runner setup. No UI execution is retained;
 install/launch and app traffic are unproved. Cleanup is independently confirmed.
-[H1](evidence/native-replacement-validation-2026-09-21/n1-f1-h1-proposal.md) prepares
-shutdown of two older TableUs simulators and host observations, with data retained
-and no test replay; approval required. No targeted Maestro upgrade fix was found.
+The approved [H1 recovery](evidence/native-replacement-validation-2026-09-21/n1-f1-h1-result.md)
+shut down both older TableUs simulators in 28.499 seconds, with data retained and
+three successful host queries. Process rows fell from 1,215 to 803 and swap use
+fell by 408 MiB during the observation window; this does not establish causality
+or stability. No app test ran. The [O5 proposal](evidence/native-replacement-validation-2026-09-21/n1-f1-o5-proposal.md)
+adds H1 provenance, a single-boot guard and setup-command evidence to one conditional
+offline diagnostic; new approval required. No targeted Maestro upgrade fix was found.
 Accepted native remains
 f94a1d9. Android still requires all iOS gates and fresh 40 GiB capacity;
 N2/live reads and canonical/auth/physical probes remain separately gated.

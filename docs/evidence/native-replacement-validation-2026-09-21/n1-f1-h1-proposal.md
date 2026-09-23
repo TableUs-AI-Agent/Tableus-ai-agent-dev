@@ -1,6 +1,8 @@
 # F1-H1 — recover host capacity before considering another native test
 
-**Prepared only; no approval or execution.** [O4](n1-f1-o4-result.md) passed its
+**Executed once after [owner approval](n1-f1-h1-approval.json); [H1 result](n1-f1-h1-result.md) completed resource recovery in 28.499 seconds.** The original proposal JSON remains unchanged.
+
+[O4](n1-f1-o4-result.md) passed its
 initial simulator control query, then stopped on a five-second host process-query
 timeout during runner setup. A later snapshot recorded about 20 GiB swap used on
 a 16 GiB host and two older booted TableUs simulators. This supports a bounded
@@ -44,13 +46,12 @@ result informs any later concrete validation proposal.
 
 The [structured proposal](n1-f1-h1-proposal.json) binds the reviewed private
 operator archive. Twelve mocked/static checks and three Python syntax checks
-pass; root review independently confirmed the on-disk identities. Native execution
-remains zero. Manifest SHA-256:
+passed before execution; root review independently confirmed the on-disk identities. Manifest SHA-256:
 `2e1da294a40b99de4988a2ef360461516188ee77042bb6756dad4e8f2adf35b6`.
 Driver SHA-256:
 `5ae06515e935adfa43bb24c6fd295634fff8eaefd3524e41e78c9e726d053ec7`.
 
-Approval is required because the approved [O4 scope](n1-f1-o4-proposal.md)
+Separate approval was required because the approved [O4 scope](n1-f1-o4-proposal.md)
 explicitly excludes “other-device operation” and ends at its first failure.
 H1 would operate the two older devices outside that scope. It is not a request
 to reconfirm any part of O4 or to restart a failed test.

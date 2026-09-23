@@ -1,6 +1,6 @@
 # Active packet: native replacement validation (2d)
 
-N1-F1 approved; **candidate 8972865 built; D2/lifecycle and P2 Settings probe passed; O1/O2 platform crashes and refresh failure unresolved; O2/O3/O4 stopped; O4 passed control but hit a host-query timeout during runner setup; H1 host recovery prepared, no further native execution authorized.**
+N1-F1 approved; **candidate 8972865 built; D2/lifecycle and P2 Settings probe passed; O1/O2 platform crashes and refresh failure unresolved; O2/O3/O4 stopped; O4 passed control but hit a host-query timeout during runner setup; H1 shut down both older targets with data retained; O5 prepared, no further native test authorized.**
 The owner authorized F1 native resumption and safe regenerable-cache cleanup on
 2026-09-22; exact scope is recorded in the [amendment](../evidence/native-replacement-validation-2026-09-21/n1-f1-resumption-approval.json).
 Capacity and fresh-input checks still govern execution; prior attempts remain consumed.
@@ -169,10 +169,19 @@ the host process query exceeded five seconds during runner setup. No UI executio
 is retained; install/launch and traffic remain unproved. Owned processes are gone,
 ports idle and retained target Shutdown. Five system-service shutdown reports
 are preserved. The 35-minute total/30-minute runner caps were respected; no retry
-is authorized and no iOS 26.5 acceptance transfers. Post-run high load/swap and
-two older booted TableUs targets motivate [H1 host recovery](../evidence/native-replacement-validation-2026-09-21/n1-f1-h1-proposal.md):
-shutdown only those two named targets, retain data/evidence and measure host-query
-latency. This is prepared only, requires approval and includes no test replay.
+is authorized and no iOS 26.5 acceptance transfers. The owner then [approved H1](../evidence/native-replacement-validation-2026-09-21/n1-f1-h1-approval.json).
+Its [resource recovery](../evidence/native-replacement-validation-2026-09-21/n1-f1-h1-result.md)
+completed in 28.499 seconds: both older targets shut down once each, data retained,
+three host queries below 0.07 seconds and idle test ports. Process rows fell from
+1,215 to 803 and swap use fell by 408 MiB during the window. Pre-shutdown queries
+were already fast; no causal or stability acceptance follows. No app tests ran.
+The [O5 proposal](../evidence/native-replacement-validation-2026-09-21/n1-f1-o5-proposal.md)
+is prepared and archived: one conditional diagnostic with H1 provenance, older
+targets Shutdown before boot/UI, required setup-command events and a stricter
+single-boot guard. Nineteen Python mocks, five Node journal cases and syntax
+checks pass. Existing 35-minute total, 30-minute runner, five-second host monitor,
+behavioral assertions and fault limits remain. New approval is required; H1
+grants no replay, and no O5 operation has occurred.
 Do not change app bytes, fault counts, assertions or timeouts to
 obtain a pass. Links and the two exports wait for passing preceding gates; no
 automatic replay. Never use ed8330a evidence as proof for changed bytes.
