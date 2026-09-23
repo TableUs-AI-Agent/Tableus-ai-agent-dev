@@ -1,5 +1,9 @@
 # F1-O2 — two caches cleared; capacity still blocks execution
 
+Historical checkpoint: the proposed older support-cache cleanup was subsequently
+approved and [completed](n1-f1-o2-old-support-result.json). Capacity preflight
+passed, then [O2 ran and failed](n1-f1-o2-result.md) on a platform crash.
+
 The owner [approved the exact npm/CocoaPods cleanup](n1-f1-o2-cache-cleanup-approval.json).
 It completed: both specified directories were removed, with **1.444 GiB observed
 free-space gain**. No other directory was deleted. The [receipt and inspection

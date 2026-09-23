@@ -1,8 +1,9 @@
 # F1-O2 — approved, waiting for disk capacity
 
 Historical proposal: its exact two-cache cleanup was subsequently approved and
-completed. See the [current storage follow-up](n1-f1-o2-storage-followup.md); O2
-remains unused because capacity is still below the required floor.
+completed. Further approved cleanup restored capacity and [O2 then ran and
+failed](n1-f1-o2-result.md). The unused-attempt statements below describe this
+historical checkpoint only.
 
 The owner approved [O2](n1-f1-o2-approval.json), including conditional continuation
 through the 44 link cases and exactly two exports after preceding checks pass.

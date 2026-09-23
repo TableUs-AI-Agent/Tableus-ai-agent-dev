@@ -1,6 +1,6 @@
 # Active packet: native replacement validation (2d)
 
-N1-F1 approved; **candidate 8972865 built; D2/lifecycle and P2 Settings probe passed; O1/refresh failures unresolved; O2 approved, blocked before execution by disk capacity.**
+N1-F1 approved; **candidate 8972865 built; D2/lifecycle and P2 Settings probe passed; O1/O2 platform crashes and refresh failure unresolved; O2 consumed, no native replay authorized.**
 The owner authorized F1 native resumption and safe regenerable-cache cleanup on
 2026-09-22; exact scope is recorded in the [amendment](../evidence/native-replacement-validation-2026-09-21/n1-f1-resumption-approval.json).
 Capacity and fresh-input checks still govern execution; prior attempts remain consumed.
@@ -143,17 +143,25 @@ and its exact archived driver passed as recorded above. The prepared
 [O2 offline amendment](../evidence/native-replacement-validation-2026-09-21/n1-f1-o2-proposal.md)
 adds host platform observation to the retained diagnostic offline operator,
 preserving app bytes and behavioral checks. The owner [approved O2](../evidence/native-replacement-validation-2026-09-21/n1-f1-o2-approval.json),
-including conditional cold/warm links and exactly two exports. The read-only
-preflight stopped at 19.37 GiB, below 20 GiB, before any native operation; the
-single O2 allowance remains unused. The separately approved two-cache cleanup
-completed with 1.444 GiB observed gain, but free space had fallen before deletion;
-repeated preflight measured 18.77 GiB (19.78 GiB later), still below 20 GiB. The
-[storage follow-up](../evidence/native-replacement-validation-2026-09-21/n1-f1-o2-storage-followup.md)
-prepares removal of one idle older iOS 26.6.1 system-support cache (5.685 GiB)
-for separate approval. Preserve current support, app symbols and retained evidence.
-After approved cleanup, repeat fresh preflight and complete O2 and successful
-downstream phases under the existing authorization, with root review and
-first-failure stops. No native/link/export operation has run in this continuation.
+including conditional links/exports. Its initial capacity stops consumed no native
+attempt. Subsequent approved cache removals completed; the older iOS support-cache
+removal recovered 5.689 GiB and fresh preflight passed with 25.34 GiB free. The
+[actual O2 attempt](../evidence/native-replacement-validation-2026-09-21/n1-f1-o2-result.md)
+then failed after 88.308 seconds: first-flow UI commands completed, followed by a
+separate SpringBoard crash matching O1's XCTest accessibility signature. Host
+monitoring detected identity replacement and stopped the runner before the crash
+report appeared. App, automation and services are stopped. No retry POST, refresh,
+link or export ran; O2's additional attempt is consumed with no automatic retry.
+
+Read-only upstream review found no targeted source-level fix in Maestro 2.10.
+The [O3 proposal](../evidence/native-replacement-validation-2026-09-21/n1-f1-o3-proposal.md)
+prepares one diagnostic comparison on a fresh iPhone 17 Pro using the installed
+iOS 27.0 (24A434) runtime, with the same artifact, Maestro 2.8.0 and eleven flows.
+Its 35-minute total includes setup and cleanup; the runner remains capped at
+30 minutes. No device has been created or run for that comparison. A new target
+cannot inherit D2/lifecycle acceptance from 26.5; any pass would be diagnostic
+only, with no downstream continuation. A new native allowance is required before
+execution; original refresh failure and AppHang remain open.
 Do not change app bytes, fault counts, assertions or timeouts to
 obtain a pass. Links and the two exports wait for passing preceding gates; no
 automatic replay. Never use ed8330a evidence as proof for changed bytes.
