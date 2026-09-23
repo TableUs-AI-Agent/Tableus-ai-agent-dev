@@ -184,9 +184,13 @@ gate failed; no retry POST, refresh phase, link or export ran. Cleanup is confir
 and O2's one attempt is consumed. The approved older system-support cache removal
 recovered 5.689 GiB; preflight had passed with 25.34 GiB free. Storage no longer
 blocked this attempt. Existing source/runtime evidence remains bound to its exact
-device and OS. The [O3 proposal](evidence/native-replacement-validation-2026-09-21/n1-f1-o3-proposal.md)
-prepares one diagnostic comparison on a fresh target using the installed iOS 27
-runtime; a new native allowance is required. No targeted Maestro upgrade fix was found.
+device and OS. The [O3 operation](evidence/native-replacement-validation-2026-09-21/n1-f1-o3-result.md)
+created and booted its iOS 27 target, then stopped after 143.997 seconds when the
+initial process query exceeded eight seconds. No app install, launch or offline
+runner occurred. The target is shut down; services/ports are clear. Five system
+service reports during shutdown are distinct from O1/O2. The [O4 proposal](evidence/native-replacement-validation-2026-09-21/n1-f1-o4-proposal.md)
+prepares a measured control query on the retained target before a conditional
+offline run; new native allowance required. No targeted Maestro upgrade fix was found.
 Accepted native remains
 f94a1d9. Android still requires all iOS gates and fresh 40 GiB capacity;
 N2/live reads and canonical/auth/physical probes remain separately gated.

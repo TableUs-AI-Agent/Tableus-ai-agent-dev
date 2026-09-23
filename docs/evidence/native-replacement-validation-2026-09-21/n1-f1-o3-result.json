@@ -1,0 +1,392 @@
+{
+  "schema_version": 1,
+  "recorded_at": "2026-09-23T06:00:06.203914+00:00",
+  "amendment": "F1-O3",
+  "status": "stopped_during_simulator_setup_before_offline_runner",
+  "evidence_base_sha": "b15c8e0889c40a9d16dd9e0e899fc800fbec9321",
+  "evidence_commit": "Commit containing this result; separate from application/operator.",
+  "approval": "n1-f1-o3-approval.json",
+  "application_sha": "8972865893a3f018a064594457dc9cc664f8a61f",
+  "build_operator_sha": "16603dd0cf36d27b492e57a02d3c6c438a2563c4",
+  "artifact_sha256": "98c1535bfe6f7cad0c8e467454f5128c71f4aae21b8b41a5aba1c1a33f1e391d",
+  "build_id": "local-ios-test-8972865-f1-01",
+  "device_id": "0EFFA766-DCDD-49E5-84B0-D3593B68709A",
+  "device_name": "TableUs-N1-F1-O3-iOS27-8972865",
+  "runtime_id": "com.apple.CoreSimulator.SimRuntime.iOS-27-0",
+  "runtime_build": "24A434",
+  "driver_summary": {
+    "runner": "offline",
+    "amendment": "F1-O3",
+    "status": "failed_diagnostic_only",
+    "application_sha": "8972865893a3f018a064594457dc9cc664f8a61f",
+    "artifact_sha256": "98c1535bfe6f7cad0c8e467454f5128c71f4aae21b8b41a5aba1c1a33f1e391d",
+    "build_id": "local-ios-test-8972865-f1-01",
+    "runtime_id": "com.apple.CoreSimulator.SimRuntime.iOS-27-0",
+    "runtime_build": "24A434",
+    "device_type": "com.apple.CoreSimulator.SimDeviceType.iPhone-17-Pro",
+    "device_name": "TableUs-N1-F1-O3-iOS27-8972865",
+    "device_id": "0EFFA766-DCDD-49E5-84B0-D3593B68709A",
+    "frozen_runner_source_sha256": "54bca226db986131b855396b79a43cb66218fd219455af543080c8a92796f63e",
+    "instrumented_runner_sha256": "205bc9f3c3c7e9eb42f5f1c4e1fa8071c74de8a6e0ab6e896dabf71cd4be80a8",
+    "instrumented_proxy_sha256": "98c33b5d88f3aa2bd2baa58ab44c127105075ba28ade0d9f1872c35a6905eef0",
+    "driver_sha256": "b22976c7fa041ecf4ccba3b6529686aa5dbdd9c320a9e9ff83ee53d7222864ff",
+    "platform_monitor_sha256": "9da3dc8687c64e17362c285d6522f64a679d0e142a859271d4fd87c528eeffd6",
+    "maestro_wrapper_sha256": "542a6f9c2c4e3bbe35261568aaa9801d480026fad63e7cbe16db21dd6071e052",
+    "maestro_version": "2.8.0",
+    "manifest_sha256": "bf7532aa0502b694d7d0f5e2ee2d67806ceed21a3fa26f30d08c5863b9d15f25",
+    "started_at": "2026-09-23T05:50:19.144004+00:00",
+    "limit_seconds_total": 2100,
+    "runner_limit_seconds": 1800,
+    "platform_monitor": {
+      "kind": "host-ps",
+      "observations": []
+    },
+    "device_create_attempts": 1,
+    "new_crash_reports": [],
+    "termination_pending": false,
+    "free_gib_before_creation": 24.840312957763672,
+    "free_gib_after_boot": 23.582496643066406,
+    "error": "TimeoutExpired: Command '['xcrun', 'simctl', 'spawn', '0EFFA766-DCDD-49E5-84B0-D3593B68709A', 'launchctl', 'list']' timed out after 8 seconds",
+    "offline_ports_idle_after_cleanup": true,
+    "app_termination_pending": "TimeoutExpired",
+    "new_device_shutdown_exit": 0,
+    "new_device_shutdown_confirmed": true,
+    "finished_at": "2026-09-23T05:52:43.141189+00:00",
+    "elapsed_seconds": 143.997
+  },
+  "artifact_provenance": {
+    "status": "artifact_provenance_passed_non_runtime",
+    "diagnostic_file_count": 42,
+    "mapped_source_file_count": 50,
+    "same_application_and_artifact": true,
+    "raw_driver_record_contains_full_proof": true
+  },
+  "attempts": {
+    "diagnostic_operations_used": 1,
+    "device_create_requests": 1,
+    "offline_runner_invocations": 0,
+    "offline_flows_invoked": 0,
+    "offline_flows_accepted": 0,
+    "refresh_phases": 0,
+    "further_native_execution_authorized": false,
+    "unused_offline_portion_may_resume": false,
+    "reason": "First failed command stops the one conditional diagnostic operation; uninvoked runner is not continuing authority."
+  },
+  "application_installed_or_launched_by_O3": false,
+  "maestro_automation_invoked": false,
+  "maestro_version_probe_completed": true,
+  "backend_or_fault_proxy_started": false,
+  "links_run": false,
+  "exports_run": 0,
+  "android_run": false,
+  "storage_gib": {
+    "before_create": 24.840312957763672,
+    "after_boot": 23.582496643066406,
+    "post_shutdown": 24.014862060546875
+  },
+  "timeline_local_UTC_minus_05": [
+    {
+      "time": "2026-09-23 00:50:19.144",
+      "event": "Approved driver started."
+    },
+    {
+      "time": "2026-09-23 00:50:23-24",
+      "event": "One new simulator created and boot requested."
+    },
+    {
+      "time": "2026-09-23 00:52:21",
+      "event": "Boot-status Finished after116s, including99.33s successful data migration; process query spawn requested."
+    },
+    {
+      "time": "2026-09-23 00:52:29",
+      "event": "launchctl PID46040 spawn acknowledged at8s timeout boundary; client disconnected. No query output/exit established."
+    },
+    {
+      "time": "2026-09-23 00:52:30-38",
+      "event": "Best-effort app termination also timed out8s; shutdown requested."
+    },
+    {
+      "time": "2026-09-23 00:52:42.6-43.1",
+      "event": "Five system-service SIGTERM-timeout/SIGKILL reports captured during shutdown."
+    },
+    {
+      "time": "2026-09-23 00:52:43.141",
+      "event": "Driver failed after143.997s; Shutdown confirmed."
+    }
+  ],
+  "post_stop": {
+    "recorded_at": "2026-09-23T05:54:16.516152+00:00",
+    "device_id": "0EFFA766-DCDD-49E5-84B0-D3593B68709A",
+    "read_only": true,
+    "device": [
+      {
+        "dataPath": "/Users/brianchei/Library/Developer/CoreSimulator/Devices/0EFFA766-DCDD-49E5-84B0-D3593B68709A/data",
+        "dataPathSize": 336150528,
+        "logPath": "/Users/brianchei/Library/Logs/CoreSimulator/0EFFA766-DCDD-49E5-84B0-D3593B68709A",
+        "udid": "0EFFA766-DCDD-49E5-84B0-D3593B68709A",
+        "lastUsedAt": "2026-09-23T05:50:23Z",
+        "isAvailable": true,
+        "logPathSize": 81920,
+        "deviceTypeIdentifier": "com.apple.CoreSimulator.SimDeviceType.iPhone-17-Pro",
+        "state": "Shutdown",
+        "name": "TableUs-N1-F1-O3-iOS27-8972865",
+        "runtime": "com.apple.CoreSimulator.SimRuntime.iOS-27-0"
+      }
+    ],
+    "shutdown_confirmed": true,
+    "matching_processes": [],
+    "ports": {
+      "7999": {
+        "exit_code": 1,
+        "stdout": "",
+        "stderr": ""
+      },
+      "8000": {
+        "exit_code": 1,
+        "stdout": "",
+        "stderr": ""
+      },
+      "8001": {
+        "exit_code": 1,
+        "stdout": "",
+        "stderr": ""
+      }
+    },
+    "new_target_crashes": [
+      {
+        "file": "logd_helper-2026-09-23-005249.ips",
+        "sha256": "2c77165a9bd33c486788f17f8271d1ffb3fef3f7debdbbc14fb0c5b4089a15fd",
+        "captureTime": "2026-09-23 00:52:43.0490 -0500",
+        "procName": "logd_helper",
+        "pid": 44833,
+        "parentPid": 44768,
+        "exception": {
+          "codes": "0x0000000000000000, 0x0000000000000000",
+          "rawCodes": [
+            0,
+            0
+          ],
+          "type": "EXC_CRASH",
+          "signal": "SIGKILL"
+        },
+        "termination": {
+          "flags": 6,
+          "code": 4,
+          "namespace": "LIBXPC",
+          "indicator": "XPC_EXIT_REASON_SIGTERM_TIMEOUT"
+        }
+      },
+      {
+        "file": "contactsd-2026-09-23-005329.000.ips",
+        "sha256": "cc50adc79f15fcbf77df29c190ff9db74c98b68f97316075fc1d3c090636ba34",
+        "captureTime": "2026-09-23 00:52:43.0592 -0500",
+        "procName": "contactsd",
+        "pid": 44990,
+        "parentPid": 44768,
+        "exception": {
+          "codes": "0x0000000000000000, 0x0000000000000000",
+          "rawCodes": [
+            0,
+            0
+          ],
+          "type": "EXC_CRASH",
+          "signal": "SIGKILL"
+        },
+        "termination": {
+          "flags": 6,
+          "code": 4,
+          "namespace": "LIBXPC",
+          "indicator": "XPC_EXIT_REASON_SIGTERM_TIMEOUT"
+        }
+      },
+      {
+        "file": "nsurlsessiond-2026-09-23-005329.ips",
+        "sha256": "881952c6200c819e5576a4f5460a834dda7fb6cac98804a6fbd46a5309d583de",
+        "captureTime": "2026-09-23 00:52:42.7178 -0500",
+        "procName": "nsurlsessiond",
+        "pid": 44862,
+        "parentPid": 44768,
+        "exception": {
+          "codes": "0x0000000000000000, 0x0000000000000000",
+          "rawCodes": [
+            0,
+            0
+          ],
+          "type": "EXC_CRASH",
+          "signal": "SIGKILL"
+        },
+        "termination": {
+          "flags": 6,
+          "code": 4,
+          "namespace": "LIBXPC",
+          "indicator": "XPC_EXIT_REASON_SIGTERM_TIMEOUT"
+        }
+      },
+      {
+        "file": "assistantd-2026-09-23-005339.ips",
+        "sha256": "7856d94ca295ea81aadf3e268f7ae4467570b20e3015b557529144437aa097fb",
+        "captureTime": "2026-09-23 00:52:43.0490 -0500",
+        "procName": "assistantd",
+        "pid": 44775,
+        "parentPid": 44768,
+        "exception": {
+          "codes": "0x0000000000000000, 0x0000000000000000",
+          "rawCodes": [
+            0,
+            0
+          ],
+          "type": "EXC_CRASH",
+          "signal": "SIGKILL"
+        },
+        "termination": {
+          "flags": 6,
+          "code": 4,
+          "namespace": "LIBXPC",
+          "indicator": "XPC_EXIT_REASON_SIGTERM_TIMEOUT"
+        }
+      },
+      {
+        "file": "logd-2026-09-23-005249.ips",
+        "sha256": "1902d20e34beeb7f1a1093e822472e4647c502731919c0b40f66c3162ab6c010",
+        "captureTime": "2026-09-23 00:52:42.6176 -0500",
+        "procName": "logd",
+        "pid": 44774,
+        "parentPid": 44768,
+        "exception": {
+          "codes": "0x0000000000000000, 0x0000000000000000",
+          "rawCodes": [
+            0,
+            0
+          ],
+          "type": "EXC_CRASH",
+          "signal": "SIGKILL"
+        },
+        "termination": {
+          "flags": 6,
+          "code": 4,
+          "namespace": "LIBXPC",
+          "indicator": "XPC_EXIT_REASON_SIGTERM_TIMEOUT"
+        }
+      }
+    ],
+    "unparsed_relevant_reports": [],
+    "no_offline_runner_was_started": true,
+    "no_app_install_or_launch_by_O3": "Both are inside offline runner; driver stopped before that runner.",
+    "app_terminate_timeout_interpretation": "Raw driver retains timeout on its best-effort terminate call. Shutdown and absent target processes establish current cleanup without claiming that terminate succeeded.",
+    "free_gib_after_shutdown": 24.014862060546875
+  },
+  "post_stop_parent_check": {
+    "recorded_at": "2026-09-23T05:57:44.433803+00:00",
+    "known_target_parent_from_crash_reports": 44768,
+    "spawned_launchctl_pid_from_log": 46040,
+    "remaining_parent_or_children_or_query": [],
+    "parent_and_query_absent": true,
+    "log_source": "/Users/brianchei/Library/Logs/CoreSimulator/CoreSimulator.log",
+    "retained_source_lines": [
+      80619,
+      84325
+    ],
+    "excerpt_sha256": "388937399c89093e3ac9e8b74dd200243430e1de41c7bce592c5f1932c416aee",
+    "log_interpretation": "launchctl spawn requested00:52:21; process-created acknowledgement00:52:29 and client disconnect. No completed query/exit/output proven. Shutdown request00:52:38; retained system service SIGTERM-timeout reports cluster00:52:42.6\u201343.1."
+  },
+  "retained_summary": {
+    "schema_version": 1,
+    "interpretation": "incomplete_or_failed_diagnostic",
+    "stage": "new_device_setup_stop_before_runner",
+    "output": "/Users/brianchei/repos/Tableus-ai-agent-dev/.artifacts/mobile/8972865893a3f018a064594457dc9cc664f8a61f/native-validation-f1/test-ios-offline-f1-o3",
+    "manifest_valid": true,
+    "driver_status": "failed_diagnostic_only",
+    "error": "TimeoutExpired: Command '['xcrun', 'simctl', 'spawn', '0EFFA766-DCDD-49E5-84B0-D3593B68709A', 'launchctl', 'list']' timed out after 8 seconds",
+    "attempt_counts": {
+      "diagnostic_operation_recorded": 1,
+      "device_create_requests_recorded": 1,
+      "offline_runner_invocations_confirmed": 0
+    },
+    "device_create_attempts_recorded": 1,
+    "new_device_uuid_recorded": "0EFFA766-DCDD-49E5-84B0-D3593B68709A",
+    "offline_runner_pid_recorded": false,
+    "offline_runner_exit_code": null,
+    "flows": {
+      "observed": [],
+      "accepted": [],
+      "accepted_count": 0,
+      "expected_count": 11,
+      "unexpected_directory_count": 0
+    },
+    "refresh_phases_observed": [],
+    "fault_journal": {
+      "present": false,
+      "app_proxy_requests_observed": null,
+      "plan_create_proxy_posts_observed": null,
+      "request_methods": {}
+    },
+    "limits_seconds": {
+      "total_observed": 143.997,
+      "total_max": 2100,
+      "runner_through_group_cleanup_observed": null,
+      "runner_max": 1800
+    },
+    "checks": {
+      "approved_manifest": true,
+      "operator_identity": true,
+      "source_artifact_build": true,
+      "new_target_recorded": true,
+      "one_runner_confirmed": false,
+      "runner_command_bound": false,
+      "driver_completion_inventory": false,
+      "eleven_flow_commands_accepted": false,
+      "five_refresh_phases": false,
+      "fault_journal_present": false,
+      "summary_identity": false,
+      "platform_health": false,
+      "owned_group_clear": false,
+      "ports_clear": true,
+      "new_device_shutdown": true,
+      "app_cleanup": false,
+      "within_limits": false,
+      "driver_diagnostic_status": false
+    },
+    "issues": [],
+    "diagnostic_only": true,
+    "downstream_acceptance": false,
+    "continuation_authorized": false
+  },
+  "interpretation": "Failure localized to simulator control after first boot, before app operations. Spawn acknowledgement at cap is not proof query completed or that longer timeout fixes it. Shutdown-time system-service reports are distinct from prior SpringBoard XCTest crashes; causal relation unproved.",
+  "historical_failures": "O1/O2 SpringBoard crashes, original refresh error and historical AppHang remain unresolved. No cross-runtime TableUs comparison or acceptance occurred.",
+  "closeout_archive": "/Users/brianchei/repos/Tableus-ai-agent-dev/.artifacts/mobile/8972865893a3f018a064594457dc9cc664f8a61f/native-validation-f1/runtime-closeout-o3",
+  "closeout_index_sha256": "4a4550fb05a4afd9da5c81b92787c2dfa835991ac94049dd212c4db64312c68b",
+  "private_files_sha256": {
+    "test-ios-offline-f1-o3/CoreSimulator-o3-excerpt.log": "388937399c89093e3ac9e8b74dd200243430e1de41c7bce592c5f1932c416aee",
+    "test-ios-offline-f1-o3/assistantd-2026-09-23-005339.ips": "7856d94ca295ea81aadf3e268f7ae4467570b20e3015b557529144437aa097fb",
+    "test-ios-offline-f1-o3/contactsd-2026-09-23-005329.000.ips": "cc50adc79f15fcbf77df29c190ff9db74c98b68f97316075fc1d3c090636ba34",
+    "test-ios-offline-f1-o3/device-mobile_installation.log.0": "a64d195235bcaa0b71fc588e4c9f0f4ca48755078595942de5631b6c90fb6585",
+    "test-ios-offline-f1-o3/device-system.log": "b1104fa56ffa23202a1ee35359d1835be54e9c6249312dc4dcac9a13daeba519",
+    "test-ios-offline-f1-o3/driver-result.json": "dda65350b0ac4b67c842ab3e8b42998ea15d18f2df38119aa141187aaa2d7d34",
+    "test-ios-offline-f1-o3/logd-2026-09-23-005249.ips": "1902d20e34beeb7f1a1093e822472e4647c502731919c0b40f66c3162ab6c010",
+    "test-ios-offline-f1-o3/logd_helper-2026-09-23-005249.ips": "2c77165a9bd33c486788f17f8271d1ffb3fef3f7debdbbc14fb0c5b4089a15fd",
+    "test-ios-offline-f1-o3/new-device-shutdown.json": "0765c95806b10addb2925536a0666d0b35b8703c31ba49a46d8b52c83412f8be",
+    "test-ios-offline-f1-o3/nsurlsessiond-2026-09-23-005329.ips": "881952c6200c819e5576a4f5460a834dda7fb6cac98804a6fbd46a5309d583de",
+    "test-ios-offline-f1-o3/post-stop-check.json": "0387a6b7479eb58d57fd16731057d2e1008d5dd3bc5ea88efdc3ff59137dd7a6",
+    "test-ios-offline-f1-o3/post-stop-parent-check.json": "e1e6dc90ffe01fd72a6f0800d329c875a7e55f244d114140b1ff903681f22190",
+    "o3-execution/approval.json": "f3e7d507e64b783cb257b653d1375b31f96860da434ca3740419c8e440267d20",
+    "o3-execution/execution.log": "0ea5ce660404117c0439c27e23b3c543be074089387061570df9d3e730533add",
+    "o3-execution/invocation.json": "7fb5468f03b67d69de77da7108ef5b5f736214a9bea6a2445b119481cf0d4a09",
+    "o3-execution/invoker.py": "828209f0a0bb0dd162fe5e46162eb9df2c5844e4bc66a53884f19cf45c44da2e",
+    "o3-execution/proposal.json": "efa1044e28c6724eac9d8b0f3cd89f20bbbdce6bbe3946aae07467609e66ee47"
+  },
+  "fresh_checks": [
+    "Exact approved operator hashes",
+    "Fresh artifact/receipt/source/UUID/map validation",
+    "Post-stop simulator/process/port/crash/log reconciliation",
+    "Four synthetic closeout-parser checks",
+    "Read-only independent result/scope audit"
+  ],
+  "source_validation_reused": {
+    "javascript_tests": 292,
+    "python_tests": 98,
+    "postgres_skips": 3,
+    "application_and_tracked_tooling_unchanged": true
+  },
+  "next_action": "Review prepared and pinned n1-f1-o4-proposal.json: one measured30s controlquery on retained target, followed conditionally by unchanged offline run. New owner approval required; no O4 execution.",
+  "next_proposal": "n1-f1-o4-proposal.json"
+}

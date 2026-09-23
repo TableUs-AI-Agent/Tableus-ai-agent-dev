@@ -1,6 +1,6 @@
 # Active packet: native replacement validation (2d)
 
-N1-F1 approved; **candidate 8972865 built; D2/lifecycle and P2 Settings probe passed; O1/O2 platform crashes and refresh failure unresolved; O2 consumed, no native replay authorized.**
+N1-F1 approved; **candidate 8972865 built; D2/lifecycle and P2 Settings probe passed; O1/O2 platform crashes and refresh failure unresolved; O2/O3 stopped; O3 created its target but ran no app tests; no further native execution authorized.**
 The owner authorized F1 native resumption and safe regenerable-cache cleanup on
 2026-09-22; exact scope is recorded in the [amendment](../evidence/native-replacement-validation-2026-09-21/n1-f1-resumption-approval.json).
 Capacity and fresh-input checks still govern execution; prior attempts remain consumed.
@@ -154,14 +154,20 @@ report appeared. App, automation and services are stopped. No retry POST, refres
 link or export ran; O2's additional attempt is consumed with no automatic retry.
 
 Read-only upstream review found no targeted source-level fix in Maestro 2.10.
-The [O3 proposal](../evidence/native-replacement-validation-2026-09-21/n1-f1-o3-proposal.md)
-prepares one diagnostic comparison on a fresh iPhone 17 Pro using the installed
-iOS 27.0 (24A434) runtime, with the same artifact, Maestro 2.8.0 and eleven flows.
-Its 35-minute total includes setup and cleanup; the runner remains capped at
-30 minutes. No device has been created or run for that comparison. A new target
-cannot inherit D2/lifecycle acceptance from 26.5; any pass would be diagnostic
-only, with no downstream continuation. A new native allowance is required before
-execution; original refresh failure and AppHang remain open.
+The owner [approved O3](../evidence/native-replacement-validation-2026-09-21/n1-f1-o3-approval.json)
+for one diagnostic iOS 27 comparison. Its [result](../evidence/native-replacement-validation-2026-09-21/n1-f1-o3-result.md)
+stopped after 143.997 seconds: target `0EFFA766-DCDD-49E5-84B0-D3593B68709A`
+was created and booted, but the initial process query exceeded its eight-second
+cap. No app install/launch or offline runner occurred. Shutdown and independent
+process/port checks confirm cleanup. Five system-service shutdown reports remain
+retained, distinct from O1/O2; the cause of the control delay is unproved.
+The one O3 operation is consumed at its first failure. Its uninvoked offline
+portion grants no continuation. The [O4 proposal](../evidence/native-replacement-validation-2026-09-21/n1-f1-o4-proposal.md)
+prepares one measured 30-second control query on the retained target, then allows
+one unchanged offline run only if control and all original prerequisites pass.
+The 35-minute total and 30-minute runner caps remain; a new allowance is required.
+No O4 operation has occurred. Any pass is diagnostic only, with no downstream
+continuation or inherited iOS 26.5 D2/lifecycle acceptance.
 Do not change app bytes, fault counts, assertions or timeouts to
 obtain a pass. Links and the two exports wait for passing preceding gates; no
 automatic replay. Never use ed8330a evidence as proof for changed bytes.

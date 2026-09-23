@@ -1,6 +1,8 @@
 # F1-O3 — controlled iOS 27 offline diagnostic
 
-**Prepared proposal only; no approval, new simulator or native execution.**
+**Executed once; setup stopped before the offline runner.** See the [approval](n1-f1-o3-approval.json)
+and [O3 result](n1-f1-o3-result.md).
+The structured proposal remains the immutable pre-approval snapshot; the scope below is unchanged.
 [O2](n1-f1-o2-result.md) reproduced O1's SpringBoard/XCTest accessibility crash
 on iOS 26.5 after the first flow's UI commands. The prior original refresh failure
 remains unresolved. Upstream review found no demonstrated targeted fix in newer
