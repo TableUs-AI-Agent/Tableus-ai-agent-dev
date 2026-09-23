@@ -17,10 +17,15 @@ Update these documents in the same change when their truth changes.
 
 ## Working agreement
 
-- GPT-6 Astra (`gpt-6-astra`) is the development model for this project. The
-  application's AI provider is a separate architecture decision.
-- Read the four current documents above first. Historical packets and chat
-  transcripts are context, not additional active requirements.
+- GPT-6 Astra (`gpt-6-astra`) orchestrates and has final technical authority.
+  Delegate most bounded implementation to GPT-6 Sol (`gpt-6-sol`) while Astra
+  handles integration, review, verification and consequential decisions. Use
+  GPT-6 Luna (`gpt-6-luna`) for narrow read-only summaries or extraction. Tiny
+  changes need no delegate. Children do not delegate. The application's AI
+  provider is a separate architecture decision.
+- At objective start read the active packet and current state; load roadmap and
+  decisions when relevant. Historical packets and chats are context, not active
+  requirements.
 - Use one feature/fix per Codex task, with a named `codex/<objective>` branch
   and isolated worktree. Record the base and active worktree in the active packet;
   do not assume the task's default checkout is current.
@@ -35,10 +40,12 @@ Update these documents in the same change when their truth changes.
 - Preserve user changes and never rewrite unrelated work.
 - Prefer deterministic providers locally and in CI. Live provider evaluation is
   an explicit, budgeted operation and never part of the normal test suite.
-- Run focused checks while iterating, then `make ready` once before handoff.
-- Use one primary agent by default. Delegate only when explicitly requested;
-  give any delegated work a bounded question and budget. Never restart the
-  canceled security scans without separate user authorization.
+- Match checks to impact. Application/executable changes get focused checks and
+  one `make ready` before handoff. Developer-only instruction/config changes get
+  syntax, host-config and instruction-consistency checks; no native rebuild.
+- Give delegated work owned files, acceptance checks, constraints and a budget.
+  Astra retains approval, budget, integration and final acceptance. Never restart
+  the canceled security scans without separate user authorization.
 - Keep native builds sequential and file-backed. Validate build identifiers,
   output paths, SDK configuration, and the candidate before compilation. Keep
   accepted artifacts and receipts in durable private storage outside OS temp.
@@ -57,10 +64,20 @@ rotating secrets, paid live-AI evaluation, production migrations, deployments,
 store submissions, and destructive cleanup. Code and local deterministic tests
 may be prepared without those external actions.
 
+Treat an action request as authority to complete its intended scope: implement,
+check, review, fix and finish the authorized handoff. Choose reasonable defaults
+for routine gaps and keep moving; ask only when missing information materially
+changes the result or a real approval gate remains.
+
 Routine, reversible implementation and staging configuration within an approved
 objective do not require repeated approval. Escalate significant product or
-architecture decisions and the explicit gates above; otherwise proceed and
-report the result.
+architecture decisions and the explicit gates above. Existing authorization
+persists across tasks; finish independent work and present a concrete result
+before seeking any still-required approval. Fix and retest routine deterministic
+failures without repeated permission. Native stop-on-first-failure and recorded
+attempt, disk and budget limits remain in force. User instructions supersede
+repository and skill guidelines within higher-priority constraints; if a skill
+actually requires a pause, cite and quote its rule rather than inferring one.
 
 ## Repository conventions
 

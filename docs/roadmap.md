@@ -1,6 +1,6 @@
 # Closed-beta roadmap
 
-Updated 2026-09-21. Ship a bounded invite-only US beta on web, iOS and Android.
+Updated 2026-09-22. Ship a bounded invite-only US beta on web, iOS and Android.
 Preserve the implemented architecture; the current staging candidate has completed acceptance. Each later feature
 requires its own implementation and applicable verification. Each row is a separate task/worktree objective, narrowed further when
 its acceptance cannot be reviewed in one change. Only the active packet executes.
@@ -18,6 +18,11 @@ its acceptance cannot be reviewed in one change. Only the active packet executes
 | 5 | Prepare production release configuration and native presentation | Reviewed production origins/signing/update policy, usable symbols/source maps, contact/privacy review, tab icons, rollback rehearsal and measured performance criteria | Resources, secrets, deployment and cleanup require their explicit gates |
 | 6 | Validate TestFlight and Play closed testing | Signed install/update, auth/links, full shared journey, privacy declarations and symbolication on distributed builds | Separate store-submission approval |
 | 7 | Activate the bounded beta | Named owner, participant cap, spend/health limits, support and stop/rollback procedure | Explicit cohort activation and invitation approval |
+
+The owner-authorized [GPT-6 development workflow](evidence/gpt6-development-workflow-2026-09-22/README.md)
+is a prerequisite governance update within the current native task: Astra leads,
+Sol implements, Luna provides bounded support. It adds no application rollout or
+new native/live allowance.
 
 ## Critical path and interruption policy
 

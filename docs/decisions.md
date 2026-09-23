@@ -15,7 +15,7 @@ when changing a subsystem; it is not a second active task packet.
   organizer finalization/reopening and rotatable private links. Finalized plans
   reject new joins, constraints and regeneration until reopened.
 - Native beta is 2D; maps/3D, broad redesign and new provider/framework work are
-  deferred. Astra is the development model, not a change to application inference.
+  deferred. GPT-6 development roles are defined below; application inference remains Gemini.
 
 ## Authentication, data and privacy
 
@@ -117,7 +117,8 @@ when changing a subsystem; it is not a second active task packet.
 Use one bounded feature/fix per conversation and named worktree. Keep current
 state concise, detailed observations in evidence and a compact commit-based
 handoff for the next task. Read a referenced previous task before relying on it;
-retrieve only needed turns. One primary agent, no unrequested delegation. Preserve
+retrieve only needed turns. The 2026-09-22 model policy below supersedes the
+initial single-agent restriction. Preserve
 budgets/approvals across tasks and distinguish measured usage from assumptions
 about model cost. See [development workflow](development-workflow.md).
 
@@ -175,3 +176,28 @@ and join-button/API boundary in local regressions; the legacy decoder alone does
 not establish native link behavior. [F1 evidence](evidence/native-replacement-validation-2026-09-21/n1-f1-result.md).
 This local decision does not establish OS association delivery, clear historical
 crashes or authorize a native rebuild; freeze changed application bytes separately.
+
+## GPT-6 development roles and completion — adopted 2026-09-22
+
+The owner authorized Astra (`gpt-6-astra`) as primary orchestrator and final
+technical authority, Sol (`gpt-6-sol`) as the implementer for most work, and Luna
+(`gpt-6-luna`) for narrow summaries/extraction. Root defaults remain Astra; child
+defaults are Sol/medium, with a Luna/low read-only role. Astra retains the existing
+reasoning preference, coordinates at most two children, reviews outputs and owns
+integration. These defaults may be overridden by explicit task settings; no
+claim is made that editing a file switches an already running task. Current
+mixed-model work uses explicit model selection and bounded context.
+
+Standing delegation and routine implementation/check/repair authority replace
+per-step permission. Finish the authorized outcome and prepare concrete gated
+actions before seeking any still-missing approval. Preserve the existing external /
+destructive gates, exact native candidates, stop conditions, attempt limits,
+closed live budgets and canceled scans. Load current documents by relevance,
+keep agent briefs concise, and validate development configuration directly;
+unchanged application bytes do not need another full suite or native build.
+
+Use stable role/context prefixes and bounded follow-ups to avoid unnecessary
+context churn. Codex controls its request caching; no API-only cache setting or
+savings claim is added to project configuration. There is no application OpenAI
+API integration to migrate in this change; do not alter Gemini or its budgets.
+[Implementation, sources and verification](evidence/gpt6-development-workflow-2026-09-22/README.md).

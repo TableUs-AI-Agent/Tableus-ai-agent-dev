@@ -1,0 +1,129 @@
+{
+  "schema_version": 1,
+  "recorded_at": "2026-09-23T01:06:56.916328+00:00",
+  "status": "passed",
+  "base_commit": "8f6c34bd682923539f9edf23ae1db4437ab58d49",
+  "application_sha": "8972865893a3f018a064594457dc9cc664f8a61f",
+  "operator_sha": "16603dd0cf36d27b492e57a02d3c6c438a2563c4",
+  "branch": "codex/native-replacement-validation",
+  "root_model": "gpt-6-astra",
+  "root_reasoning_preserved": "xhigh",
+  "roles": {
+    "sol-implementer": {
+      "model": "gpt-6-sol",
+      "reasoning_effort": "medium",
+      "sandbox": "inherited",
+      "sha256": "a2b3fc1fff42ddb5fc5db9f6acbee49e3539d6c45cf7cc96c3fa3e9821b516a4"
+    },
+    "luna-assistant": {
+      "model": "gpt-6-luna",
+      "reasoning_effort": "low",
+      "sandbox": "read-only",
+      "sha256": "5a160d9dd74c1ea43a4643150768cd438c463cb0ecc235f5253e9d051ed31810"
+    }
+  },
+  "host_config_read": {
+    "method": "config/read",
+    "strict_config": true,
+    "cwd": "/Users/brianchei/.codex/worktrees/ea6d/Tableus-ai-agent-dev",
+    "model": "gpt-6-astra",
+    "model_reasoning_effort": "xhigh",
+    "agents": {
+      "enabled": true,
+      "max_concurrent_threads_per_session": 2,
+      "max_depth": null,
+      "default_subagent_model": "gpt-6-sol",
+      "default_subagent_reasoning_effort": "medium",
+      "job_max_runtime_seconds": null,
+      "interrupt_message": null
+    },
+    "project_layers": [
+      {
+        "metadata": {
+          "name": {
+            "type": "project",
+            "dotCodexFolder": "/Users/brianchei/.codex/worktrees/ea6d/Tableus-ai-agent-dev/.codex"
+          },
+          "version": "sha256:ad0197d5a51dd8cf37802a2e747912ca939ee7d79ab5e3f8c5f6b6fae511a462"
+        },
+        "development_config": {
+          "model": "gpt-6-astra",
+          "agents": {
+            "enabled": true,
+            "max_concurrent_threads_per_session": 2,
+            "default_subagent_model": "gpt-6-sol",
+            "default_subagent_reasoning_effort": "medium"
+          }
+        }
+      }
+    ],
+    "model_origin": {
+      "name": {
+        "type": "project",
+        "dotCodexFolder": "/Users/brianchei/.codex/worktrees/ea6d/Tableus-ai-agent-dev/.codex"
+      },
+      "version": "sha256:ad0197d5a51dd8cf37802a2e747912ca939ee7d79ab5e3f8c5f6b6fae511a462"
+    },
+    "inference_started": false
+  },
+  "host_cli_version": "0.155.0-alpha.9.2",
+  "doctor_config_check": "passed",
+  "doctor_overall": "failed due shell network reachability; not reported as a full health pass",
+  "preliminary_cli_probe": "--strict-config features list unsupported; used strict doctor and successful app-server config/read instead",
+  "bundled_catalog_note": "Bundled offline catalog includes Astra but predates Sol/Luna; current collaboration tool advertises all three and explicit Sol/Luna task calls completed successfully. No CLI/account-wide availability assertion from the offline catalog.",
+  "actual_delegation": [
+    {
+      "task": "/root/luna_instruction_audit",
+      "model": "gpt-6-luna",
+      "effort": "low",
+      "scope": "read-only instruction audit and final consistency check",
+      "result": "completed"
+    },
+    {
+      "task": "/root/sol_workflow_implementation",
+      "model": "gpt-6-sol",
+      "effort": "medium",
+      "scope": "bounded governance/config implementation",
+      "result": "completed, Astra reviewed/integrated"
+    }
+  ],
+  "named_role_limit": "Current collaboration surface used explicit model/effort and equivalent briefs; named-agent files validated by TOML/schema checks, not separately spawned by role name.",
+  "local_links_checked": 52,
+  "stale_active_instruction_check": "passed",
+  "application_operator_and_test_bytes_unchanged": true,
+  "application_tests_reused": {
+    "source_sha": "8972865893a3f018a064594457dc9cc664f8a61f",
+    "js_passed": 292,
+    "python_passed": 98,
+    "python_skipped": 3,
+    "native_acceptance": false
+  },
+  "fresh_make_ready": false,
+  "native_operations": 0,
+  "application_live_requests": 0,
+  "cleanup": false,
+  "global_config_changes": false,
+  "private_evidence": {
+    "doctor-config-summary.json": "89bd6c13730bf50ac147ca0520e99f918815676bdbce350c4f95079b3836f9d2",
+    "effective-config.json": "e4e607a194c7584a9c41d81024cb874804a3d605ce8817666f82cd0f64f81389",
+    "capacity-review.json": "4708f7c638f8d8b560c2cc6730151d2c3085aa85ed03a9c4bbf64ef5b7427080"
+  },
+  "reviewed_file_sha256": {
+    "AGENTS.md": "e3d8c24a6a90f8eebb74ed30d9526f54258f7365edcc2933050d09a6ae6f2b46",
+    "docs/development-workflow.md": "c7a6a206da190e272ff1c65a1df5e081b2c05cc0bb038ddbe281df3bae6d4d63",
+    "docs/current-state.md": "78ddd096f8d3a2ea8c7d7bb4380c69e3ff85a13d0ffbd14d3fd4eaa3390c436c",
+    "docs/decisions.md": "21f6cec851801698cb30242b4a7b10fc863e59ce312c93f9c8deff75a6fef386",
+    "docs/roadmap.md": "4fa93b896213427d20b4173e342aec1d1dcb594449f5a405b6f41940b20e8311",
+    "docs/task-packets/active.md": "de29900827b46374a232f69dec91c6a824db0d5cbb8ac5b7b76056c298c3b97d",
+    "docs/evidence/gpt6-development-workflow-2026-09-22/README.md": "d826c948a4c12a0ba02c68a32cb50a6e4aa288510614a5aff133a68c35d5491d",
+    ".codex/config.toml": "f0f33786b8605b98aa1c285ea75c3d65fff768cbe9425d1b5f44869cd07001b8",
+    ".codex/agents/sol-implementer.toml": "a2b3fc1fff42ddb5fc5db9f6acbee49e3539d6c45cf7cc96c3fa3e9821b516a4",
+    ".codex/agents/luna-assistant.toml": "5a160d9dd74c1ea43a4643150768cd438c463cb0ecc235f5253e9d051ed31810"
+  },
+  "capacity_continuation": {
+    "available_gib": 14.57,
+    "build_start_floor_gib": 40,
+    "read_only_inventory": true,
+    "cleanup_authorized_by_workflow_migration": false
+  }
+}

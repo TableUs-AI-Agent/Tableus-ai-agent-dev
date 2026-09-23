@@ -2,7 +2,9 @@
 
 N1-F1 approved; **local token remediation complete; candidate 8972865 frozen.**
 N1 native execution remains stopped after the R2 token-corruption failure.
-One primary Astra agent; no delegation or canceled scans. Keep this objective in this task.
+Astra owns orchestration and final technical acceptance; Sol implements and Luna
+provides bounded read-only support under the owner's 2026-09-22 standing authority.
+Keep this incomplete native objective here; canceled scans remain canceled.
 
 ## Identities
 
@@ -59,7 +61,18 @@ A new disposable iOS 26.5 simulator was booted and received the inspected app fo
 native/JS diagnostic capture. App terminated afterward; simulator retained. Original
 accepted apps/sessions untouched. One iOS build attempt consumed; Android's single
 attempt unused. D1's one diagnostic attempt is consumed. Current free disk
-roughly 21 GiB is below the 40 GiB native build start gate.
+roughly 14.7 GiB (2026-09-22 recheck) is below the 40 GiB native build start gate.
+
+## Development workflow prerequisite
+
+The owner requested the GPT-6 workflow refresh before resuming native work.
+Base for this governance amendment is `8f6c34bd682923539f9edf23ae1db4437ab58d49`;
+branch/worktree and frozen application above are retained. Root Astra, default
+Sol implementation and read-only Luna roles are configured; approval persistence,
+completion criteria, relevant context loading and focused verification are explicit.
+[Migration evidence](../evidence/gpt6-development-workflow-2026-09-22/README.md)
+records source review, actual Sol/Luna work and configuration checks. No app code,
+native profile, signing, installed session or closed budget changes.
 
 ## Next actions and stop conditions
 

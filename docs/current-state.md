@@ -1,6 +1,6 @@
 # Current state
 
-Updated 2026-09-21. Original f94a1d9 isolated-staging acceptance remains intact,
+Updated 2026-09-22. Original f94a1d9 isolated-staging acceptance remains intact,
 including the unresolved simulator AppHang risk. Replacement application ed8330a
 is published and serves both staging aliases after exact-source CI, Preview and
 activation checks. **Phase W is complete.** The approved CORS append and one API
@@ -36,7 +36,12 @@ Invite-approved email sign-in, shared plans for 2–8 people, constraints, four
 provider-grounded options, top-three ranked votes, organizer finalize/reopen,
 private-link rotation and application-data export are implemented across Next.js,
 Expo and FastAPI `/api/v1`. Supabase client access is authentication-only.
-Gemini and Places remain the application providers; Astra is the development model.
+Gemini and Places remain the application providers. Development now uses Astra
+for orchestration/final technical review, Sol for most implementation and Luna
+for bounded read-only support. Project agent configuration and the
+[development workflow](development-workflow.md) carry standing delegation and
+completion authority; existing native/live gates and frozen application bytes
+are unchanged. See [migration evidence](evidence/gpt6-development-workflow-2026-09-22/README.md).
 
 Deterministic providers are the local/CI default. Mobile uses bounded requests,
 explicit ambiguous-write retries, private in-memory queries and device-local
@@ -140,7 +145,7 @@ Canonical HTTPS delivery, auth-mode presentation and historical AppHang clearanc
 remain unverified.
 Only the earlier disposable iOS 26.5 simulator received the ed8330a artifact;
 8972865 is unbuilt and accepted native installations remain f94a1d9. Android is unbuilt: remaining iOS
-gates and roughly 21 GiB free versus the 40 GiB build floor block it. N2/live reads
+gates and roughly 14.7 GiB free versus the 40 GiB build floor block it. N2/live reads
 stay separately gated.
 Preserve all new diagnostics, 63bd retention evidence and 90bd Phase W evidence.
 No cumulative replacement acceptance.
