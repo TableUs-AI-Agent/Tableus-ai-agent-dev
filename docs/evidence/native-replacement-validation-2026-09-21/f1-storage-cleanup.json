@@ -1,0 +1,272 @@
+{
+  "schema_version": 1,
+  "recorded_at": "2026-09-23T01:28:07.379641+00:00",
+  "approval": "n1-f1-resumption-approval.json",
+  "free_kib_before": 16089168,
+  "free_kib_after_cleanup": 44245180,
+  "observed_free_increase_gib": 26.852,
+  "free_gib_after_cleanup": 42.195,
+  "measurement_note": "Observed filesystem delta includes background activity and APFS sharing; per-batch free-space deltas overlap and must not be added. Browser caches can refill. Fresh build gate is rechecked separately.",
+  "removed_cache_directories": 53,
+  "completed_targets": [
+    {
+      "path": "/Users/brianchei/.npm/_cacache",
+      "allocated_kib_before": 6967376
+    },
+    {
+      "path": "/Users/brianchei/.npm/_npx",
+      "allocated_kib_before": 1389848
+    },
+    {
+      "path": "/Users/brianchei/.gradle/caches",
+      "allocated_kib_before": 4390352
+    },
+    {
+      "path": "/Users/brianchei/Library/Caches/CocoaPods",
+      "allocated_kib_before": 3455112
+    },
+    {
+      "path": "/Users/brianchei/Library/Caches/pnpm",
+      "allocated_kib_before": 507960
+    },
+    {
+      "path": "/Users/brianchei/Library/Caches/ReactNative",
+      "allocated_kib_before": 212088
+    },
+    {
+      "path": "/Users/brianchei/Library/Caches/org.swift.swiftpm",
+      "allocated_kib_before": 198396
+    },
+    {
+      "path": "/Users/brianchei/Library/Caches/pip",
+      "allocated_kib_before": 24608
+    },
+    {
+      "path": "/Users/brianchei/.cache/uv",
+      "allocated_kib_before": 169312
+    },
+    {
+      "path": "/Users/brianchei/Library/Caches/Arc/User Data/Profile 1/Cache",
+      "allocated_kib_before": 81808
+    },
+    {
+      "path": "/Users/brianchei/Library/Caches/Arc/User Data/Profile 1/Code Cache",
+      "allocated_kib_before": 50616
+    },
+    {
+      "path": "/Users/brianchei/Library/Caches/Arc/User Data/Default/Cache",
+      "allocated_kib_before": 1298368
+    },
+    {
+      "path": "/Users/brianchei/Library/Caches/Arc/User Data/Default/Code Cache",
+      "allocated_kib_before": 337652
+    },
+    {
+      "path": "/Users/brianchei/Library/Caches/Arc/User Data/Profile 4/Cache",
+      "allocated_kib_before": 141124
+    },
+    {
+      "path": "/Users/brianchei/Library/Caches/Arc/User Data/Profile 4/Code Cache",
+      "allocated_kib_before": 84992
+    },
+    {
+      "path": "/Users/brianchei/Library/Caches/Arc/User Data/Profile 3/Cache",
+      "allocated_kib_before": 24
+    },
+    {
+      "path": "/Users/brianchei/Library/Caches/Arc/User Data/Profile 3/Code Cache",
+      "allocated_kib_before": 16
+    },
+    {
+      "path": "/Users/brianchei/Library/Caches/Arc/User Data/Profile 5/Cache",
+      "allocated_kib_before": 81396
+    },
+    {
+      "path": "/Users/brianchei/Library/Caches/Arc/User Data/Profile 5/Code Cache",
+      "allocated_kib_before": 30320
+    },
+    {
+      "path": "/Users/brianchei/Library/Caches/Dia/User Data/Default/Cache",
+      "allocated_kib_before": 341108
+    },
+    {
+      "path": "/Users/brianchei/Library/Caches/Dia/User Data/Default/Code Cache",
+      "allocated_kib_before": 212584
+    },
+    {
+      "path": "/Users/brianchei/Library/Caches/Dia/User Data/Profile 4/Cache",
+      "allocated_kib_before": 138684
+    },
+    {
+      "path": "/Users/brianchei/Library/Caches/Dia/User Data/Profile 4/Code Cache",
+      "allocated_kib_before": 64268
+    },
+    {
+      "path": "/Users/brianchei/Library/Caches/Dia/User Data/Profile 5/Cache",
+      "allocated_kib_before": 176936
+    },
+    {
+      "path": "/Users/brianchei/Library/Caches/Dia/User Data/Profile 5/Code Cache",
+      "allocated_kib_before": 48028
+    },
+    {
+      "path": "/Users/brianchei/Library/Application Support/Code/CachedExtensionVSIXs",
+      "allocated_kib_before": 447052
+    },
+    {
+      "path": "/Users/brianchei/Library/Application Support/Cursor/CachedExtensionVSIXs",
+      "allocated_kib_before": 183368
+    },
+    {
+      "path": "/Users/brianchei/Library/Application Support/Code/Cache",
+      "allocated_kib_before": 277820
+    },
+    {
+      "path": "/Users/brianchei/Library/Application Support/Code/CachedData",
+      "allocated_kib_before": 60488
+    },
+    {
+      "path": "/Users/brianchei/Library/Application Support/Claude/Cache",
+      "allocated_kib_before": 272504
+    },
+    {
+      "path": "/Users/brianchei/Library/Application Support/Claude/Code Cache",
+      "allocated_kib_before": 175200
+    },
+    {
+      "path": "/Users/brianchei/Library/Caches/Codex/Default/Cache",
+      "allocated_kib_before": 123080
+    },
+    {
+      "path": "/Users/brianchei/Library/Caches/Codex/Default/Partitions/codex-browser-app/Cache",
+      "allocated_kib_before": 294884
+    },
+    {
+      "path": "/Users/brianchei/Library/Caches/Codex/Default/Partitions/codex-browser-app/Code Cache",
+      "allocated_kib_before": 300688
+    },
+    {
+      "path": "/Users/brianchei/Library/Application Support/Notion/Partitions/notion/Cache",
+      "allocated_kib_before": 829696
+    },
+    {
+      "path": "/Users/brianchei/Library/Application Support/Notion/Partitions/notion/Code Cache",
+      "allocated_kib_before": 41668
+    },
+    {
+      "path": "/Users/brianchei/Library/Caches/Google/Chrome/Default/Cache",
+      "allocated_kib_before": 25208
+    },
+    {
+      "path": "/Users/brianchei/Library/Caches/Google/Chrome/Default/Code Cache",
+      "allocated_kib_before": 23372
+    },
+    {
+      "path": "/Users/brianchei/Library/Caches/Google/Chrome/Profile 2/Cache",
+      "allocated_kib_before": 85344
+    },
+    {
+      "path": "/Users/brianchei/Library/Caches/Google/Chrome/Profile 2/Code Cache",
+      "allocated_kib_before": 99044
+    },
+    {
+      "path": "/Users/brianchei/.expo/ios-simulator-app-cache",
+      "allocated_kib_before": 411532
+    },
+    {
+      "path": "/Users/brianchei/.expo/android-apk-cache",
+      "allocated_kib_before": 204024
+    },
+    {
+      "path": "/Users/brianchei/.expo/expo-go",
+      "allocated_kib_before": 344032
+    },
+    {
+      "path": "/Users/brianchei/Library/Application Support/Steam/config/htmlcache/Cache",
+      "allocated_kib_before": 302492
+    },
+    {
+      "path": "/Users/brianchei/Library/Application Support/Steam/config/htmlcache/Code Cache",
+      "allocated_kib_before": 129756
+    },
+    {
+      "path": "/Users/brianchei/Library/Application Support/Microsoft/Teams/Cache",
+      "allocated_kib_before": 101392
+    },
+    {
+      "path": "/Users/brianchei/Library/Application Support/Antigravity/CachedExtensionVSIXs",
+      "allocated_kib_before": 180740
+    },
+    {
+      "path": "/Users/brianchei/Library/Application Support/Google/GoogleUpdater/crx_cache",
+      "allocated_kib_before": 762080
+    },
+    {
+      "path": "/Users/brianchei/Library/Application Support/Cursor/CachedData",
+      "allocated_kib_before": 58304
+    },
+    {
+      "path": "/Users/brianchei/Library/Caches/node-gyp",
+      "allocated_kib_before": 63756
+    },
+    {
+      "path": "/Users/brianchei/.cache/node",
+      "allocated_kib_before": 64944
+    },
+    {
+      "path": "/Users/brianchei/.cache/prisma",
+      "allocated_kib_before": 23596
+    },
+    {
+      "path": "/Users/brianchei/Library/Developer/Xcode/DerivedData/SellrApp-dmxhvfsfqeurbefszrxfuztybwii/Build/Intermediates.noindex",
+      "allocated_kib_before": 1226752
+    }
+  ],
+  "incomplete": [
+    {
+      "path": "/Users/brianchei/Library/Caches/dotslash",
+      "allocated_kib_before": 264404,
+      "reason": "Unused React Native DevTools cache has user-owned mode0555 app directories. rmtree returned EACCES; directory chmod returned EPERM even outside sandbox. Left remaining cache in place, no privilege or macOS-protection bypass. Prior failure receipts retained."
+    }
+  ],
+  "preserved": [
+    "all TableUs worktrees,retained builds,diagnostics and evidence",
+    "Sellr final build products,dSYMs,archives,logs and source",
+    "all simulators,installedapps and sessions",
+    "all Docker images,containers and volumes",
+    "personal files,downloads,wallpaper rotation,Notion pending app update",
+    "browser cookies,local storage,service workers,profiles and task history",
+    "installed SDKs and Codex runtimes"
+  ],
+  "private_receipts": [
+    {
+      "path": "/Users/brianchei/.codex/worktrees/ea6d/Tableus-ai-agent-dev/.artifacts/storage-cleanup-2026-09-22/package-cache-cleanup.json",
+      "sha256": "2af697d41715c00026db6cdbcf1262ec666239bd570c3722fbfe6af97cf8933e"
+    },
+    {
+      "path": "/Users/brianchei/.codex/worktrees/ea6d/Tableus-ai-agent-dev/.artifacts/storage-cleanup-2026-09-22/browser-editor-cache-cleanup.json",
+      "sha256": "33e67ef5e29be2cb08d18f5e5c30d94969c0bcba52f93bfd551b823c1a4c4a93"
+    },
+    {
+      "path": "/Users/brianchei/.codex/worktrees/ea6d/Tableus-ai-agent-dev/.artifacts/storage-cleanup-2026-09-22/remaining-download-cache-cleanup.json",
+      "sha256": "36250bcc19a00706d040a3a9ca79e4fc78f11300c5e7edcddd0d1002733e4404"
+    },
+    {
+      "path": "/Users/brianchei/.codex/worktrees/ea6d/Tableus-ai-agent-dev/.artifacts/storage-cleanup-2026-09-22/tool-download-cache-cleanup.json",
+      "sha256": "bce29cedcfa7c559894cf2382398296626810af0cc84acee801d159b1ab38c93"
+    },
+    {
+      "path": "/Users/brianchei/.codex/worktrees/ea6d/Tableus-ai-agent-dev/.artifacts/storage-cleanup-2026-09-22/dotslash-cleanup-resumption.json",
+      "sha256": "0806fae940be1b36d5a733187c6c88364b05919906e365067957aef917567ec4"
+    },
+    {
+      "path": "/Users/brianchei/.codex/worktrees/ea6d/Tableus-ai-agent-dev/.artifacts/storage-cleanup-2026-09-22/stale-compiler-intermediates-cleanup.json",
+      "sha256": "39ccd4333a49f18bf6ae9d96f7534ef1601ccab474b1c9d04f888d699576722b"
+    }
+  ],
+  "native_preflight": {
+    "wrapper_log": "/Users/brianchei/.codex/worktrees/ea6d/Tableus-ai-agent-dev/.artifacts/f1-native-preparation/host-preflight.log",
+    "sha256": "aedca3b200667b208db6cfa3719d7b0f4505195209e0d6cb0c5e1fc142e26d58",
+    "result": "Python and unchanged operator preflight passed. Outer display shell then returned1 because zsh reserves status; run mode separately repeats preflight before any build."
+  }
+}

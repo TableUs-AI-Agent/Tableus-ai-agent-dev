@@ -1,0 +1,43 @@
+{
+  "schema_version": 1,
+  "recorded_at": "2026-09-23T01:26:43.192448+00:00",
+  "owner_response": "continue with the next steps, I authorize",
+  "amendment": "N1-F1 native resumption and regenerable-cache cleanup",
+  "proposal_sha256": "3b27cf86ff3066a952a422d08962fa5d0c04a88096201bc573b63efc0ad09d53",
+  "application_sha": "8972865893a3f018a064594457dc9cc664f8a61f",
+  "operator_sha": "16603dd0cf36d27b492e57a02d3c6c438a2563c4",
+  "evidence_base_sha": "19cfe604e78769f2a4e1e69d4e297ae9d38f37da",
+  "scope": [
+    "Inspected regenerable-cache cleanup, preserving project sources, final build products, native evidence, installed sessions, Docker data and personal files.",
+    "One new test-ios build for frozen F1 candidate, maximum90minutes,>=40GiB before start,stop<20GiB.",
+    "Fresh artifact/source/symbol/map proof, one diagnostic capture under successful D1 bounds on one new disposable iOS26.5 target.",
+    "Once each lifecycle and offline/refresh <=30minutes, corrected cold/warm custom-scheme link matrix, then exactly two local export/share-dismissal/relaunch cycles after preceding gates.",
+    "Rebind the unused test-android attempt to F1, conditional on all iOS gates and fresh40GiB capacity; sequential execution only."
+  ],
+  "prior_attempts_remain_consumed": true,
+  "stop_on_first_native_failure": true,
+  "automatic_retry": false,
+  "excluded": [
+    "Additional canonical HTTPS XCTest compilation/probe",
+    "Additional auth-test-ios build/probe",
+    "Physical associated-domain link validation",
+    "N2/readiness/accepted-device updates",
+    "CI, deploys, merges, cloud resources, secrets, migrations, stores",
+    "Provider/OTP/canary budget changes or deadline extension"
+  ],
+  "closed_ledger": {
+    "places": {
+      "baseline": 329,
+      "used": 92,
+      "limit": 100,
+      "unused_closed": 8
+    },
+    "emails_used": 2,
+    "emails_limit": 4,
+    "canaries_per_provider_used": 6,
+    "canaries_per_provider_limit": 6,
+    "fresh_gemini_limit": 0,
+    "backstop_status": 429,
+    "deadline": "2026-09-30"
+  }
+}

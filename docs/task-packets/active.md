@@ -1,7 +1,9 @@
 # Active packet: native replacement validation (2d)
 
-N1-F1 approved; **local token remediation complete; candidate 8972865 frozen.**
-N1 native execution remains stopped after the R2 token-corruption failure.
+N1-F1 approved; **candidate 8972865 built; native diagnostic stopped on timeout.**
+The owner authorized F1 native resumption and safe regenerable-cache cleanup on
+2026-09-22; exact scope is recorded in the [amendment](../evidence/native-replacement-validation-2026-09-21/n1-f1-resumption-approval.json).
+Capacity and fresh-input checks still govern execution; prior attempts remain consumed.
 Astra owns orchestration and final technical acceptance; Sol implements and Luna
 provides bounded read-only support under the owner's 2026-09-22 standing authority.
 Keep this incomplete native objective here; canceled scans remain canceled.
@@ -15,8 +17,10 @@ Keep this incomplete native objective here; canceled scans remain canceled.
 - Prior native application: `ed8330a766b3c4b80a505e075535678394e275e9`.
 - Frozen F1 application: `8972865893a3f018a064594457dc9cc664f8a61f`.
 - Actually invoked build operator: `16603dd0cf36d27b492e57a02d3c6c438a2563c4`.
-- Build: `local-ios-test-ed8330a-2d-01`; artifact/receipt/source/symbol hashes in
+- Prior build: `local-ios-test-ed8330a-2d-01`; artifact/receipt/source/symbol hashes in
   [checkpoint](../evidence/native-replacement-validation-2026-09-21/n1-ios-checkpoint.json).
+- New F1 build: `local-ios-test-8972865-f1-01`; fresh proof and diagnostic stop in
+  [resumption result](../evidence/native-replacement-validation-2026-09-21/n1-f1-native-result.json).
 - Evidence commit is the commit containing this checkpoint, not app/operator SHA.
 
 ## Current result
@@ -55,13 +59,26 @@ owner-approved [F1 local fix](../evidence/native-replacement-validation-2026-09-
 corrects extraction and a second hook decode, with duplicate/malformed input
 rejected before writes. Its 48 route regressions and complete make-ready target
 set pass: 292 JavaScript, 98 Python, three PostgreSQL skips; no contract drift.
-No native build/replay occurred during F1.
+The local F1 fix phase included no native build or replay.
 
-A new disposable iOS 26.5 simulator was booted and received the inspected app for
-native/JS diagnostic capture. App terminated afterward; simulator retained. Original
-accepted apps/sessions untouched. One iOS build attempt consumed; Android's single
-attempt unused. D1's one diagnostic attempt is consumed. Current free disk
-roughly 14.7 GiB (2026-09-22 recheck) is below the 40 GiB native build start gate.
+The approved [F1 resumption](../evidence/native-replacement-validation-2026-09-21/n1-f1-native-result.md)
+recovered about 26.85 GiB of disposable caches, then built and verified
+`local-ios-test-8972865-f1-01` in 38.31 minutes. All 42 diagnostic hashes,
+both executable/dSYM UUIDs and 50 app/shared/decoder map contents match. The new
+iOS 26.5 simulator `CBB4FAB4-734C-413C-9F10-850329AC9A01` received the artifact.
+A Python-version setup failure before launch was retained and corrected. The
+one actual diagnostic attempt then hit its 45-second LLDB startup-command cap
+at `continue`, before an observed app breakpoint or sampled trace. App terminated;
+initial/delayed checks found no matching crash report and no target/debugger
+process remains. The cause is unresolved. No F1 behavioral runner has executed. After build and
+simulator creation, the 02:17 UTC readout recorded 25.59 GiB free.
+
+The new private root is
+`/Users/brianchei/repos/Tableus-ai-agent-dev/.artifacts/mobile/8972865893a3f018a064594457dc9cc664f8a61f/native-validation-f1`.
+The [prepared diagnostic amendment](../evidence/native-replacement-validation-2026-09-21/n1-f1-diagnostic-amendment.md)
+requests one further capture on these bytes, with phase timestamps and revised
+startup timing. It is not approved. Preserve every failed output; no native retry,
+Android build or export proceeds past the recorded stop without its approval.
 
 ## Development workflow prerequisite
 
@@ -78,10 +95,12 @@ native profile, signing, installed session or closed budget changes.
 
 F1 local implementation, verification, exact candidate freeze and
 [impact/revalidation proposal](../evidence/native-replacement-validation-2026-09-21/n1-f1-native-revalidation.md)
-are complete. Next bounded action is resolving the 40 GiB capacity gate and
-approving an exact-candidate native scope; F1 includes no native build/retry.
-Keep the native stop in force:
-do not start exports, replay ed8330a or reuse its passing checks for new bytes.
+are complete. The owner has now authorized the proposed bounded F1 native scope
+and cache cleanup. The new iOS build passed; its one diagnostic attempt stopped
+on the startup-command timeout. Review the concrete diagnostic amendment before
+any additional native launch. If that capture passes after approval, continue the
+already-authorized F1 runtime sequence under its original limits. Exports wait
+for preceding gates. Never replay ed8330a as proof for the changed bytes.
 
 Canonical HTTPS auth/join, wrong-origin and web-only auth-confirm delivery remain
 unverified: signed simulator entitlements are empty and no approved local forced
@@ -96,7 +115,9 @@ crash/AppHang and
 all time/stop limits. The failing synthetic plus case does not establish failure
 of issued canonical HTTPS/URL-safe links or when the defect was introduced.
 
-Android waits for the iOS gates and capacity. No additional cleanup is authorized.
+Android’s unused attempt is conditionally rebound to 8972865 and still waits for
+all iOS gates and fresh capacity. Cleanup is limited to inspected disposable
+caches; all retained native artifacts, sessions and personal files remain protected.
 Keep all attempts/artifacts/private logs. N2 remains a separate future approval
 for two readiness builds and in-place staging updates; live-read/passive telemetry
 scope must be explicit. No fresh provider/OTP/canary allowance exists.
@@ -115,6 +136,7 @@ Web ed8330a; API and accepted native f94a1d9; production e1184ec unchanged.
 One CI/Preview/API redeploy consumed in Phase W. Closed ledger: Places 92/100
 (baseline 329; 8 unused, not reopened), emails 2/4, canaries 6/6 per provider,
 fresh Gemini 0/0; backstop 429. September 30 unextended. AppHang acceptance remains
-isolated-staging-only; this debugger capture is not a hang diagnostic. N2, uploads,
+isolated-staging-only; this stopped diagnostic provides no hang evidence. N2, uploads,
 CI, deployments, merges, live product requests, OTP/canary, resource/secret changes,
-migrations, further cleanup, stores and cohort activation remain gated.
+migrations, cleanup beyond the approved disposable caches, stores and cohort
+activation remain gated.

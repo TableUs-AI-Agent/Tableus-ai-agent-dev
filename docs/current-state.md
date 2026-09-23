@@ -17,7 +17,7 @@ previous narrative without making it an active checklist.
 | Accepted API/native and retained Preview candidate | `f94a1d9d1125e6c9111aa08eda496f014f20d0c0` |
 | Current task branch / worktree | `codex/native-replacement-validation` / `/Users/brianchei/.codex/worktrees/ea6d/Tableus-ai-agent-dev` |
 | Staging web / prior native application | `ed8330a766b3c4b80a505e075535678394e275e9`; completed dependency remediation |
-| Local F1 mobile candidate | `8972865893a3f018a064594457dc9cc664f8a61f`; native build/validation pending |
+| Local F1 mobile candidate | `8972865893a3f018a064594457dc9cc664f8a61f`; iOS build/artifact passed, diagnostic timed out; behavior pending |
 | Native diagnostic operator | `16603dd0cf36d27b492e57a02d3c6c438a2563c4`; operator unchanged |
 | Previous task / exact base | `01a0c661-7b3f-7403-906c-0f60f60a3dd4`; `5b39d937b905691798a585b4aced79f91c7e97bf` |
 | Evidence index | [Current candidate](evidence/ios27-staging-f94a1d9/closeout.md) |
@@ -140,13 +140,24 @@ Its local fix preserves encoded custom-scheme tokens and avoids a second decode
 in the join hook; duplicate/malformed tokens fail closed. All 48 routing checks
 and the complete make-ready target set pass (292 JavaScript, 98 Python; three
 PostgreSQL skips), with unchanged generated contracts. [Exact candidate freeze and impact/revalidation](evidence/native-replacement-validation-2026-09-21/n1-f1-native-revalidation.md)
-are complete; no native build or replay ran for F1.
+are complete. The local-fix phase included no native build or replay; fresh
+resumption follows below.
 Canonical HTTPS delivery, auth-mode presentation and historical AppHang clearance
 remain unverified.
-Only the earlier disposable iOS 26.5 simulator received the ed8330a artifact;
-8972865 is unbuilt and accepted native installations remain f94a1d9. Android is unbuilt: remaining iOS
-gates and roughly 14.7 GiB free versus the 40 GiB build floor block it. N2/live reads
-stay separately gated.
+The owner [authorized bounded F1 native resumption](evidence/native-replacement-validation-2026-09-21/n1-f1-resumption-approval.json).
+[Cache cleanup](evidence/native-replacement-validation-2026-09-21/f1-storage-cleanup.md)
+recovered about 26.85 GiB and reached 42.20 GiB free. The new F1 iOS build passed;
+[artifact verification](evidence/native-replacement-validation-2026-09-21/n1-f1-native-result.md)
+matched 42 diagnostic hashes, both native UUIDs and 50 map/source contents. A new
+disposable iOS 26.5 target received it. After a corrected pre-launch Python
+setup error, the single actual diagnostic attempt hit the 45-second LLDB start
+cap before a breakpoint hit or sampled trace. The app was terminated; initial
+and delayed checks found no matching crash, and no target/debugger remains.
+Cause unresolved; no F1 lifecycle, offline, link or export run followed.
+Accepted native installations remain f94a1d9. The [proposed diagnostic amendment](evidence/native-replacement-validation-2026-09-21/n1-f1-diagnostic-amendment.md)
+requires one additional capture approval and no rebuild. Android remains unbuilt,
+conditional on all iOS gates and fresh 40 GiB capacity. N2/live reads and separate
+canonical/auth/physical probes remain gated.
 Preserve all new diagnostics, 63bd retention evidence and 90bd Phase W evidence.
 No cumulative replacement acceptance.
 Merge and release gates remain separate.
