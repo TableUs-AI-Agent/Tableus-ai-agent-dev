@@ -1,0 +1,75 @@
+{
+  "schema_version": 1,
+  "amendment": "F1-P1",
+  "recorded_at": "2026-09-23T04:17:32.234268+00:00",
+  "status": "prepared_unapproved_unexecuted",
+  "previous_result": "n1-f1-o1-result.json",
+  "evidence_base_sha": "838e6f5e0d42c548acd620a8e4f219dcf901dfa9",
+  "application_sha_unchanged": "8972865893a3f018a064594457dc9cc664f8a61f",
+  "build_operator_sha_unchanged": "16603dd0cf36d27b492e57a02d3c6c438a2563c4",
+  "probe_bundle": "/Users/brianchei/repos/Tableus-ai-agent-dev/.artifacts/mobile/8972865893a3f018a064594457dc9cc664f8a61f/native-validation-f1/runtime-preparation-o1/f1-platform-probe-preparation",
+  "probe_manifest_sha256": "65ffeb9e5b04243a8c42a2a8a58010561b7a025a14719b4687f37e8fc4df2eeb",
+  "files_sha256": {
+    "README.md": "615ad177e4e9a5f441e299abc6e1240f420c03f9eab47c1f354a3ab7d32e16e9",
+    "checks.json": "027920a8f6a287cbee8cf287ba4a43d1015e4180b22a446eea6b32697f4bba2f",
+    "driver.py": "ac2196d0d0709010abd24f6fabeb34cbe25a980ab31a71a22f73fbcf8b4d37e0",
+    "offline_check.py": "e7c4e868f1fe0d83456b58f170a9d7c5624ac9fca1af08bdf05a57a831887f32",
+    "settings-1.yml": "c14ad3ac7cdfe4f99facfff070f3c40abe80a6d1471e6a07425ae6dbfadf68eb",
+    "settings-2.yml": "1a24facbbe075a3a77fa3f8de6c89920e73ace60a2b7b9a2d45d80eda817c578",
+    "settings-3.yml": "76b33c3783c55f5fcdf4b04ce8e6108adb07a92324e45c8b8b9da9d18425bbca"
+  },
+  "archive_index": "/Users/brianchei/repos/Tableus-ai-agent-dev/.artifacts/mobile/8972865893a3f018a064594457dc9cc664f8a61f/native-validation-f1/runtime-preparation-o1/index.json",
+  "archive_index_sha256": "ef046d13e9d040069a4203c6852a38cf8a5f267db18369340ee7966a33ddfcb5",
+  "device_id": "CBB4FAB4-734C-413C-9F10-850329AC9A01",
+  "runtime": "iOS 26.5 (23F77)",
+  "app_id": "com.apple.Preferences",
+  "settings_inventory_version": "1353.5.5",
+  "maestro_version": "2.8.0",
+  "additional_runs": 1,
+  "max_seconds_including_cleanup": 300,
+  "max_serial_maestro_invocations": 3,
+  "post_flow_observation_seconds": 5,
+  "actions": [
+    "launch Settings with clearState false",
+    "assert Settings title",
+    "capture screenshot",
+    "observe target SpringBoard PID/crash reports and TableUs absence",
+    "terminate Settings during cleanup"
+  ],
+  "fresh_output": "/Users/brianchei/repos/Tableus-ai-agent-dev/.artifacts/mobile/8972865893a3f018a064594457dc9cc664f8a61f/native-validation-f1/test-ios-settings-platform-probe-01",
+  "command": [
+    "python3",
+    "/Users/brianchei/repos/Tableus-ai-agent-dev/.artifacts/mobile/8972865893a3f018a064594457dc9cc664f8a61f/native-validation-f1/runtime-preparation-o1/f1-platform-probe-preparation/driver.py",
+    "--output",
+    "/Users/brianchei/repos/Tableus-ai-agent-dev/.artifacts/mobile/8972865893a3f018a064594457dc9cc664f8a61f/native-validation-f1/test-ios-settings-platform-probe-01"
+  ],
+  "required_approval_environment": {
+    "TABLEUS_F1_PLATFORM_PROBE_APPROVED": "1"
+  },
+  "preflight": [
+    "fresh output absent",
+    "bundle hashes match",
+    "intended target already booted on exact runtime",
+    "Settings inventory unchanged",
+    "TableUs and local product services stopped",
+    "at least 20 GiB free"
+  ],
+  "stop_conditions": [
+    "SpringBoard PID changes or cannot be uniquely observed",
+    "new relevant crash report",
+    "TableUs unexpectedly running",
+    "command/assertion failure",
+    "deadline"
+  ],
+  "automatic_retry": false,
+  "automatic_tableus_continuation": false,
+  "tableus_launches": 0,
+  "offline_replays": 0,
+  "links": 0,
+  "exports": 0,
+  "tableus_builds_or_installs": 0,
+  "simulator_erase_or_toolchain_updates": 0,
+  "live_product_requests": 0,
+  "interpretation": "Crash with Settings establishes platform instability outside TableUs. No crash in three flows is inconclusive about prior failures and grants no TableUs acceptance/replay.",
+  "checks": "Mocked subprocess/monitor/deadline/cleanup checks, AST and no-approval gate; root verified installed Settings and actual target launchctl label read-only. No probe native execution."
+}

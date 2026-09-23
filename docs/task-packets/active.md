@@ -1,6 +1,6 @@
 # Active packet: native replacement validation (2d)
 
-N1-F1 approved; **candidate 8972865 built; D2 and lifecycle passed; offline refresh stopped.**
+N1-F1 approved; **candidate 8972865 built; D2/lifecycle passed; O1 stopped on SpringBoard crash; F1-P1 prepared, unapproved.**
 The owner authorized F1 native resumption and safe regenerable-cache cleanup on
 2026-09-22; exact scope is recorded in the [amendment](../evidence/native-replacement-validation-2026-09-21/n1-f1-resumption-approval.json).
 Capacity and fresh-input checks still govern execution; prior attempts remain consumed.
@@ -87,6 +87,13 @@ expected error-message assertion failed. Three refresh phases have passed
 counters; failed-phase counters were not retained, leaving the cause unproved.
 The disposable app and local services are stopped; no new crash was found.
 Links and exports have not run. D2's additional capture is consumed.
+The subsequently approved [F1-O1 run](../evidence/native-replacement-validation-2026-09-21/n1-f1-o1-result.md)
+stopped after 182.790 seconds. The first create-failure flow passed, then
+SpringBoard crashed in XCTest accessibility support; create-retry's first
+assertion saw the iOS home screen. TableUs survived until cleanup; the journal
+contains one create POST and no retry POST. No refresh phase was reached. The
+original refresh failure remains unresolved. O1's additional offline attempt is
+consumed, and the post-stop check confirms app/services stopped.
 
 ## Development workflow prerequisite
 
@@ -108,11 +115,19 @@ and cache cleanup. The new iOS build passed; its one diagnostic attempt stopped
 on the startup-command timeout. The separately approved D2 capture now passes;
 the subsequent offline run has now triggered the first-new-native-failure stop.
 The [F1-O1 amendment](../evidence/native-replacement-validation-2026-09-21/n1-f1-offline-amendment.md)
-prepares one additional offline run with durable failed-phase request/control
-events; owner approval remains required for that attempt. Do not change
-app bytes, fault counts, assertions or timeouts to obtain a pass. Links and the
-two exports wait for passing preceding gates; no automatic replay. Never use
-ed8330a evidence as proof for the changed bytes.
+was [approved](../evidence/native-replacement-validation-2026-09-21/n1-f1-o1-approval.json)
+for one additional offline run with durable failed-phase request/control events.
+Fresh artifact/source/UUID/map and target/port checks passed; that exact archived
+operator ran once and failed as recorded above. No extra offline attempt remains.
+Read-only diagnosis and preparation are complete. The proposed
+[F1-P1 platform probe](../evidence/native-replacement-validation-2026-09-21/n1-f1-platform-probe.md)
+uses Settings on the existing disposable simulator, at most three serial Maestro
+flows within 300 seconds, stopping on any failure or SpringBoard restart. It is
+prepared only and requires authorization under the existing native stop rule.
+A healthy probe would be inconclusive about TableUs and would not authorize an
+offline replay. Do not change app bytes, fault counts, assertions or timeouts to
+obtain a pass. Links and the two exports wait for passing preceding gates; no
+automatic replay. Never use ed8330a evidence as proof for changed bytes.
 
 Canonical HTTPS auth/join, wrong-origin and web-only auth-confirm delivery remain
 unverified: signed simulator entitlements are empty and no approved local forced

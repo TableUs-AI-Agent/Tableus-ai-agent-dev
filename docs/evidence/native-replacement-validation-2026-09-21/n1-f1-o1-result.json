@@ -1,0 +1,337 @@
+{
+  "schema_version": 1,
+  "recorded_at": "2026-09-23T04:10:09.313035+00:00",
+  "status": "stopped_on_first_new_native_failure",
+  "amendment": "F1-O1",
+  "application_sha": "8972865893a3f018a064594457dc9cc664f8a61f",
+  "build_operator_sha": "16603dd0cf36d27b492e57a02d3c6c438a2563c4",
+  "evidence_base_sha": "838e6f5e0d42c548acd620a8e4f219dcf901dfa9",
+  "evidence_commit": "commit containing this record; distinct from application/build operator",
+  "private_root": "/Users/brianchei/repos/Tableus-ai-agent-dev/.artifacts/mobile/8972865893a3f018a064594457dc9cc664f8a61f/native-validation-f1",
+  "approval": "n1-f1-o1-approval.json",
+  "approval_sha256": "0a7d56ca99383a9f117b5277e24447654217226c9fccaf02876eac1d7b603040",
+  "driver": {
+    "runner": "offline",
+    "amendment": "F1-O1",
+    "application_sha": "8972865893a3f018a064594457dc9cc664f8a61f",
+    "frozen_runner_source_sha256": "54bca226db986131b855396b79a43cb66218fd219455af543080c8a92796f63e",
+    "instrumented_runner_sha256": "3019103783c170d672f54ae0813dded7bbfabc8352982320372beb74bb73dfb8",
+    "instrumented_proxy_sha256": "98c33b5d88f3aa2bd2baa58ab44c127105075ba28ade0d9f1872c35a6905eef0",
+    "driver_sha256": "928a98b0b9d576510ef6670841ba0a99478fc469e11b2c3e7c829969d89520a4",
+    "artifact_sha256": "98c1535bfe6f7cad0c8e467454f5128c71f4aae21b8b41a5aba1c1a33f1e391d",
+    "build_id": "local-ios-test-8972865-f1-01",
+    "device_id": "CBB4FAB4-734C-413C-9F10-850329AC9A01",
+    "started_at": "2026-09-23T03:55:04.023316+00:00",
+    "limit_seconds": 1800,
+    "command": [
+      "/Users/brianchei/.local/bin/node",
+      "/Users/brianchei/repos/Tableus-ai-agent-dev/.artifacts/mobile/8972865893a3f018a064594457dc9cc664f8a61f/native-validation-f1/runtime-preparation-d2/f1-offline-assessment/operator/mobile-offline-e2e.mjs",
+      "--platform",
+      "ios",
+      "--device",
+      "CBB4FAB4-734C-413C-9F10-850329AC9A01",
+      "--app",
+      "/Users/brianchei/repos/Tableus-ai-agent-dev/.artifacts/mobile/8972865893a3f018a064594457dc9cc664f8a61f/native-validation-f1/test-ios.app",
+      "--build-id",
+      "local-ios-test-8972865-f1-01",
+      "--evidence",
+      "/Users/brianchei/repos/Tableus-ai-agent-dev/.artifacts/mobile/8972865893a3f018a064594457dc9cc664f8a61f/native-validation-f1/test-ios-offline-f1-o1",
+      "--verify-plan-refresh",
+      "true",
+      "--refresh-sha",
+      "8972865893a3f018a064594457dc9cc664f8a61f"
+    ],
+    "environment_keys": [
+      "DEVELOPER_DIR",
+      "HOME",
+      "JAVA_HOME",
+      "LANG",
+      "LOGNAME",
+      "MAESTRO_CLI_ANALYSIS_NOTIFICATION_DISABLED",
+      "MAESTRO_CLI_NO_ANALYTICS",
+      "MAESTRO_DISABLE_UPDATE_CHECK",
+      "PATH",
+      "TABLEUS_F1_O1_APPROVED",
+      "TABLEUS_MAESTRO_EVIDENCE_ROOT",
+      "TMPDIR",
+      "USER"
+    ],
+    "status": "failed",
+    "new_crash_reports": [],
+    "runner_pid": 16904,
+    "exit_code": 1,
+    "app_terminate_exit": 0,
+    "finished_at": "2026-09-23T03:58:06.816504+00:00",
+    "elapsed_seconds": 182.79
+  },
+  "preflight": {
+    "artifact": "o1-preflight/artifact-proof.json",
+    "device": "o1-preflight/device-and-ports.json",
+    "free_gib": 23.23
+  },
+  "flows": [
+    {
+      "flow": "create-failure",
+      "commands": "test-ios-offline-f1-o1/maestro-results/create-failure-qjre_4m7/2026-09-22_225511/create-failure/commands.json",
+      "sha256": "be8ab1e7b1a384ec8a33651f7554ed3c0998d5cf0e091e0b229a80789b8830b8",
+      "status": "passed",
+      "failed_commands": []
+    },
+    {
+      "flow": "create-retry",
+      "commands": "test-ios-offline-f1-o1/maestro-results/create-retry-2d5sddmm/2026-09-22_225724/create-retry/commands.json",
+      "sha256": "30e6b5c108c5e5983388022732596e41d1d08dcd6c121b71873e81cd16ee77c5",
+      "status": "failed",
+      "failed_commands": [
+        {
+          "command": {
+            "assertConditionCommand": {
+              "condition": {
+                "visible": {
+                  "textRegex": ".*may have completed.*",
+                  "optional": false
+                }
+              },
+              "optional": false
+            }
+          },
+          "metadata": {
+            "status": "FAILED",
+            "timestamp": 1790135862964,
+            "duration": 18435,
+            "error": {
+              "message": "Assertion is false: \".*may have completed.*\" is visible",
+              "debugMessage": "Assertion '\".*may have completed.*\" is visible' failed. Check the UI hierarchy in debug artifacts to verify the element state and properties.\n\nPossible causes:\n- Element selector may be incorrect - check if there are similar elements with slightly different names/properties.\n- Element may be temporarily unavailable due to loading state\n- This could be a real regression that needs to be addressed"
+            },
+            "sequenceNumber": 2,
+            "depth": 0,
+            "evaluatedCommand": {
+              "assertConditionCommand": {
+                "condition": {
+                  "visible": {
+                    "textRegex": ".*may have completed.*",
+                    "optional": false
+                  }
+                },
+                "optional": false
+              }
+            },
+            "artifacts": [
+              {
+                "type": "SCREEN_HIERARCHY",
+                "path": "screen-hierarchy/step-003-assertCondition-may_have_completed.json"
+              },
+              {
+                "type": "SCREENSHOT",
+                "path": "screenshots/step-003-assertCondition-may_have_completed.png"
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "flows_passed": 1,
+  "flows_failed": 1,
+  "flows_not_run": 9,
+  "refresh_phases_executed": 0,
+  "proxy": {
+    "events": 10,
+    "plan_create_posts": 1,
+    "retry_posts": 0,
+    "upstream_create_status": 200,
+    "fault": "forward-then-drop-response",
+    "direct_backend_fixture_calls_separate": true
+  },
+  "platform_crash": {
+    "captureTime": "2026-09-22 22:56:56.8628 -0500",
+    "procLaunch": "2026-09-22 21:07:12.3117 -0500",
+    "procName": "SpringBoard",
+    "pid": 94309,
+    "procPath": "/Volumes/VOLUME/*/SpringBoard.app/SpringBoard",
+    "parentProc": "launchd_sim",
+    "parentPid": 94306,
+    "osVersion": {
+      "train": "macOS 27.0",
+      "build": "26A428",
+      "releaseType": "User"
+    },
+    "exception": {
+      "codes": "0x0000000000000001, 0x0000000000000020",
+      "rawCodes": [
+        1,
+        32
+      ],
+      "type": "EXC_BAD_ACCESS",
+      "signal": "SIGSEGV",
+      "subtype": "KERN_INVALID_ADDRESS at 0x0000000000000020"
+    },
+    "termination": {
+      "flags": 0,
+      "code": 11,
+      "namespace": "SIGNAL",
+      "indicator": "Segmentation fault: 11",
+      "byProc": "exc handler",
+      "byPid": 94309
+    },
+    "faultingThread": 10,
+    "asi": null,
+    "faulting_thread": {
+      "name": null,
+      "queue": "com.apple.root.user-initiated-qos",
+      "frames": [
+        {
+          "symbol": "__66-[XCTAutomationSession initWithAccessibilityFramework:dataSource:]_block_invoke",
+          "image": "XCTAutomationSupport",
+          "offset": 192
+        },
+        {
+          "symbol": "_dispatch_call_block_and_release",
+          "image": "libdispatch.dylib",
+          "offset": 24
+        },
+        {
+          "symbol": "_dispatch_client_callout",
+          "image": "libdispatch.dylib",
+          "offset": 12
+        },
+        {
+          "symbol": "<deduplicated_symbol>",
+          "image": "libdispatch.dylib",
+          "offset": 24
+        },
+        {
+          "symbol": "_dispatch_root_queue_drain",
+          "image": "libdispatch.dylib",
+          "offset": 880
+        },
+        {
+          "symbol": "_dispatch_worker_thread2",
+          "image": "libdispatch.dylib",
+          "offset": 252
+        },
+        {
+          "symbol": "_pthread_wqthread",
+          "image": "libsystem_pthread.dylib",
+          "offset": 228
+        },
+        {
+          "symbol": "start_wqthread",
+          "image": "libsystem_pthread.dylib",
+          "offset": 8
+        }
+      ]
+    },
+    "retained_sha256": "323b12e29c459c53cc2c55acbe596f9ff4eebb7eb5350c24d4ab68c06efa49ba",
+    "interpretation": "SpringBoard report, not TableUs crash. Exact trigger requires correlated evidence; do not infer app fault from this stack alone."
+  },
+  "timeline": [
+    {
+      "at": "2026-09-23T03:56:44.463Z",
+      "observation": "Create POST received upstream 200; configured proxy dropped response."
+    },
+    {
+      "at": "2026-09-23T03:56:55.589Z",
+      "observation": "First flow completed screenshot showing ambiguous-write message and Retry creating plan."
+    },
+    {
+      "at": "2026-09-23T03:56:56.8628Z",
+      "observation": "SpringBoard PID 94309 crashed in XCTAutomationSupport; SIGSEGV address 0x20."
+    },
+    {
+      "at": "2026-09-23T03:57:02.160Z",
+      "observation": "Replacement SpringBoard PID 17600 observed surviving TableUs PID 17298 in background."
+    },
+    {
+      "at": "2026-09-23T03:57:42.964Z",
+      "observation": "Second flow began first assertion; failure screenshot shows SpringBoard home. No retry tap ran."
+    },
+    {
+      "at": "2026-09-23T03:58:06.790Z",
+      "observation": "Driver cleanup force-quit surviving TableUs process."
+    }
+  ],
+  "classification": "Simulator SpringBoard/XCTest accessibility crash disrupted the flow transition; exact triggering automation action unproved. No TableUs process crash observed. No app retry regression established.",
+  "original_refresh_failure": "Unresolved; O1 stopped before reaching refresh. Prior failure retained independently.",
+  "upstream_corroboration": {
+    "url": "https://github.com/mobile-dev-inc/maestro/issues/3494",
+    "scope": "Matching platform signature on iOS 26.5; corroboration only, not proof of identical cause or a verified fix."
+  },
+  "post_stop": {
+    "recorded_at": "2026-09-23T04:00:41.407055+00:00",
+    "device": "CBB4FAB4-734C-413C-9F10-850329AC9A01",
+    "remaining_target_processes": [],
+    "listeners": {
+      "7999": "",
+      "8000": "",
+      "8001": ""
+    },
+    "new_TableUs_crash_reports": []
+  },
+  "downstream_gate_rejected_actual_failed_result": true,
+  "additional_offline_attempts_used": 1,
+  "additional_offline_attempts_remaining": 0,
+  "automatic_retry": false,
+  "links_run": false,
+  "exports_run": 0,
+  "android_run": false,
+  "unchanged_app_verification_reused": {
+    "javascript_tests": 292,
+    "python_tests": 98,
+    "postgres_skips": 3,
+    "source": "n1-f1-result.md"
+  },
+  "private_files_sha256": {
+    "test-ios-offline-f1-o1/SpringBoard-2026-09-22-225724.ips": "323b12e29c459c53cc2c55acbe596f9ff4eebb7eb5350c24d4ab68c06efa49ba",
+    "test-ios-offline-f1-o1/app-terminate.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "test-ios-offline-f1-o1/backend.log": "63b23ea134a6b958f06c2d860a0438ad9d53f4abce139e554b3a22099902fd29",
+    "test-ios-offline-f1-o1/driver-result.json": "6bfa76cb55689b4b98bc13c8ad44e2ea30416d481b7bbd848014c40e84d85952",
+    "test-ios-offline-f1-o1/fault-proxy-events.ndjson": "0ca072226d2cba2fda4fb9eacd9ba6a7c1ac61455e7aff1dbce9cdaa6b445dd5",
+    "test-ios-offline-f1-o1/fault-proxy.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "test-ios-offline-f1-o1/maestro-results/create-failure-qjre_4m7/2026-09-22_225511/create-failure/commands.json": "be8ab1e7b1a384ec8a33651f7554ed3c0998d5cf0e091e0b229a80789b8830b8",
+    "test-ios-offline-f1-o1/maestro-results/create-failure-qjre_4m7/2026-09-22_225511/create-failure/logs/device-simulator.log": "5056046dd5459171031d14c5741b1c0075eff6c61319ee74773758ce71939b77",
+    "test-ios-offline-f1-o1/maestro-results/create-failure-qjre_4m7/2026-09-22_225511/create-failure/logs/device-xctest.log": "8e75a1fd91e7eba345d1f25193d6f542a73f0aee51402f31d3ace39ac039218f",
+    "test-ios-offline-f1-o1/maestro-results/create-failure-qjre_4m7/2026-09-22_225511/create-failure/logs/maestro.log": "c5db92dc1448c2c416162a6e8f54984751bc2d0d7e632b624b9ae7e80b73bd75",
+    "test-ios-offline-f1-o1/maestro-results/create-failure-qjre_4m7/2026-09-22_225511/create-failure/manifest.json": "5b8b377de96efab37166892feced857ec874e80d1e9b914ff43960731e33f5ea",
+    "test-ios-offline-f1-o1/maestro-results/create-failure-qjre_4m7/2026-09-22_225511/create-failure/takeScreenshot/offline-retry.png": "29e5826607f9de39e68496e58a3a7f588ceed9437c868e8a7188770da286c575",
+    "test-ios-offline-f1-o1/maestro-results/create-failure-qjre_4m7/2026-09-22_225511/xctest_runner_2026-09-22_225513.log": "c8c59fd2329b900da0cbba69d1b5fc71a0b66a36777fd8a7fe49e059a247b673",
+    "test-ios-offline-f1-o1/maestro-results/create-failure-qjre_4m7/operator-invocation.json": "22734ae9970151e23eba6ef2e0f712b4d22975456130ec1cf03b2058d95ebc47",
+    "test-ios-offline-f1-o1/maestro-results/create-retry-2d5sddmm/2026-09-22_225724/create-retry/commands.json": "30e6b5c108c5e5983388022732596e41d1d08dcd6c121b71873e81cd16ee77c5",
+    "test-ios-offline-f1-o1/maestro-results/create-retry-2d5sddmm/2026-09-22_225724/create-retry/logs/device-simulator.log": "fab51ff1094768f0a27fe7dc9ee0cf309f9bc67f7e34db2197a0f1e016e0eec6",
+    "test-ios-offline-f1-o1/maestro-results/create-retry-2d5sddmm/2026-09-22_225724/create-retry/logs/device-xctest.log": "7395b1a954ab4b31af48a4eeaa3d51730d31a4ba4e8f3f873b02072caad43686",
+    "test-ios-offline-f1-o1/maestro-results/create-retry-2d5sddmm/2026-09-22_225724/create-retry/logs/maestro.log": "9da6c93f487a888ee44cb5e79a4721f4b457c7e7e1cd324d7c25fbae9fe625cd",
+    "test-ios-offline-f1-o1/maestro-results/create-retry-2d5sddmm/2026-09-22_225724/create-retry/manifest.json": "357b72205b12bfc83517859151877e426487602890dbd544f8dc520c104e3925",
+    "test-ios-offline-f1-o1/maestro-results/create-retry-2d5sddmm/2026-09-22_225724/create-retry/screen-hierarchy/step-003-assertCondition-may_have_completed.json": "100dbaadb807e78435c51923fce587d2bc2544e4ec37955150f34c33d22297bb",
+    "test-ios-offline-f1-o1/maestro-results/create-retry-2d5sddmm/2026-09-22_225724/create-retry/screenshots/step-003-assertCondition-may_have_completed.png": "b1a2bae7f0cc1da1667e9130dccbc3def686e8843011cf506d6a61d0bbd53d24",
+    "test-ios-offline-f1-o1/maestro-results/create-retry-2d5sddmm/2026-09-22_225724/xctest_runner_2026-09-22_225731.log": "66ed0088626734081ce784c24ac7486c2fa4a6c8c995df6e39805e59860b58cb",
+    "test-ios-offline-f1-o1/maestro-results/create-retry-2d5sddmm/operator-invocation.json": "53117eda31c2db97a618dbf34576f72d0bf1935530db562f1e9e8f2efa5b9cfe",
+    "test-ios-offline-f1-o1/post-stop-check.json": "4ae33761947b2f009ae54e3c880edeb5bef3184dfed428907996db7692dd1857",
+    "test-ios-offline-f1-o1/post-stop-unified-log-receipt.json": "3c2ab839a00023fb8d1e6356be06aadf547bdf9409aeac776337d259d8708e8d",
+    "test-ios-offline-f1-o1/post-stop-unified-log.json": "bdb1c8ec8580d3900c060adb96d6774f6c4a3d28f28e58614fe4fc5087cf4b76",
+    "test-ios-offline-f1-o1/runner.log": "8fa277c574f122ded736f841134f4d3b5354c03fa3ce6b5af955f860b0d79ead",
+    "test-ios-offline-f1-o1/springboard-crash-summary.json": "be0264e8c00c9f5a9e2077e23619cc6139b8d4f126c68321f6a448da0394fd4a",
+    "test-ios-offline-f1-o1/tableus-mobile-offline-e2e-GgiFmw/flows/constraints-offline.yml": "1de8312716851e8809e82daa202587f6ac0892601d099ad5a6d3852a6c66c53e",
+    "test-ios-offline-f1-o1/tableus-mobile-offline-e2e-GgiFmw/flows/constraints-retry.yml": "7f9d9e067f33b9023b71b9cdddbe2eeefc87191dcbe73d3aba201a8e9a07e08b",
+    "test-ios-offline-f1-o1/tableus-mobile-offline-e2e-GgiFmw/flows/create-failure.yml": "79f94557fa32d38487ffde0976d6e6e828da71c6e3fb827df7c84787113a4e46",
+    "test-ios-offline-f1-o1/tableus-mobile-offline-e2e-GgiFmw/flows/create-retry.yml": "8a7b3e3f909226fb6398ee0cf524f9ff9ce189c2f22e804f7bc6c266c33783d1",
+    "test-ios-offline-f1-o1/tableus-mobile-offline-e2e-GgiFmw/flows/finalize-failure.yml": "e88a5b2bb0de806a6abc3a01ef4fe96ead3c6bd2e59c203af14997af605d2149",
+    "test-ios-offline-f1-o1/tableus-mobile-offline-e2e-GgiFmw/flows/finalize-retry.yml": "01132a941f5617c3d291e555d284f7e41d29b3c59e48ad8bdcb3f5f14aaa5922",
+    "test-ios-offline-f1-o1/tableus-mobile-offline-e2e-GgiFmw/flows/refresh-failure.yml": "4fc82933becd81fea4dc26839883f2f78344cc455a60e1079a714f50ca927a8c",
+    "test-ios-offline-f1-o1/tableus-mobile-offline-e2e-GgiFmw/flows/refresh-open.yml": "b549bf867d5c168a32e4e10b48e4a5acea926dd75a2953708090bfcde1288047",
+    "test-ios-offline-f1-o1/tableus-mobile-offline-e2e-GgiFmw/flows/refresh-recovery.yml": "7c43fb3fa0546c1c849d0d119f781b3dbe01f9e87f2f1123cfa0db8248bd6805",
+    "test-ios-offline-f1-o1/tableus-mobile-offline-e2e-GgiFmw/flows/refresh-scroll.yml": "1b903e242b50a707e5499d81ab1d31ee001e11b9c87a2db3bec224107e6d8573",
+    "test-ios-offline-f1-o1/tableus-mobile-offline-e2e-GgiFmw/flows/refresh-slow.yml": "c3d733b6829a453552e5ef0153988d9f58e655b1e63680d33e818980cf47dd2f",
+    "o1-preflight/approval.json": "0a7d56ca99383a9f117b5277e24447654217226c9fccaf02876eac1d7b603040",
+    "o1-preflight/artifact-proof.json": "cf10dcebed80548d8ee77cb1ee6c5c56241105178328d280f13afa5581ebfbc7",
+    "o1-preflight/device-and-ports.json": "99bf6ba5c17572225682c43c9fc192dba82e402874f8e42d8cd5bc17feb9a75e"
+  },
+  "next_action": "Prepare F1-P1 Settings-only platform probe; no native execution authorized by this evidence record.",
+  "prepared_followup": {
+    "proposal": "n1-f1-platform-probe.json",
+    "proposal_sha256": "6e27ac766bd22b3c6bf1e15dc381732b5b14f84ac1c9e303e4c6c62c1fd5c0d8",
+    "archive_index": "/Users/brianchei/repos/Tableus-ai-agent-dev/.artifacts/mobile/8972865893a3f018a064594457dc9cc664f8a61f/native-validation-f1/runtime-preparation-o1/index.json",
+    "archive_index_sha256": "ef046d13e9d040069a4203c6852a38cf8a5f267db18369340ee7966a33ddfcb5",
+    "archive_file_count": 18,
+    "native_executed": false
+  }
+}
