@@ -56,8 +56,9 @@ canceled. Preserve all other worktrees and artifacts.
 
 ## Status
 
-Implementation and local deterministic verification complete; final commit and
-handoff are being recorded. One `make ready` passed (296 JavaScript / 120 Python,
+Implementation and local deterministic verification complete. Application commit
+`5f8569e5b16088f64f358c64056e6dce4b191901`; [handoff](../handoffs/2026-09-24-account-lifecycle-backend.md)
+records exact evidence, remaining gates and the next bounded objective. One `make ready` passed (296 JavaScript / 120 Python,
 four PostgreSQL-only skips), with fresh SQLite migration and two-process durable
 recovery evidence. No live behavior or release acceptance is claimed. Next bounded
 objective: web/mobile account-management screens against this backend contract,
