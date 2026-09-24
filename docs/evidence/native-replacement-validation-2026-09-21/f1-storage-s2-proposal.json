@@ -1,0 +1,102 @@
+{
+  "schema_version": 1,
+  "scope": "F1-S2 regenerable-cache cleanup only",
+  "status": "prepared_unapproved_unexecuted",
+  "base_commit": "221318c71e159b233845579d6bdc5af1c93babe3",
+  "observed_at": "2026-09-24T04:10:01.551835+00:00",
+  "observed_free_gib": 20.217,
+  "estimated_allocated_gib": 1.664,
+  "recovery_guaranteed": false,
+  "targets": [
+    {
+      "path": "/Users/brianchei/Library/Caches/Arc/User Data/Default/Cache",
+      "kind": "Arc HTTP cache",
+      "allocated_kib": 909892,
+      "device": 16777230,
+      "inode": 249767250,
+      "symlinks": []
+    },
+    {
+      "path": "/Users/brianchei/Library/Caches/Arc/User Data/Default/Code Cache",
+      "kind": "Arc compiled web code",
+      "allocated_kib": 96736,
+      "device": 16777230,
+      "inode": 250319972,
+      "symlinks": []
+    },
+    {
+      "path": "/Users/brianchei/Library/Caches/Arc/User Data/Profile 4/Cache",
+      "kind": "Arc HTTP cache",
+      "allocated_kib": 20048,
+      "device": 16777230,
+      "inode": 251016484,
+      "symlinks": []
+    },
+    {
+      "path": "/Users/brianchei/Library/Caches/Arc/User Data/Profile 4/Code Cache",
+      "kind": "Arc compiled web code",
+      "allocated_kib": 608,
+      "device": 16777230,
+      "inode": 251016488,
+      "symlinks": []
+    },
+    {
+      "path": "/Users/brianchei/.codex/worktrees/ea6d/Tableus-ai-agent-dev/frontend/.next/cache/webpack",
+      "kind": "Webpack incremental cache",
+      "allocated_kib": 445316,
+      "device": 16777230,
+      "inode": 249598613,
+      "symlinks": []
+    },
+    {
+      "path": "/Users/brianchei/.npm/_cacache",
+      "kind": "npm package download cache",
+      "allocated_kib": 59876,
+      "device": 16777230,
+      "inode": 251296453,
+      "symlinks": []
+    },
+    {
+      "path": "/Users/brianchei/Library/Caches/ReactNative",
+      "kind": "React Native downloaded archives",
+      "allocated_kib": 212088,
+      "device": 16777230,
+      "inode": 250109611,
+      "symlinks": []
+    }
+  ],
+  "private_inventory": "/Users/brianchei/.codex/worktrees/ea6d/Tableus-ai-agent-dev/.artifacts/f1-storage-s2/inventory.json",
+  "private_inventory_sha256": "fab27321dd76f6fd9ff169b74fdcb79b65ecf78235a47918016f4903dc7f881c",
+  "inventory_script_sha256": "4a942808138bd8804960079d4c9bff02f29eee44e767e533320761e5ff41f331",
+  "observed_arc_running": true,
+  "open_arc_cache_files": true,
+  "observed_non_arc_target_open_handles": false,
+  "execution_scope": [
+    "After explicit approval, request one normal Arc quit; never force quit or discard an unsaved-work prompt. If Arc remains running after30seconds, leave its four directories untouched.",
+    "Recheck all exact paths: no symlink target/ancestor or descendant; no path substitution; no retained evidence or final build output.",
+    "Remeasure seven targets; stop if total allocation exceeds2GiB or path identity/type changed. No expansion to parent directories.",
+    "Recheck active builders and open handles. Skip any target in active use or with incomplete evidence.",
+    "Delete only the seven listed cache directories, preserving all parent/profile directories. No process kill, permission repair, forced unmount or retry on failure.",
+    "Record each outcome and fresh free bytes after completion; stop on first deletion error. Partial completion must be explicit.",
+    "No native probe, build or downstream run is included."
+  ],
+  "limits": {
+    "cleanup_operations": 1,
+    "max_total_target_allocated_gib": 2,
+    "arc_graceful_quit_seconds": 30,
+    "overall_cleanup_seconds": 180,
+    "no_automatic_retry": true
+  },
+  "preserved": [
+    "All source/worktrees and .artifacts evidence, native builds/symbols/diagnostics",
+    "Sellr DerivedData products, logs, symbols, archives and source",
+    "Simulator devices/runtimes, installed apps and sessions",
+    "Codex browser cache while current task runs; all Codex task history/runtime/plugins",
+    "Arc cookies/local storage/service workers/profile roots and user files/downloads",
+    "Installed SDKs, Docker data and pending app updates",
+    "Previously failed dotslash path; no permission changes"
+  ],
+  "limits_of_scan": "Bounded directory allocation inventory, not whole-disk ownership or stale-file proof. Protected macOS cache directories and one protected pyc were unreadable; not proposed. lsof exit code alone is insufficient: Arc cache checks returned rows despite code1. Counts/open use must be checked from output.",
+  "approval_gate": "AGENTS.md Approval gates: The user must explicitly approve ... destructive cleanup. The earlier completed cache cleanup is not a standing deletion allowance.",
+  "next_after_cleanup": "Evaluate fresh capacity. P3 preflight operation is already consumed; a new exact bounded native operation requires approval."
+}

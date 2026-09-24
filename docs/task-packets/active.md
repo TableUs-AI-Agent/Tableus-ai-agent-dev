@@ -55,13 +55,20 @@ attempts. Its capacity gate failed before output creation. Independent read-only
 verification confirmed all three targets Shutdown, no matching processes and
 idle test ports. Later capacity was 19.164 GiB, still below the 20 GiB gate.
 
-Next prepare a concrete storage recovery scope through read-only assessment.
-Do not delete retained evidence, simulator data or source worktrees. Destructive
-cleanup and a new bounded native operation need explicit approval; no retry or
-downstream continuation follows from the unused boot/flow counts. The frozen
-P3 operator and original proposal JSON remain immutable. Startup hypothesis and
-previous native failures remain unresolved. Reuse unchanged preparation checks;
-this execution/evidence checkpoint needs no full-suite rerun.
+The [S2 cleanup scope](../evidence/native-replacement-validation-2026-09-21/f1-storage-s2-proposal.md)
+is prepared for explicit approval: seven exact Arc HTTP/code, Webpack, npm and
+React Native cache directories, 1.664 GiB allocated. Fresh inventory measured
+20.217 GiB free; capacity fluctuates and recovery is not guaranteed. Arc is running
+with open cache files; proposal includes one normal quit, no force quit, and skips
+Arc targets if it stays running. No cleanup or app quit has occurred. One operation,
+180 seconds, maximum2GiB of target allocation; identity/use checks and first-error
+stop. Preserve source/evidence, final builds, simulator data, sessions and Codex
+history/runtime/cache. No native retry is included. After approved cleanup, inspect
+fresh capacity before proposing any new bounded native operation.
+
+Frozen P3 operator and original proposal JSON remain immutable. Startup hypothesis
+and previous native failures remain unresolved. Reuse unchanged preparation checks;
+this evidence-only checkpoint needs no full-suite rerun.
 
 Astra owns orchestration, review and final acceptance; Sol handles bounded
 implementation and Luna read-only support. Preserve application bytes, existing
