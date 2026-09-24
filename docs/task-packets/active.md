@@ -1,4 +1,4 @@
-# Active packet: native replacement validation — V1 offline review complete
+# Active packet: native replacement validation — P4 prepared, execution gated
 
 Native validation remains **incomplete**. P3-R1 reached XCTest HTTP startup and
 completed command metadata, but its blank screenshot leaves visual Settings
@@ -63,7 +63,7 @@ repairs repository discovery for the exact Maestro debug filenames missed by the
 frozen observer. 16 focused cases, copied-log replay and one make-ready pass
 (293 JavaScript / 98 Python, three skips) plus contract check pass. No native replay; clean logs still
 mean `acceptance:false`. The P3 operator/output remain immutable; no replacement
-native operator is frozen. New tooling source is the commit containing T2 evidence.
+native operator was frozen in T2. P4 below incorporates the repaired helper.
 
 [V1 offline review](../evidence/native-replacement-validation-2026-09-21/n1-f1-v1-result.md)
 confirms Preferences PID 63600 scene foreground but only nearby SpringBoard
@@ -78,13 +78,30 @@ its intended no-explicit-permission-change scope. Before/after individual states
 are unmeasured. Do not reset/revoke from an unknown baseline or claim they were
 unchanged. No new permission operation, native run or cleanup occurred in V1.
 
-Next prepare a new operator: review assertion-only initialization, replace Maestro
-launchApp with one explicitly bounded external Preferences launch, integrate T2
-and V1, preserve all budgets, mock-test and freeze exact inputs/cleanup ownership.
-Then present one concrete native approval request. Design is recorded; no new
-native executable operator or native approval exists. Require root review of the
-hashed PNG with visible Settings title and substantive content before acceptance.
-S2 cleanup remains closed. Native validation stays in this task as requested.
+[P4](../evidence/native-replacement-validation-2026-09-21/n1-f1-p4-proposal.md)
+is prepared from base `68f1f0fd63a9b456b34bf00766aa0a8ae64d597d` in this same
+branch/worktree. The frozen operator makes one external Settings launch (30s cap),
+then one assertion/screenshot-only Maestro flow. T2/V1 gates bind invocation,
+hierarchy, permission-audit logs and PNG; completion remains `acceptance:false`
+pending Astra visual review. Static initialization review is bounded to inspected
+Java paths; auxiliary XCTest setup remains, and native hierarchy selection is
+unproved. This is not a proven rendering fix.
+
+15 mocked cases, seven synthetic file-integration checks and read-only source gates
+pass. Full readiness passes (294 JavaScript/98 backend, three PostgreSQL skips)
+after one sandbox listener-denial rerun; contract drift is absent. Old archives
+remain unchanged. Private bundle: `runtime-preparation-p4/operator` under the
+durable root. Manifest SHA-256:
+`e229f29e108f508ae7bb2e7cbf1f4a25941bed5a7dcf0a6f4d2490471e1131b8`.
+
+**Next: obtain explicit approval for the frozen P4 operation.** No native command
+ran during preparation. Proposed allowance: one boot/control/Settings launch/flow,
+420 seconds total including 60 seconds cleanup, 240 seconds flow including
+30 seconds cleanup, 20 GiB before
+boot/flow, first-failure stop and no retry. Fresh preflight and owned cleanup are
+inside that operation; root PNG review requires no further approval. No TableUs,
+permission reset, data cleanup or downstream stage is included. P4 preparation
+does not reopen prior allowances. S2 remains closed; keep native validation here.
 
 Astra owns orchestration, review and final acceptance; Sol handles bounded
 implementation and Luna read-only support. Preserve application bytes, existing
