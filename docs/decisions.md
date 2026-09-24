@@ -243,3 +243,18 @@ metadata. It must not hydrate restaurant candidates or call Places; ownership
 transfer uses the same minimal response. This changes the newly added, undeployed
 transfer contract; existing full plan endpoints retain their contract. Local
 implementation is separate from hosted activation and affected native acceptance.
+
+## Lifecycle runner readiness — 2026-09-24
+
+Verify migrations and lifecycle races with a distinct restricted PostgreSQL
+runtime role; SQLite and superuser-only checks cannot close these criteria.
+CI now provisions disposable test roles and runs application checks as runtime.
+Production/hosted database roles still require their own readback.
+
+Keep deletion availability per process. To pause admission while draining, the
+API has deletion disabled and a separately configured worker remains enabled.
+Neither CLI preflight refusal nor a paused API retry may consume an unavailable
+attempt. Aggregate worker status contains counts/ages only, not identity data.
+The [operations procedure](account-lifecycle-operations.md) proposes one finite
+batch of three every minute, explicit attention recovery and stop thresholds;
+no hosted scheduler or activation is authorized by this local completion.

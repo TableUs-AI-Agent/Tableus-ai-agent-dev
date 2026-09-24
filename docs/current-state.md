@@ -1,6 +1,6 @@
 # Current state
 
-Updated 2026-09-24 for the isolated account-lifecycle client objective. Brian
+Updated 2026-09-24 for PostgreSQL lifecycle verification and recovery readiness. Brian
 owns all development at this stage. The owner approved this work in parallel
 with native validation; only [this worktree's active packet](task-packets/active.md)
 directs work here. Native evidence remains tied to its original candidate.
@@ -9,9 +9,10 @@ directs work here. Native evidence remains tied to its original candidate.
 
 | Role | Value |
 | --- | --- |
-| Client branch | `codex/account-lifecycle-clients` |
-| Client worktree | `/Users/brianchei/.codex/worktrees/account-lifecycle-clients/Tableus-ai-agent-dev` |
-| Exact implementation base | `6ed12793253a285b0890d6358ab5f60c551b3615` (backend local completion) |
+| Active branch | `codex/account-lifecycle-postgres` |
+| Active worktree | `/Users/brianchei/.codex/worktrees/account-lifecycle-postgres/Tableus-ai-agent-dev` |
+| Exact implementation base | `521345eaab6086496c6cc490843342c96fb8f2bb` (client local completion) |
+| Application / worker candidate | `eab922ee6b7a21d193514d7008a47806c9e118e3` |
 | Native validation task | `01a0c678-55c8-7cc0-a3cb-e3200776906a`, Prepare native replacement validation |
 | Native worktree | `/Users/brianchei/.codex/worktrees/ea6d/Tableus-ai-agent-dev` |
 | Native application / build operator | `8972865893a3f018a064594457dc9cc664f8a61f` / `16603dd0cf36d27b492e57a02d3c6c438a2563c4` |
@@ -53,16 +54,27 @@ There is no hosted migration, credential provisioning, deployed worker or
 activation. Broader retention durations remain open. [Contract, data treatment
 and recovery](account-lifecycle.md) document the exact scope.
 
-The [backend handoff](handoffs/2026-09-24-account-lifecycle-backend.md) retains its
-own passing make-ready, fresh SQLite migration and two-process recovery evidence.
-Those checks cover the inherited backend source. Fresh client-objective checks
-pass: 314 JavaScript tests, 121 Python tests with four PostgreSQL-only skips,
-lint/type checks, generated contracts, Next build, Expo web export and deterministic
-smoke. Seven mocked Chrome checks cover account actions and hosted-mode session
-recovery. [Client evidence](evidence/account-lifecycle-clients-2026-09-24/README.md)
-records scope and remaining release checks.
-PostgreSQL concurrency/role behavior remains unverified locally; SQLite results
-do not substitute for it.
+The [backend handoff](handoffs/2026-09-24-account-lifecycle-backend.md) and
+[client handoff](handoffs/2026-09-24-account-lifecycle-clients.md) retain their
+exact-source checks, including seven mocked Chrome journeys. Fresh PostgreSQL17.11
+verification now passes both orderings of deletion/redeem and transfer/deletion,
+competing transfers and worker exclusion. Fresh and incremental migrations pass
+restricted-runtime and denied browser-role checks. Separate worker processes
+complete synthetic recovery; no live Auth was used.
+
+The worker CLI adds privacy-safe aggregate status and refuses unavailable work
+before claiming attempts. Paused API retries return durable status without
+consuming attempts. Local initialization respects a pre-migrated private schema.
+CI is configured to use a separate restricted application role, with migrations
+under the administrator; that changed hosted CI has not run yet.
+
+Fresh make-ready on the application candidate passes **314 JavaScript and 139
+Python tests, zero skips**, lint/types, contract generation, Next build, Expo web
+export and deterministic smoke. Contract drift is empty. The
+[PostgreSQL handoff](handoffs/2026-09-24-account-lifecycle-postgres.md) and
+[operations procedure](account-lifecycle-operations.md) bind local evidence and
+remaining activation gates. Local PostgreSQL privileges do not attest to actual
+hosted grants, exposed schemas, scheduler health, credentials or native behavior.
 
 ## Native and release evidence inherited at the base
 

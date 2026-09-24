@@ -13,7 +13,7 @@ credential, scheduler or deployment has been applied by these changes.
 | `GET /api/v1/me/organized-plans` | Current organizer’s plans and participant IDs/display names only; no preferences, links, candidates or provider calls. |
 | `POST /api/v1/plans/{id}/transfer-ownership` | Current organizer supplies `recipient_profile_id` for another existing approved participant. Membership, shared content, votes and plan state remain. Former organizer stays a participant until deleting their account. Returns the same minimal management shape as organized-plans; no Places hydration. |
 | `DELETE /api/v1/plans/{id}` | Exact `{"confirmation":"DELETE"}`; only organizer, only when sole participant. Shared plans must be transferred. |
-| `POST /api/v1/me/deletion` | Exact `{"confirmation":"DELETE"}` requests full deletion. Application data removal and the durable job commit together. Then at most one due Auth attempt runs. Response is `pending` or `completed`, with retry/attention fields. Repetition reads/retries the same durable job. |
+| `POST /api/v1/me/deletion` | Exact `{"confirmation":"DELETE"}` requests full deletion. Application data removal and the durable job commit together. Then at most one due Auth attempt runs. Response is `pending` or `completed`, with retry/attention fields. Repetition reads/retries the same durable job; a disabled API returns its status without attempting Auth removal. |
 | `GET /api/v1/me/deletion` | Authenticated subject can read their status after profile deletion. No writes or provider calls. Missing request is 404 for an approved profile. |
 | `DELETE /api/v1/me` | Existing application-only contract remains; it does not delete Auth. Users who already took that legacy path still need operator Auth completion. |
 
@@ -115,6 +115,11 @@ the platform status/confirmation/recovery screens on the affected release; then 
 client environment variables. Default is disabled. Demo/test uses a deterministic
 network-free remover only when explicitly enabled. Hosted demo is forbidden.
 
+The [worker operations procedure](account-lifecycle-operations.md) defines status,
+scheduling, alert thresholds, support and API-off/worker-on drain configuration.
+`--status` is read-only. An unavailable CLI batch exits 2 before claiming work,
+and a paused API returns existing status without attempting removal.
+
 No scheduler is provisioned here. A stopped runner does not lose requests, but
 pending requests may remain pending after the user session expires. Runner
 availability and support ownership are activation prerequisites, not inferred
@@ -125,9 +130,11 @@ requests; existing jobs remain recoverable and may reach operator attention.
 
 Local tests cover provider outcomes, transfer permissions, plan preservation,
 pending/completed/retry behavior, stale-token/replay denial and lease recovery.
-SQLite cannot prove PostgreSQL advisory locks or production role grants. The
-PostgreSQL-only check is retained for a configured test database; actual race
-scenarios and migration permissions must pass before enabling in a hosted cohort.
+PostgreSQL17.11 local checks now prove both race orderings, competing transfers,
+worker exclusion, fresh/upgrade migrations and restricted runtime/browser roles.
+[Exact evidence](evidence/account-lifecycle-postgres-2026-09-24/README.md) records
+the passing full suite without PostgreSQL skips. These results do not prove
+actual hosted grants or exposed-schema configuration.
 Existing native evidence belongs to its original application SHA and does not
 prove this backend or the new UI flow.
 

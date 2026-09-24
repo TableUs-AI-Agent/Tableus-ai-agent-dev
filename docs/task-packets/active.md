@@ -1,59 +1,49 @@
-# Active packet: account lifecycle clients
+# Active packet: PostgreSQL lifecycle verification and recovery readiness
 
-Owner: Brian, sole developer for the current stage. The owner requested the next
-recommended development objective, parallel to native validation. This packet
-applies only to this branch/worktree; historical two-developer contributions
-remain shared work, not reassigned to Brian.
+Owner: Brian, sole developer at this stage. Historical shared contributions remain
+shared. User requested continuation of the recommended parallel objective.
 
-## Identity and isolation
+## Identity
 
-- Branch: `codex/account-lifecycle-clients`.
-- Worktree: `/Users/brianchei/.codex/worktrees/account-lifecycle-clients/Tableus-ai-agent-dev`.
-- Exact base: `6ed12793253a285b0890d6358ab5f60c551b3615`.
-- [Backend handoff](../handoffs/2026-09-24-account-lifecycle-backend.md) binds the inherited implementation and its checks.
-- Native validation remains in task `01a0c678-55c8-7cc0-a3cb-e3200776906a`,
-  `Prepare native replacement validation`, and its original worktree.
-- Native application remains `8972865893a3f018a064594457dc9cc664f8a61f`.
+- Branch: `codex/account-lifecycle-postgres`.
+- Worktree: `/Users/brianchei/.codex/worktrees/account-lifecycle-postgres/Tableus-ai-agent-dev`.
+- Exact base: `521345eaab6086496c6cc490843342c96fb8f2bb`.
+- Inherited application: `98f082088fe76c2768178302e8b7dca6beec29ef`;
+  [client handoff](../handoffs/2026-09-24-account-lifecycle-clients.md).
+- Native validation remains owned by task `01a0c678-55c8-7cc0-a3cb-e3200776906a`,
+  Prepare native replacement validation, in its existing worktree and budgets.
 
-## Outcome and scope
+## Outcome and acceptance
 
-Web and mobile users can resolve organized plans, request full deletion when
-available, and see truthful pending/completed/attention or unconfirmed recovery
-states after their application profile disappears. Other product routes are
-blocked during deletion. Preserve export and device-local sign-out.
+Prove account deletion/redeem and ownership-transfer concurrency on isolated local
+PostgreSQL; exercise the real migration and runtime/public-role grants. Prepare
+bounded worker scheduling, privacy-safe pending/attention visibility, support retry
+and rollback procedures. Feature remains disabled. Keep exact-source evidence.
 
-Implement platform screens/auth gates, shared domain types and a provider-free
-account-management read/transfer response. Existing legacy DELETE /me stays
-available to old clients but new screens must not silently fall back to it.
-Explicit transfer preserves shared plans; exact DELETE confirmation removes
-sole-participant plans. Exclude concurrent destructive mutations, preserve retry
-payloads/keys and reconcile ambiguous responses before another write.
-
-## Acceptance
-
-Focused deterministic backend authorization/provider-isolation tests and
-platform component/mock-browser checks cover feature unavailable, plan
-resolution, unknown writes, pending/completed/attention, session changes, cold
-restore and stale response exclusion. Review account route gates and private
-cache clearing. Run one make ready and generated contract drift check after
-integration; retain exact source/evidence identities in the final handoff.
-Native/device acceptance is separate and not inferred from Expo web export.
+Root owns local database setup, role/migration proof, integration and acceptance.
+Sol delegates own disjoint concurrency tests and worker CLI/runbook/test files.
+Focused checks then one passing make-ready and contract drift check for executable
+changes. SQLite-only results cannot close PostgreSQL criteria.
 
 ## Gates and exclusions
 
-No native build/run, simulator/emulator use, live provider/Auth calls, real account
-deletion, paid call, secrets, cloud resources, deployment, merge, production
-migration, store submission, cohort activation or shared Notion edit. No native
-retry/budget is reopened. Canceled security scans remain canceled. Keep the full
-feature disabled until PostgreSQL locking/role checks, trusted recovery runner,
-server credential, policy review and affected release acceptance are complete.
+Local deterministic tests and disposable local database setup are in scope. No
+native build/device/simulator operation, live Auth/provider calls, real account
+deletion, cloud resources, credential provisioning/rotation, deployment, merge,
+production migration, stores, beta activation or shared Notion edits. Canceled
+security scans remain canceled; no exhausted allowance resets. Retain local data
+and evidence after stopping the test server; no destructive cleanup.
 
 ## Status
 
-Implementation, root review and local deterministic verification are complete.
-One passing make-ready after correcting obsolete legacy test expectations: 314
-JavaScript / 121 Python, four PostgreSQL-only skips. Seven mocked Chrome checks
-cover account management and hosted-mode session restoration. [Handoff](../handoffs/2026-09-24-account-lifecycle-clients.md)
-binds application `98f082088fe76c2768178302e8b7dca6beec29ef` and exact evidence; no native or hosted acceptance is claimed.
-Next bounded objective: PostgreSQL lifecycle/role verification and concrete
-trusted-runner readiness, preserving disabled feature and all external gates.
+Local objective complete. Application/worker source `eab922ee6b7a21d193514d7008a47806c9e118e3` passes fresh
+make-ready: 139 Python with zero skips and 314 JavaScript, plus all other local
+readiness checks. Fresh/upgrade PostgreSQL migrations and actual runtime/browser
+role operations pass; separate-process synthetic worker proof passes. Server is
+stopped, data retained. [Handoff](../handoffs/2026-09-24-account-lifecycle-postgres.md)
+binds exact evidence, failures/repairs and remaining gates. Full deletion remains
+disabled; no hosted or native acceptance is claimed.
+
+Next independent objective: closed-beta cohort controls (operator-only usage,
+per-actor quotas and lifetime plan limits), in another isolated worktree once
+requested. Activation is a separately gated campaign, not the next implied action.
