@@ -208,8 +208,14 @@ does not cover them. O5 is consumed. [T1 local operator preparation](evidence/na
 now detects startup failure, retains diagnostics and bounds cleanup to proven
 owned collectors. Synthetic/mocked checks and a structural O5 file replay pass;
 its native entry points are disabled. The underlying stall remains unresolved.
-Next is one evidence-based comparison proposal with exact inputs and limits;
-no new native attempt or timeout increase is authorized.
+[P3](evidence/native-replacement-validation-2026-09-21/n1-f1-p3-proposal.md) is now
+prepared and verified for one Settings-only startup baseline on the retained
+iOS 27 target, with no TableUs run. Nine mocked checks, a retained P2 parser
+replay and one fresh full readiness pass (293 JS / 98 backend Python, three
+PostgreSQL skips) pass. The proposed 420-second operation/240-second flow window
+needs explicit approval; no new native attempt or timeout change has executed.
+The owner chose to keep native validation in this task; the active packet is
+condensed with linked history for smaller routine context.
 Accepted native remains
 f94a1d9. Android still requires all iOS gates and fresh 40 GiB capacity;
 N2/live reads and canonical/auth/physical probes remain separately gated.
