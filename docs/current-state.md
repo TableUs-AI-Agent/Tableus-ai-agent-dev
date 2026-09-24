@@ -219,11 +219,19 @@ quit Arc normally and removed four caches (0.980 GiB allocated) in 15.082 second
 developer caches were skipped because the guard falsely matched PodcastsWidget;
 they remain untouched. Independent postcheck found 26.245 GiB free; larger free
 space gains cannot be attributed solely to deletion. All 18 frozen P3 archive
-hashes pass. [P3-R1](evidence/native-replacement-validation-2026-09-21/n1-f1-p3r1-proposal.md)
-proposes one unchanged-operator Settings-only resumption under the same 420-second / 20 GiB
-limits, awaiting approval. No new native operation ran. Unchanged P3 preparation checks
-(nine mocks, parser replay and full readiness 293 JS / 98 Python, three skips)
-are reused. The owner chose to keep incomplete native validation in this task.
+hashes pass. The approved [P3-R1 result](evidence/native-replacement-validation-2026-09-21/n1-f1-p3r1-result.md)
+completed in 104.414s and raw logs prove XCTest HTTP startup. All five command records
+completed, but the screenshot is blank despite the title assertion; a fully visible
+Settings baseline is not accepted. Cleanup independently confirms all three targets
+Shutdown, no matching processes and idle ports; post-stop free space 26.238 GiB.
+[T2 local repair](evidence/native-replacement-validation-2026-09-21/n1-f1-t2-result.md)
+now recognizes the exact debug filenames missed by the frozen observer. 16 focused
+cases, retained-log copy replay and one make-ready pass (293 JavaScript / 98 backend tests,
+three PostgreSQL skips) plus contract check pass. Invoked native operator/evidence
+are unchanged; repaired-helper native compatibility and visual Settings evidence
+remain unverified. No further native run is authorized. Next inspect the visual
+discrepancy offline and prepare stronger evidence criteria. The owner chose to
+keep incomplete native validation in this task.
 Accepted native remains
 f94a1d9. Android still requires all iOS gates and fresh 40 GiB capacity;
 N2/live reads and canonical/auth/physical probes remain separately gated.

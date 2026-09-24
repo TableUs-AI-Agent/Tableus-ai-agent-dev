@@ -1,6 +1,7 @@
 # F1-P3-R1 — one Settings-only resumption
 
-**Prepared, unapproved and unexecuted.** [P3](n1-f1-p3-result.md) stopped at capacity
+**Historical proposal: approved and executed once.** See the [reviewed result](n1-f1-p3r1-result.md);
+original proposal JSON and invoked operator remain unchanged. [P3](n1-f1-p3-result.md) stopped at capacity
 before boot or UI execution. [S2](f1-storage-s2-result.md) left 26.245 GiB
 free at independent postcheck. Request one new invocation of the unchanged frozen
 [P3 operator](n1-f1-p3-proposal.md) to test Settings bootstrap on the retained

@@ -43,6 +43,12 @@ class DiagnosticsTests(unittest.TestCase):
         path.write_text(body)
         return path
 
+    def debug_log(self, relative, body='healthy XCTest output'):
+        path=self.root/'debug-output'/relative
+        path.parent.mkdir(parents=True,exist_ok=True)
+        path.write_text(body)
+        return path
+
     def process(self, pid=88, device=DEVICE, output=None, older=False, ppid=1):
         output=output or self.root/'tmp/maestro_xctestrunner_xcodebuild_output001/Logs/Test/X.xcresult/Staging/1_Test/Diagnostics/simctl_diagnostics'
         started=self.started-dt.timedelta(seconds=10) if older else self.started+dt.timedelta(seconds=2)
@@ -75,6 +81,43 @@ class DiagnosticsTests(unittest.TestCase):
         self.log(body='Session started, no failure yet')
         state=m.observe_invocation(self.root)
         self.assertEqual(state['state'],'no_startup_failure_observed')
+        self.assertFalse(state['acceptance'])
+
+    def test_pinned_maestro_debug_layout_is_observed_without_ui_acceptance(self):
+        runner=self.debug_log('xctest_runner_2026-09-23_232204.log',
+                              'Test Suite maestro-driver-iosUITests.xctest started')
+        device=self.debug_log('create-failure/logs/device-xctest.log',
+                              'XCTest bootstrap still in progress')
+        state=m.observe_invocation(self.root)
+        self.assertEqual(state['state'],'no_startup_failure_observed')
+        self.assertEqual(state['recognized_log_count'],2)
+        self.assertFalse(state['acceptance'])
+        self.assertEqual({x['path'] for x in state['logs']},
+                         {str(runner.relative_to(self.root)),str(device.relative_to(self.root))})
+        for entry in state['logs']:
+            self.assertEqual((self.root/entry['retained_path']).read_bytes(),
+                             (self.root/entry['path']).read_bytes())
+        device.write_text(m.FAILURES[0])
+        failed=m.observe_invocation(self.root)
+        self.assertEqual(failed['state'],'startup_failure_latched')
+        self.assertFalse(failed['acceptance'])
+        device.unlink()
+        self.assertEqual(m.observe_invocation(self.root)['state'],'startup_failure_latched')
+
+    def test_pinned_runner_log_failure_and_nearby_unowned_names(self):
+        self.debug_log('xctest_runner_2026-09-23_232204.log',m.FAILURES[1])
+        state=m.observe_invocation(self.root)
+        self.assertEqual(state['state'],'startup_failure_latched')
+        self.assertEqual(state['failure']['markers'][0]['signature'],m.FAILURES[1])
+
+    def test_nearby_debug_names_and_other_flow_layout_are_not_accepted(self):
+        for relative in ('xctest_runner_latest.log','nested/xctest_runner_2026-09-23_232204.log',
+                         'other-flow/logs/device-xctest.log','create-failure/other/device-xctest.log',
+                         'create-failure/logs/device-xctest.log.old','maestro.log'):
+            self.debug_log(relative,m.FAILURES[0])
+        state=m.observe_invocation(self.root)
+        self.assertEqual(state['state'],'pending_no_recognized_logs')
+        self.assertEqual(state['recognized_log_count'],0)
         self.assertFalse(state['acceptance'])
 
     def test_partial_marker_does_not_pass_or_latch_then_second_signature_does(self):

@@ -143,7 +143,14 @@ def _recognized_logs(reg: dict) -> list[Path]:
                     dirs[:] = []
                     continue
             for name in files:
-                if name == 'scheduling.log' or (name.startswith('Session') and name.endswith('.log')):
+                legacy = name == 'scheduling.log' or (name.startswith('Session') and name.endswith('.log'))
+                debug_rel = parent.relative_to(top)
+                runner = (top == reg['debug'] and not debug_rel.parts and
+                          re.fullmatch(r'xctest_runner_\d{4}-\d{2}-\d{2}_\d{6}\.log', name))
+                device = (top == reg['debug'] and
+                          debug_rel.parts == (Path(reg['flow_path']).stem, 'logs') and
+                          name == 'device-xctest.log')
+                if legacy or runner or device:
                     paths.append(parent / name)
     return paths
 
