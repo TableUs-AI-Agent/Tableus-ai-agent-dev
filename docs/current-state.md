@@ -237,14 +237,14 @@ focused cases, actual P2/P3-R1 replay and full readiness (294 JavaScript/98 back
 three skips) plus contract checks pass. No native action occurred. V1 also found
 P3-R1 launchApp default permission grants for Settings beyond its intended scope;
 individual state changes are unmeasured, and no reset was attempted.
-[P4 preparation](evidence/native-replacement-validation-2026-09-21/n1-f1-p4-proposal.md)
-now freezes one explicit Settings launch followed by an assertion/screenshot-only
-flow, with T2/V1 evidence gates and mandatory root PNG review. Fifteen mocked
-cases, seven synthetic integration checks and source gates pass. Full readiness
-passes (294 JavaScript/98 backend, three skips) after a sandbox loopback-denial
-rerun; no contract drift. No native action occurred. P4 execution needs explicit
-approval with its one-attempt/time/disk/cleanup limits; no TableUs acceptance or
-permission-state guarantee is claimed. Native validation remains in this task.
+The approved [P4 result](evidence/native-replacement-validation-2026-09-21/n1-f1-p4-result.md)
+stopped after 90.817 seconds: the retained target booted, then its one control
+query timed out at 30 seconds (measured 30.169s). No Settings launch or Maestro
+test ran; the revised visual hypothesis remains untested. Independent verification
+confirms all three targets Shutdown, no matching processes and idle ports. Ten
+files are retained; the frozen operator and prior evidence remain unchanged. P4's
+allowance is consumed, with no retry. Next compare control failures offline before
+another concrete native proposal. Native validation remains in this task.
 Accepted native remains
 f94a1d9. Android still requires all iOS gates and fresh 40 GiB capacity;
 N2/live reads and canonical/auth/physical probes remain separately gated.

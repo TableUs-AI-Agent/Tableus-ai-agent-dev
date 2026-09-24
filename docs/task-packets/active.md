@@ -1,4 +1,4 @@
-# Active packet: native replacement validation — P4 prepared, execution gated
+# Active packet: native replacement validation — P4 control timeout, stopped
 
 Native validation remains **incomplete**. P3-R1 reached XCTest HTTP startup and
 completed command metadata, but its blank screenshot leaves visual Settings
@@ -78,30 +78,27 @@ its intended no-explicit-permission-change scope. Before/after individual states
 are unmeasured. Do not reset/revoke from an unknown baseline or claim they were
 unchanged. No new permission operation, native run or cleanup occurred in V1.
 
-[P4](../evidence/native-replacement-validation-2026-09-21/n1-f1-p4-proposal.md)
-is prepared from base `68f1f0fd63a9b456b34bf00766aa0a8ae64d597d` in this same
-branch/worktree. The frozen operator makes one external Settings launch (30s cap),
-then one assertion/screenshot-only Maestro flow. T2/V1 gates bind invocation,
-hierarchy, permission-audit logs and PNG; completion remains `acceptance:false`
-pending Astra visual review. Static initialization review is bounded to inspected
-Java paths; auxiliary XCTest setup remains, and native hierarchy selection is
-unproved. This is not a proven rendering fix.
+[P4](../evidence/native-replacement-validation-2026-09-21/n1-f1-p4-result.md)
+was approved at `80d16853691ffa0d029636dc842462d59493b142` and invoked once
+from frozen manifest `e229f29e108f508ae7bb2e7cbf1f4a25941bed5a7dcf0a6f4d2490471e1131b8`.
+It stopped after 90.817 seconds: one boot, then the one control query timed out
+at its 30-second cap (measured 30.169s). Zero Settings launches or Maestro tests
+ran; no screenshot exists and the explicit-launch/visual hypothesis is untested.
+No host binding/ongoing crash monitor was reached; no crash-free claim is made.
 
-15 mocked cases, seven synthetic file-integration checks and read-only source gates
-pass. Full readiness passes (294 JavaScript/98 backend, three PostgreSQL skips)
-after one sandbox listener-denial rerun; contract drift is absent. Old archives
-remain unchanged. Private bundle: `runtime-preparation-p4/operator` under the
-durable root. Manifest SHA-256:
-`e229f29e108f508ae7bb2e7cbf1f4a25941bed5a7dcf0a6f4d2490471e1131b8`.
+Independent post-stop verification confirms all three retained targets Shutdown,
+no matching processes and idle test ports. Post-stop free space 25.098 GiB is
+historical, not a future preflight. Ten files are retained under
+`runtime-execution-p4`; the frozen operator and prior artifacts remain unchanged.
+No application source or provider/deployment state changed.
 
-**Next: obtain explicit approval for the frozen P4 operation.** No native command
-ran during preparation. Proposed allowance: one boot/control/Settings launch/flow,
-420 seconds total including 60 seconds cleanup, 240 seconds flow including
-30 seconds cleanup, 20 GiB before
-boot/flow, first-failure stop and no retry. Fresh preflight and owned cleanup are
-inside that operation; root PNG review requires no further approval. No TableUs,
-permission reset, data cleanup or downstream stage is included. P4 preparation
-does not reopen prior allowances. S2 remains closed; keep native validation here.
+**P4 is consumed; no retry remains.** Next compare retained control-query successes
+and failures offline and identify a concrete diagnostic hypothesis before any
+new native proposal. Do not increase time limits or repeat the probe by default.
+Unchanged P4 preparation checks remain valid for their exact bytes (15 mocked,
+seven synthetic integration, 294 JavaScript/98 backend, three PostgreSQL skips,
+contract checks). The control failure provides no new visual or TableUs acceptance.
+S2 remains closed; keep native validation in this task as requested.
 
 Astra owns orchestration, review and final acceptance; Sol handles bounded
 implementation and Luna read-only support. Preserve application bytes, existing
@@ -110,7 +107,7 @@ scans remain canceled. Validate according to impact in the development workflow.
 
 ## Preserved gates and budgets
 
-All earlier native allowances, including O5, P3 preflight and P3-R1, are consumed;
+All earlier native allowances, including O5, P3 preflight, P3-R1 and P4, are consumed;
 their retained outcomes remain unchanged. **No native retry remains.** A new task or delegate resets nothing. Any
 new operation needs its exact approved attempt/time/disk/cleanup limits; do not
 silently increase limits, weaken assertions or relabel older evidence.

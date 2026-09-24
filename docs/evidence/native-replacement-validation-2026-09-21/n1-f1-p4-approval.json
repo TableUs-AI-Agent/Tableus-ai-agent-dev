@@ -1,0 +1,22 @@
+{
+  "recorded_at": "2026-09-24T05:09:49.099894+00:00",
+  "amendment": "F1-P4",
+  "approval": "User explicitly replied approve to the concrete P4 proposal in this task.",
+  "proposal_commit": "80d16853691ffa0d029636dc842462d59493b142",
+  "proposal_sha256": "e98a3cffe5e2bee12805d0ba707c3461c84125b04ac9c04fe11b0a3e1d0b2b04",
+  "operator_manifest_sha256": "e229f29e108f508ae7bb2e7cbf1f4a25941bed5a7dcf0a6f4d2490471e1131b8",
+  "scope": "One proposed Settings-only operation; exact target, one boot/control/external Settings launch/Maestro,420s total including60s cleanup,240s flow including30s owned cleanup,30s launch cap,20GiB preflight; first failure stops; no downstream or retry.",
+  "limits": {
+    "total_seconds": 420,
+    "total_cleanup_reserve_seconds": 60,
+    "flow_seconds": 240,
+    "flow_cleanup_reserve_seconds": 30,
+    "control_query_seconds": 30,
+    "external_launch_seconds": 30,
+    "post_launch_reserve_seconds": 5,
+    "postflow_observation_seconds": 5,
+    "host_process_query_seconds": 5,
+    "minimum_free_gib": 20
+  },
+  "source_files_verified": 27
+}
