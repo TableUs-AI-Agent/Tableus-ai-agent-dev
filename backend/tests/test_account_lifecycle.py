@@ -434,6 +434,32 @@ async def test_account_plan_management_is_private_and_provider_free(
 
 
 @pytest.mark.asyncio
+async def test_retry_during_admission_pause_returns_status_without_claim(
+    client: AsyncClient, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    subject = "lifecycle-paused-retry"
+    digest = subject_digest(subject)
+    async with SessionFactory() as session:
+        session.add(AccountDeletion(subject_hash=digest, auth_subject=subject, attempts=2))
+        await session.commit()
+    monkeypatch.setattr(api, "full_deletion_available", lambda: False)
+
+    async def unexpected_claim(_digest: str) -> bool:
+        pytest.fail("Disabled API must not consume an Auth-removal attempt")
+
+    monkeypatch.setattr(api, "process_deletion", unexpected_claim)
+    response = await client.post(
+        "/api/v1/me/deletion", headers=headers(subject), json={"confirmation": "DELETE"}
+    )
+    assert response.status_code == 200
+    assert response.json()["data"]["status"] == "pending"
+    async with SessionFactory() as session:
+        row = await session.get(AccountDeletion, digest)
+        assert row is not None and row.attempts == 2
+        assert row.lease_token is None and row.last_error_code is None
+
+
+@pytest.mark.asyncio
 async def test_postgres_subject_lock_waits_for_exclusive_transaction() -> None:
     if engine.url.get_backend_name() != "postgresql":
         pytest.skip("PostgreSQL advisory locks require a PostgreSQL test database")

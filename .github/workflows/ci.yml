@@ -29,7 +29,9 @@ jobs:
           --health-retries 10
     env:
       ENVIRONMENT: test
-      DATABASE_URL: postgresql+asyncpg://tableus:tableus@127.0.0.1:5432/tableus_test
+      DATABASE_URL: postgresql+asyncpg://tableus_runtime:ci-local-only@127.0.0.1:5432/tableus_test
+      MIGRATION_DATABASE_URL: postgresql+asyncpg://tableus:tableus@127.0.0.1:5432/tableus_test
+      TABLEUS_RUNTIME_DB_ROLE: tableus_runtime
       TABLEUS_AUTH_MODE: demo
       TABLEUS_PROVIDER_MODE: deterministic
       TABLEUS_DEMO_MODE: true
@@ -49,6 +51,22 @@ jobs:
       - run: npm ci
       - run: uv sync --frozen --extra dev
         working-directory: backend
+      - name: Prepare disposable PostgreSQL roles
+        working-directory: backend
+        run: |
+          uv run python - <<'PY'
+          import asyncio
+          import asyncpg
+          async def prepare():
+              connection = await asyncpg.connect("postgresql://tableus:tableus@127.0.0.1:5432/tableus_test")
+              try:
+                  await connection.execute("CREATE ROLE tableus_runtime LOGIN PASSWORD 'ci-local-only' NOSUPERUSER NOCREATEDB NOCREATEROLE NOINHERIT")
+                  await connection.execute("CREATE ROLE anon NOLOGIN NOSUPERUSER")
+                  await connection.execute("CREATE ROLE authenticated NOLOGIN NOSUPERUSER")
+              finally:
+                  await connection.close()
+          asyncio.run(prepare())
+          PY
       - run: uv run alembic upgrade head
         working-directory: backend
       - run: npm run lint

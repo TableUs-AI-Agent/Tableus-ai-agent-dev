@@ -808,7 +808,10 @@ async def request_full_deletion(
     if prior:
         digest = prior.subject_hash
         await session.rollback()
-        await process_deletion(digest)
+        # An admission pause may leave a separate worker draining existing jobs.
+        # Return durable status without consuming an unavailable attempt here.
+        if full_deletion_available():
+            await process_deletion(digest)
         async with SessionFactory() as fresh:
             row = await fresh.get(AccountDeletion, digest)
             if row is None:
