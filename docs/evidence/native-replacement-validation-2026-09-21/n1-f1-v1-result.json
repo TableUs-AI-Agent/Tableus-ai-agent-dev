@@ -1,0 +1,174 @@
+{
+  "schema_version": 1,
+  "phase": "F1-V1",
+  "status": "offline_investigation_and_review_helper_complete_native_validation_incomplete",
+  "base_commit": "517cbecb11531aa5efc8a1943ba655065855ee94",
+  "tooling_commit": "Commit containing this result; exact SHA in task handoff. No native run uses this new helper yet.",
+  "application_sha_unchanged": "8972865893a3f018a064594457dc9cc664f8a61f",
+  "build_operator_sha_unchanged": "16603dd0cf36d27b492e57a02d3c6c438a2563c4",
+  "findings": [
+    "OS/device log records Preferences PID63600 scene foreground and running-active-Visible; process launch succeeded at this layer.",
+    "P3-R1 assertion interval contains completed SpringBoard hierarchy snapshot, with no recorded Preferences hierarchy or matched Settings node. This does not prove which node satisfied the assertion.",
+    "Root inspected both retained screenshots: P3-R1 is blank except system bars; historical P2 displays Settings, General and Accessibility. P2 records Preferences hierarchy during its assertion.",
+    "P2 and P3 differ in OS/device/time/workload; comparison is evidence-quality calibration, not a controlled cause experiment or transfer of acceptance.",
+    "P3-R1 launchApp log records successful default all=allow permission helper operations, including simctl location-always grant for com.apple.Preferences. This exceeded the intended no-permission/settings-change scope.",
+    "Before/after permission state was not captured. Individual permission state changes are unmeasured; no reset/revoke attempted.",
+    "No retained log explicitly proves blank rendering cause. Stale XCTest target, a Settings-labelled SpringBoard node or delayed rendering remain hypotheses, not findings."
+  ],
+  "official_references": {
+    "selectors": "https://docs.maestro.dev/reference/selectors/core-selectors",
+    "launch_permissions": "https://docs.maestro.dev/reference/commands-available/launchapp",
+    "animation_wait": "https://docs.maestro.dev/reference/commands-available/waitforanimationtoend"
+  },
+  "source_evidence_sha256": {
+    "/Users/brianchei/repos/Tableus-ai-agent-dev/.artifacts/mobile/8972865893a3f018a064594457dc9cc664f8a61f/native-validation-f1/test-ios-settings-platform-probe-03/maestro-results/settings-1-a0to81d0/debug-output/maestro.log": "d4a0fe0295049442861d1e016a4f11b45182ee39f2965f3152f0ab75105e02c9",
+    "/Users/brianchei/repos/Tableus-ai-agent-dev/.artifacts/mobile/8972865893a3f018a064594457dc9cc664f8a61f/native-validation-f1/test-ios-settings-platform-probe-03/maestro-results/settings-1-a0to81d0/debug-output/settings-1/commands.json": "c9650c251153d8fdeecc78a7fe0f19b71e9a78ede5114aad33d62a4eb8200e64",
+    "/Users/brianchei/repos/Tableus-ai-agent-dev/.artifacts/mobile/8972865893a3f018a064594457dc9cc664f8a61f/native-validation-f1/test-ios-settings-platform-probe-03/maestro-results/settings-1-a0to81d0/debug-output/settings-1/logs/device-xctest.log": "2c093c35aea0b57c7ee8d49a6117f4380e8a0a5d1cad702d5ab86b523be005f0",
+    "/Users/brianchei/repos/Tableus-ai-agent-dev/.artifacts/mobile/8972865893a3f018a064594457dc9cc664f8a61f/native-validation-f1/test-ios-settings-platform-probe-03/maestro-results/settings-1-a0to81d0/debug-output/settings-1/logs/device-simulator.log": "51169a45f88f6617d36bccc1150ef521eca962223d45696b11b7ddb34733dc07",
+    "/Users/brianchei/repos/Tableus-ai-agent-dev/.artifacts/mobile/8972865893a3f018a064594457dc9cc664f8a61f/native-validation-f1/test-ios-settings-platform-probe-03/maestro-results/settings-1-a0to81d0/debug-output/settings-1/takeScreenshot/settings-probe-1.png": "eec3686eee7425d433241a398016a9b52778fe5fb0775aaa3077a9bcda90b6ed",
+    "/Users/brianchei/repos/Tableus-ai-agent-dev/.artifacts/mobile/8972865893a3f018a064594457dc9cc664f8a61f/native-validation-f1/test-ios-settings-platform-probe-02/maestro-results/settings-1-zlza_yyf/2026-09-22_233550/settings-1/commands.json": "e8b9a7030faf6c4a0f07a32e8c0eb915c32924b2b9f00edbff615aa296c2ce56",
+    "/Users/brianchei/repos/Tableus-ai-agent-dev/.artifacts/mobile/8972865893a3f018a064594457dc9cc664f8a61f/native-validation-f1/test-ios-settings-platform-probe-02/maestro-results/settings-1-zlza_yyf/2026-09-22_233550/xctest_runner_2026-09-22_233555.log": "15094b544f36d1102f2031da1d70a8e744b071b0c9ab001d489301a76fe397f0",
+    "/Users/brianchei/repos/Tableus-ai-agent-dev/.artifacts/mobile/8972865893a3f018a064594457dc9cc664f8a61f/native-validation-f1/test-ios-settings-platform-probe-02/maestro-results/settings-1-zlza_yyf/2026-09-22_233550/settings-1/takeScreenshot/settings-probe-1.png": "c025f4010f0b992c56f1202059228e0dd79d94b30dd3644aa17f86ef198a7d9d"
+  },
+  "source_files": {
+    "scripts/maestro_ui_evidence.py": "f190289ad6456ffc80894783793dbc063e0ee1381d1efbd4f3bb476c8af6b25f",
+    "scripts/maestro_ui_evidence_test.py": "6ae9d034977a680b3d626556f04b51b11df5096fbad06164b228b36a77ff6206",
+    "scripts/maestro-ui-evidence.test.mjs": "4c2913b141dbb658908c807ee83749b7403f42903edb32bce6d505581d0bb909"
+  },
+  "checks": {
+    "focused_python_cases_passed": 7,
+    "node_wrapper_passed": 1,
+    "root_replay": {
+      "status": "passed",
+      "native_actions": 0,
+      "sources_unchanged": true,
+      "blocked_events": [],
+      "cases": {
+        "p2": {
+          "command_path": "/Users/brianchei/repos/Tableus-ai-agent-dev/.artifacts/mobile/8972865893a3f018a064594457dc9cc664f8a61f/native-validation-f1/test-ios-settings-platform-probe-02/maestro-results/settings-1-zlza_yyf/2026-09-22_233550/settings-1/commands.json",
+          "log_path": "/Users/brianchei/repos/Tableus-ai-agent-dev/.artifacts/mobile/8972865893a3f018a064594457dc9cc664f8a61f/native-validation-f1/test-ios-settings-platform-probe-02/maestro-results/settings-1-zlza_yyf/2026-09-22_233550/xctest_runner_2026-09-22_233555.log",
+          "commands_sha256": "e8b9a7030faf6c4a0f07a32e8c0eb915c32924b2b9f00edbff615aa296c2ce56",
+          "log_sha256": "15094b544f36d1102f2031da1d70a8e744b071b0c9ab001d489301a76fe397f0",
+          "result": {
+            "acceptance": false,
+            "disposition": "requires_visual_review",
+            "reasons": [
+              "Preferences hierarchy work lies within the assertion, but command and log evidence do not prove rendered UI"
+            ],
+            "preferences_snapshot": {
+              "app": "com.apple.Preferences",
+              "start_line": 74,
+              "done_line": 88,
+              "start_ms": 1790138176728,
+              "done_ms": 1790138177270
+            },
+            "assertion_start_ms": 1790138169462,
+            "assertion_end_ms": 1790138177492,
+            "screenshot_command_ms": 1790138177496
+          }
+        },
+        "p3r1": {
+          "command_path": "/Users/brianchei/repos/Tableus-ai-agent-dev/.artifacts/mobile/8972865893a3f018a064594457dc9cc664f8a61f/native-validation-f1/test-ios-settings-platform-probe-03/maestro-results/settings-1-a0to81d0/debug-output/settings-1/commands.json",
+          "log_path": "/Users/brianchei/repos/Tableus-ai-agent-dev/.artifacts/mobile/8972865893a3f018a064594457dc9cc664f8a61f/native-validation-f1/test-ios-settings-platform-probe-03/maestro-results/settings-1-a0to81d0/debug-output/settings-1/logs/device-xctest.log",
+          "commands_sha256": "c9650c251153d8fdeecc78a7fe0f19b71e9a78ede5114aad33d62a4eb8200e64",
+          "log_sha256": "2c093c35aea0b57c7ee8d49a6117f4380e8a0a5d1cad702d5ab86b523be005f0",
+          "result": {
+            "acceptance": false,
+            "disposition": "insufficient_evidence",
+            "reasons": [
+              "no completed Preferences hierarchy snapshot lies within Settings assertion; this does not prove launch or matching failed"
+            ],
+            "assertion_start_ms": 1790223770987,
+            "assertion_end_ms": 1790223772424,
+            "screenshot_command_ms": 1790223772425
+          }
+        }
+      },
+      "meaning": "HistoricalP2 supports hierarchy evidence and requires separatevisualreview. P3-R1 lacks expected-app hierarchy evidence. No image result or acceptance inferred by analyzer.",
+      "helper_sha256": "f190289ad6456ffc80894783793dbc063e0ee1381d1efbd4f3bb476c8af6b25f"
+    },
+    "make_ready": {
+      "started_at": "2026-09-24T04:42:12.391886+00:00",
+      "command": [
+        "make",
+        "ready"
+      ],
+      "environment_keys": [
+        "CI",
+        "DATABASE_URL",
+        "EAS_DISABLE_UPDATE_CHECK",
+        "ENVIRONMENT",
+        "EXPO_NO_TELEMETRY",
+        "GEMINI_API_KEY",
+        "GOOGLE_MAPS_API_KEY",
+        "HOME",
+        "LANG",
+        "LOGNAME",
+        "MIGRATION_DATABASE_URL",
+        "NEXT_TELEMETRY_DISABLED",
+        "PATH",
+        "POSTHOG_KEY",
+        "PYTHONDONTWRITEBYTECODE",
+        "SENTRY_DSN",
+        "SUPABASE_URL",
+        "TABLEUS_AUTH_MODE",
+        "TABLEUS_DEMO_MODE",
+        "TABLEUS_PROVIDER_MODE",
+        "TABLEUS_TELEMETRY_E2E",
+        "TABLEUS_TELEMETRY_MODE",
+        "TMPDIR",
+        "USER"
+      ],
+      "native_execution": false,
+      "provider_mode": "deterministic",
+      "exit_code": 0,
+      "status": "passed",
+      "elapsed_seconds": 77.105,
+      "finished_at": "2026-09-24T04:43:29.498450+00:00"
+    },
+    "javascript_tap": 226,
+    "javascript_jest": 68,
+    "javascript_total": 294,
+    "backend_python_passed": 98,
+    "backend_postgresql_skipped": 3,
+    "contract": "npm run contract:check output retained; independent git diff --exit-code schema/OpenAPI passed"
+  },
+  "private_archive": "/Users/brianchei/repos/Tableus-ai-agent-dev/.artifacts/mobile/8972865893a3f018a064594457dc9cc664f8a61f/native-validation-f1/runtime-preparation-v1",
+  "private_archive_index_sha256": "5880ed4052387a15fdc9363c34b4bb51b39e31f609e39846cf27512678f10217",
+  "private_archive_files": 14,
+  "native_actions": 0,
+  "deletions": 0,
+  "original_native_files_verified_unchanged": 45,
+  "proposed_future_protocol": {
+    "status": "design_only_not_execution_approval",
+    "objective": "One Settings startup and visual-evidence baseline on retained iOS27 target, with explicit launch and no deliberate permission configuration.",
+    "flow_candidate": "appId: com.apple.Preferences\n---\n- extendedWaitUntil:\n    visible: Settings\n    timeout: 5000\n- takeScreenshot: settings-probe-1\n",
+    "proposed_changes": [
+      "Review and pin a single externally supervised simctl launch of com.apple.Preferences before an assertion/screenshot-only Maestro flow. Do not issue launchApp, setPermissions, clearState or clearKeychain within Maestro.",
+      "Use T2 registered debug-log discovery and V1 pure command/hierarchy analyzer in a newly derived operator; do not edit the frozen P3 operator.",
+      "Bind exact app/device/runtime/tool/input hashes and command/log/screenshot artifacts to the new invocation. Bound log inputs before parsing; preserve original timestamps and unmodified raw logs.",
+      "Reject missing or malformed evidence, unsupported command sequences, failed commands, and absent completed Preferences hierarchy within the assertion window. A completed title selector alone cannot pass.",
+      "Report completion as pending visual review, not passed. Root must inspect the bound PNG and confirm Settings title plus substantive Settings content such as General and Accessibility, without blank/transition-only output. No user confirmation is needed for routine root visual review.",
+      "Retain and reconcile explicit permission operations from logs; never claim old or new permission state unchanged without before/after evidence. Do not reset/revoke historical grants from an unknown baseline.",
+      "Keep prior 420s total including60s cleanup, 240s flow including30s owned cleanup, 30scontrol/5shost caps, 20GiB beforeboot/flow, oneboot/control/flow and firstfailure stop. Budget an external launch inside existing work limit; no automatic retry or longer timeout.",
+      "No TableUs install/launch, newdevice, cleanup, live provider, downstream flow or deployment. Existing native approvals remain consumed."
+    ],
+    "remaining_before_approval_request": [
+      "Finish static review of the assertion-only driver initialization/permission path; permissions:{} is not a proven no-op.",
+      "Implement, mock-test and freeze a new bounded operator/launch plan with explicit launch cap and cleanup ownership; no executable native operator is prepared by this design.",
+      "Verify the exact operator/input archive and fresh capacity/device-state preflight requirements, then present one concrete approval request."
+    ],
+    "unknowns": [
+      "Why Preferences rendered blank is unresolved; Settings OS scene foreground and XCTest target hierarchy differed in retained logs.",
+      "The matched accessibility node is not retained; home-screen label/stale target/delayed rendering are hypotheses.",
+      "Changing launch ordering is a proposed diagnostic design, not a validated fix or cross-OS acceptance transfer."
+    ]
+  },
+  "limitations": [
+    "No matched accessibility node or pixel-render cause was retained; blank screenshot cause remains unresolved.",
+    "P2 is an older OS/device baseline, used only to calibrate evidence checks.",
+    "Analyzer requires already bound command/log inputs; it cannot authenticate a device, validate image pixels, restore permissions or authorize a probe. It always returns acceptancefalse.",
+    "Historical permission operations are recorded; prior and resulting individual permission states are unknown. No rollback attempted.",
+    "No new executable native operator or native execution approval is prepared by the protocol design."
+  ]
+}

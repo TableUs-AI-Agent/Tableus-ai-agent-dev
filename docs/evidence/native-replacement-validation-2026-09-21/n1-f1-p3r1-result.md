@@ -57,3 +57,9 @@ The one-operation allowance is consumed. No automatic retry or downstream run is
 authorized. Resolve the visual evidence discrepancy and prepare stronger visual
 acceptance before proposing another bounded native operation. Original refresh,
 O1/O2/O5/AppHang and downstream application gates remain unresolved.
+
+Subsequent [V1 offline review](n1-f1-v1-result.md) confirms Preferences scene
+foreground but no retained Preferences hierarchy during the assertion, and
+documents default permission-grant operations in the launch step beyond its
+intended unchanged-settings scope. Individual before/after permission states are
+unmeasured; no reset was attempted. Original raw records remain unchanged.

@@ -229,9 +229,16 @@ now recognizes the exact debug filenames missed by the frozen observer. 16 focus
 cases, retained-log copy replay and one make-ready pass (293 JavaScript / 98 backend tests,
 three PostgreSQL skips) plus contract check pass. Invoked native operator/evidence
 are unchanged; repaired-helper native compatibility and visual Settings evidence
-remain unverified. No further native run is authorized. Next inspect the visual
-discrepancy offline and prepare stronger evidence criteria. The owner chose to
-keep incomplete native validation in this task.
+remain unverified. [V1 offline review](evidence/native-replacement-validation-2026-09-21/n1-f1-v1-result.md)
+confirms Preferences scene foreground but only nearby SpringBoard hierarchy;
+matched node and blank-render cause remain unknown. A new pure review helper
+requires in-window Preferences hierarchy and separate screenshot review. Seven
+focused cases, actual P2/P3-R1 replay and full readiness (294 JavaScript/98 backend,
+three skips) plus contract checks pass. No native action occurred. V1 also found
+P3-R1 launchApp default permission grants for Settings beyond its intended scope;
+individual state changes are unmeasured, and no reset was attempted. Next derive
+and freeze an assertion-only operator with explicit launch and the new review
+gate before requesting native approval. Native validation remains in this task.
 Accepted native remains
 f94a1d9. Android still requires all iOS gates and fresh 40 GiB capacity;
 N2/live reads and canonical/auth/physical probes remain separately gated.

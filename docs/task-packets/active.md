@@ -1,4 +1,4 @@
-# Active packet: native replacement validation — P3-R1 reviewed; T2 locally complete
+# Active packet: native replacement validation — V1 offline review complete
 
 Native validation remains **incomplete**. P3-R1 reached XCTest HTTP startup and
 completed command metadata, but its blank screenshot leaves visual Settings
@@ -65,13 +65,26 @@ frozen observer. 16 focused cases, copied-log replay and one make-ready pass
 mean `acceptance:false`. The P3 operator/output remain immutable; no replacement
 native operator is frozen. New tooling source is the commit containing T2 evidence.
 
-Next investigate the visual discrepancy using retained command/device logs and
-prepare stronger visual evidence criteria locally. Do not launch native tools,
-weaken assertions, overwrite older results or infer the earlier stalls are fixed.
-Any future native operation needs a concrete reviewed operator/proposal and approval.
-S2 cleanup is closed: four Arc caches removed, three developer caches skipped due
-to the PodcastsWidget matcher false positive; no further cleanup is authorized.
-Native validation stays in this task as the owner requested.
+[V1 offline review](../evidence/native-replacement-validation-2026-09-21/n1-f1-v1-result.md)
+confirms Preferences PID 63600 scene foreground but only nearby SpringBoard
+hierarchy evidence; matched node and blank-render cause remain unknown. Historical
+P2 has a Preferences hierarchy and visible Settings content. New pure review helper
+rejects P3-R1 as insufficient, sends P2 to visual review, and never grants acceptance.
+Seven focused cases, actual-log replays and one make-ready pass (294 JavaScript /
+98 backend, three skips) plus contract checks pass. Application/native operator unchanged.
+
+V1 also found P3-R1 launchApp default permission grants for Settings, exceeding
+its intended no-explicit-permission-change scope. Before/after individual states
+are unmeasured. Do not reset/revoke from an unknown baseline or claim they were
+unchanged. No new permission operation, native run or cleanup occurred in V1.
+
+Next prepare a new operator: review assertion-only initialization, replace Maestro
+launchApp with one explicitly bounded external Preferences launch, integrate T2
+and V1, preserve all budgets, mock-test and freeze exact inputs/cleanup ownership.
+Then present one concrete native approval request. Design is recorded; no new
+native executable operator or native approval exists. Require root review of the
+hashed PNG with visible Settings title and substantive content before acceptance.
+S2 cleanup remains closed. Native validation stays in this task as requested.
 
 Astra owns orchestration, review and final acceptance; Sol handles bounded
 implementation and Luna read-only support. Preserve application bytes, existing
@@ -80,8 +93,8 @@ scans remain canceled. Validate according to impact in the development workflow.
 
 ## Preserved gates and budgets
 
-All earlier native allowances, including O5, P3 preflight and P3-R1, are consumed at their first-failure
-stops. **No native retry remains.** A new task or delegate resets nothing. Any
+All earlier native allowances, including O5, P3 preflight and P3-R1, are consumed;
+their retained outcomes remain unchanged. **No native retry remains.** A new task or delegate resets nothing. Any
 new operation needs its exact approved attempt/time/disk/cleanup limits; do not
 silently increase limits, weaken assertions or relabel older evidence.
 
