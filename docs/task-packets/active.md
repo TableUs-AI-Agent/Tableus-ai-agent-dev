@@ -1,65 +1,59 @@
-# Active packet: account lifecycle backend
+# Active packet: account lifecycle clients
 
-Owner: Brian, sole developer for the current stage. User approved parallel
-implementation and both product recommendations on 2026-09-24. This packet
-applies only to this branch/worktree. Native validation remains in task
-`01a0c678-55c8-7cc0-a3cb-e3200776906a` and its original worktree.
+Owner: Brian, sole developer for the current stage. The owner requested the next
+recommended development objective, parallel to native validation. This packet
+applies only to this branch/worktree; historical two-developer contributions
+remain shared work, not reassigned to Brian.
 
 ## Identity and isolation
 
-- Branch: `codex/account-lifecycle-backend`.
-- Worktree: `/Users/brianchei/.codex/worktrees/account-lifecycle-backend/Tableus-ai-agent-dev`.
-- Exact base: `bcc9e52d8c501dba9f51e881a7350c0959301255`, C2 preparation, not native acceptance.
-- Native application remains `8972865893a3f018a064594457dc9cc664f8a61f` in its own task.
-- [Inherited native packet](../history/2026-09-24/native-packet-at-lifecycle-base.md)
-  preserves the base's evidence and exhausted allowances; it authorizes no work here.
+- Branch: `codex/account-lifecycle-clients`.
+- Worktree: `/Users/brianchei/.codex/worktrees/account-lifecycle-clients/Tableus-ai-agent-dev`.
+- Exact base: `6ed12793253a285b0890d6358ab5f60c551b3615`.
+- [Backend handoff](../handoffs/2026-09-24-account-lifecycle-backend.md) binds the inherited implementation and its checks.
+- Native validation remains in task `01a0c678-55c8-7cc0-a3cb-e3200776906a`,
+  `Prepare native replacement validation`, and its original worktree.
+- Native application remains `8972865893a3f018a064594457dc9cc664f8a61f`.
 
-The owner explicitly authorized this exception to sequential roadmap execution.
-The only active packet in this worktree is this file. Do not change the native
-branch, candidate, packet, tools, simulators, sessions or shared staging state.
-Later integration needs explicit merge approval and candidate-specific acceptance.
+## Outcome and scope
 
-## Outcome
+Web and mobile users can resolve organized plans, request full deletion when
+available, and see truthful pending/completed/attention or unconfirmed recovery
+states after their application profile disappears. Other product routes are
+blocked during deletion. Preserve export and device-local sign-out.
 
-Backend callers can preserve shared plans by transferring ownership to an
-existing approved participant, explicitly remove a sole-participant plan, and
-request full account deletion with durable, truthful pending/completed status.
-Deletion must recover after interruption and cannot be undone by a stale JWT.
+Implement platform screens/auth gates, shared domain types and a provider-free
+account-management read/transfer response. Existing legacy DELETE /me stays
+available to old clients but new screens must not silently fall back to it.
+Explicit transfer preserves shared plans; exact DELETE confirmation removes
+sole-participant plans. Exclude concurrent destructive mutations, preserve retry
+payloads/keys and reconcile ambiguous responses before another write.
 
-## Scope and accepted choices
+## Acceptance
 
-- Backend API, schemas, migration, trusted Auth adapter and finite recovery runner.
-- Preserve current application-only deletion contract for existing clients.
-- Separate opt-in full deletion endpoint; no client-side privileged credentials.
-- Durable retries/leases, operator attention after bounded retries or rejection.
-- Isolated local deterministic tests and generated API contracts.
-- Web/mobile UI rollout, retention durations and broad release work follow separately.
+Focused deterministic backend authorization/provider-isolation tests and
+platform component/mock-browser checks cover feature unavailable, plan
+resolution, unknown writes, pending/completed/attention, session changes, cold
+restore and stale response exclusion. Review account route gates and private
+cache clearing. Run one make ready and generated contract drift check after
+integration; retain exact source/evidence identities in the final handoff.
+Native/device acceptance is separate and not inferred from Expo web export.
 
-## Acceptance and handoff
+## Gates and exclusions
 
-Verify organizer authorization, valid recipients, shared-plan preservation,
-sole-plan removal, deletion/redeem races, atomic app/job writes, provider
-failure/already-missing handling, lease ownership, restart-safe recovery and
-stale-session denial. Review private-schema grants and migration behavior.
-Run focused checks and one `make ready`, plus generated contract drift check.
-Record PostgreSQL-only gaps explicitly if a local service is unavailable.
-Update current-state/roadmap/decisions with implemented truth; finish with an
-exact commit, observed evidence, residual risks and one next bounded objective.
-
-## Gates
-
-No real account deletion, live provider/Auth calls, native build/run, paid call,
-cloud resource, secret provisioning, deployment, merge, production migration,
-store submission, cohort activation or shared Notion edit is authorized.
-No inherited native retry or budget is reopened. Canceled security scans remain
-canceled. Preserve all other worktrees and artifacts.
+No native build/run, simulator/emulator use, live provider/Auth calls, real account
+deletion, paid call, secrets, cloud resources, deployment, merge, production
+migration, store submission, cohort activation or shared Notion edit. No native
+retry/budget is reopened. Canceled security scans remain canceled. Keep the full
+feature disabled until PostgreSQL locking/role checks, trusted recovery runner,
+server credential, policy review and affected release acceptance are complete.
 
 ## Status
 
-Implementation and local deterministic verification complete. Application commit
-`5f8569e5b16088f64f358c64056e6dce4b191901`; [handoff](../handoffs/2026-09-24-account-lifecycle-backend.md)
-records exact evidence, remaining gates and the next bounded objective. One `make ready` passed (296 JavaScript / 120 Python,
-four PostgreSQL-only skips), with fresh SQLite migration and two-process durable
-recovery evidence. No live behavior or release acceptance is claimed. Next bounded
-objective: web/mobile account-management screens against this backend contract,
-with deterministic UI checks; native validation remains in its existing task.
+Implementation, root review and local deterministic verification are complete.
+One passing make-ready after correcting obsolete legacy test expectations: 314
+JavaScript / 121 Python, four PostgreSQL-only skips. Seven mocked Chrome checks
+cover account management and hosted-mode session restoration. The final handoff
+binds exact source and evidence; no native or hosted acceptance is claimed.
+Next bounded objective: PostgreSQL lifecycle/role verification and concrete
+trusted-runner readiness, preserving disabled feature and all external gates.

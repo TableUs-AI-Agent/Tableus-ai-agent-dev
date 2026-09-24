@@ -673,6 +673,23 @@
         "title": "Envelope[LocationOut]",
         "type": "object"
       },
+      "Envelope_ManagedPlanOut_": {
+        "properties": {
+          "data": {
+            "$ref": "#/components/schemas/ManagedPlanOut"
+          },
+          "meta": {
+            "additionalProperties": true,
+            "title": "Meta",
+            "type": "object"
+          }
+        },
+        "required": [
+          "data"
+        ],
+        "title": "Envelope[ManagedPlanOut]",
+        "type": "object"
+      },
       "Envelope_PlanCreated_": {
         "properties": {
           "data": {
@@ -811,6 +828,27 @@
           "data"
         ],
         "title": "Envelope[list[ConnectionOut]]",
+        "type": "object"
+      },
+      "Envelope_list_ManagedPlanOut__": {
+        "properties": {
+          "data": {
+            "items": {
+              "$ref": "#/components/schemas/ManagedPlanOut"
+            },
+            "title": "Data",
+            "type": "array"
+          },
+          "meta": {
+            "additionalProperties": true,
+            "title": "Meta",
+            "type": "object"
+          }
+        },
+        "required": [
+          "data"
+        ],
+        "title": "Envelope[list[ManagedPlanOut]]",
         "type": "object"
       },
       "Envelope_list_PlaceOut__": {
@@ -1135,6 +1173,71 @@
           "query"
         ],
         "title": "LocationResolveRequest",
+        "type": "object"
+      },
+      "ManagedPlanOut": {
+        "properties": {
+          "id": {
+            "title": "Id",
+            "type": "string"
+          },
+          "organizer_id": {
+            "title": "Organizer Id",
+            "type": "string"
+          },
+          "participants": {
+            "items": {
+              "$ref": "#/components/schemas/ManagedPlanParticipantOut"
+            },
+            "title": "Participants",
+            "type": "array"
+          },
+          "title": {
+            "title": "Title",
+            "type": "string"
+          },
+          "updated_at": {
+            "format": "date-time",
+            "title": "Updated At",
+            "type": "string"
+          },
+          "viewer_is_organizer": {
+            "title": "Viewer Is Organizer",
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "id",
+          "title",
+          "organizer_id",
+          "viewer_is_organizer",
+          "updated_at",
+          "participants"
+        ],
+        "title": "ManagedPlanOut",
+        "type": "object"
+      },
+      "ManagedPlanParticipantOut": {
+        "properties": {
+          "display_name": {
+            "title": "Display Name",
+            "type": "string"
+          },
+          "is_organizer": {
+            "title": "Is Organizer",
+            "type": "boolean"
+          },
+          "profile_id": {
+            "title": "Profile Id",
+            "type": "string"
+          }
+        },
+        "required": [
+          "profile_id",
+          "display_name",
+          "is_organizer"
+        ],
+        "title": "ManagedPlanParticipantOut",
         "type": "object"
       },
       "NearbyRequest": {
@@ -3543,6 +3646,71 @@
         ]
       }
     },
+    "/api/v1/me/organized-plans": {
+      "get": {
+        "operationId": "organized_plans_api_v1_me_organized_plans_get",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "authorization",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Authorization"
+            }
+          },
+          {
+            "in": "header",
+            "name": "x-demo-user-id",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "X-Demo-User-Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_list_ManagedPlanOut__"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Organized Plans",
+        "tags": [
+          "v1"
+        ]
+      }
+    },
     "/api/v1/plans": {
       "get": {
         "operationId": "list_plans_api_v1_plans_get",
@@ -4456,7 +4624,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Envelope_PlanOut_"
+                  "$ref": "#/components/schemas/Envelope_ManagedPlanOut_"
                 }
               }
             },

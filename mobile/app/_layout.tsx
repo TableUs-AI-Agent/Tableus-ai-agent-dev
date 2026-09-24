@@ -32,10 +32,12 @@ function RootNavigator() {
       <ConnectivityBanner />
       <Stack screenOptions={{ headerBackButtonDisplayMode: "minimal", contentStyle: { backgroundColor: colors.background } }}>
         <Stack.Screen name="index" options={{ headerShown: false }} />
-        <Stack.Protected guard={!auth.approved}>
+        <Stack.Protected guard={!auth.approved && auth.phase !== "deletion"}>
           <Stack.Screen name="auth" options={{ title: "Invite access", presentation: "modal" }} />
         </Stack.Protected>
-        <Stack.Screen name="join/[id]" options={{ title: "Join plan" }} />
+        <Stack.Protected guard={auth.phase !== "deletion"}>
+          <Stack.Screen name="join/[id]" options={{ title: "Join plan" }} />
+        </Stack.Protected>
         <Stack.Screen name="e2e/identity" options={{ title: "Local E2E identity" }} />
         <Stack.Screen name="e2e/connectivity" options={{ title: "Local connectivity" }} />
         <Stack.Screen name="e2e/auth" options={{ title: "Session check" }} />
@@ -45,8 +47,10 @@ function RootNavigator() {
         <Stack.Protected guard={auth.approved}>
           <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
           <Stack.Screen name="plans/[id]" options={{ title: "Dinner plan" }} />
-          <Stack.Screen name="account" options={{ title: "Account and data" }} />
           <Stack.Screen name="e2e/account" options={{ title: "Account check" }} />
+        </Stack.Protected>
+        <Stack.Protected guard={auth.approved || auth.phase === "deletion"}>
+          <Stack.Screen name="account" options={{ title: "Account and data" }} />
         </Stack.Protected>
       </Stack>
     </View>

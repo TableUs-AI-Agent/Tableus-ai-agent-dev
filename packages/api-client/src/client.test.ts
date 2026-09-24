@@ -10,6 +10,85 @@ function deferred<T>() {
   return { promise, resolve };
 }
 
+const subjectToken = (subject: string) => `header.${Buffer.from(JSON.stringify({ sub: subject })).toString("base64url")}.signature`;
+const isSubjectChanged = (error: unknown) => error instanceof ApiError && error.code === "subject_changed";
+
+test("subject binding works without browser base64 globals and with UTF-8 claims", async (context) => {
+  context.mock.method(globalThis, "atob", () => { throw new Error("Browser global unavailable"); });
+  const token = `header.${Buffer.from(JSON.stringify({ sub: "actor-a", name: "한글 🍽" })).toString("base64url")}.signature`;
+  const client = createApiClient({
+    baseUrl: "https://example.test", getAccessToken: async () => token,
+    fetchImpl: async () => Response.json({ data: "safe" }),
+  });
+  assert.equal(await client.get("/api/v1/me/deletion", { expectedSubject: "actor-a" }), "safe");
+});
+
+test("sensitive requests bind initial credentials to the confirming subject", async () => {
+  const credential = deferred<string | null>();
+  let calls = 0;
+  const client = createApiClient({
+    baseUrl: "https://example.test", getAccessToken: () => credential.promise,
+    fetchImpl: async () => { calls += 1; return Response.json({ data: {} }); },
+  });
+  const request = client.post("/api/v1/me/deletion", { confirmation: "DELETE" }, { expectedSubject: "actor-a" });
+  credential.resolve(subjectToken("actor-b"));
+  await assert.rejects(request, isSubjectChanged);
+  assert.equal(calls, 0);
+});
+
+test("401 refresh cannot replay deletion under a different account", async () => {
+  let calls = 0;
+  const client = createApiClient({
+    baseUrl: "https://example.test",
+    getAccessToken: async () => subjectToken("actor-a"),
+    refreshAccessToken: async () => subjectToken("actor-b"),
+    fetchImpl: async () => { calls += 1; return Response.json({}, { status: 401 }); },
+  });
+  await assert.rejects(client.post("/api/v1/me/deletion", { confirmation: "DELETE" }, { expectedSubject: "actor-a" }), isSubjectChanged);
+  assert.equal(calls, 1);
+});
+
+test("same-subject refresh preserves the confirmed payload and retry key", async () => {
+  const requests: RequestInit[] = [];
+  const client = createApiClient({
+    baseUrl: "https://example.test",
+    getAccessToken: async () => subjectToken("actor-a"),
+    refreshAccessToken: async () => subjectToken("actor-a"),
+    fetchImpl: async (_url, init) => {
+      requests.push(init!);
+      return requests.length === 1 ? Response.json({}, { status: 401 }) : Response.json({ data: { status: "pending" } });
+    },
+  });
+  assert.deepEqual(await client.post("/api/v1/me/deletion", { confirmation: "DELETE" }, { expectedSubject: "actor-a", idempotencyKey: "confirmed-attempt" }), { status: "pending" });
+  assert.equal(requests.length, 2);
+  for (const request of requests) {
+    assert.equal(new Headers(request.headers).get("Idempotency-Key"), "confirmed-attempt");
+    assert.equal(request.body, '{"confirmation":"DELETE"}');
+  }
+});
+
+test("subject-bound reads reject missing or malformed credentials and changed demo actors", async () => {
+  for (const token of [null, "malformed", "x.e30.x"]) {
+    const client = createApiClient({
+      baseUrl: "https://example.test", getAccessToken: async () => token,
+      fetchImpl: async () => { assert.fail("must not dispatch"); },
+    });
+    await assert.rejects(client.get("/api/v1/me/export", { expectedSubject: "actor-a" }), isSubjectChanged);
+  }
+  const client = createApiClient({
+    baseUrl: "https://example.test", getDemoUserId: async () => "demo-b",
+    fetchImpl: async () => Response.json({ data: "safe" }),
+  });
+  await assert.rejects(client.get("/api/v1/me/export", { expectedSubject: "demo-a" }), isSubjectChanged);
+  assert.equal(await client.get("/api/v1/me/export", { expectedSubject: "demo-b" }), "safe");
+  const conflicting = createApiClient({
+    baseUrl: "https://example.test", demoUserId: "demo-b",
+    getAccessToken: async () => subjectToken("actor-a"),
+    fetchImpl: async () => { assert.fail("ambiguous credential sources must not dispatch"); },
+  });
+  await assert.rejects(conflicting.get("/api/v1/me/export", { expectedSubject: "actor-a" }), isSubjectChanged);
+});
+
 for (const resolver of ["getAccessToken", "getDemoUserId"] as const) {
   test(`client bounds ${resolver} and never dispatches after a late credential`, async () => {
     const credential = deferred<string | null>();

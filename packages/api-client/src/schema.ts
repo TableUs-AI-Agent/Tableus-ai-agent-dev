@@ -467,6 +467,23 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/me/organized-plans": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Organized Plans */
+        get: operations["organized_plans_api_v1_me_organized_plans_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v1/plans": {
         parameters: {
             query?: never;
@@ -1072,6 +1089,14 @@ export interface components {
                 [key: string]: unknown;
             };
         };
+        /** Envelope[ManagedPlanOut] */
+        Envelope_ManagedPlanOut_: {
+            data: components["schemas"]["ManagedPlanOut"];
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+        };
         /** Envelope[PlanCreated] */
         Envelope_PlanCreated_: {
             data: components["schemas"]["PlanCreated"];
@@ -1132,6 +1157,15 @@ export interface components {
         Envelope_list_ConnectionOut__: {
             /** Data */
             data: components["schemas"]["ConnectionOut"][];
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+        };
+        /** Envelope[list[ManagedPlanOut]] */
+        Envelope_list_ManagedPlanOut__: {
+            /** Data */
+            data: components["schemas"]["ManagedPlanOut"][];
             /** Meta */
             meta?: {
                 [key: string]: unknown;
@@ -1264,6 +1298,33 @@ export interface components {
         LocationResolveRequest: {
             /** Query */
             query: string;
+        };
+        /** ManagedPlanOut */
+        ManagedPlanOut: {
+            /** Id */
+            id: string;
+            /** Organizer Id */
+            organizer_id: string;
+            /** Participants */
+            participants: components["schemas"]["ManagedPlanParticipantOut"][];
+            /** Title */
+            title: string;
+            /**
+             * Updated At
+             * Format: date-time
+             */
+            updated_at: string;
+            /** Viewer Is Organizer */
+            viewer_is_organizer: boolean;
+        };
+        /** ManagedPlanParticipantOut */
+        ManagedPlanParticipantOut: {
+            /** Display Name */
+            display_name: string;
+            /** Is Organizer */
+            is_organizer: boolean;
+            /** Profile Id */
+            profile_id: string;
         };
         /** NearbyRequest */
         NearbyRequest: {
@@ -2574,6 +2635,38 @@ export interface operations {
             };
         };
     };
+    organized_plans_api_v1_me_organized_plans_get: {
+        parameters: {
+            query?: never;
+            header?: {
+                authorization?: string | null;
+                "x-demo-user-id"?: string | null;
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_ManagedPlanOut__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
     list_plans_api_v1_plans_get: {
         parameters: {
             query?: never;
@@ -2992,7 +3085,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["Envelope_PlanOut_"];
+                    "application/json": components["schemas"]["Envelope_ManagedPlanOut_"];
                 };
             };
             /** @description Validation Error */

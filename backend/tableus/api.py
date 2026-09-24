@@ -71,6 +71,8 @@ from .schemas import (
     InviteValidation,
     LocationIn,
     LocationOut,
+    ManagedPlanOut,
+    ManagedPlanParticipantOut,
     ParticipantOut,
     PlaceOut,
     PlanCreated,
@@ -151,6 +153,31 @@ async def _plan(session: AsyncSession, plan_id: str, *, for_update: bool = False
     if not plan:
         raise HTTPException(status_code=404, detail="Plan not found")
     return plan
+
+
+async def _managed_plans_out(
+    session: AsyncSession, plans: list[Plan], viewer_id: str
+) -> list[ManagedPlanOut]:
+    if not plans:
+        return []
+    # Account management must never hydrate restaurant candidates or call a provider.
+    rows = (await session.execute(
+        select(PlanParticipant.plan_id, Profile.id, Profile.display_name)
+        .join(Profile, Profile.id == PlanParticipant.profile_id)
+        .where(PlanParticipant.plan_id.in_([plan.id for plan in plans]))
+        .order_by(PlanParticipant.joined_at, Profile.id)
+    )).all()
+    participants: dict[str, list[tuple[str, str]]] = defaultdict(list)
+    for plan_id, profile_id, display_name in rows:
+        participants[plan_id].append((profile_id, display_name))
+    return [ManagedPlanOut(
+        id=plan.id, title=plan.title, organizer_id=plan.organizer_id,
+        viewer_is_organizer=plan.organizer_id == viewer_id, updated_at=plan.updated_at,
+        participants=[ManagedPlanParticipantOut(
+            profile_id=profile_id, display_name=display_name,
+            is_organizer=profile_id == plan.organizer_id,
+        ) for profile_id, display_name in participants[plan.id]],
+    ) for plan in plans]
 
 
 async def _plan_out(
@@ -746,6 +773,14 @@ async def account_control(profile: CurrentProfile, session: DbSession):
     return ok(await _account_control(session, profile.id))
 
 
+@router.get("/me/organized-plans", response_model=Envelope[list[ManagedPlanOut]])
+async def organized_plans(profile: CurrentProfile, session: DbSession):
+    plans = list((await session.scalars(
+        select(Plan).where(Plan.organizer_id == profile.id).order_by(Plan.updated_at.desc(), Plan.id)
+    )).all())
+    return ok(await _managed_plans_out(session, plans, profile.id))
+
+
 @router.delete("/me", response_model=Envelope[DeleteAccountOut])
 async def delete_me(body: DeleteAccountIn, identity: CurrentIdentity, session: DbSession):
     await lock_subject(session, identity.subject, exclusive=True)
@@ -1180,7 +1215,7 @@ async def get_plan(plan_id: str, profile: CurrentProfile, session: DbSession):
     return ok(await _plan_out(session, plan, profile.id))
 
 
-@router.post("/plans/{plan_id}/transfer-ownership", response_model=Envelope[PlanOut])
+@router.post("/plans/{plan_id}/transfer-ownership", response_model=Envelope[ManagedPlanOut])
 async def transfer_plan_ownership(
     plan_id: str, body: TransferOwnershipIn, profile: CurrentProfile, session: DbSession
 ):
@@ -1191,9 +1226,6 @@ async def transfer_plan_ownership(
         raise HTTPException(status_code=403, detail="Only the organizer can perform this action")
     if body.recipient_profile_id == profile.id:
         raise HTTPException(status_code=422, detail="Choose another participant")
-    organizer_id = await session.scalar(select(Plan.organizer_id).where(Plan.id == plan_id))
-    if organizer_id != profile.id:
-        raise HTTPException(status_code=403, detail="Only the organizer can perform this action")
     # Acquire both actor locks before the plan row lock. Profile deletion takes
     # the exclusive counterpart before touching plans.
     try:
@@ -1214,7 +1246,7 @@ async def transfer_plan_ownership(
     _touch(plan)
     await _event(session, plan, profile, "plan.ownership_transferred")
     await session.commit()
-    return ok(await _plan_out(session, plan, profile.id))
+    return ok((await _managed_plans_out(session, [plan], profile.id))[0])
 
 
 @router.delete("/plans/{plan_id}", response_model=Envelope[DeleteAccountOut])

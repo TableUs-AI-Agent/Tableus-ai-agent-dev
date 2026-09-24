@@ -10,7 +10,7 @@ const authCard = readFileSync(new URL("../components/auth-card.tsx", import.meta
 const apiClient = readFileSync(new URL("v1-api.ts", import.meta.url), "utf8");
 
 test("web session loading distinguishes signed-out and network failures", () => {
-  assert.match(userContext, /type UserState = "loading" \| "approved" \| "signed_out" \| "error"/);
+  assert.match(userContext, /type UserState = "loading" \| "approved" \| "deleting" \| "signed_out" \| "error"/);
   assert.match(plansPage, /userState === "error"/);
   assert.match(accountPage, /userState === "error"/);
   assert.match(planPage, /userState === "error"/);

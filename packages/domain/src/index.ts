@@ -113,3 +113,4 @@ export function buildAuthUrl(origin: string, mode: AuthLinkMode): string {
 
 export * from "./telemetry.ts";
 export * from "./public-info.ts";
+export * from "./account-lifecycle.ts";

@@ -249,6 +249,21 @@ class CandidateOut(BaseModel):
     vote_score: int = 0
 
 
+class ManagedPlanParticipantOut(BaseModel):
+    profile_id: str
+    display_name: str
+    is_organizer: bool
+
+
+class ManagedPlanOut(BaseModel):
+    id: str
+    title: str
+    organizer_id: str
+    viewer_is_organizer: bool
+    updated_at: datetime
+    participants: list[ManagedPlanParticipantOut]
+
+
 class PlanOut(BaseModel):
     id: str
     title: str

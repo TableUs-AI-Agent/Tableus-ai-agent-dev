@@ -1,6 +1,6 @@
 # Current state
 
-Updated 2026-09-24 for the isolated account-lifecycle backend objective. Brian
+Updated 2026-09-24 for the isolated account-lifecycle client objective. Brian
 owns all development at this stage. The owner approved this work in parallel
 with native validation; only [this worktree's active packet](task-packets/active.md)
 directs work here. Native evidence remains tied to its original candidate.
@@ -9,9 +9,9 @@ directs work here. Native evidence remains tied to its original candidate.
 
 | Role | Value |
 | --- | --- |
-| Backend branch | `codex/account-lifecycle-backend` |
-| Backend worktree | `/Users/brianchei/.codex/worktrees/account-lifecycle-backend/Tableus-ai-agent-dev` |
-| Exact implementation base | `bcc9e52d8c501dba9f51e881a7350c0959301255` (C2 preparation only) |
+| Client branch | `codex/account-lifecycle-clients` |
+| Client worktree | `/Users/brianchei/.codex/worktrees/account-lifecycle-clients/Tableus-ai-agent-dev` |
+| Exact implementation base | `6ed12793253a285b0890d6358ab5f60c551b3615` (backend local completion) |
 | Native validation task | `01a0c678-55c8-7cc0-a3cb-e3200776906a`, Prepare native replacement validation |
 | Native worktree | `/Users/brianchei/.codex/worktrees/ea6d/Tableus-ai-agent-dev` |
 | Native application / build operator | `8972865893a3f018a064594457dc9cc664f8a61f` / `16603dd0cf36d27b492e57a02d3c6c438a2563c4` |
@@ -35,7 +35,7 @@ Local/CI providers are deterministic. Gemini and Places remain application
 providers. Mobile has bounded restoration/requests, device-local sign-out,
 explicit ambiguous-write recovery, private in-memory queries and explicit refresh.
 
-## Account lifecycle backend
+## Account lifecycle
 
 Implementation adds transfer to an existing approved participant, explicit
 sole-participant plan removal, and a separately enabled full-account deletion
@@ -45,15 +45,24 @@ backoff and operator attention for rejected/exhausted requests. A minimal stable
 subject-hash tombstone prevents stale-token re-redemption; raw Auth subject is
 cleared on completion. Existing application-only deletion remains compatible.
 
-The feature defaults off. Platform screens still use the old deletion path;
-there is no client rollout, hosted migration, credential provisioning, deployed
-worker or activation in this change. Broader retention durations remain open.
-[Contract, data treatment and recovery](account-lifecycle.md) document the exact
-scope. One complete `make ready` passed: 296 JavaScript tests, 120 Python tests
-and four PostgreSQL-only skips, lint/type checks, contracts, web build/exports,
-smoke and the report-only performance baseline. Fresh SQLite migration and a
-two-process file-backed recovery probe passed. PostgreSQL concurrency/role
-behavior remains unverified locally; SQLite results do not substitute for it.
+The feature defaults off. The client objective adds organized-plan resolution
+and full-deletion recovery to web/mobile, with provider-free management metadata.
+Screens do not silently fall back to legacy application-only deletion. Local
+client implementation and review are complete; no release acceptance is claimed.
+There is no hosted migration, credential provisioning, deployed worker or
+activation. Broader retention durations remain open. [Contract, data treatment
+and recovery](account-lifecycle.md) document the exact scope.
+
+The [backend handoff](handoffs/2026-09-24-account-lifecycle-backend.md) retains its
+own passing make-ready, fresh SQLite migration and two-process recovery evidence.
+Those checks cover the inherited backend source. Fresh client-objective checks
+pass: 314 JavaScript tests, 121 Python tests with four PostgreSQL-only skips,
+lint/type checks, generated contracts, Next build, Expo web export and deterministic
+smoke. Seven mocked Chrome checks cover account actions and hosted-mode session
+recovery. [Client evidence](evidence/account-lifecycle-clients-2026-09-24/README.md)
+records scope and remaining release checks.
+PostgreSQL concurrency/role behavior remains unverified locally; SQLite results
+do not substitute for it.
 
 ## Native and release evidence inherited at the base
 

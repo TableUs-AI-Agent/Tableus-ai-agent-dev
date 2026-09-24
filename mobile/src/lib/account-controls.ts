@@ -1,10 +1,4 @@
-export type AccountControl = {
-  can_delete: boolean;
-  blockers: "organized_plans"[];
-  organized_plan_count: number;
-  deletion_scope: "application_profile";
-  supabase_auth_removal: "operator_required";
-};
+export type { AccountControl, AccountDeletionStatus, ManagedPlan } from "@tableus/domain";
 
 export type AccountExportSummary = {
   valid: boolean;

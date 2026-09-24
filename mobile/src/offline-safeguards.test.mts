@@ -54,9 +54,5 @@ test("photo retries retain no image state and must open the picker again", () =>
   assert.doesNotMatch(analyze, /api\.post[^\n]+idempotencyKey/);
 });
 
-test("destructive account retry preserves confirmation and remains explicitly gated", () => {
-  const account = source("../app/account.tsx");
-  assert.match(account, /Retry deleting application data/);
-  assert.match(account, /confirmation !== DELETE_CONFIRMATION \|\| deleteAccount\.isPending \|\| deleteAccount\.canRetry \|\| !control\.data\?\.can_delete/);
-  assert.doesNotMatch(account, /setConfirmation\(""\)/);
-});
+// Account confirmation, offline gating and exact retry behavior are exercised
+// through rendered controls in account-lifecycle.component.test.tsx.

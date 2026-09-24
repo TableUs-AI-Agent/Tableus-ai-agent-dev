@@ -8,6 +8,8 @@ export type ApiFailure = {
 
 export type ApiRequestOptions = {
   idempotencyKey?: string;
+  /** Bind sensitive operations to the identity that confirmed them, including refresh replay. */
+  expectedSubject?: string;
 };
 
 export type TelemetryClientPlatform = "web" | "ios" | "android";
@@ -33,6 +35,34 @@ export class ApiError extends Error {
 
 function networkError() {
   return new ApiError("Network unavailable. Reconnect and try again.", 0, "network_error");
+}
+
+function credentialSubject(token: string | null | undefined, demoUserId?: string): string | null {
+  if (!token) return demoUserId ?? null;
+  try {
+    // Keep the shared client independent of browser-only atob and Node Buffer.
+    const encoded = token.split(".")[1].replace(/=+$/, "");
+    const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_";
+    let bits = 0;
+    let count = 0;
+    let escaped = "";
+    for (const character of encoded) {
+      const value = alphabet.indexOf(character);
+      if (value < 0) return null;
+      bits = (bits << 6) | value;
+      count += 6;
+      if (count >= 8) {
+        count -= 8;
+        escaped += `%${((bits >> count) & 255).toString(16).padStart(2, "0")}`;
+        bits &= (1 << count) - 1;
+      }
+    }
+    const payload = JSON.parse(decodeURIComponent(escaped));
+    const subject = typeof payload.sub === "string" ? payload.sub : null;
+    return demoUserId && demoUserId !== subject ? null : subject;
+  } catch {
+    return null;
+  }
 }
 
 function createDeadline(timeoutMs?: number, onTimeout?: () => void) {
@@ -110,6 +140,12 @@ export function createApiClient(options: ClientOptions) {
         headers.set("Idempotency-Key", requestOptions.idempotencyKey ?? createIdempotencyKey());
       }
       const send = async () => {
+        // This is a client-side account-switch guard, not JWT verification.
+        // The server still authenticates and authorizes every request.
+        if (requestOptions.expectedSubject !== undefined
+          && credentialSubject(token, demoUserId) !== requestOptions.expectedSubject) {
+          throw new ApiError("Your account changed. Check the current account before trying again.", 409, "subject_changed");
+        }
         const requestHeaders = new Headers(headers);
         if (token) requestHeaders.set("Authorization", `Bearer ${token}`);
         else requestHeaders.delete("Authorization");
@@ -151,7 +187,7 @@ export function createApiClient(options: ClientOptions) {
   };
 
   return {
-    get: <T>(path: string) => request<T>(path),
+    get: <T>(path: string, requestOptions?: ApiRequestOptions) => request<T>(path, {}, requestOptions),
     post: <T>(path: string, body?: unknown, requestOptions?: ApiRequestOptions) =>
       request<T>(path, { method: "POST", body: body instanceof FormData ? body : JSON.stringify(body ?? {}) }, requestOptions),
     put: <T>(path: string, body: unknown, requestOptions?: ApiRequestOptions) =>

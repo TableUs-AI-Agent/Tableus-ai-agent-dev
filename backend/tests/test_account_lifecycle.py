@@ -371,6 +371,69 @@ async def test_deleted_subject_cannot_redeem_or_replay_cached_write(
 
 
 @pytest.mark.asyncio
+async def test_account_plan_management_is_private_and_provider_free(
+    client: AsyncClient, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    owner, recipient = "management-owner", "management-recipient"
+    await seed_profile(owner)
+    await seed_profile(recipient)
+    async with SessionFactory() as session:
+        shared = Plan(
+            organizer_id=owner, title="Managed dinner", share_token_hash=hash_value("private-link"),
+            location_label="Chicago",
+        )
+        other = Plan(
+            organizer_id=recipient, title="Someone else's dinner",
+            share_token_hash=hash_value("other-private-link"), location_label="Chicago",
+        )
+        session.add_all([shared, other])
+        await session.flush()
+        run = RecommendationRun(plan_id=shared.id, query="private query", provider="fixture")
+        session.add(run)
+        await session.flush()
+        shared.active_run_id = run.id
+        session.add(Candidate(
+            run_id=run.id, place_id="never-hydrate", match_score=0.9, reasoning="private", rank=1,
+        ))
+        session.add_all([
+            PlanParticipant(plan_id=shared.id, profile_id=owner, constraints={"notes": "private"}),
+            PlanParticipant(plan_id=shared.id, profile_id=recipient, constraints={}),
+            PlanParticipant(plan_id=other.id, profile_id=recipient, constraints={}),
+            PlanParticipant(plan_id=other.id, profile_id=owner, constraints={}),
+        ])
+        await session.commit()
+        plan_id = shared.id
+
+    async def forbidden_provider(*_args, **_kwargs):
+        pytest.fail("Account plan management must not invoke Places")
+
+    monkeypatch.setattr(api, "_call_places", forbidden_provider)
+    listed = await client.get("/api/v1/me/organized-plans", headers=headers(owner))
+    assert listed.status_code == 200
+    plans = listed.json()["data"]
+    assert len(plans) == 1
+    assert plans[0]["id"] == plan_id
+    assert set(plans[0]) == {
+        "id", "title", "organizer_id", "viewer_is_organizer", "updated_at", "participants",
+    }
+    assert plans[0]["viewer_is_organizer"] is True
+    assert len(plans[0]["participants"]) == 2
+    for participant in plans[0]["participants"]:
+        assert set(participant) == {"profile_id", "display_name", "is_organizer"}
+    transferred = await client.post(
+        f"/api/v1/plans/{plan_id}/transfer-ownership", headers=headers(owner),
+        json={"recipient_profile_id": recipient},
+    )
+    assert transferred.status_code == 200
+    assert transferred.json()["data"]["organizer_id"] == recipient
+    assert transferred.json()["data"]["viewer_is_organizer"] is False
+    assert set(transferred.json()["data"]) == set(plans[0])
+    assert (await client.get("/api/v1/me/organized-plans", headers=headers(owner))).json()["data"] == []
+    denied = await client.get("/api/v1/me/organized-plans", headers=headers("unapproved-manager"))
+    assert denied.status_code == 403
+
+
+@pytest.mark.asyncio
 async def test_postgres_subject_lock_waits_for_exclusive_transaction() -> None:
     if engine.url.get_backend_name() != "postgresql":
         pytest.skip("PostgreSQL advisory locks require a PostgreSQL test database")

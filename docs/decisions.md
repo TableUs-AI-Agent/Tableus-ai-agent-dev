@@ -228,3 +228,18 @@ exact candidate/device binding, unresolved failures, closed live budgets and the
 existing external/destructive gates. Complete independent work before returning
 with a concrete remaining gate. Native validation remains in its current task
 until that objective completes, as the owner separately instructed.
+
+## Account-management clients — 2026-09-24
+
+The owner requested continued parallel development after the backend handoff.
+Web/mobile screens use full self-service deletion when the server enables it;
+unavailability is explicit and does not fall back to application-only deletion.
+Deletion intent/status gates private navigation and survives loss of the profile.
+Unknown outcomes require reconciliation, not a claim of success or unchanged
+data. Auth session loss cannot imply completed deletion. Status is subject-scoped.
+
+Account plan management exposes only owned-plan and participant identity/display
+metadata. It must not hydrate restaurant candidates or call Places; ownership
+transfer uses the same minimal response. This changes the newly added, undeployed
+transfer contract; existing full plan endpoints retain their contract. Local
+implementation is separate from hosted activation and affected native acceptance.
