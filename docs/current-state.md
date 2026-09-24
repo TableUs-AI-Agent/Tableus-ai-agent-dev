@@ -243,8 +243,14 @@ query timed out at 30 seconds (measured 30.169s). No Settings launch or Maestro
 test ran; the revised visual hypothesis remains untested. Independent verification
 confirms all three targets Shutdown, no matching processes and idle ports. Ten
 files are retained; the frozen operator and prior evidence remain unchanged. P4's
-allowance is consumed, with no retry. Next compare control failures offline before
-another concrete native proposal. Native validation remains in this task.
+allowance is consumed, with no retry. [C1 preparation](evidence/native-replacement-validation-2026-09-21/n1-f1-c1-proposal.md)
+combines an exact-target Settings baseline, root visual review and a conditional
+full eleven-flow/five-phase offline run under one proposed approval. Retained
+query failures have no established root cause. New pure PID binding and retained
+process snapshots replace the launchctl query; this does not establish launchctl
+health. No new native operation has run. The workflow now requires substantial
+completed objectives and treats routine checkpoints as progress updates. Native
+validation remains in this task.
 Accepted native remains
 f94a1d9. Android still requires all iOS gates and fresh 40 GiB capacity;
 N2/live reads and canonical/auth/physical probes remain separately gated.

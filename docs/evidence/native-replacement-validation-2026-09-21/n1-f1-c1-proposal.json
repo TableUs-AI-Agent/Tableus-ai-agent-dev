@@ -1,0 +1,414 @@
+{
+  "schema_version": 1,
+  "campaign": "F1-C1",
+  "status": "prepared_unapproved_unexecuted",
+  "recorded_at": "2026-09-24T05:40:12.179829+00:00",
+  "preparation_base_sha": "f77c37da0bde2653cddf8ac319a3b8e22b5b7c00",
+  "evidence_commit": "Commit containing this proposal; exact SHA in task handoff.",
+  "application_sha": "8972865893a3f018a064594457dc9cc664f8a61f",
+  "build_operator_sha": "16603dd0cf36d27b492e57a02d3c6c438a2563c4",
+  "artifact_sha256": "98c1535bfe6f7cad0c8e467454f5128c71f4aae21b8b41a5aba1c1a33f1e391d",
+  "device_id": "0EFFA766-DCDD-49E5-84B0-D3593B68709A",
+  "runtime": "iOS 27.0 /24A434",
+  "archive": {
+    "archive": "/Users/brianchei/repos/Tableus-ai-agent-dev/.artifacts/mobile/8972865893a3f018a064594457dc9cc664f8a61f/native-validation-f1/runtime-preparation-c1",
+    "files_verified": 56,
+    "index_sha256": "b9659fb42a7f2ecf7c241c7455ea180a0d9a20da8fdf8d7af4522fe52e9c2bd8",
+    "stage_manifests_sha256": {
+      "settings": "1c0d637fc6e8a5a2e9951b0e3c412e5cb576c3128ebaba8e551006877f026c18",
+      "offline": "7a2a24b2626c231b88cd6005b3835973d6e93d2eb36f125e017e83d196fa2b86"
+    }
+  },
+  "stages": {
+    "settings": {
+      "amendment": "F1-C1-S1",
+      "preparation_only": true,
+      "device_created": false,
+      "device_id": "0EFFA766-DCDD-49E5-84B0-D3593B68709A",
+      "output": "/Users/brianchei/repos/Tableus-ai-agent-dev/.artifacts/mobile/8972865893a3f018a064594457dc9cc664f8a61f/native-validation-f1/test-ios-c1-settings-01",
+      "flow_sha256": "d9fd051ec0d24fb5609d7b3192dd9809b44351a4949f9244817cce36aefa4234",
+      "maestro_ios_driver_jar_sha256": "10fcf5f711ecd9f53d571e0666c7f2cb3828aa83c4c74c78da0747cd13a8294b",
+      "maestro_launcher_sha256": "78c82065869bbabf4659e52284defd346de897d58675c6ba1dc7c70c12aed07f",
+      "maestro_cli_jar_sha256": "716859d8aedc224d3d86c1a3e4b1ef74b9802b93ed390458821666819ddf0697",
+      "maestro_orchestra_jar_sha256": "a541787649ed49420987b17889eaa947efd07d933dbbe66bccc6f11dcac27fb5",
+      "maestro_ios_jar_sha256": "025821d6a9ea4a87ea264554f5ccbe8214fe8ecae2506d46c32b326aa833349e",
+      "maestro_client_jar_sha256": "98ee8e1a46e79a062a3140fd725b34860dd56ba22fb36e763d54c02e039f4d1e",
+      "xcode_version_sha256": "99aa0f4ffa738d03c9d86b273745d4a3945c7cdc7462221033fb807463d895e9",
+      "source_t1_manifest_sha256": "75e9272a5e4b620f2e870630f897d9d57fdf604a7aabf076aa4dbee8730b41e9",
+      "source_t2_sha256": "fb69990ecc8e6da249a93bf4ac600830e2f429551797512b3364cca3fa632106",
+      "source_v1_sha256": "f190289ad6456ffc80894783793dbc063e0ee1381d1efbd4f3bb476c8af6b25f",
+      "files_sha256": {
+        "README.md": "9e31c1fe5ec29f85ce896f0eb9ece5d2c6b982d5e39b1bb5630a18f7fd65cc56",
+        "driver.py": "9dd8a5356c3dafb164b82df678718ae1d9c17fcb6a18cf8e09f404e40746df3c",
+        "maestro": "cb82d37a2ff5fc2d2f262a6c6f4948e3a82c17f72a1e4341122ab9b946644430",
+        "maestro_ui_evidence.py": "f190289ad6456ffc80894783793dbc063e0ee1381d1efbd4f3bb476c8af6b25f",
+        "maestro_xctest_diagnostics.py": "fb69990ecc8e6da249a93bf4ac600830e2f429551797512b3364cca3fa632106",
+        "platform_monitor.py": "5020a84cd847f6e3b9481846ce381eb0a99eadfe94a80c14c80d6d429366f7f3",
+        "settings-1.yml": "d9fd051ec0d24fb5609d7b3192dd9809b44351a4949f9244817cce36aefa4234",
+        "simulator_target_binding.py": "cfc41ea6c544a225a0ed5d9cdb8107c4a8f567c02431f90b813272510785a179",
+        "t1_base.py": "5de80781f2fe091547dbdb4ed397bad066868266f04726d9637f2a318c9adf86",
+        "test_settings.py": "600f57f78406af5bbc6c4f4a602e6f04a99e59026760f2b983d65a196b21d3ef"
+      },
+      "limits": {
+        "total_seconds": 420,
+        "total_cleanup_reserve_seconds": 60,
+        "flow_seconds": 240,
+        "flow_cleanup_reserve_seconds": 30,
+        "external_launch_seconds": 30,
+        "post_launch_reserve_seconds": 5,
+        "postflow_observation_seconds": 5,
+        "host_process_query_seconds": 5,
+        "minimum_free_gib": 20,
+        "target_scoped_settings_launch_seconds": 30
+      },
+      "execution_status": "not_executed",
+      "acceptance": false,
+      "base_sha": "f77c37da0bde2653cddf8ac319a3b8e22b5b7c00",
+      "application_sha": "8972865893a3f018a064594457dc9cc664f8a61f",
+      "artifact_sha256": "98c1535bfe6f7cad0c8e467454f5128c71f4aae21b8b41a5aba1c1a33f1e391d",
+      "binding_helper_sha256": "cfc41ea6c544a225a0ed5d9cdb8107c4a8f567c02431f90b813272510785a179",
+      "approval_recorded": false
+    },
+    "offline": {
+      "schema_version": 1,
+      "amendment": "F1-C1-S2",
+      "approval_recorded": false,
+      "diagnostic_only": true,
+      "application_sha": "8972865893a3f018a064594457dc9cc664f8a61f",
+      "artifact_sha256": "98c1535bfe6f7cad0c8e467454f5128c71f4aae21b8b41a5aba1c1a33f1e391d",
+      "build_id": "local-ios-test-8972865-f1-01",
+      "runtime_id": "com.apple.CoreSimulator.SimRuntime.iOS-27-0",
+      "runtime_build": "24A434",
+      "device_type": "com.apple.CoreSimulator.SimDeviceType.iPhone-17-Pro",
+      "device_id": "0EFFA766-DCDD-49E5-84B0-D3593B68709A",
+      "device_name": "TableUs-N1-F1-O3-iOS27-8972865",
+      "older_targets_must_remain_shutdown": [
+        "2408A54F-A1C5-4388-8B46-6A987FE3B578",
+        "CBB4FAB4-734C-413C-9F10-850329AC9A01"
+      ],
+      "o3_archive_manifest_sha256": "bf7532aa0502b694d7d0f5e2ee2d67806ceed21a3fa26f30d08c5863b9d15f25",
+      "o3_result_sha256": "dda65350b0ac4b67c842ab3e8b42998ea15d18f2df38119aa141187aaa2d7d34",
+      "o3_post_stop_sha256": "0387a6b7479eb58d57fd16731057d2e1008d5dd3bc5ea88efdc3ff59137dd7a6",
+      "o4_archive_manifest_sha256": "3a68a084804e0f39db995e3f62e3f22c71df75463e7518d1993fba2579c912cf",
+      "o4_result_sha256": "d2c1023a2be644ff9ff5b216c24ee47d1c7fdc75dcd97bb7a57cbd4b670ca697",
+      "o4_control_query_sha256": "3596f595af563e0ff12347d63ef2bf0a9f9ca546336fc7a07db94eecfbd2eee5",
+      "h1_result_sha256": "b693f558c7fd7db99fa96d5e3d4ae08196afc84d9d993a01c6a9aa0f8a248dd2",
+      "artifact_checker_sha256": "6a750e9ca95891b288d417d2e97e0dd210d88f50f2db412dadac8e6a327d1d2d",
+      "maestro_2_8_0_path": "/opt/homebrew/bin/maestro",
+      "maestro_launcher_sha256": "78c82065869bbabf4659e52284defd346de897d58675c6ba1dc7c70c12aed07f",
+      "proposed_fresh_output": "/Users/brianchei/repos/Tableus-ai-agent-dev/.artifacts/mobile/8972865893a3f018a064594457dc9cc664f8a61f/native-validation-f1/test-ios-c1-offline-01",
+      "total_limit_seconds": 2100,
+      "runner_limit_seconds": 1800,
+      "control_query_limit_seconds": 0,
+      "host_ps_limit_seconds": 5,
+      "runner_setup_journal": "required_start_end_proof_for_diagnostic_pass",
+      "files_sha256": {
+        "README.md": "cd66f6faf7a3d7d278a61aba1e48c0a7bb952249f6ccea1615221e611bfe211f",
+        "artifact-check/run_ios_f1.py": "8fa5156bf396ffda262460775f9868164018f3ba6f8956952d4fc1120084b7c1",
+        "artifact-check/verify_artifact.py": "6a750e9ca95891b288d417d2e97e0dd210d88f50f2db412dadac8e6a327d1d2d",
+        "driver.py": "6920ef0647deaf9d344f42f6140723713e66ae242e940d61abf0238f13af6062",
+        "maestro": "18c79cb5d69525b58d700259355b12080b4263ccab68a0ac4e772dd4efc5da79",
+        "maestro_xctest_diagnostics.py": "fb69990ecc8e6da249a93bf4ac600830e2f429551797512b3364cca3fa632106",
+        "operator/mobile-fault-proxy.mjs": "98c33b5d88f3aa2bd2baa58ab44c127105075ba28ade0d9f1872c35a6905eef0",
+        "operator/mobile-offline-e2e.mjs": "dc6aa91322f6667818586e9f60461d071363a6fc4aeb3d92c3c6500f163f16a6",
+        "platform_monitor.py": "5020a84cd847f6e3b9481846ce381eb0a99eadfe94a80c14c80d6d429366f7f3",
+        "simulator_target_binding.py": "cfc41ea6c544a225a0ed5d9cdb8107c4a8f567c02431f90b813272510785a179",
+        "source-o5-manifest.json": "cd72d3a6815f746581775a2c9b6a18a43d135105bab8a39b5ff0bb4ea35a643f",
+        "source-o5-node-tests.log": "a1c688daeb033413b287ae7762831ce3bd3dc054b5cc9cbb669f2c4156bcfdac",
+        "source-o5-python-tests.log": "2012a1b0b5b2377038cad2b0db6816972d653a40b48dab791fa59950584ef8bb",
+        "source-o5-verification.json": "ceea0b653259367b9008fbf7bb95656a4f11303938b698b764c9e2dc4b311462",
+        "test_campaign.py": "d5569aeefbfe6886e118169a23a095f839f5878326d5c7c18735013bc4fa0238",
+        "test_setup_journal.mjs": "76c6f1f122e99af4713e4fcbd60aeb2849062cb75ff2fae35f968ee472983822"
+      },
+      "runner_preflight_boot": "false_no_second_boot",
+      "preboot_host_ps_cap_seconds": 5,
+      "native_execution_enabled": true,
+      "status": "local_preparation_unexecuted",
+      "local_preparation_authorized": true,
+      "native_attempt_approval": false,
+      "base_sha": "f77c37da0bde2653cddf8ac319a3b8e22b5b7c00",
+      "build_operator_sha": "16603dd0cf36d27b492e57a02d3c6c438a2563c4",
+      "approval_recorded_scope": "native execution only; local preparation is authorized",
+      "stage1_manifest_sha256": "1c0d637fc6e8a5a2e9951b0e3c412e5cb576c3128ebaba8e551006877f026c18",
+      "aggregate_native_operation_cap_seconds": 2520,
+      "binding_helper_sha256": "cfc41ea6c544a225a0ed5d9cdb8107c4a8f567c02431f90b813272510785a179",
+      "target_scoped_settings_launch_seconds": 30,
+      "maestro_ios_driver_jar_sha256": "10fcf5f711ecd9f53d571e0666c7f2cb3828aa83c4c74c78da0747cd13a8294b",
+      "maestro_cli_jar_sha256": "716859d8aedc224d3d86c1a3e4b1ef74b9802b93ed390458821666819ddf0697",
+      "maestro_orchestra_jar_sha256": "a541787649ed49420987b17889eaa947efd07d933dbbe66bccc6f11dcac27fb5",
+      "maestro_ios_jar_sha256": "025821d6a9ea4a87ea264554f5ccbe8214fe8ecae2506d46c32b326aa833349e",
+      "maestro_client_jar_sha256": "98ee8e1a46e79a062a3140fd725b34860dd56ba22fb36e763d54c02e039f4d1e",
+      "xcode_version_sha256": "99aa0f4ffa738d03c9d86b273745d4a3945c7cdc7462221033fb807463d895e9",
+      "historical_t1_checks": {
+        "offline_test_count": 19,
+        "setup_journal_mock_cases": 5,
+        "helper_python_test_count": 13,
+        "operator_mocked_test_count": 25,
+        "integration_test_count": 6,
+        "checks_sha256": {
+          "helper-python-tests.log": "5fb1b8010b5b15467dd2d448448b6a0717d8b6c08a1cccf4adec40bf2f283666",
+          "helper-tests.log": "d5c12e6fb8a407b9bc80dd5ca401281f244bcec800b7cebf2b041f646c831302",
+          "make-ready-resume-fresh.json": "2a570351037949ce69cf4d7d3be68a9f58055bc580f0e72e2f15ff88a530c106",
+          "make-ready-resume-fresh.log": "4e2163cb492dede259d1159b320399490081ef6bde6d0a6f0a1870bbf07b43f9",
+          "make-ready-resume.json": "07d8b9a77498861a7655c408edf9acc2ea60999a354f6036dc849fe9361d1365",
+          "make-ready-resume.log": "f300fc2781fe45fd341ec66054d580dc3971ceb3617d7342814a8acb5cdcaf95",
+          "make-ready.json": "fdee303debf39fd4ab1849ce5f9c13847f9e88cb3f330f17aebae90e63803dbf",
+          "make-ready.log": "fd9dcb9588a10c82cbc0af04a39771a019e670344b8cea3874dffc34b38dbde6",
+          "o5-replay.json": "24b6ed9057b2d1ba0383a51d4f6c71d1c39a607bbd8994e545d108a2b35ab3b9",
+          "operator-tests.log": "a4f0e15266a353a9c0ea3927f6c8be59df728c5bb4b66cacaf66d00806a76d92",
+          "setup-journal-tests.log": "a1c688daeb033413b287ae7762831ce3bd3dc054b5cc9cbb669f2c4156bcfdac"
+        },
+        "readiness": {
+          "status": "all_target_checks_passed_after_test_launcher_repairs",
+          "single_make_ready_invocation": "make-ready.json",
+          "first_failure": "Split provider overrides contaminated configuration fallback tests: 4 failed, 94 passed, 3 skipped. No source fix required.",
+          "first_resume": "make-ready-resume.json",
+          "first_resume_failure": "Reused file-backed SQLite fixture caused duplicate data: 11 failed, 87 passed, 3 skipped. No source fix required.",
+          "completed_resume": "make-ready-resume-fresh.json",
+          "javascript_passed": 293,
+          "backend_python_passed": 98,
+          "backend_python_skipped": 3,
+          "helper_python_passed": 13,
+          "contracts_unchanged": true,
+          "unnecessary_full_reruns": 0
+        }
+      },
+      "native_execution_approval_recorded": false,
+      "execution_status": "not_executed",
+      "c1_mocked_stage1_test_count": 15,
+      "c1_mocked_stage2_test_count": 8,
+      "c1_setup_journal_mock_cases": 5,
+      "source_t2_sha256": "fb69990ecc8e6da249a93bf4ac600830e2f429551797512b3364cca3fa632106"
+    }
+  },
+  "limits": {
+    "aggregate_native_operation_seconds": 2520,
+    "offline_root_visual_review_dwell_excluded": true,
+    "settings_stage_seconds": 420,
+    "offline_stage_seconds": 2100,
+    "settings_flow_seconds": 240,
+    "offline_runner_seconds": 1800,
+    "per_stage_cleanup_seconds": 60,
+    "per_runner_cleanup_seconds": 30,
+    "launch_seconds": 30,
+    "host_query_seconds": 5,
+    "minimum_free_gib": 20
+  },
+  "allowances": {
+    "boot": 2,
+    "explicit_settings_launch": 2,
+    "settings_maestro_flow": 1,
+    "offline_runner_11_flows_5_phases": 1,
+    "launchctl_query": 0,
+    "retry": 0
+  },
+  "conditional_transition": "Astra actual-PNG review plus complete hash-bound result/log/command/host evidence, fully confirmed stage1 cleanup, and fresh stage2 preflight. No new user checkpoint between passing stages.",
+  "destructive_diagnostic_scope": "One TableUs uninstall/reinstall on exact retained target plus first-flow launchApp clearState:true; inherited Maestro launchApp default permission behavior for TableUs. No Settings permission reset/revoke.",
+  "environment": "Local deterministic/demo backend and fault proxy; no live-provider requests.",
+  "stop": "First required failure stops further native stages; exact-owned cleanup and offline analysis continue. No retry.",
+  "not_included": [
+    "new build",
+    "new device/erase/delete",
+    "general storage cleanup",
+    "links",
+    "exports",
+    "Android",
+    "N2",
+    "live provider evaluation",
+    "merge",
+    "deployment",
+    "store submission"
+  ],
+  "checks": {
+    "settings-verification": {
+      "status": "passed",
+      "tests_run": 15,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "python_syntax_files": 8,
+      "blocked_events": [],
+      "native_operations": 0
+    },
+    "offline-verification": {
+      "status": "passed",
+      "tests_run": 8,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "python_syntax_files": 8,
+      "blocked_events": [],
+      "native_operations": 0
+    },
+    "integration": {
+      "status": "passed",
+      "cases": [
+        "extra_flag_rejected_before_registration",
+        "extra_flag_rejected_before_registration",
+        "real_wrapper_registration_discovery_with_two_expected_log_types_pending_review",
+        "png_header_does_not_grant_acceptance",
+        "wrong_app_hierarchy_rejected",
+        "stale_command_rejected",
+        "multiple_registered_invocations_rejected"
+      ],
+      "blocked_process_signal_events": [],
+      "native_operations": 0,
+      "synthetic": true,
+      "meaning": "File/metadata integration only. Synthetic PNG is header-only and no visual acceptance is granted."
+    },
+    "source-gate": {
+      "status": "passed",
+      "bundle": "/Users/brianchei/.codex/worktrees/ea6d/Tableus-ai-agent-dev/.artifacts/f1-c1-preparation/settings",
+      "manifest_sha256": "1c0d637fc6e8a5a2e9951b0e3c412e5cb576c3128ebaba8e551006877f026c18",
+      "output_absent": true,
+      "native_calls": 0,
+      "native_approval_set": false,
+      "blocked_events": []
+    },
+    "campaign-gate": {
+      "status": "passed",
+      "native_operations": 0,
+      "stages": {
+        "settings": {
+          "manifest_sha256": "1c0d637fc6e8a5a2e9951b0e3c412e5cb576c3128ebaba8e551006877f026c18",
+          "files_verified": 10,
+          "output_absent": true,
+          "output": "/Users/brianchei/repos/Tableus-ai-agent-dev/.artifacts/mobile/8972865893a3f018a064594457dc9cc664f8a61f/native-validation-f1/test-ios-c1-settings-01"
+        },
+        "offline": {
+          "manifest_sha256": "7a2a24b2626c231b88cd6005b3835973d6e93d2eb36f125e017e83d196fa2b86",
+          "files_verified": 16,
+          "output_absent": true,
+          "output": "/Users/brianchei/repos/Tableus-ai-agent-dev/.artifacts/mobile/8972865893a3f018a064594457dc9cc664f8a61f/native-validation-f1/test-ios-c1-offline-01"
+        }
+      }
+    },
+    "make-ready": {
+      "started_at": "2026-09-24T05:31:25.143082+00:00",
+      "command": [
+        "make",
+        "ready"
+      ],
+      "environment_keys": [
+        "CI",
+        "DATABASE_URL",
+        "EAS_DISABLE_UPDATE_CHECK",
+        "ENVIRONMENT",
+        "EXPO_NO_TELEMETRY",
+        "GEMINI_API_KEY",
+        "GOOGLE_MAPS_API_KEY",
+        "HOME",
+        "LANG",
+        "LOGNAME",
+        "MIGRATION_DATABASE_URL",
+        "NEXT_TELEMETRY_DISABLED",
+        "PATH",
+        "POSTHOG_KEY",
+        "PYTHONDONTWRITEBYTECODE",
+        "SENTRY_DSN",
+        "SUPABASE_URL",
+        "TABLEUS_AUTH_MODE",
+        "TABLEUS_DEMO_MODE",
+        "TABLEUS_PROVIDER_MODE",
+        "TABLEUS_TELEMETRY_E2E",
+        "TABLEUS_TELEMETRY_MODE",
+        "TMPDIR",
+        "USER"
+      ],
+      "native_execution": false,
+      "provider_mode": "deterministic",
+      "exit_code": 0,
+      "status": "passed",
+      "elapsed_seconds": 44.43,
+      "finished_at": "2026-09-24T05:32:09.574254+00:00"
+    },
+    "flow-scope": {
+      "status": "passed",
+      "native_operations": 0,
+      "unchanged_runner_semantics": true,
+      "t1_sha256": "b5460a15140779ea2c0710d81c4681999ced27e3e0c0217b68aaeb6734aafd4d",
+      "c1_sha256": "dc6aa91322f6667818586e9f60461d071363a6fc4aeb3d92c3c6500f163f16a6",
+      "flows": {
+        "constraints-offline.yml": "1de8312716851e8809e82daa202587f6ac0892601d099ad5a6d3852a6c66c53e",
+        "constraints-retry.yml": "7f9d9e067f33b9023b71b9cdddbe2eeefc87191dcbe73d3aba201a8e9a07e08b",
+        "create-failure.yml": "79f94557fa32d38487ffde0976d6e6e828da71c6e3fb827df7c84787113a4e46",
+        "create-retry.yml": "8a7b3e3f909226fb6398ee0cf524f9ff9ce189c2f22e804f7bc6c266c33783d1",
+        "finalize-failure.yml": "e88a5b2bb0de806a6abc3a01ef4fe96ead3c6bd2e59c203af14997af605d2149",
+        "finalize-retry.yml": "01132a941f5617c3d291e555d284f7e41d29b3c59e48ad8bdcb3f5f14aaa5922",
+        "refresh-failure.yml": "4fc82933becd81fea4dc26839883f2f78344cc455a60e1079a714f50ca927a8c",
+        "refresh-open.yml": "b549bf867d5c168a32e4e10b48e4a5acea926dd75a2953708090bfcde1288047",
+        "refresh-recovery.yml": "7c43fb3fa0546c1c849d0d119f781b3dbe01f9e87f2f1123cfa0db8248bd6805",
+        "refresh-scroll.yml": "1b903e242b50a707e5499d81ab1d31ee001e11b9c87a2db3bec224107e6d8573",
+        "refresh-slow.yml": "c3d733b6829a453552e5ef0153988d9f58e655b1e63680d33e818980cf47dd2f"
+      },
+      "launchApp_flows": [
+        "create-failure.yml"
+      ],
+      "first_flow_clearState": true,
+      "permission_scope": "No explicit permissions stanza; inherited Maestro launchApp default grants are included for TableUs. Settings has no launchApp.",
+      "endpoints": [
+        "http://127.0.0.1:8000",
+        "http://127.0.0.1:8001",
+        "http://127.0.0.1:7999"
+      ],
+      "phases": [
+        "initial",
+        "scrolling",
+        "slow_refresh",
+        "failed_refresh",
+        "recovered_refresh"
+      ]
+    },
+    "prior-archives": {
+      "status": "passed",
+      "native_operations": 0,
+      "prior_archives": {
+        "runtime-preparation-p4": {
+          "index_sha256": "101bbf410c13d1c81976174d9c8c705b1ed49193675a4286854cfb2dd7fb0468",
+          "files_verified": 27
+        },
+        "runtime-execution-p4": {
+          "index_sha256": "1642c026070685dfdcead5540211efc9e5249b2307bfff19d126a1fe6a71d56f",
+          "files_verified": 10
+        }
+      }
+    },
+    "setup_journal_fixture_cases": 5,
+    "pure_binding_fixture_groups": 5,
+    "javascript_passed": 295,
+    "backend_passed": 98,
+    "postgresql_skipped": 3,
+    "contract_check": "passed; no drift",
+    "native_operations": 0
+  },
+  "analysis_sha256": "e0dbfec8b986af0fca8756a2710b9a1cf3b067818974435bb360680ebebbb88c",
+  "limitations": [
+    "Underlying launchctl/XCTest stalls and original refresh cause remain unproved.",
+    "New binding does not prove launchctl health.",
+    "Settings visual baseline and offline run are diagnostics, not cumulative application acceptance.",
+    "iOS26 runtime/lifecycle proof does not transfer to iOS27.",
+    "Monitor is not a census of every system-service crash."
+  ],
+  "operator_commands": {
+    "settings": [
+      "/opt/homebrew/opt/python@3.14/bin/python3.14",
+      "/Users/brianchei/repos/Tableus-ai-agent-dev/.artifacts/mobile/8972865893a3f018a064594457dc9cc664f8a61f/native-validation-f1/runtime-preparation-c1/operator/settings/driver.py"
+    ],
+    "offline": [
+      "/opt/homebrew/opt/python@3.14/bin/python3.14",
+      "/Users/brianchei/repos/Tableus-ai-agent-dev/.artifacts/mobile/8972865893a3f018a064594457dc9cc664f8a61f/native-validation-f1/runtime-preparation-c1/operator/offline/driver.py"
+    ]
+  },
+  "approval_environment_common": {
+    "TABLEUS_F1_C1_APPROVED": "1",
+    "TABLEUS_F1_C1_DEVICE_ID": "0EFFA766-DCDD-49E5-84B0-D3593B68709A"
+  },
+  "approval_environment_per_stage": {
+    "settings": {
+      "TABLEUS_F1_C1_MANIFEST_SHA256": "1c0d637fc6e8a5a2e9951b0e3c412e5cb576c3128ebaba8e551006877f026c18"
+    },
+    "offline": {
+      "TABLEUS_F1_C1_OFFLINE_MANIFEST_SHA256": "7a2a24b2626c231b88cd6005b3835973d6e93d2eb36f125e017e83d196fa2b86"
+    }
+  }
+}

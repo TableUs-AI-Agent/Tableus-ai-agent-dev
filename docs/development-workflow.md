@@ -22,6 +22,13 @@ directly. Delegates do not delegate or grant approvals.
    conditions in `docs/task-packets/active.md`. Keep later objectives in roadmap
    order. Do not create a new active packet for every intermediate test phase.
 
+Size this outcome around useful completed behavior, not an individual command or
+receipt. Continue through investigation, supported repairs, focused verification,
+integration, documentation and a concrete handoff in the same turn when authorized.
+A finding, passing test, local commit or completed subphase is a commentary update;
+it does not justify ending the turn while independent work remains. The owner
+reaffirmed this completion preference on 2026-09-24.
+
 Give Sol a bounded implementation brief with stable instructions first and task
 facts last: goal; owned files; acceptance; constraints and approvals; checks;
 time/attempt budget. Ask for changed paths, check results, unresolved risks and
@@ -76,6 +83,26 @@ A budget ledger retains the original baseline and links amendments separately.
 Count failed operations and companion telemetry events before starting a phase.
 Reconcile at meaningful live-phase boundaries; do not poll unchanged state.
 A new task, candidate or elapsed time grants no additional allowance.
+
+### Batch approvals around complete outcomes
+
+Before requesting a gated action, finish the work that makes its whole scope
+reviewable. Combine connected stages into one proposal when feasible, with exact
+source/artifact/target bindings, success prerequisites, aggregate and per-stage
+attempt/time/disk/spend limits, permitted recovery, retained evidence and cleanup.
+List actions such as resetting a diagnostic app explicitly. Keep unrelated
+production, provider, secret, store and destructive actions outside the scope.
+
+After approval, passing stage boundaries, root screenshot inspection and ordinary
+local repairs are internal checkpoints. Continue without another user confirmation
+within that authority. Native execution stops on the recorded failure condition;
+the agent still finishes cleanup, evidence analysis and independent local work.
+No stage failure silently earns another attempt. A new request is warranted only
+for a material scope/decision change, an exhausted explicitly limited allowance,
+an actual permission boundary, or information necessary to proceed. Prepare a
+substantial combined next action before making that request, rather than another
+single diagnostic command. A broader proposal must not claim that unprepared
+downstream gates or different-device evidence are already satisfied.
 
 ## Verify according to impact
 

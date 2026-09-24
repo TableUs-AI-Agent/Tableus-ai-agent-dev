@@ -37,6 +37,10 @@ Update these documents in the same change when their truth changes.
 - Read referenced prior tasks with bounded retrieval before relying on them;
   load older turns only for a concrete unresolved question, not the entire log.
 - Keep one objective bounded enough to review and validate continuously.
+- Pursue a complete, substantial outcome within that boundary. Intermediate
+  findings, tests, commits and visual reviews are progress updates, not reasons
+  to end the turn while authorized work remains. Prepare connected gated stages
+  as one concrete campaign where their inputs and limits can be specified.
 - Preserve user changes and never rewrite unrelated work.
 - Prefer deterministic providers locally and in CI. Live provider evaluation is
   an explicit, budgeted operation and never part of the normal test suite.
@@ -78,6 +82,15 @@ failures without repeated permission. Native stop-on-first-failure and recorded
 attempt, disk and budget limits remain in force. User instructions supersede
 repository and skill guidelines within higher-priority constraints; if a skill
 actually requires a pause, cite and quote its rule rather than inferring one.
+
+Request approval for the complete prepared scope: exact targets and artifacts,
+conditional stages, aggregate and per-stage limits, permitted recovery, stop
+conditions and cleanup. Once approved, continue between passing stages and carry
+out root evidence review without asking again. A checkpoint or phase boundary is
+not an approval gate. Do not silently reset exhausted allowances, add retries,
+waive failed prerequisites or treat a general request for autonomy as permission
+for new destructive/external actions. Complete all independent preparation before
+presenting the remaining gate, rather than asking approval for each small step.
 
 ## Repository conventions
 

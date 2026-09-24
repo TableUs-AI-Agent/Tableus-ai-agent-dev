@@ -201,3 +201,20 @@ context churn. Codex controls its request caching; no API-only cache setting or
 savings claim is added to project configuration. There is no application OpenAI
 API integration to migrate in this change; do not alter Gemini or its budgets.
 [Implementation, sources and verification](evidence/gpt6-development-workflow-2026-09-22/README.md).
+
+## Substantial objectives and combined approvals — adopted 2026-09-24
+
+The owner requested sustained work toward broader, complete objectives with fewer
+approval interruptions. Investigation, supported local fixes, verification,
+evidence review and documentation are one continuous authorized workflow.
+Individual tests, findings and commits are progress checkpoints, not completion
+or approval boundaries. Connected native stages should be prepared as one
+concrete campaign with explicit prerequisites and aggregate/per-stage limits;
+root inspection and passing stage transitions require no further confirmation.
+
+This changes how work is packaged and carried through, not what counts as evidence
+or authorization. Preserve exhausted native allowances, first-failure stops,
+exact candidate/device binding, unresolved failures, closed live budgets and the
+existing external/destructive gates. Complete independent work before returning
+with a concrete remaining gate. Native validation remains in its current task
+until that objective completes, as the owner separately instructed.
