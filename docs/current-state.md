@@ -243,14 +243,18 @@ query timed out at 30 seconds (measured 30.169s). No Settings launch or Maestro
 test ran; the revised visual hypothesis remains untested. Independent verification
 confirms all three targets Shutdown, no matching processes and idle ports. Ten
 files are retained; the frozen operator and prior evidence remain unchanged. P4's
-allowance is consumed, with no retry. [C1 preparation](evidence/native-replacement-validation-2026-09-21/n1-f1-c1-proposal.md)
-combines an exact-target Settings baseline, root visual review and a conditional
-full eleven-flow/five-phase offline run under one proposed approval. Retained
-query failures have no established root cause. New pure PID binding and retained
-process snapshots replace the launchctl query; this does not establish launchctl
-health. No new native operation has run. The workflow now requires substantial
-completed objectives and treats routine checkpoints as progress updates. Native
-validation remains in this task.
+allowance is consumed, with no retry. The approved [C1 campaign](evidence/native-replacement-validation-2026-09-21/n1-f1-c1-result.md)
+stopped before boot after 23.818s: `maestro --version` exceeded its 20s preflight
+cap. Zero Settings launches/UI flows; conditional offline stage not invoked.
+Cleanup confirms all three targets Shutdown, no matching/C1 group processes and
+idle test ports. Eighteen files are retained; application and frozen operator
+bytes are unchanged. Static inspection found dependency/update initialization
+before version-help detection. [C2 is prepared](evidence/native-replacement-validation-2026-09-21/n1-f1-c2-proposal.md)
+with a pure pinned-JAR version check so first actual CLI startup occurs in the
+logged flow. Focused mocks, static gates and one make-ready pass (296 JavaScript,
+98 backend, three skips) plus contract checks pass; 56 C2 and 74 C1 archived
+files match their hashes. No C2 invocation or proven stall fix is claimed. The workflow pursues substantial complete objectives and
+uses checkpoints as progress updates. Native validation remains in this task.
 Accepted native remains
 f94a1d9. Android still requires all iOS gates and fresh 40 GiB capacity;
 N2/live reads and canonical/auth/physical probes remain separately gated.

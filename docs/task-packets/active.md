@@ -1,4 +1,4 @@
-# Active packet: native replacement validation — C1 campaign prepared
+# Active packet: native replacement validation — C2 campaign prepared
 
 Native validation remains **incomplete**. P3-R1 reached XCTest HTTP startup and
 completed command metadata, but its blank screenshot leaves visual Settings
@@ -92,25 +92,34 @@ historical, not a future preflight. Ten files are retained under
 `runtime-execution-p4`; the frozen operator and prior artifacts remain unchanged.
 No application source or provider/deployment state changed.
 
-**P4 is consumed; no retry remains.** [C1 is prepared](../evidence/native-replacement-validation-2026-09-21/n1-f1-c1-proposal.md)
-from base `f77c37da0bde2653cddf8ac319a3b8e22b5b7c00`. Offline comparison found
-no established control-query cause. Target-scoped Settings-launch PID binding
-replaces the job-list lookup; it does not establish launchctl health. The frozen
-campaign joins one Settings baseline, root image review while Shutdown, and a
-conditional full eleven-flow/five-phase offline run. Proposed maximum: two boots,
-two explicit Settings launches, one Settings flow, one offline runner, no retries;
-420s + 2100s native-operation caps, excluding offline review dwell. Stage 2
-explicitly resets only the diagnostic TableUs app and retains its launchApp
-permission behavior. Both stages need one new campaign approval; none has run.
+**P4 and C1 are closed; no retry remains.** The owner approved C1 at
+`e3b0dbaf25cd480d262b693fef953499ddbd8699`. [C1 execution](../evidence/native-replacement-validation-2026-09-21/n1-f1-c1-result.md)
+stopped after 23.818s when `maestro --version` exceeded its 20s cap, before any
+boot, Settings launch or UI flow. The conditional offline stage never ran.
+Independent cleanup confirms all three targets Shutdown, no matching processes
+or C1 process-group members and idle ports. Eighteen files are retained with
+index `86fa10822a71c4bc5a9c8a6af37ae89d113779f0b2e8a20fc8ce32d42c6ec4ce`.
+No application, provider or deployed state changed. Host load/swap observations
+and missing partial command output do not establish the stall's cause.
 
-Preparation passed five binding fixture groups, 15 Settings mocks, eight offline
-mocks, seven synthetic evidence checks and five journal fixtures. `make ready`
-passed 295 JavaScript / 98 backend tests, three PostgreSQL skips; contract check
-has no drift. All 56 C1 archive files and 37 prior P4 files match their hashes.
-Archive index `b9659fb42a7f2ecf7c241c7455ea180a0d9a20da8fdf8d7af4522fe52e9c2bd8`;
-exact stage manifests, commands and required environment are in the structured
-proposal. Keep first-failure stops and fresh per-stage preflight. A passing stage
-or root image review requires no additional user checkpoint after campaign approval.
+Static inspection found dependency initialization and update-fetch scheduling
+before CLI version-help detection. [C2 is prepared](../evidence/native-replacement-validation-2026-09-21/n1-f1-c2-proposal.md):
+pure pinned-JAR version verification replaces the redundant CLI invocation in
+both stages. First actual CLI startup stays in the instrumented flow. C1 bytes,
+native limits, assertions, cleanup and root visual review are preserved; this is
+not a proven stall fix. The complete Settings/conditional eleven-flow offline
+campaign needs one new finite allowance: two boots/two Settings launches, one
+Settings flow/one offline runner, 420s + 2100s native operation time, no retries.
+It includes the diagnostic TableUs reset and inherited permission behavior; root
+image review and passing transitions need no further confirmation after approval.
+
+Four new static-identity fixture groups, 16 Settings mocks, nine offline mocks,
+seven synthetic evidence checks and five journal fixtures pass. One `make ready`
+passed 296 JavaScript / 98 backend tests, three PostgreSQL skips; contract checks
+show no drift. All 56 C2 and 74 C1 preparation/execution files match their hashes.
+C2 index `d2be61df14b6f57cf4c64c933dd1caa9e65fc3e968bd5c3ef68715629019b324`;
+exact manifests/commands/environment are in the structured proposal. Native
+execution remains stopped; no C2 invocation or new application acceptance.
 
 The owner requested substantial completed objectives on 2026-09-24. Continue
 through findings, local fixes, checks, integration and a concrete proposal; report
