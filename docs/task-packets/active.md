@@ -1,4 +1,4 @@
-# Active packet: native replacement validation — P3 preflight stopped
+# Active packet: native replacement validation — P3-R1 resumption prepared
 
 Native validation remains **incomplete**. T1 operator preparation is complete;
 P3 was approved and invoked once, then stopped before native actions because
@@ -55,19 +55,22 @@ attempts. Its capacity gate failed before output creation. Independent read-only
 verification confirmed all three targets Shutdown, no matching processes and
 idle test ports. Later capacity was 19.164 GiB, still below the 20 GiB gate.
 
-The [S2 cleanup scope](../evidence/native-replacement-validation-2026-09-21/f1-storage-s2-proposal.md)
-is prepared for explicit approval: seven exact Arc HTTP/code, Webpack, npm and
-React Native cache directories, 1.664 GiB allocated. Fresh inventory measured
-20.217 GiB free; capacity fluctuates and recovery is not guaranteed. Arc is running
-with open cache files; proposal includes one normal quit, no force quit, and skips
-Arc targets if it stays running. No cleanup or app quit has occurred. One operation,
-180 seconds, maximum2GiB of target allocation; identity/use checks and first-error
-stop. Preserve source/evidence, final builds, simulator data, sessions and Codex
-history/runtime/cache. No native retry is included. After approved cleanup, inspect
-fresh capacity before proposing any new bounded native operation.
+[S2 cleanup](../evidence/native-replacement-validation-2026-09-21/f1-storage-s2-result.md)
+completed in 15.082 seconds: normal Arc quit and four HTTP/code caches deleted (0.980 GiB
+allocated). Three developer caches were skipped because the guard falsely matched
+PodcastsWidget as a builder. They remain untouched; no retry or further cleanup.
+Independent postcheck found 26.245 GiB free, all four deleted paths absent, skipped
+identities unchanged, no Arc processes and 18 P3 archive hashes intact. Free-space
+increase exceeds deleted allocation; do not attribute it solely to deletion.
 
-Frozen P3 operator and original proposal JSON remain immutable. Startup hypothesis
-and previous native failures remain unresolved. Reuse unchanged preparation checks;
+The [P3-R1 proposal](../evidence/native-replacement-validation-2026-09-21/n1-f1-p3r1-proposal.md)
+is ready for explicit approval: one new invocation of the unchanged frozen P3
+operator on the same iOS 27 target; 420s total/60 cleanup, 240s flow/30 owned cleanup,
+fresh 20 GiB before boot/flow, stop at first failure, no TableUs run or automatic retry.
+Use new `runtime-execution-p3r1` approval/launch metadata; original output remains
+absent and internal operator labels remain F1-P3. Preserve the failed P3 receipt.
+Frozen operator and original proposal JSON are unchanged. Startup hypothesis and
+prior native failures remain unresolved. Reuse unchanged preparation checks;
 this evidence-only checkpoint needs no full-suite rerun.
 
 Astra owns orchestration, review and final acceptance; Sol handles bounded

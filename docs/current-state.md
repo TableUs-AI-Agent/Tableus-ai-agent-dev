@@ -213,10 +213,15 @@ approved and invoked once at c3b62c3, then stopped after 0.350 seconds: 17.70 Gi
 free was below the 20 GiB preflight gate. Zero boot/control/Maestro attempts ran;
 its startup hypothesis remains untested. Independent read-only verification
 confirmed all three targets Shutdown, no matching processes and idle test ports;
-later capacity was 19.164 GiB. No retry is authorized. The subsequent read-only
-[S2 storage proposal](evidence/native-replacement-validation-2026-09-21/f1-storage-s2-proposal.md)
-identifies seven exact disposable caches totaling1.664 GiB; free space was then
-20.217 GiB. Approval would include a normal Arc quit; no cleanup/app quit has run. Unchanged P3 preparation checks
+later capacity was 19.164 GiB. No retry is authorized. The approved
+[S2 cleanup](evidence/native-replacement-validation-2026-09-21/f1-storage-s2-result.md)
+quit Arc normally and removed four caches (0.980 GiB allocated) in 15.082 seconds. Three
+developer caches were skipped because the guard falsely matched PodcastsWidget;
+they remain untouched. Independent postcheck found 26.245 GiB free; larger free
+space gains cannot be attributed solely to deletion. All 18 frozen P3 archive
+hashes pass. [P3-R1](evidence/native-replacement-validation-2026-09-21/n1-f1-p3r1-proposal.md)
+proposes one unchanged-operator Settings-only resumption under the same 420-second / 20 GiB
+limits, awaiting approval. No new native operation ran. Unchanged P3 preparation checks
 (nine mocks, parser replay and full readiness 293 JS / 98 Python, three skips)
 are reused. The owner chose to keep incomplete native validation in this task.
 Accepted native remains

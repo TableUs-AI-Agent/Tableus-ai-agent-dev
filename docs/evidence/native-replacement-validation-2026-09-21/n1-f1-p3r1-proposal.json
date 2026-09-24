@@ -1,0 +1,105 @@
+{
+  "schema_version": 1,
+  "operation": "F1-P3-R1",
+  "status": "prepared_unapproved_unexecuted",
+  "preparation_base_commit": "f1cf6e7710133a0f235e60a4ff68e9f907f3e3f2",
+  "application_sha": "8972865893a3f018a064594457dc9cc664f8a61f",
+  "build_operator_sha": "16603dd0cf36d27b492e57a02d3c6c438a2563c4",
+  "completed_p3_preparation_commit": "c3b62c34be3b316d867afefa5a276117835cd4ea",
+  "previous_attempt": "P3 invoked once, failed capacity before native actions; preserve its receipt unchanged. This is a new operation, not restored allowance.",
+  "original_proposal_sha256": "453ce1a921934e5c51b2b22526cd8faf0e8c3555bb0f8f3b7b45b9eceec6e8bf",
+  "operator_bundle": "/Users/brianchei/repos/Tableus-ai-agent-dev/.artifacts/mobile/8972865893a3f018a064594457dc9cc664f8a61f/native-validation-f1/runtime-preparation-p3/operator",
+  "operator_manifest_sha256": "ea3ce98fb06d3fbcc5db8178691d0939a92a9ea0eac1b39820c7b7ecb199ec2e",
+  "driver_sha256": "f57a2135a1fd0870137b4edd3b14672d97d1e1bae153b2becd330f0b5573d80f",
+  "archive_index_sha256": "eb43139cd048081f485c4549b44c238446fb48ffb8db9786729942ee18a87aa3",
+  "command": [
+    "/opt/homebrew/opt/python@3.14/bin/python3.14",
+    "/Users/brianchei/repos/Tableus-ai-agent-dev/.artifacts/mobile/8972865893a3f018a064594457dc9cc664f8a61f/native-validation-f1/runtime-preparation-p3/operator/driver.py"
+  ],
+  "approval_environment": {
+    "TABLEUS_F1_P3_APPROVED": "1",
+    "TABLEUS_F1_P3_DEVICE_ID": "0EFFA766-DCDD-49E5-84B0-D3593B68709A",
+    "TABLEUS_F1_P3_MANIFEST_SHA256": "ea3ce98fb06d3fbcc5db8178691d0939a92a9ea0eac1b39820c7b7ecb199ec2e"
+  },
+  "device_id": "0EFFA766-DCDD-49E5-84B0-D3593B68709A",
+  "device_name": "TableUs-N1-F1-O3-iOS27-8972865",
+  "runtime": "iOS27.0/24A434",
+  "older_targets_must_remain_shutdown": [
+    "2408A54F-A1C5-4388-8B46-6A987FE3B578",
+    "CBB4FAB4-734C-413C-9F10-850329AC9A01"
+  ],
+  "limits": {
+    "total_seconds": 420,
+    "total_cleanup_reserve_seconds": 60,
+    "flow_seconds": 240,
+    "flow_cleanup_reserve_seconds": 30,
+    "control_query_seconds": 30,
+    "postflow_observation_seconds": 5,
+    "host_process_query_seconds": 5
+  },
+  "max_operations": 1,
+  "max_boots": 1,
+  "max_control_queries": 1,
+  "max_maestro_invocations": 1,
+  "min_free_gib_before_boot_and_flow": 20,
+  "settings_flow": {
+    "source": "Byte-identical P2 settings-1.yml",
+    "sha256": "c14ad3ac7cdfe4f99facfff070f3c40abe80a6d1471e6a07425ae6dbfadf68eb",
+    "app_id": "com.apple.Preferences",
+    "actions": [
+      "launch without clearing state",
+      "assert Settings title with unchanged 5000ms timeout",
+      "retain settings-probe-1 screenshot"
+    ],
+    "max_maestro_invocations": 1,
+    "max_boots": 1,
+    "max_control_queries": 1,
+    "automatic_retry": false,
+    "downstream_continuation": false
+  },
+  "preflight": [
+    "approved exact manifest and files",
+    "exact target/runtime/Xcode/Maestro inputs",
+    "both older targets Shutdown before boot and flow",
+    "fresh output absent",
+    ">=20GiB free before boot and flow",
+    "ports7999/8000/8001 idle",
+    "unique SpringBoard/launchd_sim identity and no unexpected TableUs",
+    "full240s flow window remains inside420s total with60s final cleanup reserve"
+  ],
+  "stop_conditions": [
+    "first required preflight/command failure",
+    "startup failure marker",
+    "target/platform identity change or unexpected TableUs",
+    "relevant target SpringBoard/TableUs crash",
+    "UI assertion or five-command evidence failure",
+    "capacity/evidence failure",
+    "interrupt or deadline"
+  ],
+  "cleanup": "Snapshot before child stop; owned group and freshly proven per-PID collectors within flow deadline; retain Settings terminate/shutdown outcomes; confirm target Shutdown, idle ports, absent known parent/SpringBoard/runner and target/output-path processes. Missing proof fails acceptance.",
+  "fresh_output": "/Users/brianchei/repos/Tableus-ai-agent-dev/.artifacts/mobile/8972865893a3f018a064594457dc9cc664f8a61f/native-validation-f1/test-ios-settings-platform-probe-03",
+  "execution_receipt_directory": "/Users/brianchei/repos/Tableus-ai-agent-dev/.artifacts/mobile/8972865893a3f018a064594457dc9cc664f8a61f/native-validation-f1/runtime-execution-p3r1",
+  "receipt_binding": "Unchanged internal operator labels still say F1-P3. External P3-R1 approval/launch receipt must bind this invocation and output by hashes; do not overwrite runtime-execution-p3 or any older evidence.",
+  "scope": "One Settings-only iOS27 startup probe, no TableUs install/launch, backend/proxy, newdevice, deletion, toolupgrade, downstream continuation or retry.",
+  "tool_pins": {
+    "maestro_version": "2.8.0",
+    "maestro_launcher_sha256": "78c82065869bbabf4659e52284defd346de897d58675c6ba1dc7c70c12aed07f",
+    "maestro_ios_driver_jar_sha256": "10fcf5f711ecd9f53d571e0666c7f2cb3828aa83c4c74c78da0747cd13a8294b",
+    "xcode_version": "27.0",
+    "xcode_build": "27A266a",
+    "xcode_version_plist_sha256": "99aa0f4ffa738d03c9d86b273745d4a3945c7cdc7462221033fb807463d895e9",
+    "historical_jar_identity_claimed": false
+  },
+  "preparation_checks": "18 unchanged frozen archive hashes verified; application/tooling unchanged. Reuse original9mocks/parser/full readiness. Output and new execution receipt directory absent.",
+  "latest_capacity_observation": {
+    "free_gib": 26.245,
+    "at": "2026-09-24T04:15:32.625163+00:00",
+    "fresh_preflight_still_required": true
+  },
+  "outcome_interpretation": {
+    "pass": "One minimal iOS27 startup/Settings/cleanup baseline; no cause or TableUs acceptance.",
+    "same_bootstrap_failure": "TableUs execution/offline services not necessary for this recurrence; root cause still unknown.",
+    "other_or_incomplete": "Inconclusive; retain and stop without retry."
+  },
+  "unresolved": "Original refresh, O1/O2 crashes, historical AppHang, iOS27 app acceptance, canonical/auth, links/exports, Android and N2 remain. T1 diagnostic layout is itself unverified natively. No prior budget resets."
+}

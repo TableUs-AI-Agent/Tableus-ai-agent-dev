@@ -1,0 +1,160 @@
+{
+  "schema_version": 1,
+  "scope": "F1-S2",
+  "status": "completed_with_skips",
+  "approval": "Owner explicitly approved seven-path cleanup including normal Arc quit; no force quit or native retry.",
+  "proposal_commit": "f1cf6e7710133a0f235e60a4ff68e9f907f3e3f2",
+  "proposal_sha256": "86cab1373876b5ac6e629ff03efac8c1bf252c8e7c82c4ec95a07f8e5c2ebff1",
+  "started_at": "2026-09-24T04:14:02.417897+00:00",
+  "finished_at": "2026-09-24T04:14:17.500017+00:00",
+  "elapsed_seconds": 15.082,
+  "targets": [
+    {
+      "path": "/Users/brianchei/Library/Caches/Arc/User Data/Default/Cache",
+      "allocated_kib_before": 909904,
+      "status": "deleted",
+      "files": 11501,
+      "directories": 4,
+      "absent_after": true
+    },
+    {
+      "path": "/Users/brianchei/Library/Caches/Arc/User Data/Default/Code Cache",
+      "allocated_kib_before": 96736,
+      "status": "deleted",
+      "files": 2262,
+      "directories": 5,
+      "absent_after": true
+    },
+    {
+      "path": "/Users/brianchei/Library/Caches/Arc/User Data/Profile 4/Cache",
+      "allocated_kib_before": 20048,
+      "status": "deleted",
+      "files": 393,
+      "directories": 4,
+      "absent_after": true
+    },
+    {
+      "path": "/Users/brianchei/Library/Caches/Arc/User Data/Profile 4/Code Cache",
+      "allocated_kib_before": 608,
+      "status": "deleted",
+      "files": 142,
+      "directories": 5,
+      "absent_after": true
+    },
+    {
+      "path": "/Users/brianchei/.codex/worktrees/ea6d/Tableus-ai-agent-dev/frontend/.next/cache/webpack",
+      "allocated_kib_before": 445316,
+      "status": "skipped_builder_running",
+      "files": 0,
+      "directories": 0,
+      "builders": [
+        "1314 /System/Applications/Podcasts.app/Contents/PlugIns/PodcastsWidget.appex/Contents/MacOS/PodcastsWidget"
+      ]
+    },
+    {
+      "path": "/Users/brianchei/.npm/_cacache",
+      "allocated_kib_before": 59876,
+      "status": "skipped_builder_running",
+      "files": 0,
+      "directories": 0,
+      "builders": [
+        "1314 /System/Applications/Podcasts.app/Contents/PlugIns/PodcastsWidget.appex/Contents/MacOS/PodcastsWidget"
+      ]
+    },
+    {
+      "path": "/Users/brianchei/Library/Caches/ReactNative",
+      "allocated_kib_before": 212088,
+      "status": "skipped_builder_running",
+      "files": 0,
+      "directories": 0,
+      "builders": [
+        "1314 /System/Applications/Podcasts.app/Contents/PlugIns/PodcastsWidget.appex/Contents/MacOS/PodcastsWidget"
+      ]
+    }
+  ],
+  "deleted_target_count": 4,
+  "skipped_target_count": 3,
+  "deleted_allocated_gib": 0.98,
+  "remeasured_total_allocated_gib": 1.664,
+  "free_gib_before": 20.209,
+  "free_gib_immediate_after": 22.236,
+  "free_gib_independent_postcheck": 26.245,
+  "postcheck_at": "2026-09-24T04:15:32.625163+00:00",
+  "free_space_interpretation": "Measured availability fluctuates. Deleted allocation is about0.980GiB; do not attribute the larger free-space increase solely to deletion.",
+  "arc_quit": "One normal AppleScript quit succeeded; no Arc processes at postcheck. No force quit or unsaved-work prompt dismissal.",
+  "skip_cause": "Bug in one-off cleanup guard: substring /pod matched Apple PodcastsWidget, falsely classified as a builder. The three developer caches were skipped; actual builder activity was not established. No retry or follow-up deletion.",
+  "private_archive": "/Users/brianchei/repos/Tableus-ai-agent-dev/.artifacts/mobile/8972865893a3f018a064594457dc9cc664f8a61f/native-validation-f1/storage-execution-s2",
+  "private_archive_index_sha256": "a0bcde6bb8e54126186fee9a5eac8e94bfd72eefc4751b54cb4cc77cb9366c86",
+  "private_archive_files": 7,
+  "verification": {
+    "postcheck": {
+      "observed_at": "2026-09-24T04:15:32.625163+00:00",
+      "read_only_verification": true,
+      "targets": [
+        {
+          "path": "/Users/brianchei/Library/Caches/Arc/User Data/Default/Cache",
+          "exists": false,
+          "parent_exists": true,
+          "status": "deleted"
+        },
+        {
+          "path": "/Users/brianchei/Library/Caches/Arc/User Data/Default/Code Cache",
+          "exists": false,
+          "parent_exists": true,
+          "status": "deleted"
+        },
+        {
+          "path": "/Users/brianchei/Library/Caches/Arc/User Data/Profile 4/Cache",
+          "exists": false,
+          "parent_exists": true,
+          "status": "deleted"
+        },
+        {
+          "path": "/Users/brianchei/Library/Caches/Arc/User Data/Profile 4/Code Cache",
+          "exists": false,
+          "parent_exists": true,
+          "status": "deleted"
+        },
+        {
+          "path": "/Users/brianchei/.codex/worktrees/ea6d/Tableus-ai-agent-dev/frontend/.next/cache/webpack",
+          "exists": true,
+          "parent_exists": true,
+          "status": "skipped_builder_running",
+          "same_identity": true
+        },
+        {
+          "path": "/Users/brianchei/.npm/_cacache",
+          "exists": true,
+          "parent_exists": true,
+          "status": "skipped_builder_running",
+          "same_identity": true
+        },
+        {
+          "path": "/Users/brianchei/Library/Caches/ReactNative",
+          "exists": true,
+          "parent_exists": true,
+          "status": "skipped_builder_running",
+          "same_identity": true
+        }
+      ],
+      "arc_processes": [],
+      "free_bytes": 28180742144,
+      "preserved_paths_exist": {
+        "/Users/brianchei/.codex/worktrees/ea6d/Tableus-ai-agent-dev/frontend/.next/server": true,
+        "/Users/brianchei/.codex/worktrees/ea6d/Tableus-ai-agent-dev/frontend/.next/static": true,
+        "/Users/brianchei/repos/Tableus-ai-agent-dev/.artifacts/mobile/8972865893a3f018a064594457dc9cc664f8a61f/native-validation-f1": true,
+        "/Users/brianchei/.codex/worktrees/ea6d/Tableus-ai-agent-dev/.git": true,
+        "/Users/brianchei/Library/Developer/CoreSimulator/Devices": true,
+        "/Users/brianchei/.codex/sessions": true
+      },
+      "p3_preparation_archive_hashes_verified": 18,
+      "application_source_diff": "",
+      "review": "Luna independently verified scope and identified /pod matcher false-positive against PodcastsWidget. Four targets deleted; three skipped; no claim of actual builder activity; no automatic follow-up deletion."
+    },
+    "source": "No application/executable source diff since T1; original P3 and S2 proposal JSON unchanged.",
+    "fresh": "Receipt accounting, exact path absence/preserved parents, skipped identities, P3 archive18file hashes, JSON/local links; Luna independent audit.",
+    "reused": "Unchanged P3 preparation nine mocks, parser replay and full make ready293JS/98Python with3skips. No suite rerun."
+  },
+  "native_attempts": 0,
+  "remaining": "S2 is closed with three approved skips; no further cleanup. P3 first-failure allowance remains consumed. Fresh native resumption needs approval."
+}

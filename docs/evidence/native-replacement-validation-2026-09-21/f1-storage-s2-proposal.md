@@ -1,6 +1,7 @@
 # F1-S2 — proposed cache recovery
 
-**Prepared, not approved or executed.** Following the [P3 capacity stop](n1-f1-p3-result.md),
+**Historical proposal: approved and completed with three skips.** See the
+[execution result](f1-storage-s2-result.md); original proposal JSON is unchanged. Following the [P3 capacity stop](n1-f1-p3-result.md),
 a read-only inventory measured **20.217 GiB free** and **1.664 GiB**
 allocated to the seven disposable caches below. Storage has fluctuated without
 our deleting anything. Recovered space is not guaranteed; current headroom above
