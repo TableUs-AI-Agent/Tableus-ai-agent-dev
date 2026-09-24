@@ -1,0 +1,216 @@
+{
+  "schema_version": 1,
+  "application_sha": "98f082088fe76c2768178302e8b7dca6beec29ef",
+  "base_sha": "6ed12793253a285b0890d6358ab5f60c551b3615",
+  "branch": "codex/account-lifecycle-clients",
+  "worktree": "/Users/brianchei/.codex/worktrees/account-lifecycle-clients/Tableus-ai-agent-dev",
+  "checks": {
+    "make_ready": {
+      "result": "passed",
+      "javascript_tests": 314,
+      "python_passed": 121,
+      "postgresql_only_skipped": 4,
+      "attempts": 2,
+      "first_failure": "Two obsolete source assertions for legacy deletion/auth routing; replaced or updated; full rerun passed."
+    },
+    "browser_demo": {
+      "result": "passed",
+      "tests": 3,
+      "provenance": "Sol delegated run; screenshots independently inspected by root; config/spec committed"
+    },
+    "browser_auth_mode": {
+      "result": "passed",
+      "tests": 4,
+      "provenance": "Root final run after strengthening delayed-response assertion; localhost mocks only"
+    },
+    "contract_drift": "passed",
+    "final_patch_whitespace": "passed",
+    "supplemental": "After make-ready, only the hosted browser race assertion was strengthened; its suite and frontend typecheck/focused lint passed. Application files unchanged."
+  },
+  "source_files": [
+    {
+      "path": "/Users/brianchei/.codex/worktrees/account-lifecycle-clients/Tableus-ai-agent-dev/backend/tableus/api.py",
+      "sha256": "acf06b9503f48c5c351eda74212949e6892c8bfa31665f001ec75bf6f0773fe4",
+      "bytes": 57511
+    },
+    {
+      "path": "/Users/brianchei/.codex/worktrees/account-lifecycle-clients/Tableus-ai-agent-dev/backend/tableus/schemas.py",
+      "sha256": "32bcc9f1e49756be1df0560116536523b72fbd911c6c4575fd8d9b264e361015",
+      "bytes": 8279
+    },
+    {
+      "path": "/Users/brianchei/.codex/worktrees/account-lifecycle-clients/Tableus-ai-agent-dev/backend/tests/test_account_lifecycle.py",
+      "sha256": "b88db497f36f7e190eb3eed9783ed1d82f7fdffab08a2edb5bafc2ba5267b245",
+      "bytes": 19318
+    },
+    {
+      "path": "/Users/brianchei/.codex/worktrees/account-lifecycle-clients/Tableus-ai-agent-dev/docs/openapi.json",
+      "sha256": "8312074a005a9f773d7666148b12aad0b1c8958a814c76f6463f09e3a1641a0a",
+      "bytes": 126506
+    },
+    {
+      "path": "/Users/brianchei/.codex/worktrees/account-lifecycle-clients/Tableus-ai-agent-dev/frontend/app/account/page.tsx",
+      "sha256": "a6b4a36dbe0b329af502ab616ae2949e39f4c8389347affdf6f83966a8fee576",
+      "bytes": 24142
+    },
+    {
+      "path": "/Users/brianchei/.codex/worktrees/account-lifecycle-clients/Tableus-ai-agent-dev/frontend/app/components/account-lifecycle-gate.tsx",
+      "sha256": "8d4f90c1f0be7fc7f58b44b1b58d6dce04a83dbbfb8a20854bb5bd7123fce0f8",
+      "bytes": 915
+    },
+    {
+      "path": "/Users/brianchei/.codex/worktrees/account-lifecycle-clients/Tableus-ai-agent-dev/frontend/app/context/user-context.tsx",
+      "sha256": "20f9290b89ef5b59f97d422b528fdf859921bd349516ea3e25a74d56c88f03ed",
+      "bytes": 13180
+    },
+    {
+      "path": "/Users/brianchei/.codex/worktrees/account-lifecycle-clients/Tableus-ai-agent-dev/frontend/app/layout.tsx",
+      "sha256": "96cd081f0d4214e9f4768fb254502aaf28f749dfe45d95985224cafc55852e00",
+      "bytes": 811
+    },
+    {
+      "path": "/Users/brianchei/.codex/worktrees/account-lifecycle-clients/Tableus-ai-agent-dev/frontend/app/lib/account-lifecycle-hosted.playwright.config.ts",
+      "sha256": "f0248e2a688f7a0e0dee24beb815256ea38a886b96b19f9ef296927b66c4c086",
+      "bytes": 672
+    },
+    {
+      "path": "/Users/brianchei/.codex/worktrees/account-lifecycle-clients/Tableus-ai-agent-dev/frontend/app/lib/account-lifecycle-hosted.spec.ts",
+      "sha256": "a6c9fe236752bba2bd9ecb866c2df3f3fcecad428ae9818bbed75c47ae8552c1",
+      "bytes": 7350
+    },
+    {
+      "path": "/Users/brianchei/.codex/worktrees/account-lifecycle-clients/Tableus-ai-agent-dev/frontend/app/lib/account-lifecycle.playwright.config.ts",
+      "sha256": "f9c70ca0016b74724cace1de46ce6a35ac150ef9f5ecca4b1572db92022d62d6",
+      "bytes": 506
+    },
+    {
+      "path": "/Users/brianchei/.codex/worktrees/account-lifecycle-clients/Tableus-ai-agent-dev/frontend/app/lib/account-lifecycle.spec.ts",
+      "sha256": "e5944c65f1bdfa85d24a18d8e6117ff4a0cf006d9ef541821020a72d906a7fc5",
+      "bytes": 7710
+    },
+    {
+      "path": "/Users/brianchei/.codex/worktrees/account-lifecycle-clients/Tableus-ai-agent-dev/frontend/app/lib/web-session-resilience.test.ts",
+      "sha256": "8baee06adeefdbf572c8f2d034d5c36d0a95387b9c0b3992310986926ec56097",
+      "bytes": 1679
+    },
+    {
+      "path": "/Users/brianchei/.codex/worktrees/account-lifecycle-clients/Tableus-ai-agent-dev/mobile/app/_layout.tsx",
+      "sha256": "5292fed712597bcb801b147c53baa73cf961fe6aceec0f26d6ea994c8b648f74",
+      "bytes": 2989
+    },
+    {
+      "path": "/Users/brianchei/.codex/worktrees/account-lifecycle-clients/Tableus-ai-agent-dev/mobile/app/account.tsx",
+      "sha256": "972c815b4f01409875e1af3b7adde6807b22eeff6451f38768476c71a323f3ce",
+      "bytes": 17488
+    },
+    {
+      "path": "/Users/brianchei/.codex/worktrees/account-lifecycle-clients/Tableus-ai-agent-dev/mobile/app/index.tsx",
+      "sha256": "f3203b4b796340861430673c4af8ad940236529e14b46001dcc91e1035868cf5",
+      "bytes": 717
+    },
+    {
+      "path": "/Users/brianchei/.codex/worktrees/account-lifecycle-clients/Tableus-ai-agent-dev/mobile/src/account-lifecycle.component.test.tsx",
+      "sha256": "ee8bc6dd1842d41e631f0b89a0f7ed83a311327839ad9c2274cecb0a4dbfafeb",
+      "bytes": 12152
+    },
+    {
+      "path": "/Users/brianchei/.codex/worktrees/account-lifecycle-clients/Tableus-ai-agent-dev/mobile/src/lib/account-controls.ts",
+      "sha256": "2903dbe244aa0337e9a3f2c4eb576adb24c98add9464f7000fb01c9e15f02c89",
+      "bytes": 1416
+    },
+    {
+      "path": "/Users/brianchei/.codex/worktrees/account-lifecycle-clients/Tableus-ai-agent-dev/mobile/src/offline-safeguards.test.mts",
+      "sha256": "2cabc96ea9b4cc3dddc390d5ca038c1917f06eb0f3df85788ec3c3c97fda6dd0",
+      "bytes": 3169
+    },
+    {
+      "path": "/Users/brianchei/.codex/worktrees/account-lifecycle-clients/Tableus-ai-agent-dev/mobile/src/providers/auth-provider.component.test.tsx",
+      "sha256": "188d0105992908618f80e3aa92062ab6c4ec0b953413cfbd7f47e23d094e419a",
+      "bytes": 14138
+    },
+    {
+      "path": "/Users/brianchei/.codex/worktrees/account-lifecycle-clients/Tableus-ai-agent-dev/mobile/src/providers/auth-provider.tsx",
+      "sha256": "71e784ae005aef506e526a55f83942b38d68c58df864d531a804cde2520430ca",
+      "bytes": 17968
+    },
+    {
+      "path": "/Users/brianchei/.codex/worktrees/account-lifecycle-clients/Tableus-ai-agent-dev/mobile/src/verified-links-safeguards.test.mts",
+      "sha256": "342465603bcc65d1879f19c4c127bb354161b872c10a192165844c9a6d7a6567",
+      "bytes": 1734
+    },
+    {
+      "path": "/Users/brianchei/.codex/worktrees/account-lifecycle-clients/Tableus-ai-agent-dev/packages/api-client/src/client.test.ts",
+      "sha256": "6870b81f402990c76a9693a5c9e0fad61ff987d6501e115e7ce693026fbb44bc",
+      "bytes": 20176
+    },
+    {
+      "path": "/Users/brianchei/.codex/worktrees/account-lifecycle-clients/Tableus-ai-agent-dev/packages/api-client/src/index.ts",
+      "sha256": "c51e2bcbd747f6ff96d234a4044898d13b7c54f51ff65df7001efa596eba3904",
+      "bytes": 8086
+    },
+    {
+      "path": "/Users/brianchei/.codex/worktrees/account-lifecycle-clients/Tableus-ai-agent-dev/packages/api-client/src/schema.ts",
+      "sha256": "7ad0e2a39e967ef7777e92e8330afb74a55175192eba6b00f65977a90a5e0355",
+      "bytes": 96868
+    },
+    {
+      "path": "/Users/brianchei/.codex/worktrees/account-lifecycle-clients/Tableus-ai-agent-dev/packages/domain/src/account-lifecycle.ts",
+      "sha256": "9145face4dd464aa447faabbf5682b54097d4f49113bf9d5a0884d070e9fa39a",
+      "bytes": 720
+    },
+    {
+      "path": "/Users/brianchei/.codex/worktrees/account-lifecycle-clients/Tableus-ai-agent-dev/packages/domain/src/index.ts",
+      "sha256": "1a658699d326d8db90e97d38ed8d66668f24966b85a9f4acd556234c0f09b373",
+      "bytes": 3139
+    }
+  ],
+  "accepted_artifacts": [
+    {
+      "path": "/Users/brianchei/.codex/artifacts/tableus/account-lifecycle-clients-2026-09-24/make-ready-final.log",
+      "sha256": "72e47ce3ca563974d052bc99a3a76e297d942cdecd74bf88cb70af343a7e34c3",
+      "bytes": 62210
+    },
+    {
+      "path": "/Users/brianchei/.codex/artifacts/tableus/account-lifecycle-clients-2026-09-24/contract-check.log",
+      "sha256": "ea43b9981ff0b977bff04f7a1fc8d290282dfdf69a3071491f805e6851163412",
+      "bytes": 388
+    },
+    {
+      "path": "/Users/brianchei/.codex/artifacts/tableus/account-lifecycle-clients-2026-09-24/browser-hosted-final.log",
+      "sha256": "b2003838d7a0bfe14e02c911a31d5cc2b93deb6ad481550cac448e569bfc112e",
+      "bytes": 1492
+    },
+    {
+      "path": "/Users/brianchei/.codex/artifacts/tableus/account-lifecycle-clients-2026-09-24/final-web-lint.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/Users/brianchei/.codex/artifacts/tableus/account-lifecycle-clients-2026-09-24/account-overview.png",
+      "sha256": "3070a19c238be75cb4db25e71e42c44b4c572c196a09d5f126558adaedf4730e",
+      "bytes": 125315
+    },
+    {
+      "path": "/Users/brianchei/.codex/artifacts/tableus/account-lifecycle-clients-2026-09-24/account-plan-control.png",
+      "sha256": "924188e7ae01a4476c40003c32ff23f3c3fa777ab3d68d1c5a7fae7a3403a529",
+      "bytes": 128828
+    },
+    {
+      "path": "/Users/brianchei/.codex/artifacts/tableus/account-lifecycle-clients-2026-09-24/account-pending.png",
+      "sha256": "e46853243ab639b75c5b0c9dca7fbef6812cce45753fcb51022d8231097688a3",
+      "bytes": 96495
+    },
+    {
+      "path": "/Users/brianchei/.codex/artifacts/tableus/account-lifecycle-clients-2026-09-24/hosted-pending.png",
+      "sha256": "fb18cd82334a9655ae3431069ca0bb34b1937d1894d274aa8c04a911f0270550",
+      "bytes": 91788
+    }
+  ],
+  "limits": [
+    "No native compilation/device/simulator or real Auth/provider calls",
+    "No PostgreSQL service: lock/race/role acceptance still required",
+    "No deployment, merge, hosted migration, secrets, worker provisioning, store or beta activation",
+    "Feature remains disabled by default",
+    "Earlier diagnostic logs and paint-incomplete account-managed.png remain private but are not final acceptance evidence"
+  ]
+}

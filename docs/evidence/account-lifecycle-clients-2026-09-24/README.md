@@ -32,8 +32,9 @@ Shared client regressions reject changed credentials on initial dispatch and
 401 replay, and cover non-browser base64 decoding. Backend tests deny unrelated
 organizer reads and prove management reads/transfers never invoke Places.
 Native validation remains with `Prepare native replacement validation`; its
-candidate is unchanged here. Exact source binding is in the final handoff and
-verification manifest.
+candidate is unchanged here. Application `98f082088fe76c2768178302e8b7dca6beec29ef` is bound in the
+[handoff](../../handoffs/2026-09-24-account-lifecycle-clients.md) and
+[verification manifest](verification.json).
 
 Private local logs/screenshots are retained at
 `/Users/brianchei/.codex/artifacts/tableus/account-lifecycle-clients-2026-09-24`.

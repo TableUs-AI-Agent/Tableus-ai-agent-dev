@@ -53,7 +53,7 @@ server credential, policy review and affected release acceptance are complete.
 Implementation, root review and local deterministic verification are complete.
 One passing make-ready after correcting obsolete legacy test expectations: 314
 JavaScript / 121 Python, four PostgreSQL-only skips. Seven mocked Chrome checks
-cover account management and hosted-mode session restoration. The final handoff
-binds exact source and evidence; no native or hosted acceptance is claimed.
+cover account management and hosted-mode session restoration. [Handoff](../handoffs/2026-09-24-account-lifecycle-clients.md)
+binds application `98f082088fe76c2768178302e8b7dca6beec29ef` and exact evidence; no native or hosted acceptance is claimed.
 Next bounded objective: PostgreSQL lifecycle/role verification and concrete
 trusted-runner readiness, preserving disabled feature and all external gates.
