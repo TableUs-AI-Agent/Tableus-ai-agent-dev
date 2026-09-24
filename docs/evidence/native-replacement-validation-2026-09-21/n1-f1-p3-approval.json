@@ -1,0 +1,19 @@
+{
+  "recorded_at": "2026-09-24T04:00:52.768156+00:00",
+  "amendment": "F1-P3",
+  "approval": "User explicitly replied approve to the concrete P3 proposal in this task.",
+  "proposal_commit": "c3b62c34be3b316d867afefa5a276117835cd4ea",
+  "proposal_sha256": "453ce1a921934e5c51b2b22526cd8faf0e8c3555bb0f8f3b7b45b9eceec6e8bf",
+  "operator_manifest_sha256": "ea3ce98fb06d3fbcc5db8178691d0939a92a9ea0eac1b39820c7b7ecb199ec2e",
+  "scope": "One proposed Settings-only operation; exact target, one boot/control/Maestro,420s total incl60 cleanup,240s flow incl30 owned cleanup; first failure stops; no downstream or retry.",
+  "limits": {
+    "total_seconds": 420,
+    "total_cleanup_reserve_seconds": 60,
+    "flow_seconds": 240,
+    "flow_cleanup_reserve_seconds": 30,
+    "control_query_seconds": 30,
+    "postflow_observation_seconds": 5,
+    "host_process_query_seconds": 5
+  },
+  "source_files_verified": 18
+}

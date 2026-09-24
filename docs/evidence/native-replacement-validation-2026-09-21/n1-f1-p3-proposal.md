@@ -1,6 +1,8 @@
 # F1-P3 — one Settings-only iOS 27 startup baseline
 
-**Preparation only; unapproved and unexecuted.** [O5](n1-f1-o5-result.md)
+**Historical proposal: subsequently approved and invoked once; stopped at the
+capacity preflight.** See the [execution result](n1-f1-p3-result.md). The original
+proposal JSON remains immutable. [O5](n1-f1-o5-result.md)
 never reached UI commands. [T1](n1-f1-t1-result.md) now provides startup
 observation and bounded cleanup but does not fix the initialization stall.
 This proposal asks whether the retained iOS 27 target can bootstrap the pinned

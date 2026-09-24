@@ -208,14 +208,15 @@ does not cover them. O5 is consumed. [T1 local operator preparation](evidence/na
 now detects startup failure, retains diagnostics and bounds cleanup to proven
 owned collectors. Synthetic/mocked checks and a structural O5 file replay pass;
 its native entry points are disabled. The underlying stall remains unresolved.
-[P3](evidence/native-replacement-validation-2026-09-21/n1-f1-p3-proposal.md) is now
-prepared and verified for one Settings-only startup baseline on the retained
-iOS 27 target, with no TableUs run. Nine mocked checks, a retained P2 parser
-replay and one fresh full readiness pass (293 JS / 98 backend Python, three
-PostgreSQL skips) pass. The proposed 420-second operation/240-second flow window
-needs explicit approval; no new native attempt or timeout change has executed.
-The owner chose to keep native validation in this task; the active packet is
-condensed with linked history for smaller routine context.
+[P3](evidence/native-replacement-validation-2026-09-21/n1-f1-p3-result.md) was
+approved and invoked once at c3b62c3, then stopped after 0.350 seconds: 17.70 GiB
+free was below the 20 GiB preflight gate. Zero boot/control/Maestro attempts ran;
+its startup hypothesis remains untested. Independent read-only verification
+confirmed all three targets Shutdown, no matching processes and idle test ports;
+later capacity was 19.164 GiB. No retry is authorized. Next prepare a concrete
+storage recovery scope without deleting anything. Unchanged P3 preparation checks
+(nine mocks, parser replay and full readiness 293 JS / 98 Python, three skips)
+are reused. The owner chose to keep incomplete native validation in this task.
 Accepted native remains
 f94a1d9. Android still requires all iOS gates and fresh 40 GiB capacity;
 N2/live reads and canonical/auth/physical probes remain separately gated.
