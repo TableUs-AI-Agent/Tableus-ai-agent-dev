@@ -5,6 +5,7 @@ from enum import StrEnum
 from sqlalchemy import (
     JSON,
     Boolean,
+    CheckConstraint,
     DateTime,
     Float,
     ForeignKey,
@@ -41,6 +42,27 @@ class Profile(Base):
     taste_profile: Mapped[str] = mapped_column(Text, default="")
     share_taste: Mapped[bool] = mapped_column(Boolean, default=False)
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=now_utc)
+
+
+class AccountDeletion(Base):
+    """Private durable deletion queue and minimal completed tombstone."""
+
+    __tablename__ = "account_deletions"
+    __table_args__ = (
+        Index("ix_account_deletions_due", "status", "next_retry_at"),
+        CheckConstraint("status IN ('pending', 'completed')", name="ck_account_deletions_status"),
+    )
+    subject_hash: Mapped[str] = mapped_column(String(64), primary_key=True)
+    auth_subject: Mapped[str | None] = mapped_column(String(64), nullable=True)
+    status: Mapped[str] = mapped_column(String(16), default="pending")
+    requested_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=now_utc)
+    completed_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True), nullable=True)
+    attempts: Mapped[int] = mapped_column(Integer, default=0)
+    next_retry_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True), nullable=True)
+    lease_token: Mapped[str | None] = mapped_column(String(36), nullable=True)
+    lease_until: Mapped[datetime | None] = mapped_column(DateTime(timezone=True), nullable=True)
+    last_error_code: Mapped[str | None] = mapped_column(String(32), nullable=True)
+    needs_attention: Mapped[bool] = mapped_column(Boolean, default=False)
 
 
 class Invite(Base):

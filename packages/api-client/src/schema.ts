@@ -432,6 +432,24 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/me/deletion": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Full Deletion Status */
+        get: operations["full_deletion_status_api_v1_me_deletion_get"];
+        put?: never;
+        /** Request Full Deletion */
+        post: operations["request_full_deletion_api_v1_me_deletion_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v1/me/export": {
         parameters: {
             query?: never;
@@ -478,7 +496,8 @@ export interface paths {
         get: operations["get_plan_api_v1_plans__plan_id__get"];
         put?: never;
         post?: never;
-        delete?: never;
+        /** Delete Sole Plan */
+        delete: operations["delete_sole_plan_api_v1_plans__plan_id__delete"];
         options?: never;
         head?: never;
         patch?: never;
@@ -597,6 +616,23 @@ export interface paths {
         put?: never;
         /** Rotate Share Token */
         post: operations["rotate_share_token_api_v1_plans__plan_id__share_token_rotate_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/plans/{plan_id}/transfer-ownership": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Transfer Plan Ownership */
+        post: operations["transfer_plan_ownership_api_v1_plans__plan_id__transfer_ownership_post"];
         delete?: never;
         options?: never;
         head?: never;
@@ -756,6 +792,11 @@ export interface components {
              * @constant
              */
             deletion_scope: "application_profile";
+            /**
+             * Full Deletion Available
+             * @default false
+             */
+            full_deletion_available: boolean;
             /** Organized Plan Count */
             organized_plan_count: number;
             /**
@@ -764,6 +805,30 @@ export interface components {
              * @constant
              */
             supabase_auth_removal: "operator_required";
+        };
+        /** AccountDeletionOut */
+        AccountDeletionOut: {
+            /** Completed At */
+            completed_at?: string | null;
+            /** Last Error Code */
+            last_error_code?: string | null;
+            /**
+             * Needs Attention
+             * @default false
+             */
+            needs_attention: boolean;
+            /** Next Retry At */
+            next_retry_at?: string | null;
+            /**
+             * Requested At
+             * Format: date-time
+             */
+            requested_at: string;
+            /**
+             * Status
+             * @enum {string}
+             */
+            status: "pending" | "completed";
         };
         /** AccountExportConnection */
         AccountExportConnection: {
@@ -946,6 +1011,14 @@ export interface components {
         /** Envelope[AccountControlOut] */
         Envelope_AccountControlOut_: {
             data: components["schemas"]["AccountControlOut"];
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+        };
+        /** Envelope[AccountDeletionOut] */
+        Envelope_AccountDeletionOut_: {
+            data: components["schemas"]["AccountDeletionOut"];
             /** Meta */
             meta?: {
                 [key: string]: unknown;
@@ -1459,6 +1532,11 @@ export interface components {
             preferences_text: string;
             /** Share Taste */
             share_taste: boolean;
+        };
+        /** TransferOwnershipIn */
+        TransferOwnershipIn: {
+            /** Recipient Profile Id */
+            recipient_profile_id: string;
         };
         /** ValidationError */
         ValidationError: {
@@ -2396,6 +2474,74 @@ export interface operations {
             };
         };
     };
+    full_deletion_status_api_v1_me_deletion_get: {
+        parameters: {
+            query?: never;
+            header?: {
+                authorization?: string | null;
+                "x-demo-user-id"?: string | null;
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_AccountDeletionOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    request_full_deletion_api_v1_me_deletion_post: {
+        parameters: {
+            query?: never;
+            header?: {
+                authorization?: string | null;
+                "x-demo-user-id"?: string | null;
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["DeleteAccountIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_AccountDeletionOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
     export_me_api_v1_me_export_get: {
         parameters: {
             query?: never;
@@ -2517,6 +2663,44 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["Envelope_PlanOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    delete_sole_plan_api_v1_plans__plan_id__delete: {
+        parameters: {
+            query?: never;
+            header?: {
+                authorization?: string | null;
+                "x-demo-user-id"?: string | null;
+            };
+            path: {
+                plan_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["DeleteAccountIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_DeleteAccountOut_"];
                 };
             };
             /** @description Validation Error */
@@ -2771,6 +2955,44 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["Envelope_ShareTokenOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    transfer_plan_ownership_api_v1_plans__plan_id__transfer_ownership_post: {
+        parameters: {
+            query?: never;
+            header?: {
+                authorization?: string | null;
+                "x-demo-user-id"?: string | null;
+            };
+            path: {
+                plan_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["TransferOwnershipIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_PlanOut_"];
                 };
             };
             /** @description Validation Error */

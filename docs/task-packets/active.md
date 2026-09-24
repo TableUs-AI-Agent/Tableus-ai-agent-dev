@@ -1,156 +1,64 @@
-# Active packet: native replacement validation — C2 campaign prepared
+# Active packet: account lifecycle backend
 
-Native validation remains **incomplete**. P3-R1 reached XCTest HTTP startup and
-completed command metadata, but its blank screenshot leaves visual Settings
-acceptance unresolved. T2's local log-discovery repair is verified offline;
-no further native run is authorized. The owner explicitly chose on 2026-09-23 to keep native validation
-in this task. Start the next task with a compact exact-commit handoff after this
-objective completes, or move earlier only at the owner's explicit request.
-[Prior phase narrative](../history/2026-09-23/native-validation-before-p3.md) is
-historical context; retrieve only evidence needed for a concrete question.
+Owner: Brian, sole developer for the current stage. User approved parallel
+implementation and both product recommendations on 2026-09-24. This packet
+applies only to this branch/worktree. Native validation remains in task
+`01a0c678-55c8-7cc0-a3cb-e3200776906a` and its original worktree.
 
-## Exact identities
+## Identity and isolation
 
-- Branch/worktree: `codex/native-replacement-validation` /
-  `/Users/brianchei/.codex/worktrees/ea6d/Tableus-ai-agent-dev`.
-- P3 preparation base / completed T1 tooling:
-  `3505c301ebfc4f1354b9b83a88ebc6f6e7feafd7`.
-- Frozen application: `8972865893a3f018a064594457dc9cc664f8a61f`.
-- Invoked build operator: `16603dd0cf36d27b492e57a02d3c6c438a2563c4`.
-- Build: `local-ios-test-8972865-f1-01`; artifact SHA-256:
-  `98c1535bfe6f7cad0c8e467454f5128c71f4aae21b8b41a5aba1c1a33f1e391d`.
-- Retained target: `0EFFA766-DCDD-49E5-84B0-D3593B68709A`, iPhone 17 Pro,
-  iOS 27.0 / `24A434`; confirmed Shutdown by independent P3-R1 post-stop verification.
-- Durable private root:
-  `/Users/brianchei/repos/Tableus-ai-agent-dev/.artifacts/mobile/8972865893a3f018a064594457dc9cc664f8a61f/native-validation-f1`.
-- Application, build operator, diagnostic operator and evidence commits are
-  distinct. The saved root checkout is stale; do not use it as implementation base.
+- Branch: `codex/account-lifecycle-backend`.
+- Worktree: `/Users/brianchei/.codex/worktrees/account-lifecycle-backend/Tableus-ai-agent-dev`.
+- Exact base: `bcc9e52d8c501dba9f51e881a7350c0959301255`, C2 preparation, not native acceptance.
+- Native application remains `8972865893a3f018a064594457dc9cc664f8a61f` in its own task.
+- [Inherited native packet](../history/2026-09-24/native-packet-at-lifecycle-base.md)
+  preserves the base's evidence and exhausted allowances; it authorizes no work here.
 
-## Current evidence
+The owner explicitly authorized this exception to sequential roadmap execution.
+The only active packet in this worktree is this file. Do not change the native
+branch, candidate, packet, tools, simulators, sessions or shared staging state.
+Later integration needs explicit merge approval and candidate-specific acceptance.
 
-- [F1](../evidence/native-replacement-validation-2026-09-21/n1-f1-native-result.md)
-  built and passed artifact/symbol/source inspection. iOS 26.5 D2 runtime proof
-  and seven lifecycle flows passed. The original offline run passed nine flows
-  then failed a refresh-error assertion; its cause remains unresolved.
-- O1/O2 reproduced SpringBoard/XCTest accessibility crashes on iOS 26.5. P2
-  passed three Settings flows on that OS only. O3/O4 stopped on setup/control
-  failures; H1 shut down both older targets without deleting their data.
-- [O5](../evidence/native-replacement-validation-2026-09-21/n1-f1-o5-result.md)
-  installed the app but failed before UI commands or recorded TableUs traffic.
-  RunningBoard killed XCTest for an expired initialization assertion
-  (`0x2182BAAD`). The underlying stall is unproved. Root verified owned-collector
-  cleanup, target Shutdown and idle ports; all diagnostics remain retained.
-- [T1](../evidence/native-replacement-validation-2026-09-21/n1-f1-t1-result.md)
-  adds startup-failure detection, durable snapshots and exact-owner cleanup.
-  Its private CLI entry points are disabled. All readiness targets passed:
-  293 JavaScript / 98 backend Python tests, three PostgreSQL skips; 13 helper
-  cases, 25 operator mocks, five journal cases and an O5 file replay also pass.
-  Reuse these for unchanged bytes; no new native compatibility is established.
+## Outcome
 
-## Latest result and bounded next action
+Backend callers can preserve shared plans by transferring ownership to an
+existing approved participant, explicitly remove a sole-participant plan, and
+request full account deletion with durable, truthful pending/completed status.
+Deletion must recover after interruption and cannot be undone by a stale JWT.
 
-[P3-R1](../evidence/native-replacement-validation-2026-09-21/n1-f1-p3r1-result.md)
-ran once from proposal commit `732189919f06315ffa2165dfa9b97488837d0e4a`:
-104.414s, one boot/control/Maestro invocation, five completed command records.
-Raw logs prove XCTest HTTP startup. The driver reports a pass, but the screenshot
-is blank despite title-assertion completion: root review does not accept a fully
-visible Settings baseline. 63 host observations found no monitored crash/TableUs
-process. Independent cleanup confirms all three targets Shutdown, no matching processes
-and idle ports. Post-stop capacity 26.238 GiB; remeasure before any future operation.
+## Scope and accepted choices
 
-[T2](../evidence/native-replacement-validation-2026-09-21/n1-f1-t2-result.md)
-repairs repository discovery for the exact Maestro debug filenames missed by the
-frozen observer. 16 focused cases, copied-log replay and one make-ready pass
-(293 JavaScript / 98 Python, three skips) plus contract check pass. No native replay; clean logs still
-mean `acceptance:false`. The P3 operator/output remain immutable; no replacement
-native operator was frozen in T2. P4 below incorporates the repaired helper.
+- Backend API, schemas, migration, trusted Auth adapter and finite recovery runner.
+- Preserve current application-only deletion contract for existing clients.
+- Separate opt-in full deletion endpoint; no client-side privileged credentials.
+- Durable retries/leases, operator attention after bounded retries or rejection.
+- Isolated local deterministic tests and generated API contracts.
+- Web/mobile UI rollout, retention durations and broad release work follow separately.
 
-[V1 offline review](../evidence/native-replacement-validation-2026-09-21/n1-f1-v1-result.md)
-confirms Preferences PID 63600 scene foreground but only nearby SpringBoard
-hierarchy evidence; matched node and blank-render cause remain unknown. Historical
-P2 has a Preferences hierarchy and visible Settings content. New pure review helper
-rejects P3-R1 as insufficient, sends P2 to visual review, and never grants acceptance.
-Seven focused cases, actual-log replays and one make-ready pass (294 JavaScript /
-98 backend, three skips) plus contract checks pass. Application/native operator unchanged.
+## Acceptance and handoff
 
-V1 also found P3-R1 launchApp default permission grants for Settings, exceeding
-its intended no-explicit-permission-change scope. Before/after individual states
-are unmeasured. Do not reset/revoke from an unknown baseline or claim they were
-unchanged. No new permission operation, native run or cleanup occurred in V1.
+Verify organizer authorization, valid recipients, shared-plan preservation,
+sole-plan removal, deletion/redeem races, atomic app/job writes, provider
+failure/already-missing handling, lease ownership, restart-safe recovery and
+stale-session denial. Review private-schema grants and migration behavior.
+Run focused checks and one `make ready`, plus generated contract drift check.
+Record PostgreSQL-only gaps explicitly if a local service is unavailable.
+Update current-state/roadmap/decisions with implemented truth; finish with an
+exact commit, observed evidence, residual risks and one next bounded objective.
 
-[P4](../evidence/native-replacement-validation-2026-09-21/n1-f1-p4-result.md)
-was approved at `80d16853691ffa0d029636dc842462d59493b142` and invoked once
-from frozen manifest `e229f29e108f508ae7bb2e7cbf1f4a25941bed5a7dcf0a6f4d2490471e1131b8`.
-It stopped after 90.817 seconds: one boot, then the one control query timed out
-at its 30-second cap (measured 30.169s). Zero Settings launches or Maestro tests
-ran; no screenshot exists and the explicit-launch/visual hypothesis is untested.
-No host binding/ongoing crash monitor was reached; no crash-free claim is made.
+## Gates
 
-Independent post-stop verification confirms all three retained targets Shutdown,
-no matching processes and idle test ports. Post-stop free space 25.098 GiB is
-historical, not a future preflight. Ten files are retained under
-`runtime-execution-p4`; the frozen operator and prior artifacts remain unchanged.
-No application source or provider/deployment state changed.
+No real account deletion, live provider/Auth calls, native build/run, paid call,
+cloud resource, secret provisioning, deployment, merge, production migration,
+store submission, cohort activation or shared Notion edit is authorized.
+No inherited native retry or budget is reopened. Canceled security scans remain
+canceled. Preserve all other worktrees and artifacts.
 
-**P4 and C1 are closed; no retry remains.** The owner approved C1 at
-`e3b0dbaf25cd480d262b693fef953499ddbd8699`. [C1 execution](../evidence/native-replacement-validation-2026-09-21/n1-f1-c1-result.md)
-stopped after 23.818s when `maestro --version` exceeded its 20s cap, before any
-boot, Settings launch or UI flow. The conditional offline stage never ran.
-Independent cleanup confirms all three targets Shutdown, no matching processes
-or C1 process-group members and idle ports. Eighteen files are retained with
-index `86fa10822a71c4bc5a9c8a6af37ae89d113779f0b2e8a20fc8ce32d42c6ec4ce`.
-No application, provider or deployed state changed. Host load/swap observations
-and missing partial command output do not establish the stall's cause.
+## Status
 
-Static inspection found dependency initialization and update-fetch scheduling
-before CLI version-help detection. [C2 is prepared](../evidence/native-replacement-validation-2026-09-21/n1-f1-c2-proposal.md):
-pure pinned-JAR version verification replaces the redundant CLI invocation in
-both stages. First actual CLI startup stays in the instrumented flow. C1 bytes,
-native limits, assertions, cleanup and root visual review are preserved; this is
-not a proven stall fix. The complete Settings/conditional eleven-flow offline
-campaign needs one new finite allowance: two boots/two Settings launches, one
-Settings flow/one offline runner, 420s + 2100s native operation time, no retries.
-It includes the diagnostic TableUs reset and inherited permission behavior; root
-image review and passing transitions need no further confirmation after approval.
-
-Four new static-identity fixture groups, 16 Settings mocks, nine offline mocks,
-seven synthetic evidence checks and five journal fixtures pass. One `make ready`
-passed 296 JavaScript / 98 backend tests, three PostgreSQL skips; contract checks
-show no drift. All 56 C2 and 74 C1 preparation/execution files match their hashes.
-C2 index `d2be61df14b6f57cf4c64c933dd1caa9e65fc3e968bd5c3ef68715629019b324`;
-exact manifests/commands/environment are in the structured proposal. Native
-execution remains stopped; no C2 invocation or new application acceptance.
-
-The owner requested substantial completed objectives on 2026-09-24. Continue
-through findings, local fixes, checks, integration and a concrete proposal; report
-checkpoints without ending the turn or seeking approval for routine work. Do not
-silently reset attempts or waive unresolved same-device prerequisites for links,
-exports, Android or N2. S2 remains closed; keep native validation here.
-
-Astra owns orchestration, review and final acceptance; Sol handles bounded
-implementation and Luna read-only support. Preserve application bytes, existing
-archives, stored sessions, old worktrees and private logs. Canceled security
-scans remain canceled. Validate according to impact in the development workflow.
-
-## Preserved gates and budgets
-
-All earlier native allowances, including O5, P3 preflight, P3-R1 and P4, are consumed;
-their retained outcomes remain unchanged. **No native retry remains.** A new task or delegate resets nothing. Any
-new operation needs its exact approved attempt/time/disk/cleanup limits; do not
-silently increase limits, weaken assertions or relabel older evidence.
-
-Original refresh/O1/O2/AppHang failures remain unresolved. iOS 26.5 acceptance
-does not transfer to iOS 27. Remaining iOS application checks, links and two
-exports, canonical HTTPS/auth-mode/physical association probes, and N2 remain
-gated. Android requires all preceding iOS gates and fresh 40 GiB capacity.
-N2 requires separate approval for two readiness builds and in-place staging
-updates with explicit live-read/passive-telemetry scope.
-
-Web `ed8330a`; API/accepted native `f94a1d9`; production `e1184ec` unchanged.
-Closed ledger: Places **92/100** (baseline 329; eight unused, not reopened), emails
-**2/4**, canaries **6/6 per provider**, fresh Gemini **0/0**, backstop 429.
-September 30 is unextended; AppHang acceptance is isolated-staging-only.
-No merge, CI/upload/deployment, cloud/secret changes, paid evaluation, live product
-requests, OTP/canary, migration, store/cohort activation or further destructive
-cleanup is granted. Retain 63bd native evidence, 90bd Phase W evidence and all
-current attempt artifacts. No cumulative replacement acceptance is claimed.
+Implementation and local deterministic verification complete; final commit and
+handoff are being recorded. One `make ready` passed (296 JavaScript / 120 Python,
+four PostgreSQL-only skips), with fresh SQLite migration and two-process durable
+recovery evidence. No live behavior or release acceptance is claimed. Next bounded
+objective: web/mobile account-management screens against this backend contract,
+with deterministic UI checks; native validation remains in its existing task.

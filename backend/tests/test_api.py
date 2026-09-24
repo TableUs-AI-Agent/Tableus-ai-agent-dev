@@ -1305,6 +1305,7 @@ async def test_account_export_and_deletion_readiness(client: AsyncClient) -> Non
         "organized_plan_count": 0,
         "deletion_scope": "application_profile",
         "supabase_auth_removal": "operator_required",
+        "full_deletion_available": False,
     }
 
     exported = await client.get("/api/v1/me/export", headers=headers(member_id))

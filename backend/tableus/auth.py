@@ -1,4 +1,5 @@
 import asyncio
+import hashlib
 import re
 import time
 from collections import OrderedDict
@@ -9,12 +10,12 @@ from typing import Annotated
 import jwt
 from fastapi import Depends, Header, HTTPException, Request
 from jwt import PyJWKClient, PyJWKClientError
-from sqlalchemy import select
+from sqlalchemy import select, text
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from .config import get_settings
 from .db import get_session
-from .models import InviteRedemption, Profile
+from .models import AccountDeletion, InviteRedemption, Profile
 
 
 @dataclass(frozen=True)
@@ -163,6 +164,7 @@ async def get_identity(
 
 
 async def load_approved_profile(identity: Identity, session: AsyncSession) -> Profile:
+    await lock_subject(session, identity.subject)
     profile = await session.get(Profile, identity.subject)
     if not profile:
         raise HTTPException(status_code=403, detail="An approved invite must be redeemed first")
@@ -174,6 +176,22 @@ async def load_approved_profile(identity: Identity, session: AsyncSession) -> Pr
         if not redemption:
             raise HTTPException(status_code=403, detail="An approved invite must be redeemed first")
     return profile
+
+
+def subject_digest(subject: str) -> str:
+    return hashlib.sha256(("tableus-account-v1:" + subject).encode()).hexdigest()
+
+
+async def lock_subject(session: AsyncSession, subject: str, *, exclusive: bool = False) -> None:
+    """Serialize account removal against actor writes on PostgreSQL."""
+    if session.bind and session.bind.dialect.name == "postgresql":
+        key = int.from_bytes(bytes.fromhex(subject_digest(subject))[:8], "big", signed=True)
+        command = "pg_advisory_xact_lock" if exclusive else "pg_advisory_xact_lock_shared"
+        await session.execute(text(f"SELECT {command}(:key)"), {"key": key})
+
+
+async def deletion_record(session: AsyncSession, subject: str) -> AccountDeletion | None:
+    return await session.get(AccountDeletion, subject_digest(subject))
 
 
 async def get_profile(

@@ -32,9 +32,19 @@ when changing a subsystem; it is not a second active task packet.
   user retry. Android transparent connection retry is disabled.
 - Runtime database credentials are least-privilege; migration credentials remain
   separate. Client Data API roles do not receive application-schema access.
-- Export excludes credentials, invite/share tokens and provider secrets. Current
-  application deletion requires exact confirmation and is blocked for organizers;
-  Auth deletion and production retention require a separate trusted workflow.
+- Export excludes credentials, invite/share tokens and provider secrets. On
+  September 24 the owner approved preserving shared plans through explicit
+  transfer to another approved participant, allowing explicit removal of
+  sole-participant plans, and full self-service account deletion with durable
+  recovery. Existing application-only deletion remains compatible; the new full
+  workflow is separately opt-in and must report pending versus completed truthfully.
+  Provider credentials stay server-only. Production retention windows, deployment
+  and client rollout remain separate work; backend readiness alone is not release acceptance.
+- Full deletion removes the application profile and records its Auth-removal job
+  atomically. A stable namespaced subject hash prevents stale-token re-redemption;
+  raw Auth subject is retained only until confirmed removal. The minimal completion
+  tombstone remains until a separately reviewed purge policy can preserve that
+  guarantee. No backup/log deletion deadline is promised by this implementation.
 - Places persistence retains Place IDs and user-owned labels, not provider display
   fields, coordinates or content. Live details are transient and refreshed on demand.
 - Canonical links use `links.table-us.com`, exact `/auth` and `/join/*`; auth

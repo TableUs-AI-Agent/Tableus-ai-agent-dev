@@ -28,7 +28,7 @@ _IDEMPOTENT_DYNAMIC_ROUTES = (
     (
         "POST",
         re.compile(
-            r"^/api/v1/plans/[^/]{1,255}/(?:join|recommendations|finalize|reopen|share-token/rotate)$"
+            r"^/api/v1/plans/[^/]{1,255}/(?:join|recommendations|finalize|reopen|share-token/rotate|transfer-ownership)$"
         ),
     ),
     ("PATCH", re.compile(r"^/api/v1/plans/[^/]{1,255}/constraints$")),

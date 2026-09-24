@@ -5,7 +5,7 @@ from pathlib import Path
 from typing import Literal
 from urllib.parse import unquote, urlparse
 
-from pydantic import Field, field_validator, model_validator
+from pydantic import Field, SecretStr, field_validator, model_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 BACKEND_ROOT = Path(__file__).resolve().parents[1]
@@ -36,6 +36,9 @@ class Settings(BaseSettings):
 
     supabase_url: str = ""
     supabase_jwt_audience: str = "authenticated"
+    # Opt-in only after the migration and trusted recovery runner are deployed.
+    tableus_account_deletion_enabled: bool = False
+    supabase_service_role_key: SecretStr = Field(default=SecretStr(""), repr=False)
     gemini_api_key: str = ""
     google_maps_api_key: str = ""
     gemini_backend: Literal["agent-platform"] = "agent-platform"

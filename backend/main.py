@@ -17,6 +17,7 @@ import os
 import re
 import time
 from contextlib import asynccontextmanager
+from datetime import UTC, datetime
 from difflib import get_close_matches
 from pathlib import Path
 from typing import List, Optional
@@ -467,6 +468,9 @@ async def request_context(request: Request, call_next):
                             organizer_only = request.url.path.endswith(
                                 ("/finalize", "/reopen", "/share-token/rotate")
                             )
+                            ownership_transfer_replay = request.url.path.endswith(
+                                "/transfer-ownership"
+                            )
                             if not plan or profile is None or (
                                 organizer_only and plan.organizer_id != profile.id
                             ):
@@ -485,6 +489,34 @@ async def request_context(request: Request, call_next):
                                     raise HTTPException(
                                         status_code=403,
                                         detail="Plan access is no longer approved",
+                                    )
+                            if ownership_transfer_replay:
+                                try:
+                                    cached_payload = json.loads(cached.body)
+                                    cached_plan = cached_payload["data"]
+                                    cached_timestamp = datetime.fromisoformat(
+                                        cached_plan["updated_at"]
+                                    )
+                                    current_timestamp = plan.updated_at
+                                    if cached_timestamp.tzinfo is None:
+                                        cached_timestamp = cached_timestamp.replace(tzinfo=UTC)
+                                    if current_timestamp.tzinfo is None:
+                                        current_timestamp = current_timestamp.replace(tzinfo=UTC)
+                                    valid_transfer = (
+                                        isinstance(cached_plan, dict)
+                                        and cached_plan.get("id") == plan_id
+                                        and isinstance(cached_plan.get("organizer_id"), str)
+                                        and cached_plan["organizer_id"] != profile.id
+                                        and cached_plan.get("viewer_is_organizer") is False
+                                        and plan.organizer_id == cached_plan["organizer_id"]
+                                        and current_timestamp == cached_timestamp
+                                    )
+                                except (KeyError, TypeError, ValueError, AttributeError):
+                                    valid_transfer = False
+                                if not valid_transfer:
+                                    raise HTTPException(
+                                        status_code=403,
+                                        detail="Plan ownership has changed since this request",
                                     )
                 except HTTPException as exc:
                     return JSONResponse(

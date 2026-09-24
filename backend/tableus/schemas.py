@@ -59,6 +59,20 @@ class AccountControlOut(BaseModel):
     organized_plan_count: int
     deletion_scope: Literal["application_profile"] = "application_profile"
     supabase_auth_removal: Literal["operator_required"] = "operator_required"
+    full_deletion_available: bool = False
+
+
+class AccountDeletionOut(BaseModel):
+    status: Literal["pending", "completed"]
+    requested_at: datetime
+    completed_at: datetime | None = None
+    next_retry_at: datetime | None = None
+    last_error_code: str | None = None
+    needs_attention: bool = False
+
+
+class TransferOwnershipIn(BaseModel):
+    recipient_profile_id: str = Field(min_length=1, max_length=64)
 
 
 class AccountExportConnection(BaseModel):

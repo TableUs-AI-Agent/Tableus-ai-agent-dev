@@ -10,13 +10,25 @@ import jwt
 import sentry_sdk
 from fastapi import APIRouter, File, HTTPException, UploadFile
 from PIL import Image
-from sqlalchemy import delete, func, select, update
+from sqlalchemy import delete, func, select
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from .auth import CurrentIdentity, CurrentProfile, DbSession
+from .account_lifecycle import process_deletion, status_payload
+from .auth import (
+    CurrentIdentity,
+    CurrentProfile,
+    DbSession,
+    Identity,
+    deletion_record,
+    load_approved_profile,
+    lock_subject,
+    subject_digest,
+)
+from .auth_removal import full_deletion_available
 from .config import get_settings
 from .db import SessionFactory
 from .models import (
+    AccountDeletion,
     Candidate,
     Connection,
     Invite,
@@ -37,6 +49,7 @@ from .providers.google_live import AiProviderError, PlacesProviderError
 from .ranking import borda_scores, ordered_candidates
 from .schemas import (
     AccountControlOut,
+    AccountDeletionOut,
     AccountExportConnection,
     AccountExportEvent,
     AccountExportMembership,
@@ -74,6 +87,7 @@ from .schemas import (
     ReviewOut,
     ShareTokenOut,
     TasteProfileOut,
+    TransferOwnershipIn,
     VoteIn,
 )
 from .security import decode_redemption_token, hash_value, issue_redemption_token, new_share_token
@@ -479,6 +493,30 @@ async def _event(
     )
 
 
+def _scrub_event_payload(value, identifiers: set[str]):
+    if isinstance(value, dict):
+        return {
+            key: _scrub_event_payload(item, identifiers)
+            for key, item in value.items()
+            if key not in {"email", "email_hash", "display_name"}
+        }
+    if isinstance(value, list):
+        return [_scrub_event_payload(item, identifiers) for item in value]
+    if isinstance(value, str) and value in identifiers:
+        return None
+    return value
+
+
+async def _anonymize_authored_events(session: AsyncSession, profile: Profile) -> None:
+    events = list((await session.scalars(
+        select(PlanEvent).where(PlanEvent.actor_id == profile.id).with_for_update()
+    )).all())
+    identifiers = {profile.id, profile.email_hash}
+    for event in events:
+        event.actor_id = None
+        event.payload = _scrub_event_payload(event.payload or {}, identifiers)
+
+
 async def _account_control(session: AsyncSession, profile_id: str) -> AccountControlOut:
     organized_plan_count = (
         await session.scalar(
@@ -493,6 +531,7 @@ async def _account_control(session: AsyncSession, profile_id: str) -> AccountCon
         can_delete=not blockers,
         blockers=blockers,
         organized_plan_count=organized_plan_count,
+        full_deletion_available=full_deletion_available(),
     )
 
 
@@ -586,6 +625,9 @@ async def validate_access(body: InviteValidateIn, session: DbSession):
 
 @router.post("/access/redeem", response_model=Envelope[ProfileOut])
 async def redeem_access(body: InviteRedeemIn, identity: CurrentIdentity, session: DbSession):
+    await lock_subject(session, identity.subject, exclusive=True)
+    if await deletion_record(session, identity.subject):
+        raise HTTPException(status_code=409, detail="Account deletion has already been requested")
     settings = get_settings()
     try:
         grant = decode_redemption_token(body.redemption_token)
@@ -705,18 +747,67 @@ async def account_control(profile: CurrentProfile, session: DbSession):
 
 
 @router.delete("/me", response_model=Envelope[DeleteAccountOut])
-async def delete_me(body: DeleteAccountIn, profile: CurrentProfile, session: DbSession):
+async def delete_me(body: DeleteAccountIn, identity: CurrentIdentity, session: DbSession):
+    await lock_subject(session, identity.subject, exclusive=True)
+    profile = await load_approved_profile(identity, session)
     control = await _account_control(session, profile.id)
     if not control.can_delete:
         raise HTTPException(
             status_code=409, detail="Transfer or delete organized plans before deleting the account"
         )
+    await _anonymize_authored_events(session, profile)
     await session.execute(
-        update(PlanEvent).where(PlanEvent.actor_id == profile.id).values(actor_id=None)
+        delete(PendingAuthValidation).where(PendingAuthValidation.email_hash == profile.email_hash)
     )
     await session.delete(profile)
     await session.commit()
     return ok(DeleteAccountOut(deleted=True))
+
+
+@router.post("/me/deletion", response_model=Envelope[AccountDeletionOut])
+async def request_full_deletion(
+    body: DeleteAccountIn, identity: CurrentIdentity, session: DbSession
+):
+    await lock_subject(session, identity.subject, exclusive=True)
+    prior = await deletion_record(session, identity.subject)
+    if prior:
+        digest = prior.subject_hash
+        await session.rollback()
+        await process_deletion(digest)
+        async with SessionFactory() as fresh:
+            row = await fresh.get(AccountDeletion, digest)
+            if row is None:
+                raise HTTPException(status_code=503, detail="Account deletion status is unavailable")
+            return ok(AccountDeletionOut(**status_payload(row)))
+    if not full_deletion_available():
+        raise HTTPException(status_code=503, detail="Full account deletion is unavailable")
+    profile = await load_approved_profile(identity, session)
+    control = await _account_control(session, profile.id)
+    if not control.can_delete:
+        raise HTTPException(status_code=409, detail="Transfer or delete organized plans first")
+    await _anonymize_authored_events(session, profile)
+    await session.execute(
+        delete(PendingAuthValidation).where(PendingAuthValidation.email_hash == profile.email_hash)
+    )
+    row = AccountDeletion(subject_hash=subject_digest(identity.subject), auth_subject=identity.subject)
+    session.add(row)
+    await session.delete(profile)
+    await session.commit()
+    await process_deletion(row.subject_hash)
+    async with SessionFactory() as fresh:
+        outcome = await fresh.get(AccountDeletion, row.subject_hash)
+        if outcome is None:
+            raise HTTPException(status_code=503, detail="Account deletion status is unavailable")
+        return ok(AccountDeletionOut(**status_payload(outcome)))
+
+
+@router.get("/me/deletion", response_model=Envelope[AccountDeletionOut])
+async def full_deletion_status(identity: CurrentIdentity, session: DbSession):
+    row = await deletion_record(session, identity.subject)
+    if row is None:
+        await load_approved_profile(identity, session)
+        raise HTTPException(status_code=404, detail="No account deletion has been requested")
+    return ok(AccountDeletionOut(**status_payload(row)))
 
 
 @router.get("/connections", response_model=Envelope[list[ConnectionOut]])
@@ -1087,6 +1178,59 @@ async def get_plan(plan_id: str, profile: CurrentProfile, session: DbSession):
     plan = await _plan(session, plan_id)
     await _participant(session, plan_id, profile.id)
     return ok(await _plan_out(session, plan, profile.id))
+
+
+@router.post("/plans/{plan_id}/transfer-ownership", response_model=Envelope[PlanOut])
+async def transfer_plan_ownership(
+    plan_id: str, body: TransferOwnershipIn, profile: CurrentProfile, session: DbSession
+):
+    # Authorize before revealing whether a supplied recipient exists. Read only
+    # the scalar here; ownership is checked again on the locked current row.
+    organizer_id = await session.scalar(select(Plan.organizer_id).where(Plan.id == plan_id))
+    if organizer_id != profile.id:
+        raise HTTPException(status_code=403, detail="Only the organizer can perform this action")
+    if body.recipient_profile_id == profile.id:
+        raise HTTPException(status_code=422, detail="Choose another participant")
+    organizer_id = await session.scalar(select(Plan.organizer_id).where(Plan.id == plan_id))
+    if organizer_id != profile.id:
+        raise HTTPException(status_code=403, detail="Only the organizer can perform this action")
+    # Acquire both actor locks before the plan row lock. Profile deletion takes
+    # the exclusive counterpart before touching plans.
+    try:
+        await load_approved_profile(Identity(subject=body.recipient_profile_id), session)
+    except HTTPException as exc:
+        raise HTTPException(status_code=409, detail="Recipient is not an approved participant") from exc
+    plan = await _plan(session, plan_id, for_update=True)
+    _require_organizer(plan, profile)
+    recipient = await session.scalar(
+        select(PlanParticipant.id).where(
+            PlanParticipant.plan_id == plan_id,
+            PlanParticipant.profile_id == body.recipient_profile_id,
+        )
+    )
+    if not recipient:
+        raise HTTPException(status_code=409, detail="Recipient is not a plan participant")
+    plan.organizer_id = body.recipient_profile_id
+    _touch(plan)
+    await _event(session, plan, profile, "plan.ownership_transferred")
+    await session.commit()
+    return ok(await _plan_out(session, plan, profile.id))
+
+
+@router.delete("/plans/{plan_id}", response_model=Envelope[DeleteAccountOut])
+async def delete_sole_plan(
+    plan_id: str, body: DeleteAccountIn, profile: CurrentProfile, session: DbSession
+):
+    plan = await _plan(session, plan_id, for_update=True)
+    _require_organizer(plan, profile)
+    count = await session.scalar(
+        select(func.count()).select_from(PlanParticipant).where(PlanParticipant.plan_id == plan_id)
+    )
+    if count != 1:
+        raise HTTPException(status_code=409, detail="Shared plans must be transferred")
+    await session.delete(plan)
+    await session.commit()
+    return ok(DeleteAccountOut(deleted=True))
 
 
 @router.get("/plans/{plan_id}/revision", response_model=Envelope[PlanRevisionOut])
