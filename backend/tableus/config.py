@@ -39,6 +39,10 @@ class Settings(BaseSettings):
     # Opt-in only after the migration and trusted recovery runner are deployed.
     tableus_account_deletion_enabled: bool = False
     supabase_service_role_key: SecretStr = Field(default=SecretStr(""), repr=False)
+    cohort_ai_operations_per_day: int = Field(default=5, gt=0, le=1000)
+    cohort_places_operations_per_day: int = Field(default=20, gt=0, le=10000)
+    cohort_plans_lifetime: int = Field(default=20, gt=0, le=10000)
+    tableus_operator_subjects: str = Field(default="", repr=False)
     gemini_api_key: str = ""
     google_maps_api_key: str = ""
     gemini_backend: Literal["agent-platform"] = "agent-platform"

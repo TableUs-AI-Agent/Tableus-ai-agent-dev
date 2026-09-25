@@ -65,6 +65,21 @@ class AccountDeletion(Base):
     needs_attention: Mapped[bool] = mapped_column(Boolean, default=False)
 
 
+class CohortCounter(Base):
+    """Private durable quota ledger; subject hashes outlive profile deletion."""
+
+    __tablename__ = "cohort_counters"
+    __table_args__ = (
+        CheckConstraint("kind IN ('ai', 'places', 'plans')", name="ck_cohort_counters_kind"),
+        CheckConstraint("used >= 0", name="ck_cohort_counters_used"),
+    )
+    subject_hash: Mapped[str] = mapped_column(String(64), primary_key=True)
+    kind: Mapped[str] = mapped_column(String(12), primary_key=True)
+    period_key: Mapped[str] = mapped_column(String(10), primary_key=True)
+    used: Mapped[int] = mapped_column(Integer, default=0)
+    updated_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=now_utc)
+
+
 class Invite(Base):
     __tablename__ = "invites"
     id: Mapped[str] = mapped_column(String(36), primary_key=True, default=new_id)

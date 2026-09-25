@@ -4,6 +4,8 @@ from datetime import UTC, datetime
 from uuid import uuid4
 
 import pytest
+from alembic.config import Config
+from alembic.script import ScriptDirectory
 from sqlalchemy import text
 from sqlalchemy.exc import DBAPIError
 from sqlalchemy.ext.asyncio import create_async_engine
@@ -64,7 +66,7 @@ async def test_deletion_table_is_private_and_browser_roles_cannot_read_or_write(
         async with admin_engine.connect() as connection:
             assert await connection.scalar(text(
                 "SELECT version_num FROM public.alembic_version"
-            )) == "6d7e3b91a2c4"
+            )) == ScriptDirectory.from_config(Config("alembic.ini")).get_current_head()
             assert await connection.scalar(text(
                 "SELECT count(*) FROM pg_class c "
                 "CROSS JOIN LATERAL aclexplode(coalesce(c.relacl, acldefault('r', c.relowner))) a "

@@ -8,7 +8,7 @@ from typing import Annotated, Literal, cast
 
 import jwt
 import sentry_sdk
-from fastapi import APIRouter, File, HTTPException, UploadFile
+from fastapi import APIRouter, File, HTTPException, Query, UploadFile
 from PIL import Image
 from sqlalchemy import delete, func, select
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -25,6 +25,7 @@ from .auth import (
     subject_digest,
 )
 from .auth_removal import full_deletion_available
+from .cohort_limits import consume_plan_creation, quota_snapshot, reserve_provider_operation
 from .config import get_settings
 from .db import SessionFactory
 from .models import (
@@ -43,6 +44,7 @@ from .models import (
     Review,
     Vote,
 )
+from .operators import CurrentOperator
 from .providers import get_ai_provider, get_places_provider
 from .providers.base import AiCallUsage
 from .providers.google_live import AiProviderError, PlacesProviderError
@@ -256,6 +258,16 @@ async def _plan_out(
     )
 
 
+async def _plan_places(session: AsyncSession, plan: Plan, viewer_id: str) -> list:
+    """Complete fallible response hydration before mutating a shared plan."""
+    if not plan.active_run_id:
+        return []
+    place_ids = list((await session.scalars(
+        select(Candidate.place_id).where(Candidate.run_id == plan.active_run_id)
+    )).all())
+    return await _call_places(viewer_id, "get_places", place_ids) if place_ids else []
+
+
 def _touch(plan: Plan) -> None:
     plan.updated_at = datetime.now(UTC)
 
@@ -331,13 +343,18 @@ async def _call_places(profile_id: str, method: str, *args):
     _consume_places_limit(profile_id)
     max_attempts = 12 if method == "get_places" else 3
     reserved = await _reserve_places_budget(max_attempts)
-    provider = get_places_provider()
     started = time.perf_counter()
 
     async def usage(operation: str, attempts: int, output_units: int, failed: bool) -> None:
         await _record_places_usage(operation, attempts, output_units, failed, started)
 
     try:
+        if reserved and not await reserve_provider_operation(profile_id, "places"):
+            raise HTTPException(
+                status_code=429,
+                detail="Daily Places operation limit reached; resets at midnight UTC",
+            )
+        provider = get_places_provider()
         return await getattr(provider, method)(*args, usage=usage)
     except PlacesProviderError as exc:
         status = 404 if exc.kind == "not_found" else 503
@@ -431,6 +448,11 @@ async def _ai_admission(
     )
     reserved = await _reserve_ai_budget()
     try:
+        if reserved and not await reserve_provider_operation(profile_id, "ai"):
+            raise HTTPException(
+                status_code=429,
+                detail="Daily AI operation limit reached; resets at midnight UTC",
+            )
         yield
     finally:
         await _release_ai_budget(reserved)
@@ -1114,7 +1136,12 @@ async def discover(body: DiscoverIn, profile: CurrentProfile):
 @router.get(
     "/provider-usage/summary", response_model=Envelope[list[ProviderUsageAggregateOut]]
 )
-async def provider_usage_summary(profile: CurrentProfile, session: DbSession):
+async def provider_usage_summary(
+    profile: CurrentOperator, session: DbSession,
+    days: int = Query(default=30, ge=1, le=30),
+):
+    """Operator-only aggregate usage within the preceding 1–30 days."""
+    cutoff = datetime.now(UTC) - timedelta(days=days)
     rows = (
         await session.execute(
             select(
@@ -1126,7 +1153,8 @@ async def provider_usage_summary(profile: CurrentProfile, session: DbSession):
                 func.coalesce(func.sum(ProviderUsage.estimated_cost_usd), 0.0).label(
                     "estimated_cost_usd"
                 ),
-            ).group_by(ProviderUsage.provider, ProviderUsage.operation)
+            ).where(ProviderUsage.created_at >= cutoff)
+            .group_by(ProviderUsage.provider, ProviderUsage.operation)
         )
     ).all()
     return ok(
@@ -1186,12 +1214,19 @@ async def list_plans(profile: CurrentProfile, session: DbSession):
 @router.post("/plans", response_model=Envelope[PlanCreated])
 async def create_plan(body: PlanCreateIn, profile: CurrentProfile, session: DbSession):
     settings = get_settings()
+    quota = await quota_snapshot(session, profile.id)
+    if quota.plans.used >= quota.plans.limit:
+        raise HTTPException(status_code=429, detail="Account lifetime plan creation limit reached")
     if body.location_place_id:
         resolved = await _call_places(profile.id, "get_location", body.location_place_id)
         if resolved.region_code != "US":
             raise HTTPException(status_code=422, detail="Only United States locations are supported")
     elif settings.places_provider_mode == "live":
         raise HTTPException(status_code=422, detail="A resolved Google Place ID is required")
+    # Recheck atomically after location validation. The debit and plan creation
+    # commit together; simultaneous creates cannot exceed the lifetime cap.
+    if not await consume_plan_creation(session, profile.id):
+        raise HTTPException(status_code=429, detail="Account lifetime plan creation limit reached")
     token = new_share_token()
     plan = Plan(
         organizer_id=profile.id,
@@ -1431,6 +1466,7 @@ async def vote(plan_id: str, body: VoteIn, profile: CurrentProfile, session: DbS
         raise HTTPException(
             status_code=422, detail="Every ranked candidate must belong to the active run"
         )
+    places = await _plan_places(session, plan, profile.id)
     existing = await session.scalar(
         select(Vote).where(Vote.run_id == plan.active_run_id, Vote.profile_id == profile.id)
     )
@@ -1449,7 +1485,7 @@ async def vote(plan_id: str, body: VoteIn, profile: CurrentProfile, session: DbS
     await _event(session, plan, profile, "vote.updated")
     await session.commit()
     await capture_event("vote_submitted", {"ranking_count": len(body.ranking)})
-    return ok(await _plan_out(session, plan, profile.id))
+    return ok(await _plan_out(session, plan, profile.id, places))
 
 
 @router.post("/plans/{plan_id}/finalize", response_model=Envelope[PlanOut])
@@ -1470,19 +1506,21 @@ async def finalize(plan_id: str, body: FinalizeIn, profile: CurrentProfile, sess
     selected_id = body.candidate_id or (ordered[0].id if ordered else None)
     if selected_id not in {candidate.id for candidate in candidates}:
         raise HTTPException(status_code=422, detail="Final candidate must belong to the active run")
+    places = await _plan_places(session, plan, profile.id)
     plan.finalized_candidate_id = selected_id
     plan.status = "finalized"
     _touch(plan)
     await _event(session, plan, profile, "plan.finalized", {"candidate_id": selected_id})
     await session.commit()
     await capture_event("plan_finalized", {"vote_count": len(votes)})
-    return ok(await _plan_out(session, plan, profile.id))
+    return ok(await _plan_out(session, plan, profile.id, places))
 
 
 @router.post("/plans/{plan_id}/reopen", response_model=Envelope[PlanOut])
 async def reopen(plan_id: str, profile: CurrentProfile, session: DbSession):
     plan = await _plan(session, plan_id, for_update=True)
     _require_organizer(plan, profile)
+    places = await _plan_places(session, plan, profile.id)
     if not plan.active_run_id:
         plan.status = "collecting"
     else:
@@ -1492,7 +1530,7 @@ async def reopen(plan_id: str, profile: CurrentProfile, session: DbSession):
     await _event(session, plan, profile, "plan.reopened")
     await session.commit()
     await capture_event("plan_reopened")
-    return ok(await _plan_out(session, plan, profile.id))
+    return ok(await _plan_out(session, plan, profile.id, places))
 
 
 @router.post("/plans/{plan_id}/share-token/rotate", response_model=Envelope[ShareTokenOut])

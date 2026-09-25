@@ -680,7 +680,10 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** Provider Usage Summary */
+        /**
+         * Provider Usage Summary
+         * @description Operator-only aggregate usage within the preceding 1–30 days.
+         */
         get: operations["provider_usage_summary_api_v1_provider_usage_summary_get"];
         put?: never;
         post?: never;
@@ -3139,7 +3142,9 @@ export interface operations {
     };
     provider_usage_summary_api_v1_provider_usage_summary_get: {
         parameters: {
-            query?: never;
+            query?: {
+                days?: number;
+            };
             header?: {
                 authorization?: string | null;
                 "x-demo-user-id"?: string | null;

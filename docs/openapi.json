@@ -4733,8 +4733,21 @@
     },
     "/api/v1/provider-usage/summary": {
       "get": {
+        "description": "Operator-only aggregate usage within the preceding 1\u201330 days.",
         "operationId": "provider_usage_summary_api_v1_provider_usage_summary_get",
         "parameters": [
+          {
+            "in": "query",
+            "name": "days",
+            "required": false,
+            "schema": {
+              "default": 30,
+              "maximum": 30,
+              "minimum": 1,
+              "title": "Days",
+              "type": "integer"
+            }
+          },
           {
             "in": "header",
             "name": "authorization",

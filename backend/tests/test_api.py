@@ -545,7 +545,8 @@ async def test_live_places_rolling_attempt_ceiling_reserves_before_provider_call
 
 
 @pytest.mark.asyncio
-async def test_provider_usage_summary_is_aggregate_only(client: AsyncClient) -> None:
+async def test_provider_usage_summary_is_aggregate_only(client: AsyncClient, monkeypatch) -> None:
+    monkeypatch.setattr(tableus_api.get_settings(), "tableus_operator_subjects", "demo-organizer")
     async with SessionFactory() as session:
         session.add(
             ProviderUsage(
