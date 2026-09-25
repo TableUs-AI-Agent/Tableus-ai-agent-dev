@@ -12,6 +12,7 @@ directs work here. Native evidence remains tied to its original candidate.
 | Active branch | `codex/deletion-support` |
 | Active worktree | `/Users/brianchei/.codex/worktrees/deletion-support/Tableus-ai-agent-dev` |
 | Implementation base | `838244aa4ba08cd67859a68d8f25b4d339476a74` |
+| Current support application | `f3efa7a28010454275bf3b32ec52fc43792fdaee` |
 | Prior deletion-content application / verification source | `72c592b511bba6b74bba2521524c6111b9cf5916` / `390cd2f7531dbc955317556b3693546ee3eadead` |
 | Private-link application / verification checkout | `484632517345e7858f48caf8fa7b128f9d9dab80` |
 | Cohort application candidate | `25e34ec9e35e1935cebe8dbb8f34465fd2b313e0` |
@@ -218,7 +219,7 @@ production-build mocked Chrome journeys pass. The initial readiness assertion
 failure and successful continuation are recorded. No hosted or native acceptance
 is implied.
 Retention periods, provider/backup settings, secure support completion and the
-external deletion-request path also remain unverified. No release, resource,
+hosted external deletion-request path also remain unverified. No release, resource,
 secret, retention duration or production acceptance was approved by this work.
 
 
@@ -240,3 +241,9 @@ the current worker finishes existing jobs; it cannot initiate deletion for an
 email-only requester without authenticated access. An email alone cannot map a
 completed deletion back to its cleared Auth subject. These gaps are recorded,
 not treated as solved by a help page. No mailbox/account operation occurred here.
+
+Local implementation is complete. The [support handoff](handoffs/2026-09-25-deletion-support.md)
+binds 317 JavaScript/214 Python checks with zero skips, completed local readiness,
+two final-production-build mocked Chrome journeys and desktop/phone-width review.
+Initial test/setup failures and final style-only checks are recorded by exact SHA.
+Nothing was published, merged or deployed; native acceptance remains separate.

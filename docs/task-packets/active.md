@@ -1,4 +1,4 @@
-# Active packet: external deletion request and support preparation
+# Active packet: external deletion request and support — locally complete
 
 Brian requested continuation of the preceding recommendation on September 25.
 Root owns integration, source review, support procedure and full local verification;
@@ -38,3 +38,23 @@ real requests/account cleanup; hosted writes/migrations; resources/secrets;
 deployment/store submission; merge/push; Notion/Notes; canceled scans. Native task
 01a0c678-55c8-7cc0-a3cb-e3200776906a retains its evidence/allowances. Production
 choices, actual mailbox coverage and retention periods remain separately unresolved.
+
+
+## Completed handoff
+
+- Final application: `f3efa7a28010454275bf3b32ec52fc43792fdaee`.
+- Readiness source: `189f02440deb09dd931d3df06001cb02c05cf691`; final delta is
+  three web color classes checked by focused lint, fresh web build and browser.
+- 317 JavaScript/214 Python tests pass with zero skips; completed readiness, two
+  final production browser journeys and responsive visual review are recorded.
+- Brian selected two-business-day acknowledgment; no fixed completion/retention
+  promise. Task services stopped. No code work remains in this bounded packet.
+- [Handoff](../handoffs/2026-09-25-deletion-support.md) and [evidence](../evidence/deletion-support-2026-09-25/README.md).
+
+Next bounded objective: prepare secure assisted deletion initiation for verified
+email-only/access-loss requests, including precise identity binding, consent,
+organizer blockers and existing transactional cleanup/job reuse. Current public
+help and worker do not implement that capability. Resolve its concrete design
+before execution; no operator bypass, real account deletion or new Auth provider
+is authorized by this handoff. Use this unmerged exact source when continuing,
+not the stale saved checkout. Retention inventory can proceed independently.

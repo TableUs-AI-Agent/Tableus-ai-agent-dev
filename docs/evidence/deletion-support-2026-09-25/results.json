@@ -1,0 +1,97 @@
+{
+  "date": "2026-09-25",
+  "status": "local_implementation_complete_not_published",
+  "base_sha": "838244aa4ba08cd67859a68d8f25b4d339476a74",
+  "application_sha": "f3efa7a28010454275bf3b32ec52fc43792fdaee",
+  "branch": "codex/deletion-support",
+  "worktree": "/Users/brianchei/.codex/worktrees/deletion-support/Tableus-ai-agent-dev",
+  "owner_decision": "Brian adopted acknowledgment within two business days; completion estimate follows verification and blocker assessment; no fixed completion or retention deadline.",
+  "readiness": {
+    "initial_source": "9c8f46200036ec0d1fb28b6a5a66ed37efa91f29",
+    "initial_command": "make ready",
+    "initial_result": "lint/types passed; mobile account lifecycle suite could not import newly added router without a test mock; stopped at JS tests",
+    "continued_source": "189f02440deb09dd931d3df06001cb02c05cf691",
+    "continued_command": "make test contract build smoke perf",
+    "continued_exit_code": 0,
+    "python_passed": 214,
+    "python_skipped": 0,
+    "javascript_passed": 317,
+    "javascript_skipped": 0,
+    "javascript_groups": {
+      "scripts": 112,
+      "web": 23,
+      "mobile_unit": 56,
+      "mobile_components": 75,
+      "api_client": 30,
+      "domain": 21
+    },
+    "contract": "regenerated; no drift",
+    "database": "PostgreSQL17.11 restricted tableus_runtime, synthetic tableus_support_ready on loopback55938",
+    "builds": [
+      "Next production",
+      "Expo web export"
+    ],
+    "smoke": "deterministic pass",
+    "performance": "report-only web chunk measurement; no performance acceptance"
+  },
+  "final_delta": {
+    "source": "f3efa7a28010454275bf3b32ec52fc43792fdaee",
+    "from_readiness": "three class changes in frontend/app/account-deletion/page.tsx improve action and link contrast; no behavior, backend, mobile, shared text, tests or contracts changed",
+    "fresh_checks": [
+      "targeted final-page ESLint pass",
+      "Next production rebuild including TypeScript pass",
+      "two production-build mocked Chrome journeys pass",
+      "desktop and390px viewport screenshot review",
+      "no application/contract drift"
+    ],
+    "reused_checks": "214 Python/317 JS and Expo-web results remain bound to189f024; relevant source is byte-identical. Initial passing lint/types supplemented by focused checks on the page and router-mock correction.",
+    "contrast": {
+      "old_button_white_on_accent": 2.35,
+      "new_button_foreground_on_accent": 6.26,
+      "new_inline_link_foreground_on_background": 13.38
+    }
+  },
+  "focused_agent_receipt": {
+    "initial_client": "web/mobile types and lint,3 new help component checks passed",
+    "repair": "9 account-lifecycle component checks including recovery navigation passed; page types/lint passed",
+    "receipt_type": "delegate reported; root full suite confirms component outcomes"
+  },
+  "browser": {
+    "source": "f3efa7a28010454275bf3b32ec52fc43792fdaee",
+    "command": "TABLEUS_BROWSER_SERVER_MODE=production ./node_modules/.bin/playwright test --config frontend/app/lib/deletion-support.playwright.config.ts",
+    "passed": 2,
+    "provider_mode": "all application API interactions mocked",
+    "cases": [
+      "public signed-out help, bare mailto, two-business-day copy, privacy link, zero v1 reads",
+      "pending recovery opens help and returns to pending status"
+    ],
+    "visual": "root inspected desktop and390px viewport captures; visible email action, wrapped text, no horizontal clipping; not native screenshots"
+  },
+  "review": "Independent source review found no consequential issue within prepared page/procedure scope. Root corrected low-contrast action/link text. Support scenario tabletop is source-based, not executed mailbox cases.",
+  "setup_repairs": [
+    "initial migration command used root cwd instead ofbackend; corrected command passed existing migrations to9a1f2e7c4b80",
+    "initial final-page ESLint command used root cwd without config; corrected frontend cwd passed",
+    "focused default web incremental-cache write EPERM; nonincremental typecheck passed"
+  ],
+  "services": "task PostgreSQL stopped; loopback55938 and3405 confirmed closed; all synthetic data/artifacts retained",
+  "not_performed": [
+    "native build or simulator/device",
+    "live Auth/Places/AI/telemetry",
+    "mailbox reads or message sends",
+    "real support request or account deletion",
+    "hosted migration/query/configuration",
+    "deployment/publication/store submission",
+    "resources/secrets",
+    "merge/push",
+    "Notion/Notes",
+    "canceled security scans"
+  ],
+  "remaining": [
+    "verified mailbox coverage and adopted acknowledgment target rehearsal",
+    "secure assisted initiation for new email-only/access-loss deletion; worker only processes existing jobs",
+    "verified case-to-subject binding after session/profile loss",
+    "approved retention/support records and provider/backup handling",
+    "compatible hosted/client rollout and affected cumulative/native acceptance",
+    "production targets/link/signing choices and known TableUs Vercel access gap"
+  ]
+}
