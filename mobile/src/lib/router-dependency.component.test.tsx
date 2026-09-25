@@ -1,7 +1,5 @@
-// Keep the legacy decoder checks separate from the native entry pipeline below.
-import { afterEach, expect, jest, test } from "@jest/globals";
+import { afterEach, beforeEach, expect, jest, test } from "@jest/globals";
 import { ApiError } from "@tableus/api-client";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { act, cleanup, fireEvent, render } from "@testing-library/react-native";
 import { LocalRouteParamsContext } from "expo-router/build/Route";
 import { extractExpoPathFromURL } from "expo-router/build/fork/extractPathFromURL";
@@ -11,142 +9,184 @@ import { getStateFromPath } from "expo-router/build/react-navigation/core/getSta
 
 import { redirectSystemPath } from "../../app/+native-intent";
 import JoinPlanScreen from "../../app/join/[id]";
+import { pendingJoinStore } from "@/lib/pending-join";
 
-const mockPost = jest.fn<(path: string, body: unknown) => Promise<never>>(async () => {
-  throw new ApiError("Synthetic validation response", 422, "validation_error");
-});
-// Keep the real parameter hooks; the Expo barrel also starts an unrelated HMR runtime.
+const mockPost = jest.fn<(...args: unknown[]) => Promise<unknown>>();
+const mockGet = jest.fn<(...args: unknown[]) => Promise<unknown>>();
+const mockReplace = jest.fn();
+const mockPush = jest.fn();
+const mockUseAuth = jest.fn<() => { approved: boolean; subject: string | null }>();
+
 jest.mock("expo-router", () => ({
   ...jest.requireActual<typeof import("expo-router/build/hooks/useLocalSearchParams")>("expo-router/build/hooks/useLocalSearchParams"),
   ...jest.requireActual<typeof import("expo-router/build/react-navigation/core/useRoute")>("expo-router/build/react-navigation/core/useRoute"),
-  router: { replace: jest.fn(), push: jest.fn() },
+  router: { replace: (...args: unknown[]) => mockReplace(...args), push: (...args: unknown[]) => mockPush(...args) },
 }));
-jest.mock("@/lib/api", () => ({ api: { post: (path: string, body: unknown) => mockPost(path, body) } }));
-jest.mock("@/providers/auth-provider", () => ({ useAuth: () => ({ approved: true }) }));
-jest.mock("@/providers/connectivity-provider", () => ({ useConnectivity: () => ({ isOnline: true }) }));
+jest.mock("@/lib/api", () => ({ api: {
+  post: (...args: unknown[]) => mockPost(...args),
+  get: (...args: unknown[]) => mockGet(...args),
+} }));
+jest.mock("@/lib/supabase", () => ({ isSupabaseConfigured: true }));
+jest.mock("@/providers/auth-provider", () => ({ useAuth: () => mockUseAuth() }));
 
 const planId = "123e4567-e89b-42d3-a456-426614174000";
-const clients: QueryClient[] = [];
-afterEach(async () => {
-  await cleanup();
-  for (const client of clients.splice(0)) client.clear();
-});
+const token = "Abc_def-0123456789GhijkLMN_opQRSTuvWxyZ";
 
-function nativeRoute(url: string, initial = true) {
-  const path = extractExpoPathFromURL([], redirectSystemPath({ path: url, initial }));
+beforeEach(() => {
+  mockUseAuth.mockReturnValue({ approved: true, subject: "actor-a" });
+  pendingJoinStore.clear();
+  pendingJoinStore.setSubject("actor-a");
+  mockPost.mockReset().mockRejectedValue(new ApiError("Synthetic failure", 503));
+  mockGet.mockReset().mockRejectedValue(new ApiError("Not a participant", 403));
+  mockReplace.mockClear();
+  mockPush.mockClear();
+});
+afterEach(async () => { await cleanup(); pendingJoinStore.clear(); pendingJoinStore.setSubject(null); });
+
+function nativeRoute(url: string) {
+  const sanitized = redirectSystemPath({ path: url, initial: true });
+  const path = extractExpoPathFromURL([], sanitized);
   const state = getNativeStateFromPath(path, { screens: { "join/[id]": "join/:id", auth: "auth" } });
   const route = state?.routes[0];
-  if (!route) throw new Error("Native URL did not produce a route");
-  return { ...route, key: "native-link-fixture" };
+  if (!route) throw new Error("Native link did not route");
+  return { route: { ...route, key: "private-link-fixture" }, sanitized };
 }
 
-async function renderJoin(url: string, initial = true) {
-  const route = nativeRoute(url, initial);
-  return renderJoinRoute(route);
-}
-
-async function renderJoinRoute(route: ReturnType<typeof nativeRoute>) {
-  expect(route.name).toBe("join/[id]");
-  const client = new QueryClient({ defaultOptions: { mutations: { retry: false, gcTime: 0 } } });
-  clients.push(client);
-  return render(
+async function mount(url: string) {
+  const { route, sanitized } = nativeRoute(url);
+  const tree = (
     <NavigationRouteContext.Provider value={route}>
       <LocalRouteParamsContext.Provider value={route.params ?? {}}>
-        <QueryClientProvider client={client}><JoinPlanScreen /></QueryClientProvider>
+        <JoinPlanScreen />
       </LocalRouteParamsContext.Provider>
-    </NavigationRouteContext.Provider>,
+    </NavigationRouteContext.Provider>
   );
+  const screen = await render(tree);
+  return { screen, route, sanitized, tree };
 }
 
-async function submitJoin(screen: Awaited<ReturnType<typeof renderJoin>>) {
+test.each(["?", "#"])("%s link routes only an opaque handle and joins on explicit press", async (delimiter) => {
+  mockPost.mockResolvedValueOnce({ id: planId });
+  const { screen, route, sanitized } = await mount(`https://links.table-us.com/join/${planId}${delimiter}token=${token}`);
+  expect(sanitized).toMatch(new RegExp(`^/join/${planId}\\?pending=`));
+  expect(sanitized).not.toContain(token);
+  expect(route.params).not.toHaveProperty("token");
+  expect(mockPost).not.toHaveBeenCalled();
   await act(async () => { fireEvent.press(screen.getByRole("button", { name: "Join this plan" })); });
-  await screen.findByText("Synthetic validation response");
-  expect(mockPost).toHaveBeenCalledTimes(1);
-}
-
-test("cold native custom-scheme join preserves the observed encoded plus at the API boundary", async () => {
-  const screen = await renderJoin(`tableus://join/${planId}?token=a%2Bb%2Fc%3D`);
-  await submitJoin(screen);
-  expect(mockPost).toHaveBeenCalledWith(`/api/v1/plans/${planId}/join`, { share_token: "a+b/c=" });
+  expect(mockPost).toHaveBeenCalledWith(`/api/v1/plans/${planId}/join`, { share_token: token }, expect.objectContaining({ expectedSubject: "actor-a" }));
+  expect(mockReplace).toHaveBeenCalledWith({ pathname: "/plans/[id]", params: { id: planId } });
+  expect(pendingJoinStore.getSnapshot()).toBeNull();
 });
 
-test("the join hook must not decode literal percent escapes a second time", async () => {
-  const url = `https://links.table-us.com/join/${planId}?token=literal%252Ftoken`;
-  expect(nativeRoute(url).params).toEqual({ id: planId, token: "literal%2Ftoken" });
-  const screen = await renderJoin(url);
-  await submitJoin(screen);
-  expect(mockPost).toHaveBeenCalledWith(`/api/v1/plans/${planId}/join`, { share_token: "literal%2Ftoken" });
-});
-
-test.each(["tableus:///join", "tableus:/join", "/join"])("%s also preserves encoded tokens", async (origin) => {
-  const screen = await renderJoin(`${origin}/${planId}?token=a%2Bb%252Fc`);
-  await submitJoin(screen);
-  expect(mockPost).toHaveBeenCalledWith(`/api/v1/plans/${planId}/join`, { share_token: "a+b%2Fc" });
-});
-
-const origins = ["tableus://join", "https://links.table-us.com/join"];
-const validTokens = [
-  ["issued URL-safe alphabet", "Abc_def-0123456789GhijkLMN_opQRSTuvWxyZ", "Abc_def-0123456789GhijkLMN_opQRSTuvWxyZ"],
-  ["encoded delimiters", "a%2Bb%2Fc%3D%26token%3Dvalue%23fragment", "a+b/c=&token=value#fragment"],
-  ["Unicode", "%E6%9D%B1%E4%BA%AC%20%2F%20caf%C3%A9", "東京 / café"],
-  ["plus versus space", "a+b%20c%2Bd", "a b c+d"],
-  ["literal escaped bytes", "literal%252F%252B%2526%25FF%2520", "literal%2F%2B%26%FF%20"],
-  ["literal percent", "100%25", "100%"],
+const decoderCases = [
+  { label: "encoded delimiters", encoded: "a%2Bb%2Fc%3D%26token%3Dvalue%23fragment", expected: "a+b/c=&token=value#fragment" },
+  { label: "plus and space", encoded: "plus+space%20and%2Bliteral%2Bplus_token", expected: "plus space and+literal+plus_token" },
+  { label: "literal escaped percent", encoded: "literal%252F%252B%2526%25FF%2520_padding", expected: "literal%2F%2B%26%FF%20_padding" },
+  { label: "Unicode", encoded: "%E6%9D%B1%E4%BA%AC%20%2F%20caf%C3%A9_abcdefghijklmnop", expected: "東京 / café_abcdefghijklmnop" },
 ];
-test.each(origins.flatMap((origin) => validTokens.map(([label, query, expected]) => ({ origin, label, query, expected }))))(
-  "warm $origin preserves $label through the real join hook and API boundary",
-  async ({ origin, query, expected }) => {
-    const screen = await renderJoin(`${origin}/${planId}?token=${query}`, false);
-    expect(mockPost).not.toHaveBeenCalled();
-    await submitJoin(screen);
-    expect(mockPost).toHaveBeenCalledWith(`/api/v1/plans/${planId}/join`, { share_token: expected });
-  },
-);
+test.each(["https://links.table-us.com/join", "tableus://join"].flatMap((origin) =>
+  ["?", "#"].flatMap((delimiter) => decoderCases.map((value) => ({ ...value, origin, delimiter }))),
+))("$origin $delimiter preserves $label through native route and Join JSON", async ({ origin, delimiter, encoded, expected }) => {
+  const { screen, sanitized, route } = await mount(`${origin}/${planId}${delimiter}token=${encoded}`);
+  expect(sanitized).not.toContain("token=");
+  expect(route.params).not.toHaveProperty("token");
+  await act(async () => { fireEvent.press(screen.getByRole("button", { name: "Join this plan" })); });
+  expect(mockPost).toHaveBeenCalledWith(`/api/v1/plans/${planId}/join`, { share_token: expected }, expect.objectContaining({ expectedSubject: "actor-a" }));
+});
 
-const invalidLinks = [
-  ["missing token", `${planId}`],
-  ["empty token", `${planId}?token=`],
-  ["bare token", `${planId}?token`],
-  ["duplicate token", `${planId}?token=first&token=second`],
-  ["encoded duplicate key", `${planId}?token=first&%74oken=second`],
-  ["invalid UTF-8", `${planId}?token=%FF%41`],
-  ["incomplete UTF-8", `${planId}?token=%E2%82`],
-  ["encoded surrogate", `${planId}?token=%ED%A0%80`],
-  ["trailing percent", `${planId}?token=trailing%`],
-  ["invalid escape", `${planId}?token=%GG`],
-  ["literal surrogate", `${planId}?token=\uD800`],
-  ["invalid UUID", "not-a-uuid?token=synthetic"],
-  ["encoded separator", `${planId}%2Fextra?token=synthetic`],
-  ["extra path segment", `${planId}/extra?token=synthetic`],
-];
-test.each(origins.flatMap((origin) => invalidLinks.map(([label, suffix]) => ({ origin, label, suffix }))))(
-  "$origin rejects $label before any join write",
-  async ({ origin, suffix }) => {
-    const screen = await renderJoin(`${origin}/${suffix}`);
-    expect(screen.getByText("This private link is invalid, expired, or has been rotated.")).toBeTruthy();
-    const button = screen.getByRole("button", { name: "Join this plan" });
-    expect(button).toBeDisabled();
-    await act(async () => { fireEvent.press(button); });
-    expect(mockPost).not.toHaveBeenCalled();
-  },
-);
-
-test("duplicate params also fail closed on direct route navigation without native intent", async () => {
-  const screen = await renderJoinRoute({
-    key: "direct-route-fixture", name: "join/[id]", params: { id: planId, token: ["first", "second"] },
-  });
-  expect(screen.getByRole("button", { name: "Join this plan" })).toBeDisabled();
+test.each(["https://links.table-us.com/join", "tableus://join"].flatMap((origin) => [
+  { origin, label: "duplicate query", suffix: `?token=${token}&token=${token}` },
+  { origin, label: "conflicting query and fragment", suffix: `?token=${token}#token=${token}` },
+  { origin, label: "malformed UTF-8", suffix: "#token=%FF%41" },
+  { origin, label: "trailing escape", suffix: "?token=trailing%" },
+  { origin, label: "short secret", suffix: "#token=short" },
+]))("$origin rejects $label before a Join write", async ({ origin, suffix }) => {
+  const { screen, sanitized } = await mount(`${origin}/${planId}${suffix}`);
+  expect(sanitized).toBe("/join/invalid");
+  expect(screen.queryByRole("button", { name: "Join this plan" })).toBeNull();
   expect(mockPost).not.toHaveBeenCalled();
 });
 
-test("router decodes auth/share query values with the patched upstream decoder", () => {
-  const state = getStateFromPath("/join?token=a%2Bb%2Fc%3D&name=Jos%C3%A9", {
-    screens: { join: "join" },
-  });
-  expect(state?.routes[0].params).toEqual({ token: "a+b/c=", name: "José" });
+test("lost join response checks provider-free membership before navigating", async () => {
+  const { screen, sanitized } = await mount(`tableus://join/${planId}?token=${token}`);
+  expect(sanitized).toMatch(/pending=/);
+  expect(pendingJoinStore.getSnapshot()?.subject).toBe("actor-a");
+  expect(mockUseAuth()).toEqual({ approved: true, subject: "actor-a" });
+  expect(screen.queryByRole("button", { name: "Join this plan" })).toBeTruthy();
+  await act(async () => { fireEvent.press(screen.getByRole("button", { name: "Join this plan" })); });
+  expect(screen.getByRole("button", { name: "Check membership" })).toBeTruthy();
+  mockGet.mockResolvedValueOnce({ updated_at: "synthetic" });
+  await act(async () => { fireEvent.press(screen.getByRole("button", { name: "Check membership" })); });
+  expect(mockGet).toHaveBeenCalledWith(`/api/v1/plans/${planId}/revision`, { expectedSubject: "actor-a" });
+  expect(mockPost).toHaveBeenCalledTimes(1);
+  expect(mockReplace).toHaveBeenCalledWith({ pathname: "/plans/[id]", params: { id: planId } });
 });
 
-test("router preserves malformed bytes while decoding valid sequences", () => {
-  const state = getStateFromPath("/join?token=%FF%41%FF%41", { screens: { join: "join" } });
-  expect(state?.routes[0].params).toEqual({ token: "%FFA%FFA" });
+test("nonmembership requires approval check and an explicit retry", async () => {
+  const { screen } = await mount(`tableus://join/${planId}?token=${token}`);
+  await act(async () => { fireEvent.press(screen.getByRole("button", { name: "Join this plan" })); });
+  mockGet.mockRejectedValueOnce(new ApiError("Not a participant", 403)).mockResolvedValueOnce({ id: "actor-a" });
+  await act(async () => { fireEvent.press(screen.getByRole("button", { name: "Check membership" })); });
+  expect(mockGet).toHaveBeenNthCalledWith(2, "/api/v1/me", { expectedSubject: "actor-a" });
+  expect(mockPost).toHaveBeenCalledTimes(1);
+  mockPost.mockResolvedValueOnce({ id: planId });
+  await act(async () => { fireEvent.press(screen.getByRole("button", { name: "Retry joining plan" })); });
+  expect(mockPost).toHaveBeenCalledTimes(2);
+  expect(mockPost.mock.calls[1]?.[2]).toEqual(mockPost.mock.calls[0]?.[2]);
+});
+
+test("subject switch clears the link and ignores a late join success", async () => {
+  let complete!: (value: unknown) => void;
+  mockPost.mockImplementationOnce(() => new Promise((resolve) => { complete = resolve; }));
+  const { screen } = await mount(`tableus://join/${planId}#token=${token}`);
+  await act(async () => { fireEvent.press(screen.getByRole("button", { name: "Join this plan" })); });
+  await act(async () => { mockUseAuth.mockReturnValue({ approved: true, subject: "actor-b" }); pendingJoinStore.setSubject("actor-b"); complete({ id: planId }); });
+  expect(pendingJoinStore.getSnapshot()).toBeNull();
+  expect(mockReplace).not.toHaveBeenCalled();
+});
+
+test("remount after an uncertain response requires membership reconciliation", async () => {
+  const first = await mount(`tableus://join/${planId}#token=${token}`);
+  await act(async () => { fireEvent.press(first.screen.getByRole("button", { name: "Join this plan" })); });
+  expect(first.screen.getByRole("button", { name: "Check membership" })).toBeTruthy();
+  await first.screen.unmount();
+  const second = await mount(first.sanitized);
+  expect(second.screen.getByRole("button", { name: "Check membership" })).toBeTruthy();
+  expect(second.screen.queryByRole("button", { name: "Join this plan" })).toBeNull();
+  expect(mockPost).toHaveBeenCalledTimes(1);
+});
+
+test("a new private link replaces a failed flow and presents a fresh Join action", async () => {
+  const first = await mount(`tableus://join/${planId}#token=${token}`);
+  await act(async () => { fireEvent.press(first.screen.getByRole("button", { name: "Join this plan" })); });
+  const replacementToken = "Replacement_0123456789GhijkLMN_opQRSTuvWxyZ";
+  let replacement!: ReturnType<typeof nativeRoute>;
+  await act(async () => { replacement = nativeRoute(`tableus://join/${planId}#token=${replacementToken}`); });
+  await first.screen.rerender(
+    <NavigationRouteContext.Provider value={replacement.route}>
+      <LocalRouteParamsContext.Provider value={replacement.route.params ?? {}}>
+        <JoinPlanScreen />
+      </LocalRouteParamsContext.Provider>
+    </NavigationRouteContext.Provider>,
+  );
+  expect(first.screen.getByRole("button", { name: "Join this plan" })).toBeTruthy();
+  expect(first.screen.queryByRole("button", { name: "Check membership" })).toBeNull();
+});
+
+test("the real router decoder retains encoded plus and malformed bytes without leaking a capability route", () => {
+  const valid = getStateFromPath("/join?token=a%2Bb%2Fc%3D", { screens: { join: "join" } });
+  expect(valid?.routes[0].params).toEqual({ token: "a+b/c=" });
+  const malformed = getStateFromPath("/join?token=%FF%41", { screens: { join: "join" } });
+  expect(malformed?.routes[0].params).toEqual({ token: "%FFA" });
+});
+
+test("signed-out link waits for approval and retains only the handle in native navigation", async () => {
+  mockUseAuth.mockReturnValue({ approved: false, subject: null });
+  pendingJoinStore.setSubject(null);
+  const { screen, sanitized } = await mount(`tableus://join/${planId}#token=${token}`);
+  expect(sanitized).not.toContain(token);
+  expect(mockPost).not.toHaveBeenCalled();
+  fireEvent.press(screen.getByRole("button", { name: "Sign in to join" }));
+  expect(mockPush).toHaveBeenCalledWith({ pathname: "/auth", params: { mode: "sign-in" } });
+  expect(pendingJoinStore.getSnapshot()?.subject).toBeNull();
 });

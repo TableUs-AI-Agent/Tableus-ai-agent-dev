@@ -342,6 +342,7 @@ from tableus.request_controls import (
     FixedWindowRateLimiter,
     IdempotencyInFlightCoordinator,
     IdempotencyReplayCache,
+    PrivateApiCacheMiddleware,
     RequestBodyLimitMiddleware,
     is_idempotency_eligible,
 )
@@ -629,6 +630,9 @@ app.add_middleware(
     shared_plans_enabled=settings.tableus_shared_plans_enabled,
     cors_origins=tuple(settings.cors_origins),
 )
+
+# Outside admission and replay handling so their early responses are private too.
+app.add_middleware(PrivateApiCacheMiddleware)
 
 
 @app.exception_handler(HTTPException)

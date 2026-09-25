@@ -26,6 +26,7 @@ import {
 } from "@/lib/auth-transaction";
 import { isSupabaseConfigured, secureAuthStorage, supabase } from "@/lib/supabase";
 import { captureTelemetry } from "@/lib/telemetry";
+import { pendingJoinStore } from "@/lib/pending-join";
 
 export type AuthPhase = "loading" | "restore_failed" | "signed_out" | "pending_verification" | "redeem_pending" | "approved" | "deletion";
 type Profile = { id: string; display_name: string; share_taste: boolean };
@@ -87,6 +88,7 @@ export function AuthProvider({ children }: PropsWithChildren) {
 
   const observeSession = useCallback((next: Session | null) => {
     const nextSubject = next?.user.id ?? null;
+    pendingJoinStore.setSubject(nextSubject);
     if (shouldClearQueryCache(subjectRef.current, nextSubject)) queryClient.clear();
     if (nextSubject && subjectRef.current !== nextSubject) {
       setDeletionStatus(null);
@@ -99,6 +101,7 @@ export function AuthProvider({ children }: PropsWithChildren) {
 
   const beginDeletion = useCallback((subject: string) => {
     if (subjectRef.current !== null && subjectRef.current !== subject) return;
+    pendingJoinStore.clear();
     deletionSubjectRef.current = subject;
     setDeletionSubject(subject);
     setProfile(null);
@@ -151,6 +154,7 @@ export function AuthProvider({ children }: PropsWithChildren) {
   }, [updatePending]);
 
   const rejectUnapprovedSession = useCallback(async (message: string) => {
+    pendingJoinStore.clear();
     await clearStoredPending();
     await supabase.auth.signOut({ scope: "local" });
     observeSession(null);
@@ -302,6 +306,7 @@ export function AuthProvider({ children }: PropsWithChildren) {
   const cancelPending = useCallback(async () => {
     setBusy(true);
     try {
+      pendingJoinStore.clear();
       await clearStoredPending();
       if (session) await supabase.auth.signOut({ scope: "local" });
       observeSession(null);
@@ -327,6 +332,7 @@ export function AuthProvider({ children }: PropsWithChildren) {
         },
         clearCache: () => queryClient.clear(),
       });
+      pendingJoinStore.clear();
       observeSession(null);
       setProfile(null);
       setDeletionStatus(null);
@@ -357,6 +363,7 @@ export function AuthProvider({ children }: PropsWithChildren) {
       const previousDeletionSubject = deletionSubjectRef.current;
       observeSession(nextSession);
       if (event === "SIGNED_OUT") {
+        pendingJoinStore.clear();
         restorationCancelled = true;
         void clearPendingTransaction(secureAuthStorage);
         updatePending(null);
@@ -405,6 +412,10 @@ export function AuthProvider({ children }: PropsWithChildren) {
       subscription.unsubscribe();
     };
   }, [completeApproval, observeSession, queryClient, restoreAttempt, retryRestore, updatePending, updatePhase]);
+
+  useEffect(() => {
+    if (!isSupabaseConfigured) pendingJoinStore.setSubject(process.env.EXPO_PUBLIC_DEMO_USER_ID ?? "demo-organizer");
+  }, []);
 
   useEffect(() => {
     if (!isSupabaseConfigured) return;

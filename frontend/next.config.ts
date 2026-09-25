@@ -3,7 +3,7 @@ import path from "node:path";
 import { withSentryConfig } from "@sentry/nextjs";
 import { PUBLIC_RUNTIME_POLICY, requireExactHttpsOrigin } from "@tableus/domain";
 import { webApiOrigin } from "./app/lib/runtime-config";
-import { FRAME_PROTECTION_HEADERS, FRAME_PROTECTION_SOURCE } from "./app/lib/security-headers";
+import { FRAME_PROTECTION_HEADERS, FRAME_PROTECTION_SOURCE, PRIVATE_JOIN_HEADERS, PRIVATE_JOIN_SOURCE } from "./app/lib/security-headers";
 
 if (process.env.VERCEL === "1") {
   requireExactHttpsOrigin(
@@ -44,6 +44,10 @@ const nextConfig: NextConfig = {
       {
         source: FRAME_PROTECTION_SOURCE,
         headers: [...FRAME_PROTECTION_HEADERS],
+      },
+      {
+        source: PRIVATE_JOIN_SOURCE,
+        headers: [...FRAME_PROTECTION_HEADERS, ...PRIVATE_JOIN_HEADERS],
       },
     ];
   },

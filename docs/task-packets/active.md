@@ -1,43 +1,45 @@
-# Active packet: capability-link design review
+# Active packet: private-link handling
 
-Owner: Brian, sole developer at this stage; historical shared attribution stays.
-Authorized outcome: the recommended bounded read-only capability-link decision
-packet, based on source and current native evidence. No implementation execution.
+Owner: Brian, sole current-stage developer. Historical shared work remains shared.
+On September 25 the owner said continue with the recommendation: retain private
+link sharing among approved members and implement the prepared safer transport.
 
-## Identities
+- Branch: `codex/private-link-handling`.
+- Worktree: `/Users/brianchei/.codex/worktrees/private-link-handling/Tableus-ai-agent-dev`.
+- Base: `2674fc7a798de5f090f17455a602e44641bda943`.
+- Inherited application: `29edb5e9f47ab7ac74034f2bac5e271a162ea620`.
+- [Design packet](../capability-link-decision.md); native task
+  `01a0c678-55c8-7cc0-a3cb-e3200776906a` retains all native execution and budgets.
 
-- Branch: `codex/capability-link-review`.
-- Worktree: `/Users/brianchei/.codex/worktrees/capability-link-review/Tableus-ai-agent-dev`.
-- Exact base: `72e8ba137350b7a73b3dbd288a541039e35d5d52`.
-- Unchanged application/operator source: `29edb5e9f47ab7ac74034f2bac5e271a162ea620`.
-- Prior [invite handoff](../handoffs/2026-09-24-recipient-invites.md).
-- Native task: `01a0c678-55c8-7cc0-a3cb-e3200776906a`, Prepare native replacement
-  validation. Its latest inspected worktree HEAD is
-  `f044c925d216c9caad201b2c4425bad878c0472c`; native application remains `8972865`.
+## Outcome
 
-## Scope and acceptance
+Read fragment and legacy query capabilities once, keep secrets out of router/auth/
+persistent state, retain only a 20-minute process-local pending join, clear on
+cancel/success/expiry/logout/account switch, and require explicit approved-member
+Join through the existing API. User-requested ambiguous recovery first checks
+provider-free membership. Preserve existing plan authority/rotation/capacity.
+New-format emission is prepared but defaults OFF (legacy query) until compatible
+web/mobile readers and installed-client adoption pass separate release acceptance.
+Add explicit join-page referrer/cache policy and private API no-store responses.
 
-Trace link creation, client navigation/authentication, joining, rotation, storage,
-telemetry and logging boundaries. Compare alternatives, recommend a concrete
-scope, identify consequential product choices and define implementation/acceptance
-steps. Astra owns backend review, synthesis and source verification; bounded Sol
-read-only work traces web/mobile paths. No broad security scan is authorized.
+## Ownership and checks
 
-Only documentation changes in this isolated worktree. No application edits,
-tests/builds, database/server runs, native tools/devices, hosted checks or CI,
-provider/Auth calls, invitations, deployments, merges/pushes, Notion edits or
-cleanup. Existing native limits and September 30 boundary are unchanged.
-Validate document links, evidence/source hashes and docs-only diff; reuse earlier
-application checks only at their original exact source. Do not claim runtime
-proof for this design. Local implementation may be proposed after the product
-choice; native release validation remains separately owned and gated.
+Astra: shared pure parser/store, API HTTP headers, integration/review, PostgreSQL
+setup and final evidence. Sol: separate frontend and mobile implementation/tests.
+React quality checklist applies. Meaningful parser/lifecycle/mock client and API
+checks, one passing make-ready on frozen source, generated-contract drift and
+durable exact-source handoff. Local PostgreSQL only, synthetic data, no live Auth.
+
+## Boundaries
+
+No native builds, simulator/device actions, live or paid providers/Auth, real
+invites/links, cloud/secret changes, hosted migration or CI, deployment, merge/push,
+store submission, beta activation, shared Notion edit or destructive cleanup.
+No native retry or September 30 extension. Account deletion stays disabled;
+canceled scans stay canceled. Keep and stop task-owned local PostgreSQL; retain
+logs/data. No rollout acceptance from mocked tests.
 
 ## Status
 
-Review packet complete. [Proposed design](../capability-link-decision.md) and
-[evidence manifest](../evidence/capability-link-review-2026-09-24/manifest.json)
-record current behavior, alternatives, a small implementation sequence and release
-dependencies. The approved-members versus named/organizer-approved plan-sharing
-question is pending; current behavior is the recommendation, not a new owner
-decision. No implementation was performed. A later local implementation objective
-can follow the choice; native/hosted acceptance is a separate gated stage.
+Implementation in progress. Approval applies to the recommended current-sharing
+model and local scope, not production risk acceptance or new-format activation.

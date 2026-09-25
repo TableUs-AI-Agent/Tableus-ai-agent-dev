@@ -1,5 +1,7 @@
 import * as Sentry from "@sentry/react-native";
 import { Stack } from "expo-router/stack";
+import { router } from "expo-router";
+import { useEffect } from "react";
 import { StatusBar } from "expo-status-bar";
 import { View } from "react-native";
 import { SafeAreaProvider } from "react-native-safe-area-context";
@@ -8,6 +10,7 @@ import { ConnectivityBanner } from "@/components/connectivity-banner";
 import { AppProviders } from "@/providers/app-providers";
 import { AuthProvider, useAuth } from "@/providers/auth-provider";
 import { colors } from "@/theme";
+import { pendingJoinStore } from "@/lib/pending-join";
 import { sanitizeSentryEvent } from "@tableus/domain";
 
 const telemetryMode = process.env.EXPO_PUBLIC_TELEMETRY_MODE;
@@ -26,6 +29,14 @@ if ((telemetryMode === "staging" || telemetryMode === "production") && process.e
 
 function RootNavigator() {
   const auth = useAuth();
+  useEffect(() => {
+    if (!auth.approved || !auth.subject) return;
+    const pending = pendingJoinStore.getSnapshot();
+    if (pending?.subject !== auth.subject) return;
+    // Approval may remove the auth modal; restore the explicit Join screen,
+    // never submit the capability as a side effect of signing in.
+    router.replace({ pathname: "/join/[id]", params: { id: pending.planId, pending: pending.handle } });
+  }, [auth.approved, auth.subject]);
   return (
     <View style={{ flex: 1 }}>
       <StatusBar style="dark" />

@@ -294,3 +294,27 @@ processes receive the configuration, not by client role claims or instant env
 hot reload. Hydrate vote/finalize/reopen responses before mutating, so a quota
 failure cannot be reported after the write commits. The [cohort contract](cohort-controls.md)
 records resource semantics and remaining gates.
+
+
+## Private plan links — adopted 2026-09-25
+
+The owner said continue with the recommendation: retain plan joining by an
+already-approved TableUs member holding the current forwarded link. Account
+invitations remain recipient-bound; plan links do not become recipient-bound or
+require organizer approval. Rotation revokes the old capability for new joins,
+not existing membership. Server link lifetime is unchanged.
+
+Capture valid query/fragment tokens exactly once into a bounded process-local
+pending flow, scrub web URL data, and route native screens with opaque local
+handles. Require explicit Join after authentication, bind to the observed account,
+and clear on expiry/cancel/success/sign-out/account switch. Unknown writes use
+provider-free membership reconciliation before another explicit attempt. No
+exchange ticket, offline write queue, persistent capability or API schema change.
+
+Prepare fragment emission behind a default-off client build setting. Do not
+activate it until compatible web/mobile readers and installed cohort adoption
+are accepted on the intended release. Legacy query links retain initial-request
+exposure; release work must specify the transition/cutoff and organizer rotation
+scope. Local implementation and mock checks cannot accept hosted logging,
+platform association delivery or distributed clients. See the
+[implementation contract](private-link-handling.md).

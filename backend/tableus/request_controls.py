@@ -40,6 +40,31 @@ PHOTO_UPLOAD_BODY_LIMIT = 9 * 1024 * 1024
 _PHOTO_UPLOAD_PATHS = {"/api/v1/food/analyze", "/api/food/analyze"}
 
 
+class PrivateApiCacheMiddleware:
+    """Prevent intermediary caching of private API responses, including replays."""
+
+    def __init__(self, app: Callable[..., Awaitable[None]]) -> None:
+        self.app = app
+
+    async def __call__(self, scope: dict, receive: Callable, send: Callable) -> None:
+        if scope.get("type") != "http" or not scope.get("path", "").startswith("/api/v1/"):
+            await self.app(scope, receive, send)
+            return
+
+        async def private_send(message: dict) -> None:
+            if message.get("type") == "http.response.start":
+                headers = [
+                    (key, value) for key, value in message.get("headers", [])
+                    if key.lower() not in {b"cache-control", b"pragma"}
+                ]
+                message = {**message, "headers": [
+                    *headers, (b"cache-control", b"no-store"), (b"pragma", b"no-cache")
+                ]}
+            await send(message)
+
+        await self.app(scope, receive, private_send)
+
+
 class RequestBodyLimitMiddleware:
     """Reject oversized declared and streamed bodies before framework parsing."""
 

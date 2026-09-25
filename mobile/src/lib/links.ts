@@ -1,9 +1,13 @@
-import { buildAuthUrl, buildJoinUrl, requireCanonicalUuid, type AuthLinkMode } from "@tableus/domain";
+import { buildAuthUrl, buildJoinUrl, parseJoinToken, requireCanonicalUuid, type AuthLinkMode } from "@tableus/domain";
+
+import { pendingJoinStore } from "./pending-join.ts";
 
 const linkOrigin = `https://${process.env.EXPO_PUBLIC_LINK_HOST ?? "links.table-us.com"}`;
 
 export function createCanonicalJoinUrl(planId: string, shareToken: string): string {
-  return buildJoinUrl(linkOrigin, planId, shareToken);
+  // Fragment sharing is enabled only after compatible installed clients are verified.
+  const format = process.env.EXPO_PUBLIC_JOIN_LINK_FORMAT === "fragment" ? "fragment" : "query";
+  return buildJoinUrl(linkOrigin, planId, shareToken, format);
 }
 
 export function createCanonicalAuthUrl(mode: AuthLinkMode): string {
@@ -12,25 +16,6 @@ export function createCanonicalAuthUrl(mode: AuthLinkMode): string {
 
 export function parseAuthLinkMode(value: string | string[] | undefined): AuthLinkMode {
   return value === "sign-in" ? "sign-in" : "join";
-}
-
-function readJoinToken(path: string): string | undefined {
-  // URLSearchParams replaces malformed UTF-8. Validate the original query so
-  // an invalid capability never acquires a different meaning during decoding.
-  const beforeFragment = path.split("#", 1)[0];
-  const queryStart = beforeFragment.indexOf("?");
-  if (queryStart < 0) return undefined;
-  let token: string | undefined;
-  for (const field of beforeFragment.slice(queryStart + 1).split("&")) {
-    const separator = field.indexOf("=");
-    const key = separator < 0 ? field : field.slice(0, separator);
-    if (decodeURIComponent(key.replace(/\+/g, " ")) !== "token") continue;
-    if (token !== undefined) throw new Error("Duplicate private-link token");
-    token = decodeURIComponent((separator < 0 ? "" : field.slice(separator + 1)).replace(/\+/g, " "));
-    // Reject unpaired literal surrogates too, before the URL parser repairs them.
-    encodeURIComponent(token);
-  }
-  return token;
 }
 
 export function rewriteCanonicalSystemPath(path: string): string {
@@ -44,14 +29,24 @@ export function rewriteCanonicalSystemPath(path: string): string {
     if (pathname === "/join" || pathname.startsWith("/join/")) {
       try {
         if (url.username || url.password || (appJoin && url.port) || !/^\/join\/[^/]+$/.test(pathname)) {
+          pendingJoinStore.clear();
           return "/join/invalid";
         }
         const planId = requireCanonicalUuid(decodeURIComponent(pathname.slice("/join/".length)), "Plan ID");
-        const token = readJoinToken(path);
-        // Returning an internal path bypasses Expo's custom-scheme extractor,
-        // which rebuilds decoded queries and changes encoded pluses to spaces.
-        return token ? `/join/${planId}?token=${encodeURIComponent(token)}` : `/join/${planId}`;
+        const token = parseJoinToken(path);
+        if (token) {
+          const { handle } = pendingJoinStore.capture(planId, token);
+          return `/join/${planId}?pending=${encodeURIComponent(handle)}`;
+        }
+        // Expo can pass an already-sanitized path through this hook again.
+        const handles = url.searchParams.getAll("pending");
+        if (handles.length === 1) {
+          const pending = pendingJoinStore.getSnapshot();
+          if (pending?.planId === planId && pending.handle === handles[0]) return `/join/${planId}?pending=${encodeURIComponent(pending.handle)}`;
+        }
+        return `/join/${planId}`;
       } catch {
+        pendingJoinStore.clear();
         return "/join/invalid";
       }
     }
@@ -60,6 +55,7 @@ export function rewriteCanonicalSystemPath(path: string): string {
     }
     return path;
   } catch {
+    pendingJoinStore.clear();
     return "/auth?mode=join";
   }
 }

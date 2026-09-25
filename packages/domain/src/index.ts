@@ -1,3 +1,5 @@
+import { validateJoinToken } from "./private-links.ts";
+
 export type PlanStatus = "collecting" | "voting" | "finalized";
 export type AuthLinkMode = "join" | "sign-in";
 
@@ -90,10 +92,12 @@ export function normalizeHttpsOrigin(value: string): string {
   return parsed.origin;
 }
 
-export function buildJoinUrl(origin: string, planId: string, shareToken: string): string {
-  if (!shareToken.trim()) throw new Error("Plan ID and share token are required");
+export function buildJoinUrl(origin: string, planId: string, shareToken: string, format: "query" | "fragment" = "query"): string {
+  validateJoinToken(shareToken);
+  if (format !== "query" && format !== "fragment") throw new Error("Invalid private link format");
   const url = new URL(`/join/${requireCanonicalUuid(planId, "Plan ID")}`, normalizeHttpsOrigin(origin));
-  url.searchParams.set("token", shareToken.trim());
+  if (format === "fragment") url.hash = new URLSearchParams({ token: shareToken }).toString();
+  else url.searchParams.set("token", shareToken);
   return url.toString();
 }
 
@@ -114,3 +118,5 @@ export function buildAuthUrl(origin: string, mode: AuthLinkMode): string {
 export * from "./telemetry.ts";
 export * from "./public-info.ts";
 export * from "./account-lifecycle.ts";
+
+export * from "./private-links.ts";

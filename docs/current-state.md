@@ -1,6 +1,6 @@
 # Current state
 
-Updated 2026-09-24 for the capability-link design review. Brian
+Updated 2026-09-25 for private-link implementation. Brian
 owns all development at this stage. The owner approved this work in parallel
 with native validation; only [this worktree's active packet](task-packets/active.md)
 directs work here. Native evidence remains tied to its original candidate.
@@ -9,9 +9,9 @@ directs work here. Native evidence remains tied to its original candidate.
 
 | Role | Value |
 | --- | --- |
-| Active branch | `codex/capability-link-review` |
-| Active worktree | `/Users/brianchei/.codex/worktrees/capability-link-review/Tableus-ai-agent-dev` |
-| Review base / unchanged application | `72e8ba137350b7a73b3dbd288a541039e35d5d52` / `29edb5e9f47ab7ac74034f2bac5e271a162ea620` |
+| Active branch | `codex/private-link-handling` |
+| Active worktree | `/Users/brianchei/.codex/worktrees/private-link-handling/Tableus-ai-agent-dev` |
+| Implementation base / inherited application | `2674fc7a798de5f090f17455a602e44641bda943` / `29edb5e9f47ab7ac74034f2bac5e271a162ea620` |
 | Cohort application candidate | `25e34ec9e35e1935cebe8dbb8f34465fd2b313e0` |
 | Native validation task | `01a0c678-55c8-7cc0-a3cb-e3200776906a`, Prepare native replacement validation |
 | Native worktree | `/Users/brianchei/.codex/worktrees/ea6d/Tableus-ai-agent-dev` |
@@ -98,8 +98,8 @@ JavaScript tests**, lint/types, contract generation, Next build, Expo web export
 and deterministic smoke. Contract drift is empty. [Handoff and evidence](handoffs/2026-09-24-cohort-controls.md)
 retain the initial test-isolation failure and passing rerun. No hosted
 migration, operator subject, configuration rollout or cohort activation occurred.
-Recipient-bound invites are implemented below. Capability-link disposition,
-affected release acceptance and retention/support review remain open.
+Recipient-bound invites and the accepted private-link design are described below.
+Affected release acceptance and retention/support review remain open.
 
 ## Recipient-bound invites
 
@@ -119,16 +119,27 @@ Auth-hook role checks and populated upgrade/downgrade/re-upgrade pass.
 [Handoff and evidence](handoffs/2026-09-24-recipient-invites.md) bind exact source. No real invite, hosted migration, Auth call, deployment or native
 validation was performed. Existing native evidence does not accept these bytes.
 
-## Capability-link review
+## Private plan links
 
-The [decision packet](capability-link-decision.md) recommends preserving approved-
-member sharing, moving the secret from query to fragment, clearing it into bounded
-client memory and keeping explicit authenticated Join through existing APIs.
-Native readers currently discard fragments, so parser/lifecycle work and later
-platform acceptance are dependencies. The sharing-policy question is pending;
-this is proposed, not adopted or implemented. No new backend ticket service is
-recommended. Repository implementation is unchanged; only documentation was
-verified. Hosted logs/headers and installed-platform fragment delivery are unproven.
+The owner accepted continued sharing among already-approved TableUs members on
+September 25. Query and fragment readers now capture once into a single 20-minute
+process-local flow. Web clears the URL; native routes contain only a local handle.
+Account changes, sign-out, cancellation, success and expiry clear pending state.
+Join stays explicit after authentication, and uncertain results first use the
+existing provider-free membership endpoint. No new ticket service, server expiry,
+recipient restriction or membership schema is introduced.
+
+New-format emission is opt-in and defaults OFF on both clients. Old installed
+readers discard fragments, so compatible release readers and adoption are still
+activation prerequisites. Legacy query URLs still reach the initial web request
+before client scrubbing. Join documents request no-referrer/no-store; API v1
+responses are no-store including successful replays and early admission errors.
+Hosted header/log behavior and actual native delivery remain unproven.
+
+Local verification is in progress in the [active packet](task-packets/active.md).
+The [implementation contract](private-link-handling.md) records behavior and
+release gates. The [prior decision packet](capability-link-decision.md) preserves
+the pre-implementation review; its then-pending policy question is now resolved.
 
 ## Native and release evidence
 
