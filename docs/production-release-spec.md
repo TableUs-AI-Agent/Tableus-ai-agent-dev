@@ -5,7 +5,10 @@ historical work remains shared. This is a reviewed preparation artifact, not
 production acceptance or permission to create resources, deploy or submit builds.
 
 Base: `a79fd60ad7bbed397ad325caef1c2313ef29c80c`.
-Unchanged cumulative application: `484632517345e7858f48caf8fa7b128f9d9dab80`.
+Original snapshot application: `484632517345e7858f48caf8fa7b128f9d9dab80`.
+Current application `72c592b511bba6b74bba2521524c6111b9cf5916` adds
+[approved deletion-content behavior](handoffs/2026-09-25-deletion-content.md).
+Rebind acceptance before execution; environment/OTA recommendations remain pending.
 Branch: `codex/production-release-spec`.
 See [source and inventory evidence](evidence/production-release-spec-2026-09-25/README.md)
 and the [cumulative staging acceptance plan](cumulative-release-acceptance.md).
@@ -22,7 +25,8 @@ a Railway environment's name for a production configuration.
 
 Three concrete gaps precede production:
 1. Confirm production targets and the staging/production link-host transition.
-2. Resolve retained authored-content behavior and retention/support promises;
+2. Roll out and accept implemented authored-content cleanup, resolve historical
+   attribution gaps, and finalize retention/support promises;
    [the companion specification](retention-support-spec.md) identifies the release gap.
 3. Accept the cumulative application in its intended environments and distributed
    artifacts. Existing native diagnostics do not accept these application bytes.

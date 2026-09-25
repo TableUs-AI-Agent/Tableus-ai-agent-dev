@@ -3,7 +3,9 @@
 The September 24 backend objective adds ownership resolution and opt-in full
 account deletion. The client objective adds web/mobile management and deletion
 recovery screens, plus provider-free plan metadata. No hosted migration,
-credential, scheduler or deployment has been applied by these changes.
+credential, scheduler or deployment has been applied by these changes. The
+September 25 [shared-content implementation](handoffs/2026-09-25-deletion-content.md)
+adds provenance, dependent-result cleanup, replay fencing and organizer repair.
 
 ## API contract
 
@@ -15,6 +17,7 @@ credential, scheduler or deployment has been applied by these changes.
 | `DELETE /api/v1/plans/{id}` | Exact `{"confirmation":"DELETE"}`; only organizer, only when sole participant. Shared plans must be transferred. |
 | `POST /api/v1/me/deletion` | Exact `{"confirmation":"DELETE"}` requests full deletion. Application data removal and the durable job commit together. Then at most one due Auth attempt runs. Response is `pending` or `completed`, with retry/attention fields. Repetition reads/retries the same durable job; a disabled API returns its status without attempting Auth removal. |
 | `GET /api/v1/me/deletion` | Authenticated subject can read their status after profile deletion. No writes or provider calls. Missing request is 404 for an approved profile. |
+| `PATCH /api/v1/plans/{id}/metadata` | Organizer repairs removed title/location on a collecting plan, using validated resolved-location input. Returns `PlanOut`; `metadata_needs_replacement` blocks recommendations until repaired. No automatic regeneration. |
 | `DELETE /api/v1/me` | Existing application-only contract remains; it does not delete Auth. Users who already took that legacy path still need operator Auth completion. |
 
 Full deletion cannot start while the feature is unavailable or organized plans
@@ -67,12 +70,22 @@ background polling, native validation or hosted feature activation is added.
 | --- | --- |
 | Profile, reviews, connections, memberships, votes, invite redemptions | Removed with profile in the application transaction. Invite use counts are not refunded. |
 | Pending invite validations matching the profile email hash | Removed in that same transaction. |
-| Shared plans and their recommendations, candidates and history | Preserved after transfer. Shared titles/labels/content can still reflect the former organizer's contributions. |
-| Events authored by the profile | Actor reference cleared; named identity fields and exact subject/hash values scrubbed from payloads. This is not a general free-text anonymizer. |
+| Shared plans and other members' inputs | Plan/membership/remaining constraints survive transfer and later account deletion. Departing-account authored metadata is replaced with neutral placeholders pending organizer repair. |
+| Recommendation results, candidates and votes | All historical and current runs dependent on the departing requester, metadata author or participant are removed with their candidates and votes. Affected active/finalized state resets to collecting. Proven independent runs remain; new recommendations and votes are explicit. Unknown legacy records in affected member plans receive conservative cleanup. |
+| Events authored by the profile | Actor cleared and free-text payload removed; only allowlisted surviving structural UUID references for known event types remain. Other actors' payloads lose exact references to removed results. This does not identify every mention written independently by someone else. |
 | Auth user | Trusted hard-delete request; only confirmed success or the provider's specific user-not-found response completes the job. |
 | Recovery row | Raw Auth subject retained while pending, cleared on completion. Namespaced subject hash, timestamps and retry metadata remain to prevent stale-token re-enrollment and support recovery. |
 | Cohort quota counters | Stable subject digest, daily operation counts and lifetime creation baseline remain across profile/plan deletion to prevent quota reset; no raw subject or profile foreign key. See [cohort controls](cohort-controls.md); retention review is still required. |
-| Logs, backups, provider audit records, transient replay cache | No new purge deadline or deletion promise. Broader retention policy and operator procedures remain release work. Existing product-access checks protect replay after profile removal. |
+| Transient response replay cache | Successful deletion synchronously strips cached bodies in the current API process and fences in-flight stale responses. Consumed keys/fingerprints remain until existing expiry/eviction; a stale replay returns `409 idempotency_content_changed` and requires a fresh read. No automatic mutation retry. No durable or cross-process guarantee is added. |
+| Logs, backups, provider audit records | No new purge deadline or deletion promise. Broader retention policy and operator procedures remain release work. |
+
+Migration `9a1f2e7c4b80` adds metadata/run/contributor provenance in the private
+schema and preserves existing rows as `legacy_unknown`. It performs no bulk
+cleanup. Former contributors already deleted before provenance existed may be
+unidentifiable; real legacy inventory/remediation remains a rollout prerequisite.
+Clients already holding delivered/offline data must refresh; the server cannot
+recall previously delivered bytes. Deploy compatible repair clients and keep the
+existing one-API-process constraint until durable replay coordination exists.
 
 The completed tombstone must not be deleted or its hash namespace changed
 without a reviewed stale-token/re-enrollment strategy. It does not depend on

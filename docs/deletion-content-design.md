@@ -4,7 +4,9 @@ September 25, 2026. Prepared by the root agent for Brian, current sole developme
 owner; historical shared contribution is unchanged. Base
 `e2b9577f810fdd9b8933bdfb0155e61c34146195`; unchanged application
 `484632517345e7858f48caf8fa7b128f9d9dab80`.
-This is source review and design, not an implementation or acceptance result.
+This packet preserves the original source review and approved design. Subsequent
+implementation and actual checks are recorded in the [handoff](handoffs/2026-09-25-deletion-content.md);
+its source identities supersede the historical baseline above.
 
 ## Approved behavior — September 25 implementation objective
 
@@ -26,7 +28,7 @@ backup/provider deletion or store acceptance.
 
 ## Exact field and dependency map
 
-| Stored data | Attribution available now | Proposed treatment |
+| Stored data | Attribution at design baseline | Approved treatment |
 | --- | --- | --- |
 | Plan title, location label, Place ID and legacy coordinates | Created by request actor, but only mutable organizer ID survives on Plan | Add immutable authored-field provenance. Clear departing author's values; use neutral title and explicit location-needs-replacement state. Do not silently retain a user's location because it is represented by a Place ID |
 | Participant constraints | Profile-keyed row; includes free-text notes/dietary notes | Existing cascade removes own row. Preserve other members' rows; never copy deleted inputs to a repair queue |
@@ -55,7 +57,7 @@ all dependent output.
 
 ## Provenance and legacy data
 
-Proposed new schema:
+Approved new schema:
 - Immutable Plan author reference for creator-supplied fields, with explicit
   provenance state (`known`, `legacy_unknown`, `removed`). Future field edits
   update ownership of those specific fields; organizer transfer does not.
@@ -157,7 +159,8 @@ copy to explain its effect on shared results before the destructive confirmation
 
 ## Completion checks for the implementation objective
 
-These are proposed checks, not executed results.
+This table is the design acceptance checklist. For executed cases and limits, use
+the [source-bound implementation evidence](evidence/deletion-content-implementation-2026-09-25/README.md).
 
 | Scenario | Required observation |
 | --- | --- |

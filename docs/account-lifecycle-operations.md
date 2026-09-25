@@ -19,12 +19,20 @@ remain per process, so API admission can pause while the worker drains.
 1. Apply and verify the account-deletion migration using the separate migration
    role. Confirm the runtime role has the intended DML grants on private
    `app.account_deletions`, with no schema-create or owner privilege, and public/Data API roles cannot read it.
-2. Verify PostgreSQL race tests, deployed API/client versions, the trusted
+2. Include provenance migration `9a1f2e7c4b80`, its indexes and private
+   `app.run_contributors` grants (runtime SELECT/INSERT/DELETE only; denied browser
+   roles). It preserves legacy rows as unknown. Inventory historical content and
+   separately approve any real legacy remediation; automatic cleanup on a future
+   deletion cannot recover already-lost attribution. Deploy compatible metadata
+   repair clients before admission. Keep one API process: replay invalidation is
+   process-local and consumed keys expire/evict or disappear on restart. Do not
+   promise recall of data already delivered to offline clients.
+3. Verify PostgreSQL race tests, deployed API/client versions, the trusted
    server-only Auth credential and the worker's access to the intended database.
    Keep that credential out of public client configuration and command output.
-3. Assign a named on-call owner for pending, attention and support requests.
+4. Assign a named on-call owner for pending, attention and support requests.
    Record the scheduler target and its execution history before admitting users.
-4. Run `--status` against the intended environment. It is read-only and works
+5. Run `--status` against the intended environment. It is read-only and works
    when processing is disabled. Confirm that its counts match private database
    evidence without exporting subjects or email addresses.
 

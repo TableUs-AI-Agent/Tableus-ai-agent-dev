@@ -3,6 +3,10 @@
 Prepared 2026-09-25 against application
 `484632517345e7858f48caf8fa7b128f9d9dab80`.
 Brian is the current implementation, operations and decision owner.
+The original source/line references below describe that historical snapshot.
+The September 25 [implementation handoff](handoffs/2026-09-25-deletion-content.md)
+and [current lifecycle contract](account-lifecycle.md) supersede its shared-content
+findings; all other unverified operational/policy items remain open.
 This document specifies remaining work; it does not enable deletion or approve
 new retention periods. [Production configuration](production-release-spec.md)
 and [source evidence](evidence/production-release-spec-2026-09-25/README.md).
@@ -12,7 +16,7 @@ and [source evidence](evidence/production-release-spec-2026-09-25/README.md).
 | Data class | Actual behavior / source | Disposition before distribution |
 | --- | --- | --- |
 | Profile and relationships | Full request deletes profile in the same transaction as its Auth-removal queue record. Cascades remove reviews, connections, memberships, votes and redemptions; pending validation records for the email hash are removed. [API](../backend/tableus/api.py) lines 838–870; [models](../backend/tableus/models.py) lines 100–138, 161–205 | Locally implemented. Hosted migration, credential/worker, recovery and client acceptance remain required |
-| Shared content | Organized shared plans must be transferred; only sole-participant plans can be removed directly. Transferred title/location, recommendation queries/reasoning/history and some contributed event content remain. Event actor is cleared; named identity keys and exact ID/hash values are scrubbed, not arbitrary free text. [API](../backend/tableus/api.py) lines 553–575; [models](../backend/tableus/models.py) lines 140–218 | **Relevant behavioral review**, not resolved by transfer or privacy wording. Determine authored personal content that must be erased while preserving collaborators' plan utility |
+| Shared content | Current code removes departing-account authored metadata, dependent historical/current results and votes, clears authored event free text, and preserves the shared plan/remaining inputs. Provenance supports future cleanup; legacy unknowns receive conservative member-deletion treatment. [Current contract](account-lifecycle.md) | Behavior approved and implemented locally. Real legacy inventory/remediation, compatible clients, hosted migration and affected acceptance remain |
 | Auth and recovery | Auth hard deletion can remain pending/attention. Raw subject is cleared after confirmed removal; stable subject hash, tombstone and retry/completion metadata remain. [lifecycle](../backend/tableus/account_lifecycle.py) lines 34–103; [models](../backend/tableus/models.py) lines 47–65 | Locally implemented recovery; current purge period absent. Preserve stale-token/re-redemption protection until a replacement is proved |
 | Invitations | Recipient email SHA-256, invite metadata and use count outlive profile deletion. Hashes can be matched to a known email and are not anonymous. [Invite contract](recipient-invites.md); [models](../backend/tableus/models.py) lines 83–106 | Relevant retention decision and purge design, not a claim of erasure or anonymization |
 | Usage limits | Stable subject-digest/day and lifetime counters survive deletion; no purge schedule. [Cohort contract](cohort-controls.md) lines 54–60; [models](../backend/tableus/models.py) lines 68–80 | Separate daily counters from lifetime abuse protection; do not reset counters incidentally during account deletion |
@@ -29,8 +33,8 @@ or approve indefinite pseudonymous retention.
 Apple requires in-app initiation of account deletion, clear completion expectations,
 and removal of associated user-generated content. Its guidance does not generally
 allow ordinary apps to require contacting support instead of providing the deletion
-flow. The existing full-deletion flag being off, and retained shared authored
-content, therefore cannot be marked submission-ready from local code alone.
+flow. The full-deletion flag remains off, and the newly implemented cleanup
+requires rollout and legacy review; local code alone is not submission readiness.
 This is a release-review finding, not a prediction of App Review's decision.
 [Apple account deletion guidance](https://developer.apple.com/support/offering-account-deletion-in-your-app/).
 
@@ -46,25 +50,18 @@ account-deletion pathway and its operation.
 
 ### Authored-content treatment
 
-Inventory each persistent plan field and event payload by author, contributor,
-subject and surviving collaborator dependency. Current plan fields and recommendation
-runs do not retain complete authorship provenance after organizer transfer; blindly
-treating the current organizer as the author would be wrong. Record the historical
-attribution gap and decide a conservative treatment for old records.
+Approved and implemented locally on September 25. New metadata, run requester,
+location-author/version and participant provenance support transactional cleanup.
+Dependent results and votes reset; remaining member inputs and independent results
+survive. Organizer repair precedes fresh explicit generation. Cached stale responses
+require a fresh read without replaying the mutation. See the [handoff](handoffs/2026-09-25-deletion-content.md)
+for PostgreSQL races, exports, event handling, browser/mobile checks and limits.
 
-Proposed approach for review: preserve plan membership and collaborators' own votes/
-contributions, while erasing or replacing the departing user's attributable personal
-free text and identity references. Add provenance where necessary for future writes;
-select and approve legacy redaction treatment before migration. Do not automatically
-delete other participants' data or claim that transfer assigns away personal-data
-deletion requirements.
-
-Completion evidence: deterministic fixtures with transferred organizers, former
-organizers, multiple contributors, free-text identity references, recommendation
-queries/reasoning, event payloads and exports. The removed user's content must not
-reappear in a surviving participant view/export or later regeneration. Document any
-remaining retention purpose and exception; review the final behavior against store
-requirements. This is a proposed objective, not executed work.
+Legacy rows are preserved as unknown during migration, then conservatively cleaned
+when an affected current member deletes. Already-deleted historical contributors
+remain an attribution gap requiring a separately scoped inventory and approval for
+real cleanup. No provider/backups erasure deadline or full store acceptance follows
+from this implementation.
 
 ### Retention schedule
 
@@ -116,9 +113,9 @@ recovery; confirmed Auth completion and honest retained-data notice; accessible
 external request page; web/mobile parity; matching store disclosures. Sending
 messages or deleting real accounts requires a separately authorized campaign.
 
-## Draft public copy — accurate to current code, not approved for publishing
+## Historical draft public copy — superseded, not approved for publishing
 
-The following describes implemented behavior, including gaps. It is a drafting
+The following describes the historical `4846325` behavior, including gaps. It is a drafting
 baseline, **not a proposed substitute for the authored-content fix or an approved
 privacy notice**. Rewrite it against the final accepted behavior and schedule.
 
@@ -146,9 +143,9 @@ effective date only when the new notice actually takes effect.
 
 ## Decisions still needed
 
-- How to remove a departing user's authored personal content in transferred plans,
-  including records without reliable historical authorship, while preserving other
-  participants' contributions. Recommended next bounded implementation design.
+- Real legacy-content inventory and a bounded remediation scope for records whose
+  contributors were already deleted before provenance existed. Future deletion
+  behavior is approved and implemented; blanket historical cleanup is not.
 - Enforceable retention periods and purpose for each surviving record class, based
   on actual configured provider/backup limits and stale-session safeguards.
 - Support response/completion target Brian can sustain during the cohort, with
@@ -159,6 +156,6 @@ redesign through this work. Preserve the current email OTP/link decisions; asses
 only affected deletion/re-authentication and distributed return flows. No new SMS
 provider, verification service or messaging budget is implied.
 
-No code or public notice was changed; no services, tests, providers, accounts or
-mailboxes were exercised. These findings amend readiness claims, not prior exact-source
-local test results.
+The original specification exercised no services/accounts/mailboxes. Subsequent
+local implementation and tests are recorded separately in its handoff; no public
+privacy notice, hosted account, mailbox or retention schedule was changed.

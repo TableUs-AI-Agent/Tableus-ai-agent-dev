@@ -1,0 +1,74 @@
+{
+  "date": "2026-09-25",
+  "status": "locally_complete_not_release_accepted",
+  "branch": "codex/deletion-content-implementation",
+  "worktree": "/Users/brianchei/.codex/worktrees/deletion-content-implementation/Tableus-ai-agent-dev",
+  "base_sha": "c87505ca0268f1c5dfec56180313d88e663ee8ba",
+  "application_sha": "72c592b511bba6b74bba2521524c6111b9cf5916",
+  "verification_sha": "390cd2f7531dbc955317556b3693546ee3eadead",
+  "verification_delta": "390cd2f changes only mobile/src/offline-safeguards.test.mts: six actions becomes eight including location resolution and metadata repair, and same-line explicit-key matching. Application bytes are identical to 72c592b.",
+  "readiness": {
+    "initial_command": "make ready",
+    "initial_source": "72c592b511bba6b74bba2521524c6111b9cf5916",
+    "initial_result": "lint/types passed; JavaScript test phase stopped on obsolete six-action assertion (actual eight). Backend suite and later stages had not run.",
+    "continuation_command": "make test contract build smoke perf",
+    "continuation_source": "390cd2f7531dbc955317556b3693546ee3eadead",
+    "continuation_exit_code": 0,
+    "lint_types": "reused passing initial result; application, toolchain and configuration unchanged; corrected .mts assertion exercised by focused and full test runs",
+    "python": {
+      "passed": 214,
+      "skipped": 0,
+      "database": "PostgreSQL 17, restricted tableus_runtime, loopback port 55937, synthetic tableus_content_ready"
+    },
+    "javascript": {
+      "passed": 313,
+      "skipped": 0,
+      "groups": {
+        "scripts": 112,
+        "web": 23,
+        "mobile_unit": 56,
+        "mobile_components": 71,
+        "api_client": 30,
+        "domain": 21
+      }
+    },
+    "contract": "regenerated at verification source; no drift",
+    "builds": [
+      "Next production build",
+      "Expo web export"
+    ],
+    "smoke": "deterministic passed",
+    "performance": "report only: 2774889 web JavaScript chunk bytes; not a measured performance acceptance"
+  },
+  "focused": {
+    "root_replay": 9,
+    "postgres_content_and_acl": 9,
+    "client_mobile_component": 11,
+    "mocked_chrome_development": 3,
+    "mocked_chrome_production": 3,
+    "fresh_migration": "9a1f2e7c4b80 applied before full suite",
+    "populated_upgrade": "predecessor d48f6c2ab913 -> 9a1f2e7c4b80 preserves synthetic old title/run/candidate and marks legacy_unknown; agent proof retained"
+  },
+  "review": "Independent read-only review identified final awaited lock-release privacy race; root moved final generation checks after release and added fresh/replay regression cases. Final review reported no concrete unresolved implementation issue within documented legacy rollout boundary.",
+  "services": "task PostgreSQL stopped; loopback 55937 and browser 3404 verified closed; data/logs retained",
+  "not_performed": [
+    "native build/simulator/device",
+    "live Auth/Places/AI/telemetry",
+    "hosted migration or configuration",
+    "real account/content cleanup",
+    "secrets or resource creation",
+    "deployment/store submission",
+    "merge/push",
+    "Notion/Notes operation",
+    "canceled security scans"
+  ],
+  "remaining": [
+    "hosted migration and role proof",
+    "compatible client rollout and affected release acceptance",
+    "legacy attribution inventory and separately approved real remediation",
+    "single-API-process constraint until durable cross-process replay coordination",
+    "retention schedule, backup/provider settings and support/external deletion pathway",
+    "production environment/link/signing decisions and Vercel target access",
+    "existing native task owns native acceptance and budgets"
+  ]
+}

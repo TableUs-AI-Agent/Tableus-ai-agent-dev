@@ -1,6 +1,6 @@
 # Current state
 
-Updated 2026-09-25 for shared-content deletion design. Brian
+Updated 2026-09-25 for shared-content deletion implementation. Brian
 owns all development at this stage. The owner approved this work in parallel
 with native validation; only [this worktree's active packet](task-packets/active.md)
 directs work here. Native evidence remains tied to its original candidate.
@@ -9,9 +9,10 @@ directs work here. Native evidence remains tied to its original candidate.
 
 | Role | Value |
 | --- | --- |
-| Active branch | `codex/deletion-content-design` |
-| Active worktree | `/Users/brianchei/.codex/worktrees/deletion-content-design/Tableus-ai-agent-dev` |
-| Planning base / unchanged application | `e2b9577f810fdd9b8933bdfb0155e61c34146195` / `484632517345e7858f48caf8fa7b128f9d9dab80` |
+| Active branch | `codex/deletion-content-implementation` |
+| Active worktree | `/Users/brianchei/.codex/worktrees/deletion-content-implementation/Tableus-ai-agent-dev` |
+| Implementation base | `c87505ca0268f1c5dfec56180313d88e663ee8ba` |
+| Current application / verification source | `72c592b511bba6b74bba2521524c6111b9cf5916` / `390cd2f7531dbc955317556b3693546ee3eadead` |
 | Private-link application / verification checkout | `484632517345e7858f48caf8fa7b128f9d9dab80` |
 | Cohort application candidate | `25e34ec9e35e1935cebe8dbb8f34465fd2b313e0` |
 | Native validation task | `01a0c678-55c8-7cc0-a3cb-e3200776906a`, Prepare native replacement validation |
@@ -168,9 +169,11 @@ remaining application/platform/AppHang, physical links/Auth, export, Android
 and N2 gates. [Immutable packet snapshot](evidence/production-release-spec-2026-09-25/native-active-at-246853f.md)
 preserves exact proposal ownership and limits. No native action occurred here.
 
-The [cumulative acceptance plan](cumulative-release-acceptance.md) selects existing
-application `4846325` for proposed isolated-staging acceptance. Its feature changes
-are already combined; newer native diagnostic tooling remains separately bound.
+The [prior cumulative acceptance plan](cumulative-release-acceptance.md) selected
+`4846325`. Current application `72c592b` adds deletion provenance, cleanup, replay
+fencing and client repair. That plan must be rebound and its affected acceptance
+expanded before execution; older checks do not accept the new bytes. Native
+diagnostic tooling remains separately bound.
 Production mobile builds are deliberately disabled until production origins and
 signed OTA policy are committed. Production configuration/retention preparation
 can proceed in parallel with native work; actual deployment/grants/scheduler,
@@ -186,7 +189,7 @@ canceled; no broader cohort or release readiness is claimed.
 The [production specification](production-release-spec.md) and
 [retention/support specification](retention-support-spec.md) are prepared with
 source hashes, read-only hosting metadata and current official store/update
-references. Application implementation is unchanged. Separate production and
+references. Their original source snapshot remains historical. Separate production and
 staging, with OTA disabled initially, is a recommendation awaiting the owner's
 environment choice, not an adopted deployment decision.
 
@@ -198,12 +201,22 @@ Current access/existence and web alias/production configuration remain unverifie
 requires an explicit transition before production; do not repoint it during
 native validation.
 
-The [shared-content deletion design](deletion-content-design.md) now maps exact
-authorship/dependencies, unknown legacy records, explicit run-vote cleanup,
-transaction ordering and stale cached response risks. Proposed behavior preserves
-shared plans and remaining members' inputs but removes dependent results and asks
-for fresh recommendations/votes. Owner response is pending; no code or earlier
-preservation decision was changed. Privacy wording alone cannot close this gap.
+The owner approved [shared-content deletion](deletion-content-design.md). Both
+deletion APIs now preserve shared plans and remaining members' inputs, remove
+authored metadata and dependent historical/current results and votes, and require
+explicit organizer metadata repair plus fresh recommendations/votes. Complete new
+run provenance distinguishes independent surviving results. Unknown legacy content
+is conservatively removed when a current member deletes; already-deleted legacy
+contributors still require a separately scoped inventory/remediation. Departing
+actors' free-text event payloads are cleared. In-process response replay bodies
+are invalidated after commit while consumed keys remain; stale responses return
+a refresh-required 409 without repeating the write. The cache is still bounded,
+process-local and not durable across restart. [Implementation handoff](handoffs/2026-09-25-deletion-content.md)
+binds completed local readiness: **214 Python and 313 JavaScript tests, zero skips**,
+lint/types, generated contract, Next/Expo-web builds and deterministic smoke; three
+production-build mocked Chrome journeys pass. The initial readiness assertion
+failure and successful continuation are recorded. No hosted or native acceptance
+is implied.
 Retention periods, provider/backup settings, secure support completion and the
 external deletion-request path also remain unverified. No release, resource,
 secret, retention duration or production acceptance was approved by this work.
