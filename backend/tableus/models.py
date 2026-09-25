@@ -82,8 +82,15 @@ class CohortCounter(Base):
 
 class Invite(Base):
     __tablename__ = "invites"
+    __table_args__ = (
+        CheckConstraint(
+            "recipient_email_hash IS NULL OR max_uses = 1",
+            name="ck_invites_recipient_one_use",
+        ),
+    )
     id: Mapped[str] = mapped_column(String(36), primary_key=True, default=new_id)
     code_hash: Mapped[str] = mapped_column(String(64), unique=True, index=True)
+    recipient_email_hash: Mapped[str | None] = mapped_column(String(64), nullable=True)
     max_uses: Mapped[int] = mapped_column(Integer, default=1)
     use_count: Mapped[int] = mapped_column(Integer, default=0)
     expires_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))

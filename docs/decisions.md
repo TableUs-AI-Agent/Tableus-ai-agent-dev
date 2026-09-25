@@ -22,6 +22,13 @@ when changing a subsystem; it is not a second active task packet.
 - Email-bound invite validation precedes first OTP sign-in; returning users need
   an existing approved application profile and consume no new invite. The API
   profile, not the Supabase session alone, authorizes product navigation.
+- Trusted invite issuance designates one normalized recipient email and one use.
+  Only its hash is retained. Hosted validation, signup hook and first redemption
+  reject legacy unbound or multi-use codes; migration retains all existing rows
+  and approved-account access. Do not infer a recipient from old reservations.
+  Reissue unused legacy invitations only within an approved invitation rollout.
+  Same-account successful redemption retries remain idempotent; revocation stops
+  new intake, not existing account access. See [operations](recipient-invites.md).
 - One mobile auth coordinator owns restoration and transitions. Persist only
   expiring redemption state, never invite/OTP material. Credential lookup,
   refresh and response-body work are bounded; failed restoration offers retry.

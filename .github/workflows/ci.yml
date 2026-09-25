@@ -63,6 +63,7 @@ jobs:
                   await connection.execute("CREATE ROLE tableus_runtime LOGIN PASSWORD 'ci-local-only' NOSUPERUSER NOCREATEDB NOCREATEROLE NOINHERIT")
                   await connection.execute("CREATE ROLE anon NOLOGIN NOSUPERUSER")
                   await connection.execute("CREATE ROLE authenticated NOLOGIN NOSUPERUSER")
+                  await connection.execute("CREATE ROLE supabase_auth_admin NOLOGIN NOSUPERUSER NOCREATEDB NOCREATEROLE NOINHERIT")
               finally:
                   await connection.close()
           asyncio.run(prepare())

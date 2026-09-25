@@ -1,6 +1,6 @@
 # Current state
 
-Updated 2026-09-24 for closed-beta cohort controls. Brian
+Updated 2026-09-24 for recipient-bound one-use invites. Brian
 owns all development at this stage. The owner approved this work in parallel
 with native validation; only [this worktree's active packet](task-packets/active.md)
 directs work here. Native evidence remains tied to its original candidate.
@@ -9,9 +9,9 @@ directs work here. Native evidence remains tied to its original candidate.
 
 | Role | Value |
 | --- | --- |
-| Active branch | `codex/cohort-controls` |
-| Active worktree | `/Users/brianchei/.codex/worktrees/cohort-controls/Tableus-ai-agent-dev` |
-| Exact implementation base | `d665dc15291191d56da521e1bcde74e99c59acdc` (PostgreSQL lifecycle completion) |
+| Active branch | `codex/recipient-invites` |
+| Active worktree | `/Users/brianchei/.codex/worktrees/recipient-invites/Tableus-ai-agent-dev` |
+| Exact implementation base | `c33479e80eef4ddd154783dda677cd016dc1a936` (cohort controls completion) |
 | Cohort application candidate | `25e34ec9e35e1935cebe8dbb8f34465fd2b313e0` |
 | Native validation task | `01a0c678-55c8-7cc0-a3cb-e3200776906a`, Prepare native replacement validation |
 | Native worktree | `/Users/brianchei/.codex/worktrees/ea6d/Tableus-ai-agent-dev` |
@@ -98,8 +98,23 @@ JavaScript tests**, lint/types, contract generation, Next build, Expo web export
 and deterministic smoke. Contract drift is empty. [Handoff and evidence](handoffs/2026-09-24-cohort-controls.md)
 retain the initial test-isolation failure and passing rerun. No hosted
 migration, operator subject, configuration rollout or cohort activation occurred.
-Named one-use recipient-bound invites and capability-link disposition remain
-open, as do affected release acceptance and retention/support review.
+Recipient-bound invites are implemented below. Capability-link disposition,
+affected release acceptance and retention/support review remain open.
+
+## Recipient-bound invites
+
+Trusted issuance now designates one recipient and fixes capacity to one use.
+Only the normalized email hash is stored; recipient entry uses a hidden prompt
+or standard input. Validation and first redemption check the designated recipient;
+the Auth signup hook joins the current invite and rejects revoked, expired,
+exhausted or legacy unbound invitations. Retry of an already successful redemption
+and ordinary returning-account access remain valid. Local demo fixtures remain
+compatible; hosted unused legacy codes need replacement before rollout.
+
+The [invite contract and rollout procedure](recipient-invites.md) describe the
+migration, private issuance, legacy handling and exact limits. Local verification
+is in progress. No real invite, hosted migration, Auth call, deployment or native
+validation was performed. Existing native evidence does not accept these bytes.
 
 ## Native and release evidence inherited at the base
 

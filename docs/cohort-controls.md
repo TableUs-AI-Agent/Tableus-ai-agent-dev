@@ -46,7 +46,8 @@ and spend bounded location operations, but only available plan slots can commit.
 Successful idempotency replay does not debit again. Deletion, transfer, profile
 removal/recreation, process restart and another worker do not refund a creation.
 This limits creations, not the number of shared plans a recipient may organize
-or join. Named invites and cohort size still need separate controls.
+or join. [Named one-use invites](recipient-invites.md) now constrain new hosted intake;
+cohort size still needs an explicit approved recipient roster.
 
 ## Migration and data treatment
 
@@ -117,6 +118,6 @@ to one API process; durable actor counters do **not** authorize horizontal scali
 Before rollout: approve exact source/targets and a quiesced migration window,
 review baseline/retention impact and realistic quota values, configure the
 operator, verify actual hosted grants, then complete affected web/native acceptance.
-Do not roll back to an unmetered API while cohort admission is open. Named one-use
-invite issuance, capability-link disposition, production configuration, distributed
+Do not roll back to an unmetered API while cohort admission is open. Recipient-bound invite implementation has a [separate rollout contract](recipient-invites.md).
+Actual issuance, capability-link disposition, production configuration, distributed
 build acceptance and explicit cohort/spend approval remain separate roadmap work.

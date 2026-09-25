@@ -50,6 +50,10 @@ contains additional Postgres migration, deterministic AI and Playwright checks.
 Use locked dependencies and source-owned test configuration. Leave all providers
 deterministic and telemetry off locally. The canceled plugin scan stays canceled.
 
+Current invite issuance uses the [recipient-bound invite procedure](recipient-invites.md).
+The archived `--max-uses` recipe is incompatible with this candidate. Real
+issuance and sends require their approved roster/scope; no command here grants it.
+
 ## 3. Reconcile evidence and external scope
 
 Before resuming an approved source, verify existing CI by SHA and public

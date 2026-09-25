@@ -132,7 +132,15 @@ def _is_expired(expires_at: datetime | None, now: datetime) -> bool:
         return False
     if expires_at.tzinfo is None:
         expires_at = expires_at.replace(tzinfo=UTC)
-    return expires_at < now
+    return expires_at <= now
+
+
+def _invite_recipient_matches(invite: Invite, email_hash: str | None) -> bool:
+    # Legacy/demo fixtures remain usable locally; hosted intake requires a
+    # recipient designated by the issuer, not whoever presents the code first.
+    if invite.recipient_email_hash:
+        return invite.max_uses == 1 and invite.recipient_email_hash == email_hash
+    return get_settings().tableus_auth_mode != "supabase"
 
 
 async def _participant(session: AsyncSession, plan_id: str, profile_id: str) -> PlanParticipant:
@@ -613,6 +621,7 @@ async def validate_access(body: InviteValidateIn, session: DbSession):
         or invite.revoked_at
         or _is_expired(invite.expires_at, now)
         or invite.use_count >= invite.max_uses
+        or not _invite_recipient_matches(invite, hash_value(body.email) if body.email else None)
     ):
         raise HTTPException(status_code=404, detail="Invite is invalid, expired, or fully redeemed")
     pending_validation = None
@@ -695,6 +704,9 @@ async def redeem_access(body: InviteRedeemIn, identity: CurrentIdentity, session
         raise HTTPException(
             status_code=403, detail="Invite validation email does not match session"
         )
+    # All invite paths lock the invite before its reservation, including retries.
+    # The CLI uses the same row lock so revocation and first redemption serialize.
+    invite = await session.get(Invite, grant.invite_id, with_for_update=True)
     now = datetime.now(UTC)
     profile = await session.get(Profile, identity.subject)
     if profile:
@@ -731,14 +743,16 @@ async def redeem_access(body: InviteRedeemIn, identity: CurrentIdentity, session
             return ok(ProfileOut.model_validate(profile))
         if redeemed_invite_ids:
             raise HTTPException(status_code=409, detail="This account has already joined TableUs")
-    invite = await session.get(Invite, grant.invite_id, with_for_update=True)
     if (
         not invite
         or invite.revoked_at
         or _is_expired(invite.expires_at, now)
         or invite.use_count >= invite.max_uses
+        or not _invite_recipient_matches(invite, grant.email_hash)
     ):
         raise HTTPException(status_code=409, detail="Invite can no longer be redeemed")
+    if invite.recipient_email_hash and not grant.pending_validation_id:
+        raise HTTPException(status_code=409, detail="Invite validation can no longer be used")
     pending_validation = None
     if grant.pending_validation_id:
         pending_validation = await session.get(
@@ -753,7 +767,7 @@ async def redeem_access(body: InviteRedeemIn, identity: CurrentIdentity, session
         ):
             raise HTTPException(status_code=409, detail="Invite validation can no longer be used")
     if not profile:
-        email_hash = hash_value(identity.email or f"{identity.subject}@supabase.local")
+        email_hash = hash_value((identity.email or f"{identity.subject}@supabase.local").lower())
         profile = Profile(
             id=identity.subject, display_name=body.display_name, email_hash=email_hash
         )
