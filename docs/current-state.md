@@ -21,8 +21,8 @@ directs work here. Native evidence remains tied to its original candidate.
 | Production, as recorded at base | `e1184ec` |
 
 The saved root checkout is stale. No shared deployment or native worktree was
-changed in this objective. The [base state](history/ 2026-09-24/current-state-at-lifecycle-base.md)
-and [base native packet](history/ 2026-09-24/native-packet-at-lifecycle-base.md)
+changed in this objective. The [base state](history/2026-09-24/current-state-at-lifecycle-base.md)
+and [base native packet](history/2026-09-24/native-packet-at-lifecycle-base.md)
 retain detailed source/evidence history. Their live/native allowances are not
 reopened by this task or branch.
 
@@ -54,8 +54,8 @@ There is no hosted migration, credential provisioning, deployed worker or
 activation. Broader retention durations remain open. [Contract, data treatment
 and recovery](account-lifecycle.md) document the exact scope.
 
-The [backend handoff](handoffs/ 2026-09-24-account-lifecycle-backend.md) and
-[client handoff](handoffs/ 2026-09-24-account-lifecycle-clients.md) retain their
+The [backend handoff](handoffs/2026-09-24-account-lifecycle-backend.md) and
+[client handoff](handoffs/2026-09-24-account-lifecycle-clients.md) retain their
 exact-source checks, including seven mocked Chrome journeys. Fresh PostgreSQL17.11
 verification now passes both orderings of deletion/redeem and transfer/deletion,
 competing transfers and worker exclusion. Fresh and incremental migrations pass
@@ -71,7 +71,7 @@ under the administrator; that changed hosted CI has not run yet.
 Inherited lifecycle candidate `eab922e` passes **314 JavaScript and 139
 Python tests, zero skips**, lint/types, contract generation, Next build, Expo web
 export and deterministic smoke. Contract drift is empty. The
-[PostgreSQL handoff](handoffs/ 2026-09-24-account-lifecycle-postgres.md) and
+[PostgreSQL handoff](handoffs/2026-09-24-account-lifecycle-postgres.md) and
 [operations procedure](account-lifecycle-operations.md) bind local evidence and
 remaining activation gates. Local PostgreSQL privileges do not attest to actual
 hosted grants, exposed schemas, scheduler health, credentials or native behavior.
@@ -104,8 +104,8 @@ open, as do affected release acceptance and retention/support review.
 ## Native and release evidence inherited at the base
 
 Original f94a1d9 isolated-staging acceptance remains intact, with owner-accepted
-unresolved simulator AppHang risk. [Staging closeout](handoffs/ 2026-09-21-staging-closeout.md)
-and [Phase W](handoffs/ 2026-09-21-phase-w-complete.md) retain their evidence.
+unresolved simulator AppHang risk. [Staging closeout](handoffs/2026-09-21-staging-closeout.md)
+and [Phase W](handoffs/2026-09-21-phase-w-complete.md) retain their evidence.
 Phase W placed ed8330a on both staging web aliases; the approved CORS/API redeploy
 kept f94a1d9 application source. This is not cumulative mixed-source acceptance.
 

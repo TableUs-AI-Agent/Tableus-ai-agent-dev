@@ -9,7 +9,7 @@ shared. User requested the recommended next independent development objective.
 - Worktree: `/Users/brianchei/.codex/worktrees/cohort-controls/Tableus-ai-agent-dev`.
 - Base: `d665dc15291191d56da521e1bcde74e99c59acdc`.
 - Inherited application: `eab922ee6b7a21d193514d7008a47806c9e118e3`;
-  [handoff](../handoffs/ 2026-09-24-account-lifecycle-postgres.md).
+  [handoff](../handoffs/2026-09-24-account-lifecycle-postgres.md).
 - Native validation remains owned by task `01a0c678-55c8-7cc0-a3cb-e3200776906a`
   and its own worktree, candidate, approvals and budgets.
 
