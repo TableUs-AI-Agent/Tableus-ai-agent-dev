@@ -1,6 +1,7 @@
 """Quota admission through the application API and live-provider call paths."""
 
 import asyncio
+from collections import deque
 from types import SimpleNamespace
 from uuid import uuid4
 
@@ -71,6 +72,10 @@ def plan_body(title: str, *, place: bool = False) -> dict[str, object]:
 
 
 def caps(monkeypatch: pytest.MonkeyPatch, *, plans: int = 1, ai: int = 1, places: int = 1) -> None:
+    # Existing minute-limit tests intentionally saturate process-wide windows.
+    # This module exercises durable quota admission from a fresh minute window.
+    monkeypatch.setattr(api, "_ai_global_window", deque())
+    monkeypatch.setattr(api, "_places_global_window", deque())
     monkeypatch.setattr(
         cohort_limits, "get_settings",
         lambda: SimpleNamespace(
