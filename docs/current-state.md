@@ -12,6 +12,7 @@ directs work here. Native evidence remains tied to its original candidate.
 | Active branch | `codex/private-link-handling` |
 | Active worktree | `/Users/brianchei/.codex/worktrees/private-link-handling/Tableus-ai-agent-dev` |
 | Implementation base / inherited application | `2674fc7a798de5f090f17455a602e44641bda943` / `29edb5e9f47ab7ac74034f2bac5e271a162ea620` |
+| Private-link application / verification checkout | `484632517345e7858f48caf8fa7b128f9d9dab80` |
 | Cohort application candidate | `25e34ec9e35e1935cebe8dbb8f34465fd2b313e0` |
 | Native validation task | `01a0c678-55c8-7cc0-a3cb-e3200776906a`, Prepare native replacement validation |
 | Native worktree | `/Users/brianchei/.codex/worktrees/ea6d/Tableus-ai-agent-dev` |
@@ -136,7 +137,15 @@ before client scrubbing. Join documents request no-referrer/no-store; API v1
 responses are no-store including successful replays and early admission errors.
 Hosted header/log behavior and actual native delivery remain unproven.
 
-Local verification is in progress in the [active packet](task-packets/active.md).
+Frozen private-link source `4846325` passes one full make-ready: **196 Python
+and 311 JavaScript tests, zero skips**, lint/types, unchanged generated contracts,
+Next production build, Expo web export and deterministic smoke. Four mocked
+Chrome journeys also pass against the exact production build, including history/
+storage scrubbing, cancellation across client history, interrupted-join recovery
+and malformed replacement. Actual loopback production responses have no-referrer
+and private no-store. [Handoff and evidence](handoffs/2026-09-25-private-link-handling.md)
+bind exact source. Task-owned PostgreSQL and web servers are stopped; no native,
+live Auth, hosted configuration or release activation occurred.
 The [implementation contract](private-link-handling.md) records behavior and
 release gates. The [prior decision packet](capability-link-decision.md) preserves
 the pre-implementation review; its then-pending policy question is now resolved.

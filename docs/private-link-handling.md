@@ -4,6 +4,8 @@ Local implementation authorized September 25, 2026. Brian owns current-stage
 development; historical shared work remains shared. The earlier
 [design review](capability-link-decision.md) is historical evidence, not current
 implementation status. Its recommended sharing model is adopted.
+[Exact-source handoff](handoffs/2026-09-25-private-link-handling.md) records local
+verification and residual gates.
 
 ## Product behavior
 

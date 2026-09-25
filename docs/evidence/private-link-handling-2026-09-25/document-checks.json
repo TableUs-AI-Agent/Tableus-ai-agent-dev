@@ -1,0 +1,212 @@
+{
+  "checked_links": 41,
+  "broken": [],
+  "non_documentation_drift": false,
+  "checks": [
+    {
+      "source": "docs/current-state.md",
+      "target": "task-packets/active.md",
+      "exists": true
+    },
+    {
+      "source": "docs/current-state.md",
+      "target": "history/2026-09-24/current-state-at-lifecycle-base.md",
+      "exists": true
+    },
+    {
+      "source": "docs/current-state.md",
+      "target": "history/2026-09-24/native-packet-at-lifecycle-base.md",
+      "exists": true
+    },
+    {
+      "source": "docs/current-state.md",
+      "target": "account-lifecycle.md",
+      "exists": true
+    },
+    {
+      "source": "docs/current-state.md",
+      "target": "handoffs/2026-09-24-account-lifecycle-backend.md",
+      "exists": true
+    },
+    {
+      "source": "docs/current-state.md",
+      "target": "handoffs/2026-09-24-account-lifecycle-clients.md",
+      "exists": true
+    },
+    {
+      "source": "docs/current-state.md",
+      "target": "handoffs/2026-09-24-account-lifecycle-postgres.md",
+      "exists": true
+    },
+    {
+      "source": "docs/current-state.md",
+      "target": "account-lifecycle-operations.md",
+      "exists": true
+    },
+    {
+      "source": "docs/current-state.md",
+      "target": "cohort-controls.md",
+      "exists": true
+    },
+    {
+      "source": "docs/current-state.md",
+      "target": "handoffs/2026-09-24-cohort-controls.md",
+      "exists": true
+    },
+    {
+      "source": "docs/current-state.md",
+      "target": "recipient-invites.md",
+      "exists": true
+    },
+    {
+      "source": "docs/current-state.md",
+      "target": "handoffs/2026-09-24-recipient-invites.md",
+      "exists": true
+    },
+    {
+      "source": "docs/current-state.md",
+      "target": "handoffs/2026-09-25-private-link-handling.md",
+      "exists": true
+    },
+    {
+      "source": "docs/current-state.md",
+      "target": "private-link-handling.md",
+      "exists": true
+    },
+    {
+      "source": "docs/current-state.md",
+      "target": "capability-link-decision.md",
+      "exists": true
+    },
+    {
+      "source": "docs/current-state.md",
+      "target": "handoffs/2026-09-21-staging-closeout.md",
+      "exists": true
+    },
+    {
+      "source": "docs/current-state.md",
+      "target": "handoffs/2026-09-21-phase-w-complete.md",
+      "exists": true
+    },
+    {
+      "source": "docs/current-state.md",
+      "target": "evidence/capability-link-review-2026-09-24/manifest.json",
+      "exists": true
+    },
+    {
+      "source": "docs/evidence/private-link-handling-2026-09-25/README.md",
+      "target": "verification.json",
+      "exists": true
+    },
+    {
+      "source": "docs/evidence/private-link-handling-2026-09-25/README.md",
+      "target": "../../handoffs/2026-09-25-private-link-handling.md",
+      "exists": true
+    },
+    {
+      "source": "docs/handoffs/2026-09-25-private-link-handling.md",
+      "target": "../evidence/private-link-handling-2026-09-25/verification.json",
+      "exists": true
+    },
+    {
+      "source": "docs/handoffs/2026-09-25-private-link-handling.md",
+      "target": "../private-link-handling.md",
+      "exists": true
+    },
+    {
+      "source": "docs/private-link-handling.md",
+      "target": "capability-link-decision.md",
+      "exists": true
+    },
+    {
+      "source": "docs/private-link-handling.md",
+      "target": "handoffs/2026-09-25-private-link-handling.md",
+      "exists": true
+    },
+    {
+      "source": "docs/roadmap.md",
+      "target": "handoffs/2026-09-21-staging-closeout.md",
+      "exists": true
+    },
+    {
+      "source": "docs/roadmap.md",
+      "target": "evidence/dependency-toolchain-2026-09-21/README.md",
+      "exists": true
+    },
+    {
+      "source": "docs/roadmap.md",
+      "target": "evidence/dependency-rollout-2026-09-21/README.md",
+      "exists": true
+    },
+    {
+      "source": "docs/roadmap.md",
+      "target": "evidence/web-dependency-rollout-2026-09-21/README.md",
+      "exists": true
+    },
+    {
+      "source": "docs/roadmap.md",
+      "target": "evidence/native-diagnostic-retention-2026-09-21/README.md",
+      "exists": true
+    },
+    {
+      "source": "docs/roadmap.md",
+      "target": "evidence/capability-link-review-2026-09-24/manifest.json",
+      "exists": true
+    },
+    {
+      "source": "docs/roadmap.md",
+      "target": "account-lifecycle.md",
+      "exists": true
+    },
+    {
+      "source": "docs/roadmap.md",
+      "target": "cohort-controls.md",
+      "exists": true
+    },
+    {
+      "source": "docs/roadmap.md",
+      "target": "recipient-invites.md",
+      "exists": true
+    },
+    {
+      "source": "docs/roadmap.md",
+      "target": "private-link-handling.md",
+      "exists": true
+    },
+    {
+      "source": "docs/roadmap.md",
+      "target": "evidence/gpt6-development-workflow-2026-09-22/README.md",
+      "exists": true
+    },
+    {
+      "source": "docs/roadmap.md",
+      "target": "development-workflow.md",
+      "exists": true
+    },
+    {
+      "source": "docs/roadmap.md",
+      "target": "release-runbook.md",
+      "exists": true
+    },
+    {
+      "source": "docs/roadmap.md",
+      "target": "history/2026-09-21/roadmap.md",
+      "exists": true
+    },
+    {
+      "source": "docs/task-packets/active.md",
+      "target": "../capability-link-decision.md",
+      "exists": true
+    },
+    {
+      "source": "docs/task-packets/active.md",
+      "target": "../handoffs/2026-09-25-private-link-handling.md",
+      "exists": true
+    },
+    {
+      "source": "docs/task-packets/active.md",
+      "target": "../evidence/private-link-handling-2026-09-25/verification.json",
+      "exists": true
+    }
+  ]
+}

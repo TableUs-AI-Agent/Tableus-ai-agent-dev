@@ -41,5 +41,18 @@ logs/data. No rollout acceptance from mocked tests.
 
 ## Status
 
-Implementation in progress. Approval applies to the recommended current-sharing
-model and local scope, not production risk acceptance or new-format activation.
+Local implementation complete; application frozen at `484632517345e7858f48caf8fa7b128f9d9dab80`.
+One full make-ready passes 196 Python / 311 JavaScript tests, zero skips; unchanged
+generated contracts, lint/types, Next build, Expo web export and deterministic
+smoke. Four mocked Chrome journeys pass on those exact production bytes; observed
+join headers include no-referrer/private no-store. Local servers are stopped;
+logs/data retained. [Handoff](../handoffs/2026-09-25-private-link-handling.md)
+and [receipt](../evidence/private-link-handling-2026-09-25/verification.json).
+
+Approval applies to the recommended current-sharing model and local scope, not
+production risk acceptance or new-format activation. The next bounded objective
+is a cumulative release-acceptance proposal: exact compatible candidate, native
+impact/ownership, reader adoption and transition/rotation scope, hosted header/log
+checks and remaining activation gates. Prepare that proposal read-only before
+requesting any new native/external execution; do not start from stale main or
+silently merge these branches.
