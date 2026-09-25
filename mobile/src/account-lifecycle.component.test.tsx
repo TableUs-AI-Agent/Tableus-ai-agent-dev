@@ -8,6 +8,7 @@ import AccountScreen from "../app/account";
 const mockGet = jest.fn<(path: string) => Promise<unknown>>();
 const mockPost = jest.fn<(path: string, body: unknown, options: unknown) => Promise<unknown>>();
 const mockDelete = jest.fn<(path: string, body: unknown, options: unknown) => Promise<unknown>>();
+const mockPush = jest.fn<(path: string) => void>();
 let mockOnline = true;
 const mockAuth = {
   approved: true,
@@ -28,6 +29,7 @@ jest.mock("@/lib/api", () => ({ api: {
   delete: (path: string, body: unknown, options: unknown) => mockDelete(path, body, options),
 } }));
 jest.mock("@/providers/auth-provider", () => ({ useAuth: () => mockAuth }));
+jest.mock("expo-router", () => ({ router: { push: (path: string) => mockPush(path) } }));
 jest.mock("react-native/Libraries/Components/RefreshControl/RefreshControl", () => {
   const React = jest.requireActual<typeof import("react")>("react");
   const { Pressable, Text } = jest.requireActual<typeof import("react-native")>("react-native");
@@ -96,8 +98,21 @@ beforeEach(() => {
   mockGet.mockReset();
   mockPost.mockReset().mockResolvedValue(shared);
   mockDelete.mockReset().mockResolvedValue({ deleted: true });
+  mockPush.mockReset();
   deletionRead = null;
   setReads(false);
+});
+
+test("deletion recovery opens public help without a profile read", async () => {
+  mockAuth.approved = false;
+  mockAuth.phase = "deletion";
+  mockAuth.deletionStatus = { status: "pending", needs_attention: false, next_retry_at: null };
+  client = new QueryClient({ defaultOptions: { queries: { retry: false, gcTime: 0 } } });
+  view = await render(<QueryClientProvider client={client}><AccountScreen /></QueryClientProvider>);
+  expect(view.getByText(/Application data is removed. Sign-in account deletion is pending/)).toBeTruthy();
+  await act(async () => { fireEvent.press(view.getByText("Account deletion help and privacy contact")); });
+  expect(mockPush).toHaveBeenCalledWith("/account-deletion");
+  expect(mockGet).not.toHaveBeenCalled();
 });
 
 afterEach(async () => {
