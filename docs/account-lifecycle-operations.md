@@ -83,8 +83,9 @@ specific user's durable status. A stopped worker leaves pending rows durable.
 Users may lose a usable session before completion, so support ownership cannot
 depend on a client status screen staying accessible.
 
-For a support request, verify the requester through the established support
-channel. If their session remains valid, `GET /api/v1/me/deletion` shows their
+For a support request, follow the [prepared support procedure](deletion-support-procedure.md).
+Verify the requester through the approved support channel before disclosure or action.
+Its mailbox/case-binding rehearsal remains a launch prerequisite. If their session remains valid, `GET /api/v1/me/deletion` shows their
 own status. For an expired session or an attention row, a trusted operator may
 inspect the private queue using a least-privilege administrative path and locate
 the corresponding subject hash. Keep the hash and raw Auth subject out of

@@ -328,3 +328,19 @@ exposure; release work must specify the transition/cutoff and organizer rotation
 scope. Local implementation and mock checks cannot accept hosted logging,
 platform association delivery or distributed clients. See the
 [implementation contract](private-link-handling.md).
+
+
+## External deletion requests and support — adopted 2026-09-25
+
+The owner requested the next implementation after shared-content deletion:
+a public `/account-deletion` request/help page, matching web/mobile explanations,
+and a concrete support procedure. Keep the existing authenticated in-app flow;
+email is an additional request path, not automatic deletion or public status lookup.
+No new Auth mechanism, operator impersonation or privileged deletion endpoint.
+
+Brian selected acknowledgment within two business days. Completion estimates
+follow ownership verification and blocker assessment, with no invented purge
+period. Mailbox coverage, secure assisted completion, actual retention settings
+and publication require their own operational evidence. The [support procedure](deletion-support-procedure.md)
+records those gaps and source-bound case handling; no real messages are authorized
+by this local implementation.

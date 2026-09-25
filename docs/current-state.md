@@ -1,6 +1,6 @@
 # Current state
 
-Updated 2026-09-25 for shared-content deletion implementation. Brian
+Updated 2026-09-25 for external deletion help and support preparation. Brian
 owns all development at this stage. The owner approved this work in parallel
 with native validation; only [this worktree's active packet](task-packets/active.md)
 directs work here. Native evidence remains tied to its original candidate.
@@ -9,10 +9,10 @@ directs work here. Native evidence remains tied to its original candidate.
 
 | Role | Value |
 | --- | --- |
-| Active branch | `codex/deletion-content-implementation` |
-| Active worktree | `/Users/brianchei/.codex/worktrees/deletion-content-implementation/Tableus-ai-agent-dev` |
-| Implementation base | `c87505ca0268f1c5dfec56180313d88e663ee8ba` |
-| Current application / verification source | `72c592b511bba6b74bba2521524c6111b9cf5916` / `390cd2f7531dbc955317556b3693546ee3eadead` |
+| Active branch | `codex/deletion-support` |
+| Active worktree | `/Users/brianchei/.codex/worktrees/deletion-support/Tableus-ai-agent-dev` |
+| Implementation base | `838244aa4ba08cd67859a68d8f25b4d339476a74` |
+| Prior deletion-content application / verification source | `72c592b511bba6b74bba2521524c6111b9cf5916` / `390cd2f7531dbc955317556b3693546ee3eadead` |
 | Private-link application / verification checkout | `484632517345e7858f48caf8fa7b128f9d9dab80` |
 | Cohort application candidate | `25e34ec9e35e1935cebe8dbb8f34465fd2b313e0` |
 | Native validation task | `01a0c678-55c8-7cc0-a3cb-e3200776906a`, Prepare native replacement validation |
@@ -220,3 +220,23 @@ is implied.
 Retention periods, provider/backup settings, secure support completion and the
 external deletion-request path also remain unverified. No release, resource,
 secret, retention duration or production acceptance was approved by this work.
+
+
+## External deletion help and support
+
+Public `/account-deletion` and a matching mobile help screen offer an explicit
+privacy-email request path, selectable-address fallback and optional Account and
+data navigation. Auth/privacy/account screens link to help; deletion recovery does
+not block it. Shared copy distinguishes request receipt, accepted deletion, pending
+Auth and completion, explains shared-content treatment and pseudonymous retention.
+Brian adopted acknowledgment within two business days; completion estimates follow
+verification and blocker assessment. No new authentication or deletion API is added.
+
+The [support procedure](deletion-support-procedure.md) covers verification, exact
+case/job binding, duplicate requests, pending/attention/completion and privacy-safe
+correspondence. Publication remains gated on actual mailbox coverage, approved
+retention notice and a rehearsed secure assisted-completion path. In particular,
+the current worker finishes existing jobs; it cannot initiate deletion for an
+email-only requester without authenticated access. An email alone cannot map a
+completed deletion back to its cleared Auth subject. These gaps are recorded,
+not treated as solved by a help page. No mailbox/account operation occurred here.

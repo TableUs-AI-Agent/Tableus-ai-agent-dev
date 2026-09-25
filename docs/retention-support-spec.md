@@ -85,7 +85,7 @@ promise while the production mechanism and backup expiry are unknown.
 
 ### Support and external request pathway
 
-Propose a prominent `/account-deletion` web page (path proposed, not implemented):
+The current objective implements a prominent `/account-deletion` web page:
 TableUs identification, in-app settings route, account/associated-data scope,
 organizer prerequisites, actual timing and retained-data explanation, plus a
 `privacy@table-us.com` request path usable without reinstalling the app.
@@ -93,6 +93,9 @@ Require secure ownership verification before any destructive action; never ask
 for passwords, OTPs, session tokens, invite codes or private plan links in email.
 An email address alone is not proof that a sender controls the account.
 
+Brian adopted an acknowledgment target of two business days on September 25.
+The [support procedure](deletion-support-procedure.md) binds verification, duplicate
+handling, exact status proof and remaining access-loss completion gaps.
 Brian owns triage and operator follow-through. The current runner supplies aggregate
 health, not a demonstrated complete support-case system. Define a restricted case
 lookup and authorization procedure, minimal case identifier, status/attention
@@ -148,8 +151,8 @@ effective date only when the new notice actually takes effect.
   behavior is approved and implemented; blanket historical cleanup is not.
 - Enforceable retention periods and purpose for each surviving record class, based
   on actual configured provider/backup limits and stale-session safeguards.
-- Support response/completion target Brian can sustain during the cohort, with
-  secure verification and completion confirmation.
+- Operational proof for the adopted two-business-day acknowledgment target,
+  secure verification and supported case-specific completion estimates.
 
 The previous six-digit verification-code backlog does not become a new auth
 redesign through this work. Preserve the current email OTP/link decisions; assess

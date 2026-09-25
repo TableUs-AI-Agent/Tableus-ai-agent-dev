@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useLocalSearchParams } from "expo-router";
+import { router, useLocalSearchParams } from "expo-router";
 import { Pressable, ScrollView, Text } from "react-native";
 
 import { Button, Card, ErrorText, Field } from "@/components/ui";
@@ -104,6 +104,7 @@ export default function AuthScreen() {
           </>
         )}
       </Card>
+      <Text accessibilityRole="link" onPress={() => router.push("/account-deletion")} style={{ color: colors.accent, fontWeight: "700", textAlign: "center" }}>Request account deletion without signing in</Text>
     </ScrollView>
   );
 }

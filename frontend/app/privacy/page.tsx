@@ -1,4 +1,5 @@
 import { BETA_NOTICE_EFFECTIVE_DATE, mailto, PUBLIC_CONTACTS, PUBLIC_POLICY_LINKS } from "@tableus/domain";
+import Link from "next/link";
 
 export default function PrivacyPage() {
   return (
@@ -15,6 +16,7 @@ export default function PrivacyPage() {
       <p>Plan content is visible only to approved participants. Taste-profile sharing is opt-in. Service providers receive only the information required to provide authentication, hosting, database, maps, AI, analytics, and error-reporting services. Beta records are retained while the account is active and for the limited period needed for security, backups, disputes, or legal obligations.</p>
       <h2>Your choices</h2>
       <p>You may disable taste sharing, export your application data, or request deletion from account settings. Organized plans must first be transferred or removed. Signing out or deleting application data may not immediately invalidate an already-issued authentication token.</p>
+      <p><Link href="/account-deletion">How to request account deletion without signing in</Link></p>
       <h2>Safety and contact</h2>
       <p>TableUs is not intended for children under 13. Do not submit sensitive medical information. Questions and deletion problems can be sent to <a href={mailto(PUBLIC_CONTACTS.privacyEmail)}>{PUBLIC_CONTACTS.privacyEmail}</a>.</p>
     </article>

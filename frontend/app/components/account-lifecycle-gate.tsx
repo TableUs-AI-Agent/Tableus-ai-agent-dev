@@ -10,7 +10,7 @@ export function AccountLifecycleGate({ children }: { children: ReactNode }) {
   const router = useRouter();
   const { userState } = useUser();
   const deleting = userState === "deleting";
-  const allowed = pathname === "/account" || pathname === "/privacy" || pathname === "/terms";
+  const allowed = pathname === "/account" || pathname === "/account-deletion" || pathname === "/privacy" || pathname === "/terms";
 
   useEffect(() => {
     if (deleting && !allowed) router.replace("/account");

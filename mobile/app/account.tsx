@@ -2,6 +2,7 @@ import { ApiError, createIdempotencyKey } from "@tableus/api-client";
 import { PUBLIC_CONTACTS } from "@tableus/domain";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useEffect, useRef, useState } from "react";
+import { router } from "expo-router";
 import { Linking, RefreshControl, ScrollView, Text, View } from "react-native";
 
 import { Button, Card, ErrorText, Field } from "@/components/ui";
@@ -237,6 +238,9 @@ export default function AccountScreen() {
         {attempt?.kind === "full-delete" && retryReady ? <Button label="Retry same deletion request" onPress={() => void run(attempt)} disabled={busy || !isOnline} /> : null}
       </Card>
     </>}
+    <Card>
+      <Text accessibilityRole="link" onPress={() => router.push("/account-deletion")} style={{ color: colors.accent, fontWeight: "700" }}>Account deletion help and privacy contact</Text>
+    </Card>
     <Card>
       <Text selectable style={{ color: colors.ink, fontSize: 18, fontWeight: "800" }}>Session</Text>
       <Text selectable style={{ color: colors.muted }}>Sign out on this device and clear its cached TableUs data.</Text>

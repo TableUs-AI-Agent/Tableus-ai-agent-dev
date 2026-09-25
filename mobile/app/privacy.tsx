@@ -1,5 +1,6 @@
 import { BETA_NOTICE_EFFECTIVE_DATE, mailto, PUBLIC_CONTACTS, PUBLIC_POLICY_LINKS } from "@tableus/domain";
 import { Linking, ScrollView, Text } from "react-native";
+import { router } from "expo-router";
 
 import { colors } from "@/theme";
 
@@ -17,6 +18,7 @@ export default function PrivacyScreen() {
       <Text selectable style={{ color: colors.muted, lineHeight: 23 }}>During the beta, TableUs sends a small default-on set of anonymous aggregate product events to PostHog using a random in-memory session identifier that resets when the app process ends. We do not create analytics person profiles, persist an analytics identifier, use autocapture, collect location through analytics, or record sessions. Sentry receives sanitized unexpected errors only; messages, request bodies, headers, user fields, breadcrumbs, query strings, private URL segments, performance traces, profiling, replay, and attachments are excluded. Raw emails, reviews, queries, precise locations, photos, prompts, provider responses, and complete share tokens are excluded. Plan content is limited to approved participants and taste sharing is opt-in.</Text>
       <Text selectable style={{ color: colors.ink, fontSize: 18, fontWeight: "700" }}>Your choices</Text>
       <Text selectable style={{ color: colors.muted, lineHeight: 23 }}>Account settings provide export and deletion controls. Organized plans must first be transferred or removed. TableUs is not intended for children under 13; do not submit sensitive medical information.</Text>
+      <Text accessibilityRole="link" onPress={() => router.push("/account-deletion")} style={{ color: colors.accent, fontWeight: "700" }}>How to request account deletion without signing in</Text>
       <Text accessibilityRole="link" onPress={() => Linking.openURL(mailto(PUBLIC_CONTACTS.privacyEmail))} style={{ color: colors.accent, fontWeight: "700" }}>{PUBLIC_CONTACTS.privacyEmail}</Text>
     </ScrollView>
   );

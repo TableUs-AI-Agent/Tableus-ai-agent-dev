@@ -54,6 +54,7 @@ function RootNavigator() {
         <Stack.Screen name="e2e/auth" options={{ title: "Session check" }} />
         <Stack.Screen name="e2e/telemetry" options={{ title: "Telemetry check" }} />
         <Stack.Screen name="privacy" options={{ title: "Privacy" }} />
+        <Stack.Screen name="account-deletion" options={{ title: "Account deletion" }} />
         <Stack.Screen name="terms" options={{ title: "Terms" }} />
         <Stack.Protected guard={auth.approved}>
           <Stack.Screen name="(tabs)" options={{ headerShown: false }} />

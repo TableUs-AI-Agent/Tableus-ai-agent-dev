@@ -120,6 +120,7 @@ export function AuthCard({ initialMode = "join", onApproved }: AuthCardProps) {
       <button disabled={disabled} onClick={sent && isSupabaseConfigured ? verify : begin} className="w-full rounded-2xl bg-[var(--accent)] px-5 py-4 font-semibold text-white disabled:opacity-50">{busy ? "Working…" : sent && isSupabaseConfigured ? "Verify and continue" : isSupabaseConfigured ? "Email me a code" : "Continue in demo mode"}</button>
       {sent && isSupabaseConfigured ? <button type="button" disabled={busy} onClick={() => { setSent(false); setSentEmail(""); setOtp(""); setError(""); }} className="w-full text-sm font-semibold text-[var(--accent)] underline-offset-4 hover:underline">Use a different email or request a new code</button> : null}
       {isSupabaseConfigured ? <button type="button" onClick={() => changeMode(needsJoinFields ? "sign-in" : "join")} className="w-full text-sm font-semibold text-[var(--accent)] underline-offset-4 hover:underline">{needsJoinFields ? "Already joined? Sign in" : "Have a new invite? Join the beta"}</button> : null}
+      <a href="/account-deletion" className="block text-center text-sm font-semibold text-[var(--accent)] underline">Request account deletion without signing in</a>
     </section>
   );
 }
