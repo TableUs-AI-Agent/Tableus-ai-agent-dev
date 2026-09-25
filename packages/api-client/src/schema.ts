@@ -571,6 +571,23 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/plans/{plan_id}/metadata": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        /** Replace Plan Metadata */
+        patch: operations["replace_plan_metadata_api_v1_plans__plan_id__metadata_patch"];
+        trace?: never;
+    };
     "/api/v1/plans/{plan_id}/recommendations": {
         parameters: {
             query?: never;
@@ -1426,6 +1443,11 @@ export interface components {
             location_label: string;
             /** Longitude */
             longitude: number | null;
+            /**
+             * Metadata Needs Replacement
+             * @default false
+             */
+            metadata_needs_replacement: boolean;
             /** My Vote */
             my_vote: string[] | null;
             /** Organizer Id */
@@ -2901,6 +2923,44 @@ export interface operations {
         requestBody: {
             content: {
                 "application/json": components["schemas"]["PlanJoinIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_PlanOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    replace_plan_metadata_api_v1_plans__plan_id__metadata_patch: {
+        parameters: {
+            query?: never;
+            header?: {
+                authorization?: string | null;
+                "x-demo-user-id"?: string | null;
+            };
+            path: {
+                plan_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["PlanCreateIn"];
             };
         };
         responses: {

@@ -6,7 +6,7 @@ owner; historical shared contribution is unchanged. Base
 `484632517345e7858f48caf8fa7b128f9d9dab80`.
 This is source review and design, not an implementation or acceptance result.
 
-## Recommended behavior — owner response pending
+## Approved behavior — September 25 implementation objective
 
 Preserve the shared plan and remaining members' inputs. Remove the departing
 member's authored fields and every recommendation run derived from their inputs.
@@ -15,10 +15,10 @@ require fresh recommendations and votes. The surviving organizer can supply a
 replacement title/location where necessary. Never automatically call providers
 or replay old inputs during deletion.
 
-This changes the previous promise to preserve candidates/results across deletion.
-It must be approved as a product behavior before implementation. It does not
-authorize deleting real data, migrations or deployment. The concrete question was
-sent to Brian during this task; no response has been received.
+The owner approved this recommendation on September 25 by asking to continue with
+it. It changes the previous expectation that affected candidates/results survive
+deletion. Local implementation and deterministic verification are authorized; real
+data cleanup, hosted migrations and deployment remain separate gates.
 
 [Prior retention review](retention-support-spec.md) explains the store-readiness
 reason. This design does not settle all retention periods, support completion,
@@ -98,7 +98,7 @@ A prior full-deletion record continues returning durable status; retries do not
 resurrect profiles, reset quotas or recreate content.
 
 1. Acquire existing exclusive subject lock, identify affected plans from membership,
-   authored metadata and run dependencies (including location versions) (including historical runs), then lock
+   authored metadata and run dependencies (including location versions and historical runs), then lock
    those plans in deterministic order. Recheck organized-plan blockers and current
    dependencies under lock.
 2. Clean authored metadata, affected run votes, candidates/runs and event payloads;
@@ -190,7 +190,9 @@ This narrows the missing input to access/current existence of that exact project
 it is not evidence that a replacement project should be created. Current alias/
 production configuration remains unverified.
 
-Next implementation needs the owner's shared-content behavior/legacy policy
-decision. Production trust configuration separately needs environment choice and
-actual resource bindings. No builds, services, native runs, hosted changes, real
-deletions, Notion edits, messages or provider calls were executed.
+The behavior is now approved for local implementation. Actual bulk legacy
+remediation needs a separately reviewed scope. Production trust configuration
+separately needs environment choice and actual resource bindings. The original
+design review executed no builds, services, native runs, hosted changes, real
+deletions, Notion edits, messages or provider calls; implementation evidence is
+recorded separately.

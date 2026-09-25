@@ -228,7 +228,7 @@ export default function AccountScreen() {
       </Card>
       <Card>
         <Text selectable accessibilityRole="header" style={{ color: colors.danger, fontSize: 18, fontWeight: "800" }}>Delete my account</Text>
-        <Text selectable style={{ color: colors.danger }}>This removes application data, then requests deletion of your sign-in account. Shared plans stay with their participants.</Text>
+        <Text selectable style={{ color: colors.danger }}>This removes application data, then requests deletion of your sign-in account. Shared plans stay with their participants, but your plan details and recommendations based on your input are removed. Other members may need to choose new details, generate options, and vote again.</Text>
         <Text selectable accessibilityLiveRegion="polite" style={{ color: colors.danger }}>
           {!control.data ? "Checking deletion availability…" : !control.data.full_deletion_available ? "Full account deletion is unavailable. Contact support." : !control.data.can_delete ? `${control.data.organized_plan_count} organized plans must be transferred or removed first.` : "Full account deletion is available."}
         </Text>

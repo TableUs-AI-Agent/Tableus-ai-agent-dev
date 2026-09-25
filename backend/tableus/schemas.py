@@ -271,6 +271,7 @@ class PlanOut(BaseModel):
     viewer_is_organizer: bool
     status: Literal["collecting", "voting", "finalized"]
     location_label: str
+    metadata_needs_replacement: bool = False
     latitude: float | None
     longitude: float | None
     participants: list[ParticipantOut]

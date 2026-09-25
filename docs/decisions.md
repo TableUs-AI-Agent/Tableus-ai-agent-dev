@@ -47,6 +47,16 @@ when changing a subsystem; it is not a second active task packet.
   workflow is separately opt-in and must report pending versus completed truthfully.
   Provider credentials stay server-only. Production retention windows, deployment
   and client rollout remain separate work; backend readiness alone is not release acceptance.
+- On September 25 the owner approved preserving shared plans and remaining
+  members' inputs while removing the departing account's authored metadata and
+  dependent recommendation results. Affected choices/votes/finalization reset;
+  the surviving organizer explicitly replaces removed title/location and members
+  request fresh recommendations/votes. No automatic provider call accompanies
+  deletion. Run dependencies include requester, all participant inputs and the
+  authored location. This supersedes preserving affected candidates across
+  deletion. Legacy provenance remains unknown until proved or explicitly remediated;
+  no bulk real-data cleanup, retention duration or hosted activation was approved.
+  See [implementation design](deletion-content-design.md).
 - Full deletion removes the application profile and records its Auth-removal job
   atomically. A stable namespaced subject hash prevents stale-token re-redemption;
   raw Auth subject is retained only until confirmed removal. The minimal completion

@@ -1502,6 +1502,11 @@
             ],
             "title": "Longitude"
           },
+          "metadata_needs_replacement": {
+            "default": false,
+            "title": "Metadata Needs Replacement",
+            "type": "boolean"
+          },
           "my_vote": {
             "anyOf": [
               {
@@ -4252,6 +4257,90 @@
           }
         },
         "summary": "Join Plan",
+        "tags": [
+          "v1"
+        ]
+      }
+    },
+    "/api/v1/plans/{plan_id}/metadata": {
+      "patch": {
+        "operationId": "replace_plan_metadata_api_v1_plans__plan_id__metadata_patch",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "plan_id",
+            "required": true,
+            "schema": {
+              "title": "Plan Id",
+              "type": "string"
+            }
+          },
+          {
+            "in": "header",
+            "name": "authorization",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Authorization"
+            }
+          },
+          {
+            "in": "header",
+            "name": "x-demo-user-id",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "X-Demo-User-Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PlanCreateIn"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_PlanOut_"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Replace Plan Metadata",
         "tags": [
           "v1"
         ]

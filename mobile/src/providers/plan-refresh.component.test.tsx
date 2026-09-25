@@ -1,5 +1,6 @@
 import { afterEach, beforeEach, expect, jest, test } from "@jest/globals";
 import type { Plan } from "@tableus/domain";
+import { ApiError } from "@tableus/api-client";
 import { focusManager, onlineManager, type QueryClient, useQueryClient } from "@tanstack/react-query";
 import { act, cleanup, fireEvent, render } from "@testing-library/react-native";
 import { type PropsWithChildren, useEffect } from "react";
@@ -15,8 +16,10 @@ let mockOnline = true;
 let mockPlan: Plan;
 const mockGet = jest.fn<(path: string) => Promise<unknown>>();
 const mockPut = jest.fn<() => Promise<Plan>>();
+const mockPost = jest.fn<(path: string, body: unknown) => Promise<unknown>>();
+const mockPatch = jest.fn<(path: string, body: unknown) => Promise<unknown>>();
 jest.mock("@/lib/api", () => ({ api: {
-  get: (path: string) => mockGet(path), put: () => mockPut(), post: jest.fn(), patch: jest.fn(),
+  get: (path: string) => mockGet(path), put: () => mockPut(), post: (path: string, body: unknown) => mockPost(path, body), patch: (path: string, body: unknown) => mockPatch(path, body),
 } }));
 jest.mock("expo-router", () => ({
   useLocalSearchParams: () => ({ id: "fixture-plan" }), useIsFocused: () => mockFocused,
@@ -86,6 +89,8 @@ beforeEach(() => {
   mockGet.mockReset().mockImplementation(async (path) => path === "/api/v1/me"
     ? { id: "fixture-user", display_name: "Diner", share_taste: false } : mockPlan);
   mockPut.mockReset().mockImplementation(async () => ({ ...mockPlan, my_vote: ["candidate-1", "candidate-2", "candidate-3"] }));
+  mockPost.mockReset();
+  mockPatch.mockReset();
 });
 afterEach(async () => {
   await cleanup();
@@ -172,6 +177,61 @@ test("saving a vote consumes the mutation response without an extra detail fetch
   expect(screen.queryByText("Ranked vote saved.")).toBeNull();
   expect(screen.getByText("Ranking changes are not submitted.")).toBeTruthy();
   expect(mockPut).toHaveBeenCalledTimes(1);
+});
+
+test("organizer repairs removed metadata before generating fresh options", async () => {
+  mockPlan = { ...mockPlan, viewer_is_organizer: true, organizer_id: "fixture-user", status: "collecting", metadata_needs_replacement: true, title: "Plan details needed", location_label: "Location needed", candidates: [], my_vote: null };
+  mockPost.mockImplementation(async (path) => {
+    if (path === "/api/v1/locations/resolve") return { place_id: "replacement-place", label: "Chicago", data_provider: "fixture" };
+    throw new Error(`Unexpected post: ${path}`);
+  });
+  mockPatch.mockImplementation(async (path, body) => {
+    expect(path).toBe("/api/v1/plans/fixture-plan/metadata");
+    expect(body).toEqual({ title: "Fresh dinner", location_label: "Chicago", location_place_id: "replacement-place" });
+    return { ...mockPlan, title: "Fresh dinner", location_label: "Chicago", metadata_needs_replacement: false, updated_at: "2026-09-15T00:00:00Z" };
+  });
+  const screen = await render(<Tree />);
+  await flush();
+  expect(screen.getByText("Plan details changed")).toBeTruthy();
+  expect(screen.queryByText("Find four options")).toBeNull();
+  await fireEvent.changeText(screen.getByLabelText("Replacement plan title"), "Fresh dinner");
+  await fireEvent.changeText(screen.getByLabelText("Replacement city, neighborhood, or ZIP code"), "Chicago");
+  expect(screen.getByRole("button", { name: "Find replacement location" })).toBeEnabled();
+  await fireEvent.press(screen.getByText("Find replacement location"));
+  await flush();
+  expect(mockPost).toHaveBeenCalledTimes(1);
+  expect(screen.getByText("Chicago")).toBeTruthy();
+  expect(screen.getByRole("button", { name: "Save new plan details" })).toBeEnabled();
+  await fireEvent.press(screen.getByText("Save new plan details"));
+  await flush();
+  expect(mockPatch).toHaveBeenCalledTimes(1);
+  expect(screen.queryByText("Plan details changed")).toBeNull();
+  expect(screen.getByText("Find four options")).toBeTruthy();
+  expect(mockPost).toHaveBeenCalledTimes(1);
+});
+
+test("stale metadata replay requires a refresh and never retries the old body", async () => {
+  mockPlan = { ...mockPlan, viewer_is_organizer: true, organizer_id: "fixture-user", status: "collecting", metadata_needs_replacement: true, candidates: [] };
+  mockPost.mockImplementation(async () => ({ place_id: "replacement-place", label: "Chicago", data_provider: "fixture" }));
+  mockPatch.mockImplementation(async () => { throw new ApiError("Plan content changed", 409, "idempotency_content_changed"); });
+  const screen = await render(<Tree />);
+  await flush();
+  await fireEvent.changeText(screen.getByLabelText("Replacement plan title"), "Fresh dinner");
+  await fireEvent.changeText(screen.getByLabelText("Replacement city, neighborhood, or ZIP code"), "Chicago");
+  await fireEvent.press(screen.getByText("Find replacement location"));
+  await flush();
+  await fireEvent.press(screen.getByText("Save new plan details"));
+  await flush();
+  expect(mockPatch).toHaveBeenCalledTimes(1);
+  expect(screen.getByText("Plan details changed. Refresh the plan before making another change.")).toBeTruthy();
+  expect(screen.getByRole("button", { name: "Save new plan details" })).toBeDisabled();
+  expect(screen.queryByText("Retry saving plan details")).toBeNull();
+  mockPlan = { ...mockPlan, title: "Fresh dinner", location_label: "Chicago", metadata_needs_replacement: false, updated_at: "2026-09-15T00:00:00Z" };
+  await fireEvent.press(screen.getByText("Refresh plan"));
+  await flush();
+  expect(screen.queryByText("Plan details changed. Refresh the plan before making another change.")).toBeNull();
+  expect(screen.getByText("Find four options")).toBeTruthy();
+  expect(mockPatch).toHaveBeenCalledTimes(1);
 });
 
 test("overlapping manual refreshes share one slow detail request", async () => {

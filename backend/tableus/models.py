@@ -148,6 +148,13 @@ class Plan(Base):
     share_token_hash: Mapped[str] = mapped_column(String(64), unique=True, index=True)
     location_label: Mapped[str] = mapped_column(String(160))
     location_place_id: Mapped[str | None] = mapped_column(String(255), nullable=True)
+    metadata_author_id: Mapped[str | None] = mapped_column(
+        ForeignKey("profiles.id", ondelete="SET NULL"), nullable=True
+    )
+    metadata_provenance: Mapped[str] = mapped_column(String(20), default="legacy_unknown")
+    metadata_version: Mapped[int] = mapped_column(Integer, default=1)
+    metadata_needs_replacement: Mapped[bool] = mapped_column(Boolean, default=False)
+    content_epoch: Mapped[int] = mapped_column(Integer, default=0)
     latitude: Mapped[float | None] = mapped_column(Float, nullable=True)
     longitude: Mapped[float | None] = mapped_column(Float, nullable=True)
     active_run_id: Mapped[str | None] = mapped_column(String(36))
@@ -177,7 +184,23 @@ class RecommendationRun(Base):
     plan_id: Mapped[str] = mapped_column(ForeignKey("plans.id", ondelete="CASCADE"), index=True)
     query: Mapped[str] = mapped_column(String(500))
     provider: Mapped[str] = mapped_column(String(40))
+    requester_id: Mapped[str | None] = mapped_column(
+        ForeignKey("profiles.id", ondelete="SET NULL"), nullable=True
+    )
+    location_author_id: Mapped[str | None] = mapped_column(
+        ForeignKey("profiles.id", ondelete="SET NULL"), nullable=True
+    )
+    location_version: Mapped[int | None] = mapped_column(Integer, nullable=True)
+    provenance: Mapped[str] = mapped_column(String(20), default="legacy_unknown")
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=now_utc)
+
+
+class RunContributor(Base):
+    __tablename__ = "run_contributors"
+    __table_args__ = (UniqueConstraint("run_id", "profile_id"), Index("ix_run_contributors_profile", "profile_id"))
+    id: Mapped[str] = mapped_column(String(36), primary_key=True, default=new_id)
+    run_id: Mapped[str] = mapped_column(ForeignKey("recommendation_runs.id", ondelete="CASCADE"))
+    profile_id: Mapped[str] = mapped_column(ForeignKey("profiles.id", ondelete="CASCADE"))
 
 
 class Candidate(Base):

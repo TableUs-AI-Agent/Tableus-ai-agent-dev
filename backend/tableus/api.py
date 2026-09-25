@@ -1,6 +1,7 @@
 import asyncio
 import io
 import time
+import uuid
 from collections import defaultdict, deque
 from contextlib import asynccontextmanager
 from datetime import UTC, datetime, timedelta
@@ -27,6 +28,7 @@ from .auth import (
 from .auth_removal import full_deletion_available
 from .cohort_limits import consume_plan_creation, quota_snapshot, reserve_provider_operation
 from .config import get_settings
+from .content_cleanup import clean_departing_content, lock_affected_plans
 from .db import SessionFactory
 from .models import (
     AccountDeletion,
@@ -42,6 +44,7 @@ from .models import (
     ProviderUsage,
     RecommendationRun,
     Review,
+    RunContributor,
     Vote,
 )
 from .operators import CurrentOperator
@@ -158,7 +161,7 @@ async def _participant(session: AsyncSession, plan_id: str, profile_id: str) -> 
 async def _plan(session: AsyncSession, plan_id: str, *, for_update: bool = False) -> Plan:
     statement = select(Plan).where(Plan.id == plan_id)
     if for_update:
-        statement = statement.with_for_update()
+        statement = statement.with_for_update().execution_options(populate_existing=True)
     plan = await session.scalar(statement)
     if not plan:
         raise HTTPException(status_code=404, detail="Plan not found")
@@ -255,6 +258,7 @@ async def _plan_out(
         viewer_is_organizer=plan.organizer_id == viewer_id,
         status=cast(Literal["collecting", "voting", "finalized"], plan.status),
         location_label=plan.location_label,
+        metadata_needs_replacement=plan.metadata_needs_replacement,
         latitude=plan.latitude,
         longitude=plan.longitude,
         participants=participants,
@@ -568,10 +572,27 @@ async def _anonymize_authored_events(session: AsyncSession, profile: Profile) ->
     events = list((await session.scalars(
         select(PlanEvent).where(PlanEvent.actor_id == profile.id).with_for_update()
     )).all())
-    identifiers = {profile.id, profile.email_hash}
     for event in events:
         event.actor_id = None
-        event.payload = _scrub_event_payload(event.payload or {}, identifiers)
+        # Keep only reviewed structural references. Legacy arbitrary payload
+        # fields may contain free text and cannot be classified as safe.
+        allowed = {
+            "recommendations.generated": ("run_id", RecommendationRun),
+            "plan.finalized": ("candidate_id", Candidate),
+        }.get(event.event_type)
+        payload: dict = {}
+        if allowed:
+            key, model = allowed
+            value = (event.payload or {}).get(key)
+            if isinstance(value, str):
+                try:
+                    uuid.UUID(value)
+                except ValueError:
+                    pass
+                else:
+                    if await session.get(model, value):
+                        payload[key] = value
+        event.payload = payload
 
 
 async def _account_control(session: AsyncSession, profile_id: str) -> AccountControlOut:
@@ -821,17 +842,21 @@ async def organized_plans(profile: CurrentProfile, session: DbSession):
 async def delete_me(body: DeleteAccountIn, identity: CurrentIdentity, session: DbSession):
     await lock_subject(session, identity.subject, exclusive=True)
     profile = await load_approved_profile(identity, session)
+    affected_plans = await lock_affected_plans(session, profile.id)
     control = await _account_control(session, profile.id)
     if not control.can_delete:
         raise HTTPException(
             status_code=409, detail="Transfer or delete organized plans before deleting the account"
         )
+    await clean_departing_content(session, profile.id, affected_plans)
     await _anonymize_authored_events(session, profile)
     await session.execute(
         delete(PendingAuthValidation).where(PendingAuthValidation.email_hash == profile.email_hash)
     )
     await session.delete(profile)
     await session.commit()
+    from .request_controls import invalidate_private_responses
+    invalidate_private_responses()
     return ok(DeleteAccountOut(deleted=True))
 
 
@@ -856,9 +881,11 @@ async def request_full_deletion(
     if not full_deletion_available():
         raise HTTPException(status_code=503, detail="Full account deletion is unavailable")
     profile = await load_approved_profile(identity, session)
+    affected_plans = await lock_affected_plans(session, profile.id)
     control = await _account_control(session, profile.id)
     if not control.can_delete:
         raise HTTPException(status_code=409, detail="Transfer or delete organized plans first")
+    await clean_departing_content(session, profile.id, affected_plans)
     await _anonymize_authored_events(session, profile)
     await session.execute(
         delete(PendingAuthValidation).where(PendingAuthValidation.email_hash == profile.email_hash)
@@ -867,6 +894,8 @@ async def request_full_deletion(
     session.add(row)
     await session.delete(profile)
     await session.commit()
+    from .request_controls import invalidate_private_responses
+    invalidate_private_responses()
     await process_deletion(row.subject_hash)
     async with SessionFactory() as fresh:
         outcome = await fresh.get(AccountDeletion, row.subject_hash)
@@ -1244,6 +1273,8 @@ async def create_plan(body: PlanCreateIn, profile: CurrentProfile, session: DbSe
     token = new_share_token()
     plan = Plan(
         organizer_id=profile.id,
+        metadata_author_id=profile.id,
+        metadata_provenance="known",
         share_token_hash=hash_value(token),
         title=body.title,
         location_label=" ".join(body.location_label.split()),
@@ -1264,6 +1295,37 @@ async def create_plan(body: PlanCreateIn, profile: CurrentProfile, session: DbSe
 async def get_plan(plan_id: str, profile: CurrentProfile, session: DbSession):
     plan = await _plan(session, plan_id)
     await _participant(session, plan_id, profile.id)
+    return ok(await _plan_out(session, plan, profile.id))
+
+
+@router.patch("/plans/{plan_id}/metadata", response_model=Envelope[PlanOut])
+async def replace_plan_metadata(
+    plan_id: str, body: PlanCreateIn, profile: CurrentProfile, session: DbSession
+):
+    plan = await _plan(session, plan_id, for_update=True)
+    _require_organizer(plan, profile)
+    if plan.status != "collecting" or not plan.metadata_needs_replacement:
+        raise HTTPException(status_code=409, detail="Plan details do not need replacement")
+    settings = get_settings()
+    if body.location_place_id:
+        resolved = await _call_places(profile.id, "get_location", body.location_place_id)
+        if resolved.region_code != "US":
+            raise HTTPException(status_code=422, detail="Only United States locations are supported")
+    elif settings.places_provider_mode == "live":
+        raise HTTPException(status_code=422, detail="A resolved Google Place ID is required")
+    plan.title = body.title
+    plan.location_label = " ".join(body.location_label.split())
+    plan.location_place_id = body.location_place_id
+    plan.latitude = None if body.location_place_id else body.latitude
+    plan.longitude = None if body.location_place_id else body.longitude
+    plan.metadata_author_id = profile.id
+    plan.metadata_provenance = "known"
+    plan.metadata_needs_replacement = False
+    plan.metadata_version += 1
+    plan.content_epoch += 1
+    _touch(plan)
+    await _event(session, plan, profile, "plan.metadata_replaced")
+    await session.commit()
     return ok(await _plan_out(session, plan, profile.id))
 
 
@@ -1379,6 +1441,8 @@ async def generate_recommendations(
     plan = await _plan(session, plan_id, for_update=True)
     await _participant(session, plan.id, profile.id)
     _require_reopened(plan)
+    if plan.metadata_needs_replacement:
+        raise HTTPException(status_code=409, detail="Replace plan details before generating options")
     participant_rows = list(
         (
             await session.scalars(select(PlanParticipant).where(PlanParticipant.plan_id == plan.id))
@@ -1437,9 +1501,18 @@ async def generate_recommendations(
             detail="No four-place recommendation set satisfies the current constraints",
         )
 
-    run = RecommendationRun(plan_id=plan.id, query=body.query, provider=ai_provider.name)
+    run = RecommendationRun(
+        plan_id=plan.id, query=body.query, provider=ai_provider.name,
+        requester_id=profile.id, location_author_id=plan.metadata_author_id,
+        location_version=plan.metadata_version,
+        provenance="known" if plan.metadata_provenance == "known" else "legacy_unknown",
+    )
     session.add(run)
     await session.flush()
+    session.add_all([
+        RunContributor(run_id=run.id, profile_id=participant.profile_id)
+        for participant in participant_rows
+    ])
     for index, item in enumerate(recommendations):
         session.add(
             Candidate(

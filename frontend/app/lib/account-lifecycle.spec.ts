@@ -42,6 +42,7 @@ test("organizer transfers a shared plan and sees pending deletion recovery", asy
   });
   await page.goto("/account");
   await expect(page.getByRole("heading", { name: "Plans you organize" })).toBeVisible();
+  await expect(page.getByText("Shared plans remain, but your plan details and any recommendations based on your input are removed.", { exact: false })).toBeVisible();
   await expect(page.getByRole("button", { name: "Delete my account" })).toBeDisabled();
   await page.locator("body > main").evaluate((element) => { element.scrollTop = 0; });
   await page.evaluate(() => new Promise<void>((resolve) => requestAnimationFrame(() => requestAnimationFrame(() => resolve()))));

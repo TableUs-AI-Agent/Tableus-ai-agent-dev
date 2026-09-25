@@ -9,8 +9,9 @@ import time
 import uuid
 from collections import OrderedDict
 from collections.abc import Awaitable, Callable
-from dataclasses import dataclass
+from dataclasses import dataclass, replace
 from typing import Any
+from weakref import WeakSet
 
 _IDEMPOTENT_EXACT_ROUTES = {
     ("POST", "/api/v1/access/redeem"),
@@ -31,7 +32,7 @@ _IDEMPOTENT_DYNAMIC_ROUTES = (
             r"^/api/v1/plans/[^/]{1,255}/(?:join|recommendations|finalize|reopen|share-token/rotate|transfer-ownership)$"
         ),
     ),
-    ("PATCH", re.compile(r"^/api/v1/plans/[^/]{1,255}/constraints$")),
+    ("PATCH", re.compile(r"^/api/v1/plans/[^/]{1,255}/(?:constraints|metadata)$")),
     ("PUT", re.compile(r"^/api/v1/plans/[^/]{1,255}/vote$")),
 )
 
@@ -322,6 +323,24 @@ def is_idempotency_eligible(method: str, path: str) -> bool:
     )
 
 
+# The service deliberately supports one API process. Deletion advances this
+# fence synchronously after commit, before any other await. In-flight responses
+# from the previous generation may not be inserted or replayed afterward.
+_private_response_generation = 0
+_replay_caches: WeakSet[IdempotencyReplayCache] = WeakSet()
+
+
+def private_response_generation() -> int:
+    return _private_response_generation
+
+
+def invalidate_private_responses() -> None:
+    global _private_response_generation
+    _private_response_generation += 1
+    for cache in list(_replay_caches):
+        cache.invalidate_bodies()
+
+
 @dataclass(frozen=True)
 class CachedResponse:
     expires_at: float
@@ -329,6 +348,8 @@ class CachedResponse:
     body: bytes
     media_type: str
     request_fingerprint: str
+    generation: int | None = None
+    invalidated: bool = False
 
 
 class FixedWindowRateLimiter:
@@ -396,6 +417,13 @@ class IdempotencyReplayCache:
         self.max_response_bytes = max_response_bytes
         self._entries: OrderedDict[tuple[str, str, str, str], CachedResponse] = OrderedDict()
         self._total_bytes = 0
+        _replay_caches.add(self)
+
+    def invalidate_bodies(self) -> None:
+        """Keep consumed keys/fingerprints/expiry, but discard private bytes."""
+        for key, entry in self._entries.items():
+            self._entries[key] = replace(entry, body=b"", invalidated=True)
+        self._total_bytes = 0
 
     def __len__(self) -> int:
         return len(self._entries)
@@ -431,6 +459,11 @@ class IdempotencyReplayCache:
         return entry
 
     def store(self, key: tuple[str, str, str, str], entry: CachedResponse, now: float) -> bool:
+        generation = private_response_generation()
+        if entry.generation is None:
+            entry = replace(entry, generation=generation)
+        elif entry.generation != generation:
+            entry = replace(entry, body=b"", invalidated=True)
         if len(entry.body) > self.max_response_bytes:
             return False
         self._prune_expired(now)

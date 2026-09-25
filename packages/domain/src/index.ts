@@ -37,6 +37,8 @@ export type Plan = {
   organizer_id: string;
   viewer_is_organizer: boolean;
   status: PlanStatus;
+  /** Older API responses omit this field and mean false. */
+  metadata_needs_replacement?: boolean;
   location_label: string;
   latitude: number | null;
   longitude: number | null;

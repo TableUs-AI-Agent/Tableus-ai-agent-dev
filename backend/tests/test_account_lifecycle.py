@@ -186,7 +186,7 @@ async def test_transfer_preserves_shared_plan_and_allows_full_deletion(
         assert (await session.get(Plan, plan_id)).organizer_id == recipient
         retained_event = await session.scalar(select(PlanEvent).where(PlanEvent.event_type == "plan.created"))
         assert retained_event.actor_id is None
-        assert retained_event.payload == {"actor": None, "nested": [None, "safe"]}
+        assert retained_event.payload == {}
         row = await session.get(AccountDeletion, subject_digest(owner))
         assert row.auth_subject is None
     recipient_view = await client.get(f"/api/v1/plans/{plan_id}", headers=headers(recipient))

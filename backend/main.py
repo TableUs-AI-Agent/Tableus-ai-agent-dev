@@ -345,6 +345,7 @@ from tableus.request_controls import (
     PrivateApiCacheMiddleware,
     RequestBodyLimitMiddleware,
     is_idempotency_eligible,
+    private_response_generation,
 )
 
 settings = get_settings()
@@ -388,6 +389,18 @@ async def request_context(request: Request, call_next):
     cache_key = None
     cached = None
     inflight_lock = None
+    response_generation = private_response_generation()
+
+    def content_changed_response():
+        return JSONResponse(
+            status_code=409,
+            content={"error": {
+                "code": "idempotency_content_changed",
+                "message": "Account data changed. This request was already completed; refresh before continuing.",
+            }, "request_id": request_id},
+            headers={"X-Request-ID": request_id, "X-Idempotent-Replay": "true"},
+        )
+
     if idempotency_eligible:
         if not re.fullmatch(r"[A-Za-z0-9._:-]{8,200}", idempotency_key or ""):
             return JSONResponse(
@@ -491,7 +504,8 @@ async def request_context(request: Request, call_next):
                                         status_code=403,
                                         detail="Plan access is no longer approved",
                                     )
-                            if ownership_transfer_replay:
+                            if (ownership_transfer_replay and not cached.invalidated
+                                    and cached.generation == private_response_generation()):
                                 try:
                                     cached_payload = json.loads(cached.body)
                                     cached_plan = cached_payload["data"]
@@ -543,6 +557,12 @@ async def request_context(request: Request, call_next):
                         },
                         headers={"X-Request-ID": request_id},
                     )
+                await app.state.idempotency_inflight.release(cache_key, inflight_lock)
+                inflight_lock = None
+                # Auth checks and lock release await work. Recheck the generation
+                # afterward even when this coroutine holds an old entry object.
+                if cached.invalidated or cached.generation != private_response_generation():
+                    return content_changed_response()
                 return Response(
                     content=cached.body,
                     status_code=cached.status_code,
@@ -550,8 +570,9 @@ async def request_context(request: Request, call_next):
                     headers={"X-Request-ID": request_id, "X-Idempotent-Replay": "true"},
                 )
             finally:
-                await app.state.idempotency_inflight.release(cache_key, inflight_lock)
-                inflight_lock = None
+                if inflight_lock is not None:
+                    await app.state.idempotency_inflight.release(cache_key, inflight_lock)
+                    inflight_lock = None
     telemetry_token = set_telemetry_context(
         parse_telemetry_context(
             request.headers.get("X-TableUs-Telemetry-Session"),
@@ -578,15 +599,32 @@ async def request_context(request: Request, call_next):
                         body=body,
                         media_type=response.media_type or "application/json",
                         request_fingerprint=request_fingerprint or "",
+                        generation=(
+                            private_response_generation()
+                            if request.method == "DELETE" and request.url.path == "/api/v1/me"
+                            else response_generation
+                        ),
                     ),
                     now,
                 )
-            response = Response(
-                content=body,
-                status_code=response.status_code,
-                media_type=response.media_type,
-                headers=dict(response.headers),
-            )
+            if inflight_lock is not None and cache_key is not None:
+                await app.state.idempotency_inflight.release(cache_key, inflight_lock)
+                inflight_lock = None
+            if (
+                200 <= response.status_code < 300
+                and response_generation != private_response_generation()
+                and not (request.method == "DELETE" and request.url.path == "/api/v1/me")
+            ):
+                # The mutation already completed: suppress its old private body
+                # and retain the consumed-key tombstone, never rerun the write.
+                response = content_changed_response()
+            else:
+                response = Response(
+                    content=body,
+                    status_code=response.status_code,
+                    media_type=response.media_type,
+                    headers=dict(response.headers),
+                )
         response.headers["X-Request-ID"] = request_id
         logging.getLogger("tableus.request").info(
             json.dumps(
