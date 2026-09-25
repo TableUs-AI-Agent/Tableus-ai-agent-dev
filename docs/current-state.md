@@ -112,8 +112,11 @@ and ordinary returning-account access remain valid. Local demo fixtures remain
 compatible; hosted unused legacy codes need replacement before rollout.
 
 The [invite contract and rollout procedure](recipient-invites.md) describe the
-migration, private issuance, legacy handling and exact limits. Local verification
-is in progress. No real invite, hosted migration, Auth call, deployment or native
+migration, private issuance, legacy handling and exact limits. Frozen invite source `29edb5e` passes full local readiness: **193 Python
+with zero skips and 314 JavaScript tests**, lint/types, unchanged generated
+contracts, web builds/export and deterministic smoke. Real PostgreSQL contention,
+Auth-hook role checks and populated upgrade/downgrade/re-upgrade pass.
+[Handoff and evidence](handoffs/2026-09-24-recipient-invites.md) bind exact source. No real invite, hosted migration, Auth call, deployment or native
 validation was performed. Existing native evidence does not accept these bytes.
 
 ## Native and release evidence inherited at the base

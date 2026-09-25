@@ -41,4 +41,14 @@ of unused legacy invites and quiesce intake across migration/code transition.
 
 ## Status
 
-Implementation in progress; no invite or release acceptance claimed.
+Local objective complete. Application/operator source:
+`29edb5e9f47ab7ac74034f2bac5e271a162ea620`. One full make-ready passed:
+193 Python, zero skips, and 314 JavaScript tests; lint/types, unchanged contracts,
+web builds/export and deterministic smoke. PostgreSQL row contention, hook roles
+and fresh/populated migration checks pass. Test server stopped, data retained.
+See [handoff](../handoffs/2026-09-24-recipient-invites.md).
+
+Next proposed objective: review the capability-link exchange design and its
+migration/user-experience tradeoffs against current code before implementing a
+consequential policy change. No next objective or release operation executes
+under this completed packet; native validation and its budgets remain separate.

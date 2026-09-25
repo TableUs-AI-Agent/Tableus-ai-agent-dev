@@ -1,0 +1,63 @@
+{
+  "schema_version": 1,
+  "candidate_sha": "29edb5e9f47ab7ac74034f2bac5e271a162ea620",
+  "operator_tooling_sha": "29edb5e9f47ab7ac74034f2bac5e271a162ea620",
+  "base_sha": "c33479e80eef4ddd154783dda677cd016dc1a936",
+  "branch": "codex/recipient-invites",
+  "postgres_version": "17.11",
+  "migration_head": "d48f6c2ab913",
+  "final_readiness": {
+    "exit_code": 0,
+    "python_tests": 193,
+    "javascript_tests": 314,
+    "skips": 0,
+    "database": "fresh local invite_ready; restricted tableus_runtime role",
+    "web_javascript_bytes_report_only": 2772474,
+    "native_builds_or_runs": 0
+  },
+  "contract_drift": false,
+  "hosted_ci_executed": false,
+  "local_server_stopped": true,
+  "source_sha256": {
+    ".github/workflows/ci.yml": "444fe7d4e0a356597d07a3e1d2da7faf6c0910f9b790174e5c4fa11a3fb56a99",
+    "backend/alembic/versions/d48f6c2ab913_recipient_bound_invites.py": "6d443604c20214d8e5f48493c1fa34d0a3910dd3f0e5953a63e557c9ea34e94f",
+    "backend/scripts/invites.py": "9aca0f6182abf12d12b38d6f4f4e76ea1cd12e67e770cf4d50e9a0710f26e2d7",
+    "backend/tableus/api.py": "1722eeea118f046bb6c7cd4feebf596ffa334883916ad36a2a6b026d313485f9",
+    "backend/tableus/models.py": "2b33bcd63169b0e26ed7ae0c9017b98e02183a1c47987d0b3c2cc219a2d9d03b",
+    "backend/tests/test_invite_cli.py": "421d946989dc648b7a3479d6bdf60b4ca8837c6e9814a425899880a60d2ae81d",
+    "backend/tests/test_recipient_invite_api.py": "efaa9132932f7dfc3c58266a6c554204ed661e03b9560c80141019627758cbc8",
+    "backend/tests/test_recipient_invite_hook.py": "2599e4100b4404773d56d48022675493e3aaac920ee231f4c7d7de1c46a05a11",
+    "docs/openapi.json": "187365567b1c3b3c92903c24b91e042be9eb5a691b0cd13e239657589c31e731",
+    "packages/api-client/src/schema.ts": "3e1040f8dcad1f0ddffb4a11fc90a09941a533c1d6d7323d96ad606f47ecc8cd",
+    "package-lock.json": "c2b5dff8fe1f95cf1fb6e0eb6ba2b85ac92712266cf6fbdf946880b866fb1413",
+    "backend/uv.lock": "a66a443a25e9563d695e7926a7ea66ef81a73e5737ef3dbd774b8937a5e41504"
+  },
+  "evidence_sha256": {
+    "/Users/brianchei/.codex/artifacts/tableus/recipient-invites-2026-09-24/make-ready.log": "b453eefce8a02f498da0c949faf00d14422fc0c3e1a95891d32712db835d6c52",
+    "/Users/brianchei/.codex/artifacts/tableus/recipient-invites-2026-09-24/ready-migration.log": "28707f545e06688d6cd36391d6d6283b4522abbef905f0fa9ae75658d19b8293",
+    "/Users/brianchei/.codex/artifacts/tableus/recipient-invites-2026-09-24/api-focused.log": "15d885d8b4bf7d45b06a0448518227a3179c34414ee823c83941d7267cb3b329",
+    "/Users/brianchei/.codex/artifacts/tableus/recipient-invites-2026-09-24/cli-focused.log": "549ca11e4fe3df25ea1c34a3bac944e6e63975250497b6adc3e172fa62165968",
+    "/Users/brianchei/.codex/artifacts/tableus/recipient-invites-2026-09-24/hook-focused.log": "c1b9970d9ba1306b6beaf0105d2da0b7d1bf8b0d24750646d0a8fcfe102621cf",
+    "/Users/brianchei/.codex/artifacts/tableus/recipient-invites-2026-09-24/hook-migration.log": "28707f545e06688d6cd36391d6d6283b4522abbef905f0fa9ae75658d19b8293",
+    "/Users/brianchei/.codex/artifacts/tableus/recipient-invites-2026-09-24/hook-upgrade-proof.py": "3142a571066e46b11409b260abf52b432e6251dc7fe29372a4d8ea44384175ce",
+    "/Users/brianchei/.codex/artifacts/tableus/recipient-invites-2026-09-24/hook-upgrade-proof.log": "fe2f6c93134f3b9bdb34410c508cbb7337e8f04a52767a068c8941cd788afad0",
+    "/Users/brianchei/.codex/artifacts/tableus/recipient-invites-2026-09-24/focused-migration.log": "28707f545e06688d6cd36391d6d6283b4522abbef905f0fa9ae75658d19b8293",
+    "/Users/brianchei/.codex/artifacts/tableus/recipient-invites-2026-09-24/contract-drift.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "/Users/brianchei/.codex/artifacts/tableus/recipient-invites-2026-09-24/shutdown.log": "ca19178a35ab4153b75b494963b66ce8243e1b94c173107c87b44d09db23652d",
+    "/Users/brianchei/.codex/artifacts/tableus/recipient-invites-2026-09-24/server-status.log": "b931e738d6db266a5cfc065304a29dac0eb804aba7a67435da7c1a962ab89747",
+    "/Users/brianchei/.codex/artifacts/tableus/recipient-invites-2026-09-24/supabase-changelog.md": "56f15c42f2143b542bebad07b62a10bd7410d6ec1d200bc0b7b103985231aff0"
+  },
+  "limitations": [
+    "No hosted Auth/native/release acceptance",
+    "No real invitations or sends",
+    "Legacy unused codes require approved replacement before hosted rollout",
+    "No global cohort-size cap added",
+    "Invite-hash retention remains a release policy decision"
+  ],
+  "observed_warnings": [
+    "Existing Alembic path_separator deprecation",
+    "Existing Node module-type warnings in tests",
+    "Cached npm install emitted deprecation notices; no dependency changes or audit was performed"
+  ],
+  "setup_correction": "Initial Alembic call from root failed before schema work; rerun from backend succeeded. Full readiness passed first attempt."
+}
