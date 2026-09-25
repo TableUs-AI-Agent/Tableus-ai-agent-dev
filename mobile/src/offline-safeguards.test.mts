@@ -8,9 +8,9 @@ function source(relativePath: string) {
 
 test("every plan workspace write uses the recoverable controller and an explicit key", () => {
   const plan = source("../app/plans/[id].tsx");
-  assert.equal((plan.match(/useRecoverableMutation\(/g) ?? []).length, 6);
-  for (const route of ["constraints", "recommendations", "vote", "finalize", "reopen", "share-token/rotate"]) {
-    assert.match(plan, new RegExp(`${route.replace("/", "\\/")}.*idempotencyKey`, "s"));
+  assert.equal((plan.match(/useRecoverableMutation\(/g) ?? []).length, 8);
+  for (const route of ["constraints", "recommendations", "vote", "finalize", "reopen", "share-token/rotate", "locations/resolve", "metadata"]) {
+    assert.match(plan, new RegExp(`${route.replace("/", "\\/")}[^\\n]*idempotencyKey`));
   }
   assert.match(plan, /setRankingDraft\(null\)/);
 });
