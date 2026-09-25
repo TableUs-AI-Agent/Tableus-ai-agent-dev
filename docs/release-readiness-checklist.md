@@ -6,6 +6,11 @@ complete, with the owner-accepted unresolved simulator hang.** The [candidate ma
 owns detailed status and provenance. The [old checklist](history/2026-09-21/release-readiness-checklist.md)
 is historical and does not direct current execution.
 
+For current cumulative source `4846325`, use the
+[September 25 acceptance plan](cumulative-release-acceptance.md). The checkmarks
+below remain evidence for `f94a1d9` only; they do not accept new lifecycle, invite,
+quota or private-link behavior.
+
 ## Candidate acceptance
 
 - [x] Exact-source local checks and recorded CI, including PostgreSQL/browser tests.

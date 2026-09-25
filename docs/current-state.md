@@ -1,6 +1,6 @@
 # Current state
 
-Updated 2026-09-25 for private-link implementation. Brian
+Updated 2026-09-25 for cumulative release-acceptance planning. Brian
 owns all development at this stage. The owner approved this work in parallel
 with native validation; only [this worktree's active packet](task-packets/active.md)
 directs work here. Native evidence remains tied to its original candidate.
@@ -9,9 +9,9 @@ directs work here. Native evidence remains tied to its original candidate.
 
 | Role | Value |
 | --- | --- |
-| Active branch | `codex/private-link-handling` |
-| Active worktree | `/Users/brianchei/.codex/worktrees/private-link-handling/Tableus-ai-agent-dev` |
-| Implementation base / inherited application | `2674fc7a798de5f090f17455a602e44641bda943` / `29edb5e9f47ab7ac74034f2bac5e271a162ea620` |
+| Active branch | `codex/cumulative-release-acceptance` |
+| Active worktree | `/Users/brianchei/.codex/worktrees/cumulative-release-acceptance/Tableus-ai-agent-dev` |
+| Planning base / unchanged application | `ec4cf578bf7ea40f8ffefc64ee8dfc238e009a7e` / `484632517345e7858f48caf8fa7b128f9d9dab80` |
 | Private-link application / verification checkout | `484632517345e7858f48caf8fa7b128f9d9dab80` |
 | Cohort application candidate | `25e34ec9e35e1935cebe8dbb8f34465fd2b313e0` |
 | Native validation task | `01a0c678-55c8-7cc0-a3cb-e3200776906a`, Prepare native replacement validation |
@@ -158,14 +158,25 @@ and [Phase W](handoffs/2026-09-21-phase-w-complete.md) retain their evidence.
 Phase W placed ed8330a on both staging web aliases; the approved CORS/API redeploy
 kept f94a1d9 application source. This is not cumulative mixed-source acceptance.
 
-Replacement native acceptance remains incomplete. The latest bounded read of
-Prepare native replacement validation found it idle after C7, not accepted.
-Its committed packet/result at `f044c925d216c9caad201b2c4425bad878c0472c` records
-C7 stopping before UI on an unavailable host executable-path lookup, consumed
-allowances, no C8 authority and separately verified local diagnostics. Original
-refresh/AppHang issues and links/exports, physical association/auth, Android and
-N2 gates remain. [Read provenance](evidence/capability-link-review-2026-09-24/manifest.json)
-binds the exact inspected native files. No native operation or retry ran here.
+Replacement native acceptance remains incomplete. A fresh bounded task/source
+read found C8 completed at native evidence commit
+`981e2f9e646ab51eb31cbe1868e1ce6ae615cf61`; the task was active. Its collector
+passed one 17.514-second postboot diagnostic, with application acceptance false
+and zero remaining C8 attempts. Application remains `8972865`, diagnostic operator
+`ab38d27`, build operator `16603dd`. The native task is preparing its next complete
+Settings-baseline/conditional offline-refresh campaign; this planning task does
+not dispatch or approve it. Original application/platform/AppHang, physical links/
+Auth, export, Android and N2 gates remain. The
+[immutable read snapshot](evidence/cumulative-release-acceptance-2026-09-25/source-snapshot.json)
+binds the inspected packet/results; native runtime checks were not repeated here.
+
+The [cumulative acceptance plan](cumulative-release-acceptance.md) selects existing
+application `4846325` for proposed isolated-staging acceptance. Its feature changes
+are already combined; newer native diagnostic tooling remains separately bound.
+Production mobile builds are deliberately disabled until production origins and
+signed OTA policy are committed. Production configuration/retention preparation
+can proceed in parallel with native work; actual deployment/grants/scheduler,
+installed adoption and real-device availability remain unverified.
 
 The September 30 dependency boundary is unextended. Production and old immutable
 artifacts are outside the replacement dependency disposition. Cohort controls are locally implemented; production configuration, distributed TestFlight/Play

@@ -1,58 +1,49 @@
-# Active packet: private-link handling
+# Active packet: cumulative release-acceptance planning
 
-Owner: Brian, sole current-stage developer. Historical shared work remains shared.
-On September 25 the owner said continue with the recommendation: retain private
-link sharing among approved members and implement the prepared safer transport.
+Owner: Brian, sole developer for this stage. Historical shared attribution remains.
 
-- Branch: `codex/private-link-handling`.
-- Worktree: `/Users/brianchei/.codex/worktrees/private-link-handling/Tableus-ai-agent-dev`.
-- Base: `2674fc7a798de5f090f17455a602e44641bda943`.
-- Inherited application: `29edb5e9f47ab7ac74034f2bac5e271a162ea620`.
-- [Design packet](../capability-link-decision.md); native task
-  `01a0c678-55c8-7cc0-a3cb-e3200776906a` retains all native execution and budgets.
+- Branch: `codex/cumulative-release-acceptance`.
+- Worktree: `/Users/brianchei/.codex/worktrees/cumulative-release-acceptance/Tableus-ai-agent-dev`.
+- Base: `ec4cf578bf7ea40f8ffefc64ee8dfc238e009a7e`.
+- Unchanged cumulative application: `484632517345e7858f48caf8fa7b128f9d9dab80`.
+- Existing native task: `01a0c678-55c8-7cc0-a3cb-e3200776906a`, Prepare native replacement validation.
 
-## Outcome
+## Authorized outcome
 
-Read fragment and legacy query capabilities once, keep secrets out of router/auth/
-persistent state, retain only a 20-minute process-local pending join, clear on
-cancel/success/expiry/logout/account switch, and require explicit approved-member
-Join through the existing API. User-requested ambiguous recovery first checks
-provider-free membership. Preserve existing plan authority/rotation/capacity.
-New-format emission is prepared but defaults OFF (legacy query) until compatible
-web/mobile readers and installed-client adoption pass separate release acceptance.
-Add explicit join-page referrer/cache policy and private API no-store responses.
+Prepare a source-backed cumulative release-acceptance plan: exact candidate and
+native evidence, affected acceptance, hosted migration/activation dependencies,
+reader adoption/transition, rollback, finite promotion proposal and consequential
+unknowns. Repository implementation stays read-only. Astra owns integration and
+final evidence; Sol provides a bounded read-only lifecycle/hosted prerequisite
+summary. No separate user task is dispatched.
 
-## Ownership and checks
+## Result
 
-Astra: shared pure parser/store, API HTTP headers, integration/review, PostgreSQL
-setup and final evidence. Sol: separate frontend and mobile implementation/tests.
-React quality checklist applies. Meaningful parser/lifecycle/mock client and API
-checks, one passing make-ready on frozen source, generated-contract drift and
-durable exact-source handoff. Local PostgreSQL only, synthetic data, no live Auth.
+[Plan](../cumulative-release-acceptance.md) complete. Feature changes already descend
+into application `4846325`; no additional application merge is necessary to combine
+them. C8 is now the latest inspected native result at `981e2f9`: diagnostic pass,
+not application acceptance, zero remaining native attempts. Native task was active
+when inspected and retains preparation/execution ownership. Proposed cumulative
+candidate is for staging; production mobile builds remain intentionally blocked.
 
-## Boundaries
+The next independent objective is production trust/signing/update configuration
+preparation and retention/support delta, while the native owner prepares its own
+Settings/offline campaign. This plan proposes no native run or delegated execution.
+Before an external acceptance request, bind current target/grants/hook/worker and
+installed-state inventories, exact native profile/attempt/time limits, physical
+devices and live ledger. Device availability was asked; unanswered input remains
+an execution prerequisite, not a reason to leave this planning artifact unfinished.
 
-No native builds, simulator/device actions, live or paid providers/Auth, real
-invites/links, cloud/secret changes, hosted migration or CI, deployment, merge/push,
-store submission, beta activation, shared Notion edit or destructive cleanup.
-No native retry or September 30 extension. Account deletion stays disabled;
-canceled scans stay canceled. Keep and stop task-owned local PostgreSQL; retain
-logs/data. No rollout acceptance from mocked tests.
+## Verification and boundaries
 
-## Status
+Documentation/snapshot JSON, source hashes, Git ancestry, local links and docs-only
+diff checks. Reuse the exact `4846325` readiness result; do not rerun tests or builds
+for this planning change. [Evidence](../evidence/cumulative-release-acceptance-2026-09-25/README.md).
 
-Local implementation complete; application frozen at `484632517345e7858f48caf8fa7b128f9d9dab80`.
-One full make-ready passes 196 Python / 311 JavaScript tests, zero skips; unchanged
-generated contracts, lint/types, Next build, Expo web export and deterministic
-smoke. Four mocked Chrome journeys pass on those exact production bytes; observed
-join headers include no-referrer/private no-store. Local servers are stopped;
-logs/data retained. [Handoff](../handoffs/2026-09-25-private-link-handling.md)
-and [receipt](../evidence/private-link-handling-2026-09-25/verification.json).
-
-Approval applies to the recommended current-sharing model and local scope, not
-production risk acceptance or new-format activation. The next bounded objective
-is a cumulative release-acceptance proposal: exact compatible candidate, native
-impact/ownership, reader adoption and transition/rotation scope, hosted header/log
-checks and remaining activation gates. Prepare that proposal read-only before
-requesting any new native/external execution; do not start from stale main or
-silently merge these branches.
+Zero builds/tests/services/simulator/device actions, live Auth/providers/OTP,
+CI dispatches, hosted migration or writes, resources/secrets, deployment, merge/
+push, store submission, real invites/rotation, beta activation, shared Notion/
+Notes operation or destructive cleanup. All native/provider allowances retain
+their original scope; September 30 is unextended; canceled scans remain canceled.
+No assumption that the latest active native task turn inherits this plan's limits
+or vice versa. Approval must use that task's current exact frozen proposal.

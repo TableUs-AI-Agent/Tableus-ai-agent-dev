@@ -7,6 +7,13 @@ has completed its gates. The browser and mobile apps must treat a pending
 request as already removed from application data, while Auth removal may still
 be running.
 
+The API and worker each need the server-only Auth credential and correct Auth
+origin when their deletion capability is enabled. The API checks availability
+before new admission and can make an immediate bounded Auth-removal attempt on a
+request or enabled retry; scheduling a healthy worker alone does not enable it.
+Count both API and worker attempts in an approved live scope. Their enable flags
+remain per process, so API admission can pause while the worker drains.
+
 ## Before scheduling
 
 1. Apply and verify the account-deletion migration using the separate migration
