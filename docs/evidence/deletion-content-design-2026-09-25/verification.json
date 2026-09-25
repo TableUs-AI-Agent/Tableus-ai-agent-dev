@@ -1,0 +1,14 @@
+{
+  "date": "2026-09-25",
+  "result": "pass",
+  "source_hashes": 14,
+  "local_links": 53,
+  "docs_only": true,
+  "application_unchanged": "484632517345e7858f48caf8fa7b128f9d9dab80",
+  "fresh_application_tests": false,
+  "root_review": "Completed",
+  "delegate_review": "Added plan-location version/author dependency and corrected independent-run criterion. Votes explicitly removed; no assumed run FK.",
+  "decision": "Owner behavior choice and legacy remediation scope pending",
+  "hosted_mutations": 0,
+  "native_actions": 0
+}

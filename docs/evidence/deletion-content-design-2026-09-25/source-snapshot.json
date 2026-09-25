@@ -1,0 +1,75 @@
+{
+  "date": "2026-09-25",
+  "base": "e2b9577f810fdd9b8933bdfb0155e61c34146195",
+  "application": "484632517345e7858f48caf8fa7b128f9d9dab80",
+  "sources": [
+    {
+      "path": "backend/tableus/api.py",
+      "sha256": "1722eeea118f046bb6c7cd4feebf596ffa334883916ad36a2a6b026d313485f9"
+    },
+    {
+      "path": "backend/tableus/models.py",
+      "sha256": "2b33bcd63169b0e26ed7ae0c9017b98e02183a1c47987d0b3c2cc219a2d9d03b"
+    },
+    {
+      "path": "backend/tableus/auth.py",
+      "sha256": "4891a847ba45b412f5ac266a0e733b44a045cbcca219dcd2e2a69c81461cb888"
+    },
+    {
+      "path": "backend/tableus/db.py",
+      "sha256": "5e012c0cd394ca89d51275811d03593fe9f09c66bb13ddd0a9a7135e3e59bf38"
+    },
+    {
+      "path": "backend/tableus/schemas.py",
+      "sha256": "32bcc9f1e49756be1df0560116536523b72fbd911c6c4575fd8d9b264e361015"
+    },
+    {
+      "path": "backend/tableus/providers/google_live.py",
+      "sha256": "4543b3639f5fbe1f38468fc03385c7d19bd9b80747ef32c4fe1ae7217257f381"
+    },
+    {
+      "path": "backend/tableus/request_controls.py",
+      "sha256": "3ecfec5d5d7d42aa785f629d0ba0fa3a9188ae8d209bab5877c7d0fa22344f9a"
+    },
+    {
+      "path": "backend/main.py",
+      "sha256": "5856f634a3ec2dfa76eb7cdc60d7aed67a0d65636d6f1fb3e1075bb184106910"
+    },
+    {
+      "path": "backend/tests/test_account_lifecycle.py",
+      "sha256": "433f643f64d19500168fb6a92145987dd9a691c7d07ac2796806b834d90d9ce0"
+    },
+    {
+      "path": "backend/tests/test_account_lifecycle_postgres.py",
+      "sha256": "640072d91e4df20e5773de7fc9b80acb32c303777fcb25b7c55980bfc216e1e3"
+    },
+    {
+      "path": "frontend/app/plans/[id]/page.tsx",
+      "sha256": "aff56316bb7d8376c994d8339fbe99363e6f8b110f6fa837fa5d68cce84a46d9"
+    },
+    {
+      "path": "mobile/app/plans/[id].tsx",
+      "sha256": "7088fcbe6b4326343f6c5afa6c3696e3e070a9cd8c46d9e59d848fa8e3612937"
+    },
+    {
+      "path": "docs/retention-support-spec.md",
+      "sha256": "72460e871db0ee3c83b7062831b9295c905f1f7a5233fbc224204eb5da770f28"
+    },
+    {
+      "path": "docs/evidence/web-dependency-rollout-2026-09-21/preflight.json",
+      "sha256": "e00568b5313c65fc96791873b8bdb75fddec16f37366f55d28a3a9a271a1ea12"
+    }
+  ],
+  "vercel_read": {
+    "tool": "vercel_get_project",
+    "team_id": "team_0Pu6vuMiug12C8K2HQqbgOQG",
+    "project_id": "prj_lPu3pWZiJ5ZRUIab6wiXrJIW930G",
+    "result": "Failed to fetch project: 404 Not Found",
+    "provenance": [
+      "/Users/brianchei/repos/Tableus-ai-agent-dev/.vercel/project.json",
+      "docs/evidence/web-dependency-rollout-2026-09-21/preflight.json"
+    ],
+    "limitation": "Cannot distinguish access restriction from missing project; no replacement provisioned."
+  },
+  "decision": "Proposed reset of dependent results; owner answer pending. Legacy remediation separately requires explicit scope/approval."
+}

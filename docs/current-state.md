@@ -1,6 +1,6 @@
 # Current state
 
-Updated 2026-09-25 for production configuration and retention specification. Brian
+Updated 2026-09-25 for shared-content deletion design. Brian
 owns all development at this stage. The owner approved this work in parallel
 with native validation; only [this worktree's active packet](task-packets/active.md)
 directs work here. Native evidence remains tied to its original candidate.
@@ -9,9 +9,9 @@ directs work here. Native evidence remains tied to its original candidate.
 
 | Role | Value |
 | --- | --- |
-| Active branch | `codex/production-release-spec` |
-| Active worktree | `/Users/brianchei/.codex/worktrees/production-release-spec/Tableus-ai-agent-dev` |
-| Planning base / unchanged application | `a79fd60ad7bbed397ad325caef1c2313ef29c80c` / `484632517345e7858f48caf8fa7b128f9d9dab80` |
+| Active branch | `codex/deletion-content-design` |
+| Active worktree | `/Users/brianchei/.codex/worktrees/deletion-content-design/Tableus-ai-agent-dev` |
+| Planning base / unchanged application | `e2b9577f810fdd9b8933bdfb0155e61c34146195` / `484632517345e7858f48caf8fa7b128f9d9dab80` |
 | Private-link application / verification checkout | `484632517345e7858f48caf8fa7b128f9d9dab80` |
 | Cohort application candidate | `25e34ec9e35e1935cebe8dbb8f34465fd2b313e0` |
 | Native validation task | `01a0c678-55c8-7cc0-a3cb-e3200776906a`, Prepare native replacement validation |
@@ -192,13 +192,18 @@ environment choice, not an adopted deployment decision.
 
 Read-only inventory finds the TableUs staging API, an empty production-named
 Railway environment, and only TableUs Staging in the connected Supabase inventory.
-The connected Vercel team exposes no TableUs project, so current web alias/production
-configuration remains unverified. Existing `links.table-us.com` staging use
+Saved deployment metadata identifies TableUs Vercel project
+`prj_lPu3pWZiJ5ZRUIab6wiXrJIW930G`; targeted connector retrieval returns 404.
+Current access/existence and web alias/production configuration remain unverified. Existing `links.table-us.com` staging use
 requires an explicit transition before production; do not repoint it during
 native validation.
 
-Full deletion's retained shared authored content needs behavioral review against
-store deletion expectations. Privacy wording alone cannot close that gap.
+The [shared-content deletion design](deletion-content-design.md) now maps exact
+authorship/dependencies, unknown legacy records, explicit run-vote cleanup,
+transaction ordering and stale cached response risks. Proposed behavior preserves
+shared plans and remaining members' inputs but removes dependent results and asks
+for fresh recommendations/votes. Owner response is pending; no code or earlier
+preservation decision was changed. Privacy wording alone cannot close this gap.
 Retention periods, provider/backup settings, secure support completion and the
 external deletion-request path also remain unverified. No release, resource,
 secret, retention duration or production acceptance was approved by this work.
