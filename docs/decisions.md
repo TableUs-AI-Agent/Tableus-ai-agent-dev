@@ -56,7 +56,10 @@ when changing a subsystem; it is not a second active task packet.
   fields, coordinates or content. Live details are transient and refreshed on demand.
 - Canonical links use `links.table-us.com`, exact `/auth` and `/join/*`; auth
   confirmation stays web-only. Capability URL risk remains open; authentication,
-  hashed storage, rotation and redaction mitigate isolated staging only.
+  hashed storage, rotation and redaction mitigate isolated staging only. The
+  [capability-link proposal](capability-link-decision.md) recommends fragment
+  transport and existing approved-member join authority; it is not an adopted
+  product decision or production risk acceptance.
 
 ## Reliability, providers and telemetry
 

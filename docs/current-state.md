@@ -1,6 +1,6 @@
 # Current state
 
-Updated 2026-09-24 for recipient-bound one-use invites. Brian
+Updated 2026-09-24 for the capability-link design review. Brian
 owns all development at this stage. The owner approved this work in parallel
 with native validation; only [this worktree's active packet](task-packets/active.md)
 directs work here. Native evidence remains tied to its original candidate.
@@ -9,9 +9,9 @@ directs work here. Native evidence remains tied to its original candidate.
 
 | Role | Value |
 | --- | --- |
-| Active branch | `codex/recipient-invites` |
-| Active worktree | `/Users/brianchei/.codex/worktrees/recipient-invites/Tableus-ai-agent-dev` |
-| Exact implementation base | `c33479e80eef4ddd154783dda677cd016dc1a936` (cohort controls completion) |
+| Active branch | `codex/capability-link-review` |
+| Active worktree | `/Users/brianchei/.codex/worktrees/capability-link-review/Tableus-ai-agent-dev` |
+| Review base / unchanged application | `72e8ba137350b7a73b3dbd288a541039e35d5d52` / `29edb5e9f47ab7ac74034f2bac5e271a162ea620` |
 | Cohort application candidate | `25e34ec9e35e1935cebe8dbb8f34465fd2b313e0` |
 | Native validation task | `01a0c678-55c8-7cc0-a3cb-e3200776906a`, Prepare native replacement validation |
 | Native worktree | `/Users/brianchei/.codex/worktrees/ea6d/Tableus-ai-agent-dev` |
@@ -119,7 +119,18 @@ Auth-hook role checks and populated upgrade/downgrade/re-upgrade pass.
 [Handoff and evidence](handoffs/2026-09-24-recipient-invites.md) bind exact source. No real invite, hosted migration, Auth call, deployment or native
 validation was performed. Existing native evidence does not accept these bytes.
 
-## Native and release evidence inherited at the base
+## Capability-link review
+
+The [decision packet](capability-link-decision.md) recommends preserving approved-
+member sharing, moving the secret from query to fragment, clearing it into bounded
+client memory and keeping explicit authenticated Join through existing APIs.
+Native readers currently discard fragments, so parser/lifecycle work and later
+platform acceptance are dependencies. The sharing-policy question is pending;
+this is proposed, not adopted or implemented. No new backend ticket service is
+recommended. Repository implementation is unchanged; only documentation was
+verified. Hosted logs/headers and installed-platform fragment delivery are unproven.
+
+## Native and release evidence
 
 Original f94a1d9 isolated-staging acceptance remains intact, with owner-accepted
 unresolved simulator AppHang risk. [Staging closeout](handoffs/2026-09-21-staging-closeout.md)
@@ -127,12 +138,14 @@ and [Phase W](handoffs/2026-09-21-phase-w-complete.md) retain their evidence.
 Phase W placed ed8330a on both staging web aliases; the approved CORS/API redeploy
 kept f94a1d9 application source. This is not cumulative mixed-source acceptance.
 
-Replacement native acceptance remains incomplete. F1 artifact/runtime proof and
-seven lifecycle flows passed on the recorded targets; the original refresh
-failure and later setup/control/render failures remain unresolved. C1 stopped
-before boot; C2 was prepared at this branch's base. This task makes no claim
-about later native-task progress. Offline/links/exports, Android, canonical/auth
-and N2 gates stay with that task. No native allowance transfers here.
+Replacement native acceptance remains incomplete. The latest bounded read of
+Prepare native replacement validation found it idle after C7, not accepted.
+Its committed packet/result at `f044c925d216c9caad201b2c4425bad878c0472c` records
+C7 stopping before UI on an unavailable host executable-path lookup, consumed
+allowances, no C8 authority and separately verified local diagnostics. Original
+refresh/AppHang issues and links/exports, physical association/auth, Android and
+N2 gates remain. [Read provenance](evidence/capability-link-review-2026-09-24/manifest.json)
+binds the exact inspected native files. No native operation or retry ran here.
 
 The September 30 dependency boundary is unextended. Production and old immutable
 artifacts are outside the replacement dependency disposition. Cohort controls are locally implemented; production configuration, distributed TestFlight/Play

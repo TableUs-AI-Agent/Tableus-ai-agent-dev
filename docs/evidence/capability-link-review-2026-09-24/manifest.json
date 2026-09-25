@@ -1,0 +1,72 @@
+{
+  "reviewed_at_utc": "2026-09-25T01:06:08.960413+00:00",
+  "base_sha": "72e8ba137350b7a73b3dbd288a541039e35d5d52",
+  "unchanged_application_sha": "29edb5e9f47ab7ac74034f2bac5e271a162ea620",
+  "branch": "codex/capability-link-review",
+  "review_type": "bounded source/design review; no security scan or runtime execution",
+  "source_sha256": {
+    "AGENTS.md": "01ce752ae68e3142915513d842170d751f6ef1bf97ac7c7da476fcdaf719b774",
+    "docs/development-workflow.md": "93ae3ecbd01cac92b0a0cb1f083f68e9a981e3de0505a858a1953e515fec65a0",
+    "backend/tableus/api.py": "1722eeea118f046bb6c7cd4feebf596ffa334883916ad36a2a6b026d313485f9",
+    "backend/tableus/auth.py": "4891a847ba45b412f5ac266a0e733b44a045cbcca219dcd2e2a69c81461cb888",
+    "backend/tableus/models.py": "2b33bcd63169b0e26ed7ae0c9017b98e02183a1c47987d0b3c2cc219a2d9d03b",
+    "backend/tableus/security.py": "3640e708b94296f3c125e7f2c5a37985a949bfb8314c2cff9a127438ac8d7915",
+    "backend/tableus/telemetry.py": "6bf769d0ad06fa7ca0f4c636163d38a7c47fc03991d03b381be7f76dcec8946f",
+    "backend/tableus/run.py": "07f6416b3cfccdad4fc0ec1be5cbdb70b033edcf3028e6d7ba2518c620356dba",
+    "backend/main.py": "c24c20c4131603ea9b4b5920fa26f739f7acdc5c358bdfccaee8731d641e6ba2",
+    "packages/domain/src/index.ts": "1a658699d326d8db90e97d38ed8d66668f24966b85a9f4acd556234c0f09b373",
+    "packages/domain/src/telemetry.ts": "a40285c26e671e7f7ac30239114d60fc2751cea4ab8e72dd1d05bccc52ce98df",
+    "frontend/app/join/[id]/page.tsx": "3d67b60513064b08fcfe6bf13dcddcf61401f8193d9114fc45084371e50e9293",
+    "frontend/app/plans/page.tsx": "3ebf328e7f0f6f3c808a438631f4e96093f754b14098730ceb915bc8572c17b1",
+    "frontend/app/plans/[id]/page.tsx": "aff56316bb7d8376c994d8339fbe99363e6f8b110f6fa837fa5d68cce84a46d9",
+    "frontend/app/components/auth-card.tsx": "7f273501bd1307a1bdb93a23217bd7c7153312b97afaf570b1b36fcebe8ff593",
+    "frontend/app/lib/security-headers.ts": "045f2264641bd226cf5033b19a21e2e6678586a255124a6f69e8f3e6255f4af9",
+    "frontend/app/lib/site-association.ts": "1a848ce4ca5b4640a4e4e261c6738ff710a63d745b25963b96db3d435007a93a",
+    "frontend/app/providers.tsx": "2e0e0cfa691340446b1dc64610539bb15cc06405a2890123827099e3c1d996ba",
+    "frontend/next.config.ts": "5153a2afa1a93a4677642813a77fd9ca1540ac4086befb7c8a57e43f03db92d1",
+    "frontend/instrumentation-client.ts": "53643c6c83e300ca9651214c0736e3728f0df73662cd84e9ce1c1af386660291",
+    "mobile/src/lib/links.ts": "2ddc09737242c4c69da7c9cc40996f59b1a996a5e94c8c8a726ef8e0298704b6",
+    "mobile/app/+native-intent.tsx": "cefcf2d1b96f8cf94a4ab72787852d8569b4d189b01a85abdfd69953fc97ff96",
+    "mobile/app/join/[id].tsx": "bea0d8371f585e9e77386d48f3dc4a02d8f38069147cc9b9dc43df265c787c66",
+    "mobile/app/plans/[id].tsx": "7088fcbe6b4326343f6c5afa6c3696e3e070a9cd8c46d9e59d848fa8e3612937",
+    "mobile/app/auth.tsx": "fa1bc8b568d004d16faa87371f482e4028c695353458aee98d37af8ef9063cee",
+    "mobile/app/_layout.tsx": "5292fed712597bcb801b147c53baa73cf961fe6aceec0f26d6ea994c8b648f74",
+    "mobile/app.config.ts": "50d21693801b982aae362dbf467c9de210a3e77685241a0ea447e95a053290dd",
+    "backend/tests/test_api.py": "4af52119cfbf5bab0c881b4fee8969676cef9adf639675d8883a2ad3acb5523d",
+    "mobile/src/lib/router-dependency.component.test.tsx": "bdbaafe008ced44966b694300cc050900b758f4fd8642807cdb9c70eff059c79",
+    "mobile/src/lib/links.test.mts": "d38f8e606e2c17ad89f54e346a47cf90082342a7e8ddb17f090f3ab0185fbffe"
+  },
+  "native_task": {
+    "id": "01a0c678-55c8-7cc0-a3cb-e3200776906a",
+    "title": "Prepare native replacement validation",
+    "ui_snapshot": "idle/completed latest turn, no assistant text returned",
+    "source_sha": "f044c925d216c9caad201b2c4425bad878c0472c",
+    "application_sha": "8972865893a3f018a064594457dc9cc664f8a61f",
+    "result": "C7 stopped before UI; no retry; no C8 authority; local diagnostics do not complete native acceptance",
+    "source_sha256": {
+      "/Users/brianchei/.codex/worktrees/ea6d/Tableus-ai-agent-dev/docs/task-packets/active.md": "5f4ef8d9a312348ed020d852fd2726303313cf3dbbb7d02a6b9fdb23a2ffbb9e",
+      "/Users/brianchei/.codex/worktrees/ea6d/Tableus-ai-agent-dev/docs/evidence/native-replacement-validation-2026-09-21/n1-f1-c7-result.md": "5f0f09eeafc6c82226c7f17130dc64db1c7a2506457d34d3e1746266273e2bd4"
+    }
+  },
+  "external_references": [
+    "https://www.rfc-editor.org/rfc/rfc3986#section-3.5",
+    "https://w3c.github.io/webappsec-referrer-policy/#referrer-policy-no-referrer",
+    "https://developer.mozilla.org/en-US/docs/Web/URI/Reference/Fragment"
+  ],
+  "runtime_checks_executed": false,
+  "inherited_checks": {
+    "source_sha": "29edb5e9f47ab7ac74034f2bac5e271a162ea620",
+    "python_passed": 193,
+    "javascript_passed": 314,
+    "rerun": false,
+    "does_not_verify_proposal": true
+  },
+  "owner_question": "Keep approved-member link sharing or require named recipients/organizer approval?",
+  "owner_answer": "pending; current behavior recommended, no implementation or risk acceptance inferred",
+  "access_limits": [
+    "No hosted headers/logs/configuration checked",
+    "No installed-platform fragment delivery checked",
+    "No actual messaging or clipboard retention inspected",
+    "Notion not needed for this source-level review and untouched"
+  ]
+}

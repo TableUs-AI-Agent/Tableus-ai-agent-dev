@@ -1,54 +1,43 @@
-# Active packet: recipient-bound one-use invites
+# Active packet: capability-link design review
 
-Owner: Brian, sole developer at this stage; historical shared work remains shared.
-The owner requested the recommended next independent objective.
+Owner: Brian, sole developer at this stage; historical shared attribution stays.
+Authorized outcome: the recommended bounded read-only capability-link decision
+packet, based on source and current native evidence. No implementation execution.
 
-## Identity
+## Identities
 
-- Branch: `codex/recipient-invites`.
-- Worktree: `/Users/brianchei/.codex/worktrees/recipient-invites/Tableus-ai-agent-dev`.
-- Exact base: `c33479e80eef4ddd154783dda677cd016dc1a936`.
-- Prior candidate: `25e34ec9e35e1935cebe8dbb8f34465fd2b313e0`;
-  [cohort handoff](../handoffs/2026-09-24-cohort-controls.md).
-- Native task `01a0c678-55c8-7cc0-a3cb-e3200776906a` retains all native work,
-  source identities, approvals and exhausted allowances.
+- Branch: `codex/capability-link-review`.
+- Worktree: `/Users/brianchei/.codex/worktrees/capability-link-review/Tableus-ai-agent-dev`.
+- Exact base: `72e8ba137350b7a73b3dbd288a541039e35d5d52`.
+- Unchanged application/operator source: `29edb5e9f47ab7ac74034f2bac5e271a162ea620`.
+- Prior [invite handoff](../handoffs/2026-09-24-recipient-invites.md).
+- Native task: `01a0c678-55c8-7cc0-a3cb-e3200776906a`, Prepare native replacement
+  validation. Its latest inspected worktree HEAD is
+  `f044c925d216c9caad201b2c4425bad878c0472c`; native application remains `8972865`.
 
-## Outcome and acceptance
+## Scope and acceptance
 
-Trusted local issuance requires one intended email and permits one redemption.
-Only its normalized hash is stored. Validation, signup hook and redemption check
-current recipient, expiry, revocation and capacity. Concurrent redemption has
-one winner; successful same-account retries remain idempotent. Returning approved
-accounts need no fresh invite. Hosted new intake fails closed for legacy unbound
-or multi-use codes; retain their rows and existing account access. Demo fixtures
-remain compatible. No in-place recipient reassignment or real invitations.
+Trace link creation, client navigation/authentication, joining, rotation, storage,
+telemetry and logging boundaries. Compare alternatives, recommend a concrete
+scope, identify consequential product choices and define implementation/acceptance
+steps. Astra owns backend review, synthesis and source verification; bounded Sol
+read-only work traces web/mobile paths. No broad security scan is authorized.
 
-Root owns integration/review, PostgreSQL setup, API changes, docs and final checks.
-Sol owns disjoint model/migration/hook and CLI/tests components. Focused checks
-cover recipient mismatch, old grants, revocation/expiry, retry/race, privacy and
-fresh/populated migrations with actual restricted roles. Freeze source, then one
-passing `make ready`, contract-drift check and evidence-bound handoff.
-
-## Boundaries
-
-Local code and synthetic deterministic tests only. No native builds/devices,
-live Auth/providers, real deletion or invite issuance/sends, cloud resources,
-secrets, hosted migration, deployment, merge/push, stores, beta activation or
-shared Notion edits. Account deletion stays disabled. Use a fresh task-owned
-PostgreSQL cluster; stop it and retain data/logs. Capability exchange and release
-activation remain separate objectives. Hosted rollout must review replacement
-of unused legacy invites and quiesce intake across migration/code transition.
+Only documentation changes in this isolated worktree. No application edits,
+tests/builds, database/server runs, native tools/devices, hosted checks or CI,
+provider/Auth calls, invitations, deployments, merges/pushes, Notion edits or
+cleanup. Existing native limits and September 30 boundary are unchanged.
+Validate document links, evidence/source hashes and docs-only diff; reuse earlier
+application checks only at their original exact source. Do not claim runtime
+proof for this design. Local implementation may be proposed after the product
+choice; native release validation remains separately owned and gated.
 
 ## Status
 
-Local objective complete. Application/operator source:
-`29edb5e9f47ab7ac74034f2bac5e271a162ea620`. One full make-ready passed:
-193 Python, zero skips, and 314 JavaScript tests; lint/types, unchanged contracts,
-web builds/export and deterministic smoke. PostgreSQL row contention, hook roles
-and fresh/populated migration checks pass. Test server stopped, data retained.
-See [handoff](../handoffs/2026-09-24-recipient-invites.md).
-
-Next proposed objective: review the capability-link exchange design and its
-migration/user-experience tradeoffs against current code before implementing a
-consequential policy change. No next objective or release operation executes
-under this completed packet; native validation and its budgets remain separate.
+Review packet complete. [Proposed design](../capability-link-decision.md) and
+[evidence manifest](../evidence/capability-link-review-2026-09-24/manifest.json)
+record current behavior, alternatives, a small implementation sequence and release
+dependencies. The approved-members versus named/organizer-approved plan-sharing
+question is pending; current behavior is the recommendation, not a new owner
+decision. No implementation was performed. A later local implementation objective
+can follow the choice; native/hosted acceptance is a separate gated stage.
