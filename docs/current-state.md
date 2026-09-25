@@ -1,6 +1,6 @@
 # Current state
 
-Updated 2026-09-24 for PostgreSQL lifecycle verification and recovery readiness. Brian
+Updated 2026-09-24 for closed-beta cohort controls. Brian
 owns all development at this stage. The owner approved this work in parallel
 with native validation; only [this worktree's active packet](task-packets/active.md)
 directs work here. Native evidence remains tied to its original candidate.
@@ -9,10 +9,10 @@ directs work here. Native evidence remains tied to its original candidate.
 
 | Role | Value |
 | --- | --- |
-| Active branch | `codex/account-lifecycle-postgres` |
-| Active worktree | `/Users/brianchei/.codex/worktrees/account-lifecycle-postgres/Tableus-ai-agent-dev` |
-| Exact implementation base | `521345eaab6086496c6cc490843342c96fb8f2bb` (client local completion) |
-| Application / worker candidate | `eab922ee6b7a21d193514d7008a47806c9e118e3` |
+| Active branch | `codex/cohort-controls` |
+| Active worktree | `/Users/brianchei/.codex/worktrees/cohort-controls/Tableus-ai-agent-dev` |
+| Exact implementation base | `d665dc15291191d56da521e1bcde74e99c59acdc` (PostgreSQL lifecycle completion) |
+| Cohort application candidate | `25e34ec9e35e1935cebe8dbb8f34465fd2b313e0` |
 | Native validation task | `01a0c678-55c8-7cc0-a3cb-e3200776906a`, Prepare native replacement validation |
 | Native worktree | `/Users/brianchei/.codex/worktrees/ea6d/Tableus-ai-agent-dev` |
 | Native application / build operator | `8972865893a3f018a064594457dc9cc664f8a61f` / `16603dd0cf36d27b492e57a02d3c6c438a2563c4` |
@@ -21,8 +21,8 @@ directs work here. Native evidence remains tied to its original candidate.
 | Production, as recorded at base | `e1184ec` |
 
 The saved root checkout is stale. No shared deployment or native worktree was
-changed in this objective. The [base state](history/2026-09-24/current-state-at-lifecycle-base.md)
-and [base native packet](history/2026-09-24/native-packet-at-lifecycle-base.md)
+changed in this objective. The [base state](history/ 2026-09-24/current-state-at-lifecycle-base.md)
+and [base native packet](history/ 2026-09-24/native-packet-at-lifecycle-base.md)
 retain detailed source/evidence history. Their live/native allowances are not
 reopened by this task or branch.
 
@@ -54,8 +54,8 @@ There is no hosted migration, credential provisioning, deployed worker or
 activation. Broader retention durations remain open. [Contract, data treatment
 and recovery](account-lifecycle.md) document the exact scope.
 
-The [backend handoff](handoffs/2026-09-24-account-lifecycle-backend.md) and
-[client handoff](handoffs/2026-09-24-account-lifecycle-clients.md) retain their
+The [backend handoff](handoffs/ 2026-09-24-account-lifecycle-backend.md) and
+[client handoff](handoffs/ 2026-09-24-account-lifecycle-clients.md) retain their
 exact-source checks, including seven mocked Chrome journeys. Fresh PostgreSQL17.11
 verification now passes both orderings of deletion/redeem and transfer/deletion,
 competing transfers and worker exclusion. Fresh and incremental migrations pass
@@ -68,19 +68,44 @@ consuming attempts. Local initialization respects a pre-migrated private schema.
 CI is configured to use a separate restricted application role, with migrations
 under the administrator; that changed hosted CI has not run yet.
 
-Fresh make-ready on the application candidate passes **314 JavaScript and 139
+Inherited lifecycle candidate `eab922e` passes **314 JavaScript and 139
 Python tests, zero skips**, lint/types, contract generation, Next build, Expo web
 export and deterministic smoke. Contract drift is empty. The
-[PostgreSQL handoff](handoffs/2026-09-24-account-lifecycle-postgres.md) and
+[PostgreSQL handoff](handoffs/ 2026-09-24-account-lifecycle-postgres.md) and
 [operations procedure](account-lifecycle-operations.md) bind local evidence and
 remaining activation gates. Local PostgreSQL privileges do not attest to actual
 hosted grants, exposed schemas, scheduler health, credentials or native behavior.
 
+## Cohort controls
+
+Durable pseudonymous counters now limit logical live AI/Places operations per
+account per UTC day and committed plan creations over the account lifetime.
+Proposed configurable defaults are 5 AI / 20 Places daily and 20 plan creations;
+existing per-minute and global budgets remain. Operator usage is default-denied
+unless the approved subject appears in server configuration, with reports bounded
+to 1–30 preceding days. The [cohort contract](cohort-controls.md) explains accounting,
+operator operations and rollout prerequisites.
+
+The migration seeds surviving plan creation history, with current-organizer
+fallback when creator evidence is missing. Deleted history is unavailable and
+fallback attribution is approximate; prospective enforcement is exact. Deletion,
+transfer and process restart do not refund counters. Quota-limited Places
+hydration for vote/finalize/reopen now happens before mutation, preventing an
+error after a successful commit. Full plan reads remain subject to Places caps.
+
+Fresh make-ready on `25e34ec` passes **162 Python with zero skips and 314
+JavaScript tests**, lint/types, contract generation, Next build, Expo web export
+and deterministic smoke. Contract drift is empty. [Handoff and evidence](handoffs/2026-09-24-cohort-controls.md)
+retain the initial test-isolation failure and passing rerun. No hosted
+migration, operator subject, configuration rollout or cohort activation occurred.
+Named one-use recipient-bound invites and capability-link disposition remain
+open, as do affected release acceptance and retention/support review.
+
 ## Native and release evidence inherited at the base
 
 Original f94a1d9 isolated-staging acceptance remains intact, with owner-accepted
-unresolved simulator AppHang risk. [Staging closeout](handoffs/2026-09-21-staging-closeout.md)
-and [Phase W](handoffs/2026-09-21-phase-w-complete.md) retain their evidence.
+unresolved simulator AppHang risk. [Staging closeout](handoffs/ 2026-09-21-staging-closeout.md)
+and [Phase W](handoffs/ 2026-09-21-phase-w-complete.md) retain their evidence.
 Phase W placed ed8330a on both staging web aliases; the approved CORS/API redeploy
 kept f94a1d9 application source. This is not cumulative mixed-source acceptance.
 
@@ -92,7 +117,6 @@ about later native-task progress. Offline/links/exports, Android, canonical/auth
 and N2 gates stay with that task. No native allowance transfers here.
 
 The September 30 dependency boundary is unextended. Production and old immutable
-artifacts are outside the replacement dependency disposition. Cohort quotas,
-operator usage visibility, production configuration, distributed TestFlight/Play
+artifacts are outside the replacement dependency disposition. Cohort controls are locally implemented; production configuration, distributed TestFlight/Play
 acceptance and beta activation remain roadmap work. Canceled security scans stay
 canceled; no broader cohort or release readiness is claimed.

@@ -71,6 +71,7 @@ background polling, native validation or hosted feature activation is added.
 | Events authored by the profile | Actor reference cleared; named identity fields and exact subject/hash values scrubbed from payloads. This is not a general free-text anonymizer. |
 | Auth user | Trusted hard-delete request; only confirmed success or the provider's specific user-not-found response completes the job. |
 | Recovery row | Raw Auth subject retained while pending, cleared on completion. Namespaced subject hash, timestamps and retry metadata remain to prevent stale-token re-enrollment and support recovery. |
+| Cohort quota counters | Stable subject digest, daily operation counts and lifetime creation baseline remain across profile/plan deletion to prevent quota reset; no raw subject or profile foreign key. See [cohort controls](cohort-controls.md); retention review is still required. |
 | Logs, backups, provider audit records, transient replay cache | No new purge deadline or deletion promise. Broader retention policy and operator procedures remain release work. Existing product-access checks protect replay after profile removal. |
 
 The completed tombstone must not be deleted or its hash namespace changed

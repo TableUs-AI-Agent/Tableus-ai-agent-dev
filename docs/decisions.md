@@ -73,8 +73,9 @@ when changing a subsystem; it is not a second active task packet.
   Sentry is error-only with private data scrubbed; no tracing/profiling, replay,
   attachments or breadcrumbs. Canary delivery must be observed per platform;
   each mobile canary also sends one API companion and both count against the cap.
-- Existing cohort quota fairness, operator usage visibility, invite reservation
-  abuse and plan retention limits require explicit release work before expansion.
+- Durable per-actor quotas, lifetime creation counters and operator-only usage are
+  implemented by the cohort-control objective below. Actual cohort sizing, invite
+  reservation policy and retention still require release review before expansion.
 
 ## Native builds and evidence
 
@@ -258,3 +259,28 @@ attempt. Aggregate worker status contains counts/ages only, not identity data.
 The [operations procedure](account-lifecycle-operations.md) proposes one finite
 batch of three every minute, explicit attention recovery and stop thresholds;
 no hosted scheduler or activation is authorized by this local completion.
+
+## Cohort quotas and operator visibility — 2026-09-24
+
+The owner requested this next independent development objective. Use durable
+subject-digest counters: UTC-calendar-day logical live provider operations and
+lifetime committed plan creations. Provider admission commits before dispatch;
+ambiguous/failed attempts are charged. Creation debit commits with the plan;
+rollback does not consume it, while transfer/deletion never refunds it. Existing
+single-process global budgets remain binding; these counters do not authorize
+horizontal scaling. Proposed configurable defaults 5/20 daily and 20 creations
+remain undeployed and subject to activation review.
+
+Seed surviving historical creations by earliest usable creation event, else
+current organizer. The fallback is an approximation and can charge a successor;
+deleted history is not recoverable. Preserve precise prospective accounting and
+review baseline impact before quiesced hosted migration. Counters are private,
+pseudonymous and retained across profile deletion; no purge promise is introduced.
+
+Require an approved authenticated profile and an exact server subject allowlist
+for aggregate provider usage. Default empty denies everyone, and time windows
+are 1–30 preceding days. Configuration grants/revocations take effect when API
+processes receive the configuration, not by client role claims or instant env
+hot reload. Hydrate vote/finalize/reopen responses before mutating, so a quota
+failure cannot be reported after the write commits. The [cohort contract](cohort-controls.md)
+records resource semantics and remaining gates.
