@@ -1,0 +1,17 @@
+{
+  "date": "2026-09-25",
+  "result": "pass",
+  "source_hashes_checked": 25,
+  "native_snapshot_hash_checked": true,
+  "local_links_checked": 80,
+  "frozen_native_snapshot_relative_links": "Excluded; resolve at original docs/task-packets/active.md in native commit.",
+  "json_parsed": true,
+  "docs_only": true,
+  "application_unchanged": "484632517345e7858f48caf8fa7b128f9d9dab80",
+  "application_checks": "Existing exact-source readiness reused; no tests/builds run.",
+  "review": "Root integration plus bounded Sol read-only review: no actionable corrections.",
+  "external_mutations": 0,
+  "native_actions": 0,
+  "provider_auth_calls": 0,
+  "decision_status": "Environment choice pending; separate resources and OTA disabled are recommendations."
+}

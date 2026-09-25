@@ -1,0 +1,115 @@
+{
+  "observed_date": "2026-09-25",
+  "railway": {
+    "list_services": {
+      "project": {
+        "id": "93dcd3f4-7c47-4010-9431-fc28638813d2",
+        "name": "tableus-staging"
+      },
+      "environments": [
+        {
+          "id": "0f546dbc-222f-48b8-a27b-ff008af4fec9",
+          "name": "staging"
+        },
+        {
+          "id": "659afbbb-d2b5-4716-bf49-1eba42132aac",
+          "name": "production"
+        }
+      ],
+      "services": [
+        {
+          "id": "94aeecda-4575-4fc1-bb08-796bf779ada5",
+          "name": "api"
+        }
+      ]
+    },
+    "staging_status": {
+      "project": {
+        "id": "93dcd3f4-7c47-4010-9431-fc28638813d2",
+        "name": "tableus-staging",
+        "workspaceName": "Brian Chei's Projects"
+      },
+      "environment": {
+        "id": "0f546dbc-222f-48b8-a27b-ff008af4fec9",
+        "name": "staging",
+        "unmergedChangesCount": null,
+        "stagedChanges": null
+      },
+      "services": [
+        {
+          "id": "94aeecda-4575-4fc1-bb08-796bf779ada5",
+          "name": "api",
+          "numReplicas": null,
+          "cronSchedule": null,
+          "volumes": [],
+          "latestDeployment": {
+            "id": "24eefe75-9583-4a90-8d3e-48450818dec0",
+            "status": "SUCCESS",
+            "createdAt": "2026-09-21T23:19:17.500Z",
+            "url": null
+          }
+        }
+      ],
+      "buckets": [],
+      "pendingWork": []
+    },
+    "production_status": {
+      "project": {
+        "id": "93dcd3f4-7c47-4010-9431-fc28638813d2",
+        "name": "tableus-staging",
+        "workspaceName": "Brian Chei's Projects"
+      },
+      "environment": {
+        "id": "659afbbb-d2b5-4716-bf49-1eba42132aac",
+        "name": "production",
+        "unmergedChangesCount": null,
+        "stagedChanges": null
+      },
+      "services": [],
+      "buckets": [],
+      "pendingWork": []
+    },
+    "staging_domains": {
+      "service": {
+        "id": "94aeecda-4575-4fc1-bb08-796bf779ada5",
+        "name": "api"
+      },
+      "environment": {
+        "id": "0f546dbc-222f-48b8-a27b-ff008af4fec9",
+        "name": "staging"
+      },
+      "serviceDomains": [
+        {
+          "id": "fdb19d81-1120-4f85-b191-1adfa580932c",
+          "domain": "api-staging-3795.up.railway.app",
+          "targetPort": null
+        }
+      ],
+      "customDomains": []
+    }
+  },
+  "supabase": {
+    "source_tool": "supabase_list_projects",
+    "tableus_project": {
+      "name": "TableUs Staging",
+      "id": "mrwdhdeubdiiydmmvlda",
+      "organization_id": "qwuufzejhuawrbopexvx",
+      "region": "us-east-1",
+      "status": "ACTIVE_HEALTHY",
+      "postgres_version": "17.6.1.155"
+    },
+    "production_visibility": "No separate TableUs production project returned; connection-limited observation."
+  },
+  "vercel": {
+    "source_tools": [
+      "vercel_list_teams",
+      "vercel_list_projects"
+    ],
+    "team_id": "team_0Pu6vuMiug12C8K2HQqbgOQG",
+    "tableus_project_visible": false,
+    "limitations": "List returned one unrelated project; no TableUs project or current alias/hosting settings inspected."
+  },
+  "exclusions": [
+    "No env variable values, API keys, user records, log bodies or hosted configuration mutations retrieved."
+  ]
+}

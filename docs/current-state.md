@@ -1,6 +1,6 @@
 # Current state
 
-Updated 2026-09-25 for cumulative release-acceptance planning. Brian
+Updated 2026-09-25 for production configuration and retention specification. Brian
 owns all development at this stage. The owner approved this work in parallel
 with native validation; only [this worktree's active packet](task-packets/active.md)
 directs work here. Native evidence remains tied to its original candidate.
@@ -9,9 +9,9 @@ directs work here. Native evidence remains tied to its original candidate.
 
 | Role | Value |
 | --- | --- |
-| Active branch | `codex/cumulative-release-acceptance` |
-| Active worktree | `/Users/brianchei/.codex/worktrees/cumulative-release-acceptance/Tableus-ai-agent-dev` |
-| Planning base / unchanged application | `ec4cf578bf7ea40f8ffefc64ee8dfc238e009a7e` / `484632517345e7858f48caf8fa7b128f9d9dab80` |
+| Active branch | `codex/production-release-spec` |
+| Active worktree | `/Users/brianchei/.codex/worktrees/production-release-spec/Tableus-ai-agent-dev` |
+| Planning base / unchanged application | `a79fd60ad7bbed397ad325caef1c2313ef29c80c` / `484632517345e7858f48caf8fa7b128f9d9dab80` |
 | Private-link application / verification checkout | `484632517345e7858f48caf8fa7b128f9d9dab80` |
 | Cohort application candidate | `25e34ec9e35e1935cebe8dbb8f34465fd2b313e0` |
 | Native validation task | `01a0c678-55c8-7cc0-a3cb-e3200776906a`, Prepare native replacement validation |
@@ -158,17 +158,15 @@ and [Phase W](handoffs/2026-09-21-phase-w-complete.md) retain their evidence.
 Phase W placed ed8330a on both staging web aliases; the approved CORS/API redeploy
 kept f94a1d9 application source. This is not cumulative mixed-source acceptance.
 
-Replacement native acceptance remains incomplete. A fresh bounded task/source
-read found C8 completed at native evidence commit
-`981e2f9e646ab51eb31cbe1868e1ce6ae615cf61`; the task was active. Its collector
-passed one 17.514-second postboot diagnostic, with application acceptance false
-and zero remaining C8 attempts. Application remains `8972865`, diagnostic operator
-`ab38d27`, build operator `16603dd`. The native task is preparing its next complete
-Settings-baseline/conditional offline-refresh campaign; this planning task does
-not dispatch or approve it. Original application/platform/AppHang, physical links/
-Auth, export, Android and N2 gates remain. The
-[immutable read snapshot](evidence/cumulative-release-acceptance-2026-09-25/source-snapshot.json)
-binds the inspected packet/results; native runtime checks were not repeated here.
+Replacement native acceptance remains incomplete. The bounded packet read at
+`246853f219b4567be12f1cd949a517c4a41ba5e7` records C9 prepared, not approved
+or executed. C8 remains a 17.514-second collector diagnostic pass with no
+application acceptance; C7/C8 are closed and create no reusable allowance.
+Application remains `8972865`, build operator `16603dd`. The existing native
+task owns its Settings-baseline/conditional offline-refresh campaign and all
+remaining application/platform/AppHang, physical links/Auth, export, Android
+and N2 gates. [Immutable packet snapshot](evidence/production-release-spec-2026-09-25/native-active-at-246853f.md)
+preserves exact proposal ownership and limits. No native action occurred here.
 
 The [cumulative acceptance plan](cumulative-release-acceptance.md) selects existing
 application `4846325` for proposed isolated-staging acceptance. Its feature changes
@@ -182,3 +180,25 @@ The September 30 dependency boundary is unextended. Production and old immutable
 artifacts are outside the replacement dependency disposition. Cohort controls are locally implemented; production configuration, distributed TestFlight/Play
 acceptance and beta activation remain roadmap work. Canceled security scans stay
 canceled; no broader cohort or release readiness is claimed.
+
+## Production configuration and retention specification
+
+The [production specification](production-release-spec.md) and
+[retention/support specification](retention-support-spec.md) are prepared with
+source hashes, read-only hosting metadata and current official store/update
+references. Application implementation is unchanged. Separate production and
+staging, with OTA disabled initially, is a recommendation awaiting the owner's
+environment choice, not an adopted deployment decision.
+
+Read-only inventory finds the TableUs staging API, an empty production-named
+Railway environment, and only TableUs Staging in the connected Supabase inventory.
+The connected Vercel team exposes no TableUs project, so current web alias/production
+configuration remains unverified. Existing `links.table-us.com` staging use
+requires an explicit transition before production; do not repoint it during
+native validation.
+
+Full deletion's retained shared authored content needs behavioral review against
+store deletion expectations. Privacy wording alone cannot close that gap.
+Retention periods, provider/backup settings, secure support completion and the
+external deletion-request path also remain unverified. No release, resource,
+secret, retention duration or production acceptance was approved by this work.
