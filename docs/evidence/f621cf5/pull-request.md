@@ -2,7 +2,14 @@ The pilot opens on Plans and exposes Plans and Account on web/mobile. Hidden Dis
 
 Finalization records distinct voters from the active run without changing quorum or ranking. Deletion's strict event allowlist retains only an integer from 0–8 independently of removed candidates/runs. A bounded read-only report counts eligible retained plans once across reopen/re-finalize, requires two voters for success, and discloses unknown historical/deleted coverage. See `docs/pilot-measurement.md`.
 
-Validation: one `make ready` passed (326 JavaScript tests; 202 Python tests with 36 PostgreSQL-only skips; lint/types, contracts, web/Expo-web builds and smoke). Contract drift check and 24 focused measurement tests passed. Local Chrome passed five shared-plan/navigation, five account/help recovery and four private-Join cases. An existing dev-cache timeout passed on unchanged application source with a fresh cache; diagnostics remain. Hosted CI is pending publication approval.
+Validation: [hosted CI](https://github.com/TableUs-AI-Agent/Tableus-ai-agent-dev/actions/runs/36301151907)
+passed 238 Python tests, 326 JavaScript tests and five browser journeys with zero
+skips, including restricted PostgreSQL/migrations, lint/types, deterministic
+evaluation, contracts, web/Expo-web builds and smoke. One local `make ready` and
+contract drift check passed; local Chrome also passed five account/help recovery
+and four private-Join cases. Existing dev-cache plan-detail timeouts passed on
+unchanged application source after starting a fresh cache; diagnostics remain.
+No application fixes were needed in hosted CI.
 
 Base: `8ae3c94eb3e41b87f0840cd5aa2b0827c0882af4`. Preserves the eight pre-existing integration/packet/fresh-thread documentation changes. A pre-existing account test now selects its own plan event to avoid test-order dependence. Source-bound handoff: `docs/evidence/f621cf5/implementation.md`.
 

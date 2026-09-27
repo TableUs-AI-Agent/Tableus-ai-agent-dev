@@ -2,10 +2,14 @@
 
 ## Status and working identity
 
-Priority 2 of the [roadmap](../roadmap.md) is implemented; local readiness and browser checks pass. Publication and hosted CI are waiting
-for explicit owner authorization after automatic approval review rejected the push.
+Priority 2 of the [roadmap](../roadmap.md) is implemented and verified; its draft PR
+awaits review and separately approved merge. No later priority has started.
+Brian approved publication and hosted CI in this chat on September 27.
+[Draft PR #8](https://github.com/TableUs-AI-Agent/Tableus-ai-agent-dev/pull/8)
+is published; [hosted CI](https://github.com/TableUs-AI-Agent/Tableus-ai-agent-dev/actions/runs/36301151907)
+passed on `a08e3d0f64ed43c839adc4e9d7ae5134a45fbd6a`. The closeout changes only docs.
 The [source-bound handoff](../evidence/f621cf5/implementation.md) and
-[draft PR text](../evidence/f621cf5/pull-request.md) are prepared.
+[PR description](../evidence/f621cf5/pull-request.md) record verification and limits.
 The product direction and September 27 follow-up decisions are
 recorded in [decisions](../decisions.md#pilot-follow-up--adopted-2026-09-27).
 Priority 1 is complete: Brian approved [PR #7](https://github.com/TableUs-AI-Agent/Tableus-ai-agent-dev/pull/7),
@@ -53,14 +57,15 @@ Completion: focused navigation/recovery, audit-count/cleanup and measurement
 checks, shared-plan browser checks, one `make ready` and CI. Update the lifecycle
 contract for the new safe event field when its implementation changes. Application
 changes produce application candidate `f621cf5dbf0c8663d92be5fe613b9910b68a9953`
-for later acceptance. No publication, merge or deployment has occurred.
+for later acceptance. Publication is complete; merge and deployment remain gated.
 
 Local `make ready` passed once: 202 Python tests with 36 PostgreSQL-only skips,
 326 JavaScript tests with zero skips, lint/types, generated contracts, web and
 Expo-web builds, deterministic smoke and report-only bundle baseline. No migration
 or dependency change. The [measurement procedure](../pilot-measurement.md) documents
-the tested bounded query and accepted coverage gaps. Hosted CI must cover the
-PostgreSQL checks before handoff. All five shared-plan/navigation browser journeys,
+the tested bounded query and accepted coverage gaps. Hosted CI passed all 238 Python
+and 326 JavaScript tests plus five browser journeys, with zero skips, including
+restricted PostgreSQL/migrations, builds, contracts and smoke. All five shared-plan/navigation browser journeys,
 five account/deletion-help recovery cases and four private-Join cases pass locally
 with Chrome. Initial local plan-detail responses timed out using the existing dev
 cache; the unchanged application passed after preserving that cache and starting

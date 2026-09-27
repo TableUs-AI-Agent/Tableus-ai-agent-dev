@@ -16,16 +16,20 @@ when application inputs change.
       `8ae3c94eb3e41b87f0840cd5aa2b0827c0882af4`; its tree matches the passing
       `97c3c65` PostgreSQL/browser CI candidate ([evidence](evidence/6dac996/integration.md)).
       Later application changes require matching checks and replacement build bindings.
-- [ ] Web/mobile show Plans and Account; hidden product routes lead to Plans.
+- [x] Priority 2 source: web/mobile show Plans and Account; hidden product routes lead to Plans.
       Auth, invite, Join, export, legal/privacy and deletion help remain reachable,
       including recovery states. No learned-taste or guest/proxy scope is added.
-- [ ] `plan.finalized` records the active run's distinct-voter count. Focused
+      Source `f621cf5` and hosted `a08e3d0` passed ([evidence](evidence/f621cf5/implementation.md));
+      deployment and physical-device acceptance remain separate gates below.
+- [x] `plan.finalized` records the active run's distinct-voter count. Focused
       tests cover zero/one/multiple voters, updated votes, re-finalization and
       deletion of the finalizer/another member, including removal of the recorded
       candidate/run. Deletion's strict payload allowlist retains the reviewed
       bounded integer independently of whether those references still exist,
       alongside safe existing fields. The read-only measurement query counts each plan once, treats old
       missing counts as unknown and discloses whole-plan deletion coverage gaps.
+      The same [Priority 2 evidence](evidence/f621cf5/implementation.md) covers the
+      24 measurement cases, including hosted PostgreSQL and the read-only wrapper.
 - [ ] Actual hosted source, migration head, runtime/Auth-hook grants, existing
       users/invites and rollout/rollback compatibility reconciled. Apply only
       missing migrations under approval (four expected from the recorded base).

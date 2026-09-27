@@ -68,9 +68,10 @@ was approved and merged as `8ae3c94eb3e41b87f0840cd5aa2b0827c0882af4` on
 September 27. Its tree matches the passing hosted CI candidate; no deployment
 occurred. [Integration evidence](evidence/6dac996/integration.md) retains the
 review, test repairs and source binding. The separate native diagnostic branch
-was not merged. Priority 2 is implemented locally; readiness and browser checks pass. Publication
-and hosted CI await owner authorization after automatic approval review blocked
-the push ([handoff](evidence/f621cf5/implementation.md)). Priority 3
+was not merged. Priority 2 implementation and verification are complete; its draft PR awaits review
+and separately approved merge. Brian approved publication and CI;
+[draft PR #8](https://github.com/TableUs-AI-Agent/Tableus-ai-agent-dev/pull/8) is
+published with passing hosted CI ([handoff](evidence/f621cf5/implementation.md)). Priority 3
 remains a separate, later authorized objective.
 
 Effort is a rough planning range in focused engineering days, excluding approval,
@@ -78,7 +79,7 @@ hosted CI, device/signing and external-access waits; these are not delivery prom
 
 | Priority | Outcome and reason | Rough effort | Dependencies, risks and completion |
 | --- | --- | --- | --- |
-| 2 | Show Plans and Account only on web/mobile and record participation at finalization, so the experience and measurement match the pilot. | 1–3 days | Preserve auth/join/legal/help routes, account access, code/data/export fields and deep-link safety. Hidden product routes lead to Plans; add mobile Account access before hiding Profile. Add the audit count and a reviewed numeric allowlist entry in deletion cleanup, with focused tests and a read-only measurement query. Navigation/shared-plan checks, one make ready and CI pass. |
+| 2 | Show Plans and Account only on web/mobile and record participation at finalization, so the experience and measurement match the pilot. | 1–3 days | Preserve auth/join/legal/help routes, account access, code/data/export fields and deep-link safety. Hidden product routes lead to Plans; add mobile Account access before hiding Profile. Add the audit count and a reviewed numeric allowlist entry in deletion cleanup, with focused tests and a read-only measurement query. Navigation/shared-plan checks, one make ready and hosted CI passed ([evidence](evidence/f621cf5/implementation.md)); review/merge remain gated. |
 
 ## Next, after the baseline, client and measurement changes
 

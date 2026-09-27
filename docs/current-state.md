@@ -1,7 +1,7 @@
 # Current state
 
 Updated 2026-09-27. GitHub state and deployment-trigger settings were freshly
-read for [baseline integration](evidence/6dac996/integration.md). Application
+read for [Priority 2 publication](evidence/f621cf5/implementation.md). Application
 serving identities below remain the September 25 record, not fresh health checks.
 
 ## Source baseline
@@ -10,7 +10,7 @@ serving identities below remain the September 25 record, not fresh health checks
 | --- | --- |
 | Integrated source baseline | Application lineage `4a2f9ecc37070f434df7fc75c1054d5875f21ba9`, September 26–27 realignment, publication guard and two test-only CI repairs through `97c3c65` |
 | Refreshed `origin/main` | `8ae3c94eb3e41b87f0840cd5aa2b0827c0882af4`, approved merge of [PR #7](https://github.com/TableUs-AI-Agent/Tableus-ai-agent-dev/pull/7) on September 27; GitHub uses `main`, with no branch protection/rulesets at preflight |
-| Integration status | Priority 1 complete. Merge tree exactly matches the passing `97c3c65` candidate. No deployment. The separate native diagnostic branch was not merged; do not merge it wholesale. Priority 2 is implemented locally on `codex/pilot-experience-measurement`; application candidate `f621cf5` passes local readiness/browser checks; publication and hosted CI await owner approval. See the [handoff](evidence/f621cf5/implementation.md). |
+| Integration status | Priority 1 complete. Merge tree exactly matches the passing `97c3c65` candidate. No deployment. The separate native diagnostic branch was not merged; do not merge it wholesale. Priority 2 is implemented locally on `codex/pilot-experience-measurement`; application candidate `f621cf5` passes local readiness and hosted CI on `a08e3d0`; [draft PR #8](https://github.com/TableUs-AI-Agent/Tableus-ai-agent-dev/pull/8) awaits review and approved merge. See the [handoff](evidence/f621cf5/implementation.md). |
 | Root checkout | Stale at `codex/privacy-safe-observability` (`8e9625e`). Use the baseline, not the root checkout. |
 
 The last full local readiness at the baseline's application source passed 214
@@ -26,6 +26,15 @@ readiness completed in stages; one mobile component-test timeout passed on focus
 and full rechecks and remains a reliability observation. The
 [integration review](evidence/6dac996/integration.md) distinguishes reused local
 checks from the PR's hosted result.
+
+Priority 2 [hosted CI](https://github.com/TableUs-AI-Agent/Tableus-ai-agent-dev/actions/runs/36301151907)
+passed **238 Python tests, 326 JavaScript tests and five browser journeys, zero
+skips**, including restricted PostgreSQL roles/migrations, lint/types, deterministic
+evaluation, contract checks, web/Expo-web builds and smoke. The tested merge tree
+matches the published `a08e3d0` head. Local account/help and private-Join recovery
+checks also passed. No application repair was needed in hosted CI; the
+[handoff](evidence/f621cf5/implementation.md) preserves local dev-cache timeout
+observations and source binding. Documentation closeout does not change app inputs.
 
 Vercel project Git auto-deployment is enabled, but repository configuration now
 excludes `codex/pilot-realignment`, `codex/pilot-experience-measurement` and `main`
