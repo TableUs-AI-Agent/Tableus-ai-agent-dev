@@ -191,7 +191,6 @@ export default function AccountScreen() {
     </Card> : <>
       <Card>
         <Text selectable accessibilityRole="header" style={{ color: colors.ink, fontSize: 22, fontWeight: "800" }}>{profile.data?.display_name ?? "Your account"}</Text>
-        <Text selectable style={{ color: colors.muted }}>Taste-profile sharing is currently {profile.data?.share_taste ? "on" : "off"}.</Text>
       </Card>
       <Card>
         <Text selectable style={{ color: colors.ink, fontSize: 18, fontWeight: "800" }}>Export my data</Text>
@@ -239,6 +238,8 @@ export default function AccountScreen() {
       </Card>
     </>}
     <Card>
+      <Text accessibilityRole="link" onPress={() => router.push("/privacy")} style={{ color: colors.accent, fontWeight: "700" }}>Privacy</Text>
+      <Text accessibilityRole="link" onPress={() => router.push("/terms")} style={{ color: colors.accent, fontWeight: "700" }}>Terms</Text>
       <Text accessibilityRole="link" onPress={() => router.push("/account-deletion")} style={{ color: colors.accent, fontWeight: "700" }}>Account deletion help and privacy contact</Text>
     </Card>
     <Card>

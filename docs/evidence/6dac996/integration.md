@@ -64,7 +64,7 @@ The wrapper now resolves `python3` from `PATH`, matching neighboring wrappers,
 with a named test, bounded execution and useful spawn-failure diagnostics. Its
 four existing pure Python fixtures pass locally. No native device/toolchain test
 or application behavior changed. A complete hosted pass on the replacement head
-remains required; the failed run is not integration acceptance.
+was still required; the failed run was not integration acceptance.
 
 [Run 36298074968](https://github.com/TableUs-AI-Agent/Tableus-ai-agent-dev/actions/runs/36298074968)
 on replacement head `bb3f20eaaca8b004b5aa7921ca876aad58e50e9c` passed all 214
@@ -79,7 +79,7 @@ disabled full-deletion availability, verifies the sole-plan confirmation control
 and retains the versioned export/privacy assertions. No account feature is enabled.
 With that correction, all four journeys passed locally using existing Chrome,
 disposable SQLite and a temporary runner configuration. No browser was installed;
-the hosted replacement still must pass with CI's pinned Chromium and PostgreSQL.
+the passing hosted result below uses CI's pinned Chromium and PostgreSQL.
 
 Local readiness on `bb3f20e` completed in stages. The initial sandboxed attempt
 could not bind the fault proxy to loopback; a permitted run passed that test but
@@ -90,6 +90,34 @@ skips under SQLite). Lint/types, contract generation, web/Expo-web builds, smoke
 and the report-only bundle baseline passed. The timeout's cause is unestablished;
 retain it as a local test reliability observation, not a proven application defect.
 Hosted PostgreSQL coverage above supplies the locally skipped checks.
+
+The passing hosted integration run is
+[36298539456](https://github.com/TableUs-AI-Agent/Tableus-ai-agent-dev/actions/runs/36298539456)
+on `97c3c65cf214f7a066aed73fb7f0b3bee49d56dc`: **214 Python tests, 317 JavaScript
+tests and four browser journeys passed, zero skips**. Locked dependency setup,
+restricted-role migrations, lint/types, deterministic evaluation, contracts,
+web/Expo-web builds and smoke all passed. The checked synthetic merge is
+`3dc3fbce191bf9516e2a9a8fca897fcb8b17d2b0`; its tree and the head tree both equal
+`373d544f61799c84dfb13024bea3fc4fa5382387`, against unchanged base `e1184ec`.
+These results supersede the two failed runs for merge readiness while retaining
+their diagnostics above. GitHub reports nonblocking action-runtime and future
+runner-image migration notices; no toolchain upgrade was made in this integration.
+Brian explicitly approved merging this exact head. No staging/native acceptance
+follows from this deterministic hosted result.
+
+## Approved merge
+
+GitHub merged PR #7 at **2026-09-27 06:15:33 UTC** as
+`8ae3c94eb3e41b87f0840cd5aa2b0827c0882af4`, preserving the cumulative history.
+Immediately before merge, the head was still `97c3c65`, the base was still
+`e1184ec`, matching CI was green and the repository Vercel exclusions/Railway
+trigger settings were rechecked. The actual merge tree is
+`373d544f61799c84dfb13024bea3fc4fa5382387`, identical to the passing head and
+synthetic merge; no new application checks were required for identical bytes.
+
+The pilot worktree was fast-forwarded to this merge while preserving uncommitted
+documentation. The root checkout and its existing untracked evidence were left
+untouched. Priority 1 is complete; Priority 2 is prepared but not started.
 
 Post-publication provider reads found no new Vercel deployment and unchanged
 production/preview targets. Railway's latest staging deployment remains
@@ -114,7 +142,7 @@ and was validated against the current schema for every configured property.
 It allows GitHub publication/CI without an automatic Preview or production release.
 Manual deployment remains separately gated; review other branches before pushing.
 
-After publication, verify the expected Vercel skip and absence of new deployments.
-Before any owner-approved merge, refresh `main`, confirm matching green CI and
-recheck deployment triggers. Stop if these conditions changed. Do not bypass a
-failed check, start a native campaign or deploy to make an integration check pass.
+Publication and merge did not create a new Vercel or Railway deployment; the
+existing target identities above remained unchanged on provider readback.
+Future branch publication still requires trigger review. Do not bypass a failed
+check, start a native campaign or deploy to make an integration check pass.

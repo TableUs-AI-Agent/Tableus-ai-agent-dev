@@ -3,6 +3,7 @@
   "git": {
     "deploymentEnabled": {
       "codex/pilot-realignment": false,
+      "codex/pilot-experience-measurement": false,
       "main": false
     }
   },

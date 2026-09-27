@@ -15,13 +15,14 @@ an invite-only closed beta in the US on web, iOS and Android.
 ## Status
 
 An earlier shared-plan implementation runs on staging with live Places and Gemini.
-The cumulative local web/iOS/Android application still needs release acceptance.
+The cumulative web/iOS/Android baseline is integrated into `main` and passes
+hosted CI; it still needs release acceptance.
 The next milestone is a staging pilot on all three platforms with
 real groups; see the [roadmap](docs/roadmap.md) and [current state](docs/current-state.md).
-Hackathon-era discovery, friends, review and taste-profile screens remain in the
-code and remain visible today; hiding them is the next focused client change
-after baseline integration. That change also adds the pilot's finalization voter
-count; it is planned, not implemented.
+The Priority 2 candidate focuses web/mobile on Plans and Account. Deferred discovery,
+friends, review, taste-profile and photo code/data remain; hidden entry routes lead
+to Plans. Finalization records distinct voters for the bounded
+[pilot measurement](docs/pilot-measurement.md); this candidate is not deployed.
 
 ## How a plan works
 

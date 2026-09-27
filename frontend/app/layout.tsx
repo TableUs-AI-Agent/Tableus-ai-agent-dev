@@ -6,7 +6,7 @@ import { AppProviders } from "./providers";
 
 export const metadata: Metadata = {
   title: "TableUs",
-  description: "AI-powered restaurant discovery for friends planning the next table together.",
+  description: "Choose where to eat together with a shared dinner plan.",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

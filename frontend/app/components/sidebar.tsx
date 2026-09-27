@@ -2,16 +2,13 @@
 
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { CalendarDays, ChevronDown, PenSquare, Search, User, Users } from "lucide-react";
+import { CalendarDays, ChevronDown, User } from "lucide-react";
 import { useState } from "react";
 import { useUser } from "../context/user-context";
 
 const NAV = [
   { href: "/plans", label: "Plans", icon: CalendarDays },
-  { href: "/discover", label: "Discover", icon: Search },
-  { href: "/friends", label: "Friends", icon: Users },
-  { href: "/review", label: "Review", icon: PenSquare },
-  { href: "/profile", label: "Profile", icon: User },
+  { href: "/account", label: "Account", icon: User },
 ];
 
 export function Sidebar() {
@@ -34,7 +31,7 @@ export function Sidebar() {
 
         <nav className="flex-1 space-y-2 px-4">
           {NAV.map(({ href, label, icon: Icon }) => {
-            const active = pathname === href || (href === "/discover" && pathname === "/");
+            const active = pathname === href || (href === "/plans" && pathname.startsWith("/plans/"));
             return (
               <Link
                 key={href}
@@ -137,7 +134,7 @@ export function Sidebar() {
       <nav className="fixed inset-x-0 bottom-0 z-[70] border-t border-white/75 bg-white/92 px-2 pb-[calc(0.45rem+env(safe-area-inset-bottom))] pt-2 shadow-[0_-14px_40px_rgba(145,94,255,0.1)] backdrop-blur-2xl lg:hidden">
         <div className="mx-auto flex max-w-xl items-center gap-1">
           {NAV.map(({ href, label, icon: Icon }) => {
-            const active = pathname === href || (href === "/discover" && pathname === "/");
+            const active = pathname === href || (href === "/plans" && pathname.startsWith("/plans/"));
             return (
               <Link
                 key={href}
@@ -161,7 +158,7 @@ export function Sidebar() {
             );
           })}
 
-          <button
+          {canSwitchUser ? <button
             type="button"
             onClick={() => canSwitchUser ? setOpen((value) => !value) : router.push("/account")}
             className={`flex min-w-0 flex-1 flex-col items-center gap-1 rounded-2xl px-1.5 py-1.5 text-[10px] font-semibold transition ${
@@ -181,7 +178,7 @@ export function Sidebar() {
               )}
             </span>
             <span className="w-full truncate text-center">{canSwitchUser ? "User" : "Account"}</span>
-          </button>
+          </button> : null}
         </div>
       </nav>
     </>

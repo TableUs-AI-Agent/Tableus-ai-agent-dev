@@ -27,6 +27,10 @@ implemented behavior and stay current with their code.
   subagent defaults live in `.codex/` and are not project requirements.
 - Start from the active packet and current state. The root checkout may be stale;
   confirm the branch and base before editing, and preserve uncommitted work.
+- Start each authorized major development pass in a fresh thread, with a compact
+  handoff to the current packet, source state and approval boundaries. A thread
+  created for that pass satisfies this rule; keep its fixes and verification there.
+  A fresh thread does not require a fresh worktree or authorize the next priority.
 - Use a named `codex/<objective>` branch and prefer reusing a suitable checkout
   for sequential work. Create another worktree when concurrency or isolation
   requires it; choose the base by ancestry and accepted work, not edit recency.

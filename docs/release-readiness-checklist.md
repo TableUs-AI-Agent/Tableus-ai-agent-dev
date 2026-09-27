@@ -9,11 +9,13 @@ builds, migrations, deployments, provider calls or invitations.
 Record formal acceptance once per gate under the application candidate in
 `docs/evidence/<commit>/`; bind artifacts/configuration and operator source
 separately. Reuse unchanged checks and retain useful failure diagnostics privately.
-All boxes remain open until actual candidate evidence exists.
+Check a box only against actual candidate evidence; revalidate affected gates
+when application inputs change.
 
-- [ ] Cumulative source reviewed; exact-source hosted CI passes PostgreSQL and
-      browser checks before approved integration to main. Record the actual merge
-      source and rebind later builds if application inputs change.
+- [x] Cumulative baseline reviewed and integrated through approved PR #7 as
+      `8ae3c94eb3e41b87f0840cd5aa2b0827c0882af4`; its tree matches the passing
+      `97c3c65` PostgreSQL/browser CI candidate ([evidence](evidence/6dac996/integration.md)).
+      Later application changes require matching checks and replacement build bindings.
 - [ ] Web/mobile show Plans and Account; hidden product routes lead to Plans.
       Auth, invite, Join, export, legal/privacy and deletion help remain reachable,
       including recovery states. No learned-taste or guest/proxy scope is added.

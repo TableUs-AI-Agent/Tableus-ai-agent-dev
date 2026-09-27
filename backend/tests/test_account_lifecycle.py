@@ -184,7 +184,7 @@ async def test_transfer_preserves_shared_plan_and_allows_full_deletion(
     async with SessionFactory() as session:
         assert await session.get(Profile, owner) is None
         assert (await session.get(Plan, plan_id)).organizer_id == recipient
-        retained_event = await session.scalar(select(PlanEvent).where(PlanEvent.event_type == "plan.created"))
+        retained_event = await session.scalar(select(PlanEvent).where(PlanEvent.plan_id == plan_id, PlanEvent.event_type == "plan.created"))
         assert retained_event.actor_id is None
         assert retained_event.payload == {}
         row = await session.get(AccountDeletion, subject_digest(owner))
