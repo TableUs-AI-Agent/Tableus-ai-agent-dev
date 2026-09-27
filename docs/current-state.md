@@ -2,8 +2,10 @@
 
 Updated 2026-09-27. Priority 3 read-only inventory freshly confirmed API/web
 source, API readiness, migration head, grants, admission counts and deployment
-triggers; see [staging preparation](pilot-staging-preparation.md). No external
-configuration, deployment, Auth user or provider operation changed.
+triggers; see [staging preparation](pilot-staging-preparation.md). Brian approved
+the bounded campaign. Supabase preflight and a private local restore check passed;
+signup email wording was corrected. Retention readback remains open. No deployment,
+hosted migration, Auth user, email or provider operation changed.
 
 ## Source baseline
 
@@ -11,7 +13,7 @@ configuration, deployment, Auth user or provider operation changed.
 | --- | --- |
 | Integrated source baseline | Priority 1 merge `8ae3c94` plus Priority 2 application candidate `f621cf5` and communication/review documentation through `1270206` |
 | Refreshed `origin/main` | `462a7dd6b3428d21a8fbccfe20a0003361904761`, approved merge of [PR #8](https://github.com/TableUs-AI-Agent/Tableus-ai-agent-dev/pull/8) on September 27 |
-| Integration status | Priorities 1 and 2 complete. The merge tree exactly matches passing CI head `1270206`. No deployment. The separate native diagnostic branch was not merged; do not merge it wholesale. See the [integration evidence](evidence/f621cf5/integration.md). Priority 3 preparation is authorized in its fresh chat on `codex/pilot-staging-readiness`, preserving local closeout `810d410`; external execution remains gated. |
+| Integration status | Priorities 1 and 2 complete. The merge tree exactly matches passing CI head `1270206`. No deployment. The separate native diagnostic branch was not merged; do not merge it wholesale. See the [integration evidence](evidence/f621cf5/integration.md). Priority 3 is approved on `codex/pilot-staging-readiness`, preserving local closeout `810d410`; remaining preflight still gates publication and rollout. |
 | Root checkout | Stale at `codex/privacy-safe-observability` (`8e9625e`). Use the baseline, not the root checkout. |
 
 Priority 1 local readiness at its earlier application source passed 214
@@ -146,9 +148,17 @@ Shared privacy/help copy now explains pending Auth removal, authored-content
 cleanup, retained pseudonymous records without automatic purge, and the accepted
 email-access-loss limitation. Brian confirmed `brian@table-us.com` for support,
 with `privacy@table-us.com` forwarding to him, plus four controlled test aliases.
-No mailbox delivery or publication has occurred. The [prepared scope](pilot-staging-preparation.md)
-specifies six invites, four accounts, worker/Auth/email limits, $15 provider/$5
-hosting proposals, rollback compatibility and remaining Auth/retention readback.
+No mailbox delivery or publication has occurred. Brian approved the
+[prepared scope](pilot-staging-preparation.md) against `e5e7d1`: six invites, four
+accounts, worker/Auth/email limits, $15 provider/$5 hosting ceilings, rollback
+compatibility and required Auth/retention readback. Supabase dashboard checks now
+confirm the hook, custom SMTP, OTP/session settings and app-schema isolation.
+There are no scheduled backups/PITR on this Free-plan project. A private logical
+backup and isolated local app/public restore/migration check passed; the
+[execution record](evidence/e5e7d13/execution.md) records scope, limitations and
+remaining provider-retention readback. The hosted signup email template now says
+“verification code” instead of “six-digit code,” matching the configured eight-digit
+OTP without changing security settings. No email, deployment or migration occurred.
 The global Places configuration maximum is now 1,000; default 150 is unchanged.
 That validation ceiling grants no spending. API/web/native staging identities above
 remain unchanged; no new migration is introduced by this preparation.

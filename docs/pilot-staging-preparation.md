@@ -1,6 +1,9 @@
 # Priority 3: staging candidate and proposed external campaign
 
-Prepared September 27, 2026. **No external execution is approved by this document.**
+Prepared September 27, 2026. Brian subsequently **approved the combined campaign**
+in chat for candidate `e5e7d13478aaea6f526f2de9e6978824a30c79c3`. This records that
+approval; it does not waive prerequisites or expand any limit below. Follow the
+[execution record](evidence/e5e7d13/execution.md) for current progress.
 The [active packet](task-packets/active.md) owns this objective. Brian owns
 approval, support and stop/rollback decisions. Preparation starts at
 `810d410d32e7dd4ab29dc98a83ae733a304c10b3` on `codex/pilot-staging-readiness`.
@@ -32,7 +35,7 @@ rejected decoding a stored CLI credential for another attempt as credential
 probing. The in-app dashboard was signed out. Do not retry credential extraction.
 Use a normal signed-in dashboard session for the remaining readback below.
 
-**Unverified execution prerequisites:** actual registered/enabled Auth-hook URI,
+**Initially unverified prerequisites (current results in the execution record):** actual registered/enabled Auth-hook URI,
 email signup/OTP/SMTP limits and sender, allowed redirect URLs, JWT expiry, exposed
 Data API schemas, Supabase backup/PITR coverage, host/provider log retention and
 mailbox delivery. Database function existence does not prove hook registration.
@@ -314,7 +317,8 @@ publication, live provider call or mail delivery was performed.
   inputs changed after readiness.
 
 No new dependency or migration is added here. Remaining risks are explicitly
-bounded: current-hosted source is older, Auth registration/SMTP and retention
-settings still need normal dashboard readback, worker image/scheduler delivery
-needs hosted proof, and historical attribution cannot be reconstructed. Native
+bounded: current-hosted source is older, retention settings still need normal
+dashboard readback, worker image/scheduler delivery needs hosted proof, and
+historical attribution cannot be reconstructed. Auth/SMTP, schema and recovery
+preflight results are now in the [execution record](evidence/e5e7d13/execution.md). Native
 physical-device acceptance and real pilot intake remain intentionally deferred.

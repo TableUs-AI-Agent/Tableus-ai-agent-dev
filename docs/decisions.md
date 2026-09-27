@@ -465,8 +465,8 @@ by this local implementation.
 
 Brian authorized independent preparation in a fresh chat, preserving closeout
 `810d410` above Priority 2 merge `462a7dd`. The named branch is
-`codex/pilot-staging-readiness`; hosted actions still need the complete approval
-scope in [staging preparation](pilot-staging-preparation.md).
+`codex/pilot-staging-readiness`; the complete approval scope subsequently granted
+is recorded in [staging preparation](pilot-staging-preparation.md).
 
 Queue-only admission is an optional operating mode: disabling inline Auth
 attempts leaves transactional cleanup and durable status intact, with the
@@ -485,5 +485,14 @@ Local journey measurements support a proposed 40 Places/3 AI operations per day
 for the bounded staging exercise. The validation maximum for global Places
 attempts is 1,000 while the default stays 150. No live allowance or pilot-cohort
 budget is adopted here; the prepared request separately caps actual attempts,
-spend, fixtures and time. Retention settings and remaining hosted Auth readback
-must be verified through normal authenticated access before external execution.
+spend, fixtures and time. Brian subsequently approved that complete request for
+`e5e7d13478aaea6f526f2de9e6978824a30c79c3`, including publication/CI/review/merge,
+the four staging migrations, one API/web candidate and private worker, existing
+server-only credential configuration and the four-account/six-invite rehearsal.
+The combined incremental ceiling is $20 ($15 providers, $5 hosting); all narrower
+attempt, email, worker and time limits remain in force. Approval does not permit
+native builds, production, real invitations or legacy data cleanup. Retention
+settings must be verified through normal authenticated access before publication
+and rollout. Supabase Auth/schema/recovery readback is complete; Sentry and PostHog
+retention readback remains open. The routine signup template wording correction
+preserves the configured OTP length and all delivery/security settings.
