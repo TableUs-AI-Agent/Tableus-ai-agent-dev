@@ -112,6 +112,10 @@ test("deletion recovery opens public help without a profile read", async () => {
   expect(view.getByText(/Application data is removed. Sign-in account deletion is pending/)).toBeTruthy();
   await act(async () => { fireEvent.press(view.getByText("Account deletion help and privacy contact")); });
   expect(mockPush).toHaveBeenCalledWith("/account-deletion");
+  for (const [label, path] of [["Privacy", "/privacy"], ["Terms", "/terms"]]) {
+    await act(async () => { fireEvent.press(view.getByText(label)); });
+    expect(mockPush).toHaveBeenCalledWith(path);
+  }
   expect(mockGet).not.toHaveBeenCalled();
 });
 

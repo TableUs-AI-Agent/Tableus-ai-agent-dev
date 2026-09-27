@@ -161,3 +161,27 @@ test("completes the deterministic two-person voting lifecycle", async ({ page })
   });
   expect(expiredLink.status()).toBe(404);
 });
+
+test("pilot landing, navigation and hidden direct routes keep Plans and Account accessible", async ({ page }) => {
+  await page.goto("/");
+  await expect(page).toHaveURL(/\/plans$/);
+  await expect(page.getByPlaceholder("Friday dinner")).toBeVisible();
+  const nav = page.getByRole("navigation").filter({ visible: true });
+  await expect(nav.getByRole("link", { name: "Plans", exact: true })).toBeVisible();
+  await expect(nav.getByRole("link", { name: "Account", exact: true })).toBeVisible();
+  await expect(nav.getByRole("link", { name: /Discover|Friends|People|Review|Profile|Taste|Photo/ })).toHaveCount(0);
+  await nav.getByRole("link", { name: "Account", exact: true }).click();
+  await expect(page).toHaveURL(/\/account$/);
+  await expect(page.getByRole("button", { name: "Download my data" })).toBeVisible();
+  await expect(page.getByText("Change it from your profile.")).toHaveCount(0);
+  await page.setViewportSize({ width: 390, height: 844 });
+  await expect(page.getByRole("navigation").filter({ visible: true }).getByRole("link", { name: "Plans", exact: true })).toBeVisible();
+  await expect(page.getByRole("navigation").filter({ visible: true }).getByRole("link", { name: "Account", exact: true })).toBeVisible();
+  for (const path of ["/discover", "/friends", "/people", "/review", "/profile", "/taste", "/photo", "/photos/upload", "/review/photo"]) {
+    await page.goto(path);
+    await expect(page).toHaveURL(/\/plans$/);
+    await expect(page.getByPlaceholder("Friday dinner")).toBeVisible();
+  }
+  await page.goto("/account-deletion");
+  await expect(page.getByRole("heading", { name: "Request account deletion" })).toBeVisible();
+});

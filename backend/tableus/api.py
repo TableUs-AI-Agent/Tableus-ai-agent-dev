@@ -48,6 +48,7 @@ from .models import (
     Vote,
 )
 from .operators import CurrentOperator
+from .pilot_measurement import valid_voter_count
 from .providers import get_ai_provider, get_places_provider
 from .providers.base import AiCallUsage
 from .providers.google_live import AiProviderError, PlacesProviderError
@@ -574,7 +575,8 @@ async def _anonymize_authored_events(session: AsyncSession, profile: Profile) ->
     )).all())
     for event in events:
         event.actor_id = None
-        # Keep only reviewed structural references. Legacy arbitrary payload
+        # Keep only reviewed structural references and bounded aggregate counts.
+        # Legacy arbitrary payload
         # fields may contain free text and cannot be classified as safe.
         allowed = {
             "recommendations.generated": ("run_id", RecommendationRun),
@@ -592,6 +594,10 @@ async def _anonymize_authored_events(session: AsyncSession, profile: Profile) ->
                 else:
                     if await session.get(model, value):
                         payload[key] = value
+        if event.event_type == "plan.finalized":
+            count = (event.payload or {}).get("distinct_voter_count")
+            if valid_voter_count(count):
+                payload["distinct_voter_count"] = count
         event.payload = payload
 
 
@@ -1597,7 +1603,10 @@ async def finalize(plan_id: str, body: FinalizeIn, profile: CurrentProfile, sess
     plan.finalized_candidate_id = selected_id
     plan.status = "finalized"
     _touch(plan)
-    await _event(session, plan, profile, "plan.finalized", {"candidate_id": selected_id})
+    await _event(session, plan, profile, "plan.finalized", {
+        "candidate_id": selected_id,
+        "distinct_voter_count": len({vote.profile_id for vote in votes}),
+    })
     await session.commit()
     await capture_event("plan_finalized", {"vote_count": len(votes)})
     return ok(await _plan_out(session, plan, profile.id, places))

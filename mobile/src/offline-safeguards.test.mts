@@ -46,7 +46,7 @@ test("mobile requests have a bounded production timeout and a faster local fault
 });
 
 test("photo retries retain no image state and must open the picker again", () => {
-  const review = source("../app/(tabs)/review.tsx");
+  const review = source("./screens/deferred/review.tsx");
   const analyze = review.slice(review.indexOf("const analyze"), review.indexOf("\n  return (", review.indexOf("const analyze")));
   assert.match(review, /mutationFn: async[\s\S]*launchImageLibraryAsync/);
   assert.match(review, /retryLabel="Choose photo and retry"/);

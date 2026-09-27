@@ -5,19 +5,26 @@ repository. [AGENTS.md](../AGENTS.md) holds the short rules; this page explains 
 
 ## Start an objective
 
-1. Read the [active packet](task-packets/active.md) and [current state](current-state.md);
+1. Begin each authorized major pass in a fresh thread: a new roadmap priority or
+   distinct feature/release objective. Pass along the objective, canonical packet,
+   worktree/branch/base, uncommitted work, relevant evidence and approval limits.
+   If this thread was created for that pass, continue here; do not create another.
+   Keep fixes, review and verification of the same objective in that thread.
+2. Read the [active packet](task-packets/active.md) and [current state](current-state.md);
    read the roadmap and decisions when the work touches them.
-2. Confirm the branch and base. The root checkout may be stale, and the latest
+3. Confirm the branch and base. The root checkout may be stale, and the latest
    work may be on an unmerged branch. Preserve uncommitted files.
-3. Use a named `codex/<objective>` branch and reuse a suitable checkout for
+4. Use a named `codex/<objective>` branch and reuse a suitable checkout for
    sequential work. Create another for concurrency or necessary isolation;
    choose the base by ancestry and accepted work, not edit recency.
-4. Keep the objective reviewable in one change. If the active packet does not
+5. Keep the objective reviewable in one change. If the active packet does not
    describe it, update the packet first.
 
 When a previous conversation is referenced, read only what answers a concrete
 question. Handoffs/reviews retain provenance, scoped approvals and limits; they
-do not start a new objective. A new task or model does not replenish spent limits.
+do not start a new objective. The fresh-thread preference does not authorize
+advancing the roadmap or change approval gates. A new task or model does not
+replenish spent limits.
 
 ## Keep documents current
 
@@ -92,6 +99,13 @@ and retested. A bounded external/native campaign failure does not earn an extra
 attempt beyond its approved recovery scope; preserve diagnostics and stop as agreed.
 
 ## Hand off
+
+Brian's standing communication preference, confirmed September 27: every response
+includes clear details on what is next for development. In progress updates, name
+the immediate next action and what it will establish. In final handoffs, explain
+the next development objective, its first concrete action, and any dependencies
+or approvals still required. Carry this preference into fresh threads; a proposed
+next step is not authorization to execute a gated action.
 
 Include the exact base commit and branch, uncommitted changes if any, checks run, evidence for any
 gate, residual risks, anything deferred and the next objective. Local completion,
