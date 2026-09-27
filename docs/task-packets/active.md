@@ -2,15 +2,16 @@
 
 ## Status and working identity
 
-Priority 2 of the [roadmap](../roadmap.md) is implemented and verified. Brian's
-September 27 instruction to continue with the next step approves review and merge
-of PR #8; integration is pending the final published checks. No later priority
-has started. Every response now includes development next steps, as recorded in
-[the workflow](../development-workflow.md#hand-off) and [AGENTS.md](../../AGENTS.md).
-Brian approved publication and hosted CI in this chat on September 27.
-[Draft PR #8](https://github.com/TableUs-AI-Agent/Tableus-ai-agent-dev/pull/8)
-is published; [hosted CI](https://github.com/TableUs-AI-Agent/Tableus-ai-agent-dev/actions/runs/36301151907)
-passed on `a08e3d0f64ed43c839adc4e9d7ae5134a45fbd6a`. The closeout changes only docs.
+Priority 2 of the [roadmap](../roadmap.md) is implemented, verified and merged.
+Brian's September 27 instruction to continue with the next step approved review
+and merge of [PR #8](https://github.com/TableUs-AI-Agent/Tableus-ai-agent-dev/pull/8).
+It merged as `462a7dd6b3428d21a8fbccfe20a0003361904761`; its file tree exactly matches
+`1270206461fcdcecaad49ede80b3eb2a605a6436`, which passed
+[final hosted CI](https://github.com/TableUs-AI-Agent/Tableus-ai-agent-dev/actions/runs/36302260485).
+No deployment occurred and no later priority has started. Every response includes
+development next steps, as recorded in [the workflow](../development-workflow.md#hand-off)
+and [AGENTS.md](../../AGENTS.md). The [integration evidence](../evidence/f621cf5/integration.md)
+records review, source binding, gates and the documentation-only local closeout.
 The [source-bound handoff](../evidence/f621cf5/implementation.md) and
 [PR description](../evidence/f621cf5/pull-request.md) record verification and limits.
 The product direction and September 27 follow-up decisions are
@@ -23,8 +24,11 @@ test-only repairs, validation limits and unchanged deployments.
 
 - Current branch: `codex/pilot-experience-measurement`, created from the approved merge.
 - Worktree: `/Users/brianchei/repos/Tableus-ai-agent-dev/.worktrees/pilot-realignment`.
-- Base for the next change: `8ae3c94eb3e41b87f0840cd5aa2b0827c0882af4` on `origin/main`.
-- The eight pre-existing documentation closeout changes are preserved on this branch.
+- Integrated base for the next change: `462a7dd6b3428d21a8fbccfe20a0003361904761` on `origin/main`.
+- This branch is fast-forwarded to that merge and carries the subsequent local
+  documentation-only closeout. Preserve it when preparing the next named branch.
+- The earlier eight documentation changes and standing communication preference
+  are included in the approved merge.
 - Root checkout `codex/privacy-safe-observability` and local `main` are stale;
   confirm actual branch/remote state rather than using them as implementation bases.
 
@@ -60,7 +64,7 @@ Completion: focused navigation/recovery, audit-count/cleanup and measurement
 checks, shared-plan browser checks, one `make ready` and CI. Update the lifecycle
 contract for the new safe event field when its implementation changes. Application
 changes produce application candidate `f621cf5dbf0c8663d92be5fe613b9910b68a9953`
-for later acceptance. Publication is complete; merge and deployment remain gated.
+for later acceptance. Publication and approved merge are complete; deployment remains gated.
 
 Local `make ready` passed once: 202 Python tests with 36 PostgreSQL-only skips,
 326 JavaScript tests with zero skips, lint/types, generated contracts, web and
@@ -76,7 +80,7 @@ a fresh one. Keep the diagnostics; this is not an application defect fix.
 
 ## Boundaries and dependencies
 
-The completed integration is not staging/native acceptance. Repository configuration
+The approved merge is not staging/native acceptance. Repository configuration
 now excludes this objective branch, `codex/pilot-realignment` and `main` from Vercel
 Git deployment. Read-only preflight confirms Railway has no deployment triggers or
 PR environments. Recheck before any gated release action. Do not merge the separate native
@@ -88,3 +92,19 @@ Do not resume the canceled simulator/security campaigns or reuse spent allowance
 The [pilot checklist](../release-readiness-checklist.md) defines later acceptance;
 Priority 3 includes approved deletion activation and synthetic rehearsal, and
 Priority 4 requires the private iPhone roster before its signed build.
+
+## Next development handoff
+
+Priority 3 is the next objective, not started by this integration. Start it in a
+fresh chat on authorization, reusing this checkout after preserving its local
+closeout. Confirm actual remote ancestry and create the next named `codex/` branch;
+do not use stale root/local-main state or discard the closeout.
+
+The first action is to replace this completed packet with a bounded preparation
+scope: read-only staging inventory (actual source/migration head, restricted grants,
+Auth invite hook and existing admission state), complete-journey quota/spend sizing,
+and a synthetic deletion-rehearsal plan. Resolve controlled-inbox/account/invite
+counts, worker schedule/limits, recovery cases, support ownership and stop conditions.
+Prepare code/configuration and deterministic checks as needed before presenting
+one concrete request for the required secrets/resources/migrations/deployment and
+live rehearsal. Native builds, real invitations and production remain later gates.

@@ -1,19 +1,20 @@
 # Current state
 
 Updated 2026-09-27. GitHub state and deployment-trigger settings were freshly
-read for [Priority 2 publication](evidence/f621cf5/implementation.md). Application
-serving identities below remain the September 25 record, not fresh health checks.
+read for [Priority 2 integration](evidence/f621cf5/integration.md). Post-merge
+readback found no new deployments. Application serving identities below remain
+the September 25 record, not fresh application health checks.
 
 ## Source baseline
 
 | Item | Value |
 | --- | --- |
-| Integrated source baseline | Application lineage `4a2f9ecc37070f434df7fc75c1054d5875f21ba9`, September 26–27 realignment, publication guard and two test-only CI repairs through `97c3c65` |
-| Refreshed `origin/main` | `8ae3c94eb3e41b87f0840cd5aa2b0827c0882af4`, approved merge of [PR #7](https://github.com/TableUs-AI-Agent/Tableus-ai-agent-dev/pull/7) on September 27; GitHub uses `main`, with no branch protection/rulesets at preflight |
-| Integration status | Priority 1 complete. Merge tree exactly matches the passing `97c3c65` candidate. No deployment. The separate native diagnostic branch was not merged; do not merge it wholesale. Priority 2 is implemented locally on `codex/pilot-experience-measurement`; application candidate `f621cf5` passes local readiness and hosted CI on `a08e3d0`; [draft PR #8](https://github.com/TableUs-AI-Agent/Tableus-ai-agent-dev/pull/8) awaits review and approved merge. See the [handoff](evidence/f621cf5/implementation.md). |
+| Integrated source baseline | Priority 1 merge `8ae3c94` plus Priority 2 application candidate `f621cf5` and communication/review documentation through `1270206` |
+| Refreshed `origin/main` | `462a7dd6b3428d21a8fbccfe20a0003361904761`, approved merge of [PR #8](https://github.com/TableUs-AI-Agent/Tableus-ai-agent-dev/pull/8) on September 27 |
+| Integration status | Priorities 1 and 2 complete. The merge tree exactly matches passing CI head `1270206`. No deployment. The separate native diagnostic branch was not merged; do not merge it wholesale. See the [integration evidence](evidence/f621cf5/integration.md). Priority 3 remains a later authorized objective. |
 | Root checkout | Stale at `codex/privacy-safe-observability` (`8e9625e`). Use the baseline, not the root checkout. |
 
-The last full local readiness at the baseline's application source passed 214
+Priority 1 local readiness at its earlier application source passed 214
 Python and 317 JavaScript tests with zero skips, plus lint, types, contract
 generation, web and Expo-web builds and deterministic smoke
 ([handoff](handoffs/2026-09-25-deletion-support.md)). [Integration PR #7](https://github.com/TableUs-AI-Agent/Tableus-ai-agent-dev/pull/7)
@@ -27,11 +28,11 @@ and full rechecks and remains a reliability observation. The
 [integration review](evidence/6dac996/integration.md) distinguishes reused local
 checks from the PR's hosted result.
 
-Priority 2 [hosted CI](https://github.com/TableUs-AI-Agent/Tableus-ai-agent-dev/actions/runs/36301151907)
+Priority 2 [final hosted CI](https://github.com/TableUs-AI-Agent/Tableus-ai-agent-dev/actions/runs/36302260485)
 passed **238 Python tests, 326 JavaScript tests and five browser journeys, zero
 skips**, including restricted PostgreSQL roles/migrations, lint/types, deterministic
-evaluation, contract checks, web/Expo-web builds and smoke. The tested merge tree
-matches the published `a08e3d0` head. Local account/help and private-Join recovery
+evaluation, contract checks, web/Expo-web builds and smoke. The approved merge
+`462a7dd` and tested `1270206` head have the same file tree. Local account/help and private-Join recovery
 checks also passed. No application repair was needed in hosted CI; the
 [handoff](evidence/f621cf5/implementation.md) preserves local dev-cache timeout
 observations and source binding. Documentation closeout does not change app inputs.
@@ -68,7 +69,7 @@ authentication. Earlier candidate evidence is not acceptance of the cumulative
 local application. The API allows organizer finalization with zero or partial
 votes; the agreed pilot counts success only with at least two independent votes.
 
-The Priority 2 source candidate lands users on Plans and exposes Plans/Account on
+The merged Priority 2 source lands users on Plans and exposes Plans/Account on
 web and mobile. Deferred Discover, Friends/People, Review, Taste/Profile and photo
 entry routes lead to Plans; their implementations, API endpoints and export fields
 remain. Mobile Account has an independent tab plus its existing deletion-recovery
@@ -118,7 +119,7 @@ unknown history/deletion coverage. This does not add a quorum or change ranking.
 - Ad hoc iOS builds install only on devices included in the provisioning profile;
   collect all pilot iPhone device IDs before building. Production mobile builds
   are deliberately disabled until production origins and update policy exist.
-- Integration CI is green on the tree merged as `8ae3c94`; later staging/native
+- Integration CI is green on the tree merged as `462a7dd`; later staging/native
   acceptance remains separate. A local plan-refresh component-test timeout
   did not recur in focused/full rechecks or either subsequent hosted run; its
   cause is unestablished.

@@ -31,8 +31,8 @@ skips, including restricted PostgreSQL/migrations, lint/types, deterministic AI
 evaluation, contracts, builds and smoke. The [implementation handoff](implementation.md)
 records local readiness, account/private-Join checks and residual observations.
 Only documentation and agent instructions change for this review; reuse matching
-application checks and verify links/consistency. The automatically triggered CI
-must finish before merging the updated head.
+application checks and verify links/consistency. The automatically triggered final
+CI completed before the exact reviewed head was merged, as recorded below.
 
 ## Release safeguards and next development
 
@@ -41,8 +41,22 @@ exclusions for this branch and `main`, unchanged production/preview target IDs,
 zero Railway deployment triggers and `prDeploys=false`. Sanitized local evidence
 is `/tmp/tableus-p2-merge-preflight.json`. Stop if those safeguards change.
 
-Merge result is pending. Record the exact merge/head/tree and post-merge deployment
-readback here once complete. Keep the branch and checkout; no cleanup is approved.
+PR #8 merged at 07:15:48 UTC as
+`462a7dd6b3428d21a8fbccfe20a0003361904761`. Its file tree and final reviewed head
+`1270206461fcdcecaad49ede80b3eb2a605a6436` both are
+`51927d7bec375b30bd01a39b910278871007d83f`. The base stayed `8ae3c94`.
+[Final CI](https://github.com/TableUs-AI-Agent/Tableus-ai-agent-dev/actions/runs/36302260485)
+passed the same 238 Python, 326 JavaScript and five browser tests with zero skips,
+plus all build/type/lint/contract/evaluation/smoke checks. No application fixes were
+needed. Logs remain privately at `/tmp/tableus-p2-ci-36302260485.log`.
+
+At 07:16:16 UTC, Vercel returned no new deployments since preflight. Railway's
+latest remained `24eefe75-9583-4a90-8d3e-48450818dec0`, source `f94a1d9`, from
+September 21. No deployment, resource, secret, hosted migration or activation was
+performed. The reused checkout was fast-forwarded to the merge; the root checkout
+was untouched. This subsequent closeout changes only Markdown and is committed
+locally for the next authorized development pass to carry forward. It is not part
+of the already completed merge. Keep the branch and checkout; no cleanup is approved.
 
 Next development objective is Priority 3 staging readiness in a fresh chat after
 authorization. Its first concrete action is to replace the active packet with a

@@ -19,8 +19,9 @@ when application inputs change.
 - [x] Priority 2 source: web/mobile show Plans and Account; hidden product routes lead to Plans.
       Auth, invite, Join, export, legal/privacy and deletion help remain reachable,
       including recovery states. No learned-taste or guest/proxy scope is added.
-      Source `f621cf5` and hosted `a08e3d0` passed ([evidence](evidence/f621cf5/implementation.md));
-      deployment and physical-device acceptance remain separate gates below.
+      Source `f621cf5` and final hosted `1270206` passed; PR #8 is approved and
+      merged as `462a7dd` with the same file tree ([evidence](evidence/f621cf5/integration.md)).
+      Deployment and physical-device acceptance remain separate gates below.
 - [x] `plan.finalized` records the active run's distinct-voter count. Focused
       tests cover zero/one/multiple voters, updated votes, re-finalization and
       deletion of the finalizer/another member, including removal of the recorded
