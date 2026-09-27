@@ -2,7 +2,10 @@
 
 ## Status and working identity
 
-Priority 2 of the [roadmap](../roadmap.md) is implemented; local readiness and browser checks pass; hosted CI is pending.
+Priority 2 of the [roadmap](../roadmap.md) is implemented; local readiness and browser checks pass. Publication and hosted CI are waiting
+for explicit owner authorization after automatic approval review rejected the push.
+The [source-bound handoff](../evidence/f621cf5/implementation.md) and
+[draft PR text](../evidence/f621cf5/pull-request.md) are prepared.
 The product direction and September 27 follow-up decisions are
 recorded in [decisions](../decisions.md#pilot-follow-up--adopted-2026-09-27).
 Priority 1 is complete: Brian approved [PR #7](https://github.com/TableUs-AI-Agent/Tableus-ai-agent-dev/pull/7),
@@ -49,7 +52,8 @@ Make the shared-plan experience and completion measurement match the agreed pilo
 Completion: focused navigation/recovery, audit-count/cleanup and measurement
 checks, shared-plan browser checks, one `make ready` and CI. Update the lifecycle
 contract for the new safe event field when its implementation changes. Application
-changes produce a replacement candidate for later acceptance.
+changes produce application candidate `f621cf5dbf0c8663d92be5fe613b9910b68a9953`
+for later acceptance. No publication, merge or deployment has occurred.
 
 Local `make ready` passed once: 202 Python tests with 36 PostgreSQL-only skips,
 326 JavaScript tests with zero skips, lint/types, generated contracts, web and

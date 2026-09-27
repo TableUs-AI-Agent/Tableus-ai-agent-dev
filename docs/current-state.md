@@ -10,7 +10,7 @@ serving identities below remain the September 25 record, not fresh health checks
 | --- | --- |
 | Integrated source baseline | Application lineage `4a2f9ecc37070f434df7fc75c1054d5875f21ba9`, September 26–27 realignment, publication guard and two test-only CI repairs through `97c3c65` |
 | Refreshed `origin/main` | `8ae3c94eb3e41b87f0840cd5aa2b0827c0882af4`, approved merge of [PR #7](https://github.com/TableUs-AI-Agent/Tableus-ai-agent-dev/pull/7) on September 27; GitHub uses `main`, with no branch protection/rulesets at preflight |
-| Integration status | Priority 1 complete. Merge tree exactly matches the passing `97c3c65` candidate. No deployment. The separate native diagnostic branch was not merged; do not merge it wholesale. Priority 2 is implemented locally on `codex/pilot-experience-measurement`; local readiness and shared-plan browser checks pass; hosted CI is pending. |
+| Integration status | Priority 1 complete. Merge tree exactly matches the passing `97c3c65` candidate. No deployment. The separate native diagnostic branch was not merged; do not merge it wholesale. Priority 2 is implemented locally on `codex/pilot-experience-measurement`; application candidate `f621cf5` passes local readiness/browser checks; publication and hosted CI await owner approval. See the [handoff](evidence/f621cf5/implementation.md). |
 | Root checkout | Stale at `codex/privacy-safe-observability` (`8e9625e`). Use the baseline, not the root checkout. |
 
 The last full local readiness at the baseline's application source passed 214

@@ -68,7 +68,9 @@ was approved and merged as `8ae3c94eb3e41b87f0840cd5aa2b0827c0882af4` on
 September 27. Its tree matches the passing hosted CI candidate; no deployment
 occurred. [Integration evidence](evidence/6dac996/integration.md) retains the
 review, test repairs and source binding. The separate native diagnostic branch
-was not merged. Priority 2 is implemented locally; readiness and shared-plan checks pass, with hosted CI pending. Priority 3
+was not merged. Priority 2 is implemented locally; readiness and browser checks pass. Publication
+and hosted CI await owner authorization after automatic approval review blocked
+the push ([handoff](evidence/f621cf5/implementation.md)). Priority 3
 remains a separate, later authorized objective.
 
 Effort is a rough planning range in focused engineering days, excluding approval,
