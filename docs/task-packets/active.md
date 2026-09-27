@@ -2,8 +2,11 @@
 
 ## Status and working identity
 
-Priority 2 of the [roadmap](../roadmap.md) is implemented and verified; its draft PR
-awaits review and separately approved merge. No later priority has started.
+Priority 2 of the [roadmap](../roadmap.md) is implemented and verified. Brian's
+September 27 instruction to continue with the next step approves review and merge
+of PR #8; integration is pending the final published checks. No later priority
+has started. Every response now includes development next steps, as recorded in
+[the workflow](../development-workflow.md#hand-off) and [AGENTS.md](../../AGENTS.md).
 Brian approved publication and hosted CI in this chat on September 27.
 [Draft PR #8](https://github.com/TableUs-AI-Agent/Tableus-ai-agent-dev/pull/8)
 is published; [hosted CI](https://github.com/TableUs-AI-Agent/Tableus-ai-agent-dev/actions/runs/36301151907)

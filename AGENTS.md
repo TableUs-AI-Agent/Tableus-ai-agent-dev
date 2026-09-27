@@ -50,6 +50,10 @@ implemented behavior and stay current with their code.
 - Do not restart the canceled security scans without new owner authorization.
 - Handoffs identify the base commit and any uncommitted changes, checks run,
   observable evidence, residual risks and intentionally deferred work.
+- Every response to Brian includes clear development next steps: the next concrete
+  action, its purpose, and any dependency or approval gate. Keep progress updates
+  brief and make final handoffs self-contained. This standing preference also
+  applies in future threads; describing a next step does not authorize it.
 
 ## Approval gates
 

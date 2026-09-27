@@ -100,6 +100,13 @@ attempt beyond its approved recovery scope; preserve diagnostics and stop as agr
 
 ## Hand off
 
+Brian's standing communication preference, confirmed September 27: every response
+includes clear details on what is next for development. In progress updates, name
+the immediate next action and what it will establish. In final handoffs, explain
+the next development objective, its first concrete action, and any dependencies
+or approvals still required. Carry this preference into fresh threads; a proposed
+next step is not authorization to execute a gated action.
+
 Include the exact base commit and branch, uncommitted changes if any, checks run, evidence for any
 gate, residual risks, anything deferred and the next objective. Local completion,
 merge, staging acceptance and production activation are distinct outcomes; say
