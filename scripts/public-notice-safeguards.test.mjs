@@ -14,8 +14,8 @@ test("web and mobile notices use canonical contacts and incorporated Google poli
   const mobileTerms = source("mobile/app/terms.tsx");
   const mobilePrivacy = source("mobile/app/privacy.tsx");
 
-  assert.match(publicInfo, /support@table-us\.com/);
-  assert.match(publicInfo, /privacy@table-us\.com/);
+  assert.match(publicInfo, /brian@table-us\.com/);
+  assert.match(publicInfo, /privacyEmail: "privacy@table-us\.com"/);
   assert.doesNotMatch([webTerms, webPrivacy, mobileTerms, mobilePrivacy].join("\n"), /tableus\.app/);
   assert.match(webTerms, /googleMapsPlatformTerms/);
   assert.match(mobileTerms, /googleMapsPlatformTerms/);

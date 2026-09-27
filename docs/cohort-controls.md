@@ -121,3 +121,15 @@ operator, verify actual hosted grants, then complete affected web/native accepta
 Do not roll back to an unmetered API while cohort admission is open. Recipient-bound invite implementation has a [separate rollout contract](recipient-invites.md).
 Actual issuance, capability-link disposition, production configuration, distributed
 build acceptance and explicit cohort/spend approval remain separate roadmap work.
+
+## Priority 3 sizing
+
+The [prepared staging scope](pilot-staging-preparation.md#measured-journey-and-budget)
+now records deterministic API journey counts for 2/4/8 people, billable-attempt
+multipliers, pricing assumptions and the existing hosted usage baseline. Proposed
+staging configuration is 40 Places/3 AI per UTC day and 20 lifetime creations;
+code defaults remain 20/5/20. The global Places setting's validation ceiling is
+1,000 (default 150 unchanged), permitting the proposed existing usage plus
+420-attempt synthetic campaign. This is not an approved allocation. Eight-person
+live acceptance and the real pilot need their own group-level budget; no current
+allowance is reused and no counters are reset.

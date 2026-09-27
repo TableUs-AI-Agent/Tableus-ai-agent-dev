@@ -155,6 +155,9 @@ def test_configured_limits_are_positive_and_bounded() -> None:
         Settings(cohort_ai_operations_per_day=0)
     with pytest.raises(ValueError):
         Settings(cohort_plans_lifetime=10001)
+    assert Settings(places_runtime_max_attempts_30d=814).places_runtime_max_attempts_30d == 814
+    with pytest.raises(ValueError):
+        Settings(places_runtime_max_attempts_30d=1001)
 
 
 def test_migration_attributes_surviving_creation_events_then_organizer_fallback(

@@ -72,7 +72,8 @@ was not merged. Priority 2 is complete: Brian approved review and merge, and
 [PR #8](https://github.com/TableUs-AI-Agent/Tableus-ai-agent-dev/pull/8) merged as
 `462a7dd6b3428d21a8fbccfe20a0003361904761`. Its file tree matches final passing CI
 head `1270206`; no deployment occurred ([integration evidence](evidence/f621cf5/integration.md)).
-Priority 3 remains a separate, later authorized objective in a fresh chat.
+Priority 3 is authorized in a fresh chat. Independent local preparation is
+complete on `codex/pilot-staging-readiness`; its external actions are not approved.
 
 Effort is a rough planning range in focused engineering days, excluding approval,
 hosted CI, device/signing and external-access waits; these are not delivery promises.
@@ -89,10 +90,10 @@ hosted CI, device/signing and external-access waits; these are not delivery prom
 | 4 | Accept signed iOS/Android pilot builds using the existing `readiness-ios` and `readiness-android` profiles on physical devices. Establish that all three supported clients work. | 1–3 days if device checks pass | Collect every pilot iPhone's device ID before the iOS build and verify inclusion in its ad hoc profile; keep the roster private. Have physical iPhone/Android installation access. Pass physical checks plus one bounded candidate-source `mobile-offline-e2e` run on a separately identified local test artifact. Preserve/dispose of prior findings explicitly. One accepted signed pilot build per platform is the target, not permission for retries or extra test builds. |
 | 5 | Run the pilot and decide the next product priority from observed outcomes. | Three-week observation window | Approved roster/cap, representative web/iOS/Android use, budget, support, measurement and stop rules. Report the targets, unknowns and organizer feedback; no automatic expansion. |
 
-The [active packet](task-packets/active.md) closes Priority 2 and gives the next
-handoff. On authorization, replace it with Priority 3's bounded staging inventory,
-quota/spend sizing and synthetic deletion-rehearsal preparation before requesting
-external-action approvals. The [pilot checklist](release-readiness-checklist.md) owns
+The [active packet](task-packets/active.md) now covers Priority 3. Its
+[prepared execution scope](pilot-staging-preparation.md) records fresh staging
+inventory, measured quota/attempt sizing, worker configuration, synthetic fixtures
+and one combined gated request. Local preparation does not close staging acceptance. The [pilot checklist](release-readiness-checklist.md) owns
 acceptance details; the [runbook](release-runbook.md) supplies relevant procedures.
 
 ## Deferred

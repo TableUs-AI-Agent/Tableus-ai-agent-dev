@@ -4,6 +4,10 @@ Updated 2026-09-27 for the [staging pilot](roadmap.md). Brian owns release,
 support and rollback decisions. Planning approval is not permission to execute
 builds, migrations, deployments, provider calls or invitations.
 
+Priority 3 local preparation and the exact proposed synthetic campaign are in
+[staging preparation](pilot-staging-preparation.md). Inventory is read-only; none
+of the external acceptance boxes below is closed by the prepared code/config.
+
 ## Pilot gates
 
 Record formal acceptance once per gate under the application candidate in

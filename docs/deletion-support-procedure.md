@@ -11,7 +11,9 @@ Users may initiate full deletion in Account and data when enabled. The public
 web page also offers `privacy@table-us.com` without installation or sign-in.
 Opening a mail link only opens a draft; it neither sends a request nor deletes
 anything. No public form, case database, status lookup or automated mailbox agent
-is added. `support@table-us.com` can route deletion problems to the same owner.
+is added. `brian@table-us.com` is the general support contact. Brian confirmed on
+September 27 that `privacy@table-us.com` forwards to him; actual delivery remains
+part of the gated synthetic rehearsal.
 Support must not be a mandatory replacement for enabled in-app deletion.
 
 The page describes current application behavior, not a guarantee that an older
@@ -187,3 +189,13 @@ subject tombstone against re-enrollment. Preserve that behavior; this procedure
 adds no Auth/session changes. The changelog Markdown fetch was unsupported; the
 [HTML changelog](https://supabase.com/changelog) was read instead, with no relevant
 new API change adopted by this UI/procedure objective.
+
+## Current preparation
+
+The [Priority 3 campaign](pilot-staging-preparation.md) now binds four aliases on
+Brian's controlled mailbox, the 14-message synthetic support scope, private case
+storage proposal and exact deletion/worker limits. Local public copy names retained
+records and the accepted access-loss limitation consistently on web/mobile.
+This does not establish mailbox delivery, a purge period, legal review or
+permission to act on an account. Existing historical attestations do not cover
+the changed support address; publication approval must include that change.

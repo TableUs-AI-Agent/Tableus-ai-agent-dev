@@ -1,0 +1,11 @@
+# Prepared only. Select this config explicitly for a separate private worker.
+# Never apply it to the API service. Resource/secret/deployment approval required.
+[build]
+builder = "DOCKERFILE"
+dockerfilePath = "backend/Dockerfile"
+
+[deploy]
+startCommand = "timeout --signal=TERM --kill-after=5s 70s sh -c 'python scripts/process_account_deletions.py --limit 3 && python scripts/process_account_deletions.py --status'"
+cronSchedule = "*/5 * * * *"
+restartPolicyType = "NEVER"
+numReplicas = 1

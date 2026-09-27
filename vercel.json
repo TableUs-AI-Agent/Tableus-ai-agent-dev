@@ -4,6 +4,7 @@
     "deploymentEnabled": {
       "codex/pilot-realignment": false,
       "codex/pilot-experience-measurement": false,
+      "codex/pilot-staging-readiness": false,
       "main": false
     }
   },
