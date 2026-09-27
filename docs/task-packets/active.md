@@ -1,66 +1,81 @@
-# Active packet: privacy-safe observability staging validation
+# Active packet: review and integrate the pilot baseline
 
-## Status
+## Status and working identity
 
-Complete in staging at exact candidate
-`4920d99b11b06c4e0aa1c4afc3f91763bb53ee1c`. Railway deployment
-`bed50df4-5ced-465f-8492-a24147e8f663` and Vercel deployment
-`dpl_4M7eSvsht9UNB2wqmCjZ1pVUmHiD` are pinned to the candidate. Inspected,
-memory-bounded local iOS and Android telemetry-test artifacts emitted sanitized
-canaries, the preserved approved iOS session exercised the authenticated API
-canary without a new OTP, and aggregate verification found one exact-release
-issue in each Sentry project plus all four PostHog platforms. Sanitized evidence
-is in `docs/evidence/4920d99/observability/`. Earlier candidates and incomplete
-evidence remain superseded. Public merge remains a separate explicit gate.
+Priority 1 of the [roadmap](../roadmap.md): prepare the reviewed baseline for
+integration. The product direction and September 27 follow-up decisions are
+recorded in [decisions](../decisions.md#pilot-follow-up--adopted-2026-09-27).
+The cumulative review is prepared with [evidence](../evidence/6dac996/integration.md).
+Publication uses repository-local Vercel exclusions for this branch and `main`;
+Railway has no current deployment triggers or PR environments. [PR #7](https://github.com/TableUs-AI-Agent/Tableus-ai-agent-dev/pull/7)
+is published. Hosted CI exposed a Homebrew-specific Python test wrapper and a
+stale assertion against the old account-deletion UI. Both are corrected; all
+unit/PostgreSQL tests and builds passed on the second run. A full replacement
+hosted pass and an explicitly approved merge remain the completion gates.
 
-## Objective
+- Branch: `codex/pilot-realignment`.
+- Worktree: `/Users/brianchei/repos/Tableus-ai-agent-dev/.worktrees/pilot-realignment`.
+- Application baseline: `4a2f9ecc37070f434df7fc75c1054d5875f21ba9`.
+- Root checkout `codex/privacy-safe-observability` and local `main` are stale;
+  confirm actual branch/remote state rather than using them as implementation bases.
 
-Make staging failures diagnosable and closed-beta behavior measurable without
-creating telemetry identities or sending private dining data. Use three isolated
-Sentry staging projects (API, web, mobile) for sanitized errors only and one
-isolated US PostHog staging project for anonymous allowlisted events.
+## Outcome and sequence
 
-## Deliverables
+Establish a reviewed, tested baseline on `main` before the focused pilot changes.
 
-- Random memory-only telemetry session identifiers shared with the API only as
-  request context. They reset with the page/app process, are never account IDs,
-  are not stored, and never create person profiles.
-- PostHog autocapture, lifecycle/page capture, surveys, feature flags, GeoIP,
-  persistence, and session replay disabled behind a strict event/property
-  allowlist.
-- Sentry error capture with private values and request content removed. Tracing,
-  profiling, replay, attachments, and breadcrumbs remain disabled; useful stack,
-  component, request ID, environment, and exact release evidence remain.
-- Exact-SHA readiness, source-map upload with public client-map deletion, gated
-  telemetry-test profiles, synthetic canary surfaces, leakage tests, and an
-  aggregate-only `make telemetry-staging-e2e` verifier.
-- Updated privacy disclosures, current state, roadmap, decisions, and runbook.
+1. Inspect actual remote/default-branch state and the cumulative application diff.
+   September 27 readback confirms `main` at `e1184ec`, 165 commits behind `6dac996`
+   with no divergence. Refresh again before merge. Preserve existing work and
+   resolve material review findings in this objective.
+2. Prepare one reviewable integration PR with exact base/source, checks and known
+   gaps. Review automatic Preview side effects before requesting any needed push
+   scope; an integration objective does not itself authorize deployment.
+3. Run hosted CI on the proposed source before merge. Restricted-runtime PostgreSQL
+   checks passed on `bb3f20e`; the corrected account browser journey still needs
+   a complete hosted pass. Fix failures and apply impact-based checks
+   from the [workflow](../development-workflow.md).
+4. Merge only with Brian's explicit approval. Record the actual integrated SHA and
+   matching CI results. Do not merge the separate native diagnostic branch wholesale;
+   assess any required helper by its consumers and keep operator provenance distinct.
 
-## Acceptance
+## Completion
 
-- Deterministic `make ready` is credential-free and produces no live event.
-- Staging readiness is exact-SHA and reports anonymous analytics, error-only
-  reporting, and explicitly gated E2E controls.
-- PostHog receives allowlisted bounded properties, platform, release, and
-  no-person/no-GeoIP flags only. No identifier survives process termination or
-  links to an application profile.
-- PostHog's required `distinct_id` is the random process-memory telemetry UUID;
-  SDK device identifiers and account identifiers are not retained.
-- Sentry receives one sanitized canary per component with usable stack/release
-  evidence and none of the prohibited private fields.
-- Retained evidence contains aggregate counts and booleans only.
+Reviewed baseline on `main`, exact-source hosted CI green (including restricted
+PostgreSQL and browser checks), and authoritative state/packet updated. Integration
+alone does not accept deployment, native artifacts or pilot operation.
 
-## External gate
+## Following objective: focused pilot experience and measurement
 
-The approved public push, isolated staging resources, exact-SHA Railway/Vercel
-deployments, memory-bounded local artifacts, and sanitized canaries are complete.
-Merging `codex/privacy-safe-observability` to `main` remains a separate explicit
-approval.
+Priority 2 is a separate change after integration:
 
-## Boundaries
+- Signed-in web/mobile users land on Plans; Plans and Account remain accessible.
+  Hide Discover, Friends/People, Review, Taste/Profile and photo surfaces, including
+  direct entry. Preserve their code/data, endpoints and export fields.
+- Provide mobile Account access before hiding Profile. Preserve invite, auth,
+  private Join, privacy, legal and deletion-help navigation and recovery.
+- Record `distinct_voter_count` for the active run in `plan.finalized`; preserve a
+  validated integer in the range 0–8 through account deletion's strict payload
+  allowlist independently of whether its candidate or run still exists, without
+  retaining voter identities or arbitrary payload fields.
+  Cover zero/one/multiple voters, vote updates, deleting the finalizer/another
+  member, removal of the recorded candidate/run and missing/invalid old fields.
+  The removed-candidate/run test must still count the earlier finalization.
+  Validate a read-only query that counts
+  each eligible plan once across reopen/re-finalize and reports deletion-related
+  coverage gaps. Do not reconstruct missing historical counts from current votes.
+- Preserve organizer finalization discretion; no new quorum or ranking feature.
 
-No migration, production resource/deployment/build, store action, new invite,
-paid provider call, account deletion, cohort invitation, replay, performance
-tracing, profiling, or person analytics is included. Build-time source-map
-tokens never enter client artifacts. A correction after the candidate commit
-requires a new SHA and new deployment/build evidence.
+Completion: focused navigation/recovery, audit-count/cleanup and measurement
+checks, shared-plan browser checks, one `make ready` and CI. Update the lifecycle
+contract for the new safe event field when its implementation changes. Application
+changes produce a replacement candidate for later acceptance.
+
+## Boundaries and dependencies
+
+The integration packet does not authorize Priority 2 implementation or later
+release actions. Secrets, resources, migrations, deployments, signed pilot builds,
+real invitations and destructive cleanup retain the [approval gates](../../AGENTS.md#approval-gates).
+Do not resume the canceled simulator/security campaigns or reuse spent allowances.
+The [pilot checklist](../release-readiness-checklist.md) defines later acceptance;
+Priority 3 includes approved deletion activation and synthetic rehearsal, and
+Priority 4 requires the private iPhone roster before its signed build.

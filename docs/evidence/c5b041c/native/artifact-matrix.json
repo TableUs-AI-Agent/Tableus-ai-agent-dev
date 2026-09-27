@@ -1,0 +1,96 @@
+{
+  "schema_version": 1,
+  "application_sha": "c5b041c85f4f7b959436c13bef48c959622c624f",
+  "verified_at": "2026-09-13T04:10:26.914Z",
+  "artifact_count": 6,
+  "all_six_accepted": true,
+  "sequential_builds_verified": true,
+  "physical_or_live_acceptance_claimed": false,
+  "verifier_sha256": "be349eedcf3258d1b617dfbe07e7fb64f193a5126ef29ed136b231901d15e31c",
+  "checks": [
+    {
+      "profile": "test-ios",
+      "artifact_name": "TableUs.app",
+      "artifact_sha256": "61d4d12a25d2857942402095a9fea24e97e7b0e8d0ddca1d586b4c945c5735f2",
+      "receipt_and_inspection_validated": true,
+      "source_and_lock_validated": true,
+      "build_started_at": "2026-09-13T01:48:20.145978+00:00",
+      "build_finished_at": "2026-09-13T02:19:34.110190+00:00",
+      "build_duration_seconds": 1874
+    },
+    {
+      "profile": "test-android",
+      "artifact_name": "TableUs.apk",
+      "artifact_sha256": "716370574aa91aed4834c37a9866011c9a114b11d3162007a903840c18d7b860",
+      "receipt_and_inspection_validated": true,
+      "source_and_lock_validated": true,
+      "build_started_at": "2026-09-13T02:47:08.682539+00:00",
+      "build_finished_at": "2026-09-13T03:01:20.402994+00:00",
+      "build_duration_seconds": 852
+    },
+    {
+      "profile": "readiness-ios",
+      "artifact_name": "TableUs.ipa",
+      "artifact_sha256": "c089122ea4ab71fc0d93edc2f69b9206ed00688c390ad04f4b5cdae1d2ac299c",
+      "receipt_and_inspection_validated": true,
+      "source_and_lock_validated": true,
+      "build_started_at": "2026-09-13T03:14:47.923556+00:00",
+      "build_finished_at": "2026-09-13T03:24:58.371078+00:00",
+      "build_duration_seconds": 610,
+      "compiled_source": {
+        "bundle_sha256": "11b895bbe2775d8cf722af74e47b6a4a0447917b973955f30b3b268dfb5c7e16",
+        "expected_source_literal_present": true,
+        "inherited_source_literal_present": false,
+        "runtime_delivery_verified": false
+      }
+    },
+    {
+      "profile": "readiness-android",
+      "artifact_name": "TableUs.apk",
+      "artifact_sha256": "8d59d69fd5fe1a19e6eaa0ea1330a36084e01119bf66b9d0751454df098779a8",
+      "receipt_and_inspection_validated": true,
+      "source_and_lock_validated": true,
+      "build_started_at": "2026-09-13T03:26:14.326962+00:00",
+      "build_finished_at": "2026-09-13T03:34:58.516595+00:00",
+      "build_duration_seconds": 524,
+      "compiled_source": {
+        "bundle_sha256": "6f9821f70702720b27b1618d2728ecc4f89ba3de239b69a4bbbf70d6af5ba997",
+        "expected_source_literal_present": true,
+        "inherited_source_literal_present": false,
+        "runtime_delivery_verified": false
+      }
+    },
+    {
+      "profile": "telemetry-test-ios",
+      "artifact_name": "TableUs.app",
+      "artifact_sha256": "198ee544b6ac63eff9011330a6ed404852acc8d68af0d831026be79a6bd4a9da",
+      "receipt_and_inspection_validated": true,
+      "source_and_lock_validated": true,
+      "build_started_at": "2026-09-13T03:35:11.366335+00:00",
+      "build_finished_at": "2026-09-13T03:51:30.570522+00:00",
+      "build_duration_seconds": 979,
+      "compiled_source": {
+        "bundle_sha256": "11b895bbe2775d8cf722af74e47b6a4a0447917b973955f30b3b268dfb5c7e16",
+        "expected_source_literal_present": true,
+        "inherited_source_literal_present": false,
+        "runtime_delivery_verified": false
+      }
+    },
+    {
+      "profile": "telemetry-test-android",
+      "artifact_name": "TableUs.apk",
+      "artifact_sha256": "47e5249afbf808575f1b8986cf7021edfb489a70985d6dbfac741bc1fd961832",
+      "receipt_and_inspection_validated": true,
+      "source_and_lock_validated": true,
+      "build_started_at": "2026-09-13T03:52:44.372492+00:00",
+      "build_finished_at": "2026-09-13T04:09:49.991800+00:00",
+      "build_duration_seconds": 1026,
+      "compiled_source": {
+        "bundle_sha256": "6f9821f70702720b27b1618d2728ecc4f89ba3de239b69a4bbbf70d6af5ba997",
+        "expected_source_literal_present": true,
+        "inherited_source_literal_present": false,
+        "runtime_delivery_verified": false
+      }
+    }
+  ]
+}

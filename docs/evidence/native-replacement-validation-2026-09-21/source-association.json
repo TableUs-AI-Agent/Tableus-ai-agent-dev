@@ -1,0 +1,91 @@
+{
+  "schema_version": 1,
+  "base_sha": "5b39d937b905691798a585b4aced79f91c7e97bf",
+  "application_sha": "ed8330a766b3c4b80a505e075535678394e275e9",
+  "operator_implementation_sha": "16603dd0cf36d27b492e57a02d3c6c438a2563c4",
+  "native_execution": false,
+  "source_checks": {
+    "Makefile": {
+      "sha256": "4108f3649d023bf3879986e0b5b6b71098a8b57ec4dff148f59fb3d58a7cc8f7",
+      "matches_operator_implementation": true
+    },
+    "scripts/local-mobile-build.mjs": {
+      "sha256": "a2266c6a187b25f69b5af137daefcfc7b48e6e1dd9c9a20dd9ea8efb6f723941",
+      "matches_operator_implementation": true
+    },
+    "scripts/local-mobile-diagnostics.mjs": {
+      "sha256": "ffc99a61284d2ebaa0df8fd1209ec9d3f3f372caffd35b4595a4ed50e4a07194",
+      "matches_operator_implementation": true
+    },
+    "scripts/local-mobile-build.test.mjs": {
+      "sha256": "82749b0fb93c4f331781babb4898bf9c42a3b8a55be2fbea9b836d527a357755",
+      "matches_operator_implementation": true
+    },
+    "scripts/local-mobile-diagnostics.test.mjs": {
+      "sha256": "77f0f94ccf6ecb3666247ca61a6f770d9d1869d544f55a14538b99e132dd47da",
+      "matches_operator_implementation": true
+    },
+    "scripts/local-mobile-build-integration.test.mjs": {
+      "sha256": "adfa8067f85c2028d5d3d5e52f084c7b1b7c7ddbe9431aaab15eddc65d122e8d",
+      "matches_operator_implementation": true
+    },
+    "scripts/local-mobile-build-preflight.test.mjs": {
+      "sha256": "b328ad541b9f82823042cb22ee65bff6b1d4aa4731a12b78f3bbcc9c31e08f01",
+      "matches_operator_implementation": true
+    },
+    "scripts/ios-scene-build-preflight.mjs": {
+      "sha256": "43c6ca85aa3580fb4d5affc6abb91457e5195fbc757ea0c13781a63bbfdab6b4",
+      "application_equals_operator": true
+    },
+    "mobile/plugins/ios-scene-lifecycle.cjs": {
+      "sha256": "b30f0909b8659604ae96fbe875e93d52764a83d866130143accd5c56a5641ae0",
+      "application_equals_operator": true
+    }
+  },
+  "private_log_checks": {
+    ".artifacts/native-diagnostic-retention/focused.log": {
+      "sha256": "9857f1a150c22779e16b9d4cf43b7f6ab25c05b98882450b6d33ead29db91364",
+      "matches": true
+    },
+    ".artifacts/native-diagnostic-retention/make-ready-sandbox-blocked.log": {
+      "sha256": "5226b143067600ef90eb686dfe5ce72e78c17e8d393fe57ad1e623dd15525f08",
+      "matches": true
+    },
+    ".artifacts/native-diagnostic-retention/make-ready.log": {
+      "sha256": "da92fc79269a83af19e28cae86958da216e94d92d91d7c62637c99e24d5073ad",
+      "matches": true
+    },
+    ".artifacts/native-diagnostic-retention/contract-check.log": {
+      "sha256": "33004905d7fb90dcfe23794aefb69990d48d210803fa04c4330da64eaf19452e",
+      "matches": true
+    }
+  },
+  "git_objects": {
+    "mobile": "f6b5c4f6547f416b7f36f063eb729df96ff2e4aa",
+    "packages": "ea8a044159b46b6578c3755a6da904fbfa241e7e",
+    "package-lock.json": "c8b71c3a621e53232c44b3540fd87f39e1fcf9e8",
+    "vendor": "1bd9b5b4cdc9a354a9abcbb94263676cf5fe051a",
+    "backend": "fc576d49099aa378c5b21f6796e47f5aea156de2"
+  },
+  "signer_expectations": {
+    "test-android/inspection.json": {
+      "inspection_sha256": "6d9cc43b0c21ced62c2212eccbe62b9d2e80f5efe8cf8b87cab5f3c408c2de95",
+      "signer_type": "android-sha256-cert",
+      "signer_identity": "02:FC:F9:A8:5F:EF:26:D4:61:43:F4:D8:28:7A:32:5B:05:21:1B:B6:77:23:91:32:4C:12:AA:78:60:C6:65:68"
+    },
+    "readiness-android/inspection.json": {
+      "inspection_sha256": "cb4b157dcdb9dfb2263554430170ee7790ee2c6585b22506bc8e61750db34e8c",
+      "signer_type": "android-sha256-cert",
+      "signer_identity": "02:FC:F9:A8:5F:EF:26:D4:61:43:F4:D8:28:7A:32:5B:05:21:1B:B6:77:23:91:32:4C:12:AA:78:60:C6:65:68"
+    },
+    "ios27-pilot/readiness-ios/inspection.json": {
+      "inspection_sha256": "d9f38160fb0d5ccabcef82d9ac5c1aecdcfc910d21c89e80ee054cfc713c5dc5",
+      "signer_type": "apple-team-id",
+      "signer_identity": "6MHJN5V9UJ"
+    }
+  },
+  "installed_prior_operator_cli": {
+    "version": "23.2.0",
+    "scope": "prior 63bd installation, not a new install"
+  }
+}

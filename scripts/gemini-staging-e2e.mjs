@@ -3,13 +3,14 @@
 import { randomUUID } from "node:crypto";
 import { mkdirSync, writeFileSync } from "node:fs";
 import { basename, resolve } from "node:path";
-import { createInterface } from "node:readline/promises";
 import { spawnSync } from "node:child_process";
 
 import {
   assertSanitizedGeminiSummary,
   validateGeminiReadiness,
 } from "./gemini-evidence-utils.mjs";
+import { promptSecret } from "./prompt-utils.mjs";
+import { RELEASE_ORIGINS, requireReleaseOrigin } from "./release-origins.mjs";
 
 function parseArgs(argv) {
   const values = {};
@@ -23,7 +24,7 @@ function parseArgs(argv) {
 }
 
 async function jsonRequest(url, options = {}) {
-  const response = await fetch(url, { ...options, signal: AbortSignal.timeout(30_000) });
+  const response = await fetch(url, { redirect: "error", ...options, signal: AbortSignal.timeout(30_000) });
   if (!response.ok) throw new Error(`Sanitized staging request failed (${response.status}).`);
   return response.json();
 }
@@ -41,7 +42,8 @@ if (!apiUrl || !expectedSha || !args.evidence) {
   throw new Error("--api-url, --sha, and --evidence are required.");
 }
 if (!/^[0-9a-f]{40}$/.test(expectedSha)) throw new Error("--sha must be an exact commit SHA.");
-if (new URL(apiUrl).protocol !== "https:") throw new Error("Gemini staging evidence requires HTTPS.");
+requireReleaseOrigin(apiUrl, RELEASE_ORIGINS.stagingApi, "Gemini staging API");
+requireReleaseOrigin(supabaseUrl, RELEASE_ORIGINS.stagingSupabase, "Gemini Supabase");
 if (!supabaseUrl || !supabaseAnonKey) {
   throw new Error("Supabase URL and public anon key must be provided through the environment.");
 }
@@ -53,16 +55,15 @@ if (git.status !== 0 || git.stdout.trim() !== expectedSha) {
 const readiness = await jsonRequest(`${apiUrl}/health/ready`);
 validateGeminiReadiness(readiness, expectedSha);
 
-const terminal = createInterface({ input: process.stdin, output: process.stdout });
 async function authenticate(label) {
-  const email = (await terminal.question(`${label} approved account email: `)).trim().toLowerCase();
+  const email = (await promptSecret(`${label} approved account email: `)).trim().toLowerCase();
   if (!email) throw new Error("An approved account email is required.");
   await jsonRequest(`${supabaseUrl}/auth/v1/otp`, {
     method: "POST",
     headers: { apikey: supabaseAnonKey, "Content-Type": "application/json" },
     body: JSON.stringify({ email, create_user: false }),
   });
-  const code = (await terminal.question(`${label} newest verification code: `)).trim();
+  const code = (await promptSecret(`${label} newest verification code: `)).trim();
   if (!code) throw new Error("A verification code is required.");
   const session = await jsonRequest(`${supabaseUrl}/auth/v1/verify`, {
     method: "POST",
@@ -94,7 +95,6 @@ let guestToken;
 try {
   organizerToken = await authenticate("Organizer");
   guestToken = await authenticate("Guest");
-  terminal.close();
   const organizer = api(organizerToken);
   const guest = api(guestToken);
   const locationLabel = "Madison, Wisconsin";
@@ -183,5 +183,4 @@ try {
 } finally {
   organizerToken = undefined;
   guestToken = undefined;
-  terminal.close();
 }

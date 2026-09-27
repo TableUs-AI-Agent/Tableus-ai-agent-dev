@@ -1,0 +1,233 @@
+{
+  "kind": "source_review",
+  "sha": "f94a1d9d1125e6c9111aa08eda496f014f20d0c0",
+  "report": {
+    "schema_version": 1,
+    "kind": "source_review",
+    "sha": "f94a1d9d1125e6c9111aa08eda496f014f20d0c0",
+    "environment": "staging",
+    "reviewer": "primary-codex-gpt-6-astra",
+    "reviewed_at": "2026-09-15T21:54:03.517Z",
+    "files": [
+      {
+        "path": "backend/main.py",
+        "sha256": "ef666ed1b6c0a38a6c0fb3e9aad51707bb4bc701beeadfc8b669b1e72fd48dbf"
+      },
+      {
+        "path": "backend/tableus/api.py",
+        "sha256": "ddb81183008b432785472d5bf4399ba4b8b33a3329e5671da0667774a32dbfdc"
+      },
+      {
+        "path": "backend/tableus/auth.py",
+        "sha256": "3aa402be2daf5a4b7892ba842190c407687f64f4d97b74e61bbe958288f7621e"
+      },
+      {
+        "path": "backend/tableus/config.py",
+        "sha256": "d7b742fdb37ac0bfe6277bd55efa98e78e789055590011a7c60d3858dbdd9248"
+      },
+      {
+        "path": "backend/tableus/request_controls.py",
+        "sha256": "f52590c79a83c99fe869de45115d8b2920f760039bfcd96c54298bb93132f03b"
+      },
+      {
+        "path": "backend/tableus/security.py",
+        "sha256": "3640e708b94296f3c125e7f2c5a37985a949bfb8314c2cff9a127438ac8d7915"
+      },
+      {
+        "path": "backend/tableus/telemetry.py",
+        "sha256": "6bf769d0ad06fa7ca0f4c636163d38a7c47fc03991d03b381be7f76dcec8946f"
+      },
+      {
+        "path": "mobile/src/lib/auth-lifecycle.ts",
+        "sha256": "c4729b6b69a050d362f29d17070c559bf0bc5113515b3bcf3a34963cbabb98ec"
+      },
+      {
+        "path": "mobile/src/providers/auth-provider.tsx",
+        "sha256": "f1ad8763d32aa807e2a327cf7c129da570b5282f9589f0d626ec44442b633c51"
+      },
+      {
+        "path": "packages/domain/src/telemetry.ts",
+        "sha256": "a40285c26e671e7f7ac30239114d60fc2751cea4ab8e72dd1d05bccc52ce98df"
+      },
+      {
+        "path": "scripts/release-origins.mjs",
+        "sha256": "e91ebe8fd77bac445afe01fb360ac5dd5f459253aadd0d57cbb07e76cb46df7d"
+      },
+      {
+        "path": "mobile/app/plans/[id].tsx",
+        "sha256": "7088fcbe6b4326343f6c5afa6c3696e3e070a9cd8c46d9e59d848fa8e3612937"
+      },
+      {
+        "path": "mobile/src/providers/app-providers.tsx",
+        "sha256": "c7c75e9783f2c5473f370d7ec93cf662b268c8425ce6e599e7e63e1632da3195"
+      },
+      {
+        "path": "mobile/src/lib/recoverable-mutation.ts",
+        "sha256": "413017bc2cde4f40ecd331bff6802619a9954a897c9022862af236e831c78301"
+      },
+      {
+        "path": "mobile/app.config.ts",
+        "sha256": "50d21693801b982aae362dbf467c9de210a3e77685241a0ea447e95a053290dd"
+      },
+      {
+        "path": "mobile/package.json",
+        "sha256": "c4856eac7023713a5c1ab834d2fa6cb1b3db62a3edf700dc9ed9fd0180503d23"
+      },
+      {
+        "path": "package-lock.json",
+        "sha256": "7af3277d19094e0275e35b39b5a04c195b7ddf75d4b517983f120bf72fe299f3"
+      },
+      {
+        "path": "mobile/plugins/ios-scene-lifecycle.cjs",
+        "sha256": "b30f0909b8659604ae96fbe875e93d52764a83d866130143accd5c56a5641ae0"
+      },
+      {
+        "path": "mobile/plugins/with-ios-scene-lifecycle.cjs",
+        "sha256": "465ddb91a8d7c96efac467238a328e877ba01b5365e15a654825eecb783da407"
+      },
+      {
+        "path": "mobile/plugins/NOTICE.md",
+        "sha256": "abeb79fc38dd4362f5e6cc12a09437de811a9021f6ee9f3a8cdcb330625aa5a2"
+      },
+      {
+        "path": "scripts/ios-scene-build-preflight.mjs",
+        "sha256": "43c6ca85aa3580fb4d5affc6abb91457e5195fbc757ea0c13781a63bbfdab6b4"
+      },
+      {
+        "path": "scripts/local-mobile-build.mjs",
+        "sha256": "6dd3d8123e5a0b904554dc558a0746e96fe8c33f1e4feccedf862dde6fb3572a"
+      },
+      {
+        "path": "scripts/mobile-artifact-security.mjs",
+        "sha256": "9c5c55e40a3ffb15a459171bdafeb19b113b1cd2e86835de7fe9a33440c603ac"
+      },
+      {
+        "path": "scripts/inspect-mobile-links-artifact.mjs",
+        "sha256": "81c8fe3b5351a10ca30c95d63fbc1ab7832daa8a0d503089ec5cc53b7ba42497"
+      },
+      {
+        "path": "scripts/ios-scene-lifecycle.test.mjs",
+        "sha256": "fdb13ace96fc1b5c0d13ab2cb52fa2f7d0f94633b8a4f0aeccb2c5336ddd3a63"
+      },
+      {
+        "path": "scripts/verify-ios-scene-prebuild.mjs",
+        "sha256": "b10a756bbf3437237df93a7a95d8de170d29e6feb40ad3243b7c4f50dd630195"
+      }
+    ],
+    "coverage": [
+      {
+        "area": "authentication",
+        "files": [
+          "backend/tableus/auth.py",
+          "mobile/src/providers/auth-provider.tsx",
+          "mobile/src/lib/auth-lifecycle.ts",
+          "mobile/plugins/ios-scene-lifecycle.cjs",
+          "mobile/plugins/with-ios-scene-lifecycle.cjs"
+        ],
+        "assessment": "Hash-verified carry-forward from owner-accepted 2ad48a8: every previously reviewed file is unchanged. The named control files are byte-identical to the accepted 6b9719b review; its scoped assessment is carried forward after Git-blob comparison. Verified hosted identity signature/audience checks, approved-profile lookup, local sign-out scope and subject-change cache clearing. Existing session deadlines and modeled cross-device scope tests are retained. The migration retains factory initialization and existing URL overrides; Expo owns cold/warm scene delivery. Actual prebuild matches the reviewed migration. Physical auth restoration after this native runtime change remains unverified."
+      },
+      {
+        "area": "authorization",
+        "files": [
+          "backend/tableus/api.py",
+          "backend/tableus/auth.py",
+          "mobile/app/plans/[id].tsx"
+        ],
+        "assessment": "Hash-verified carry-forward from owner-accepted 2ad48a8: every previously reviewed file is unchanged. The named control files are byte-identical to the accepted 6b9719b review; its scoped assessment is carried forward after Git-blob comparison. Reviewed membership checks for plan/detail/vote, organizer checks for finalize/reopen/rotation, active-run vote binding and finalized-plan mutation rejection. This targets those controls, not every API route. Reviewed the changed screen: refresh uses the existing member-protected detail endpoint, and organizer controls and mutation routes are unchanged."
+      },
+      {
+        "area": "private_links",
+        "files": [
+          "backend/tableus/api.py",
+          "backend/tableus/security.py",
+          "mobile/app.config.ts",
+          "mobile/plugins/ios-scene-lifecycle.cjs"
+        ],
+        "assessment": "Hash-verified carry-forward from owner-accepted 2ad48a8: every previously reviewed file is unchanged. The named control files are byte-identical to the accepted 6b9719b review; its scoped assessment is carried forward after Git-blob comparison. Reviewed random capability generation, hashed storage, approved-profile join dependency, rotation rejection and bounded/email-bound invitation grants. URL capability risk remains explicitly open. Only the scene plugin is added to app config; canonical host/association and link validation are unchanged. No custom SceneDelegate is introduced. Cold/warm universal/private link delivery requires new device evidence."
+      },
+      {
+        "area": "idempotency",
+        "files": [
+          "backend/main.py",
+          "backend/tableus/request_controls.py",
+          "mobile/app/plans/[id].tsx",
+          "mobile/src/lib/recoverable-mutation.ts"
+        ],
+        "assessment": "Hash-verified carry-forward from owner-accepted 2ad48a8: every previously reviewed file is unchanged. The named control files are byte-identical to the accepted 6b9719b review; its scoped assessment is carried forward after Git-blob comparison. Reviewed replay identity keyed by verified subject/method/path, request-body fingerprint conflicts, fresh approval/membership/organizer checks before replay and one-process serialization. Existing deterministic replay regressions cover these boundaries. New vote feedback does not change the recoverable mutation hook, idempotency keys, request body or cache update path."
+      },
+      {
+        "area": "provider_limits",
+        "files": [
+          "backend/tableus/api.py",
+          "backend/tableus/config.py",
+          "mobile/app/plans/[id].tsx",
+          "mobile/src/providers/app-providers.tsx"
+        ],
+        "assessment": "Hash-verified carry-forward from owner-accepted 2ad48a8: every previously reviewed file is unchanged. The named control files are byte-identical to the accepted 6b9719b review; its scoped assessment is carried forward after Git-blob comparison. Reviewed admission before provider work and bounded rolling Places/Gemini reservations. Shared quota fairness and one-process reservation coordination remain staging limits. The changed plan screen removes gesture-triggered reads, disables refresh during fetching and reuses an in-flight query. Nine component regressions establish local request behavior; this reduces accidental work but does not replace server quotas."
+      },
+      {
+        "area": "hosted_origins",
+        "files": [
+          "backend/tableus/config.py",
+          "scripts/release-origins.mjs",
+          "scripts/ios-scene-build-preflight.mjs",
+          "scripts/local-mobile-build.mjs",
+          "scripts/mobile-artifact-security.mjs",
+          "scripts/inspect-mobile-links-artifact.mjs"
+        ],
+        "assessment": "Hash-verified carry-forward from owner-accepted 2ad48a8: every previously reviewed file is unchanged. The named control files are byte-identical to the accepted 6b9719b review; its scoped assessment is carried forward after Git-blob comparison. Reviewed hosted rejection of demo auth, exact staging operator origins, HTTPS-only origins and distinct runtime/migration database roles. No fresh hosted grant/configuration audit is claimed. SDK 27 compatibility is checked against the detached candidate before EAS compilation and against inspected plist metadata before artifact acceptance. Existing origin, signer, transport and source gates are retained. Prebuild shows no unrelated plist/project changes."
+      },
+      {
+        "area": "telemetry",
+        "files": [
+          "backend/tableus/telemetry.py",
+          "packages/domain/src/telemetry.ts",
+          "mobile/package.json",
+          "package-lock.json",
+          "mobile/plugins/NOTICE.md",
+          "scripts/verify-ios-scene-prebuild.mjs"
+        ],
+        "assessment": "Hash-verified carry-forward from owner-accepted 2ad48a8: every previously reviewed file is unchanged. The named control files are byte-identical to the accepted 6b9719b review; its scoped assessment is carried forward after Git-blob comparison. Reviewed event property allowlists, random session identifiers, redacted error messages, removal of user/headers/breadcrumb data and URL sanitization. Existing telemetry tests remain deterministic. Expo is pinned to published 57.0.23; the official experimental plugin is adapted from an immutable attributed MIT source. No credentials, uploads or application telemetry are added. Repeated generated Xcode projects differ only in the existing Sentry phase UUID, normalized solely for comparison."
+      }
+    ],
+    "checks": [
+      {
+        "name": "One make ready passed: 226 JavaScript, 98 Python, three local Postgres skips. 24 focused tests, actual SDK fail-before/pass-after and three actual prebuild generations passed; no native compilation.",
+        "passed": true,
+        "evidence_sha256": "295d38a492345ae78f4c397ebdf4f3716c51f2c1347706d6ef256621a6d6a38e"
+      }
+    ],
+    "findings": [
+      {
+        "id": "staging-shared-quota",
+        "severity": "medium",
+        "runtime": true,
+        "status": "open",
+        "disposition": "One approved participant can consume shared rolling provider limits. Existing minute limits and isolated staging contain exposure. Durable per-actor quotas are required before cohort expansion."
+      },
+      {
+        "id": "staging-capability-url",
+        "severity": "medium",
+        "runtime": true,
+        "status": "open",
+        "disposition": "Private join capability remains in a URL and can be copied from browser history or sharing. Approved authentication, hashed storage, rotation and telemetry redaction reduce exposure. Exchange design or explicit production risk decision is deferred."
+      }
+    ],
+    "limitations": [
+      "Primary-agent focused delta review with hash-verified reuse of all fourteen control files from accepted 2ad48a8. Not an independent audit, whole-repository review or Security Scan.",
+      "Expo native runtime and its transitive dependency graph changed. Config/source review and prebuild checks cannot prove compilation, launch, foreground events or cold/warm links. No new native artifact exists and the physical launch blocker remains unverified until a new iOS 27 pilot passes.",
+      "The official opt-in integration is experimental and unpublished; the local adaptation uses the approved immutable revision, installed-package patch checks and provenance. React Native remains 0.86.2 despite the existing recommended 0.86.3 warning. Native dependency/advisory and production release review remain outstanding.",
+      "No new critical/high runtime issue was identified in this scoped source delta. This is not a fresh dependency advisory audit or a claim that the entire dependency graph is vulnerability-free.",
+      "All old native/hosted artifacts and review acceptance remain bound to their exact SHA. New review acceptance is pending. Staging quota fairness and capability URLs remain open medium risks; no production/store/cohort authorization follows.",
+      "Three PostgreSQL tests are skipped locally. No live providers, sign-in messages, devices, native compilation, CI push or deployment ran. Reconcile live budgets before any new device traffic."
+    ]
+  },
+  "report_sha256": "490ab7cab808455d38e21cd00942b6aa9b071a0b54d0810bb1e980c010f891cc",
+  "owner_acceptance": {
+    "policy": "staging-source-review-v1",
+    "approved": true,
+    "sha": "f94a1d9d1125e6c9111aa08eda496f014f20d0c0",
+    "report_sha256": "490ab7cab808455d38e21cd00942b6aa9b071a0b54d0810bb1e980c010f891cc",
+    "reference": "owner-approved-f94a1d9-ios27-pilot-2026-09-15"
+  }
+}

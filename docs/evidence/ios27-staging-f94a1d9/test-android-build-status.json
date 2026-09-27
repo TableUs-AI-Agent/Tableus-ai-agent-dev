@@ -1,0 +1,15 @@
+{
+  "profile": "test-android",
+  "application_sha": "f94a1d9d1125e6c9111aa08eda496f014f20d0c0",
+  "status": "passed",
+  "started_at": "2026-09-15T23:01:59.379972+00:00",
+  "free_gib_at_start": 21.466,
+  "operator_sha": "4e515268386150ab5c26b92c978b72a366612c54",
+  "pid": 12146,
+  "exit_code": 0,
+  "finished_at": "2026-09-15T23:24:41.608249+00:00",
+  "artifact_exists": true,
+  "inspection_exists": true,
+  "receipt_exists": true,
+  "free_gib_at_finish": 18.198
+}

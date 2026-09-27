@@ -1,0 +1,29 @@
+{
+  "application_sha": "f94a1d9d1125e6c9111aa08eda496f014f20d0c0",
+  "profiles": [
+    {
+      "path": "/Users/brianchei/repos/Tableus-ai-agent-dev/.artifacts/ios27-staging-f94a1d9/install-staging/readiness-android/TableUs.apk",
+      "artifact_sha256": "d06a893df1cfc5e1ffd91a3bb6f8e9c309b80bfcb7389a82974fccd2ad061000",
+      "application_sha": "f94a1d9d1125e6c9111aa08eda496f014f20d0c0",
+      "profile": "readiness-android",
+      "staging_reinspection_passed": true
+    },
+    {
+      "path": "/Users/brianchei/repos/Tableus-ai-agent-dev/.artifacts/ios27-staging-f94a1d9/install-staging/telemetry-test-ios/TableUs.app",
+      "artifact_sha256": "81075451eb36d6c5d583df8322f48eea98ec7d9eda3fdb932ecf37e2716af5eb",
+      "application_sha": "f94a1d9d1125e6c9111aa08eda496f014f20d0c0",
+      "profile": "telemetry-test-ios",
+      "staging_reinspection_passed": true
+    },
+    {
+      "path": "/Users/brianchei/repos/Tableus-ai-agent-dev/.artifacts/ios27-staging-f94a1d9/install-staging/telemetry-test-android/TableUs.apk",
+      "artifact_sha256": "e751a178d92aff237b2a357a8c512a7bdfde24d4fc289249d3f19624a65f8f1b",
+      "application_sha": "f94a1d9d1125e6c9111aa08eda496f014f20d0c0",
+      "profile": "telemetry-test-android",
+      "staging_reinspection_passed": true
+    }
+  ],
+  "helper_sha256": "a40259cd731b88fb6e3aa8c7ad8d87cdee4da203d4788cf16d16f160da19e6ef",
+  "installed": false,
+  "canaries_sent": false
+}

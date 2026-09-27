@@ -1,0 +1,28 @@
+{
+  "application_source_sha": "c5b041c85f4f7b959436c13bef48c959622c624f",
+  "operator_tooling_reference_sha": "211ff1c7876694a4b2db677ec26fe5741a6770cb",
+  "operator_files_unchanged_across_checkpoints": true,
+  "operator_file_blobs": {
+    "scripts/local-mobile-build.mjs": "8c2b0f2e01fa2dc63044b724146bfce55f43fd48",
+    "scripts/local-mobile-build-preflight.mjs": "faf49cf9947010a7fdb13171399b4e42007087d4"
+  },
+  "checkpoints": [
+    "211ff1c7876694a4b2db677ec26fe5741a6770cb",
+    "b7f5f039a5546d4fd0b397effe6d62826ce2f9f5",
+    "60654ae7bac065b7f1635aca1e4e0fb888c0331a",
+    "80f96e052bc1a68cab4d026bf25ad3e28d5ff9e5"
+  ],
+  "build_dispatch_checkout_sha": {
+    "test-ios": "211ff1c7876694a4b2db677ec26fe5741a6770cb",
+    "test-android": "211ff1c7876694a4b2db677ec26fe5741a6770cb",
+    "readiness-ios": "b7f5f039a5546d4fd0b397effe6d62826ce2f9f5",
+    "readiness-android": "60654ae7bac065b7f1635aca1e4e0fb888c0331a",
+    "telemetry-test-ios": "60654ae7bac065b7f1635aca1e4e0fb888c0331a",
+    "telemetry-test-android": "80f96e052bc1a68cab4d026bf25ad3e28d5ff9e5"
+  },
+  "test_harness_checkout_sha": "c5b041c85f4f7b959436c13bef48c959622c624f",
+  "remote_branch_application_sha": "c5b041c85f4f7b959436c13bef48c959622c624f",
+  "evidence_commits_pushed": false,
+  "matrix_verifier_sha256": "be349eedcf3258d1b617dfbe07e7fb64f193a5126ef29ed136b231901d15e31c",
+  "physical_readiness_launcher_sha256": "6b89da490e9224cb9caa24dc04a4f9d13d6db330cb4b147cc6ff2c766a0e4378"
+}

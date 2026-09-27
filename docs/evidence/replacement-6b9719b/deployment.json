@@ -1,0 +1,77 @@
+{
+  "schema_version": 1,
+  "application_sha": "6b9719b4e63e34803f2e7c2598e45851790df661",
+  "observed_at": "2026-09-14T22:56:40.087367+00:00",
+  "railway": {
+    "project_id": "93dcd3f4-7c47-4010-9431-fc28638813d2",
+    "environment_id": "0f546dbc-222f-48b8-a27b-ff008af4fec9",
+    "service_id": "94aeecda-4575-4fc1-bb08-796bf779ada5",
+    "deployment_id": "69c96019-bedc-4b53-a37d-358a103f7e24",
+    "status": "SUCCESS",
+    "explicit_commit_sha": "6b9719b4e63e34803f2e7c2598e45851790df661",
+    "readiness": {
+      "status": "ready",
+      "provider_mode": "live",
+      "places_provider_mode": "live",
+      "ai_provider_mode": "live",
+      "ai_backend": "agent-platform",
+      "auth_mode": "supabase",
+      "build_sha": "6b9719b4e63e34803f2e7c2598e45851790df661",
+      "telemetry_mode": "staging",
+      "analytics_mode": "anonymous",
+      "error_reporting_mode": "errors_only",
+      "telemetry_e2e": true
+    },
+    "places_runtime_max_attempts_30d": 349,
+    "cors": [
+      {
+        "origin": "https://tableus-staging-949ez84u1-briancheis-projects.vercel.app",
+        "status": 200,
+        "allow_origin": "https://tableus-staging-949ez84u1-briancheis-projects.vercel.app"
+      },
+      {
+        "origin": "https://tableus-staging-git-codex-replacemen-ea2809-briancheis-projects.vercel.app",
+        "status": 200,
+        "allow_origin": "https://tableus-staging-git-codex-replacemen-ea2809-briancheis-projects.vercel.app"
+      }
+    ]
+  },
+  "vercel": {
+    "project_id": "prj_lPu3pWZiJ5ZRUIab6wiXrJIW930G",
+    "deployment_id": "dpl_2qeefqPhARdErQxUqxLssCintxte",
+    "status": "READY",
+    "git_sha": "6b9719b4e63e34803f2e7c2598e45851790df661",
+    "git_branch": "codex/replacement-6b9719b",
+    "url": "https://tableus-staging-949ez84u1-briancheis-projects.vercel.app",
+    "preview_aliases": [
+      "tableus-staging-git-codex-replacemen-ea2809-briancheis-projects.vercel.app"
+    ],
+    "production_deployment_id": "dpl_7csJvHoJH9qgFZDijbwu3w36r2sK",
+    "production_aliases": [
+      "www.table-us.com",
+      "links.table-us.com",
+      "tableus-staging.vercel.app",
+      "table-us.com",
+      "tableus-staging-briancheis-projects.vercel.app",
+      "tableus-staging-git-main-briancheis-projects.vercel.app"
+    ],
+    "production_unchanged": true,
+    "protection": {
+      "deploymentType": "all_except_custom_domains"
+    },
+    "source_variables_updated_before_push": true
+  },
+  "ci": {
+    "run_id": "34905755622",
+    "url": "https://github.com/TableUs-AI-Agent/Tableus-ai-agent-dev/actions/runs/34905755622",
+    "head_sha": "6b9719b4e63e34803f2e7c2598e45851790df661",
+    "conclusion": "success",
+    "javascript_tests": 204,
+    "python_tests": 101,
+    "browser_tests": 4,
+    "local_provider_modes": "deterministic"
+  },
+  "native_acceptance_complete": false,
+  "cumulative_acceptance_complete": false,
+  "security_scan_started": false
+}

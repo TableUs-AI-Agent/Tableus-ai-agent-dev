@@ -1,0 +1,17 @@
+{
+  "schema_version": 1,
+  "recorded_at": "2026-09-22T02:46:03.135156+00:00",
+  "owner_response": "approve",
+  "approved_amendment": "D1",
+  "proposal_commit": "8be19c0896b9aeb97a28b8f3f35bf19ce287ea70",
+  "proposal_sha256": "a39624efa874381062fa629f6fc2887f464fb5f48a519189ab1f137a37dce47e",
+  "script_sha256": {
+    "capture.py": "ebc3d31524516ab4a5a2cd7c7480a1957978baed22b30d9bd435ce815cdb4a2f",
+    "driver.py": "9a8b58400a355dc6cd9aebedd6c82ef3ee6e6bae0dbdedef240aa8fa3e622048"
+  },
+  "scope": "One bounded local diagnostic launch on the existing disposable iOS simulator; fresh setup/readout debuggers; unchanged app; telemetry off; stop on first failure; no automatic repeat.",
+  "native_builds_authorized": 0,
+  "live_budget_change": false,
+  "N1_behavioral_resumption_approved": false,
+  "N2_approved": false
+}

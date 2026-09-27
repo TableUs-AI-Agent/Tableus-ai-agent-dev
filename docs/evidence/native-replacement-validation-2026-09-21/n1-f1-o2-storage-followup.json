@@ -1,0 +1,95 @@
+{
+  "schema_version": 1,
+  "recorded_at": "2026-09-23T05:13:07.600211+00:00",
+  "status": "approved_two_cache_cleanup_completed_capacity_still_blocked",
+  "evidence_base_sha": "163336f5e454107e56d055493f1859c9bdebbb09",
+  "cleanup_approval": "n1-f1-o2-cache-cleanup-approval.json",
+  "cleanup_receipt": {
+    "started_at": "2026-09-23T05:06:12.581792+00:00",
+    "status": "completed",
+    "targets": [
+      "/Users/brianchei/.npm/_cacache",
+      "/Users/brianchei/Library/Caches/CocoaPods/Pods"
+    ],
+    "free_gib_before": 17.32590103149414,
+    "removed": [
+      {
+        "path": "/Users/brianchei/.npm/_cacache",
+        "allocated_kib_before": 512812,
+        "finished_at": "2026-09-23T05:06:15.713516+00:00"
+      },
+      {
+        "path": "/Users/brianchei/Library/Caches/CocoaPods/Pods",
+        "allocated_kib_before": 994072,
+        "finished_at": "2026-09-23T05:06:17.634872+00:00"
+      }
+    ],
+    "finished_at": "2026-09-23T05:06:17.635315+00:00",
+    "free_gib_after": 18.769428253173828
+  },
+  "observed_free_gib_change": 1.444,
+  "post_cleanup_preflight_free_gib": 18.767086029052734,
+  "required_free_gib": 20,
+  "native_driver_started": false,
+  "native_attempts_consumed": 0,
+  "native_attempts_remaining": 1,
+  "links_cases_executed": 0,
+  "exports_executed": 0,
+  "current_free_gib": 19.779,
+  "storage_diagnosis": {
+    "swap_observation_mib": {
+      "total": 21504,
+      "used": 20260.5,
+      "free": 1243.5
+    },
+    "cause_of_drop": "Not established; swap can contribute to changing APFS availability; no baseline swap observation proves this drop.",
+    "mounted_CoreDevice_DeviceFS": "Read-only mounted device content, not a local cleanup candidate; scan stopped.",
+    "protected": "Current support/runtime files, installed app/device sessions, app artifacts/archives/symbols, private native evidence, sources, Codex sessions and personal files."
+  },
+  "next_cleanup_proposal": {
+    "status": "prepared_unapproved",
+    "path": "/Users/brianchei/Library/Developer/Xcode/iOS DeviceSupport/iPhone18,2 26.6.1 (23G83)",
+    "allocated_kib": 5961408,
+    "allocated_gib": 5.685,
+    "kind": "Older iOS 26.6.1 system-symbol/device-support cache, not application dSYMs or build artifacts",
+    "observed_device_versions": [
+      {
+        "version": "26.5",
+        "build": "23F77"
+      },
+      {
+        "version": "27.0",
+        "build": "24A434"
+      },
+      {
+        "version": "27.0",
+        "build": "24A437"
+      }
+    ],
+    "no_known_device_on_target_version": true,
+    "registered_iPhone18_2_version": "27.0 (24A437); unavailable connection, last-known inventory only",
+    "open_files": "none; lsof exit1 with empty output/error",
+    "retained_current_support": "/Users/brianchei/Library/Developer/Xcode/iOS DeviceSupport/iPhone18,2 27.0 (24A437)",
+    "operator": "/Users/brianchei/repos/Tableus-ai-agent-dev/.artifacts/mobile/8972865893a3f018a064594457dc9cc664f8a61f/native-validation-f1/storage-followup-o2/f1-o2-old-support-cleanup.py",
+    "operator_sha256": "79ca6e0035129b5dca287966c58cf8cd1d76ccfc77ab10671a44f3347a4d885d",
+    "required_environment": {
+      "TABLEUS_OLD_IOS_SUPPORT_CLEANUP_APPROVED": "1"
+    },
+    "execution_checks": "Exact real owned directory; current support remains; fresh device inventory has no26.6/23G83; no open target files; one exact removal without permission changes.",
+    "consequence": "Future debugging/symbolication for that old OS may require restoring its system support files. Current support, app symbols and all retained evidence stay.",
+    "continuation": "Repeat fresh O2 preflight and run already approved sequence with >=20GiB; no extra native allowance or routine approval."
+  },
+  "private_evidence_sha256": {
+    "/Users/brianchei/repos/Tableus-ai-agent-dev/.artifacts/mobile/8972865893a3f018a064594457dc9cc664f8a61f/native-validation-f1/storage-followup-o2/n1-f1-o2-cache-cleanup-approval.json": "1f8e4009e1b108b65afefd20beb0d3511e08f02afca01b5afaef6d4bcdf05a43",
+    "/Users/brianchei/repos/Tableus-ai-agent-dev/.artifacts/mobile/8972865893a3f018a064594457dc9cc664f8a61f/native-validation-f1/storage-followup-o2/result.json": "fde773b09d6c7bda48b65bde90e5356a61b50719cd2da840b972ccdc9cf3e4a3",
+    "/Users/brianchei/repos/Tableus-ai-agent-dev/.artifacts/mobile/8972865893a3f018a064594457dc9cc664f8a61f/native-validation-f1/storage-followup-o2/f1-o2-cache-cleanup-execution.log": "2ce170c0232897c30161cf37d64eb23ddafe352e569aa5467075c804f3bb9b39",
+    "/Users/brianchei/repos/Tableus-ai-agent-dev/.artifacts/mobile/8972865893a3f018a064594457dc9cc664f8a61f/native-validation-f1/storage-followup-o2/f1-o2-preflight-after-cleanup.log": "1936c457dbc125761fa28eb06fd37c0f5cba969161fad654041ef87426e0a838",
+    "/Users/brianchei/repos/Tableus-ai-agent-dev/.artifacts/mobile/8972865893a3f018a064594457dc9cc664f8a61f/native-validation-f1/storage-followup-o2/f1-o2-connected-devices.json": "277b98ec8cb317d83ae23b05d41948fc89289d7fee2ff467719b30dd6d3de7c5",
+    "/Users/brianchei/repos/Tableus-ai-agent-dev/.artifacts/mobile/8972865893a3f018a064594457dc9cc664f8a61f/native-validation-f1/storage-followup-o2/f1-o2-connected-devices.log": "2cc762d4d462e4e5716278bc668de0366ddd1881a2ea7497b74ffb3c8608e3e0",
+    "/Users/brianchei/repos/Tableus-ai-agent-dev/.artifacts/mobile/8972865893a3f018a064594457dc9cc664f8a61f/native-validation-f1/storage-followup-o2/f1-o2-old-device-support-open-files.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "/Users/brianchei/repos/Tableus-ai-agent-dev/.artifacts/mobile/8972865893a3f018a064594457dc9cc664f8a61f/native-validation-f1/storage-followup-o2/f1-o2-old-device-support-open-files.err": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "/Users/brianchei/repos/Tableus-ai-agent-dev/.artifacts/mobile/8972865893a3f018a064594457dc9cc664f8a61f/native-validation-f1/storage-followup-o2/f1-o2-old-device-support-open-files.exit": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865",
+    "/Users/brianchei/repos/Tableus-ai-agent-dev/.artifacts/mobile/8972865893a3f018a064594457dc9cc664f8a61f/native-validation-f1/storage-followup-o2/f1-o2-old-support-cleanup.py": "79ca6e0035129b5dca287966c58cf8cd1d76ccfc77ab10671a44f3347a4d885d"
+  },
+  "validation": "Cleanup operator syntax/no-approval refusal; O2 native driver still not executed; application/tracked tooling unchanged."
+}

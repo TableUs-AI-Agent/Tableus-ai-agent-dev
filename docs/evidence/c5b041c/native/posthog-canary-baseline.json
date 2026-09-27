@@ -1,0 +1,19 @@
+{
+  "schema_version": 1,
+  "application_sha": "c5b041c85f4f7b959436c13bef48c959622c624f",
+  "queried_at": "2026-09-13T04:00:47Z",
+  "organization": "TableUs",
+  "project_id": 578352,
+  "project_name": "Default project",
+  "event": "telemetry_e2e",
+  "release_filter": "c5b041c85f4f7b959436c13bef48c959622c624f",
+  "date_from": "2026-09-12T00:00:00Z",
+  "breakdown": "platform",
+  "result_rows": 0,
+  "provider_reported_no_data": true,
+  "canaries_sent_during_query": false,
+  "delivery_acceptance_complete": false,
+  "raw_event_payloads_retained": false,
+  "access_restored_by_owner": true,
+  "query_documentation": "https://posthog.com/docs/product-analytics/trends/filters"
+}

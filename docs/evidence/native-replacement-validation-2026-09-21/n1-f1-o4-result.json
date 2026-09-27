@@ -1,0 +1,560 @@
+{
+  "schema_version": 1,
+  "recorded_at": "2026-09-23T06:28:37.391582+00:00",
+  "amendment": "F1-O4",
+  "status": "stopped_on_host_process_monitor_timeout_before_retained_ui_execution",
+  "evidence_base_sha": "66b4f84ce4bbc7eb7fb54dfb1e193919f629896d",
+  "evidence_commit": "Commit containing this result; separate from application/operator.",
+  "approval": "n1-f1-o4-approval.json",
+  "application_sha": "8972865893a3f018a064594457dc9cc664f8a61f",
+  "build_operator_sha": "16603dd0cf36d27b492e57a02d3c6c438a2563c4",
+  "artifact_sha256": "98c1535bfe6f7cad0c8e467454f5128c71f4aae21b8b41a5aba1c1a33f1e391d",
+  "build_id": "local-ios-test-8972865-f1-01",
+  "device_id": "0EFFA766-DCDD-49E5-84B0-D3593B68709A",
+  "device_name": "TableUs-N1-F1-O3-iOS27-8972865",
+  "runtime_id": "com.apple.CoreSimulator.SimRuntime.iOS-27-0",
+  "runtime_build": "24A434",
+  "driver_summary": {
+    "runner": "offline",
+    "amendment": "F1-O4",
+    "status": "failed_diagnostic_only",
+    "application_sha": "8972865893a3f018a064594457dc9cc664f8a61f",
+    "artifact_sha256": "98c1535bfe6f7cad0c8e467454f5128c71f4aae21b8b41a5aba1c1a33f1e391d",
+    "build_id": "local-ios-test-8972865-f1-01",
+    "runtime_id": "com.apple.CoreSimulator.SimRuntime.iOS-27-0",
+    "runtime_build": "24A434",
+    "device_type": "com.apple.CoreSimulator.SimDeviceType.iPhone-17-Pro",
+    "device_name": "TableUs-N1-F1-O3-iOS27-8972865",
+    "device_id": "0EFFA766-DCDD-49E5-84B0-D3593B68709A",
+    "frozen_runner_source_sha256": "54bca226db986131b855396b79a43cb66218fd219455af543080c8a92796f63e",
+    "instrumented_runner_sha256": "16ee1bcfae8d46d4c0c4b8eddd5e3730b53090739829fc680daa4df0a7839b8e",
+    "instrumented_proxy_sha256": "98c33b5d88f3aa2bd2baa58ab44c127105075ba28ade0d9f1872c35a6905eef0",
+    "driver_sha256": "46eeb4ea7d35eaabeb4d05c9cb9b50f71cf260e6401e6eabbfc9416b2d702096",
+    "platform_monitor_sha256": "9da3dc8687c64e17362c285d6522f64a679d0e142a859271d4fd87c528eeffd6",
+    "maestro_wrapper_sha256": "f9d9cfee40ac97dc328d1a62683f2a0da14b1c447b2d0bc0a3d5be29f0b7c632",
+    "maestro_version": "2.8.0",
+    "manifest_sha256": "3a68a084804e0f39db995e3f62e3f22c71df75463e7518d1993fba2579c912cf",
+    "o3_failed_pre_run_provenance": {
+      "o3_result_path": "/Users/brianchei/repos/Tableus-ai-agent-dev/.artifacts/mobile/8972865893a3f018a064594457dc9cc664f8a61f/native-validation-f1/test-ios-offline-f1-o3/driver-result.json",
+      "o3_result_sha256": "dda65350b0ac4b67c842ab3e8b42998ea15d18f2df38119aa141187aaa2d7d34",
+      "o3_post_stop_path": "/Users/brianchei/repos/Tableus-ai-agent-dev/.artifacts/mobile/8972865893a3f018a064594457dc9cc664f8a61f/native-validation-f1/test-ios-offline-f1-o3/post-stop-check.json",
+      "o3_post_stop_sha256": "0387a6b7479eb58d57fd16731057d2e1008d5dd3bc5ea88efdc3ff59137dd7a6",
+      "interpretation": "O3 failed before offline runner; not runtime acceptance"
+    },
+    "started_at": "2026-09-23T06:21:15.982559+00:00",
+    "limit_seconds_total": 2100,
+    "runner_limit_seconds": 1800,
+    "device_create_attempts": 0,
+    "boot_attempts": 1,
+    "control_query_attempts": 1,
+    "offline_runner_attempts": 1,
+    "new_crash_reports": [],
+    "termination_pending": false,
+    "free_gib_before_boot": 22.851634979248047,
+    "free_gib_after_boot": 22.842212677001953,
+    "control_query": {
+      "exit_code": 0,
+      "timed_out": false,
+      "elapsed_seconds": 9.465,
+      "springboard_pid": 50837,
+      "record": "/Users/brianchei/repos/Tableus-ai-agent-dev/.artifacts/mobile/8972865893a3f018a064594457dc9cc664f8a61f/native-validation-f1/test-ios-offline-f1-o4/control-query.json"
+    },
+    "command": [
+      "/Users/brianchei/.local/bin/node",
+      "/Users/brianchei/repos/Tableus-ai-agent-dev/.artifacts/mobile/8972865893a3f018a064594457dc9cc664f8a61f/native-validation-f1/runtime-preparation-o4/operator/mobile-offline-e2e.mjs",
+      "--platform",
+      "ios",
+      "--device",
+      "0EFFA766-DCDD-49E5-84B0-D3593B68709A",
+      "--app",
+      "/Users/brianchei/repos/Tableus-ai-agent-dev/.artifacts/mobile/8972865893a3f018a064594457dc9cc664f8a61f/native-validation-f1/test-ios.app",
+      "--build-id",
+      "local-ios-test-8972865-f1-01",
+      "--evidence",
+      "/Users/brianchei/repos/Tableus-ai-agent-dev/.artifacts/mobile/8972865893a3f018a064594457dc9cc664f8a61f/native-validation-f1/test-ios-offline-f1-o4",
+      "--verify-plan-refresh",
+      "true",
+      "--refresh-sha",
+      "8972865893a3f018a064594457dc9cc664f8a61f"
+    ],
+    "environment_keys": [
+      "DEVELOPER_DIR",
+      "HOME",
+      "JAVA_HOME",
+      "LANG",
+      "LOGNAME",
+      "MAESTRO_CLI_ANALYSIS_NOTIFICATION_DISABLED",
+      "MAESTRO_CLI_NO_ANALYTICS",
+      "MAESTRO_DISABLE_UPDATE_CHECK",
+      "PATH",
+      "TABLEUS_F1_O4_APPROVED",
+      "TABLEUS_F1_O4_DEVICE_ID",
+      "TABLEUS_MAESTRO_EVIDENCE_ROOT",
+      "TMPDIR",
+      "USER"
+    ],
+    "runner_started_at": "2026-09-23T06:21:52.697114+00:00",
+    "runner_pid": 51066,
+    "error": "TimeoutExpired: Command '['ps', '-axo', 'pid=,ppid=,lstart=,comm=']' timed out after 5 seconds",
+    "runner_cleanup": {
+      "stopped": true,
+      "exit_code": -2,
+      "signal": "SIGINT"
+    },
+    "exit_code": -2,
+    "owned_group_cleanup": {
+      "signals": [
+        "SIGTERM"
+      ],
+      "remaining": [],
+      "stopped": true
+    },
+    "owned_processes_after_cleanup": [],
+    "runner_elapsed_through_owned_cleanup_seconds": 49.141,
+    "offline_ports_idle_after_cleanup": true,
+    "app_termination_pending": "TimeoutExpired",
+    "retained_device_shutdown_exit": 0,
+    "retained_device_shutdown_confirmed": true,
+    "finished_at": "2026-09-23T06:23:09.774482+00:00",
+    "elapsed_seconds": 113.791,
+    "platform_monitor": {
+      "kind": "host-ps",
+      "observation_count": 29,
+      "bound_identity": {
+        "springboard": {
+          "pid": 50837,
+          "ppid": 50831,
+          "lstart": "Wed Sep 23 01:21:20 2026",
+          "comm": "/Library/Developer/CoreSimulator/Volumes/iOS_24A434/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/RuntimeRoot/System/Library/CoreServices/SpringBoard.app/SpringBoard"
+        },
+        "parent": {
+          "pid": 50831,
+          "ppid": 1,
+          "lstart": "Wed Sep 23 01:21:20 2026",
+          "comm": "launchd_sim"
+        }
+      },
+      "final_health": {
+        "at": "2026-09-23T06:22:42.750490+00:00",
+        "monitor": "host-ps",
+        "springboard": {
+          "pid": 50837,
+          "ppid": 50831,
+          "lstart": "Wed Sep 23 01:21:20 2026",
+          "comm": "/Library/Developer/CoreSimulator/Volumes/iOS_24A434/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/RuntimeRoot/System/Library/CoreServices/SpringBoard.app/SpringBoard"
+        },
+        "launchd_sim": {
+          "pid": 50831,
+          "ppid": 1,
+          "lstart": "Wed Sep 23 01:21:20 2026",
+          "comm": "launchd_sim"
+        },
+        "replacement_springboard_pids": [],
+        "tableus_pids": [],
+        "tableus_process_matches": [],
+        "new_crash_reports": [],
+        "ps_elapsed_seconds": 0.857,
+        "stop_reasons": []
+      }
+    }
+  },
+  "artifact_provenance": {
+    "status": "artifact_provenance_passed_non_runtime",
+    "diagnostic_file_count": 42,
+    "mapped_source_file_count": 50,
+    "same_application_and_artifact": true,
+    "raw_driver_record_contains_full_proof": true
+  },
+  "attempts": {
+    "diagnostic_operations_used": 1,
+    "device_create_requests": 0,
+    "boot_requests": 1,
+    "control_queries": 1,
+    "offline_runner_invocations": 1,
+    "retained_ui_flow_invocations": 0,
+    "offline_flows_accepted": 0,
+    "refresh_phases_observed": 0,
+    "further_native_execution_authorized": false,
+    "additional_attempts_remaining": 0
+  },
+  "app_install_and_launch": "Not established by retained evidence. No TableUs process observed; preparatory uninstall requested, no retained install or UI-flow records. Generated YAML is not execution.",
+  "backend_or_fault_proxy_started": true,
+  "proxy_journal_present": false,
+  "app_traffic_count": null,
+  "links_run": false,
+  "exports_run": 0,
+  "android_run": false,
+  "storage_gib": {
+    "before_boot": 22.851634979248047,
+    "after_boot": 22.842212677001953,
+    "post_shutdown": 22.681060791015625
+  },
+  "timeline_utc": [
+    {
+      "time": "2026-09-23T06:21:15.982559+00:00",
+      "event": "Approved driver started; source/artifact/tool prerequisites verified."
+    },
+    {
+      "time": "2026-09-23T06:21:42.822367+00:00",
+      "event": "One measured launchctl list began after retained-device boot."
+    },
+    {
+      "time": "2026-09-23T06:21:52.287570+00:00",
+      "event": "Query completed exit0 in9.465s; SpringBoard50837 bound to launchd_sim50831."
+    },
+    {
+      "time": "2026-09-23T06:21:52.697114+00:00",
+      "event": "One offline runner started; backend/proxy setup and generated flow definitions retained."
+    },
+    {
+      "time": "2026-09-23T06:22:03Z",
+      "event": "CoreSimulator source line88744 records preparatory uninstall request for com.tableus.app; completion not proven."
+    },
+    {
+      "time": "2026-09-23T06:22:28.868799Z",
+      "event": "Last of29 regular healthy host observations; next ps query exceeded5s, triggering stop."
+    },
+    {
+      "time": "2026-09-23T06:22:42.750490Z",
+      "event": "Final host observation healthy after owned-process cleanup; original SpringBoard/parent still present, no TableUs observed."
+    },
+    {
+      "time": "2026-09-23T06:23:01Z",
+      "event": "Target shutdown requested after best-effort app terminate timed out8s."
+    },
+    {
+      "time": "2026-09-23T06:23:07.261Z",
+      "event": "Five target system-service SIGTERM-timeout/SIGKILL reports captured during shutdown."
+    },
+    {
+      "time": "2026-09-23T06:23:09.774482+00:00",
+      "event": "Failed after113.791s; target Shutdown confirmed."
+    }
+  ],
+  "post_stop": {
+    "recorded_at": "2026-09-23T06:27:03.261123+00:00",
+    "device_id": "0EFFA766-DCDD-49E5-84B0-D3593B68709A",
+    "read_only": true,
+    "device": [
+      {
+        "dataPath": "/Users/brianchei/Library/Developer/CoreSimulator/Devices/0EFFA766-DCDD-49E5-84B0-D3593B68709A/data",
+        "dataPathSize": 367931392,
+        "logPath": "/Users/brianchei/Library/Logs/CoreSimulator/0EFFA766-DCDD-49E5-84B0-D3593B68709A",
+        "udid": "0EFFA766-DCDD-49E5-84B0-D3593B68709A",
+        "lastUsedAt": "2026-09-23T06:21:20Z",
+        "isAvailable": true,
+        "logPathSize": 81920,
+        "deviceTypeIdentifier": "com.apple.CoreSimulator.SimDeviceType.iPhone-17-Pro",
+        "state": "Shutdown",
+        "name": "TableUs-N1-F1-O3-iOS27-8972865",
+        "runtime": "com.apple.CoreSimulator.SimRuntime.iOS-27-0"
+      }
+    ],
+    "shutdown_confirmed": true,
+    "matching_processes": [],
+    "known_parent_runner_or_descendants": [],
+    "ports": {
+      "7999": {
+        "exit_code": 1,
+        "stdout": "",
+        "stderr": ""
+      },
+      "8000": {
+        "exit_code": 1,
+        "stdout": "",
+        "stderr": ""
+      },
+      "8001": {
+        "exit_code": 1,
+        "stdout": "",
+        "stderr": ""
+      }
+    },
+    "new_target_crashes": [
+      {
+        "file": "UsageTrackingAgent-2026-09-23-012310.000.ips",
+        "sha256": "115fe65f410434113d91b4ed5ca67db18a74a55177b86491a7cd0d9ec53b7415",
+        "captureTime": "2026-09-23 01:23:07.2618 -0500",
+        "procName": "UsageTrackingAgent",
+        "pid": 51073,
+        "parentPid": 50831,
+        "exception": {
+          "codes": "0x0000000000000000, 0x0000000000000000",
+          "rawCodes": [
+            0,
+            0
+          ],
+          "type": "EXC_CRASH",
+          "signal": "SIGKILL"
+        },
+        "termination": {
+          "flags": 6,
+          "code": 4,
+          "namespace": "LIBXPC",
+          "indicator": "XPC_EXIT_REASON_SIGTERM_TIMEOUT"
+        }
+      },
+      {
+        "file": "logd-2026-09-23-012310.ips",
+        "sha256": "24e67631042ff3ede56e3fbe1eff9746c9ea3617cf009ccb14e257447bc7fbe6",
+        "captureTime": "2026-09-23 01:23:07.2618 -0500",
+        "procName": "logd",
+        "pid": 50838,
+        "parentPid": 50831,
+        "exception": {
+          "codes": "0x0000000000000000, 0x0000000000000000",
+          "rawCodes": [
+            0,
+            0
+          ],
+          "type": "EXC_CRASH",
+          "signal": "SIGKILL"
+        },
+        "termination": {
+          "flags": 6,
+          "code": 4,
+          "namespace": "LIBXPC",
+          "indicator": "XPC_EXIT_REASON_SIGTERM_TIMEOUT"
+        }
+      },
+      {
+        "file": "featureaccessd-2026-09-23-012310.ips",
+        "sha256": "65299b1d69895bcb5e99b6776ea9fdf70685845a1d7c5be39f8bec76e524a73c",
+        "captureTime": "2026-09-23 01:23:07.2617 -0500",
+        "procName": "featureaccessd",
+        "pid": 51060,
+        "parentPid": 50831,
+        "exception": {
+          "codes": "0x0000000000000000, 0x0000000000000000",
+          "rawCodes": [
+            0,
+            0
+          ],
+          "type": "EXC_CRASH",
+          "signal": "SIGKILL"
+        },
+        "termination": {
+          "flags": 6,
+          "code": 4,
+          "namespace": "LIBXPC",
+          "indicator": "XPC_EXIT_REASON_SIGTERM_TIMEOUT"
+        }
+      },
+      {
+        "file": "routined-2026-09-23-012316.ips",
+        "sha256": "8f080d3333eb2de94a459b1d85412b79dd9a45bc6647d2f5c6faeb19837badd5",
+        "captureTime": "2026-09-23 01:23:07.2617 -0500",
+        "procName": "routined",
+        "pid": 50845,
+        "parentPid": 50831,
+        "exception": {
+          "codes": "0x0000000000000000, 0x0000000000000000",
+          "rawCodes": [
+            0,
+            0
+          ],
+          "type": "EXC_CRASH",
+          "signal": "SIGKILL"
+        },
+        "termination": {
+          "flags": 6,
+          "code": 4,
+          "namespace": "LIBXPC",
+          "indicator": "XPC_EXIT_REASON_SIGTERM_TIMEOUT"
+        }
+      },
+      {
+        "file": "rapportd-2026-09-23-012311.ips",
+        "sha256": "18616789c77cf828ade69b76f2d0336e2f07770f90197c3b1e526ee4ab3cfa65",
+        "captureTime": "2026-09-23 01:23:07.2618 -0500",
+        "procName": "rapportd",
+        "pid": 50871,
+        "parentPid": 50831,
+        "exception": {
+          "codes": "0x0000000000000000, 0x0000000000000000",
+          "rawCodes": [
+            0,
+            0
+          ],
+          "type": "EXC_CRASH",
+          "signal": "SIGKILL"
+        },
+        "termination": {
+          "flags": 6,
+          "code": 4,
+          "namespace": "LIBXPC",
+          "indicator": "XPC_EXIT_REASON_SIGTERM_TIMEOUT"
+        }
+      }
+    ],
+    "unparsed_relevant_reports": [],
+    "no_offline_runner_was_started": false,
+    "app_install_launch_scope": "Both are inside offline runner; consult runner PID/log and flow evidence.",
+    "cleanup_interpretation": "Read-only shutdown/process/port proof is independent of the raw driver; failed command outcomes are retained unchanged.",
+    "free_gib_after_shutdown": 22.681060791015625
+  },
+  "retained_summary": {
+    "schema_version": 1,
+    "interpretation": "incomplete_or_failed_diagnostic",
+    "stage": "runner_started_no_retained_ui_flow_commands",
+    "output": "/Users/brianchei/repos/Tableus-ai-agent-dev/.artifacts/mobile/8972865893a3f018a064594457dc9cc664f8a61f/native-validation-f1/test-ios-offline-f1-o4",
+    "manifest_valid": true,
+    "driver_status": "failed_diagnostic_only",
+    "error": "TimeoutExpired: Command '['ps', '-axo', 'pid=,ppid=,lstart=,comm=']' timed out after 5 seconds",
+    "attempt_counts": {
+      "diagnostic_operation_recorded": 1,
+      "device_create_requests_recorded": 0,
+      "boot_requests_recorded": 1,
+      "control_queries_recorded": 1,
+      "offline_runner_invocations_confirmed": 1
+    },
+    "device_create_attempts_recorded": 0,
+    "retained_device_uuid_recorded": "0EFFA766-DCDD-49E5-84B0-D3593B68709A",
+    "offline_runner_pid_recorded": true,
+    "offline_runner_exit_code": -2,
+    "control_query": {
+      "present": true,
+      "command_bound": true,
+      "completed_zero": true,
+      "exit_code": 0,
+      "timed_out": false,
+      "late_completion": false,
+      "elapsed_seconds": 9.465,
+      "effective_timeout_seconds": 30,
+      "stdout_sha256": "942dae1151ccc92c86452598541cbfda795b8224b5a1c565d050c12127d7a020",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "springboard_pids_in_stdout": [
+        50837
+      ],
+      "error": null
+    },
+    "runner_setup_artifacts": {
+      "runner_log_present": true,
+      "runner_log_bytes": 0,
+      "backend_log_present": true,
+      "fault_proxy_log_present": true,
+      "generated_yaml_count": 11,
+      "interpretation": "Setup artifacts do not prove app install, launch, or UI flow invocation"
+    },
+    "flows": {
+      "observed": [],
+      "accepted": [],
+      "accepted_count": 0,
+      "expected_count": 11,
+      "unexpected_directory_count": 0
+    },
+    "refresh_phases_observed": [],
+    "fault_journal": {
+      "present": false,
+      "app_proxy_requests_observed": null,
+      "plan_create_proxy_posts_observed": null,
+      "request_methods": {}
+    },
+    "limits_seconds": {
+      "total_observed": 113.791,
+      "total_max": 2100,
+      "runner_through_group_cleanup_observed": 49.141,
+      "runner_max": 1800
+    },
+    "checks": {
+      "approved_manifest": true,
+      "operator_identity": true,
+      "source_artifact_build": true,
+      "retained_target_bound": true,
+      "one_boot_recorded": true,
+      "control_gate": true,
+      "one_runner_completed_zero": false,
+      "runner_command_bound": true,
+      "driver_completion_inventory": false,
+      "eleven_flow_commands_accepted": false,
+      "five_refresh_phases": false,
+      "fault_journal_present": false,
+      "summary_identity": false,
+      "platform_health": true,
+      "owned_group_clear": true,
+      "ports_clear": true,
+      "retained_device_shutdown": true,
+      "app_cleanup": false,
+      "within_limits": true,
+      "driver_diagnostic_status": false
+    },
+    "issues": [
+      "missing:ios-offline-summary.json",
+      "missing:ios-plan-refresh-summary.json",
+      "missing:ios-refresh-observations.json"
+    ],
+    "diagnostic_only": true,
+    "downstream_acceptance": false,
+    "continuation_authorized": false
+  },
+  "host_snapshot": {
+    "recorded_at": "2026-09-23T06:24:55.593239+00:00",
+    "physical_memory_gib": 16,
+    "swap_used_mib": 20524.25,
+    "load_averages": [
+      28.27,
+      40.49,
+      25.6
+    ],
+    "memory_pressure_free_percent": 33,
+    "same_ps_query_seconds": 0.092,
+    "older_tableus_targets_still_booted": [
+      "2408A54F-A1C5-4388-8B46-6A987FE3B578",
+      "CBB4FAB4-734C-413C-9F10-850329AC9A01"
+    ],
+    "interpretation": "Post-run load/swap observations suggest host contention deserves assessment, but neither prove timeout cause nor establish current memory pressure or simulator causality."
+  },
+  "interpretation": "Control completed under30s on warmed retained target. Host-monitor timeout stopped runner setup; no retained UI execution or cross-runtime TableUs behavior comparison. A later successful ps query does not erase the first failure. Shutdown-time system-service reports differ from prior SpringBoard XCTest crashes.",
+  "historical_failures": "O1/O2 SpringBoard crashes, original refresh error and historical AppHang remain unresolved; no transferred D2/lifecycle acceptance.",
+  "closeout_archive": "/Users/brianchei/repos/Tableus-ai-agent-dev/.artifacts/mobile/8972865893a3f018a064594457dc9cc664f8a61f/native-validation-f1/runtime-closeout-o4",
+  "closeout_index_sha256": "3e6fd258582b1507309354939e7019ff0ecfa644287782aedb7ae8e802d1f6f2",
+  "private_files_sha256": {
+    "test-ios-offline-f1-o4/CoreSimulator-o4-excerpt.log": "ddec7a4010a05a4fd8e06f9ae0a000dd837315f63282ea42ae79e952bebb7dd8",
+    "test-ios-offline-f1-o4/UsageTrackingAgent-2026-09-23-012310.000.ips": "115fe65f410434113d91b4ed5ca67db18a74a55177b86491a7cd0d9ec53b7415",
+    "test-ios-offline-f1-o4/backend.log": "e68a383b1a1d721289f0508dc49fca4d1b1142239ad2c678fc1a0d15b4dbff73",
+    "test-ios-offline-f1-o4/control-query.json": "3596f595af563e0ff12347d63ef2bf0a9f9ca546336fc7a07db94eecfbd2eee5",
+    "test-ios-offline-f1-o4/delayed-post-stop-check.json": "00ddaacffa2676cf170cd300309dc7e45580fe9bd51abd700cea25c049bd00fe",
+    "test-ios-offline-f1-o4/device-mobile_installation.log.0": "a64d195235bcaa0b71fc588e4c9f0f4ca48755078595942de5631b6c90fb6585",
+    "test-ios-offline-f1-o4/device-system.log": "dc8de2108bee1b977a0f5d3d2de0f13a2683389b9521f78b14d1556be5efb5c4",
+    "test-ios-offline-f1-o4/driver-result.json": "d2c1023a2be644ff9ff5b216c24ee47d1c7fdc75dcd97bb7a57cbd4b670ca697",
+    "test-ios-offline-f1-o4/fault-proxy.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "test-ios-offline-f1-o4/featureaccessd-2026-09-23-012310.ips": "65299b1d69895bcb5e99b6776ea9fdf70685845a1d7c5be39f8bec76e524a73c",
+    "test-ios-offline-f1-o4/log-retention.json": "76ccb58c03547c3fde585408e888ea857c3a694dfac046dd5acb81109a58dd55",
+    "test-ios-offline-f1-o4/logd-2026-09-23-012310.ips": "24e67631042ff3ede56e3fbe1eff9746c9ea3617cf009ccb14e257447bc7fbe6",
+    "test-ios-offline-f1-o4/post-stop-check.json": "5e6470602c4e45f3d9227301ec2b7e34893969302f8b1201e598821d2102061d",
+    "test-ios-offline-f1-o4/rapportd-2026-09-23-012311.ips": "18616789c77cf828ade69b76f2d0336e2f07770f90197c3b1e526ee4ab3cfa65",
+    "test-ios-offline-f1-o4/retained-device-shutdown.json": "0765c95806b10addb2925536a0666d0b35b8703c31ba49a46d8b52c83412f8be",
+    "test-ios-offline-f1-o4/routined-2026-09-23-012316.ips": "8f080d3333eb2de94a459b1d85412b79dd9a45bc6647d2f5c6faeb19837badd5",
+    "test-ios-offline-f1-o4/runner.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "test-ios-offline-f1-o4/tableus-mobile-offline-e2e-PJs5jf/flows/constraints-offline.yml": "1de8312716851e8809e82daa202587f6ac0892601d099ad5a6d3852a6c66c53e",
+    "test-ios-offline-f1-o4/tableus-mobile-offline-e2e-PJs5jf/flows/constraints-retry.yml": "7f9d9e067f33b9023b71b9cdddbe2eeefc87191dcbe73d3aba201a8e9a07e08b",
+    "test-ios-offline-f1-o4/tableus-mobile-offline-e2e-PJs5jf/flows/create-failure.yml": "79f94557fa32d38487ffde0976d6e6e828da71c6e3fb827df7c84787113a4e46",
+    "test-ios-offline-f1-o4/tableus-mobile-offline-e2e-PJs5jf/flows/create-retry.yml": "8a7b3e3f909226fb6398ee0cf524f9ff9ce189c2f22e804f7bc6c266c33783d1",
+    "test-ios-offline-f1-o4/tableus-mobile-offline-e2e-PJs5jf/flows/finalize-failure.yml": "e88a5b2bb0de806a6abc3a01ef4fe96ead3c6bd2e59c203af14997af605d2149",
+    "test-ios-offline-f1-o4/tableus-mobile-offline-e2e-PJs5jf/flows/finalize-retry.yml": "01132a941f5617c3d291e555d284f7e41d29b3c59e48ad8bdcb3f5f14aaa5922",
+    "test-ios-offline-f1-o4/tableus-mobile-offline-e2e-PJs5jf/flows/refresh-failure.yml": "4fc82933becd81fea4dc26839883f2f78344cc455a60e1079a714f50ca927a8c",
+    "test-ios-offline-f1-o4/tableus-mobile-offline-e2e-PJs5jf/flows/refresh-open.yml": "b549bf867d5c168a32e4e10b48e4a5acea926dd75a2953708090bfcde1288047",
+    "test-ios-offline-f1-o4/tableus-mobile-offline-e2e-PJs5jf/flows/refresh-recovery.yml": "7c43fb3fa0546c1c849d0d119f781b3dbe01f9e87f2f1123cfa0db8248bd6805",
+    "test-ios-offline-f1-o4/tableus-mobile-offline-e2e-PJs5jf/flows/refresh-scroll.yml": "1b903e242b50a707e5499d81ab1d31ee001e11b9c87a2db3bec224107e6d8573",
+    "test-ios-offline-f1-o4/tableus-mobile-offline-e2e-PJs5jf/flows/refresh-slow.yml": "c3d733b6829a453552e5ef0153988d9f58e655b1e63680d33e818980cf47dd2f",
+    "o4-execution/approval.json": "2cddd0f24ba76808a50ac2819ec5d5c9ff7e7bf8db699fd8b22020751245a613",
+    "o4-execution/execution.log": "bb8a06e440c358233311dc84d52a971572ebe86f862e97e2e04b4e7e20603f1a",
+    "o4-execution/invocation.json": "04479671fad6e7809ebfbc4a6f4a12d0aac40759c99d10e3e37074cb72804ee9",
+    "o4-execution/invoker.py": "10ac427a376d4f84082d58958a1ef56bf219dd3301f465b521e3f28a50afda9a",
+    "o4-execution/proposal.json": "cf58ee0d008d922837d1a99da360ff24c3527b1d50036adea47f70cae8ac1a9f"
+  },
+  "fresh_checks": [
+    "Exact approved operator hashes and fresh artifact/receipt/source/UUID/map checks",
+    "Measured control query and29 host observations",
+    "Independent initial/delayed cleanup and crash/log reconciliation",
+    "Six synthetic closeout-parser checks",
+    "Root and Luna read-only scope/evidence review"
+  ],
+  "source_validation_reused": {
+    "javascript_tests": 292,
+    "python_tests": 98,
+    "postgres_skips": 3,
+    "application_and_tracked_tooling_unchanged": true
+  },
+  "next_action": "Review H1 bounded host recovery before any new native test allowance: shut down only the two exact older TableUs validation devices, preserve data and evidence, measure host process-query latency. No automatic offline replay."
+}

@@ -1,0 +1,30 @@
+{
+  "application_sha": "f94a1d9d1125e6c9111aa08eda496f014f20d0c0",
+  "observed_at": "2026-09-16T22:49:05Z",
+  "posthog_project_id": 578352,
+  "posthog_counts": {
+    "web": 1,
+    "ios": 1,
+    "android": 1,
+    "api": 2
+  },
+  "sentry_release_environment_filtered_counts": {
+    "tableus-web-staging": 1,
+    "tableus-mobile-staging": 2,
+    "tableus-api-staging": 2
+  },
+  "sentry_canary_issue_ids": {
+    "web": "7694001131",
+    "mobile": "7694252510",
+    "api": "7694252495"
+  },
+  "android_ui_passed_owner_confirmed": true,
+  "android_single_send_with_api_companion": true,
+  "current_release_events_per_provider": 5,
+  "prior_carried_forward_events_per_provider": 1,
+  "shared_events_per_provider": 6,
+  "approved_shared_limit": 6,
+  "all_four_platforms_delivered": true,
+  "raw_payloads_retained": false,
+  "additional_canary_sends_allowed": false
+}

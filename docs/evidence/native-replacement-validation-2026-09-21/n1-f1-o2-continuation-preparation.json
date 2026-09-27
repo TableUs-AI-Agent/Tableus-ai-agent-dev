@@ -1,0 +1,29 @@
+{
+  "schema_version": 1,
+  "recorded_at": "2026-09-23T05:02:40.435471+00:00",
+  "status": "prepared_unexecuted",
+  "scope": "Existing authorized conditional O2 link phase only; no additional attempt or behavioral change.",
+  "application_sha": "8972865893a3f018a064594457dc9cc664f8a61f",
+  "archive": "/Users/brianchei/repos/Tableus-ai-agent-dev/.artifacts/mobile/8972865893a3f018a064594457dc9cc664f8a61f/native-validation-f1/runtime-preparation-o2-continuation",
+  "files_sha256": {
+    "README.md": "ef7a8317bb2f369a641f5f492424bb8187fac9368a1b219cbb64d4558e8a1429",
+    "link_platform_wrapper.py": "e0abe66bd98c4043e7fbf37935805079d9e4eccb050aab663c7e77a8fb72a18c",
+    "manifest.json": "1e0dfa2eac540f2bbc3c715ec6603e222731dbe256c4fceb6cfa425c83e029ae",
+    "offline_checks.py": "252ad693ddc7bdaca49e8fd3cab03231365f8afa236301fc8bd93a70f480e615"
+  },
+  "reason": "Archived link driver checks TableUs crashes but lacks SpringBoard and parent identity watch; outer pinned host observer supplies first-platform-failure stop.",
+  "command": [
+    "/opt/homebrew/opt/python@3.14/bin/python3.14",
+    "-B",
+    "/Users/brianchei/repos/Tableus-ai-agent-dev/.artifacts/mobile/8972865893a3f018a064594457dc9cc664f8a61f/native-validation-f1/runtime-preparation-o2-continuation/link_platform_wrapper.py"
+  ],
+  "environment": {
+    "TABLEUS_F1_O2_LINK_WATCH_APPROVED": "1"
+  },
+  "execution_interlock": "Operator gate for already approved conditional work, not a new user approval.",
+  "prerequisites": "Root-reviewed passing complete O2 proof; unchanged archived link runner repeats offline/source/artifact gates.",
+  "checks": "Root source review; Python AST/pins/no-gate checks; four pure mocked platform/child-result/final-health/deadline-cleanup checks passed.",
+  "limits": "44 cases once; 1800 seconds with20-second cleanupreserve; expected TableUs PID lifecycle allowed; first platform/command/behavior failure stops. Root verifies cleanup, including separate groups after forcekill.",
+  "export_readiness": "Exactly2cycles only after link+watch proof; actual button/safe sheetdismissal and timestamped native main-thread sampling remain runtime observations required before export tap.",
+  "native_execution": false
+}

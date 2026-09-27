@@ -2,41 +2,64 @@
 
 ## Mission
 
-Ship the invite-only TableUs closed beta across web, iOS, and Android. The root
-agent is the primary orchestrator and owns integration, verification, and the
-final handoff for every objective.
+TableUs helps a small group decide where to eat together: create a shared plan,
+invite friends, collect constraints, compare four grounded options, rank them and
+let the organizer finalize. The current milestone is a staging pilot in which real
+groups complete real dinner decisions on web, iOS and Android. Production, store
+distribution and a wider cohort follow the pilot.
 
 ## Source of truth
 
-- `docs/current-state.md` records what is actually implemented.
-- `docs/roadmap.md` records milestone order and acceptance criteria.
-- `docs/decisions.md` records durable product and architecture decisions.
-- `docs/task-packets/active.md` is the only active implementation packet.
+- `docs/current-state.md` records what is implemented and deployed now.
+- `docs/roadmap.md` records the milestone, ordered priorities and exit criteria.
+- `docs/decisions.md` records durable product, architecture and operating choices.
+- `docs/task-packets/active.md` directs the current objective in this worktree.
 
-Update these documents in the same change when their truth changes.
+Update these documents in place, in the same change, when their truth changes.
+Handoffs, reviews, history snapshots and evidence retain provenance and scoped
+approvals; they do not start new work or reset budgets. Feature contracts such as `docs/account-lifecycle.md` describe
+implemented behavior and stay current with their code.
 
 ## Working agreement
 
-- Use a `codex/<objective>` branch and an isolated worktree for concurrent work.
-- Keep one objective bounded enough to review and validate continuously.
-- Preserve user changes and never rewrite unrelated work.
+- Brian Chei owns product decisions and approvals. Whichever agent leads a task
+  owns its integration, verification and handoff. Codex-specific model and
+  subagent defaults live in `.codex/` and are not project requirements.
+- Start from the active packet and current state. The root checkout may be stale;
+  confirm the branch and base before editing, and preserve uncommitted work.
+- Use a named `codex/<objective>` branch and prefer reusing a suitable checkout
+  for sequential work. Create another worktree when concurrency or isolation
+  requires it; choose the base by ancestry and accepted work, not edit recency.
+- Keep one objective small enough to review, then finish it: implement, check,
+  fix and hand off without stopping at intermediate findings.
 - Prefer deterministic providers locally and in CI. Live provider evaluation is
   an explicit, budgeted operation and never part of the normal test suite.
-- Run focused checks while iterating, then `make ready` once before handoff.
-- Handoffs include the exact commit SHA, checks run, observable evidence,
-  residual risks, and intentionally deferred work.
+- Follow the impact-based checks in `docs/development-workflow.md`: focused checks
+  and one `make ready` for application or executable changes; links and consistency
+  for documentation. Reuse checks only while their relevant inputs are unchanged.
+- Create formal source-bound evidence at merge, deployment, native pilot build,
+  distribution and activation gates. Summarize routine checks in the handoff and
+  retain useful failure diagnostics; no per-command commit or evidence file.
+- Keep native builds sequential with file-backed logs, and check disk and memory
+  before building. Pilot acceptance uses physical devices and the checklist's
+  bounded lost-response test; the long simulator campaign remains superseded.
+- Do not restart the canceled security scans without new owner authorization.
+- Handoffs identify the base commit and any uncommitted changes, checks run,
+  observable evidence, residual risks and intentionally deferred work.
 
 ## Approval gates
 
-The user must explicitly approve merges, cloud-resource creation, adding or
-rotating secrets, paid live-AI evaluation, production migrations, deployments,
-store submissions, and destructive cleanup. Code and local deterministic tests
-may be prepared without those external actions.
+The owner must explicitly approve merges, pushes that trigger deployments,
+cloud-resource creation, adding or rotating secrets, paid live-AI evaluation,
+staging or production migrations, deployments, signed native builds for pilot
+or store distribution, store submissions, invitations to real users and
+destructive cleanup. Code and local deterministic tests may be prepared without
+those external actions. Product alignment does not itself authorize a release.
 
-Routine, reversible implementation and staging configuration within an approved
-objective do not require repeated approval. Escalate significant product or
-architecture decisions and the explicit gates above; otherwise proceed and
-report the result.
+Within an approved objective, routine reversible implementation and fixes need no
+repeated approval. Before asking for a gated action, finish the independent work
+and present the complete scope, limits and stop conditions in one request.
+Escalate significant product or architecture decisions.
 
 ## Repository conventions
 

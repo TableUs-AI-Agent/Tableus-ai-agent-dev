@@ -1,0 +1,101 @@
+{
+  "passed": true,
+  "application_sha": "ed8330a766b3c4b80a505e075535678394e275e9",
+  "platform": "linux",
+  "architecture": "arm64",
+  "node": "v22.23.1",
+  "next": "16.3.5",
+  "sharp_versions": {
+    "aom": "3.15.0",
+    "archive": "3.8.9",
+    "cairo": "1.18.4",
+    "cgif": "0.5.3",
+    "exif": "0.6.26",
+    "expat": "2.8.3",
+    "ffi": "3.8.0",
+    "fontconfig": "2.18.3",
+    "freetype": "2.14.3",
+    "fribidi": "1.0.16",
+    "glib": "2.89.4",
+    "harfbuzz": "14.3.1",
+    "heif": "1.23.2",
+    "highway": "1.4.0",
+    "imagequant": "2.4.1",
+    "lcms": "2.19.1",
+    "mozjpeg": "0826579",
+    "pango": "1.58.2",
+    "pixman": "0.46.4",
+    "png": "1.6.58",
+    "proxy-libintl": "0.5",
+    "rsvg": "2.62.91",
+    "tiff": "4.7.2",
+    "uhdr": "2.0.2",
+    "vips": "8.18.6",
+    "webp": "1.6.0",
+    "xml2": "2.15.3",
+    "zlib-ng": "2.3.3",
+    "sharp": "0.35.4"
+  },
+  "lock_sha256": "c2b5dff8fe1f95cf1fb6e0eb6ba2b85ac92712266cf6fbdf946880b866fb1413",
+  "optimizer_sha256": "d005f98c0e82235b16f422427c43dfea578f5303887ea69b690237c7649aa987",
+  "vendor_adapter_sha256": "6a47dafc28e6645cf165319739dad2bdea43b67ebb5b5e0689f403323afee6db",
+  "fixtures": [
+    {
+      "format": "png",
+      "fixture_sha256": "749160c2c8475c8850e73e6d285f88136d7c7f9011da81d51b25865618b064e8",
+      "fixture_bytes": 126,
+      "output_sha256": "2d1bab5ed2fcc7dd03447aaeb2a39b96039b4e279a502fff5b4275d6d333bfe9",
+      "output_bytes": 64,
+      "width": 16,
+      "height": 12,
+      "contentType": "image/webp",
+      "maxAge": 300,
+      "upstreamEtag": "749160c2c8475c8850e73e6d285f88136d7c7f9011da81d51b25865618b064e8"
+    },
+    {
+      "format": "jpeg",
+      "fixture_sha256": "eba1bccaf628f85f1b9a90d89e24f4aa38d03b8aa5aefb1fd23739d8c68d4943",
+      "fixture_bytes": 275,
+      "output_sha256": "2d1bab5ed2fcc7dd03447aaeb2a39b96039b4e279a502fff5b4275d6d333bfe9",
+      "output_bytes": 64,
+      "width": 16,
+      "height": 12,
+      "contentType": "image/webp",
+      "maxAge": 300,
+      "upstreamEtag": "eba1bccaf628f85f1b9a90d89e24f4aa38d03b8aa5aefb1fd23739d8c68d4943"
+    },
+    {
+      "format": "avif",
+      "fixture_sha256": "63c9e7294c51ee398c205c00cd250e4ca3995d8d31d945f74da5cb43f7533b54",
+      "fixture_bytes": 287,
+      "output_sha256": "2d1bab5ed2fcc7dd03447aaeb2a39b96039b4e279a502fff5b4275d6d333bfe9",
+      "output_bytes": 64,
+      "width": 16,
+      "height": 12,
+      "contentType": "image/webp",
+      "maxAge": 300,
+      "upstreamEtag": "63c9e7294c51ee398c205c00cd250e4ca3995d8d31d945f74da5cb43f7533b54"
+    }
+  ],
+  "benign_invalid_image_rejected_400": true,
+  "previous_cache_reused": true,
+  "scope": "Provider-free local Linux optimizer; does not prove hosted execution, CDN cache or Vercel resolved binaries.",
+  "npm": "10.9.8",
+  "install_command": "npm ci --no-audit --no-fund",
+  "container": {
+    "id": "3e2165560dca67a3d0b87eaec80edc43aef55e7dd9178c6325c21647fe01845b",
+    "exit_code": 0,
+    "image_id": "sha256:6c74791e557ce11fc957704f6d4fe134a7bc8d6f5ca4403205b2966bd488f6b3",
+    "repository_digests": [
+      "node@sha256:6c74791e557ce11fc957704f6d4fe134a7bc8d6f5ca4403205b2966bd488f6b3"
+    ]
+  },
+  "operator_harness": {
+    "kind": "task-local evidence harness, outside application source",
+    "path": "/Users/brianchei/.codex/worktrees/90bd/Tableus-ai-agent-dev/.artifacts/phase-w/linux-check.cjs",
+    "sha256": "d201c4ab0483bedea7f0d0f8b09f15b99a44c4b8a255a6e0c1b89f915bc340c7"
+  },
+  "runner_sha256": "658eb5d19dbe82efc26d72ec8ddcf645ea49f8155c08337c406bb3e5de1173a3",
+  "source_archive_sha256": "0f0e9c365835adbf70fe43617b89f7c63db17462944a7c7438639bd16d6530cb",
+  "log_sha256": "6dd58efaff21f168733fbea699c4d65f9f69fcadbec2d4100603399d477e84ba"
+}

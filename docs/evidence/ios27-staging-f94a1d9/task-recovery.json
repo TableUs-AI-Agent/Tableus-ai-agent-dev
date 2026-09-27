@@ -1,0 +1,30 @@
+{
+  "schema_version": 1,
+  "previous_task_id": "01a097ad-4b11-7d62-9813-6ae4cf75f3f5",
+  "base_commit": "33d79b653715ce2959c163b1d08c6d270b77dfd7",
+  "application_sha": "f94a1d9d1125e6c9111aa08eda496f014f20d0c0",
+  "source_worktree_preserved": true,
+  "recovered_uncommitted_files": [
+    {
+      "path": "docs/evidence/ios27-staging-f94a1d9/live-link-rotation.json",
+      "sha256": "0126e78e1ffb5cefd79e45f563c94c63b9941aa47ee3fb03f0d233f0d7e54dc6"
+    },
+    {
+      "path": "docs/evidence/ios27-staging-f94a1d9/run-ledger.json",
+      "sha256": "858e095d3c4cf93b8dac60fd5f5668d390daa25da410a2bc1c9140ece71c74f0"
+    },
+    {
+      "path": "docs/evidence/ios27-staging-f94a1d9/owner-rotated-canonical-links.json",
+      "sha256": "6a0a6a613c392a31e63abde9487122340a9085ad9dd76f819bd03f6ea22eb41c"
+    },
+    {
+      "path": "docs/evidence/ios27-staging-f94a1d9/session-isolation.json",
+      "sha256": "68c30cf189ea6410addd7d58d198df13f4f8358454cb082a6bfa56cb360995d7"
+    }
+  ],
+  "read_only_supabase_reconciliation": "connector_permission_denied",
+  "new_live_operations": 0,
+  "task_branch": "codex/staging-closeout",
+  "task_worktree": ".worktrees/staging-closeout",
+  "application_source_unchanged": true
+}

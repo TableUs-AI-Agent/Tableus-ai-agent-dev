@@ -1,0 +1,67 @@
+{
+  "observed_at": "2026-09-21T23:34:01.130709+00:00",
+  "passed": true,
+  "kind": "phase_w_completion_evidence_validation",
+  "application_sha": "ed8330a766b3c4b80a505e075535678394e275e9",
+  "base_evidence_commit": "514a0136e1eb2ea0c52c315bf92efaf92809dfc9",
+  "checks": {
+    "changed_files_docs_only": true,
+    "application_tooling_tests_unchanged": true,
+    "diff_check": true,
+    "json_files_parsed": 4,
+    "relative_links": 56,
+    "private_hashes": 371,
+    "detached_source_clean": true,
+    "exact_application_evidence_binding": true,
+    "private_credentials_absent_from_changes": true,
+    "one_ci_one_preview_one_api_redeploy_two_alias_moves": true
+  },
+  "local_full_suite_reruns": 0,
+  "reused": "Original make ready and focused compatibility/Metro/contract/browser results remain bound to ed8330a; no executable repository changes.",
+  "file_hashes": [
+    {
+      "file": "docs/current-state.md",
+      "sha256": "2a3aa11ce1ccc21fb4cd73bde815cf55a02087c50b52f8b48ceb0bdaf605f32d"
+    },
+    {
+      "file": "docs/decisions.md",
+      "sha256": "6fdc4212b9023b678f26f845f74bf57ab69d034efefb396451cf48b08cfde3f5"
+    },
+    {
+      "file": "docs/evidence/web-dependency-rollout-2026-09-21/README.md",
+      "sha256": "f8156b65a77459c9f3dffe8345d3389cdb152852806b175ea41b4d8bb6995201"
+    },
+    {
+      "file": "docs/evidence/web-dependency-rollout-2026-09-21/activation-private-manifest.json",
+      "sha256": "7549edc96609435931a08733096cf2e571a508a002cba91450efb1b670b4b513"
+    },
+    {
+      "file": "docs/evidence/web-dependency-rollout-2026-09-21/activation.json",
+      "sha256": "ab7a2fecba692ffd6649b53930bb9f673823a8f798653ad061b5eb392cfdcd66"
+    },
+    {
+      "file": "docs/evidence/web-dependency-rollout-2026-09-21/cors-approval-request.json",
+      "sha256": "90ebb03427a859f5cf4bbf1f0a2caf042bd8a2fc674a83373b06c9c08bf391c8"
+    },
+    {
+      "file": "docs/evidence/web-dependency-rollout-2026-09-21/execution.json",
+      "sha256": "144b413ea75cf3d80cdc8b808e007cf69e3aaf1d230a3906898a37e197151ba6"
+    },
+    {
+      "file": "docs/handoffs/2026-09-21-phase-w-complete.md",
+      "sha256": "5f4295b6bb582bb839f42866f128de62aaa549101656536ad5f46cb519dbe09c"
+    },
+    {
+      "file": "docs/release-readiness-checklist.md",
+      "sha256": "a9044357c1e2f85fdc6fa9ada55d4555f7d4d9de3b85541c023c23886583d3f2"
+    },
+    {
+      "file": "docs/roadmap.md",
+      "sha256": "80cab977821d8892854cb181a0826d794a40d92ea25d7935d0cf890d4a9884fd"
+    },
+    {
+      "file": "docs/task-packets/active.md",
+      "sha256": "0e869db067a0dd401726c6b5a33e80f99d0fc842407009cc1801b9a60013f58e"
+    }
+  ]
+}

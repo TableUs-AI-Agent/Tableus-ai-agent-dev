@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "recorded_at": "2026-09-22T02:58:06.337463+00:00",
+  "owner_response": "approve",
+  "approved_amendment": "N1-R",
+  "proposal_commit": "fb99e87e909f91bba03c4311d7b9ef304869f4cd",
+  "proposal_sha256": "7f0a63fd685a54457e8517bae70a37ee3faf04f7eca7048ccd9b220bca0b16ca",
+  "scope": "Resume remaining deterministic iOS checks on the existing disposable simulator and inspected app: one lifecycle runner, one offline/refresh runner, original cold/warm link matrix and two export/relaunch cycles. Stop at the first failure; retain evidence; no automatic repeat.",
+  "application_sha": "ed8330a766b3c4b80a505e075535678394e275e9",
+  "native_builds_authorized": 0,
+  "live_budget_change": false,
+  "N2_approved": false,
+  "cleanup_authorized": false
+}

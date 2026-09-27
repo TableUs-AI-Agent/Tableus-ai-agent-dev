@@ -1,0 +1,37 @@
+{
+  "recorded_at": "2026-09-24T05:43:33.117177+00:00",
+  "campaign": "F1-C1",
+  "approval": "User explicitly replied approve to the complete two-stage C1 campaign in this task.",
+  "proposal_commit": "e3b0dbaf25cd480d262b693fef953499ddbd8699",
+  "proposal_sha256": "bf22c8137b44bd54ed2382dd5f135e134b03d93b7616a509518a41198babafcf",
+  "archive_index_sha256": "b9659fb42a7f2ecf7c241c7455ea180a0d9a20da8fdf8d7af4522fe52e9c2bd8",
+  "stage_manifests_sha256": {
+    "settings": "1c0d637fc6e8a5a2e9951b0e3c412e5cb576c3128ebaba8e551006877f026c18",
+    "offline": "7a2a24b2626c231b88cd6005b3835973d6e93d2eb36f125e017e83d196fa2b86"
+  },
+  "limits": {
+    "aggregate_native_operation_seconds": 2520,
+    "offline_root_visual_review_dwell_excluded": true,
+    "settings_stage_seconds": 420,
+    "offline_stage_seconds": 2100,
+    "settings_flow_seconds": 240,
+    "offline_runner_seconds": 1800,
+    "per_stage_cleanup_seconds": 60,
+    "per_runner_cleanup_seconds": 30,
+    "launch_seconds": 30,
+    "host_query_seconds": 5,
+    "minimum_free_gib": 20
+  },
+  "allowances": {
+    "boot": 2,
+    "explicit_settings_launch": 2,
+    "settings_maestro_flow": 1,
+    "offline_runner_11_flows_5_phases": 1,
+    "launchctl_query": 0,
+    "retry": 0
+  },
+  "conditional_transition": "Astra actual-PNG review plus complete hash-bound result/log/command/host evidence, fully confirmed stage1 cleanup, and fresh stage2 preflight. No new user checkpoint between passing stages.",
+  "destructive_diagnostic_scope": "One TableUs uninstall/reinstall on exact retained target plus first-flow launchApp clearState:true; inherited Maestro launchApp default permission behavior for TableUs. No Settings permission reset/revoke.",
+  "first_failure_stops": true,
+  "retries": 0
+}

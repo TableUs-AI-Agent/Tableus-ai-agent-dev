@@ -23,12 +23,28 @@ appId: com.tableus.app
     timeout: 30000
 - tapOn: "Join this plan"
 - extendedWaitUntil:
+    visible: ".*(Your constraints|Retry joining plan).*"
+    timeout: 30000
+- runFlow:
+    when:
+      visible: "Retry joining plan"
+    commands:
+      - tapOn: "Retry joining plan"
+- extendedWaitUntil:
     visible: "Your constraints"
     timeout: 30000
 - tapOn: "Budget, vibe, dietary notes…"
 - inputText: "Guest wants a quiet patio"
 - tapOn: "Your constraints"
 - tapOn: "Save constraints"
+- extendedWaitUntil:
+    visible: ".*(Constraints saved.|Retry saving constraints).*"
+    timeout: 30000
+- runFlow:
+    when:
+      visible: "Retry saving constraints"
+    commands:
+      - tapOn: "Retry saving constraints"
 - extendedWaitUntil:
     visible: "Constraints saved."
     timeout: 30000

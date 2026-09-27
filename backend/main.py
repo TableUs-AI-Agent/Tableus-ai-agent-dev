@@ -7,6 +7,7 @@ This service powers:
   3. Restaurant search over nearby candidates
   4. Multi-person search using combined preference summaries
 """
+import asyncio
 import hashlib
 import io
 import json
@@ -16,6 +17,7 @@ import os
 import re
 import time
 from contextlib import asynccontextmanager
+from datetime import UTC, datetime
 from difflib import get_close_matches
 from pathlib import Path
 from typing import List, Optional
@@ -335,11 +337,312 @@ from tableus.telemetry import (
     reset_telemetry_context,
     set_telemetry_context,
 )
+from tableus.request_controls import (
+    CachedResponse,
+    FixedWindowRateLimiter,
+    IdempotencyInFlightCoordinator,
+    IdempotencyReplayCache,
+    PrivateApiCacheMiddleware,
+    RequestBodyLimitMiddleware,
+    is_idempotency_eligible,
+    private_response_generation,
+)
 
 settings = get_settings()
 configure_sentry()
 
 app = FastAPI(title="TableUs", version="0.2.0", lifespan=lifespan)
+app.state.request_rate_limiter = FixedWindowRateLimiter()
+app.state.readiness_rate_limiter = FixedWindowRateLimiter(
+    per_source_limit=12,
+    global_limit=60,
+    max_sources=512,
+)
+app.state.idempotency_cache = IdempotencyReplayCache()
+app.state.idempotency_inflight = IdempotencyInFlightCoordinator()
+app.state.readiness_probe_lock = asyncio.Lock()
+app.state.readiness_probe_expires_at = 0.0
+@app.middleware("http")
+async def request_context(request: Request, call_next):
+    import uuid
+
+    request_id = (
+        getattr(request.state, "request_id", None)
+        or request.headers.get("X-Request-ID")
+        or str(uuid.uuid4())
+    )
+    request.state.request_id = request_id
+    now = time.time()
+
+    idempotency_key = request.headers.get("Idempotency-Key")
+    idempotency_eligible = bool(
+        idempotency_key
+        and (
+            is_idempotency_eligible(request.method, request.url.path)
+            or (
+                settings.environment == "test"
+                and request.url.path == "/api/v1/__test/idempotency-500"
+            )
+        )
+    )
+    request_fingerprint = None
+    cache_key = None
+    cached = None
+    inflight_lock = None
+    response_generation = private_response_generation()
+
+    def content_changed_response():
+        return JSONResponse(
+            status_code=409,
+            content={"error": {
+                "code": "idempotency_content_changed",
+                "message": "Account data changed. This request was already completed; refresh before continuing.",
+            }, "request_id": request_id},
+            headers={"X-Request-ID": request_id, "X-Idempotent-Replay": "true"},
+        )
+
+    if idempotency_eligible:
+        if not re.fullmatch(r"[A-Za-z0-9._:-]{8,200}", idempotency_key or ""):
+            return JSONResponse(
+                status_code=400,
+                content={
+                    "error": {
+                        "code": "invalid_idempotency_key",
+                        "message": "Idempotency key is invalid",
+                    },
+                    "request_id": request_id,
+                },
+                headers={"X-Request-ID": request_id},
+            )
+        from tableus.auth import load_approved_profile, resolve_identity
+        from tableus.db import SessionFactory
+
+        try:
+            identity = await resolve_identity(
+                request.headers.get("Authorization"), request.headers.get("X-Demo-User-ID")
+            )
+        except HTTPException as exc:
+            return JSONResponse(
+                status_code=exc.status_code,
+                content={
+                    "error": {"code": f"http_{exc.status_code}", "message": str(exc.detail)},
+                    "request_id": request_id,
+                },
+                headers={"X-Request-ID": request_id},
+            )
+        request.state.identity = identity
+        content_length = request.headers.get("Content-Length")
+        if content_length and content_length.isdigit() and int(content_length) > 1024 * 1024:
+            return JSONResponse(
+                status_code=413,
+                content={
+                    "error": {"code": "request_too_large", "message": "Request body is too large"},
+                    "request_id": request_id,
+                },
+                headers={"X-Request-ID": request_id},
+            )
+        request_body = await request.body()
+        if len(request_body) > 1024 * 1024:
+            return JSONResponse(
+                status_code=413,
+                content={
+                    "error": {"code": "request_too_large", "message": "Request body is too large"},
+                    "request_id": request_id,
+                },
+                headers={"X-Request-ID": request_id},
+            )
+        request_fingerprint = hashlib.sha256(request_body).hexdigest()
+        cache_key = (
+            identity.subject,
+            request.method,
+            request.url.path,
+            hashlib.sha256((idempotency_key or "").encode()).hexdigest(),
+        )
+        inflight_lock = await app.state.idempotency_inflight.acquire(cache_key)
+        cached = app.state.idempotency_cache.get(cache_key, time.time())
+        if cached:
+            try:
+                try:
+                    account_deletion_replay = (
+                        request.method == "DELETE" and request.url.path == "/api/v1/me"
+                    )
+                    async with SessionFactory() as session:
+                        profile = (
+                            None
+                            if account_deletion_replay
+                            else await load_approved_profile(identity, session)
+                        )
+                        if request.url.path.startswith("/api/v1/plans/"):
+                            from sqlalchemy import select
+
+                            from tableus.models import Plan, PlanParticipant
+
+                            plan_id = request.url.path.split("/")[4]
+                            plan = await session.get(Plan, plan_id)
+                            organizer_only = request.url.path.endswith(
+                                ("/finalize", "/reopen", "/share-token/rotate")
+                            )
+                            ownership_transfer_replay = request.url.path.endswith(
+                                "/transfer-ownership"
+                            )
+                            if not plan or profile is None or (
+                                organizer_only and plan.organizer_id != profile.id
+                            ):
+                                raise HTTPException(
+                                    status_code=403,
+                                    detail="Plan access is no longer approved",
+                                )
+                            if not organizer_only:
+                                participant = await session.scalar(
+                                    select(PlanParticipant.id).where(
+                                        PlanParticipant.plan_id == plan_id,
+                                        PlanParticipant.profile_id == profile.id,
+                                    )
+                                )
+                                if not participant:
+                                    raise HTTPException(
+                                        status_code=403,
+                                        detail="Plan access is no longer approved",
+                                    )
+                            if (ownership_transfer_replay and not cached.invalidated
+                                    and cached.generation == private_response_generation()):
+                                try:
+                                    cached_payload = json.loads(cached.body)
+                                    cached_plan = cached_payload["data"]
+                                    cached_timestamp = datetime.fromisoformat(
+                                        cached_plan["updated_at"]
+                                    )
+                                    current_timestamp = plan.updated_at
+                                    if cached_timestamp.tzinfo is None:
+                                        cached_timestamp = cached_timestamp.replace(tzinfo=UTC)
+                                    if current_timestamp.tzinfo is None:
+                                        current_timestamp = current_timestamp.replace(tzinfo=UTC)
+                                    valid_transfer = (
+                                        isinstance(cached_plan, dict)
+                                        and cached_plan.get("id") == plan_id
+                                        and isinstance(cached_plan.get("organizer_id"), str)
+                                        and cached_plan["organizer_id"] != profile.id
+                                        and cached_plan.get("viewer_is_organizer") is False
+                                        and plan.organizer_id == cached_plan["organizer_id"]
+                                        and current_timestamp == cached_timestamp
+                                    )
+                                except (KeyError, TypeError, ValueError, AttributeError):
+                                    valid_transfer = False
+                                if not valid_transfer:
+                                    raise HTTPException(
+                                        status_code=403,
+                                        detail="Plan ownership has changed since this request",
+                                    )
+                except HTTPException as exc:
+                    return JSONResponse(
+                        status_code=exc.status_code,
+                        content={
+                            "error": {
+                                "code": f"http_{exc.status_code}",
+                                "message": str(exc.detail),
+                            },
+                            "request_id": request_id,
+                        },
+                        headers={"X-Request-ID": request_id},
+                    )
+                if cached.request_fingerprint != request_fingerprint:
+                    return JSONResponse(
+                        status_code=409,
+                        content={
+                            "error": {
+                                "code": "idempotency_conflict",
+                                "message": "This idempotency key was already used with a different request body",
+                            },
+                            "request_id": request_id,
+                        },
+                        headers={"X-Request-ID": request_id},
+                    )
+                await app.state.idempotency_inflight.release(cache_key, inflight_lock)
+                inflight_lock = None
+                # Auth checks and lock release await work. Recheck the generation
+                # afterward even when this coroutine holds an old entry object.
+                if cached.invalidated or cached.generation != private_response_generation():
+                    return content_changed_response()
+                return Response(
+                    content=cached.body,
+                    status_code=cached.status_code,
+                    media_type=cached.media_type,
+                    headers={"X-Request-ID": request_id, "X-Idempotent-Replay": "true"},
+                )
+            finally:
+                if inflight_lock is not None:
+                    await app.state.idempotency_inflight.release(cache_key, inflight_lock)
+                    inflight_lock = None
+    telemetry_token = set_telemetry_context(
+        parse_telemetry_context(
+            request.headers.get("X-TableUs-Telemetry-Session"),
+            request.headers.get("X-TableUs-Client"),
+        )
+    )
+    started = time.perf_counter()
+    try:
+        try:
+            with sentry_sdk.isolation_scope() as scope:
+                scope.set_tag("component", "api")
+                scope.set_tag("request_id", request_id)
+                response = await call_next(request)
+        finally:
+            reset_telemetry_context(telemetry_token)
+        if idempotency_eligible:
+            body = b"".join([chunk async for chunk in response.body_iterator])
+            if 200 <= response.status_code < 300 and cache_key is not None:
+                app.state.idempotency_cache.store(
+                    cache_key,
+                    CachedResponse(
+                        expires_at=now + 86400,
+                        status_code=response.status_code,
+                        body=body,
+                        media_type=response.media_type or "application/json",
+                        request_fingerprint=request_fingerprint or "",
+                        generation=(
+                            private_response_generation()
+                            if request.method == "DELETE" and request.url.path == "/api/v1/me"
+                            else response_generation
+                        ),
+                    ),
+                    now,
+                )
+            if inflight_lock is not None and cache_key is not None:
+                await app.state.idempotency_inflight.release(cache_key, inflight_lock)
+                inflight_lock = None
+            if (
+                200 <= response.status_code < 300
+                and response_generation != private_response_generation()
+                and not (request.method == "DELETE" and request.url.path == "/api/v1/me")
+            ):
+                # The mutation already completed: suppress its old private body
+                # and retain the consumed-key tombstone, never rerun the write.
+                response = content_changed_response()
+            else:
+                response = Response(
+                    content=body,
+                    status_code=response.status_code,
+                    media_type=response.media_type,
+                    headers=dict(response.headers),
+                )
+        response.headers["X-Request-ID"] = request_id
+        logging.getLogger("tableus.request").info(
+            json.dumps(
+                {
+                    "request_id": request_id,
+                    "method": request.method,
+                    "path": request.url.path,
+                    "status": response.status_code,
+                    "latency_ms": int((time.perf_counter() - started) * 1000),
+                }
+            )
+        )
+        return response
+    finally:
+        if inflight_lock is not None and cache_key is not None:
+            await app.state.idempotency_inflight.release(cache_key, inflight_lock)
+
+
 app.add_middleware(
     CORSMiddleware,
     allow_origins=settings.cors_origins,
@@ -355,126 +658,19 @@ app.add_middleware(
         "X-TableUs-Client",
     ],
 )
+app.add_middleware(
+    RequestBodyLimitMiddleware,
+    rate_limiter=app.state.request_rate_limiter,
+    readiness_rate_limiter=app.state.readiness_rate_limiter,
+    demo_legacy_allowed=(
+        settings.tableus_demo_mode and settings.environment in {"development", "test"}
+    ),
+    shared_plans_enabled=settings.tableus_shared_plans_enabled,
+    cors_origins=tuple(settings.cors_origins),
+)
 
-
-@app.middleware("http")
-async def request_context(request: Request, call_next):
-    import uuid
-
-    from tableus.security import hash_value
-
-    request_id = request.headers.get("X-Request-ID") or str(uuid.uuid4())
-    request.state.request_id = request_id
-    is_legacy = request.url.path.startswith("/api/") and not request.url.path.startswith("/api/v1")
-    if is_legacy and not settings.tableus_demo_mode:
-        return JSONResponse(
-            status_code=404,
-            content={
-                "error": {"code": "not_found", "message": "Not found"},
-                "request_id": request_id,
-            },
-        )
-    if (
-        request.url.path.startswith("/api/v1/plans")
-        and not settings.tableus_shared_plans_enabled
-    ):
-        return JSONResponse(
-            status_code=404,
-            content={
-                "error": {"code": "feature_disabled", "message": "Shared plans are disabled"},
-                "request_id": request_id,
-            },
-        )
-    now = time.time()
-    actor = request.headers.get("Authorization") or request.headers.get("X-Demo-User-ID")
-    actor_key = hash_value(actor or (request.client.host if request.client else "unknown"))
-    rate_key = (actor_key, int(now // 60))
-    rate_counts = getattr(app.state, "rate_counts", {})
-    rate_counts[rate_key] = rate_counts.get(rate_key, 0) + 1
-    app.state.rate_counts = {
-        key: value for key, value in rate_counts.items() if key[1] >= int(now // 60) - 1
-    }
-    if rate_counts[rate_key] > 120:
-        return JSONResponse(
-            status_code=429,
-            content={
-                "error": {"code": "rate_limited", "message": "Too many requests"},
-                "request_id": request_id,
-            },
-        )
-
-    idempotency_key = request.headers.get("Idempotency-Key")
-    request_fingerprint = None
-    if idempotency_key and request.method in {"POST", "PUT", "PATCH", "DELETE"}:
-        request_fingerprint = hashlib.sha256(await request.body()).hexdigest()
-    cache_key = (actor_key, request.method, request.url.path, idempotency_key)
-    idempotency_cache = getattr(app.state, "idempotency_cache", {})
-    cached = idempotency_cache.get(cache_key) if idempotency_key else None
-    if cached and cached[0] > now:
-        if cached[4] != request_fingerprint:
-            return JSONResponse(
-                status_code=409,
-                content={
-                    "error": {
-                        "code": "idempotency_conflict",
-                        "message": "This idempotency key was already used with a different request body",
-                    },
-                    "request_id": request_id,
-                },
-                headers={"X-Request-ID": request_id},
-            )
-        return Response(
-            content=cached[2],
-            status_code=cached[1],
-            media_type=cached[3],
-            headers={"X-Request-ID": request_id, "X-Idempotent-Replay": "true"},
-        )
-    telemetry_token = set_telemetry_context(
-        parse_telemetry_context(
-            request.headers.get("X-TableUs-Telemetry-Session"),
-            request.headers.get("X-TableUs-Client"),
-        )
-    )
-    started = time.perf_counter()
-    try:
-        with sentry_sdk.isolation_scope() as scope:
-            scope.set_tag("component", "api")
-            scope.set_tag("request_id", request_id)
-            response = await call_next(request)
-    finally:
-        reset_telemetry_context(telemetry_token)
-    if idempotency_key and request.method in {"POST", "PUT", "PATCH", "DELETE"}:
-        body = b"".join([chunk async for chunk in response.body_iterator])
-        if response.status_code < 500:
-            idempotency_cache[cache_key] = (
-                now + 86400,
-                response.status_code,
-                body,
-                response.media_type or "application/json",
-                request_fingerprint,
-            )
-            app.state.idempotency_cache = {
-                key: value for key, value in idempotency_cache.items() if value[0] > now
-            }
-        response = Response(
-            content=body,
-            status_code=response.status_code,
-            media_type=response.media_type,
-            headers=dict(response.headers),
-        )
-    response.headers["X-Request-ID"] = request_id
-    logging.getLogger("tableus.request").info(
-        json.dumps(
-            {
-                "request_id": request_id,
-                "method": request.method,
-                "path": request.url.path,
-                "status": response.status_code,
-                "latency_ms": int((time.perf_counter() - started) * 1000),
-            }
-        )
-    )
-    return response
+# Outside admission and replay handling so their early responses are private too.
+app.add_middleware(PrivateApiCacheMiddleware)
 
 
 @app.exception_handler(HTTPException)
@@ -1196,8 +1392,16 @@ async def health_ready():
     from tableus.db import SessionFactory
     from tableus.models import Profile
 
-    async with SessionFactory() as session:
-        await session.execute(select(Profile.id).limit(1))
+    now = time.monotonic()
+    async with app.state.readiness_probe_lock:
+        if app.state.readiness_probe_expires_at <= now:
+            try:
+                async with asyncio.timeout(2.0):
+                    async with SessionFactory() as session:
+                        await session.execute(select(Profile.id).limit(1))
+            except TimeoutError as exc:
+                raise HTTPException(status_code=503, detail="Readiness check timed out") from exc
+            app.state.readiness_probe_expires_at = time.monotonic() + 2.0
     return {
         "status": "ready",
         "provider_mode": settings.provider_mode,

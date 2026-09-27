@@ -1,0 +1,104 @@
+{
+  "schema_version": 1,
+  "application_sha": "6b9719b4e63e34803f2e7c2598e45851790df661",
+  "deployment_id": "69c96019-bedc-4b53-a37d-358a103f7e24",
+  "source": "Railway proxy request metadata and provider usage aggregates",
+  "window_start": "2026-09-15T06:32:50Z",
+  "window_end": "2026-09-15T06:34:10Z",
+  "places_before": 32,
+  "places_after": 60,
+  "phase_expected_maximum": 12,
+  "phase_actual_attempts": 28,
+  "additional_detail_reads": 4,
+  "attempts_per_hydrated_response": 4,
+  "all_plan_requests_match_test_plan": true,
+  "all_http_statuses": 200,
+  "request_client": "android",
+  "new_vote_events": 1,
+  "vote_at": "2026-09-15T06:33:34.139929Z",
+  "trigger_attribution": "owner-reports-unintended-refresh-during-scroll; per-request-cause-unproven",
+  "raw_logs_retained": false,
+  "requests": [
+    {
+      "at": "2026-09-15T06:32:51.020680663Z",
+      "method": "GET",
+      "route": "/api/v1/plans",
+      "matches_test_plan": false,
+      "status": 200,
+      "client": "android"
+    },
+    {
+      "at": "2026-09-15T06:33:01.930929089Z",
+      "method": "GET",
+      "route": "/api/v1/plans",
+      "matches_test_plan": false,
+      "status": 200,
+      "client": "android"
+    },
+    {
+      "at": "2026-09-15T06:33:07.327833174Z",
+      "method": "POST",
+      "route": "/api/v1/plans/:id/join",
+      "matches_test_plan": true,
+      "status": 200,
+      "client": "android"
+    },
+    {
+      "at": "2026-09-15T06:33:09.166327176Z",
+      "method": "GET",
+      "route": "/api/v1/plans/:id",
+      "matches_test_plan": true,
+      "status": 200,
+      "client": "android"
+    },
+    {
+      "at": "2026-09-15T06:33:18.337881917Z",
+      "method": "GET",
+      "route": "/api/v1/plans/:id",
+      "matches_test_plan": true,
+      "status": 200,
+      "client": "android"
+    },
+    {
+      "at": "2026-09-15T06:33:25.442993909Z",
+      "method": "GET",
+      "route": "/api/v1/plans/:id",
+      "matches_test_plan": true,
+      "status": 200,
+      "client": "android"
+    },
+    {
+      "at": "2026-09-15T06:33:25.892862089Z",
+      "method": "GET",
+      "route": "/api/v1/plans/:id",
+      "matches_test_plan": true,
+      "status": 200,
+      "client": "android"
+    },
+    {
+      "at": "2026-09-15T06:33:35.930779974Z",
+      "method": "PUT",
+      "route": "/api/v1/plans/:id/vote",
+      "matches_test_plan": true,
+      "status": 200,
+      "client": "android"
+    },
+    {
+      "at": "2026-09-15T06:33:43.700878467Z",
+      "method": "GET",
+      "route": "/api/v1/plans/:id",
+      "matches_test_plan": true,
+      "status": 200,
+      "client": "android"
+    }
+  ],
+  "native_devices_stopped": true,
+  "post_pause_observation": {
+    "observed_at": "2026-09-15T06:42:50.553340Z",
+    "places_attempts": 60,
+    "latest_places_at": "2026-09-15T06:33:43.488754Z",
+    "new_generation_rows": 0
+  },
+  "owner_deliberate_vote_submission": false,
+  "local_investigation": "../../reviews/2026-09-15-explicit-plan-refresh.md"
+}

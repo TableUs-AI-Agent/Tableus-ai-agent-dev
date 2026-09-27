@@ -1,21 +1,37 @@
 import asyncio
 import io
 import time
+import uuid
 from collections import defaultdict, deque
+from contextlib import asynccontextmanager
 from datetime import UTC, datetime, timedelta
 from typing import Annotated, Literal, cast
 
 import jwt
 import sentry_sdk
-from fastapi import APIRouter, File, HTTPException, UploadFile
+from fastapi import APIRouter, File, HTTPException, Query, UploadFile
 from PIL import Image
-from sqlalchemy import func, select, update
+from sqlalchemy import delete, func, select
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from .auth import CurrentIdentity, CurrentProfile, DbSession
+from .account_lifecycle import process_deletion, status_payload
+from .auth import (
+    CurrentIdentity,
+    CurrentProfile,
+    DbSession,
+    Identity,
+    deletion_record,
+    load_approved_profile,
+    lock_subject,
+    subject_digest,
+)
+from .auth_removal import full_deletion_available
+from .cohort_limits import consume_plan_creation, quota_snapshot, reserve_provider_operation
 from .config import get_settings
+from .content_cleanup import clean_departing_content, lock_affected_plans
 from .db import SessionFactory
 from .models import (
+    AccountDeletion,
     Candidate,
     Connection,
     Invite,
@@ -28,14 +44,17 @@ from .models import (
     ProviderUsage,
     RecommendationRun,
     Review,
+    RunContributor,
     Vote,
 )
+from .operators import CurrentOperator
 from .providers import get_ai_provider, get_places_provider
 from .providers.base import AiCallUsage
 from .providers.google_live import AiProviderError, PlacesProviderError
 from .ranking import borda_scores, ordered_candidates
 from .schemas import (
     AccountControlOut,
+    AccountDeletionOut,
     AccountExportConnection,
     AccountExportEvent,
     AccountExportMembership,
@@ -57,6 +76,8 @@ from .schemas import (
     InviteValidation,
     LocationIn,
     LocationOut,
+    ManagedPlanOut,
+    ManagedPlanParticipantOut,
     ParticipantOut,
     PlaceOut,
     PlanCreated,
@@ -73,6 +94,7 @@ from .schemas import (
     ReviewOut,
     ShareTokenOut,
     TasteProfileOut,
+    TransferOwnershipIn,
     VoteIn,
 )
 from .security import decode_redemption_token, hash_value, issue_redemption_token, new_share_token
@@ -85,8 +107,13 @@ _places_global_window: deque[float] = deque()
 _ai_user_windows: dict[str, deque[float]] = defaultdict(deque)
 _ai_global_window: deque[float] = deque()
 _ai_budget_lock = asyncio.Lock()
+_places_budget_lock = asyncio.Lock()
 _ai_reserved_usd = 0.0
+_places_reserved_attempts = 0
 _ai_reservation_usd = 0.02
+_food_image_slots = asyncio.Semaphore(2)
+_FOOD_IMAGE_SLOT_TIMEOUT_SECONDS = 0.25
+_MAX_REVIEWS_PER_PROFILE = 100
 
 
 def ok(data, **meta):
@@ -108,7 +135,15 @@ def _is_expired(expires_at: datetime | None, now: datetime) -> bool:
         return False
     if expires_at.tzinfo is None:
         expires_at = expires_at.replace(tzinfo=UTC)
-    return expires_at < now
+    return expires_at <= now
+
+
+def _invite_recipient_matches(invite: Invite, email_hash: str | None) -> bool:
+    # Legacy/demo fixtures remain usable locally; hosted intake requires a
+    # recipient designated by the issuer, not whoever presents the code first.
+    if invite.recipient_email_hash:
+        return invite.max_uses == 1 and invite.recipient_email_hash == email_hash
+    return get_settings().tableus_auth_mode != "supabase"
 
 
 async def _participant(session: AsyncSession, plan_id: str, profile_id: str) -> PlanParticipant:
@@ -123,11 +158,39 @@ async def _participant(session: AsyncSession, plan_id: str, profile_id: str) -> 
     return participant
 
 
-async def _plan(session: AsyncSession, plan_id: str) -> Plan:
-    plan = await session.get(Plan, plan_id)
+async def _plan(session: AsyncSession, plan_id: str, *, for_update: bool = False) -> Plan:
+    statement = select(Plan).where(Plan.id == plan_id)
+    if for_update:
+        statement = statement.with_for_update().execution_options(populate_existing=True)
+    plan = await session.scalar(statement)
     if not plan:
         raise HTTPException(status_code=404, detail="Plan not found")
     return plan
+
+
+async def _managed_plans_out(
+    session: AsyncSession, plans: list[Plan], viewer_id: str
+) -> list[ManagedPlanOut]:
+    if not plans:
+        return []
+    # Account management must never hydrate restaurant candidates or call a provider.
+    rows = (await session.execute(
+        select(PlanParticipant.plan_id, Profile.id, Profile.display_name)
+        .join(Profile, Profile.id == PlanParticipant.profile_id)
+        .where(PlanParticipant.plan_id.in_([plan.id for plan in plans]))
+        .order_by(PlanParticipant.joined_at, Profile.id)
+    )).all()
+    participants: dict[str, list[tuple[str, str]]] = defaultdict(list)
+    for plan_id, profile_id, display_name in rows:
+        participants[plan_id].append((profile_id, display_name))
+    return [ManagedPlanOut(
+        id=plan.id, title=plan.title, organizer_id=plan.organizer_id,
+        viewer_is_organizer=plan.organizer_id == viewer_id, updated_at=plan.updated_at,
+        participants=[ManagedPlanParticipantOut(
+            profile_id=profile_id, display_name=display_name,
+            is_organizer=profile_id == plan.organizer_id,
+        ) for profile_id, display_name in participants[plan.id]],
+    ) for plan in plans]
 
 
 async def _plan_out(
@@ -195,6 +258,7 @@ async def _plan_out(
         viewer_is_organizer=plan.organizer_id == viewer_id,
         status=cast(Literal["collecting", "voting", "finalized"], plan.status),
         location_label=plan.location_label,
+        metadata_needs_replacement=plan.metadata_needs_replacement,
         latitude=plan.latitude,
         longitude=plan.longitude,
         participants=participants,
@@ -204,6 +268,16 @@ async def _plan_out(
         created_at=plan.created_at,
         updated_at=plan.updated_at,
     )
+
+
+async def _plan_places(session: AsyncSession, plan: Plan, viewer_id: str) -> list:
+    """Complete fallible response hydration before mutating a shared plan."""
+    if not plan.active_run_id:
+        return []
+    place_ids = list((await session.scalars(
+        select(Candidate.place_id).where(Candidate.run_id == plan.active_run_id)
+    )).all())
+    return await _call_places(viewer_id, "get_places", place_ids) if place_ids else []
 
 
 def _touch(plan: Plan) -> None:
@@ -243,24 +317,69 @@ async def _record_places_usage(
         await usage_session.commit()
 
 
+async def _reserve_places_budget(max_attempts: int) -> bool:
+    global _places_reserved_attempts
+    settings = get_settings()
+    if settings.places_provider_mode != "live":
+        return False
+    async with _places_budget_lock:
+        cutoff = datetime.now(UTC) - timedelta(days=30)
+        async with SessionFactory() as budget_session:
+            spent = (
+                await budget_session.scalar(
+                    select(func.coalesce(func.sum(ProviderUsage.input_units), 0)).where(
+                        ProviderUsage.provider == "google-places-new",
+                        ProviderUsage.created_at >= cutoff,
+                    )
+                )
+                or 0
+            )
+        if int(spent) + _places_reserved_attempts + max_attempts > settings.places_runtime_max_attempts_30d:
+            raise HTTPException(
+                status_code=429,
+                detail="Places staging usage limit reached; try again after the budget window resets",
+            )
+        _places_reserved_attempts += max_attempts
+        return True
+
+
+async def _release_places_budget(reserved: bool, max_attempts: int) -> None:
+    global _places_reserved_attempts
+    if not reserved:
+        return
+    async with _places_budget_lock:
+        _places_reserved_attempts = max(0, _places_reserved_attempts - max_attempts)
+
+
 async def _call_places(profile_id: str, method: str, *args):
     _consume_places_limit(profile_id)
-    provider = get_places_provider()
+    max_attempts = 12 if method == "get_places" else 3
+    reserved = await _reserve_places_budget(max_attempts)
     started = time.perf_counter()
 
     async def usage(operation: str, attempts: int, output_units: int, failed: bool) -> None:
         await _record_places_usage(operation, attempts, output_units, failed, started)
 
     try:
+        if reserved and not await reserve_provider_operation(profile_id, "places"):
+            raise HTTPException(
+                status_code=429,
+                detail="Daily Places operation limit reached; resets at midnight UTC",
+            )
+        provider = get_places_provider()
         return await getattr(provider, method)(*args, usage=usage)
     except PlacesProviderError as exc:
         status = 404 if exc.kind == "not_found" else 503
         raise HTTPException(status_code=status, detail=str(exc)) from exc
     except ValueError as exc:
         raise HTTPException(status_code=404, detail=str(exc)) from exc
+    finally:
+        await _release_places_budget(reserved, max_attempts)
 
 
-def _consume_ai_limit(profile_id: str) -> None:
+def _consume_ai_limit(
+    profile_id: str, *, include_user: bool = True, include_global: bool = True
+) -> None:
     if get_settings().ai_provider_mode != "live":
         return
     now = time.monotonic()
@@ -270,10 +389,14 @@ def _consume_ai_limit(profile_id: str) -> None:
         user_window.popleft()
     while _ai_global_window and _ai_global_window[0] <= cutoff:
         _ai_global_window.popleft()
-    if len(user_window) >= 5 or len(_ai_global_window) >= 30:
+    if (include_user and len(user_window) >= 5) or (
+        include_global and len(_ai_global_window) >= 30
+    ):
         raise HTTPException(status_code=429, detail="AI request limit reached; try again soon")
-    user_window.append(now)
-    _ai_global_window.append(now)
+    if include_user:
+        user_window.append(now)
+    if include_global:
+        _ai_global_window.append(now)
 
 
 async def _reserve_ai_budget() -> bool:
@@ -328,9 +451,26 @@ async def _record_ai_usage(
         await usage_session.commit()
 
 
-async def _call_ai(profile_id: str, method: str, *args):
-    _consume_ai_limit(profile_id)
+@asynccontextmanager
+async def _ai_admission(
+    profile_id: str, *, include_user: bool = True, include_global: bool = True
+):
+    _consume_ai_limit(
+        profile_id, include_user=include_user, include_global=include_global
+    )
     reserved = await _reserve_ai_budget()
+    try:
+        if reserved and not await reserve_provider_operation(profile_id, "ai"):
+            raise HTTPException(
+                status_code=429,
+                detail="Daily AI operation limit reached; resets at midnight UTC",
+            )
+        yield
+    finally:
+        await _release_ai_budget(reserved)
+
+
+async def _invoke_ai(method: str, *args):
     started = time.perf_counter()
     recorded = False
 
@@ -355,8 +495,55 @@ async def _call_ai(profile_id: str, method: str, *args):
         raise HTTPException(status_code=status, detail=str(exc)) from exc
     except RuntimeError as exc:
         raise HTTPException(status_code=503, detail="AI provider is not configured") from exc
-    finally:
-        await _release_ai_budget(reserved)
+
+
+async def _call_ai(profile_id: str, method: str, *args):
+    async with _ai_admission(profile_id):
+        return await _invoke_ai(method, *args)
+
+
+def _sanitize_food_image(image_bytes: bytes) -> bytes:
+    try:
+        with Image.open(io.BytesIO(image_bytes)) as opened:
+            if opened.width * opened.height > 20_000_000:
+                raise HTTPException(
+                    status_code=413, detail="Image must be 20 megapixels or smaller"
+                )
+            opened.verify()
+        with Image.open(io.BytesIO(image_bytes)) as opened:
+            sanitized = io.BytesIO()
+            with opened.convert("RGB") as converted:
+                converted.thumbnail((1600, 1600), Image.Resampling.LANCZOS)
+                converted.save(sanitized, format="JPEG", quality=85, optimize=True)
+        return sanitized.getvalue()
+    except HTTPException:
+        raise
+    except Exception as exc:
+        raise HTTPException(status_code=422, detail="Image data is invalid") from exc
+
+
+def _release_food_image_slot(worker: asyncio.Task[bytes]) -> None:
+    _food_image_slots.release()
+    if not worker.cancelled():
+        worker.exception()
+
+
+async def _sanitize_food_image_bounded(image_bytes: bytes) -> bytes:
+    try:
+        await asyncio.wait_for(
+            _food_image_slots.acquire(), timeout=_FOOD_IMAGE_SLOT_TIMEOUT_SECONDS
+        )
+    except TimeoutError as exc:
+        raise HTTPException(
+            status_code=503, detail="Image analysis is busy; try again soon"
+        ) from exc
+    try:
+        worker = asyncio.create_task(asyncio.to_thread(_sanitize_food_image, image_bytes))
+    except BaseException:
+        _food_image_slots.release()
+        raise
+    worker.add_done_callback(_release_food_image_slot)
+    return await asyncio.shield(worker)
 
 
 async def _event(
@@ -365,6 +552,47 @@ async def _event(
     session.add(
         PlanEvent(plan_id=plan.id, actor_id=actor.id, event_type=event_type, payload=payload or {})
     )
+
+
+def _scrub_event_payload(value, identifiers: set[str]):
+    if isinstance(value, dict):
+        return {
+            key: _scrub_event_payload(item, identifiers)
+            for key, item in value.items()
+            if key not in {"email", "email_hash", "display_name"}
+        }
+    if isinstance(value, list):
+        return [_scrub_event_payload(item, identifiers) for item in value]
+    if isinstance(value, str) and value in identifiers:
+        return None
+    return value
+
+
+async def _anonymize_authored_events(session: AsyncSession, profile: Profile) -> None:
+    events = list((await session.scalars(
+        select(PlanEvent).where(PlanEvent.actor_id == profile.id).with_for_update()
+    )).all())
+    for event in events:
+        event.actor_id = None
+        # Keep only reviewed structural references. Legacy arbitrary payload
+        # fields may contain free text and cannot be classified as safe.
+        allowed = {
+            "recommendations.generated": ("run_id", RecommendationRun),
+            "plan.finalized": ("candidate_id", Candidate),
+        }.get(event.event_type)
+        payload: dict = {}
+        if allowed:
+            key, model = allowed
+            value = (event.payload or {}).get(key)
+            if isinstance(value, str):
+                try:
+                    uuid.UUID(value)
+                except ValueError:
+                    pass
+                else:
+                    if await session.get(model, value):
+                        payload[key] = value
+        event.payload = payload
 
 
 async def _account_control(session: AsyncSession, profile_id: str) -> AccountControlOut:
@@ -381,6 +609,7 @@ async def _account_control(session: AsyncSession, profile_id: str) -> AccountCon
         can_delete=not blockers,
         blockers=blockers,
         organized_plan_count=organized_plan_count,
+        full_deletion_available=full_deletion_available(),
     )
 
 
@@ -389,25 +618,78 @@ def _require_organizer(plan: Plan, profile: Profile) -> None:
         raise HTTPException(status_code=403, detail="Only the organizer can perform this action")
 
 
+def _require_reopened(plan: Plan) -> None:
+    if plan.status == "finalized":
+        raise HTTPException(
+            status_code=409,
+            detail="The organizer must reopen this finalized plan before making changes",
+        )
+
+
 @router.post("/access/validate", response_model=Envelope[InviteValidation])
 async def validate_access(body: InviteValidateIn, session: DbSession):
-    invite = await session.scalar(select(Invite).where(Invite.code_hash == hash_value(body.code)))
+    settings = get_settings()
+    if settings.tableus_auth_mode == "supabase" and not body.email:
+        raise HTTPException(status_code=422, detail="Email is required for hosted invite validation")
+    invite = await session.scalar(
+        select(Invite)
+        .where(Invite.code_hash == hash_value(body.code))
+        .with_for_update()
+    )
     now = datetime.now(UTC)
     if (
         not invite
         or invite.revoked_at
         or _is_expired(invite.expires_at, now)
         or invite.use_count >= invite.max_uses
+        or not _invite_recipient_matches(invite, hash_value(body.email) if body.email else None)
     ):
         raise HTTPException(status_code=404, detail="Invite is invalid, expired, or fully redeemed")
     pending_validation = None
     if body.email:
-        pending_validation = PendingAuthValidation(
-            invite_id=invite.id,
-            email_hash=hash_value(body.email),
-            expires_at=now + timedelta(minutes=20),
+        await session.execute(
+            delete(PendingAuthValidation).where(
+                PendingAuthValidation.invite_id == invite.id,
+                PendingAuthValidation.redeemed_at.is_(None),
+                PendingAuthValidation.expires_at <= now,
+            )
         )
-        session.add(pending_validation)
+        email_hash = hash_value(body.email)
+        pending_validation = await session.scalar(
+            select(PendingAuthValidation).where(
+                PendingAuthValidation.invite_id == invite.id,
+                PendingAuthValidation.email_hash == email_hash,
+                PendingAuthValidation.redeemed_at.is_(None),
+                PendingAuthValidation.expires_at > now,
+            )
+        )
+        if pending_validation:
+            pending_validation.expires_at = now + timedelta(minutes=20)
+        else:
+            active_count = (
+                await session.scalar(
+                    select(func.count())
+                    .select_from(PendingAuthValidation)
+                    .where(
+                        PendingAuthValidation.invite_id == invite.id,
+                        PendingAuthValidation.redeemed_at.is_(None),
+                        PendingAuthValidation.expires_at > now,
+                    )
+                )
+                or 0
+            )
+            remaining_uses = invite.max_uses - invite.use_count
+            if active_count >= remaining_uses:
+                raise HTTPException(
+                    status_code=409,
+                    detail="Invite validation is already reserved; retry after it expires",
+                )
+            pending_validation = PendingAuthValidation(
+                invite_id=invite.id,
+                email_hash=email_hash,
+                expires_at=now + timedelta(minutes=20),
+            )
+            session.add(pending_validation)
         await session.commit()
     return ok(
         InviteValidation(
@@ -422,16 +704,76 @@ async def validate_access(body: InviteValidateIn, session: DbSession):
 
 @router.post("/access/redeem", response_model=Envelope[ProfileOut])
 async def redeem_access(body: InviteRedeemIn, identity: CurrentIdentity, session: DbSession):
+    await lock_subject(session, identity.subject, exclusive=True)
+    if await deletion_record(session, identity.subject):
+        raise HTTPException(status_code=409, detail="Account deletion has already been requested")
+    settings = get_settings()
     try:
         grant = decode_redemption_token(body.redemption_token)
     except jwt.PyJWTError as exc:
         raise HTTPException(
             status_code=400, detail="Redemption token is invalid or expired"
         ) from exc
+    if settings.tableus_auth_mode == "supabase" and (
+        not grant.email_hash or not grant.pending_validation_id
+    ):
+        raise HTTPException(
+            status_code=400,
+            detail="Hosted redemption token is missing its email reservation",
+        )
     if grant.email_hash and hash_value((identity.email or "").lower()) != grant.email_hash:
         raise HTTPException(
             status_code=403, detail="Invite validation email does not match session"
         )
+    # All invite paths lock the invite before its reservation, including retries.
+    # The CLI uses the same row lock so revocation and first redemption serialize.
+    invite = await session.get(Invite, grant.invite_id, with_for_update=True)
+    now = datetime.now(UTC)
+    profile = await session.get(Profile, identity.subject)
+    if profile:
+        redeemed_invite_ids = set(
+            (
+                await session.scalars(
+                    select(InviteRedemption.invite_id).where(
+                        InviteRedemption.profile_id == profile.id
+                    )
+                )
+            ).all()
+        )
+        same_invite_retry = grant.invite_id in redeemed_invite_ids
+        reservation_changed = False
+        if grant.pending_validation_id:
+            existing_reservation = await session.get(
+                PendingAuthValidation, grant.pending_validation_id, with_for_update=True
+            )
+            if (
+                existing_reservation
+                and existing_reservation.invite_id == grant.invite_id
+                and existing_reservation.email_hash == grant.email_hash
+                and not _is_expired(existing_reservation.expires_at, now)
+                and not existing_reservation.redeemed_at
+            ):
+                if same_invite_retry:
+                    existing_reservation.redeemed_at = now
+                else:
+                    await session.delete(existing_reservation)
+                reservation_changed = True
+        if reservation_changed:
+            await session.commit()
+        if same_invite_retry:
+            return ok(ProfileOut.model_validate(profile))
+        if redeemed_invite_ids:
+            raise HTTPException(status_code=409, detail="This account has already joined TableUs")
+    if (
+        not invite
+        or invite.revoked_at
+        or _is_expired(invite.expires_at, now)
+        or invite.use_count >= invite.max_uses
+        or not _invite_recipient_matches(invite, grant.email_hash)
+    ):
+        raise HTTPException(status_code=409, detail="Invite can no longer be redeemed")
+    if invite.recipient_email_hash and not grant.pending_validation_id:
+        raise HTTPException(status_code=409, detail="Invite validation can no longer be used")
     pending_validation = None
     if grant.pending_validation_id:
         pending_validation = await session.get(
@@ -439,23 +781,14 @@ async def redeem_access(body: InviteRedeemIn, identity: CurrentIdentity, session
         )
         if (
             not pending_validation
+            or pending_validation.invite_id != invite.id
             or pending_validation.email_hash != grant.email_hash
             or pending_validation.redeemed_at
-            or _is_expired(pending_validation.expires_at, datetime.now(UTC))
+            or _is_expired(pending_validation.expires_at, now)
         ):
             raise HTTPException(status_code=409, detail="Invite validation can no longer be used")
-    invite = await session.get(Invite, grant.invite_id, with_for_update=True)
-    now = datetime.now(UTC)
-    if (
-        not invite
-        or invite.revoked_at
-        or _is_expired(invite.expires_at, now)
-        or invite.use_count >= invite.max_uses
-    ):
-        raise HTTPException(status_code=409, detail="Invite can no longer be redeemed")
-    profile = await session.get(Profile, identity.subject)
     if not profile:
-        email_hash = hash_value(identity.email or f"{identity.subject}@supabase.local")
+        email_hash = hash_value((identity.email or f"{identity.subject}@supabase.local").lower())
         profile = Profile(
             id=identity.subject, display_name=body.display_name, email_hash=email_hash
         )
@@ -497,19 +830,87 @@ async def account_control(profile: CurrentProfile, session: DbSession):
     return ok(await _account_control(session, profile.id))
 
 
+@router.get("/me/organized-plans", response_model=Envelope[list[ManagedPlanOut]])
+async def organized_plans(profile: CurrentProfile, session: DbSession):
+    plans = list((await session.scalars(
+        select(Plan).where(Plan.organizer_id == profile.id).order_by(Plan.updated_at.desc(), Plan.id)
+    )).all())
+    return ok(await _managed_plans_out(session, plans, profile.id))
+
+
 @router.delete("/me", response_model=Envelope[DeleteAccountOut])
-async def delete_me(body: DeleteAccountIn, profile: CurrentProfile, session: DbSession):
+async def delete_me(body: DeleteAccountIn, identity: CurrentIdentity, session: DbSession):
+    await lock_subject(session, identity.subject, exclusive=True)
+    profile = await load_approved_profile(identity, session)
+    affected_plans = await lock_affected_plans(session, profile.id)
     control = await _account_control(session, profile.id)
     if not control.can_delete:
         raise HTTPException(
             status_code=409, detail="Transfer or delete organized plans before deleting the account"
         )
+    await clean_departing_content(session, profile.id, affected_plans)
+    await _anonymize_authored_events(session, profile)
     await session.execute(
-        update(PlanEvent).where(PlanEvent.actor_id == profile.id).values(actor_id=None)
+        delete(PendingAuthValidation).where(PendingAuthValidation.email_hash == profile.email_hash)
     )
     await session.delete(profile)
     await session.commit()
+    from .request_controls import invalidate_private_responses
+    invalidate_private_responses()
     return ok(DeleteAccountOut(deleted=True))
+
+
+@router.post("/me/deletion", response_model=Envelope[AccountDeletionOut])
+async def request_full_deletion(
+    body: DeleteAccountIn, identity: CurrentIdentity, session: DbSession
+):
+    await lock_subject(session, identity.subject, exclusive=True)
+    prior = await deletion_record(session, identity.subject)
+    if prior:
+        digest = prior.subject_hash
+        await session.rollback()
+        # An admission pause may leave a separate worker draining existing jobs.
+        # Return durable status without consuming an unavailable attempt here.
+        if full_deletion_available():
+            await process_deletion(digest)
+        async with SessionFactory() as fresh:
+            row = await fresh.get(AccountDeletion, digest)
+            if row is None:
+                raise HTTPException(status_code=503, detail="Account deletion status is unavailable")
+            return ok(AccountDeletionOut(**status_payload(row)))
+    if not full_deletion_available():
+        raise HTTPException(status_code=503, detail="Full account deletion is unavailable")
+    profile = await load_approved_profile(identity, session)
+    affected_plans = await lock_affected_plans(session, profile.id)
+    control = await _account_control(session, profile.id)
+    if not control.can_delete:
+        raise HTTPException(status_code=409, detail="Transfer or delete organized plans first")
+    await clean_departing_content(session, profile.id, affected_plans)
+    await _anonymize_authored_events(session, profile)
+    await session.execute(
+        delete(PendingAuthValidation).where(PendingAuthValidation.email_hash == profile.email_hash)
+    )
+    row = AccountDeletion(subject_hash=subject_digest(identity.subject), auth_subject=identity.subject)
+    session.add(row)
+    await session.delete(profile)
+    await session.commit()
+    from .request_controls import invalidate_private_responses
+    invalidate_private_responses()
+    await process_deletion(row.subject_hash)
+    async with SessionFactory() as fresh:
+        outcome = await fresh.get(AccountDeletion, row.subject_hash)
+        if outcome is None:
+            raise HTTPException(status_code=503, detail="Account deletion status is unavailable")
+        return ok(AccountDeletionOut(**status_payload(outcome)))
+
+
+@router.get("/me/deletion", response_model=Envelope[AccountDeletionOut])
+async def full_deletion_status(identity: CurrentIdentity, session: DbSession):
+    row = await deletion_record(session, identity.subject)
+    if row is None:
+        await load_approved_profile(identity, session)
+        raise HTTPException(status_code=404, detail="No account deletion has been requested")
+    return ok(AccountDeletionOut(**status_payload(row)))
 
 
 @router.get("/connections", response_model=Envelope[list[ConnectionOut]])
@@ -683,6 +1084,7 @@ async def list_reviews(profile: CurrentProfile, session: DbSession):
                 select(Review)
                 .where(Review.profile_id == profile.id)
                 .order_by(Review.created_at.desc())
+                .limit(_MAX_REVIEWS_PER_PROFILE)
             )
         ).all()
     )
@@ -691,6 +1093,15 @@ async def list_reviews(profile: CurrentProfile, session: DbSession):
 
 @router.post("/reviews", response_model=Envelope[ReviewOut])
 async def create_review(body: ReviewIn, profile: CurrentProfile, session: DbSession):
+    await session.scalar(select(Profile.id).where(Profile.id == profile.id).with_for_update())
+    review_count = await session.scalar(
+        select(func.count()).select_from(Review).where(Review.profile_id == profile.id)
+    )
+    if (review_count or 0) >= _MAX_REVIEWS_PER_PROFILE:
+        raise HTTPException(
+            status_code=409,
+            detail="The closed beta supports at most 100 reviews per account",
+        )
     review = Review(profile_id=profile.id, **body.model_dump())
     session.add(review)
     await session.commit()
@@ -735,28 +1146,13 @@ async def analyze_food(profile: CurrentProfile, image: Annotated[UploadFile, Fil
     allowed = {"image/jpeg", "image/png", "image/webp"}
     if image.content_type not in allowed:
         raise HTTPException(status_code=415, detail="Only JPEG, PNG, and WebP images are supported")
+    _consume_ai_limit(profile.id, include_global=False)
     image_bytes = await image.read(8 * 1024 * 1024 + 1)
     if len(image_bytes) > 8 * 1024 * 1024:
         raise HTTPException(status_code=413, detail="Image must be 8 MB or smaller")
-    try:
-        with Image.open(io.BytesIO(image_bytes)) as opened:
-            if opened.width * opened.height > 20_000_000:
-                raise HTTPException(
-                    status_code=413, detail="Image must be 20 megapixels or smaller"
-                )
-            opened.verify()
-    except HTTPException:
-        raise
-    except Exception as exc:
-        raise HTTPException(status_code=422, detail="Image data is invalid") from exc
-    with Image.open(io.BytesIO(image_bytes)) as opened:
-        sanitized = io.BytesIO()
-        converted = opened.convert("RGB")
-        converted.thumbnail((1600, 1600), Image.Resampling.LANCZOS)
-        converted.save(sanitized, format="JPEG", quality=85, optimize=True)
-    result = await _call_ai(
-        profile.id, "analyze_food", sanitized.getvalue(), "image/jpeg"
-    )
+    sanitized = await _sanitize_food_image_bounded(image_bytes)
+    async with _ai_admission(profile.id, include_user=False):
+        result = await _invoke_ai("analyze_food", sanitized, "image/jpeg")
     return ok(FoodAnalysisOut.model_validate(result))
 
 
@@ -783,7 +1179,12 @@ async def discover(body: DiscoverIn, profile: CurrentProfile):
 @router.get(
     "/provider-usage/summary", response_model=Envelope[list[ProviderUsageAggregateOut]]
 )
-async def provider_usage_summary(profile: CurrentProfile, session: DbSession):
+async def provider_usage_summary(
+    profile: CurrentOperator, session: DbSession,
+    days: int = Query(default=30, ge=1, le=30),
+):
+    """Operator-only aggregate usage within the preceding 1–30 days."""
+    cutoff = datetime.now(UTC) - timedelta(days=days)
     rows = (
         await session.execute(
             select(
@@ -795,7 +1196,8 @@ async def provider_usage_summary(profile: CurrentProfile, session: DbSession):
                 func.coalesce(func.sum(ProviderUsage.estimated_cost_usd), 0.0).label(
                     "estimated_cost_usd"
                 ),
-            ).group_by(ProviderUsage.provider, ProviderUsage.operation)
+            ).where(ProviderUsage.created_at >= cutoff)
+            .group_by(ProviderUsage.provider, ProviderUsage.operation)
         )
     ).all()
     return ok(
@@ -855,15 +1257,24 @@ async def list_plans(profile: CurrentProfile, session: DbSession):
 @router.post("/plans", response_model=Envelope[PlanCreated])
 async def create_plan(body: PlanCreateIn, profile: CurrentProfile, session: DbSession):
     settings = get_settings()
+    quota = await quota_snapshot(session, profile.id)
+    if quota.plans.used >= quota.plans.limit:
+        raise HTTPException(status_code=429, detail="Account lifetime plan creation limit reached")
     if body.location_place_id:
         resolved = await _call_places(profile.id, "get_location", body.location_place_id)
         if resolved.region_code != "US":
             raise HTTPException(status_code=422, detail="Only United States locations are supported")
     elif settings.places_provider_mode == "live":
         raise HTTPException(status_code=422, detail="A resolved Google Place ID is required")
+    # Recheck atomically after location validation. The debit and plan creation
+    # commit together; simultaneous creates cannot exceed the lifetime cap.
+    if not await consume_plan_creation(session, profile.id):
+        raise HTTPException(status_code=429, detail="Account lifetime plan creation limit reached")
     token = new_share_token()
     plan = Plan(
         organizer_id=profile.id,
+        metadata_author_id=profile.id,
+        metadata_provenance="known",
         share_token_hash=hash_value(token),
         title=body.title,
         location_label=" ".join(body.location_label.split()),
@@ -887,6 +1298,87 @@ async def get_plan(plan_id: str, profile: CurrentProfile, session: DbSession):
     return ok(await _plan_out(session, plan, profile.id))
 
 
+@router.patch("/plans/{plan_id}/metadata", response_model=Envelope[PlanOut])
+async def replace_plan_metadata(
+    plan_id: str, body: PlanCreateIn, profile: CurrentProfile, session: DbSession
+):
+    plan = await _plan(session, plan_id, for_update=True)
+    _require_organizer(plan, profile)
+    if plan.status != "collecting" or not plan.metadata_needs_replacement:
+        raise HTTPException(status_code=409, detail="Plan details do not need replacement")
+    settings = get_settings()
+    if body.location_place_id:
+        resolved = await _call_places(profile.id, "get_location", body.location_place_id)
+        if resolved.region_code != "US":
+            raise HTTPException(status_code=422, detail="Only United States locations are supported")
+    elif settings.places_provider_mode == "live":
+        raise HTTPException(status_code=422, detail="A resolved Google Place ID is required")
+    plan.title = body.title
+    plan.location_label = " ".join(body.location_label.split())
+    plan.location_place_id = body.location_place_id
+    plan.latitude = None if body.location_place_id else body.latitude
+    plan.longitude = None if body.location_place_id else body.longitude
+    plan.metadata_author_id = profile.id
+    plan.metadata_provenance = "known"
+    plan.metadata_needs_replacement = False
+    plan.metadata_version += 1
+    plan.content_epoch += 1
+    _touch(plan)
+    await _event(session, plan, profile, "plan.metadata_replaced")
+    await session.commit()
+    return ok(await _plan_out(session, plan, profile.id))
+
+
+@router.post("/plans/{plan_id}/transfer-ownership", response_model=Envelope[ManagedPlanOut])
+async def transfer_plan_ownership(
+    plan_id: str, body: TransferOwnershipIn, profile: CurrentProfile, session: DbSession
+):
+    # Authorize before revealing whether a supplied recipient exists. Read only
+    # the scalar here; ownership is checked again on the locked current row.
+    organizer_id = await session.scalar(select(Plan.organizer_id).where(Plan.id == plan_id))
+    if organizer_id != profile.id:
+        raise HTTPException(status_code=403, detail="Only the organizer can perform this action")
+    if body.recipient_profile_id == profile.id:
+        raise HTTPException(status_code=422, detail="Choose another participant")
+    # Acquire both actor locks before the plan row lock. Profile deletion takes
+    # the exclusive counterpart before touching plans.
+    try:
+        await load_approved_profile(Identity(subject=body.recipient_profile_id), session)
+    except HTTPException as exc:
+        raise HTTPException(status_code=409, detail="Recipient is not an approved participant") from exc
+    plan = await _plan(session, plan_id, for_update=True)
+    _require_organizer(plan, profile)
+    recipient = await session.scalar(
+        select(PlanParticipant.id).where(
+            PlanParticipant.plan_id == plan_id,
+            PlanParticipant.profile_id == body.recipient_profile_id,
+        )
+    )
+    if not recipient:
+        raise HTTPException(status_code=409, detail="Recipient is not a plan participant")
+    plan.organizer_id = body.recipient_profile_id
+    _touch(plan)
+    await _event(session, plan, profile, "plan.ownership_transferred")
+    await session.commit()
+    return ok((await _managed_plans_out(session, [plan], profile.id))[0])
+
+
+@router.delete("/plans/{plan_id}", response_model=Envelope[DeleteAccountOut])
+async def delete_sole_plan(
+    plan_id: str, body: DeleteAccountIn, profile: CurrentProfile, session: DbSession
+):
+    plan = await _plan(session, plan_id, for_update=True)
+    _require_organizer(plan, profile)
+    count = await session.scalar(
+        select(func.count()).select_from(PlanParticipant).where(PlanParticipant.plan_id == plan_id)
+    )
+    if count != 1:
+        raise HTTPException(status_code=409, detail="Shared plans must be transferred")
+    await session.delete(plan)
+    await session.commit()
+    return ok(DeleteAccountOut(deleted=True))
+
+
 @router.get("/plans/{plan_id}/revision", response_model=Envelope[PlanRevisionOut])
 async def get_plan_revision(plan_id: str, profile: CurrentProfile, session: DbSession):
     plan = await _plan(session, plan_id)
@@ -896,7 +1388,7 @@ async def get_plan_revision(plan_id: str, profile: CurrentProfile, session: DbSe
 
 @router.post("/plans/{plan_id}/join", response_model=Envelope[PlanOut])
 async def join_plan(plan_id: str, body: PlanJoinIn, profile: CurrentProfile, session: DbSession):
-    plan = await _plan(session, plan_id)
+    plan = await _plan(session, plan_id, for_update=True)
     if plan.share_token_hash != hash_value(body.share_token):
         raise HTTPException(status_code=404, detail="Share link is invalid or has been rotated")
     existing = await session.scalar(
@@ -905,6 +1397,7 @@ async def join_plan(plan_id: str, body: PlanJoinIn, profile: CurrentProfile, ses
         )
     )
     if not existing:
+        _require_reopened(plan)
         count = await session.scalar(
             select(func.count())
             .select_from(PlanParticipant)
@@ -927,8 +1420,9 @@ async def join_plan(plan_id: str, body: PlanJoinIn, profile: CurrentProfile, ses
 async def update_constraints(
     plan_id: str, body: ConstraintsIn, profile: CurrentProfile, session: DbSession
 ):
-    plan = await _plan(session, plan_id)
+    plan = await _plan(session, plan_id, for_update=True)
     participant = await _participant(session, plan.id, profile.id)
+    _require_reopened(plan)
     participant.constraints = body.model_dump()
     plan.status = "collecting"
     plan.active_run_id = None
@@ -944,8 +1438,11 @@ async def update_constraints(
 async def generate_recommendations(
     plan_id: str, body: RecommendationIn, profile: CurrentProfile, session: DbSession
 ):
-    plan = await _plan(session, plan_id)
+    plan = await _plan(session, plan_id, for_update=True)
     await _participant(session, plan.id, profile.id)
+    _require_reopened(plan)
+    if plan.metadata_needs_replacement:
+        raise HTTPException(status_code=409, detail="Replace plan details before generating options")
     participant_rows = list(
         (
             await session.scalars(select(PlanParticipant).where(PlanParticipant.plan_id == plan.id))
@@ -1004,9 +1501,18 @@ async def generate_recommendations(
             detail="No four-place recommendation set satisfies the current constraints",
         )
 
-    run = RecommendationRun(plan_id=plan.id, query=body.query, provider=ai_provider.name)
+    run = RecommendationRun(
+        plan_id=plan.id, query=body.query, provider=ai_provider.name,
+        requester_id=profile.id, location_author_id=plan.metadata_author_id,
+        location_version=plan.metadata_version,
+        provenance="known" if plan.metadata_provenance == "known" else "legacy_unknown",
+    )
     session.add(run)
     await session.flush()
+    session.add_all([
+        RunContributor(run_id=run.id, profile_id=participant.profile_id)
+        for participant in participant_rows
+    ])
     for index, item in enumerate(recommendations):
         session.add(
             Candidate(
@@ -1032,7 +1538,7 @@ async def generate_recommendations(
 
 @router.put("/plans/{plan_id}/vote", response_model=Envelope[PlanOut])
 async def vote(plan_id: str, body: VoteIn, profile: CurrentProfile, session: DbSession):
-    plan = await _plan(session, plan_id)
+    plan = await _plan(session, plan_id, for_update=True)
     await _participant(session, plan.id, profile.id)
     if plan.status != "voting" or not plan.active_run_id:
         raise HTTPException(status_code=409, detail="The plan is not currently accepting votes")
@@ -1047,6 +1553,7 @@ async def vote(plan_id: str, body: VoteIn, profile: CurrentProfile, session: DbS
         raise HTTPException(
             status_code=422, detail="Every ranked candidate must belong to the active run"
         )
+    places = await _plan_places(session, plan, profile.id)
     existing = await session.scalar(
         select(Vote).where(Vote.run_id == plan.active_run_id, Vote.profile_id == profile.id)
     )
@@ -1065,12 +1572,12 @@ async def vote(plan_id: str, body: VoteIn, profile: CurrentProfile, session: DbS
     await _event(session, plan, profile, "vote.updated")
     await session.commit()
     await capture_event("vote_submitted", {"ranking_count": len(body.ranking)})
-    return ok(await _plan_out(session, plan, profile.id))
+    return ok(await _plan_out(session, plan, profile.id, places))
 
 
 @router.post("/plans/{plan_id}/finalize", response_model=Envelope[PlanOut])
 async def finalize(plan_id: str, body: FinalizeIn, profile: CurrentProfile, session: DbSession):
-    plan = await _plan(session, plan_id)
+    plan = await _plan(session, plan_id, for_update=True)
     _require_organizer(plan, profile)
     if plan.status != "voting" or not plan.active_run_id:
         raise HTTPException(status_code=409, detail="Generate recommendations before finalizing")
@@ -1086,19 +1593,21 @@ async def finalize(plan_id: str, body: FinalizeIn, profile: CurrentProfile, sess
     selected_id = body.candidate_id or (ordered[0].id if ordered else None)
     if selected_id not in {candidate.id for candidate in candidates}:
         raise HTTPException(status_code=422, detail="Final candidate must belong to the active run")
+    places = await _plan_places(session, plan, profile.id)
     plan.finalized_candidate_id = selected_id
     plan.status = "finalized"
     _touch(plan)
     await _event(session, plan, profile, "plan.finalized", {"candidate_id": selected_id})
     await session.commit()
     await capture_event("plan_finalized", {"vote_count": len(votes)})
-    return ok(await _plan_out(session, plan, profile.id))
+    return ok(await _plan_out(session, plan, profile.id, places))
 
 
 @router.post("/plans/{plan_id}/reopen", response_model=Envelope[PlanOut])
 async def reopen(plan_id: str, profile: CurrentProfile, session: DbSession):
-    plan = await _plan(session, plan_id)
+    plan = await _plan(session, plan_id, for_update=True)
     _require_organizer(plan, profile)
+    places = await _plan_places(session, plan, profile.id)
     if not plan.active_run_id:
         plan.status = "collecting"
     else:
@@ -1108,12 +1617,12 @@ async def reopen(plan_id: str, profile: CurrentProfile, session: DbSession):
     await _event(session, plan, profile, "plan.reopened")
     await session.commit()
     await capture_event("plan_reopened")
-    return ok(await _plan_out(session, plan, profile.id))
+    return ok(await _plan_out(session, plan, profile.id, places))
 
 
 @router.post("/plans/{plan_id}/share-token/rotate", response_model=Envelope[ShareTokenOut])
 async def rotate_share_token(plan_id: str, profile: CurrentProfile, session: DbSession):
-    plan = await _plan(session, plan_id)
+    plan = await _plan(session, plan_id, for_update=True)
     _require_organizer(plan, profile)
     token = new_share_token()
     plan.share_token_hash = hash_value(token)

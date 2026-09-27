@@ -1,0 +1,292 @@
+{
+  "schema_version": 1,
+  "amendment": "F1-P2",
+  "recorded_at": "2026-09-23T04:40:14.080423+00:00",
+  "status": "passed_settings_probe_only",
+  "evidence_base_sha": "64d4e18e4b0d13ab4002de08997085593e8e604a",
+  "evidence_commit": "commit containing this checkpoint; distinct from application/build/probe identities",
+  "application_sha_unchanged": "8972865893a3f018a064594457dc9cc664f8a61f",
+  "build_operator_sha_unchanged": "16603dd0cf36d27b492e57a02d3c6c438a2563c4",
+  "approval": "n1-f1-p2-approval.json",
+  "approval_sha256": "a2026cf77ec158d72f97e63eeedb5da5d5e5acdcefea19cd32a5c3dcbc7f7289",
+  "proposal_sha256": "27865e7254423cf04745dd0feed1c27b49037e151fd4136ffd3ed5410537f1c8",
+  "probe_manifest_sha256": "490b582dde6823594d1816fef705f70117b58a13c6a6cc28220e470ed26a33af",
+  "probe_driver_sha256": "25dac7bf07a2892ab9e079d345b975491c28eadc276f714e176ba28da286219c",
+  "private_root": "/Users/brianchei/repos/Tableus-ai-agent-dev/.artifacts/mobile/8972865893a3f018a064594457dc9cc664f8a61f/native-validation-f1",
+  "device_id": "CBB4FAB4-734C-413C-9F10-850329AC9A01",
+  "started_at": "2026-09-23T04:35:46.682963+00:00",
+  "finished_at": "2026-09-23T04:37:56.992139+00:00",
+  "elapsed_seconds": 130.308,
+  "limit_seconds": 300,
+  "preflight_status": "passed",
+  "preflight_free_gib": 20.82,
+  "monitor": "host-ps-after-one-target-bind",
+  "bound_host_identity": {
+    "springboard": {
+      "pid": 17600,
+      "ppid": 94306,
+      "lstart": "Tue Sep 22 22:56:56 2026",
+      "comm": "/Library/Developer/CoreSimulator/Volumes/iOS_23F77/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 26.5.simruntime/Contents/Resources/RuntimeRoot/System/Library/CoreServices/SpringBoard.app/SpringBoard"
+    },
+    "parent": {
+      "pid": 94306,
+      "ppid": 1,
+      "lstart": "Tue Sep 22 21:07:12 2026",
+      "comm": "launchd_sim"
+    }
+  },
+  "flows": [
+    {
+      "index": 1,
+      "started_at": "2026-09-23T04:35:49.457691+00:00",
+      "command": [
+        "/Users/brianchei/repos/Tableus-ai-agent-dev/.artifacts/mobile/8972865893a3f018a064594457dc9cc664f8a61f/native-validation-f1/runtime-tools-f1/maestro",
+        "--device",
+        "CBB4FAB4-734C-413C-9F10-850329AC9A01",
+        "test",
+        "--test-output-dir=results",
+        "/Users/brianchei/repos/Tableus-ai-agent-dev/.artifacts/mobile/8972865893a3f018a064594457dc9cc664f8a61f/native-validation-f1/runtime-preparation-p1/f1-p2-preparation/settings-1.yml"
+      ],
+      "status": "passed",
+      "exit_code": 0,
+      "commands_evidence": {
+        "path": "/Users/brianchei/repos/Tableus-ai-agent-dev/.artifacts/mobile/8972865893a3f018a064594457dc9cc664f8a61f/native-validation-f1/test-ios-settings-platform-probe-02/maestro-results/settings-1-zlza_yyf/2026-09-22_233550/settings-1/commands.json",
+        "sha256": "e8b9a7030faf6c4a0f07a32e8c0eb915c32924b2b9f00edbff615aa296c2ce56"
+      },
+      "finished_at": "2026-09-23T04:36:30.891663+00:00",
+      "screenshot": "/Users/brianchei/repos/Tableus-ai-agent-dev/.artifacts/mobile/8972865893a3f018a064594457dc9cc664f8a61f/native-validation-f1/test-ios-settings-platform-probe-02/maestro-results/settings-1-zlza_yyf/2026-09-22_233550/settings-1/takeScreenshot/settings-probe-1.png"
+    },
+    {
+      "index": 2,
+      "started_at": "2026-09-23T04:36:31.055427+00:00",
+      "command": [
+        "/Users/brianchei/repos/Tableus-ai-agent-dev/.artifacts/mobile/8972865893a3f018a064594457dc9cc664f8a61f/native-validation-f1/runtime-tools-f1/maestro",
+        "--device",
+        "CBB4FAB4-734C-413C-9F10-850329AC9A01",
+        "test",
+        "--test-output-dir=results",
+        "/Users/brianchei/repos/Tableus-ai-agent-dev/.artifacts/mobile/8972865893a3f018a064594457dc9cc664f8a61f/native-validation-f1/runtime-preparation-p1/f1-p2-preparation/settings-2.yml"
+      ],
+      "status": "passed",
+      "exit_code": 0,
+      "commands_evidence": {
+        "path": "/Users/brianchei/repos/Tableus-ai-agent-dev/.artifacts/mobile/8972865893a3f018a064594457dc9cc664f8a61f/native-validation-f1/test-ios-settings-platform-probe-02/maestro-results/settings-2-y_wyh1gj/2026-09-22_233634/settings-2/commands.json",
+        "sha256": "ce78aa2a13ad72d6206325e00567312aae56aefe7592a7a6470e69f56a782906"
+      },
+      "finished_at": "2026-09-23T04:37:18.863182+00:00",
+      "screenshot": "/Users/brianchei/repos/Tableus-ai-agent-dev/.artifacts/mobile/8972865893a3f018a064594457dc9cc664f8a61f/native-validation-f1/test-ios-settings-platform-probe-02/maestro-results/settings-2-y_wyh1gj/2026-09-22_233634/settings-2/takeScreenshot/settings-probe-2.png"
+    },
+    {
+      "index": 3,
+      "started_at": "2026-09-23T04:37:19.031789+00:00",
+      "command": [
+        "/Users/brianchei/repos/Tableus-ai-agent-dev/.artifacts/mobile/8972865893a3f018a064594457dc9cc664f8a61f/native-validation-f1/runtime-tools-f1/maestro",
+        "--device",
+        "CBB4FAB4-734C-413C-9F10-850329AC9A01",
+        "test",
+        "--test-output-dir=results",
+        "/Users/brianchei/repos/Tableus-ai-agent-dev/.artifacts/mobile/8972865893a3f018a064594457dc9cc664f8a61f/native-validation-f1/runtime-preparation-p1/f1-p2-preparation/settings-3.yml"
+      ],
+      "status": "passed",
+      "exit_code": 0,
+      "commands_evidence": {
+        "path": "/Users/brianchei/repos/Tableus-ai-agent-dev/.artifacts/mobile/8972865893a3f018a064594457dc9cc664f8a61f/native-validation-f1/test-ios-settings-platform-probe-02/maestro-results/settings-3-ifvumd2r/2026-09-22_233723/settings-3/commands.json",
+        "sha256": "a9536f9418291b3d217f852b736d2d0a7d9140bac22e6d4f26e7ad946a26227f"
+      },
+      "finished_at": "2026-09-23T04:37:56.351762+00:00",
+      "screenshot": "/Users/brianchei/repos/Tableus-ai-agent-dev/.artifacts/mobile/8972865893a3f018a064594457dc9cc664f8a61f/native-validation-f1/test-ios-settings-platform-probe-02/maestro-results/settings-3-ifvumd2r/2026-09-22_233723/settings-3/takeScreenshot/settings-probe-3.png"
+    }
+  ],
+  "command_evidence": [
+    {
+      "path": "test-ios-settings-platform-probe-02/maestro-results/settings-1-zlza_yyf/2026-09-22_233550/settings-1/commands.json",
+      "sha256": "e8b9a7030faf6c4a0f07a32e8c0eb915c32924b2b9f00edbff615aa296c2ce56",
+      "statuses": [
+        "COMPLETED",
+        "COMPLETED",
+        "COMPLETED",
+        "COMPLETED",
+        "COMPLETED"
+      ],
+      "command_types": [
+        "defineVariablesCommand",
+        "applyConfigurationCommand",
+        "launchAppCommand",
+        "assertConditionCommand",
+        "takeScreenshotCommand"
+      ]
+    },
+    {
+      "path": "test-ios-settings-platform-probe-02/maestro-results/settings-2-y_wyh1gj/2026-09-22_233634/settings-2/commands.json",
+      "sha256": "ce78aa2a13ad72d6206325e00567312aae56aefe7592a7a6470e69f56a782906",
+      "statuses": [
+        "COMPLETED",
+        "COMPLETED",
+        "COMPLETED",
+        "COMPLETED",
+        "COMPLETED"
+      ],
+      "command_types": [
+        "defineVariablesCommand",
+        "applyConfigurationCommand",
+        "launchAppCommand",
+        "assertConditionCommand",
+        "takeScreenshotCommand"
+      ]
+    },
+    {
+      "path": "test-ios-settings-platform-probe-02/maestro-results/settings-3-ifvumd2r/2026-09-22_233723/settings-3/commands.json",
+      "sha256": "a9536f9418291b3d217f852b736d2d0a7d9140bac22e6d4f26e7ad946a26227f",
+      "statuses": [
+        "COMPLETED",
+        "COMPLETED",
+        "COMPLETED",
+        "COMPLETED",
+        "COMPLETED"
+      ],
+      "command_types": [
+        "defineVariablesCommand",
+        "applyConfigurationCommand",
+        "launchAppCommand",
+        "assertConditionCommand",
+        "takeScreenshotCommand"
+      ]
+    }
+  ],
+  "screenshots": [
+    {
+      "path": "/Users/brianchei/repos/Tableus-ai-agent-dev/.artifacts/mobile/8972865893a3f018a064594457dc9cc664f8a61f/native-validation-f1/test-ios-settings-platform-probe-02/maestro-results/settings-1-zlza_yyf/2026-09-22_233550/settings-1/takeScreenshot/settings-probe-1.png",
+      "sha256": "c025f4010f0b992c56f1202059228e0dd79d94b30dd3644aa17f86ef198a7d9d"
+    },
+    {
+      "path": "/Users/brianchei/repos/Tableus-ai-agent-dev/.artifacts/mobile/8972865893a3f018a064594457dc9cc664f8a61f/native-validation-f1/test-ios-settings-platform-probe-02/maestro-results/settings-2-y_wyh1gj/2026-09-22_233634/settings-2/takeScreenshot/settings-probe-2.png",
+      "sha256": "172ed578dad254bcd1a46332bc618cfb60621310bab331271e7e9803d7ccbed4"
+    },
+    {
+      "path": "/Users/brianchei/repos/Tableus-ai-agent-dev/.artifacts/mobile/8972865893a3f018a064594457dc9cc664f8a61f/native-validation-f1/test-ios-settings-platform-probe-02/maestro-results/settings-3-ifvumd2r/2026-09-22_233723/settings-3/takeScreenshot/settings-probe-3.png",
+      "sha256": "5aea1cb3024bbd066a01b8cccf19a375bdd1248ab570fb471a3b7b2407e11e61"
+    }
+  ],
+  "observations": {
+    "count": 105,
+    "springboard_pids": [
+      17600
+    ],
+    "tableus_pids": [],
+    "stop_reasons": [],
+    "host_ps_max_seconds": 1.203,
+    "host_ps_median_seconds": 0.185
+  },
+  "new_crash_reports": [],
+  "cleanup": {
+    "settings_terminate_exit": 0,
+    "final_health": {
+      "at": "2026-09-23T04:37:56.991696+00:00",
+      "monitor": "host-ps",
+      "springboard": {
+        "pid": 17600,
+        "ppid": 94306,
+        "lstart": "Tue Sep 22 22:56:56 2026",
+        "comm": "/Library/Developer/CoreSimulator/Volumes/iOS_23F77/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 26.5.simruntime/Contents/Resources/RuntimeRoot/System/Library/CoreServices/SpringBoard.app/SpringBoard"
+      },
+      "launchd_sim": {
+        "pid": 94306,
+        "ppid": 1,
+        "lstart": "Tue Sep 22 21:07:12 2026",
+        "comm": "launchd_sim"
+      },
+      "replacement_springboard_pids": [],
+      "tableus_pids": [],
+      "new_crash_reports": [],
+      "ps_elapsed_seconds": 0.43,
+      "stop_reasons": []
+    }
+  },
+  "error": null,
+  "additional_runs_used": 1,
+  "additional_runs_remaining": 0,
+  "ui_flows_with_all_commands_completed": 3,
+  "accepted_probe_flows": 3,
+  "tableus_validation_granted": false,
+  "automatic_tableus_continuation": false,
+  "original_refresh_failure": "Unresolved; Settings-only probe does not exercise TableUs.",
+  "O1_platform_crash": "Retained; this probe cannot explain or clear the prior crash.",
+  "private_files_sha256": {
+    "test-ios-settings-platform-probe-02/maestro-1.log": "090aeba9a0adcc54628a528020ed63937528c07a59ec9ec48e21b08334b9206d",
+    "test-ios-settings-platform-probe-02/maestro-2.log": "b634316e7ab3d4051cdcb0d1432c609860b401fc06ad3eaa959d2f4f6a5473f9",
+    "test-ios-settings-platform-probe-02/maestro-3.log": "976509747d2f6ddcd80c326bee0f4700520b5495937059b4f6cf2cb5e564a09a",
+    "test-ios-settings-platform-probe-02/maestro-results/settings-1-zlza_yyf/2026-09-22_233550/settings-1/commands.json": "e8b9a7030faf6c4a0f07a32e8c0eb915c32924b2b9f00edbff615aa296c2ce56",
+    "test-ios-settings-platform-probe-02/maestro-results/settings-1-zlza_yyf/2026-09-22_233550/settings-1/logs/device-simulator.log": "74939ac099f3a0d8b46628f21510d1696e70a8e0a8d7eaa8deaf075997ed8b8b",
+    "test-ios-settings-platform-probe-02/maestro-results/settings-1-zlza_yyf/2026-09-22_233550/settings-1/logs/device-xctest.log": "2585942bc2767a3782e769decc9ea38d63a61986cace33268372c285de494400",
+    "test-ios-settings-platform-probe-02/maestro-results/settings-1-zlza_yyf/2026-09-22_233550/settings-1/logs/maestro.log": "05fed958ef35cc311f7cd25185165886ba6fa1d142beba1da01a8cccd1ca43c9",
+    "test-ios-settings-platform-probe-02/maestro-results/settings-1-zlza_yyf/2026-09-22_233550/settings-1/manifest.json": "6ce7414f7ee62cb3598f7e0a4abeeb1d34bdd3356f21107573ce24255ef06fdd",
+    "test-ios-settings-platform-probe-02/maestro-results/settings-1-zlza_yyf/2026-09-22_233550/settings-1/takeScreenshot/settings-probe-1.png": "c025f4010f0b992c56f1202059228e0dd79d94b30dd3644aa17f86ef198a7d9d",
+    "test-ios-settings-platform-probe-02/maestro-results/settings-1-zlza_yyf/2026-09-22_233550/xctest_runner_2026-09-22_233555.log": "15094b544f36d1102f2031da1d70a8e744b071b0c9ab001d489301a76fe397f0",
+    "test-ios-settings-platform-probe-02/maestro-results/settings-1-zlza_yyf/operator-invocation.json": "17463e12b7640b5bad6083e3194f10f01ec38b50d8c84d37e462b5a46ede134c",
+    "test-ios-settings-platform-probe-02/maestro-results/settings-2-y_wyh1gj/2026-09-22_233634/settings-2/commands.json": "ce78aa2a13ad72d6206325e00567312aae56aefe7592a7a6470e69f56a782906",
+    "test-ios-settings-platform-probe-02/maestro-results/settings-2-y_wyh1gj/2026-09-22_233634/settings-2/logs/device-simulator.log": "2d618c2cbed71ce335d8e9c58ab20e8974302a3646741658eca7f87feae1a96e",
+    "test-ios-settings-platform-probe-02/maestro-results/settings-2-y_wyh1gj/2026-09-22_233634/settings-2/logs/device-xctest.log": "8678949434f24e4a42aead30a7b672c43c9c746b021e315cc2a6c251a46789fa",
+    "test-ios-settings-platform-probe-02/maestro-results/settings-2-y_wyh1gj/2026-09-22_233634/settings-2/logs/maestro.log": "1a13c986680a605755bc9cae0b98e8ed481412c0cfc5eaf0d04aca3319b39deb",
+    "test-ios-settings-platform-probe-02/maestro-results/settings-2-y_wyh1gj/2026-09-22_233634/settings-2/manifest.json": "5580242cdb02871348ca99cc13d21c03c07736c31518295742ec6202abca4b2f",
+    "test-ios-settings-platform-probe-02/maestro-results/settings-2-y_wyh1gj/2026-09-22_233634/settings-2/takeScreenshot/settings-probe-2.png": "172ed578dad254bcd1a46332bc618cfb60621310bab331271e7e9803d7ccbed4",
+    "test-ios-settings-platform-probe-02/maestro-results/settings-2-y_wyh1gj/2026-09-22_233634/xctest_runner_2026-09-22_233638.log": "2e1fdd157ece093ee6f33f5481a4a671573daeb33ab4e6552f5e568a05948011",
+    "test-ios-settings-platform-probe-02/maestro-results/settings-2-y_wyh1gj/operator-invocation.json": "b158f01e030b58bac004bf8146868bc5bd5e164ed2ac4b1f3a70e21d42f7a07a",
+    "test-ios-settings-platform-probe-02/maestro-results/settings-3-ifvumd2r/2026-09-22_233723/settings-3/commands.json": "a9536f9418291b3d217f852b736d2d0a7d9140bac22e6d4f26e7ad946a26227f",
+    "test-ios-settings-platform-probe-02/maestro-results/settings-3-ifvumd2r/2026-09-22_233723/settings-3/logs/device-simulator.log": "ad88247b7ce1c89d16717ca0524b2955bfb2e46cb4fb94436c083a386d9a9136",
+    "test-ios-settings-platform-probe-02/maestro-results/settings-3-ifvumd2r/2026-09-22_233723/settings-3/logs/device-xctest.log": "3655c2fb5ab1970c9d6f3000fe83ff67d8f739761247331ec344c97459866dcd",
+    "test-ios-settings-platform-probe-02/maestro-results/settings-3-ifvumd2r/2026-09-22_233723/settings-3/logs/maestro.log": "b03d68b12a27dec9e857422e59fdc163708e83322867c2e999a87f4fbc2f0b18",
+    "test-ios-settings-platform-probe-02/maestro-results/settings-3-ifvumd2r/2026-09-22_233723/settings-3/manifest.json": "1f33f128d8fdadbb4a4cb99f3ddb73e4df602b168306c80fa810cd84d817342d",
+    "test-ios-settings-platform-probe-02/maestro-results/settings-3-ifvumd2r/2026-09-22_233723/settings-3/takeScreenshot/settings-probe-3.png": "5aea1cb3024bbd066a01b8cccf19a375bdd1248ab570fb471a3b7b2407e11e61",
+    "test-ios-settings-platform-probe-02/maestro-results/settings-3-ifvumd2r/2026-09-22_233723/xctest_runner_2026-09-22_233727.log": "94476db43aac7513c9a6c287370052dedd49b22a52679db753e0e6245db440bb",
+    "test-ios-settings-platform-probe-02/maestro-results/settings-3-ifvumd2r/operator-invocation.json": "8db5928ff983bde1137d037060620a58d9caa1bb8144b88666a5f74e29686419",
+    "test-ios-settings-platform-probe-02/post-stop-check.json": "1c97fa788d2c98135b7ff57243a9f1bdcbed0f731996a49a41d7580e216dd828",
+    "test-ios-settings-platform-probe-02/result.json": "8da36a79072fdd922848faa81672e5d4f959d500a12930ffba4c2fb1dfa00248",
+    "test-ios-settings-platform-probe-02/settings-terminate.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "p2-preflight/approval.json": "a2026cf77ec158d72f97e63eeedb5da5d5e5acdcefea19cd32a5c3dcbc7f7289",
+    "p2-preflight/preflight.json": "6bdd999fc9c2b3dd3704a23d958c5ab14d9025b273e8fdf2270d6f95855e3af9"
+  },
+  "post_stop": {
+    "recorded_at": "2026-09-23T04:40:13.924465+00:00",
+    "source": "Read-only host process, port and crash-file inventory; no app or simulator operation.",
+    "bound_host_identity_preserved": true,
+    "target_processes": [
+      {
+        "pid": 17600,
+        "ppid": 94306,
+        "lstart": "Tue Sep 22 22:56:56 2026",
+        "comm": "/Library/Developer/CoreSimulator/Volumes/iOS_23F77/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 26.5.simruntime/Contents/Resources/RuntimeRoot/System/Library/CoreServices/SpringBoard.app/SpringBoard"
+      },
+      {
+        "pid": 94306,
+        "ppid": 1,
+        "lstart": "Tue Sep 22 21:07:12 2026",
+        "comm": "launchd_sim"
+      }
+    ],
+    "matching_automation_processes": [],
+    "ports": {
+      "7999": {
+        "free": true,
+        "exit_code": 1
+      },
+      "8000": {
+        "free": true,
+        "exit_code": 1
+      },
+      "8001": {
+        "free": true,
+        "exit_code": 1
+      }
+    },
+    "new_late_TableUs_or_SpringBoard_report_files": []
+  },
+  "prepared_followup": {
+    "proposal": "n1-f1-o2-proposal.json",
+    "proposal_sha256": "c56aea2d80fc17245c0a6fda03fab8f9d0d0c09881eb89088b68f5f66cb66055",
+    "archive_index": "/Users/brianchei/repos/Tableus-ai-agent-dev/.artifacts/mobile/8972865893a3f018a064594457dc9cc664f8a61f/native-validation-f1/runtime-preparation-p2/index.json",
+    "archive_index_sha256": "8d8521d52b0e7adbe8a16d1216a7b38fec88fea9a1b9eb8eb05bcb367ef08e14",
+    "archive_file_count": 19,
+    "O2_executed": false,
+    "downstream_executed": false
+  }
+}

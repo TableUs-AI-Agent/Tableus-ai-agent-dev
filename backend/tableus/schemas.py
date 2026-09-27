@@ -59,6 +59,20 @@ class AccountControlOut(BaseModel):
     organized_plan_count: int
     deletion_scope: Literal["application_profile"] = "application_profile"
     supabase_auth_removal: Literal["operator_required"] = "operator_required"
+    full_deletion_available: bool = False
+
+
+class AccountDeletionOut(BaseModel):
+    status: Literal["pending", "completed"]
+    requested_at: datetime
+    completed_at: datetime | None = None
+    next_retry_at: datetime | None = None
+    last_error_code: str | None = None
+    needs_attention: bool = False
+
+
+class TransferOwnershipIn(BaseModel):
+    recipient_profile_id: str = Field(min_length=1, max_length=64)
 
 
 class AccountExportConnection(BaseModel):
@@ -235,6 +249,21 @@ class CandidateOut(BaseModel):
     vote_score: int = 0
 
 
+class ManagedPlanParticipantOut(BaseModel):
+    profile_id: str
+    display_name: str
+    is_organizer: bool
+
+
+class ManagedPlanOut(BaseModel):
+    id: str
+    title: str
+    organizer_id: str
+    viewer_is_organizer: bool
+    updated_at: datetime
+    participants: list[ManagedPlanParticipantOut]
+
+
 class PlanOut(BaseModel):
     id: str
     title: str
@@ -242,6 +271,7 @@ class PlanOut(BaseModel):
     viewer_is_organizer: bool
     status: Literal["collecting", "voting", "finalized"]
     location_label: str
+    metadata_needs_replacement: bool = False
     latitude: float | None
     longitude: float | None
     participants: list[ParticipantOut]

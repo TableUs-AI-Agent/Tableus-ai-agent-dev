@@ -1,0 +1,42 @@
+{
+  "schema_version": 1,
+  "application_sha": "eab922ee6b7a21d193514d7008a47806c9e118e3",
+  "base_sha": "521345eaab6086496c6cc490843342c96fb8f2bb",
+  "branch": "codex/account-lifecycle-postgres",
+  "postgres_version": "17.11",
+  "database_scope": "isolated local loopback cluster; synthetic data only; server stopped, files retained",
+  "make_ready": {
+    "exit_code": 0,
+    "javascript_tests": 314,
+    "python_tests": 139,
+    "skips": 0,
+    "native_builds": 0,
+    "web_javascript_bytes_report_only": 2772470
+  },
+  "contract_drift": false,
+  "hosted_ci_executed": false,
+  "source_sha256": {
+    ".github/workflows/ci.yml": "cbc6e1d48f33d44e154848a71a65786069bf12a890ade73aa8b50beabd05c513",
+    "backend/scripts/process_account_deletions.py": "be4898d76e79df3de06c2cb77e57e711ad2f94015b6f988e668ce65adc96a10d",
+    "backend/tableus/api.py": "b77c46da9bb426fa0b077f499f01c469ad357c2dfe9fe8a21bd5d2d0cccc1344",
+    "backend/tableus/db.py": "5e012c0cd394ca89d51275811d03593fe9f09c66bb13ddd0a9a7135e3e59bf38",
+    "backend/tests/test_account_deletion_worker.py": "1beabd947f11f5da9c49b5f2b71b744364b8afa65ae8484213aef5ce706523c6",
+    "backend/tests/test_account_lifecycle.py": "433f643f64d19500168fb6a92145987dd9a691c7d07ac2796806b834d90d9ce0",
+    "backend/tests/test_account_lifecycle_postgres.py": "640072d91e4df20e5773de7fc9b80acb32c303777fcb25b7c55980bfc216e1e3",
+    "backend/tests/test_account_lifecycle_roles.py": "a94f7ee44a2beedd591d15b509a8f597bf524286adec2254e5acaa04113c07c0"
+  },
+  "evidence_sha256": {
+    "/Users/brianchei/.codex/artifacts/tableus/account-lifecycle-postgres-2026-09-24/make-ready.log": "6d87665a103c30029ab097ba019751955d18fb20f9a78bd9d289f2a44f6d95f7",
+    "/Users/brianchei/.codex/artifacts/tableus/account-lifecycle-postgres-2026-09-24/fresh-migration.log": "5ed03e9c4a727d2f019d9509a9623f4790215e3f1789f1aaa8c52456102a2d9d",
+    "/Users/brianchei/.codex/artifacts/tableus/account-lifecycle-postgres-2026-09-24/upgrade-migration.log": "9041b4fa66a61fa48802b5f062d9a1ac74867a5ff65168639eba967f14b71241",
+    "/Users/brianchei/.codex/artifacts/tableus/account-lifecycle-postgres-2026-09-24/upgrade-roles.log": "a57955b1730cda2136ec650c64e76075c8466b7ee9af8452162100565cdee323",
+    "/Users/brianchei/.codex/artifacts/tableus/account-lifecycle-postgres-2026-09-24/roles-migrations.log": "6aaf5c7c57932a0d534b0098cf2bce350988ffa414620556025f7801d4d3ee30",
+    "/Users/brianchei/.codex/artifacts/tableus/account-lifecycle-postgres-2026-09-24/postgres-focused.log": "1041fdadc327d1db6997ac6d1381c43d87b3b63388910ec87d5889bef6f7494f",
+    "/Users/brianchei/.codex/artifacts/tableus/account-lifecycle-postgres-2026-09-24/postgres-focused-r2.log": "2e5f9462d3117067c5143d507166662994e44acfc70addc298c3f6d25b1ceaa3",
+    "/Users/brianchei/.codex/artifacts/tableus/account-lifecycle-postgres-2026-09-24/agent-focused.log": "c76461a88c53d89d389f37dae2fcdfab877d4ac9e827890dc49cfce5ecea82f0",
+    "/Users/brianchei/.codex/artifacts/tableus/account-lifecycle-postgres-2026-09-24/worker-process.log": "80f5c1e51f68af07db52cd9fcf09a9fee1be89207024565e45f98f2105d4e4fe",
+    "/Users/brianchei/.codex/artifacts/tableus/account-lifecycle-postgres-2026-09-24/acceptance-migration.log": "5ed03e9c4a727d2f019d9509a9623f4790215e3f1789f1aaa8c52456102a2d9d",
+    "/Users/brianchei/.codex/artifacts/tableus/account-lifecycle-postgres-2026-09-24/shutdown.log": "ca19178a35ab4153b75b494963b66ce8243e1b94c173107c87b44d09db23652d",
+    "/Users/brianchei/.codex/artifacts/tableus/account-lifecycle-postgres-2026-09-24/postgres-install.log": "cdf2b6602194dc7aa7c7310afe7986e8aeb64b853e4f9fb7e062dc467f86e648"
+  }
+}

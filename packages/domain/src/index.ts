@@ -1,3 +1,5 @@
+import { validateJoinToken } from "./private-links.ts";
+
 export type PlanStatus = "collecting" | "voting" | "finalized";
 export type AuthLinkMode = "join" | "sign-in";
 
@@ -35,6 +37,8 @@ export type Plan = {
   organizer_id: string;
   viewer_is_organizer: boolean;
   status: PlanStatus;
+  /** Older API responses omit this field and mean false. */
+  metadata_needs_replacement?: boolean;
   location_label: string;
   latitude: number | null;
   longitude: number | null;
@@ -90,11 +94,21 @@ export function normalizeHttpsOrigin(value: string): string {
   return parsed.origin;
 }
 
-export function buildJoinUrl(origin: string, planId: string, shareToken: string): string {
-  if (!planId.trim() || !shareToken.trim()) throw new Error("Plan ID and share token are required");
-  const url = new URL(`/join/${encodeURIComponent(planId.trim())}`, normalizeHttpsOrigin(origin));
-  url.searchParams.set("token", shareToken.trim());
+export function buildJoinUrl(origin: string, planId: string, shareToken: string, format: "query" | "fragment" = "query"): string {
+  validateJoinToken(shareToken);
+  if (format !== "query" && format !== "fragment") throw new Error("Invalid private link format");
+  const url = new URL(`/join/${requireCanonicalUuid(planId, "Plan ID")}`, normalizeHttpsOrigin(origin));
+  if (format === "fragment") url.hash = new URLSearchParams({ token: shareToken }).toString();
+  else url.searchParams.set("token", shareToken);
   return url.toString();
+}
+
+export function requireCanonicalUuid(value: string, label = "Identifier"): string {
+  const normalized = value.trim();
+  if (!/^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/.test(normalized)) {
+    throw new Error(`${label} must be a canonical UUID`);
+  }
+  return normalized;
 }
 
 export function buildAuthUrl(origin: string, mode: AuthLinkMode): string {
@@ -104,3 +118,7 @@ export function buildAuthUrl(origin: string, mode: AuthLinkMode): string {
 }
 
 export * from "./telemetry.ts";
+export * from "./public-info.ts";
+export * from "./account-lifecycle.ts";
+
+export * from "./private-links.ts";

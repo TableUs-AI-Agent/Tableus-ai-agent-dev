@@ -1,0 +1,39 @@
+{
+  "schema_version": 1,
+  "application_sha": "f94a1d9d1125e6c9111aa08eda496f014f20d0c0",
+  "operator_sha": "d0447b8711109f43fb7a1572cb2b0a275f9901ab",
+  "platform": "ios",
+  "profile": "readiness-ios",
+  "build_id": "local-ios-readiness-f94a1d9",
+  "artifact_sha256": "9d569309e437b3212a827305e1e119d4424d65c40f1c5fd464a120ad9bcf1798",
+  "receipt_sha256": "d2cb1eb3ac4279a2f4a33d632244b6ab581224a7f0b17246b28d91ea152894b3",
+  "inspection_sha256": "d9f38160fb0d5ccabcef82d9ac5c1aecdcfc910d21c89e80ee054cfc713c5dc5",
+  "source_tree_sha": "b1d4c75e5616ee89cfeedd5d3170ae8036a0f9bf",
+  "package_lock_sha256": "7af3277d19094e0275e35b39b5a04c195b7ddf75d4b517983f120bf72fe299f3",
+  "verified_at": "2026-09-15T22:25:38.239Z",
+  "compiled_bundle_sha256": "af47199dfc35ffb5fc13ff25a875c17a43a39750b719fc698ea507c00eefab08",
+  "verifier_sha256": "5240351b30c00644d664bd5a7f0ae02a053c4226e2016574182b7a051f88c68a",
+  "build_host_preflight": {
+    "observed_at": "2026-09-15T22:02:37.581893+00:00",
+    "xcode": "Xcode 27.0\nBuild version 27A266a",
+    "iphoneos_sdk": "27.0",
+    "sdk_scene_preflight_passed": true,
+    "input_preflight_passed": true,
+    "build_script_sha256": "ee1c749f3a7bb6fd616c11724e53445812cea5ae095fa66404072b8a183023dc"
+  },
+  "physical_or_live_acceptance_claimed": false,
+  "checks": [
+    {
+      "receipt_and_inspection_validated": true,
+      "reinspection_matches": true,
+      "actual_artifact_bytes_match": true,
+      "source_tree_matches": true,
+      "frozen_lock_matches": true,
+      "embedded_source_matches": true,
+      "hosted_profile_configuration": true,
+      "expected_signer": true,
+      "native_transport_configuration_validated": true,
+      "refresh_correction_in_bundle": true
+    }
+  ]
+}

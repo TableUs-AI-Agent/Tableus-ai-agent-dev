@@ -1,0 +1,15 @@
+{
+  "profile": "telemetry-test-android",
+  "application_sha": "f94a1d9d1125e6c9111aa08eda496f014f20d0c0",
+  "status": "passed",
+  "started_at": "2026-09-16T00:40:26.826678+00:00",
+  "free_gib_at_start": 23.719,
+  "operator_sha": "3de41a536d8a8ed11cdaef9fab6281e92d8c31cb",
+  "pid": 75786,
+  "exit_code": 0,
+  "finished_at": "2026-09-16T00:51:32.030268+00:00",
+  "artifact_exists": true,
+  "inspection_exists": true,
+  "receipt_exists": true,
+  "free_gib_at_finish": 23.506
+}

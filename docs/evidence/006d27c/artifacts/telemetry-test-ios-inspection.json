@@ -1,0 +1,10 @@
+{
+  "schema_version": 1,
+  "platform": "ios",
+  "profile": "telemetry-test-ios",
+  "candidate_sha": "006d27c2307016317eb92e78af7dea98e3e53b35",
+  "artifact_sha256": "c49038ecf7a8346dffb3ce9d93f78b593447266d07f53df07f88d0493c062337",
+  "inspection_passed": true,
+  "signer_type": "ios-simulator",
+  "signer_identity": "com.tableus.app"
+}

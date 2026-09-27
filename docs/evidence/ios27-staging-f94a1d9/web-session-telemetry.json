@@ -1,0 +1,11 @@
+{
+  "application_sha": "f94a1d9d1125e6c9111aa08eda496f014f20d0c0",
+  "observed_at": "2026-09-16T02:05:11.925927+00:00",
+  "deployment_id": "dpl_5iF8xTCbfuJghn2bRuUSGdKoRiJb",
+  "organizer_plans_returned": true,
+  "one_sign_in_email_used": true,
+  "canary_ui_send_count": 1,
+  "canary_ui_sent": true,
+  "api_companion_sent": false,
+  "returned_to_plans": true
+}

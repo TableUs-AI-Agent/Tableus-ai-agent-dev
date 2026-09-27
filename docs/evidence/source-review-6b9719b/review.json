@@ -1,0 +1,144 @@
+{
+  "schema_version": 1,
+  "kind": "source_review",
+  "sha": "6b9719b4e63e34803f2e7c2598e45851790df661",
+  "environment": "staging",
+  "reviewer": "primary-codex-gpt-6-astra",
+  "reviewed_at": "2026-09-14T21:43:41.117Z",
+  "files": [
+    {
+      "path": "backend/main.py",
+      "sha256": "ef666ed1b6c0a38a6c0fb3e9aad51707bb4bc701beeadfc8b669b1e72fd48dbf"
+    },
+    {
+      "path": "backend/tableus/api.py",
+      "sha256": "ddb81183008b432785472d5bf4399ba4b8b33a3329e5671da0667774a32dbfdc"
+    },
+    {
+      "path": "backend/tableus/auth.py",
+      "sha256": "3aa402be2daf5a4b7892ba842190c407687f64f4d97b74e61bbe958288f7621e"
+    },
+    {
+      "path": "backend/tableus/config.py",
+      "sha256": "d7b742fdb37ac0bfe6277bd55efa98e78e789055590011a7c60d3858dbdd9248"
+    },
+    {
+      "path": "backend/tableus/request_controls.py",
+      "sha256": "f52590c79a83c99fe869de45115d8b2920f760039bfcd96c54298bb93132f03b"
+    },
+    {
+      "path": "backend/tableus/security.py",
+      "sha256": "3640e708b94296f3c125e7f2c5a37985a949bfb8314c2cff9a127438ac8d7915"
+    },
+    {
+      "path": "backend/tableus/telemetry.py",
+      "sha256": "6bf769d0ad06fa7ca0f4c636163d38a7c47fc03991d03b381be7f76dcec8946f"
+    },
+    {
+      "path": "mobile/src/lib/auth-lifecycle.ts",
+      "sha256": "c4729b6b69a050d362f29d17070c559bf0bc5113515b3bcf3a34963cbabb98ec"
+    },
+    {
+      "path": "mobile/src/providers/auth-provider.tsx",
+      "sha256": "f1ad8763d32aa807e2a327cf7c129da570b5282f9589f0d626ec44442b633c51"
+    },
+    {
+      "path": "packages/domain/src/telemetry.ts",
+      "sha256": "a40285c26e671e7f7ac30239114d60fc2751cea4ab8e72dd1d05bccc52ce98df"
+    },
+    {
+      "path": "scripts/release-origins.mjs",
+      "sha256": "e91ebe8fd77bac445afe01fb360ac5dd5f459253aadd0d57cbb07e76cb46df7d"
+    }
+  ],
+  "coverage": [
+    {
+      "area": "authentication",
+      "files": [
+        "backend/tableus/auth.py",
+        "mobile/src/providers/auth-provider.tsx",
+        "mobile/src/lib/auth-lifecycle.ts"
+      ],
+      "assessment": "Verified hosted identity signature/audience checks, approved-profile lookup, local sign-out scope and subject-change cache clearing. Existing session deadlines and modeled cross-device scope tests are retained."
+    },
+    {
+      "area": "authorization",
+      "files": [
+        "backend/tableus/api.py",
+        "backend/tableus/auth.py"
+      ],
+      "assessment": "Reviewed membership checks for plan/detail/vote, organizer checks for finalize/reopen/rotation, active-run vote binding and finalized-plan mutation rejection. This targets those controls, not every API route."
+    },
+    {
+      "area": "private_links",
+      "files": [
+        "backend/tableus/api.py",
+        "backend/tableus/security.py"
+      ],
+      "assessment": "Reviewed random capability generation, hashed storage, approved-profile join dependency, rotation rejection and bounded/email-bound invitation grants. URL capability risk remains explicitly open."
+    },
+    {
+      "area": "idempotency",
+      "files": [
+        "backend/main.py",
+        "backend/tableus/request_controls.py"
+      ],
+      "assessment": "Reviewed replay identity keyed by verified subject/method/path, request-body fingerprint conflicts, fresh approval/membership/organizer checks before replay and one-process serialization. Existing deterministic replay regressions cover these boundaries."
+    },
+    {
+      "area": "provider_limits",
+      "files": [
+        "backend/tableus/api.py",
+        "backend/tableus/config.py"
+      ],
+      "assessment": "Reviewed admission before provider work and bounded rolling Places/Gemini reservations. Shared quota fairness and one-process reservation coordination remain staging limits."
+    },
+    {
+      "area": "hosted_origins",
+      "files": [
+        "backend/tableus/config.py",
+        "scripts/release-origins.mjs"
+      ],
+      "assessment": "Reviewed hosted rejection of demo auth, exact staging operator origins, HTTPS-only origins and distinct runtime/migration database roles. No fresh hosted grant/configuration audit is claimed."
+    },
+    {
+      "area": "telemetry",
+      "files": [
+        "backend/tableus/telemetry.py",
+        "packages/domain/src/telemetry.ts"
+      ],
+      "assessment": "Reviewed event property allowlists, random session identifiers, redacted error messages, removal of user/headers/breadcrumb data and URL sanitization. Existing telemetry tests remain deterministic."
+    }
+  ],
+  "checks": [
+    {
+      "name": "Candidate make ready: 204 JavaScript and 98 Python passing; three Postgres-only local skips. Eleven focused auth/refresh regressions passed.",
+      "passed": true,
+      "evidence_sha256": "acc544eb392f20e4637ad0fd860f2951070a613e30cf3d394aaa48980cf7e75f"
+    }
+  ],
+  "findings": [
+    {
+      "id": "staging-shared-quota",
+      "severity": "medium",
+      "runtime": true,
+      "status": "open",
+      "disposition": "One approved participant can consume shared rolling provider limits. Existing minute limits and isolated staging contain exposure. Durable per-actor quotas are required before cohort expansion."
+    },
+    {
+      "id": "staging-capability-url",
+      "severity": "medium",
+      "runtime": true,
+      "status": "open",
+      "disposition": "Private join capability remains in a URL and can be copied from browser history or sharing. Approved authentication, hashed storage, rotation and telemetry redaction reduce exposure. Exchange design or explicit production risk decision is deferred."
+    }
+  ],
+  "limitations": [
+    "Targeted primary-agent source review of named controls; not every line, an independent audit or a plugin scan. No comprehensive absence-of-vulnerabilities claim.",
+    "No new unresolved critical or high runtime finding identified in the reviewed controls. Findings elsewhere may remain undiscovered.",
+    "Source and tests only. Real Supabase session preservation and native navigation on the replacement remain unverified; c5b041c artifacts do not establish acceptance for 6b9719b.",
+    "Runtime database grants, current provider advisories and hosted environment settings were not reaudited. Three Postgres-specific checks are skipped locally.",
+    "One API process is required for replay and provider reservation coordination. Scaling, retention, Auth deletion, source maps, signing, production, stores and cohort expansion remain separate gates.",
+    "The earlier focused scan report remains unavailable and provides no evidence for this report. No security scanner or live provider operation ran."
+  ]
+}

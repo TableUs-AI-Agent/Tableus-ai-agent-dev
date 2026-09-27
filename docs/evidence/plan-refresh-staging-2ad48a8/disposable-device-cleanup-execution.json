@@ -1,0 +1,36 @@
+{
+  "approved_at": "2026-09-15T21:18:57.334870+00:00",
+  "approval": "Owner: approve, screen time restriction is removed",
+  "plan_commit": "b7728a7efd1d55d07dd07bb86b0b54d7e69af3a0",
+  "plan_sha256": "57b60c729bdcddcfd67f7257ab998e250ce9d2a77eb805f70f439998364f6e0f",
+  "scope": [
+    {
+      "name": "TableUsRefresh2ad-iOS",
+      "type": "disposable_ios_simulator",
+      "id": "FED2189A-B68C-4E40-A78A-FD7CED91DD7C",
+      "path": "/Users/brianchei/Library/Developer/CoreSimulator/Devices/FED2189A-B68C-4E40-A78A-FD7CED91DD7C",
+      "deletion_method": "xcrun simctl delete exact UUID",
+      "disk_bytes": 2626342912
+    },
+    {
+      "name": "TableUsRefresh2ad_Android",
+      "type": "disposable_android_emulator",
+      "path": "/Users/brianchei/repos/Tableus-ai-agent-dev/.artifacts/plan-refresh-verification-2ad48a8/deterministic-avds",
+      "deletion_method": "remove only isolated AVD directory after confirming emulator stopped",
+      "disk_bytes": 2633891840
+    }
+  ],
+  "preserved": [
+    "saved staging iOS simulator and Android emulator, with account data",
+    "paired physical iPhone and app data",
+    "all accepted artifacts, receipts, raw logs and screenshots",
+    "all unrelated devices, caches and signing material"
+  ],
+  "free_gib_before": 18.496,
+  "removed": [
+    "TableUsRefresh2ad-iOS",
+    "TableUsRefresh2ad_Android"
+  ],
+  "status": "passed",
+  "free_gib_after": 20.967
+}

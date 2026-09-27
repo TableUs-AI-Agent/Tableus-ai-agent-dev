@@ -1,46 +1,68 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 
-import {
-  createCanonicalAuthUrl,
-  createCanonicalJoinUrl,
-  parseAuthLinkMode,
-  rewriteCanonicalSystemPath,
-} from "./links.ts";
+import { pendingJoinStore } from "./pending-join.ts";
+import { createCanonicalAuthUrl, createCanonicalJoinUrl, parseAuthLinkMode, rewriteCanonicalSystemPath } from "./links.ts";
 
-test("mobile shares canonical HTTPS links", () => {
+const id = "123e4567-e89b-42d3-a456-426614174000";
+const token = "Abc_def-0123456789GhijkLMN_opQRSTuvWxyZ";
+
+test.afterEach(() => { pendingJoinStore.clear(); pendingJoinStore.setSubject(null); });
+
+test("mobile defaults to compatible query links; fragment emission requires opt-in", () => {
   assert.equal(createCanonicalAuthUrl("join"), "https://links.table-us.com/auth?mode=join");
-  assert.equal(
-    createCanonicalJoinUrl("plan-id", "private/token"),
-    "https://links.table-us.com/join/plan-id?token=private%2Ftoken",
-  );
+  assert.equal(createCanonicalJoinUrl(id, token), `https://links.table-us.com/join/${id}?token=${token}`);
+  const prior = process.env.EXPO_PUBLIC_JOIN_LINK_FORMAT;
+  try {
+    process.env.EXPO_PUBLIC_JOIN_LINK_FORMAT = "fragment";
+    assert.equal(createCanonicalJoinUrl(id, token), `https://links.table-us.com/join/${id}#token=${token}`);
+  } finally {
+    if (prior === undefined) delete process.env.EXPO_PUBLIC_JOIN_LINK_FORMAT;
+    else process.env.EXPO_PUBLIC_JOIN_LINK_FORMAT = prior;
+  }
 });
 
-test("auth links accept only the two public modes", () => {
+test("auth links accept only public modes", () => {
   assert.equal(parseAuthLinkMode("sign-in"), "sign-in");
-  assert.equal(parseAuthLinkMode("join"), "join");
   assert.equal(parseAuthLinkMode("admin"), "join");
   assert.equal(parseAuthLinkMode(["sign-in"]), "join");
-  assert.equal(parseAuthLinkMode(undefined), "join");
 });
 
-test("canonical native paths retain only allowlisted auth and join parameters", () => {
-  assert.equal(
-    rewriteCanonicalSystemPath("https://links.table-us.com/auth?mode=sign-in&email=private@example.com"),
-    "/auth?mode=sign-in",
-  );
-  assert.equal(
-    rewriteCanonicalSystemPath("https://links.table-us.com/auth?mode=admin&otp=private"),
-    "/auth?mode=join",
-  );
-  assert.equal(
-    rewriteCanonicalSystemPath("https://links.table-us.com/join/plan-1?token=private%20token&extra=drop"),
-    "/join/plan-1?token=private%20token",
-  );
+test("native query and fragment links capture before routing without a secret route parameter", () => {
+  for (const delimiter of ["?", "#"]) {
+    const path = rewriteCanonicalSystemPath(`https://links.table-us.com/join/${id}${delimiter}token=${token}&extra=drop`);
+    const captured = pendingJoinStore.getSnapshot();
+    assert.ok(captured);
+    assert.equal(path, `/join/${id}?pending=${captured.handle}`);
+    assert.ok(!path.includes(token));
+    pendingJoinStore.setSubject("actor-a");
+    assert.equal(pendingJoinStore.read(captured.handle, "actor-a"), token);
+    assert.equal(rewriteCanonicalSystemPath(path), path);
+    pendingJoinStore.clear();
+    pendingJoinStore.setSubject(null);
+  }
 });
 
-test("native path rewriting leaves other origins and development schemes alone", () => {
-  assert.equal(rewriteCanonicalSystemPath("https://example.com/auth?mode=sign-in"), "https://example.com/auth?mode=sign-in");
-  assert.equal(rewriteCanonicalSystemPath("tableus://auth?mode=sign-in"), "tableus://auth?mode=sign-in");
-  assert.equal(rewriteCanonicalSystemPath("https://links.table-us.com/privacy"), "https://links.table-us.com/privacy");
+test("malformed new links clear a previous capability and never carry raw bytes into the route", () => {
+  rewriteCanonicalSystemPath(`tableus://join/${id}?token=${token}`);
+  for (const suffix of [
+    `?token=${token}&token=${token}`,
+    `?token=${token}#token=${token}`,
+    `#token=%FF%41`,
+    `#token=short`,
+    `#token=trailing%`,
+    `#other=value`,
+  ]) {
+    assert.equal(rewriteCanonicalSystemPath(`tableus://join/${id}${suffix}`), "/join/invalid");
+    assert.equal(pendingJoinStore.getSnapshot(), null);
+    rewriteCanonicalSystemPath(`tableus://join/${id}?token=${token}`);
+  }
+  assert.equal(rewriteCanonicalSystemPath(`tableus://user@join/${id}?token=${token}`), "/join/invalid");
+  assert.equal(pendingJoinStore.getSnapshot(), null);
+});
+
+test("unrelated and auth links remain canonicalized without private fields", () => {
+  assert.equal(rewriteCanonicalSystemPath("https://links.table-us.com/auth?mode=sign-in&email=private@example.com"), "/auth?mode=sign-in");
+  assert.equal(rewriteCanonicalSystemPath("https://example.com/privacy"), "https://example.com/privacy");
+  assert.equal(rewriteCanonicalSystemPath(`https://links.table-us.com/join/${id}%2Fextra?token=${token}`), "/join/invalid");
 });

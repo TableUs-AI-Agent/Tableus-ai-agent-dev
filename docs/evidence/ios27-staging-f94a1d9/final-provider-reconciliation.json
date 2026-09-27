@@ -1,0 +1,22 @@
+{
+  "application_sha": "f94a1d9d1125e6c9111aa08eda496f014f20d0c0",
+  "observed_at": "2026-09-21T19:20:36.506907Z",
+  "source": "supabase_read_only_aggregate",
+  "places_attempts_all_time": 421,
+  "places_baseline": 329,
+  "places_attempts_used": 92,
+  "places_attempts_limit": 100,
+  "places_attempts_remaining": 8,
+  "gemini_usage_rows": 9,
+  "gemini_estimated_usd": 0.0050015,
+  "new_gemini_generations": 0,
+  "new_provider_operations_requested_in_closeout": 0,
+  "sign_in_messages_used": 2,
+  "sign_in_messages_limit": 4,
+  "sign_in_count_provenance": "carried execution ledger; no additional messages requested in closeout",
+  "explicit_canaries_used_per_provider": 6,
+  "explicit_canaries_limit_per_provider": 6,
+  "canary_count_provenance": "retained delivery evidence and execution ledger; no sends requested in closeout",
+  "auth_audit_events_since_last_checkpoint": 0,
+  "auth_audit_limit": "empty current audit result is not independent delivery or retention proof"
+}

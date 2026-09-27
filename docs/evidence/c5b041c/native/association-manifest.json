@@ -1,0 +1,36 @@
+{
+  "apple": {
+    "applinks": {
+      "apps": [],
+      "details": [
+        {
+          "appIDs": [
+            "6MHJN5V9UJ.com.tableus.app"
+          ],
+          "components": [
+            {
+              "/": "/join/*"
+            },
+            {
+              "/": "/auth"
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "android": [
+    {
+      "relation": [
+        "delegate_permission/common.handle_all_urls"
+      ],
+      "target": {
+        "namespace": "android_app",
+        "package_name": "com.tableus.app",
+        "sha256_cert_fingerprints": [
+          "02:FC:F9:A8:5F:EF:26:D4:61:43:F4:D8:28:7A:32:5B:05:21:1B:B6:77:23:91:32:4C:12:AA:78:60:C6:65:68"
+        ]
+      }
+    }
+  ]
+}

@@ -8,11 +8,16 @@ function source(relativePath: string) {
 
 test("every plan workspace write uses the recoverable controller and an explicit key", () => {
   const plan = source("../app/plans/[id].tsx");
-  assert.equal((plan.match(/useRecoverableMutation\(/g) ?? []).length, 6);
-  for (const route of ["constraints", "recommendations", "vote", "finalize", "reopen", "share-token/rotate"]) {
-    assert.match(plan, new RegExp(`${route.replace("/", "\\/")}.*idempotencyKey`, "s"));
+  assert.equal((plan.match(/useRecoverableMutation\(/g) ?? []).length, 8);
+  for (const route of ["constraints", "recommendations", "vote", "finalize", "reopen", "share-token/rotate", "locations/resolve", "metadata"]) {
+    assert.match(plan, new RegExp(`${route.replace("/", "\\/")}[^\\n]*idempotencyKey`));
   }
   assert.match(plan, /setRankingDraft\(null\)/);
+});
+
+test("mobile plan details do not poll paid provider-backed hydration", () => {
+  const plan = source("../app/plans/[id].tsx");
+  assert.doesNotMatch(plan, /refetchInterval/);
 });
 
 test("ambiguous finalization remains retryable after a finalized-state refresh", () => {
@@ -25,11 +30,19 @@ test("device evidence starts from clean app state and accepts a tappable finaliz
   const runner = source("../../scripts/mobile-offline-e2e.mjs");
   const finalizeFlow = source("../.maestro-offline/finalize-failure.yml");
   const constraintsFlow = source("../.maestro-offline/constraints-offline.yml");
+  const lifecycleFinalizeFlow = source("../.maestro/lifecycle-organizer-finalize.yml");
   assert.match(runner, /runBestEffort\("xcrun", \["simctl", "uninstall", device, appId\]/);
   assert.match(runner, /\["-s", device, "uninstall", appId\]/);
+  assert.match(runner, /mobile-device-preflight\.mjs/);
   assert.match(finalizeFlow, /visibilityPercentage: 60/);
   assert.match(constraintsFlow, /inputText: "Quiet patio and accessible seating"[\s\S]*tapOn: "Your constraints"[\s\S]*tapOn: "Save constraints"/);
   assert.doesNotMatch(constraintsFlow, /hideKeyboard/);
+  assert.match(lifecycleFinalizeFlow, /tapOn: "Reopen voting"[\s\S]*scrollUntilVisible:[\s\S]*Submit ranked vote\|Retry reopening voting/);
+});
+
+test("mobile requests have a bounded production timeout and a faster local fault-test timeout", () => {
+  const api = source("lib/api.ts");
+  assert.match(api, /requestTimeoutMs: localE2EEnabled \? 10_000 : 45_000/);
 });
 
 test("photo retries retain no image state and must open the picker again", () => {
@@ -41,9 +54,5 @@ test("photo retries retain no image state and must open the picker again", () =>
   assert.doesNotMatch(analyze, /api\.post[^\n]+idempotencyKey/);
 });
 
-test("destructive account retry preserves confirmation and remains explicitly gated", () => {
-  const account = source("../app/account.tsx");
-  assert.match(account, /Retry deleting application data/);
-  assert.match(account, /confirmation !== DELETE_CONFIRMATION \|\| deleteAccount\.isPending \|\| deleteAccount\.canRetry \|\| !control\.data\?\.can_delete/);
-  assert.doesNotMatch(account, /setConfirmation\(""\)/);
-});
+// Account confirmation, offline gating and exact retry behavior are exercised
+// through rendered controls in account-lifecycle.component.test.tsx.

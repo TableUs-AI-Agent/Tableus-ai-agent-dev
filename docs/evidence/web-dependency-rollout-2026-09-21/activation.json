@@ -1,0 +1,666 @@
+{
+  "observed_at": "2026-09-21T23:28:39.857490+00:00",
+  "status": "phase_w_complete_staging_web_activated",
+  "phase_w_complete": true,
+  "application_sha": "ed8330a766b3c4b80a505e075535678394e275e9",
+  "repository_operator_sha": "ed8330a766b3c4b80a505e075535678394e275e9",
+  "prior_evidence_commit": "514a0136e1eb2ea0c52c315bf92efaf92809dfc9",
+  "owner_approval": {
+    "message": "approve",
+    "received_date": "2026-09-21",
+    "scope": "Exact prepared CORS append and one existing-source Railway redeploy; previously approved conditional staging alias activation remains in scope."
+  },
+  "railway": {
+    "project_id": "93dcd3f4-7c47-4010-9431-fc28638813d2",
+    "environment_id": "0f546dbc-222f-48b8-a27b-ff008af4fec9",
+    "service_id": "94aeecda-4575-4fc1-bb08-796bf779ada5",
+    "previous_deployment_id": "d929fba2-9c1e-4428-8379-ffaae6a3c4d2",
+    "deployment_id": "24eefe75-9583-4a90-8d3e-48450818dec0",
+    "status": "SUCCESS",
+    "source_sha": "f94a1d9d1125e6c9111aa08eda496f014f20d0c0",
+    "old_image_digest": "sha256:4391a5a2fb1c5cb954a4ce3b651a1be987d0bbd883b058794f9d2dd8e1c2ca90",
+    "image_digest": "sha256:92d1605c9100bd54b84c5e5295a93d6eef32c138e00984c2c2788d6a27b82272",
+    "from_source": false,
+    "redeploy_calls": 1,
+    "variable_updates": 1,
+    "changed_variable": "ALLOWED_ORIGINS",
+    "old_origins_preserved": 11,
+    "new_exact_origin": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app",
+    "all_other_variables_preserved": true,
+    "configured_places_backstop": 429,
+    "provenance": {
+      "old": {
+        "packages": {
+          "aiosqlite": "0.22.1",
+          "alembic": "1.19.1",
+          "annotated-doc": "0.0.5",
+          "annotated-types": "0.8.0",
+          "anyio": "4.14.2",
+          "asyncpg": "0.31.0",
+          "certifi": "2026.7.22",
+          "cffi": "2.1.1",
+          "charset-normalizer": "3.5.1",
+          "click": "8.4.2",
+          "cryptography": "50.0.0",
+          "distro": "1.9.0",
+          "fastapi": "0.141.1",
+          "google-auth": "2.56.3",
+          "google-genai": "1.75.0",
+          "greenlet": "3.5.5",
+          "h11": "0.16.0",
+          "httptools": "0.8.0",
+          "httpx": "0.28.1",
+          "idna": "3.18",
+          "mako": "1.4.1",
+          "markupsafe": "3.0.3",
+          "pillow": "12.3.0",
+          "pyasn1": "0.6.4",
+          "pyasn1-modules": "0.4.2",
+          "pycparser": "3.0",
+          "pydantic": "2.13.4",
+          "pydantic-core": "2.46.4",
+          "pydantic-settings": "2.15.0",
+          "pyjwt": "2.13.0",
+          "python-dotenv": "1.2.2",
+          "python-multipart": "0.0.32",
+          "pyyaml": "6.0.3",
+          "requests": "2.34.2",
+          "sentry-sdk": "2.68.0",
+          "sniffio": "1.3.1",
+          "sqlalchemy": "2.0.52",
+          "starlette": "1.6.0",
+          "tenacity": "9.1.4",
+          "typing-extensions": "4.16.0",
+          "typing-inspection": "0.4.4",
+          "urllib3": "2.7.0",
+          "uvicorn": "0.52.3",
+          "uvloop": "0.22.1",
+          "watchfiles": "1.2.0",
+          "websockets": "16.1.1"
+        },
+        "python_base_pinned": true,
+        "uv_base_pinned": true,
+        "frozen_install": true,
+        "healthcheck_succeeded": true,
+        "build_log_sha256": "0ca2908470e371fea21e5dec019891a6318776025e7a1fb033bdbb39c79207f8"
+      },
+      "new": {
+        "packages": {
+          "aiosqlite": "0.22.1",
+          "alembic": "1.19.1",
+          "annotated-doc": "0.0.5",
+          "annotated-types": "0.8.0",
+          "anyio": "4.14.2",
+          "asyncpg": "0.31.0",
+          "certifi": "2026.7.22",
+          "cffi": "2.1.1",
+          "charset-normalizer": "3.5.1",
+          "click": "8.4.2",
+          "cryptography": "50.0.0",
+          "distro": "1.9.0",
+          "fastapi": "0.141.1",
+          "google-auth": "2.56.3",
+          "google-genai": "1.75.0",
+          "greenlet": "3.5.5",
+          "h11": "0.16.0",
+          "httpcore": "1.0.9",
+          "httptools": "0.8.0",
+          "httpx": "0.28.1",
+          "idna": "3.18",
+          "mako": "1.4.1",
+          "markupsafe": "3.0.3",
+          "pillow": "12.3.0",
+          "pyasn1": "0.6.4",
+          "pyasn1-modules": "0.4.2",
+          "pycparser": "3.0",
+          "pydantic": "2.13.4",
+          "pydantic-core": "2.46.4",
+          "pydantic-settings": "2.15.0",
+          "pyjwt": "2.13.0",
+          "python-dotenv": "1.2.2",
+          "python-multipart": "0.0.32",
+          "pyyaml": "6.0.3",
+          "requests": "2.34.2",
+          "sentry-sdk": "2.68.0",
+          "sniffio": "1.3.1",
+          "sqlalchemy": "2.0.52",
+          "starlette": "1.6.0",
+          "tenacity": "9.1.4",
+          "typing-extensions": "4.16.0",
+          "typing-inspection": "0.4.4",
+          "urllib3": "2.7.0",
+          "uvicorn": "0.52.3",
+          "uvloop": "0.22.1",
+          "watchfiles": "1.2.0",
+          "websockets": "16.1.1"
+        },
+        "python_base_pinned": true,
+        "uv_base_pinned": true,
+        "frozen_install": true,
+        "healthcheck_succeeded": true,
+        "build_log_sha256": "fbb9299ffea95438ed917de75b1dfa5d193d8a22f9154566e089c571d8c08332"
+      },
+      "source_files": {
+        "backend/Dockerfile": "bdc63c16cae942e308029bb6faed02041c71f819bccea6d94ef4576dadf08aa0",
+        "backend/uv.lock": "a66a443a25e9563d695e7926a7ea66ef81a73e5737ef3dbd774b8937a5e41504",
+        "backend/pyproject.toml": "dfcb5221a2985c17d7f5cc77979b3c68269b9682fd24bf947e27e80703018d61"
+      },
+      "old_image_digest": "sha256:4391a5a2fb1c5cb954a4ce3b651a1be987d0bbd883b058794f9d2dd8e1c2ca90",
+      "new_image_digest": "sha256:92d1605c9100bd54b84c5e5295a93d6eef32c138e00984c2c2788d6a27b82272",
+      "interpretation": "Approved existing-source redeploy rebuilt f94a1d9. Both logs use the same digest-pinned Python and uv base images and frozen install commands. All 47 new dependencies match the f94a1d9 lock, and 46 readable old dependency names/versions match. New image digest is separately recorded; byte-identical image reuse is not claimed. Source/build-input provenance passes.",
+      "observed_at": "2026-09-21T23:23:16.463643+00:00",
+      "application_sha": "f94a1d9d1125e6c9111aa08eda496f014f20d0c0",
+      "new_dependencies_match_frozen_source_lock": true,
+      "all_46_readable_old_dependency_pins_match": true,
+      "old_log_limitation": "The old build log has a corrupted httpcore package name at version 1.0.9. New httpcore 1.0.9 matches the unchanged source lock; full 47-name direct old/new log equality is not claimed.",
+      "passed": true
+    },
+    "runtime_validation_scope": "Fresh readiness and CORS only; original API journey acceptance stays bound to its original deployment and artifact. No new authenticated/live journey or image-byte equivalence is claimed."
+  },
+  "api_checks": {
+    "observed_at": "2026-09-21T23:21:23.490725+00:00",
+    "rows": [
+      {
+        "label": "api-ready",
+        "status": 200,
+        "allow_origin": null,
+        "allow_credentials": null,
+        "body": {
+          "status": "ready",
+          "provider_mode": "live",
+          "places_provider_mode": "live",
+          "ai_provider_mode": "live",
+          "ai_backend": "agent-platform",
+          "auth_mode": "supabase",
+          "build_sha": "f94a1d9d1125e6c9111aa08eda496f014f20d0c0",
+          "telemetry_mode": "staging",
+          "analytics_mode": "anonymous",
+          "error_reporting_mode": "errors_only",
+          "telemetry_e2e": true
+        }
+      },
+      {
+        "label": "cors-preview",
+        "status": 200,
+        "allow_origin": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app",
+        "allow_credentials": "true",
+        "requested_origin": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app",
+        "passed": true
+      },
+      {
+        "label": "cors-staging",
+        "status": 200,
+        "allow_origin": "https://tableus-staging.vercel.app",
+        "allow_credentials": "true",
+        "requested_origin": "https://tableus-staging.vercel.app",
+        "passed": true
+      },
+      {
+        "label": "cors-links",
+        "status": 200,
+        "allow_origin": "https://links.table-us.com",
+        "allow_credentials": "true",
+        "requested_origin": "https://links.table-us.com",
+        "passed": true
+      },
+      {
+        "label": "cors-unapproved",
+        "status": 400,
+        "allow_origin": null,
+        "allow_credentials": "true",
+        "requested_origin": "https://phase-w-unapproved.example",
+        "passed": true
+      }
+    ],
+    "passed": true,
+    "provider_calls": 0,
+    "canaries": 0
+  },
+  "aliases": [
+    {
+      "host": "tableus-staging.vercel.app",
+      "before_deployment_id": "dpl_7yiJcGeeVGHBRzFggodNCLzoiAeX",
+      "deployment_id": "dpl_3ec5bdvridE1meArFaYWAp8yabKM",
+      "redirect": null,
+      "redirect_status": null
+    },
+    {
+      "host": "links.table-us.com",
+      "before_deployment_id": "dpl_7yiJcGeeVGHBRzFggodNCLzoiAeX",
+      "deployment_id": "dpl_3ec5bdvridE1meArFaYWAp8yabKM",
+      "redirect": null,
+      "redirect_status": null
+    },
+    {
+      "host": "table-us.com",
+      "before_deployment_id": "dpl_7csJvHoJH9qgFZDijbwu3w36r2sK",
+      "deployment_id": "dpl_7csJvHoJH9qgFZDijbwu3w36r2sK",
+      "redirect": "www.table-us.com",
+      "redirect_status": 308
+    },
+    {
+      "host": "www.table-us.com",
+      "before_deployment_id": "dpl_7csJvHoJH9qgFZDijbwu3w36r2sK",
+      "deployment_id": "dpl_7csJvHoJH9qgFZDijbwu3w36r2sK",
+      "redirect": null,
+      "redirect_status": null
+    }
+  ],
+  "alias_checks": [
+    {
+      "observed_at": "2026-09-21T23:23:48.830990+00:00",
+      "host": "tableus-staging.vercel.app",
+      "application_sha": "ed8330a766b3c4b80a505e075535678394e275e9",
+      "authenticated": false,
+      "rows": [
+        {
+          "label": "landing",
+          "path": "/",
+          "status": 307,
+          "content_type": "text/html; charset=utf-8",
+          "location": "/discover",
+          "sha256": "043b5933af9355e271b0ae412b47742becbd5492bab20e9afb0fa952fbe6d948",
+          "bytes": 6106
+        },
+        {
+          "label": "invite",
+          "path": "/invite",
+          "status": 200,
+          "content_type": "text/html; charset=utf-8",
+          "location": null,
+          "sha256": "28cc90f62793d80b85c4efcd5d31815747db07fb0be12ea2565d732dcc2e718a",
+          "bytes": 18576
+        },
+        {
+          "label": "auth",
+          "path": "/auth?mode=sign-in",
+          "status": 307,
+          "content_type": "text/html; charset=utf-8",
+          "location": "/invite?mode=sign-in",
+          "sha256": "0d6391bf237347cf1701326ac0f73e8f8ecc4c3936329304047abae265b8cf0d",
+          "bytes": 6671
+        },
+        {
+          "label": "auth-confirm",
+          "path": "/auth/confirm",
+          "status": 307,
+          "content_type": null,
+          "location": "https://tableus-staging.vercel.app/invite?error=invalid_callback",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "bytes": 0
+        },
+        {
+          "label": "invalid-join",
+          "path": "/join/not-a-uuid?token=phase-w-invalid",
+          "status": 200,
+          "content_type": "text/html; charset=utf-8",
+          "location": null,
+          "sha256": "64cd76019214ee8b9ebc03087c41b29eeff624d5f4f7412ca55cf2b4e2bfb057",
+          "bytes": 18617
+        },
+        {
+          "label": "missing-token",
+          "path": "/join/00000000-0000-4000-8000-000000000000",
+          "status": 200,
+          "content_type": "text/html; charset=utf-8",
+          "location": null,
+          "sha256": "63b5d706eaf2bd53c38fbdc41b78a0bc6366fa7a546978ebdef82b6cf73899b5",
+          "bytes": 18582
+        },
+        {
+          "label": "attribution",
+          "path": "/google-maps-attribution.svg",
+          "status": 200,
+          "content_type": "image/svg+xml",
+          "location": null,
+          "sha256": "62c52df68d8f450c860d5d65068fc96d63c2dfaec849b91ac64b3256a898936e",
+          "bytes": 5275,
+          "matches_verified_preview_bytes": true
+        },
+        {
+          "label": "apple",
+          "path": "/.well-known/apple-app-site-association",
+          "status": 200,
+          "content_type": "application/json",
+          "location": null,
+          "sha256": "710eb96b4cb131ad435294629ed493857a0f8d38e9d0cba112fc905f9cc34d63",
+          "bytes": 123,
+          "matches_verified_preview_bytes": true,
+          "manifest": {
+            "applinks": {
+              "apps": [],
+              "details": [
+                {
+                  "appIDs": [
+                    "6MHJN5V9UJ.com.tableus.app"
+                  ],
+                  "components": [
+                    {
+                      "/": "/join/*"
+                    },
+                    {
+                      "/": "/auth"
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "label": "android",
+          "path": "/.well-known/assetlinks.json",
+          "status": 200,
+          "content_type": "application/json",
+          "location": null,
+          "sha256": "e2ad9e673a352912bf9782eba015a5bbcfd28069c138d858d37ced66bf411430",
+          "bytes": 258,
+          "matches_verified_preview_bytes": true,
+          "manifest": [
+            {
+              "relation": [
+                "delegate_permission/common.handle_all_urls"
+              ],
+              "target": {
+                "namespace": "android_app",
+                "package_name": "com.tableus.app",
+                "sha256_cert_fingerprints": [
+                  "02:FC:F9:A8:5F:EF:26:D4:61:43:F4:D8:28:7A:32:5B:05:21:1B:B6:77:23:91:32:4C:12:AA:78:60:C6:65:68"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "label": "source-bundle-0",
+          "path": "/_next/static/chunks/app/invite/page-382cae1aee686465.js",
+          "status": 200,
+          "content_type": "application/javascript; charset=utf-8",
+          "location": null,
+          "sha256": "af7991482a97a5847bcc3ba749f2d37bb47afb2933da05d2022b3f6ab90ba0f2",
+          "bytes": 9088,
+          "matches_verified_preview_bytes": true
+        },
+        {
+          "label": "source-bundle-1",
+          "path": "/_next/static/chunks/app/layout-139aecc5216eb721.js",
+          "status": 200,
+          "content_type": "application/javascript; charset=utf-8",
+          "location": null,
+          "sha256": "45ba3114400c6a7c281e49b0ee500320171275de9a2f8abdf2c430982c134430",
+          "bytes": 15382,
+          "matches_verified_preview_bytes": true
+        },
+        {
+          "label": "source-bundle-2",
+          "path": "/_next/static/chunks/main-app-ceba052889cbb13f.js",
+          "status": 200,
+          "content_type": "application/javascript; charset=utf-8",
+          "location": null,
+          "sha256": "b773d56e611075ec170a5790d9bfddd92cdb086714044c3cd5c236d85b8765ab",
+          "bytes": 6589,
+          "matches_verified_preview_bytes": true
+        }
+      ],
+      "passed": true,
+      "failure": null,
+      "provider_calls": 0,
+      "writes": 0
+    },
+    {
+      "observed_at": "2026-09-21T23:24:46.958115+00:00",
+      "host": "links.table-us.com",
+      "application_sha": "ed8330a766b3c4b80a505e075535678394e275e9",
+      "authenticated": false,
+      "rows": [
+        {
+          "label": "landing",
+          "path": "/",
+          "status": 307,
+          "content_type": "text/html; charset=utf-8",
+          "location": "/discover",
+          "sha256": "043b5933af9355e271b0ae412b47742becbd5492bab20e9afb0fa952fbe6d948",
+          "bytes": 6106
+        },
+        {
+          "label": "invite",
+          "path": "/invite",
+          "status": 200,
+          "content_type": "text/html; charset=utf-8",
+          "location": null,
+          "sha256": "28cc90f62793d80b85c4efcd5d31815747db07fb0be12ea2565d732dcc2e718a",
+          "bytes": 18576
+        },
+        {
+          "label": "auth",
+          "path": "/auth?mode=sign-in",
+          "status": 307,
+          "content_type": "text/html; charset=utf-8",
+          "location": "/invite?mode=sign-in",
+          "sha256": "0d6391bf237347cf1701326ac0f73e8f8ecc4c3936329304047abae265b8cf0d",
+          "bytes": 6671
+        },
+        {
+          "label": "auth-confirm",
+          "path": "/auth/confirm",
+          "status": 307,
+          "content_type": null,
+          "location": "https://links.table-us.com/invite?error=invalid_callback",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "bytes": 0
+        },
+        {
+          "label": "invalid-join",
+          "path": "/join/not-a-uuid?token=phase-w-invalid",
+          "status": 200,
+          "content_type": "text/html; charset=utf-8",
+          "location": null,
+          "sha256": "64cd76019214ee8b9ebc03087c41b29eeff624d5f4f7412ca55cf2b4e2bfb057",
+          "bytes": 18617
+        },
+        {
+          "label": "missing-token",
+          "path": "/join/00000000-0000-4000-8000-000000000000",
+          "status": 200,
+          "content_type": "text/html; charset=utf-8",
+          "location": null,
+          "sha256": "63b5d706eaf2bd53c38fbdc41b78a0bc6366fa7a546978ebdef82b6cf73899b5",
+          "bytes": 18582
+        },
+        {
+          "label": "attribution",
+          "path": "/google-maps-attribution.svg",
+          "status": 200,
+          "content_type": "image/svg+xml",
+          "location": null,
+          "sha256": "62c52df68d8f450c860d5d65068fc96d63c2dfaec849b91ac64b3256a898936e",
+          "bytes": 5275,
+          "matches_verified_preview_bytes": true
+        },
+        {
+          "label": "apple",
+          "path": "/.well-known/apple-app-site-association",
+          "status": 200,
+          "content_type": "application/json",
+          "location": null,
+          "sha256": "710eb96b4cb131ad435294629ed493857a0f8d38e9d0cba112fc905f9cc34d63",
+          "bytes": 123,
+          "matches_verified_preview_bytes": true,
+          "manifest": {
+            "applinks": {
+              "apps": [],
+              "details": [
+                {
+                  "appIDs": [
+                    "6MHJN5V9UJ.com.tableus.app"
+                  ],
+                  "components": [
+                    {
+                      "/": "/join/*"
+                    },
+                    {
+                      "/": "/auth"
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "label": "android",
+          "path": "/.well-known/assetlinks.json",
+          "status": 200,
+          "content_type": "application/json",
+          "location": null,
+          "sha256": "e2ad9e673a352912bf9782eba015a5bbcfd28069c138d858d37ced66bf411430",
+          "bytes": 258,
+          "matches_verified_preview_bytes": true,
+          "manifest": [
+            {
+              "relation": [
+                "delegate_permission/common.handle_all_urls"
+              ],
+              "target": {
+                "namespace": "android_app",
+                "package_name": "com.tableus.app",
+                "sha256_cert_fingerprints": [
+                  "02:FC:F9:A8:5F:EF:26:D4:61:43:F4:D8:28:7A:32:5B:05:21:1B:B6:77:23:91:32:4C:12:AA:78:60:C6:65:68"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "label": "source-bundle-0",
+          "path": "/_next/static/chunks/app/invite/page-382cae1aee686465.js",
+          "status": 200,
+          "content_type": "application/javascript; charset=utf-8",
+          "location": null,
+          "sha256": "af7991482a97a5847bcc3ba749f2d37bb47afb2933da05d2022b3f6ab90ba0f2",
+          "bytes": 9088,
+          "matches_verified_preview_bytes": true
+        },
+        {
+          "label": "source-bundle-1",
+          "path": "/_next/static/chunks/app/layout-139aecc5216eb721.js",
+          "status": 200,
+          "content_type": "application/javascript; charset=utf-8",
+          "location": null,
+          "sha256": "45ba3114400c6a7c281e49b0ee500320171275de9a2f8abdf2c430982c134430",
+          "bytes": 15382,
+          "matches_verified_preview_bytes": true
+        },
+        {
+          "label": "source-bundle-2",
+          "path": "/_next/static/chunks/main-app-ceba052889cbb13f.js",
+          "status": 200,
+          "content_type": "application/javascript; charset=utf-8",
+          "location": null,
+          "sha256": "b773d56e611075ec170a5790d9bfddd92cdb086714044c3cd5c236d85b8765ab",
+          "bytes": 6589,
+          "matches_verified_preview_bytes": true
+        }
+      ],
+      "passed": true,
+      "failure": null,
+      "provider_calls": 0,
+      "writes": 0
+    }
+  ],
+  "browser": {
+    "observed_at": "2026-09-21T23:25:34.860Z",
+    "browser": "153.0.8010.53",
+    "checks": [
+      {
+        "host": "tableus-staging.vercel.app",
+        "label": "invite",
+        "status": 200,
+        "expected": "Join TableUs",
+        "passed": true
+      },
+      {
+        "host": "tableus-staging.vercel.app",
+        "label": "invalid-join",
+        "status": 200,
+        "expected": "This private link is invalid, expired, or has been rotated.",
+        "passed": true
+      },
+      {
+        "host": "links.table-us.com",
+        "label": "invite",
+        "status": 200,
+        "expected": "Join TableUs",
+        "passed": true
+      },
+      {
+        "host": "links.table-us.com",
+        "label": "invalid-join",
+        "status": 200,
+        "expected": "This private link is invalid, expired, or has been rotated.",
+        "passed": true
+      }
+    ],
+    "errors": [],
+    "authenticated": false,
+    "fresh_contexts": true,
+    "passed": true,
+    "network_policy": "Fresh anonymous contexts; only GET to the current alias, excluding /api/. No saved sessions, bypass credential, external traffic, provider requests, or telemetry delivery."
+  },
+  "blocked_browser_requests": 20,
+  "screenshots_visually_inspected": [
+    "links.table-us.com-invalid-join-browser.png"
+  ],
+  "preservation": {
+    "vercel_project_response_identical": true,
+    "production_target": "dpl_7csJvHoJH9qgFZDijbwu3w36r2sK",
+    "production_sha": "e1184eca9b73e1a9f26d1007ab543df9d54c7124",
+    "production_apex_www_unchanged": true,
+    "deployment_inventory_unchanged": true,
+    "retained_deployment_count": 86,
+    "accepted_old_preview_retained": true,
+    "native_changed": false,
+    "public_http": {
+      "observed_at": "2026-09-21T23:26:39.093545+00:00",
+      "rows": [
+        {
+          "host": "table-us.com",
+          "status": 308,
+          "location": "https://www.table-us.com/",
+          "sha256": "7c040f8633b8823d72ed63da9b3b2dfe9846e912c66a64c9433ec9c4815d76c2",
+          "response_matches_preflight": true
+        },
+        {
+          "host": "www.table-us.com",
+          "status": 307,
+          "location": "/discover",
+          "sha256": "9a6421765f33c511286915f39c1864c12dcdc9b94fa1681ade58e774654cdab7",
+          "response_matches_preflight": true
+        },
+        {
+          "host": "tableus-staging-dwuhnprja-briancheis-projects.vercel.app",
+          "status": 302,
+          "sha256": "7c040f8633b8823d72ed63da9b3b2dfe9846e912c66a64c9433ec9c4815d76c2",
+          "anonymous_sso_redirect": true,
+          "location_host": "vercel.com"
+        },
+        {
+          "host": "tableus-staging-i6b1exrb3-briancheis-projects.vercel.app",
+          "status": 302,
+          "sha256": "7c040f8633b8823d72ed63da9b3b2dfe9846e912c66a64c9433ec9c4815d76c2",
+          "anonymous_sso_redirect": true,
+          "location_host": "vercel.com"
+        }
+      ],
+      "passed": true
+    }
+  },
+  "additional_ci_or_preview_deployments": 0,
+  "live_places": 0,
+  "live_gemini": 0,
+  "otp_emails": 0,
+  "canaries": 0,
+  "symbol_uploads": 0,
+  "remaining_phase_w_gate": null,
+  "next_bounded_objective": "Separate local native diagnostic-retention tooling fix; no native compilation, install, symbols upload, or live allowance."
+}

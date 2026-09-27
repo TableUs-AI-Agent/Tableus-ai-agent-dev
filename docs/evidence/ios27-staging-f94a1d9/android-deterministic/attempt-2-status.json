@@ -1,0 +1,24 @@
+{
+  "operator_sha": "cf26de100e68e4f0ea8a448ba2f9ec433ee2f2f8",
+  "artifact_sha256": "5ca6c184d0dd716ea80802c3b3d7cd40db6b3b830be7cf5df6249cb7aed4bae7",
+  "application_sha": "f94a1d9d1125e6c9111aa08eda496f014f20d0c0",
+  "platform": "android",
+  "attempt": 2,
+  "status": "passed",
+  "phase": "offline",
+  "started_at": "2026-09-16T00:57:36.181040+00:00",
+  "checks": [
+    {
+      "phase": "lifecycle",
+      "passed": true,
+      "summary": "/Users/brianchei/repos/Tableus-ai-agent-dev/.artifacts/mobile/f94a1d9d1125e6c9111aa08eda496f014f20d0c0/evidence/android/attempt-2/lifecycle/android-summary.json"
+    },
+    {
+      "phase": "offline",
+      "passed": true,
+      "summary": "/Users/brianchei/repos/Tableus-ai-agent-dev/.artifacts/mobile/f94a1d9d1125e6c9111aa08eda496f014f20d0c0/evidence/android/attempt-2/offline/android-offline-summary.json"
+    }
+  ],
+  "retry_reason": "Initial local backend readiness timed out; independent probe then passed in 1.57 seconds. Original cause is unestablished.",
+  "finished_at": "2026-09-16T01:12:17.244044+00:00"
+}

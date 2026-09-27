@@ -1,0 +1,42 @@
+{
+  "status": "approved_executed_verified",
+  "project_id": "93dcd3f4-7c47-4010-9431-fc28638813d2",
+  "environment_id": "0f546dbc-222f-48b8-a27b-ff008af4fec9",
+  "service_id": "94aeecda-4575-4fc1-bb08-796bf779ada5",
+  "expected_existing_deployment_id": "d929fba2-9c1e-4428-8379-ffaae6a3c4d2",
+  "expected_application_sha": "f94a1d9d1125e6c9111aa08eda496f014f20d0c0",
+  "new_exact_origin": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app",
+  "variable": "ALLOWED_ORIGINS",
+  "before": "https://tableus-staging.vercel.app,https://links.table-us.com,https://tableus-staging-3e0h7umke-briancheis-projects.vercel.app,https://tableus-staging-git-codex-astra-proj-30d7eb-briancheis-projects.vercel.app,https://tableus-staging-949ez84u1-briancheis-projects.vercel.app,https://tableus-staging-git-codex-replacemen-ea2809-briancheis-projects.vercel.app,https://tableus-staging-rk6jt0id1-briancheis-projects.vercel.app,https://tableus-staging-git-codex-refresh-2ad48a8-briancheis-projects.vercel.app,https://tableus-staging-le68rjle9-briancheis-projects.vercel.app,https://tableus-staging-git-codex-ios27-f94a1d9-briancheis-projects.vercel.app,https://tableus-staging-i6b1exrb3-briancheis-projects.vercel.app",
+  "after": "https://tableus-staging.vercel.app,https://links.table-us.com,https://tableus-staging-3e0h7umke-briancheis-projects.vercel.app,https://tableus-staging-git-codex-astra-proj-30d7eb-briancheis-projects.vercel.app,https://tableus-staging-949ez84u1-briancheis-projects.vercel.app,https://tableus-staging-git-codex-replacemen-ea2809-briancheis-projects.vercel.app,https://tableus-staging-rk6jt0id1-briancheis-projects.vercel.app,https://tableus-staging-git-codex-refresh-2ad48a8-briancheis-projects.vercel.app,https://tableus-staging-le68rjle9-briancheis-projects.vercel.app,https://tableus-staging-git-codex-ios27-f94a1d9-briancheis-projects.vercel.app,https://tableus-staging-i6b1exrb3-briancheis-projects.vercel.app,https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app",
+  "operation": "Set this one nonsecret variable with --skip-deploys, then railway redeploy the existing deployment exactly once without --from-source. Recheck source/image identity and latest deployment before the action.",
+  "preserve_all_other_variables": true,
+  "provider_budget_change": false,
+  "production_or_native_change": false,
+  "acceptance": [
+    "API ready with unchanged f94a1d9 source",
+    "same existing image/source provenance",
+    "exact new Preview and staging/canonical origins allowed",
+    "unapproved origin still rejected",
+    "no provider calls or canaries",
+    "conditional web alias activation only after all Phase W checks and preservation pass"
+  ],
+  "stop_on_failure": true,
+  "automatic_rollback": false,
+  "expected_existing_image_digest": "sha256:4391a5a2fb1c5cb954a4ce3b651a1be987d0bbd883b058794f9d2dd8e1c2ca90",
+  "source_selection": "Redeploy latest existing deployment only; --from-source is excluded because it would follow configured main.",
+  "owner_approval": {
+    "message": "approve",
+    "received_date": "2026-09-21",
+    "scope": "Exact prepared CORS append and one existing-source Railway redeploy; previously approved conditional staging alias activation remains in scope."
+  },
+  "result": {
+    "deployment_id": "24eefe75-9583-4a90-8d3e-48450818dec0",
+    "new_image_digest": "sha256:92d1605c9100bd54b84c5e5295a93d6eef32c138e00984c2c2788d6a27b82272",
+    "source_and_pinned_build_inputs_verified": true,
+    "byte_identical_image_reuse": false,
+    "readiness_and_cors_passed": true,
+    "staging_aliases_activated": true,
+    "evidence": "activation.json"
+  }
+}

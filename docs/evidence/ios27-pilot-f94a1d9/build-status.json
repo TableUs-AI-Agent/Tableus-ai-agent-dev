@@ -1,0 +1,15 @@
+{
+  "profile": "readiness-ios",
+  "application_sha": "f94a1d9d1125e6c9111aa08eda496f014f20d0c0",
+  "status": "passed",
+  "started_at": "2026-09-15T22:07:00.350637+00:00",
+  "free_gib_at_start": 21.584,
+  "operator_sha": "d0447b8711109f43fb7a1572cb2b0a275f9901ab",
+  "pid": 82642,
+  "exit_code": 0,
+  "finished_at": "2026-09-15T22:25:15.040366+00:00",
+  "artifact_exists": true,
+  "inspection_exists": true,
+  "receipt_exists": true,
+  "free_gib_at_finish": 21.876
+}

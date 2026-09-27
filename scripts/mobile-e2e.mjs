@@ -130,6 +130,13 @@ if (!appPath || !existsSync(appPath)) throw new Error("--app must point to an ex
 if (new URL(apiUrl).hostname !== "127.0.0.1") throw new Error("Mobile E2E refuses non-loopback API URLs");
 
 await assertPortAvailable();
+run(process.execPath, [
+  "scripts/mobile-device-preflight.mjs",
+  "--platform", platform,
+  "--device", device,
+  "--app", appPath,
+  "--boot", platform === "ios" ? "true" : "false",
+]);
 const temporaryRoot = mkdtempSync(join(tmpdir(), "tableus-mobile-e2e-"));
 const temporaryFlowDir = join(temporaryRoot, "flows");
 cpSync(flowDir, temporaryFlowDir, { recursive: true });

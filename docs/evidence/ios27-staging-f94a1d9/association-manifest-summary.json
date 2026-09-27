@@ -1,0 +1,15 @@
+{
+  "application_sha": "f94a1d9d1125e6c9111aa08eda496f014f20d0c0",
+  "observed_at": "2026-09-15T22:56:14.241728+00:00",
+  "source": "hosted-preflight.json",
+  "manifests": {
+    "apple": {
+      "sha256": "710eb96b4cb131ad435294629ed493857a0f8d38e9d0cba112fc905f9cc34d63",
+      "http_status": 200
+    },
+    "android": {
+      "sha256": "e2ad9e673a352912bf9782eba015a5bbcfd28069c138d858d37ced66bf411430",
+      "http_status": 200
+    }
+  }
+}

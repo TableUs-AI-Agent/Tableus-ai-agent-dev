@@ -1,6 +1,6 @@
 from collections.abc import AsyncIterator
 
-from sqlalchemy import MetaData, event, text
+from sqlalchemy import MetaData, event, inspect, text
 from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker, create_async_engine
 from sqlalchemy.orm import DeclarativeBase
 
@@ -38,13 +38,20 @@ async def init_database() -> None:
 
     if settings.environment in {"development", "test"}:
         async with engine.begin() as connection:
-            if settings.database_schema:
-                await connection.execute(
-                    text(f'CREATE SCHEMA IF NOT EXISTS "{settings.database_schema}"')
+            schema = settings.database_schema
+            if schema:
+                schema_exists = await connection.run_sync(
+                    lambda sync: inspect(sync).has_schema(schema)
                 )
+                # PostgreSQL checks CREATE privilege even with IF NOT EXISTS.
+                # A pre-migrated test database must work with the runtime role.
+                if not schema_exists:
+                    await connection.execute(
+                        text(f'CREATE SCHEMA IF NOT EXISTS "{schema}"')
+                    )
             await connection.run_sync(Base.metadata.create_all)
 
-    if settings.tableus_auth_mode == "demo":
+    if settings.tableus_auth_mode == "demo" and settings.environment in {"development", "test"}:
         await seed_demo_data()
 
 

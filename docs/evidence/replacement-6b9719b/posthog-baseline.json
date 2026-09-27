@@ -1,0 +1,18 @@
+{
+  "schema_version": 1,
+  "application_sha": "6b9719b4e63e34803f2e7c2598e45851790df661",
+  "observed_at": "2026-09-14T22:56:40.112791+00:00",
+  "matching_canaries": 0,
+  "verification_method": "typed_connector_trends",
+  "release_filter": "6b9719b4e63e34803f2e7c2598e45851790df661",
+  "canaries_sent": false,
+  "project_id": 578352,
+  "date_from": "2026-09-14T22:39:36Z",
+  "event_name": "telemetry_e2e",
+  "platforms": [
+    "web",
+    "ios",
+    "android",
+    "api"
+  ]
+}

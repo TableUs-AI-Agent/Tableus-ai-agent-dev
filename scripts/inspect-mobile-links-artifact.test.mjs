@@ -16,18 +16,19 @@ test("verified-link inspection requires exact signed native associations", () =>
 
 test("verified-link inspection rejects private test and credential markers from active configuration", () => {
   for (const marker of [
-    "appConfigurationBytes",
-    "/assets/app.config",
-    "/EXConstants.bundle/app.config",
+    "embeddedAppConfiguration",
+    "validateHostedAppConfig",
     "embedded.mobileprovision",
     '"cms", "-inform", "der", "-verify"',
     '"-signer", profileSignerPath',
     "ProvisionedDevices",
     "demo-organizer",
     "http://127.0.0.1",
+    "NSAppTransportSecurity.NSAllowsLocalNetworking",
+    'android:usesCleartextTraffic=\"true\"',
     "SUPABASE_SERVICE_ROLE",
-    '"localE2E":false',
-    '"authE2E":false',
+    "parsedConfiguration.extra.localE2E !== false",
+    "parsedConfiguration.extra.authE2E !== false",
   ]) {
     assert.equal(source.includes(marker), true);
   }

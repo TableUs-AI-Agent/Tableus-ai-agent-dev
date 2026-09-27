@@ -1,0 +1,62 @@
+{
+  "schema_version": 1,
+  "candidate_sha": "25e34ec9e35e1935cebe8dbb8f34465fd2b313e0",
+  "implementation_sha": "1066dcbbae5a0685719d88864d751e606a05d866",
+  "base_sha": "d665dc15291191d56da521e1bcde74e99c59acdc",
+  "branch": "codex/cohort-controls",
+  "postgres_version": "17.11",
+  "migration_head": "ab72e4f39d10",
+  "final_readiness": {
+    "exit_code": 0,
+    "javascript_tests": 314,
+    "python_tests": 162,
+    "skips": 0,
+    "warning": "Alembic path_separator deprecation",
+    "web_javascript_bytes_report_only": 2772470,
+    "native_builds_or_runs": 0,
+    "database": "fresh local tableus_cohort_acceptance_r2; restricted runtime role"
+  },
+  "initial_readiness": {
+    "source_sha": "1066dcbbae5a0685719d88864d751e606a05d866",
+    "python_passed": 161,
+    "python_failed": 1,
+    "cause": "new daily quota fixture inherited saturated minute-limit window; test-only correction"
+  },
+  "contract_drift": false,
+  "hosted_ci_executed": false,
+  "local_server_stopped": true,
+  "source_sha256": {
+    "backend/.env.example": "1cddcc1a04cae3a890e8efb9d6edeed405d7b76d3d14732ec694f201d8b2ce7d",
+    "backend/alembic/versions/ab72e4f39d10_cohort_counters.py": "b017d9ea6902c963bbc7cf519460bdb1dae0cfb1ea7217cdc2f933996a8f99da",
+    "backend/tableus/api.py": "e142e1b8f0380c5983d6ebbd731163a3a482bee72b3273a20ffbcb7f8a5198bd",
+    "backend/tableus/cohort_limits.py": "85bedc61c30ba0e4620e81b21b225a579df1fd65e204e73217ac855b0795cbd5",
+    "backend/tableus/config.py": "d22c2a5d955b749c2f71180e61864b13bb85f7fddb56bebd73e7e3f791bc320a",
+    "backend/tableus/models.py": "5afef0c690baa98043ece7a8877bd3a51eda8b2505ee85093008ab9539734811",
+    "backend/tableus/operators.py": "e66d69f5882be27e96f8670a9c95930e84e9a69a4cfb68f8d2b47abf7424df81",
+    "backend/tests/test_account_lifecycle_roles.py": "4859447b65afb93f941a336c7272d8002dd19ca7c80d769313cd5e9ecd3e9083",
+    "backend/tests/test_api.py": "4af52119cfbf5bab0c881b4fee8969676cef9adf639675d8883a2ad3acb5523d",
+    "backend/tests/test_cohort_api.py": "684c762205083f3d55ff762d7e45448aeced51185d3d1018a79e3e09ceed2c8f",
+    "backend/tests/test_cohort_limits.py": "5174309e261b402eeec8f50bbde115ea6b69c441c4669fe6d5b531ac3457e1b8",
+    "backend/tests/test_cohort_roles.py": "64db6485b5dc427814c07b7498fbeee1505c4b75a1f69ccf519d6d519768b0a3",
+    "backend/tests/test_operator_usage.py": "35c482f55bcc56497a0681c2622c53fa086f466c3d3b6dea9b3a9b4d999cbff6",
+    "docs/openapi.json": "187365567b1c3b3c92903c24b91e042be9eb5a691b0cd13e239657589c31e731",
+    "packages/api-client/src/schema.ts": "3e1040f8dcad1f0ddffb4a11fc90a09941a533c1d6d7323d96ad606f47ecc8cd"
+  },
+  "evidence_sha256": {
+    "/Users/brianchei/.codex/artifacts/tableus/cohort-controls-2026-09-24/make-ready-r2.log": "3bdb3f6af3aff6c381b0291498868e936af3d0a59111749ecd5240e90637c25a",
+    "/Users/brianchei/.codex/artifacts/tableus/cohort-controls-2026-09-24/make-ready.log": "171e3bdd8bec4179daabc7b557cca3b2febb91ce00b259bbeda48d54ea1600d1",
+    "/Users/brianchei/.codex/artifacts/tableus/cohort-controls-2026-09-24/fresh-migration.log": "3058f758d075a667946c5e5355cab748e8511d62f252847b00434e1ba82bdaf8",
+    "/Users/brianchei/.codex/artifacts/tableus/cohort-controls-2026-09-24/upgrade-migration.log": "17d5fb64c5db3229eb57394c5839fc3494e883a8a983274b8c1a0abc345690aa",
+    "/Users/brianchei/.codex/artifacts/tableus/cohort-controls-2026-09-24/upgrade-roles.log": "8c4451fa3bc6e73524ce038c77fee5da60f6a9ce5f3da83bb6ea5990263a2660",
+    "/Users/brianchei/.codex/artifacts/tableus/cohort-controls-2026-09-24/backfill-verification.log": "7afd7c6d5841f6f07071246f1f810d8c5a8551ec5694c5e2f6583c9c06924407",
+    "/Users/brianchei/.codex/artifacts/tableus/cohort-controls-2026-09-24/root-focused.log": "980e62fd3feab08bbf039e0e32448018c94916febc2de0e4c7efe0410155f430",
+    "/Users/brianchei/.codex/artifacts/tableus/cohort-controls-2026-09-24/operator-focused.log": "8e3dd3f3ec5b8ce7536c0d81dabdf0848432b04c6950f23d3febd3fc54d8b462",
+    "/Users/brianchei/.codex/artifacts/tableus/cohort-controls-2026-09-24/postcommit-hydration.log": "6e3d86c7271bacfe08a1439cf9744278d25c66c1b1fe4491b65e77f0a13ea87f",
+    "/Users/brianchei/.codex/artifacts/tableus/cohort-controls-2026-09-24/agent-focused.log": "b9b294aee71014758182e7348f01c50c7136a252cd6ac69cf8b8e3c77e1ddcb9",
+    "/Users/brianchei/.codex/artifacts/tableus/cohort-controls-2026-09-24/acceptance-r2-migration.log": "3058f758d075a667946c5e5355cab748e8511d62f252847b00434e1ba82bdaf8",
+    "/Users/brianchei/.codex/artifacts/tableus/cohort-controls-2026-09-24/process-persistence.log": "e2524cf8128ecc7c98ab42842ea2b0af0a2b7c43c19c07be8d2a9359c6d25ee6",
+    "/Users/brianchei/.codex/artifacts/tableus/cohort-controls-2026-09-24/operator-aggregate-sql.log": "a08039ab179dfd6824f0b2faf6b02f9babb6d8554b661571e2cb923c99c637eb",
+    "/Users/brianchei/.codex/artifacts/tableus/cohort-controls-2026-09-24/shutdown.log": "ca19178a35ab4153b75b494963b66ce8243e1b94c173107c87b44d09db23652d"
+  },
+  "evidence_association": "Final make-ready-r2 proves candidate_sha. Other logs are focused pre-freeze checks and migration/process diagnostics; see README for corrections and scope."
+}

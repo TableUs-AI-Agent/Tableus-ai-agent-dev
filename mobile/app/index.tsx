@@ -14,5 +14,5 @@ export default function Index() {
       </View>
     );
   }
-  return <Redirect href={auth.approved ? "/(tabs)/plans" : "/auth"} />;
+  return <Redirect href={auth.phase === "deletion" ? "/account" : auth.approved ? "/(tabs)/plans" : "/auth"} />;
 }

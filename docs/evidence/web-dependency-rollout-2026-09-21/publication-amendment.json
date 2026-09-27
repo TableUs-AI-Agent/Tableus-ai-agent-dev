@@ -1,0 +1,60 @@
+{
+  "status": "owner_approved_not_yet_executed",
+  "project_id": "prj_lPu3pWZiJ5ZRUIab6wiXrJIW930G",
+  "team_id": "team_0Pu6vuMiug12C8K2HQqbgOQG",
+  "project_pause_patch": {
+    "previewDeploymentsDisabled": true
+  },
+  "git_publication": {
+    "source": "ed8330a766b3c4b80a505e075535678394e275e9",
+    "destination": "refs/heads/codex/web-deps-ed8330a",
+    "force": false
+  },
+  "branch_preview_environment": [
+    {
+      "key": "TABLEUS_BUILD_SHA",
+      "value": "ed8330a766b3c4b80a505e075535678394e275e9",
+      "type": "plain",
+      "target": [
+        "preview"
+      ],
+      "gitBranch": "codex/web-deps-ed8330a"
+    },
+    {
+      "key": "NEXT_PUBLIC_SOURCE_SHA",
+      "value": "ed8330a766b3c4b80a505e075535678394e275e9",
+      "type": "plain",
+      "target": [
+        "preview"
+      ],
+      "gitBranch": "codex/web-deps-ed8330a"
+    },
+    {
+      "key": "SENTRY_AUTH_TOKEN",
+      "value": "",
+      "type": "plain",
+      "target": [
+        "preview"
+      ],
+      "gitBranch": "codex/web-deps-ed8330a"
+    }
+  ],
+  "project_restore_patch": {
+    "previewDeploymentsDisabled": false
+  },
+  "deployment_rule": "Inspect triggers, then create or reuse exactly one Preview at application SHA; never duplicate or retry blindly.",
+  "ci": {
+    "workflow": ".github/workflows/ci.yml",
+    "ref": "codex/web-deps-ed8330a",
+    "max_runs": 1
+  },
+  "later_separate_gate": "Exact immutable Preview CORS addition and f94a1d9 API config restart/redeploy; not included in this amendment.",
+  "rollback_owner": "Brian Chei",
+  "approval": {
+    "owner": "Brian Chei",
+    "owner_message": "approve",
+    "task": "01a0c5ec-b7f9-77d1-b739-0f49a238de16",
+    "recorded_at": "2026-09-21T22:11:10.553502+00:00",
+    "scope": "Full amended publication sequence requested in preceding final response, including temporary Preview pause and empty branch SENTRY_AUTH_TOKEN override. Exact Preview CORS/API restart remains separately gated."
+  }
+}

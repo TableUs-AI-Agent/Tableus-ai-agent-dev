@@ -1,5 +1,6 @@
 import { expect, test } from "@playwright/test";
 import { readFile } from "node:fs/promises";
+import { randomUUID } from "node:crypto";
 
 function nestedKeys(value: unknown): Set<string> {
   if (Array.isArray(value)) {
@@ -20,7 +21,7 @@ test("organizer creates a persistent plan", async ({ page }) => {
   await page.getByLabel("City, neighborhood, or ZIP code").fill("Boston, MA");
   await page.getByRole("button", { name: "Find location" }).click();
   await expect(page.getByText("Boston, MA", { exact: true })).toBeVisible();
-  await expect(page.getByText("Google Maps", { exact: true })).toBeVisible();
+  await expect(page.getByRole("img", { name: "Google Maps" })).toBeVisible();
   await page.getByRole("button", { name: "Create plan" }).click();
   await expect(page.getByText("Playwright dinner").first()).toBeVisible();
   await expect(page.getByText("Private join link")).toBeVisible();
@@ -30,7 +31,7 @@ test("organizer creates a persistent plan", async ({ page }) => {
 test("publishes release disclosures and verified-link manifests", async ({ page }) => {
   await page.goto("/privacy");
   await expect(page.getByRole("heading", { name: "TableUs closed-beta privacy notice" })).toBeVisible();
-  await expect(page.getByText("Effective August 17, 2026.")).toBeVisible();
+  await expect(page.getByText("Effective August 26, 2026.")).toBeVisible();
 
   const apple = await page.request.get("/.well-known/apple-app-site-association");
   expect(apple.status()).toBe(200);
@@ -50,12 +51,33 @@ test("publishes release disclosures and verified-link manifests", async ({ page 
   expect(auth.url()).toContain("/invite?mode=sign-in");
 });
 
-test("downloads a versioned account export and shows deletion blockers", async ({ page }) => {
+test("downloads a versioned account export and shows organized-plan controls", async ({ page }) => {
   test.skip(Boolean(process.env.PLAYWRIGHT_BASE_URL), "Local deterministic evidence only");
+  const api = "http://127.0.0.1:8000";
+  const organizer = { "X-Demo-User-ID": "demo-organizer" };
+  const title = `Account export ${randomUUID()}`;
+  const createdResponse = await page.request.post(`${api}/api/v1/plans`, {
+    headers: organizer,
+    data: { title, location_label: "Boston, MA", latitude: 42.3601, longitude: -71.0589 },
+  });
+  expect(createdResponse.ok()).toBeTruthy();
+  const controlResponse = await page.request.get(`${api}/api/v1/me/account-control`, {
+    headers: organizer,
+  });
+  expect(controlResponse.ok()).toBeTruthy();
+  expect((await controlResponse.json()).data).toMatchObject({
+    can_delete: false,
+    full_deletion_available: false,
+  });
+
   await page.goto("/account");
   await expect(page.getByRole("heading", { name: "Demo Organizer" })).toBeVisible();
-  await expect(page.getByText(/organized plans? must be transferred or removed first/)).toBeVisible();
-  await expect(page.getByRole("button", { name: "Delete my application data" })).toBeDisabled();
+  const managedPlan = page.getByRole("heading", { name: title, exact: true }).locator("..");
+  await expect(managedPlan.getByText("1 participant", { exact: true })).toBeVisible();
+  await expect(managedPlan.getByRole("button", { name: "Remove sole plan" })).toBeDisabled();
+  await expect(page.getByRole("status")).toContainText("Account deletion is not available in this beta environment.");
+  await expect(page.getByRole("button", { name: "Delete my account", exact: true })).toBeDisabled();
+  await expect(page.getByLabel("Type DELETE to confirm account deletion")).toBeDisabled();
 
   const downloadPromise = page.waitForEvent("download");
   await page.getByRole("button", { name: "Download my data" }).click();

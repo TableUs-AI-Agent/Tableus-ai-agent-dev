@@ -1,0 +1,10 @@
+{
+  "application_sha": "f94a1d9d1125e6c9111aa08eda496f014f20d0c0",
+  "observed_at": "2026-09-16T22:54:08.776719+00:00",
+  "deployment_id": "d929fba2-9c1e-4428-8379-ffaae6a3c4d2",
+  "deployment_status": "SUCCESS",
+  "staging_backstop_verified": 429,
+  "api_ready": true,
+  "variable_changed": "PLACES_RUNTIME_MAX_ATTEMPTS_30D",
+  "secrets_changed": false
+}

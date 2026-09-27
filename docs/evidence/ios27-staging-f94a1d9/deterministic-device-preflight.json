@@ -1,0 +1,12 @@
+{
+  "observed_at": "2026-09-16T00:45:40.814377+00:00",
+  "ios_runtime": {
+    "identifier": "com.apple.CoreSimulator.SimRuntime.iOS-26-5",
+    "version": "26.5",
+    "buildversion": "23F77",
+    "isAvailable": true
+  },
+  "booted_simulators": 0,
+  "android_api_36_arm64_image_present": true,
+  "saved_devices_modified": false
+}

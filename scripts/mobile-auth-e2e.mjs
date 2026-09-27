@@ -1,14 +1,15 @@
 #!/usr/bin/env node
 
 import { randomBytes } from "node:crypto";
-import { copyFileSync, cpSync, existsSync, mkdirSync, mkdtempSync, readdirSync, rmSync, statSync, writeFileSync } from "node:fs";
+import { cpSync, existsSync, mkdirSync, mkdtempSync, readdirSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { basename, dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
-import { createInterface } from "node:readline/promises";
 import { spawnSync } from "node:child_process";
 
-import { artifactChecksum } from "./evidence-utils.mjs";
+import { promptSecret } from "./prompt-utils.mjs";
+import { RELEASE_ORIGINS, requireReleaseOrigin } from "./release-origins.mjs";
+import { assertArtifactUnchanged, stageVerifiedArtifact } from "./mobile-artifact-security.mjs";
 
 const repoRoot = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const flowSource = join(repoRoot, "mobile", ".maestro-auth");
@@ -40,9 +41,8 @@ function run(command, args, { cwd = repoRoot, env = {}, secrets = [] } = {}) {
 }
 
 async function preflight(apiUrl) {
-  const url = new URL(apiUrl);
-  if (url.protocol !== "https:") throw new Error("Mobile auth E2E requires an HTTPS staging API.");
-  const response = await fetch(`${apiUrl.replace(/\/$/, "")}/health/ready`, { signal: AbortSignal.timeout(15_000) });
+  requireReleaseOrigin(apiUrl, RELEASE_ORIGINS.stagingApi, "Mobile auth staging API");
+  const response = await fetch(`${apiUrl.replace(/\/$/, "")}/health/ready`, { redirect: "error", signal: AbortSignal.timeout(15_000) });
   if (!response.ok) throw new Error(`Staging readiness failed with ${response.status}.`);
   const payload = await response.json();
   if (payload.auth_mode !== "supabase" || payload.ai_provider_mode !== "deterministic" || !["deterministic", "live"].includes(payload.places_provider_mode)) {
@@ -51,21 +51,15 @@ async function preflight(apiUrl) {
   return payload;
 }
 
-function collectScreenshot(root, evidenceDir, platform) {
-  const matches = [];
-  const visit = (directory) => {
-    for (const entry of readdirSync(directory)) {
-      const path = join(directory, entry);
-      if (statSync(path).isDirectory()) visit(path);
-      else if (entry === "returning-session.png" || entry === "account-controls.png") matches.push(path);
-    }
-  };
-  visit(root);
-  return matches.map((source) => {
-    const destination = join(evidenceDir, `${platform}-${basename(source)}`);
-    copyFileSync(source, destination);
-    return basename(destination);
-  });
+function snapshot(directory) {
+  return existsSync(directory) ? new Set(readdirSync(directory)) : new Set();
+}
+
+function removeNewEntries(directory, before) {
+  if (!existsSync(directory)) return;
+  for (const entry of readdirSync(directory)) {
+    if (!before.has(entry)) rmSync(join(directory, entry), { recursive: true, force: true });
+  }
 }
 
 const args = parseArgs(process.argv.slice(2));
@@ -73,32 +67,34 @@ const platform = args.platform;
 const device = args.device;
 const appPath = resolve(args.app ?? "");
 const apiUrl = args["api-url"] ?? process.env.EXPO_PUBLIC_API_URL ?? "";
+const supabaseUrl = args["supabase-url"] ?? "";
+const candidateSha = args.sha;
 const buildId = args["build-id"];
 const evidenceDir = resolve(args.evidence ?? "");
 const phases = ["invalid-invite", "signup-send", "verify-signup", "persistence", "refresh", "foreground", "sign-out", "returning-send", "returning-verify", "account-controls"];
 const startPhase = args["start-phase"] ?? phases[0];
 if (!new Set(["ios", "android"]).has(platform)) throw new Error("--platform must be ios or android");
-if (!device || !existsSync(appPath) || !buildId || !args.evidence) throw new Error("--device, --app, --build-id, and --evidence are required");
+if (!device || !existsSync(appPath) || !buildId || !args.evidence || !candidateSha || !args.receipt || !supabaseUrl) {
+  throw new Error("--device, --app, --build-id, --evidence, --sha, --receipt, and --supabase-url are required");
+}
+if (platform === "android" && !args["android-fingerprint"]) throw new Error("--android-fingerprint is required for Android auth evidence");
 const startPhaseIndex = phases.indexOf(startPhase);
 if (startPhaseIndex < 0) throw new Error(`--start-phase must be one of: ${phases.join(", ")}`);
 const readiness = await preflight(apiUrl);
 
-const terminal = createInterface({ input: process.stdin, output: process.stdout });
-const email = (await terminal.question("Test account email: ")).trim().toLowerCase();
 const signupWillRun = startPhaseIndex <= phases.indexOf("signup-send");
-const displayName = signupWillRun ? (await terminal.question("Display name: ")).trim() : "";
-const invite = signupWillRun ? (await terminal.question("One-use invite code: ")).trim() : "";
-if (!email || (signupWillRun && (!displayName || !invite))) {
-  throw new Error("Email is required, and signup runs also require display name and invite.");
-}
-
 const temporaryRoot = mkdtempSync(join(tmpdir(), "tableus-mobile-auth-e2e-"));
 const flows = join(temporaryRoot, "flows");
+const installRoot = join(temporaryRoot, "install");
 cpSync(flowSource, flows, { recursive: true });
 mkdirSync(evidenceDir, { recursive: true });
+mkdirSync(installRoot, { recursive: true, mode: 0o700 });
 const joinToken = randomBytes(24).toString("base64url");
 const invalidInvite = `invalid-${randomBytes(12).toString("hex")}`;
-const secrets = [email, displayName, invite, joinToken, invalidInvite];
+const secrets = [joinToken, invalidInvite];
+let email = "";
+let displayName = "";
+let invite = "";
 const maestroEnvironment = {
   MAESTRO_CLI_NO_ANALYTICS: "1",
   MAESTRO_CLI_ANALYSIS_NOTIFICATION_DISABLED: "true",
@@ -108,6 +104,10 @@ const maestroEnvironment = {
 const developerDir = process.env.DEVELOPER_DIR || "/Applications/Xcode.app/Contents/Developer";
 const knownAdb = "/opt/homebrew/share/android-commandlinetools/platform-tools/adb";
 const adb = process.env.ADB || (existsSync(knownAdb) ? knownAdb : "adb");
+const maestroTests = join(process.env.HOME ?? "", ".maestro", "tests");
+const maestroLogs = join(process.env.HOME ?? "", "Library", "Logs", "maestro");
+const testsBefore = snapshot(maestroTests);
+const logsBefore = snapshot(maestroLogs);
 
 function flow(name, variables = {}) {
   const maestroArgs = ["--device", device, "test", "--test-output-dir=results"];
@@ -128,13 +128,41 @@ function shouldRun(phase) {
 }
 
 try {
-  if (platform === "ios") run("xcrun", ["simctl", "install", device, appPath], { env: { DEVELOPER_DIR: developerDir } });
-  else run(adb, ["-s", device, "install", "-r", appPath]);
+  const verified = stageVerifiedArtifact({
+    artifact: appPath,
+    receiptPath: resolve(args.receipt),
+    platform,
+    profile: `auth-test-${platform}`,
+    candidateSha,
+    buildId,
+    destination: installRoot,
+    signerType: platform === "ios" ? "ios-simulator" : "android-sha256-cert",
+    signerIdentity: platform === "ios" ? appId : args["android-fingerprint"],
+  });
+  const inspectorArgs = [
+    "scripts/inspect-mobile-auth-artifact.mjs", "--platform", platform, "--artifact", verified.path,
+    "--sha", candidateSha, "--api-url", apiUrl, "--supabase-url", supabaseUrl,
+    "--link-host", args["link-host"] ?? "links.table-us.com",
+  ];
+  if (args["android-fingerprint"]) inspectorArgs.push("--android-fingerprint", args["android-fingerprint"]);
+  if (args["forbidden-origins"]) inspectorArgs.push("--forbidden-origins", args["forbidden-origins"]);
+  run(process.execPath, inspectorArgs);
+  assertArtifactUnchanged(verified.path, verified.digest);
+  if (platform === "ios") run("xcrun", ["simctl", "install", device, verified.path], { env: { DEVELOPER_DIR: developerDir } });
+  else run(adb, ["-s", device, "install", "-r", verified.path]);
+
+  email = (await promptSecret("Test account email: ")).trim().toLowerCase();
+  displayName = signupWillRun ? (await promptSecret("Display name: ")).trim() : "";
+  invite = signupWillRun ? (await promptSecret("One-use invite code: ")).trim() : "";
+  if (!email || (signupWillRun && (!displayName || !invite))) {
+    throw new Error("Email is required, and signup runs also require display name and invite.");
+  }
+  secrets.push(email, displayName, invite);
 
   if (shouldRun("invalid-invite")) flow("invalid-invite.yml", { INVALID_INVITE: invalidInvite, DISPLAY_NAME: displayName, EMAIL: email });
   if (shouldRun("signup-send")) flow("signup-send.yml", { INVITE: invite, DISPLAY_NAME: displayName, EMAIL: email, JOIN_TOKEN: joinToken });
   if (shouldRun("verify-signup")) {
-    const signupOtp = (await terminal.question("Signup OTP from the newest email: ")).trim();
+    const signupOtp = (await promptSecret("Signup OTP from the newest email: ")).trim();
     if (!signupOtp) throw new Error("Signup OTP is required.");
     secrets.push(signupOtp);
     flow("verify-signup.yml", { OTP: signupOtp });
@@ -148,23 +176,20 @@ try {
     flow("returning-send.yml", { EMAIL: email });
   }
   if (shouldRun("returning-verify")) {
-    const returningOtp = (await terminal.question("Returning sign-in OTP from the newest email: ")).trim();
+    const returningOtp = (await promptSecret("Returning sign-in OTP from the newest email: ")).trim();
     if (!returningOtp) throw new Error("Returning sign-in OTP is required.");
     secrets.push(returningOtp);
     flow("returning-verify.yml", { OTP: returningOtp });
   }
   if (shouldRun("account-controls")) flow("account-controls.yml");
 
-  const screenshots = collectScreenshot(temporaryRoot, evidenceDir, platform);
-  const gitResult = spawnSync("git", ["rev-parse", "HEAD"], { cwd: repoRoot, encoding: "utf8" });
-  if (gitResult.status !== 0) throw new Error("Could not resolve the candidate SHA.");
   const summary = {
     platform,
     device,
     build_id: buildId,
-    git_sha: gitResult.stdout.trim(),
+    git_sha: candidateSha,
     artifact: basename(appPath),
-    artifact_sha256: artifactChecksum(appPath),
+    artifact_sha256: verified.digest,
     api_origin: new URL(apiUrl).origin,
     app_id: appId,
     provider_mode: readiness.provider_mode,
@@ -180,7 +205,7 @@ try {
     sign_out: shouldRun("sign-out"),
     returning_sign_in: shouldRun("returning-verify"),
     account_controls_validated: shouldRun("account-controls"),
-    screenshots,
+    screenshots_retained_by_runner: false,
     started_at_phase: startPhase,
   };
   const summaryKind = startPhase === "returning-send" ? "account" : "auth";
@@ -189,6 +214,7 @@ try {
     ? `TableUs ${platform} staging authentication lifecycle passed.\n`
     : `TableUs ${platform} staging authentication segment from ${startPhase} passed.\n`);
 } finally {
-  terminal.close();
   rmSync(temporaryRoot, { recursive: true, force: true });
+  removeNewEntries(maestroTests, testsBefore);
+  removeNewEntries(maestroLogs, logsBefore);
 }

@@ -1,0 +1,58 @@
+{
+  "schema_version": 1,
+  "observed_at": "2026-09-21T21:40:47.561945+00:00",
+  "application_sha": "ed8330a766b3c4b80a505e075535678394e275e9",
+  "kind": "planning_only",
+  "passed": true,
+  "checks": {
+    "changed_files_docs_only": true,
+    "git_diff_check": true,
+    "changed_json_parse": true,
+    "relative_markdown_links_resolve": true,
+    "local_link_count": 39,
+    "source_associations_match": true,
+    "prior_worktree_clean": true,
+    "application_tooling_test_bytes_unchanged": true
+  },
+  "reviewed_file_hashes": [
+    {
+      "file": "docs/current-state.md",
+      "sha256": "38485c7285519efc3fdefbc150db92f3625fffb396a27a10bc75e058f99d652b"
+    },
+    {
+      "file": "docs/decisions.md",
+      "sha256": "5a3995b12e820619f74a730e2b43ec835b20496c68af156dce77479300003ec8"
+    },
+    {
+      "file": "docs/evidence/dependency-rollout-2026-09-21/README.md",
+      "sha256": "66a895c2f7fe995e8b72d221f2851acaf4f220dfd9b1987a07a33b03d44ce47a"
+    },
+    {
+      "file": "docs/evidence/dependency-rollout-2026-09-21/source-association.json",
+      "sha256": "b609cf9870871683133c3af81148fa6fef7e48b554ae8ee990171b55473cf8f2"
+    },
+    {
+      "file": "docs/handoffs/2026-09-21-dependency-rollout.md",
+      "sha256": "d0e2a05f9d274ec4058bdc8554e1fff179b823d0429b94eb0ca0add1321b346b"
+    },
+    {
+      "file": "docs/release-readiness-checklist.md",
+      "sha256": "663a5569568061a2a3d83d43b32fa45b5bb86668e1caf05fa99f21f1979cd8f1"
+    },
+    {
+      "file": "docs/roadmap.md",
+      "sha256": "273ad474b6192db807e593e89cdce3d4fd4f88648d3253088a3e40de831c7de9"
+    },
+    {
+      "file": "docs/task-packets/active.md",
+      "sha256": "f3911bb3ffb8c7b09462623e25802b099ba6c3c85d56d8efb23e75287d11f5ca"
+    }
+  ],
+  "reused_application_checks": "Original verification.json: frozen npm install/npm ls, 8 compatibility tests, platform JS exports, contract drift, 4 Chrome journeys, one make ready (234 JS/98 Python, 3 PostgreSQL skips). Reused by exact source/log hashes, not freshly executed.",
+  "new_full_suite_runs": 0,
+  "new_ci_runs": 0,
+  "new_native_builds": 0,
+  "new_deployments": 0,
+  "security_scan": false,
+  "approval_received": false
+}

@@ -1,0 +1,75 @@
+{
+  "observed_at": "2026-09-21T22:00:25.544603+00:00",
+  "passed": true,
+  "kind": "documentation_evidence_checkpoint_not_rollout_acceptance",
+  "application_sha": "ed8330a766b3c4b80a505e075535678394e275e9",
+  "checks": {
+    "changed_files_docs_only": true,
+    "application_repository_tooling_tests_unchanged": true,
+    "git_diff_check": true,
+    "json_parse": true,
+    "markdown_relative_links": 42,
+    "private_evidence_hashes": 73,
+    "detached_source_clean": true
+  },
+  "reused_checks": "Original exact-byte local validation, including one make ready. No repeated full local suite.",
+  "phase_w_complete": false,
+  "file_hashes": [
+    {
+      "file": "docs/current-state.md",
+      "sha256": "779c2720897106ff24dc3c283f45c8aaf8d475ce189ae973f35511699df9bee8"
+    },
+    {
+      "file": "docs/decisions.md",
+      "sha256": "7c90f0f0bc232ca3889ec4c549be7a122705b669fe87095b79261796e9504fbf"
+    },
+    {
+      "file": "docs/evidence/web-dependency-rollout-2026-09-21/README.md",
+      "sha256": "59b960ea7d2712ddd47c51902b35add0974eef4b4b8829454553a72c1f19f1c6"
+    },
+    {
+      "file": "docs/evidence/web-dependency-rollout-2026-09-21/approval.json",
+      "sha256": "36f5ac8ece6663003c4726dd4bc7abf95313c0d99b513f12ee7cd0f0a996c00e"
+    },
+    {
+      "file": "docs/evidence/web-dependency-rollout-2026-09-21/linux-image-check.json",
+      "sha256": "620dd0d65bfa3007150c5ae1f801129ea656943c0f0368266450dc41f6bf05af"
+    },
+    {
+      "file": "docs/evidence/web-dependency-rollout-2026-09-21/preflight.json",
+      "sha256": "e00568b5313c65fc96791873b8bdb75fddec16f37366f55d28a3a9a271a1ea12"
+    },
+    {
+      "file": "docs/evidence/web-dependency-rollout-2026-09-21/private-manifest.json",
+      "sha256": "d6f64a63c6e50a762627058b8a02d5be37ec2c798eb976fa471c2092b69fd25d"
+    },
+    {
+      "file": "docs/evidence/web-dependency-rollout-2026-09-21/public-preflight.json",
+      "sha256": "5199069c7efaf88ed8598b4e24fb6b3e528f6218e67383d2edbadbcb2f0d8f21"
+    },
+    {
+      "file": "docs/evidence/web-dependency-rollout-2026-09-21/publication-amendment.json",
+      "sha256": "0864b8333f3e5e1e608921486943c98fe5d6feab68dc2753f51074f209e40082"
+    },
+    {
+      "file": "docs/evidence/web-dependency-rollout-2026-09-21/retained-deployments.json",
+      "sha256": "e3e86d0ad627ae802866f37ec36bd309267b6dbb29a0618c75784b1022750715"
+    },
+    {
+      "file": "docs/handoffs/2026-09-21-phase-w-checkpoint.md",
+      "sha256": "3ae9d31ceb6ec72665c92c9089a9f5a6c51faf773899633b00df316da27dfbba"
+    },
+    {
+      "file": "docs/release-readiness-checklist.md",
+      "sha256": "48d0308a04138b7f60bb2162cc67958f2150e76f09e9677920402db2a0f07cc8"
+    },
+    {
+      "file": "docs/roadmap.md",
+      "sha256": "0be97038280589b7dadb39efe7693a2d024f44ea5c7a21798e06a1a1830cde74"
+    },
+    {
+      "file": "docs/task-packets/active.md",
+      "sha256": "3cf724249c107eee349cfde1037b46b48b1de26876c823f3bbeb3a81fd3cd7e4"
+    }
+  ]
+}

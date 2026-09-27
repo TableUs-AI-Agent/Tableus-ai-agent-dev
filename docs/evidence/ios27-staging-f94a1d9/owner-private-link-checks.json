@@ -1,0 +1,20 @@
+{
+  "application_sha": "f94a1d9d1125e6c9111aa08eda496f014f20d0c0",
+  "recorded_at": "2026-09-17T00:44:22.595510Z",
+  "evidence_kind": "owner_confirmation",
+  "profiles": [
+    "readiness-ios",
+    "readiness-android"
+  ],
+  "private_link_cold_open_passed_both": true,
+  "existing_member_join_once_per_device_confirmed": true,
+  "four_cards_and_saved_vote_confirmed_both": true,
+  "returned_to_plans_before_warm_link": true,
+  "private_link_warm_open_to_join_screen_passed_both": true,
+  "second_join_not_requested": true,
+  "new_sign_in_code_not_required": true,
+  "places_aggregate_before": 397,
+  "places_aggregate_after": 413,
+  "new_places_delta": 16,
+  "raw_capability_retained": false
+}

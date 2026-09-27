@@ -1,0 +1,23 @@
+{
+  "schema_version": 1,
+  "application_sha": "2ad48a8d8ec4d3aa9a7bd52061b823bb55960bcd",
+  "approved": true,
+  "owner_message_reference": "codex:01a097ad-4b11-7d62-9813-6ae4cf75f3f5:turn:01a0a69b-3173-7e11-bd98-807264105409",
+  "quoted_message": "approve",
+  "approved_plan_commit": "73ff83b1105bf06a130d209a67a327eee8e77f74",
+  "approved_plan_file_sha256": "5491845d6808978762f181a364521e9db632412393ef6f6c9c5ce2685d77f356",
+  "source_review_report_sha256": "65f9f2e8e0a48f3431cf15633dfe42bf886a2334969a47381dab04325215be0e",
+  "recorded_at": "2026-09-15T19:51:37.955Z",
+  "limits": {
+    "places_attempts": 80,
+    "sign_in_messages": 4,
+    "gemini_generations": 0,
+    "events_per_telemetry_provider": 5,
+    "new_native_builds": 4
+  },
+  "staging_deployment_approved": true,
+  "saved_device_installation_approved": true,
+  "production_approved": false,
+  "security_scan_approved": false,
+  "destructive_cleanup_approved": false
+}

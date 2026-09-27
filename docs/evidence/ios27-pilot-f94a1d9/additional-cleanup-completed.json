@@ -1,0 +1,17 @@
+{
+  "approved": true,
+  "quoted_message": "approve",
+  "started_at": "2026-09-15T22:05:25.557393+00:00",
+  "targets": [
+    "/Users/brianchei/repos/Tableus-ai-agent-dev/.worktrees/closed-beta-readiness/node_modules",
+    "/Users/brianchei/repos/Tableus-ai-agent-dev/.worktrees/closed-beta-readiness/mobile/node_modules",
+    "/Users/brianchei/repos/Tableus-ai-agent-dev/.worktrees/closed-beta-readiness/frontend/node_modules",
+    "/Users/brianchei/repos/Tableus-ai-agent-dev/.worktrees/closed-beta-readiness/frontend/.next"
+  ],
+  "free_gib_before": 18.916,
+  "finished_at": "2026-09-15T22:05:45.526076+00:00",
+  "removed_count": 4,
+  "free_gib_after": 21.575,
+  "preserved_evidence_files": 1,
+  "source_status_unchanged": true
+}

@@ -1,0 +1,56 @@
+{
+  "schema_version": 1,
+  "application_sha": "f94a1d9d1125e6c9111aa08eda496f014f20d0c0",
+  "operator_sha": "cf26de100e68e4f0ea8a448ba2f9ec433ee2f2f8",
+  "platform": "android",
+  "build_id": "local-android-test-f94a1d9",
+  "artifact_sha256": "5ca6c184d0dd716ea80802c3b3d7cd40db6b3b830be7cf5df6249cb7aed4bae7",
+  "provider_mode": "deterministic",
+  "auth_mode": "demo",
+  "telemetry_mode": "off",
+  "phases": [
+    {
+      "phase": "initial",
+      "write_request_count": 0,
+      "request_count": 1,
+      "upstream_request_count": 1,
+      "passed": true
+    },
+    {
+      "phase": "scrolling",
+      "write_request_count": 0,
+      "request_count": 0,
+      "upstream_request_count": 0,
+      "passed": true
+    },
+    {
+      "phase": "slow_refresh",
+      "write_request_count": 0,
+      "request_count": 1,
+      "upstream_request_count": 1,
+      "delayed_response_count": 1,
+      "passed": true
+    },
+    {
+      "phase": "failed_refresh",
+      "write_request_count": 0,
+      "upstream_request_count": 0,
+      "request_count": 2,
+      "synthetic_error_count": 2,
+      "passed": true
+    },
+    {
+      "phase": "recovered_refresh",
+      "write_request_count": 0,
+      "request_count": 1,
+      "upstream_request_count": 1,
+      "passed": true
+    }
+  ],
+  "prior_vote_unchanged": true,
+  "screenshots": [
+    "android-refresh-after-scrolling.png",
+    "android-refresh-failure-cached-plan.png",
+    "android-refresh-recovered.png"
+  ]
+}

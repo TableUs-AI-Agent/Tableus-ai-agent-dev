@@ -1,0 +1,18 @@
+{
+  "application_sha": "ed8330a766b3c4b80a505e075535678394e275e9",
+  "build_operator_sha": "16603dd0cf36d27b492e57a02d3c6c438a2563c4",
+  "build_id": "local-ios-test-ed8330a-2d-01",
+  "recorded_at": "2026-09-22T01:48:57.681944+00:00",
+  "extracted_eas_source_matches": {
+    "package.json": "981864193ebb31ef7fbd8227621ab60d4edf6785a90927afda96b10912e3a59b",
+    "package-lock.json": "c2b5dff8fe1f95cf1fb6e0eb6ba2b85ac92712266cf6fbdf946880b866fb1413",
+    "mobile/eas.json": "4ce954f5e596f9b9bf222dd882d58aecff0520ea2c360fee33335177edf4e4ed",
+    "mobile/app.config.ts": "50d21693801b982aae362dbf467c9de210a3e77685241a0ea447e95a053290dd",
+    "packages/api-client/package.json": "fe28c758bcf63412cdd5fbf8c29bb3b4254a9e85b3c57f78590deb49f79d28c3",
+    "packages/domain/package.json": "244a0da720f88d2f82350d5167edd17d8d1aa08b8c9b2e7c63c65e7ec363f96d",
+    "vendor/decode-uri-component-compat/index.cjs": "6a47dafc28e6645cf165319739dad2bdea43b67ebb5b5e0689f403323afee6db"
+  },
+  "installed_cli": "23.2.0",
+  "installed_eas_prebuild_minimatch": "9.0.9",
+  "scope": "Source packaging and installed dependency checks only; no artifact or runtime acceptance."
+}

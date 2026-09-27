@@ -1,0 +1,17 @@
+{
+  "schema_version": 1,
+  "recorded_at": "2026-09-23T05:06:03.833793+00:00",
+  "owner_response": "approve",
+  "amendment": "F1-O2 exact two-cache cleanup",
+  "evidence_base_sha": "163336f5e454107e56d055493f1859c9bdebbb09",
+  "proposal_sha256": "2f5258d45b3ea1269b88aa667d15e32d6716173c9b3650f80ddb1fdeb62ade02",
+  "operator": "/Users/brianchei/repos/Tableus-ai-agent-dev/.artifacts/mobile/8972865893a3f018a064594457dc9cc664f8a61f/native-validation-f1/capacity-preparation-o2/f1-o2-cache-cleanup.py",
+  "operator_sha256": "38ad4f886f1be9e5ab83bfcba99f17a76b2f63eec34a5e1a8a741c62bd7d6b35",
+  "targets": [
+    "/Users/brianchei/.npm/_cacache",
+    "/Users/brianchei/Library/Caches/CocoaPods/Pods"
+  ],
+  "scope": "Delete only the two exact regenerable download-cache directories. Preserve source, installed dependencies, app artifacts, native evidence and sessions. No chmod or protection bypass.",
+  "continuation": "Existing approved O2 and conditional link/export sequence after fresh gates; native attempt remains unused until execution.",
+  "extra_native_attempts": 0
+}

@@ -1,0 +1,31 @@
+{
+  "schema_version": 1,
+  "recorded_at": "2026-09-23T03:53:51.356802+00:00",
+  "owner_response": "approve",
+  "evidence_base_sha": "838e6f5e0d42c548acd620a8e4f219dcf901dfa9",
+  "amendment": "F1-O1",
+  "amendment_sha256": "f8d2e4f45a87d0576d35b280548eaaa3b846c4fa9a61674f906a79417e009353",
+  "application_sha": "8972865893a3f018a064594457dc9cc664f8a61f",
+  "artifact_sha256": "98c1535bfe6f7cad0c8e467454f5128c71f4aae21b8b41a5aba1c1a33f1e391d",
+  "device_id": "CBB4FAB4-734C-413C-9F10-850329AC9A01",
+  "build_id": "local-ios-test-8972865-f1-01",
+  "durable_manifest_sha256": "bcf16f564ed7023cd8cbf0f80c518c5ab3f4e5fe6baeea575e04fb74e85cc236",
+  "instrumented_files_sha256": {
+    "README.md": "09af55199089935d5b230d871e519181eb72a3fc3d5c8ed2501f0a06b0ef130e",
+    "checks.json": "e4f9bcb40f2a6b95330be47f8b17074a3ebcdb908a38da3b5af9b7280218e16a",
+    "driver.py": "928a98b0b9d576510ef6670841ba0a99478fc469e11b2c3e7c829969d89520a4",
+    "identity-review.json": "6b7253d75b027ae138028b0152771f765341b6aeadfb61cebb743add65670c2a",
+    "offline_check.mjs": "245b846f708479e7a706ab6d81f54a528695b6b9b93e52ef4bacde8805130ebb",
+    "operator/mobile-fault-proxy.mjs": "98c33b5d88f3aa2bd2baa58ab44c127105075ba28ade0d9f1872c35a6905eef0",
+    "operator/mobile-offline-e2e.mjs": "3019103783c170d672f54ae0813dded7bbfabc8352982320372beb74bb73dfb8",
+    "prepare.py": "4b5d99d94f488cd5928be3f395b5a0315fb3a4d874c670019b1e1c6fcd2ad9ce"
+  },
+  "additional_offline_attempts": 1,
+  "maximum_seconds": 1800,
+  "new_builds": 0,
+  "lifecycle_reruns": 0,
+  "automatic_retry": false,
+  "stop_on_first_native_failure": true,
+  "conditional_continuation": "Root reviews complete 11-flow/5-phase result and journal, then changes only downstream offline prerequisite paths/operator identity verification to the immutable O1 result. Continue already-authorized cold/warm links and exactly two Account export cycles only after each preceding gate.",
+  "all_other_limits_unchanged": true
+}

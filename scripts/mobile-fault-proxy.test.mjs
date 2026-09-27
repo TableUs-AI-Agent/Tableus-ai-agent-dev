@@ -63,7 +63,9 @@ test("fault proxy drops safely and reports only replay booleans and counts", asy
     await waitForControl();
     await post("/configure", { mode: "forward-then-drop-response", method: "POST", path: "/api/v1/write" });
     const secretKey = "must-never-be-emitted";
-    await assert.rejects(fetch(`${proxyUrl}/api/v1/write`, { method: "POST", headers: { "Idempotency-Key": secretKey }, body: "{}" }));
+    const interrupted = await fetch(`${proxyUrl}/api/v1/write`, { method: "POST", headers: { "Idempotency-Key": secretKey }, body: "{}" });
+    assert.equal(interrupted.status, 200);
+    await assert.rejects(interrupted.json());
     assert.equal(commits, 1);
 
     const replay = await fetch(`${proxyUrl}/api/v1/write`, { method: "POST", headers: { "Idempotency-Key": secretKey }, body: "{}" });
@@ -94,6 +96,32 @@ test("fault proxy drops safely and reports only replay booleans and counts", asy
     assert.equal(beforeStats.request_count, 1);
     assert.equal(beforeStats.upstream_request_count, 0);
     assert.equal(beforeStats.dropped_before_send_count, 1);
+
+    await post("/reset", {});
+    await post("/configure", { mode: "delay-response", method: "GET", path: "/api/v1/plan", delay_ms: 200 });
+    let delivered = false;
+    const pending = fetch(`${proxyUrl}/api/v1/plan`).then((response) => { delivered = true; return response; });
+    await new Promise((resolvePromise) => setTimeout(resolvePromise, 50));
+    assert.equal(delivered, false);
+    assert.equal((await pending).status, 200);
+    const delayed = await (await fetch(`${controlUrl}/stats?method=GET&path=/api/v1/plan`)).json();
+    assert.equal(delayed.request_count, 1);
+    assert.equal(delayed.delayed_response_count, 1);
+
+    await post("/reset", {});
+    await post("/configure", { mode: "respond-error", method: "GET", path: "/api/v1/plan", repeat: 3 });
+    for (let attempt = 0; attempt < 3; attempt += 1) {
+      assert.equal((await fetch(`${proxyUrl}/api/v1/plan`)).status, 503);
+    }
+    assert.equal((await fetch(`${proxyUrl}/api/v1/plan`)).status, 200);
+    const recovery = await (await fetch(`${controlUrl}/stats?method=GET&path=/api/v1/plan`)).json();
+    assert.equal(recovery.request_count, 4);
+    assert.equal(recovery.upstream_request_count, 1);
+    assert.equal(recovery.synthetic_error_count, 3);
+    for (const invalid of [{ repeat: 4 }, { delay_ms: 5001 }, { delay_ms: -1 }]) {
+      const response = await fetch(`${controlUrl}/configure`, { method: "POST", body: JSON.stringify({ mode: "delay-response", method: "GET", path: "/api/v1/plan", delay_ms: 1, ...invalid }) });
+      assert.equal(response.status, 400);
+    }
   } finally {
     proxy.kill("SIGTERM");
     upstream.close();

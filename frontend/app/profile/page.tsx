@@ -90,6 +90,8 @@ export default function ProfilePage() {
 
     async function loadProfile() {
       setLoading(true);
+      setProfile(null);
+      setReviews([]);
       const [profileResult, reviewResult] = await Promise.all([
         api<TasteProfile>(`/api/profile/${userId}/taste`).catch(() => null),
         api<Review[]>(`/api/reviews/${userId}`).catch(() => []),

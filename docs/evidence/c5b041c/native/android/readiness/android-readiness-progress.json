@@ -1,0 +1,87 @@
+{
+  "schema_version": 1,
+  "application_sha": "c5b041c85f4f7b959436c13bef48c959622c624f",
+  "recorded_at": "2026-09-13T08:14:19.166289+00:00",
+  "platform": "android",
+  "device_kind": "Android_API_36_ARM64_emulator",
+  "build_id": "local-android-readiness-c5b041c",
+  "artifact_sha256": "8d59d69fd5fe1a19e6eaa0ea1330a36084e01119bf66b9d0751454df098779a8",
+  "complete": true,
+  "installation": {
+    "passed": true,
+    "artifact_reinspection_passed": true,
+    "association_preflight_passed": true,
+    "staging_readiness_passed": true,
+    "evidence_source": "candidate_readiness_runner_reached_first_confirmation"
+  },
+  "canonical_domain_state": "verified",
+  "domain_state_observation_source": "adb_package_manager_get_app_links",
+  "owner_observed_screen": "plans_after_returning_signin",
+  "new_signin_message_requested": true,
+  "raw_personal_data_retained": false,
+  "screenshots_retained": false,
+  "phases": {
+    "returning_authentication": {
+      "passed": true,
+      "observation_source": "owner_confirmation"
+    },
+    "session_persistence": {
+      "passed": true,
+      "evidence_source": "owner_observed_relaunch_after_emulator_recovery"
+    },
+    "verified_auth_link": {
+      "passed": true,
+      "evidence_source": "owner_tapped_canonical_link_on_local_page"
+    },
+    "verified_join_link": {
+      "passed": true,
+      "evidence_source": "owner_observed_canonical_link_open_app_and_two_person_plan_after_join"
+    },
+    "live_location_and_four_candidates": {
+      "passed": true,
+      "evidence_source": "owner_confirmation_and_staging_aggregate_SQL",
+      "google_maps_attribution_owner_confirmed": true
+    },
+    "foreground_refresh": {
+      "passed": true,
+      "evidence_source": "owner_observed_current_plan_state_on_return_after_emulator_restart"
+    },
+    "cross_client_vote": {
+      "passed": true,
+      "evidence_source": "owner_observed_ranked_vote_saved_on_Android_and_prior_SQL_confirmed_distinct_votes"
+    },
+    "organizer_authorization": {
+      "passed": true,
+      "evidence_source": "owner_observed_absent_Android_guest_finalize_control_and_web_organizer_finalize_reopen_verified"
+    },
+    "rotated_link_rejected": {
+      "passed": true,
+      "evidence_source": "owner_opened_same_old_local_page_join_link_and_observed_rejection"
+    },
+    "account_controls_read_only": {
+      "passed": true,
+      "evidence_source": "owner_observed_JSON_share_sheet_and_deletion_status_with_empty_confirmation",
+      "deletion_run": false
+    }
+  },
+  "canonical_private_join_link_opened_app": true,
+  "distinct_participant_account_verified": true,
+  "observed_participant_count": 3,
+  "emulator_recovered_after_idle_ios_simulator_shutdown": true,
+  "root_cause_proven": false,
+  "extra_returning_signin_message_used": true,
+  "initial_account_owner_controls_observed": true,
+  "participant_count_source": "staging_aggregate_SQL",
+  "constraints_saved_owner_confirmed": true,
+  "recommendation_generation_requested": true,
+  "recommendation_generation_result": "four_distinct_candidates",
+  "saved_ranked_vote_for_associated_account": true,
+  "saved_vote_platform_attribution": "owner_confirmed_on_Android",
+  "saved_vote_UI_confirmation_pending": false,
+  "original_interactive_runner_active": false,
+  "original_interactive_runner_completed": false,
+  "verification_method": "assembled_owner_checklist_with_original_source_runner_installation",
+  "current_plan_people_observed": 3,
+  "current_plan_status_observed": "voting",
+  "current_max_score_observed": 5
+}

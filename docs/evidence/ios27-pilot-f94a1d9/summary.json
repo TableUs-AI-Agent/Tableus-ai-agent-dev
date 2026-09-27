@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "status": "pilot_passed",
+  "application_sha": "f94a1d9d1125e6c9111aa08eda496f014f20d0c0",
+  "build_operator_sha": "d0447b8711109f43fb7a1572cb2b0a275f9901ab",
+  "artifact_sha256": "9d569309e437b3212a827305e1e119d4424d65c40f1c5fd464a120ad9bcf1798",
+  "executable_uuid": "5E8ED08A-6282-3483-90E7-53442A4511A8",
+  "device_os": "27.0",
+  "device_os_build": "24A437",
+  "native_sdk": "iphoneos27.0",
+  "scene_manifest_verified": true,
+  "build_and_independent_receipt_inspection_passed": true,
+  "first_launch_and_session_restoration_passed": true,
+  "relaunch_and_session_persistence_passed": true,
+  "canonical_auth_link_passed": true,
+  "paid_provider_delta": 0,
+  "new_email_count": 0,
+  "existing_api_sha": "2ad48a8d8ec4d3aa9a7bd52061b823bb55960bcd",
+  "cumulative_same_sha_readiness": false,
+  "remaining": "Five new-source native artifacts, exact-source hosted deployment and remaining lifecycle/private-link/refresh/account/telemetry verification require their proposed execution approval."
+}

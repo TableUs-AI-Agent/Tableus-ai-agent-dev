@@ -1,0 +1,20 @@
+{
+  "schema_version": 1,
+  "application_sha": "2ad48a8d8ec4d3aa9a7bd52061b823bb55960bcd",
+  "scope": "operator tooling only; native outcomes pending",
+  "javascript_tests_passed": 219,
+  "python_tests_passed": 98,
+  "postgres_tests_skipped": 3,
+  "focused_proxy_and_evidence_tests_passed": 4,
+  "native_flows_yaml_parsed": 5,
+  "readiness_status": {
+    "command": "make ready",
+    "started_at": "2026-09-15T07:42:49.447312+00:00",
+    "status": "passed",
+    "application_sha": "2ad48a8d8ec4d3aa9a7bd52061b823bb55960bcd",
+    "scope": "operator tooling and native flow preparation",
+    "exit_code": 0,
+    "finished_at": "2026-09-15T07:43:47.472252+00:00"
+  },
+  "log_sha256": "bbd40470354c263adadd900783b0e33221c92bbb217db4113aeca22c28765385"
+}

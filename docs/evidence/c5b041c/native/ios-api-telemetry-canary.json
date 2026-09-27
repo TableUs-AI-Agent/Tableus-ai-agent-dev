@@ -1,0 +1,50 @@
+{
+  "schema_version": 1,
+  "sha": "c5b041c85f4f7b959436c13bef48c959622c624f",
+  "recorded_at": "2026-09-13T07:49:41.759810+00:00",
+  "passed": true,
+  "platforms": [
+    "ios",
+    "api"
+  ],
+  "ios_build_id": "local-ios-telemetry-test-c5b041c",
+  "ios_artifact_sha256": "198ee544b6ac63eff9011330a6ed404852acc8d68af0d831026be79a6bd4a9da",
+  "ios_artifact_reinspection_passed": true,
+  "ios_installed_bundle_matches_verified_copy": true,
+  "ios_returning_signin_passed": true,
+  "ios_ui_reported_passed": true,
+  "ios_ui_evidence_source": "owner_confirmation_and_native_accessibility_observation",
+  "initial_custom_scheme_attempt_returned_to_plans": true,
+  "subsequent_local_page_link_navigation_passed": true,
+  "artifact_changed_between_attempts": false,
+  "posthog_project_id": 578352,
+  "posthog_event_counts": {
+    "ios": 1,
+    "api": 1
+  },
+  "posthog_query_date_from": "2026-09-13T07:40:00Z",
+  "posthog_release_and_platform_filters_verified": true,
+  "posthog_evidence_source": "typed_connector_aggregate_query",
+  "sentry_issue_counts": {
+    "tableus-mobile-staging": 1,
+    "tableus-api-staging": 1
+  },
+  "sentry_event_counts": {
+    "tableus-mobile-staging": 1,
+    "tableus-api-staging": 1
+  },
+  "sentry_issue_ids": {
+    "tableus-mobile-staging": "7694252510",
+    "tableus-api-staging": "7694252495"
+  },
+  "sentry_api_route": "/api/v1/e2e/telemetry",
+  "sentry_mobile_function": "anon_0_send",
+  "sentry_release_and_staging_filters_verified": true,
+  "sentry_messages_redacted": true,
+  "sentry_evidence_source": "authenticated_issue_list_UI",
+  "standalone_token_collector_run": false,
+  "anonymous_mode": true,
+  "error_only_mode": true,
+  "raw_payloads_retained": false,
+  "android_canary_pending": false
+}

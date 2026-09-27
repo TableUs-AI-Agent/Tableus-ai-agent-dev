@@ -1,0 +1,25 @@
+{
+  "approved": true,
+  "quoted_message": "Approve these three cache directories",
+  "targets": [
+    {
+      "path": "/Users/brianchei/repos/Tableus-ai-agent-dev/.worktrees/astra-project-reassessment/node_modules",
+      "removed": true,
+      "measured_bytes": 1745891328
+    },
+    {
+      "path": "/Users/brianchei/repos/Tableus-ai-agent-dev/.worktrees/astra-project-reassessment/mobile/node_modules",
+      "removed": true,
+      "measured_bytes": 53612544
+    },
+    {
+      "path": "/Users/brianchei/repos/Tableus-ai-agent-dev/.worktrees/astra-project-reassessment/frontend/.next",
+      "removed": true,
+      "measured_bytes": 653357056
+    }
+  ],
+  "source_status_unchanged": true,
+  "free_gib_before": 19.115,
+  "free_gib_after": 21.47,
+  "observed_at": "2026-09-15T23:00:52.386006+00:00"
+}

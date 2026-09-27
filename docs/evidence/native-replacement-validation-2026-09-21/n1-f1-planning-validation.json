@@ -1,0 +1,19 @@
+{
+  "schema_version": 1,
+  "recorded_at": "2026-09-22T04:06:44.455981+00:00",
+  "application_sha": "8972865893a3f018a064594457dc9cc664f8a61f",
+  "status": "passed",
+  "local_markdown_links_checked": 52,
+  "approved_original_proposal_unchanged": true,
+  "source_and_log_hashes_verified": true,
+  "application_and_operator_trees_unchanged_after_freeze": true,
+  "json_valid": true,
+  "diff_check_passed": true,
+  "native_actions": 0,
+  "reviewed_evidence_files": {
+    "n1-f1-result.json": "6f30b61d49046b2bbbf8a57baedd44edccb828f688bf45dd6810f5f0f5f85b7a",
+    "n1-f1-result.md": "c22722f27409a236ab25cdca41dd40768b7fdc2c416ac4354689e3c01d1dfa42",
+    "n1-f1-freeze.json": "63afe15ae5eb39df943e84a493fcaa45208b350f615de3c579166f96cb069f48",
+    "n1-f1-native-revalidation.md": "3b27cf86ff3066a952a422d08962fa5d0c04a88096201bc573b63efc0ad09d53"
+  }
+}

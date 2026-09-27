@@ -1,0 +1,437 @@
+{
+  "auditReportVersion": 2,
+  "vulnerabilities": {
+    "@expo/bunyan": {
+      "name": "@expo/bunyan",
+      "severity": "moderate",
+      "isDirect": false,
+      "via": [
+        "uuid"
+      ],
+      "effects": [
+        "@expo/rudder-sdk-node"
+      ],
+      "range": ">=3.0.0",
+      "nodes": [
+        "node_modules/@expo/bunyan"
+      ],
+      "fixAvailable": {
+        "name": "eas-cli",
+        "version": "13.4.2",
+        "isSemVerMajor": true
+      }
+    },
+    "@expo/cli": {
+      "name": "@expo/cli",
+      "severity": "moderate",
+      "isDirect": false,
+      "via": [
+        "@expo/config",
+        "@expo/config-plugins",
+        "@expo/inline-modules",
+        "@expo/metro-config",
+        "@expo/prebuild-config"
+      ],
+      "effects": [
+        "expo"
+      ],
+      "range": "<=0.0.0-canary-20231123-1b19f96-4 || >=0.0.1-canary-20231125-d600e44",
+      "nodes": [
+        "node_modules/expo/node_modules/@expo/cli"
+      ],
+      "fixAvailable": {
+        "name": "expo",
+        "version": "46.0.21",
+        "isSemVerMajor": true
+      }
+    },
+    "@expo/config": {
+      "name": "@expo/config",
+      "severity": "moderate",
+      "isDirect": false,
+      "via": [
+        "@expo/config-plugins"
+      ],
+      "effects": [
+        "@expo/local-build-cache-provider",
+        "@expo/metro-config",
+        "eas-cli",
+        "expo"
+      ],
+      "range": "<=0.0.1-canary-20240418-8d74597 || >=3.3.23-alpha.0",
+      "nodes": [
+        "node_modules/@expo/config",
+        "node_modules/eas-cli/node_modules/@expo/config",
+        "node_modules/eas-cli/node_modules/@expo/prebuild-config/node_modules/@expo/config"
+      ],
+      "fixAvailable": {
+        "name": "expo",
+        "version": "46.0.21",
+        "isSemVerMajor": true
+      }
+    },
+    "@expo/config-plugins": {
+      "name": "@expo/config-plugins",
+      "severity": "moderate",
+      "isDirect": false,
+      "via": [
+        "xcode"
+      ],
+      "effects": [
+        "@expo/cli",
+        "@expo/config",
+        "@expo/inline-modules",
+        "@expo/prebuild-config",
+        "eas-cli",
+        "expo",
+        "expo-sharing"
+      ],
+      "range": "*",
+      "nodes": [
+        "node_modules/@expo/config-plugins",
+        "node_modules/eas-cli/node_modules/@expo/config-plugins",
+        "node_modules/eas-cli/node_modules/@expo/prebuild-config/node_modules/@expo/config-plugins"
+      ],
+      "fixAvailable": {
+        "name": "eas-cli",
+        "version": "13.4.2",
+        "isSemVerMajor": true
+      }
+    },
+    "@expo/inline-modules": {
+      "name": "@expo/inline-modules",
+      "severity": "moderate",
+      "isDirect": false,
+      "via": [
+        "@expo/config-plugins"
+      ],
+      "effects": [
+        "@expo/cli"
+      ],
+      "range": ">=0.0.2-canary-20260409-6fc2991",
+      "nodes": [
+        "node_modules/@expo/inline-modules"
+      ],
+      "fixAvailable": {
+        "name": "expo",
+        "version": "46.0.21",
+        "isSemVerMajor": true
+      }
+    },
+    "@expo/local-build-cache-provider": {
+      "name": "@expo/local-build-cache-provider",
+      "severity": "moderate",
+      "isDirect": false,
+      "via": [
+        "@expo/config"
+      ],
+      "effects": [
+        "expo"
+      ],
+      "range": "*",
+      "nodes": [
+        "node_modules/@expo/local-build-cache-provider"
+      ],
+      "fixAvailable": {
+        "name": "expo",
+        "version": "46.0.21",
+        "isSemVerMajor": true
+      }
+    },
+    "@expo/metro-config": {
+      "name": "@expo/metro-config",
+      "severity": "moderate",
+      "isDirect": false,
+      "via": [
+        "@expo/config"
+      ],
+      "effects": [
+        "expo"
+      ],
+      "range": "<=0.0.1-canary-20240418-8d74597 || >=0.1.49-alpha.0",
+      "nodes": [
+        "node_modules/@expo/metro-config"
+      ],
+      "fixAvailable": {
+        "name": "expo",
+        "version": "46.0.21",
+        "isSemVerMajor": true
+      }
+    },
+    "@expo/prebuild-config": {
+      "name": "@expo/prebuild-config",
+      "severity": "moderate",
+      "isDirect": false,
+      "via": [
+        "@expo/config",
+        "@expo/config-plugins"
+      ],
+      "effects": [
+        "eas-cli"
+      ],
+      "range": "*",
+      "nodes": [
+        "node_modules/@expo/prebuild-config",
+        "node_modules/eas-cli/node_modules/@expo/prebuild-config"
+      ],
+      "fixAvailable": {
+        "name": "eas-cli",
+        "version": "13.4.2",
+        "isSemVerMajor": true
+      }
+    },
+    "@expo/rudder-sdk-node": {
+      "name": "@expo/rudder-sdk-node",
+      "severity": "moderate",
+      "isDirect": false,
+      "via": [
+        "@expo/bunyan",
+        "uuid"
+      ],
+      "effects": [
+        "eas-cli"
+      ],
+      "range": "*",
+      "nodes": [
+        "node_modules/@expo/rudder-sdk-node"
+      ],
+      "fixAvailable": {
+        "name": "eas-cli",
+        "version": "13.4.2",
+        "isSemVerMajor": true
+      }
+    },
+    "@sentry/react-native": {
+      "name": "@sentry/react-native",
+      "severity": "moderate",
+      "isDirect": true,
+      "via": [
+        "expo"
+      ],
+      "effects": [],
+      "range": ">=5.16.0-alpha.1",
+      "nodes": [
+        "node_modules/@sentry/react-native"
+      ],
+      "fixAvailable": {
+        "name": "@sentry/react-native",
+        "version": "5.15.2",
+        "isSemVerMajor": true
+      }
+    },
+    "diff": {
+      "name": "diff",
+      "severity": "low",
+      "isDirect": false,
+      "via": [
+        {
+          "source": 1112706,
+          "name": "diff",
+          "dependency": "diff",
+          "title": "jsdiff has a Denial of Service vulnerability in parsePatch and applyPatch",
+          "url": "https://github.com/advisories/GHSA-73rr-hh4g-fpgx",
+          "severity": "low",
+          "cwe": [
+            "CWE-400",
+            "CWE-1333"
+          ],
+          "cvss": {
+            "score": 0,
+            "vectorString": null
+          },
+          "range": ">=6.0.0 <8.0.3"
+        }
+      ],
+      "effects": [
+        "eas-cli"
+      ],
+      "range": "6.0.0 - 8.0.2",
+      "nodes": [
+        "node_modules/diff"
+      ],
+      "fixAvailable": {
+        "name": "eas-cli",
+        "version": "13.4.2",
+        "isSemVerMajor": true
+      }
+    },
+    "eas-cli": {
+      "name": "eas-cli",
+      "severity": "moderate",
+      "isDirect": true,
+      "via": [
+        "@expo/config",
+        "@expo/config-plugins",
+        "@expo/prebuild-config",
+        "@expo/rudder-sdk-node",
+        "diff",
+        "ts-deepmerge"
+      ],
+      "effects": [],
+      "range": ">=0.1.0-alpha.10",
+      "nodes": [
+        "node_modules/eas-cli"
+      ],
+      "fixAvailable": {
+        "name": "eas-cli",
+        "version": "13.4.2",
+        "isSemVerMajor": true
+      }
+    },
+    "expo": {
+      "name": "expo",
+      "severity": "moderate",
+      "isDirect": true,
+      "via": [
+        "@expo/cli",
+        "@expo/config",
+        "@expo/config-plugins",
+        "@expo/local-build-cache-provider",
+        "@expo/metro-config"
+      ],
+      "effects": [
+        "@sentry/react-native"
+      ],
+      "range": "40.0.0-alpha.0 - 40.0.0-beta.5 || >=41.0.0-alpha.0",
+      "nodes": [
+        "node_modules/expo"
+      ],
+      "fixAvailable": {
+        "name": "expo",
+        "version": "46.0.21",
+        "isSemVerMajor": true
+      }
+    },
+    "expo-sharing": {
+      "name": "expo-sharing",
+      "severity": "moderate",
+      "isDirect": true,
+      "via": [
+        "@expo/config-plugins"
+      ],
+      "effects": [],
+      "range": ">=14.0.9-canary-20251205-756eb7a",
+      "nodes": [
+        "node_modules/expo-sharing"
+      ],
+      "fixAvailable": {
+        "name": "expo-sharing",
+        "version": "14.0.8",
+        "isSemVerMajor": true
+      }
+    },
+    "ts-deepmerge": {
+      "name": "ts-deepmerge",
+      "severity": "moderate",
+      "isDirect": false,
+      "via": [
+        {
+          "source": 1121318,
+          "name": "ts-deepmerge",
+          "dependency": "ts-deepmerge",
+          "title": "ts-deepmerge: Prototype Method Override leads to DoS",
+          "url": "https://github.com/advisories/GHSA-87mf-gv2c-c62c",
+          "severity": "moderate",
+          "cwe": [
+            "CWE-248"
+          ],
+          "cvss": {
+            "score": 5.3,
+            "vectorString": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:L"
+          },
+          "range": "<8.0.0"
+        }
+      ],
+      "effects": [
+        "eas-cli"
+      ],
+      "range": "<8.0.0",
+      "nodes": [
+        "node_modules/ts-deepmerge"
+      ],
+      "fixAvailable": {
+        "name": "eas-cli",
+        "version": "13.4.2",
+        "isSemVerMajor": true
+      }
+    },
+    "uuid": {
+      "name": "uuid",
+      "severity": "moderate",
+      "isDirect": false,
+      "via": [
+        {
+          "source": 1119441,
+          "name": "uuid",
+          "dependency": "uuid",
+          "title": "uuid: Missing buffer bounds check in v3/v5/v6 when buf is provided",
+          "url": "https://github.com/advisories/GHSA-w5hq-g745-h8pq",
+          "severity": "moderate",
+          "cwe": [
+            "CWE-787",
+            "CWE-1285"
+          ],
+          "cvss": {
+            "score": 7.5,
+            "vectorString": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:H/A:N"
+          },
+          "range": "<11.1.1"
+        }
+      ],
+      "effects": [
+        "@expo/bunyan",
+        "@expo/rudder-sdk-node",
+        "xcode"
+      ],
+      "range": "<11.1.1",
+      "nodes": [
+        "node_modules/@expo/bunyan/node_modules/uuid",
+        "node_modules/@expo/rudder-sdk-node/node_modules/uuid",
+        "node_modules/uuid"
+      ],
+      "fixAvailable": {
+        "name": "eas-cli",
+        "version": "13.4.2",
+        "isSemVerMajor": true
+      }
+    },
+    "xcode": {
+      "name": "xcode",
+      "severity": "moderate",
+      "isDirect": false,
+      "via": [
+        "uuid"
+      ],
+      "effects": [
+        "@expo/config-plugins"
+      ],
+      "range": ">=0.9.2",
+      "nodes": [
+        "node_modules/xcode"
+      ],
+      "fixAvailable": {
+        "name": "eas-cli",
+        "version": "13.4.2",
+        "isSemVerMajor": true
+      }
+    }
+  },
+  "metadata": {
+    "vulnerabilities": {
+      "info": 0,
+      "low": 1,
+      "moderate": 16,
+      "high": 0,
+      "critical": 0,
+      "total": 17
+    },
+    "dependencies": {
+      "prod": 846,
+      "dev": 1072,
+      "optional": 149,
+      "peer": 101,
+      "peerOptional": 0,
+      "total": 2055
+    }
+  }
+}

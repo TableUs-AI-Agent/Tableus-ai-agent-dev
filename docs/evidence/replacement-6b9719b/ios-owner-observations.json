@@ -1,0 +1,24 @@
+{
+  "schema_version": 1,
+  "application_sha": "6b9719b4e63e34803f2e7c2598e45851790df661",
+  "artifact_sha256": "82726f6ba8328135e155a11a27544c55da25013f3ba08dd16f45028fbb2422cb",
+  "source": "Owner observations after replacement installation",
+  "phases": {
+    "returning_authentication": true,
+    "session_persistence": true,
+    "verified_auth_link": true,
+    "verified_join_link": true,
+    "live_location_and_four_candidates": true,
+    "cross_client_vote": true,
+    "account_controls_read_only": true
+  },
+  "complete": false,
+  "observed_at": "2026-09-15T04:28:40.743684+00:00",
+  "guest_finalize_control_absent": true,
+  "ranked_vote_status": "owner-and-server-confirmed",
+  "server_new_vote_events": 1,
+  "server_vote_at": "2026-09-15T04:24:43.970447+00:00",
+  "export_share_sheet_observed": true,
+  "deletion_confirmation_empty": true,
+  "deletion_invoked": false
+}

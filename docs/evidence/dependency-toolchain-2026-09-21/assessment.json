@@ -1,0 +1,284 @@
+{
+  "schema_version": 1,
+  "observed_at": "2026-09-21T21:23:02.674Z",
+  "base_sha": "5375e3389823b9c0736328709aab1cdc9be6ef98",
+  "frozen_staging_sha": "f94a1d9d1125e6c9111aa08eda496f014f20d0c0",
+  "package_lock_sha256": "c2b5dff8fe1f95cf1fb6e0eb6ba2b85ac92712266cf6fbdf946880b866fb1413",
+  "status": "local_remediation_and_exact_use_disposition",
+  "exception_extended": false,
+  "production_approval": false,
+  "security_scan_performed": false,
+  "original_deadline": "2026-09-30 or before production, whichever is earlier",
+  "old_deployment_patched": false,
+  "scope_limitations": [
+    "npm dependencies only",
+    "No Python/native/system or comprehensive source audit",
+    "No deployment or native artifact evidence for replacement",
+    "No live provider budget granted"
+  ],
+  "before": {
+    "info": 0,
+    "low": 1,
+    "moderate": 22,
+    "high": 6,
+    "critical": 1,
+    "total": 30
+  },
+  "after": {
+    "info": 0,
+    "low": 1,
+    "moderate": 16,
+    "high": 0,
+    "critical": 0,
+    "total": 17
+  },
+  "production_labelled": {
+    "info": 0,
+    "low": 0,
+    "moderate": 12,
+    "high": 0,
+    "critical": 0,
+    "total": 12
+  },
+  "advisories": [
+    {
+      "package": "ajv",
+      "id": "GHSA-2g4f-4pwh-qvx6",
+      "url": "https://github.com/advisories/GHSA-2g4f-4pwh-qvx6",
+      "severity": "moderate",
+      "affected_range": ">=7.0.0-alpha.0 <8.18.0",
+      "scope": "development_build_tooling",
+      "disposition": {
+        "status": "patched",
+        "reason": "Affected instances absent from final advisory result; see exact version changes and lockfile."
+      }
+    },
+    {
+      "package": "decode-uri-component",
+      "id": "GHSA-vcc3-ghjq-m6fr",
+      "url": "https://github.com/advisories/GHSA-vcc3-ghjq-m6fr",
+      "severity": "moderate",
+      "affected_range": "<=0.4.2",
+      "scope": "application_runtime",
+      "disposition": {
+        "status": "patched",
+        "reason": "Affected instances absent from final advisory result; see exact version changes and lockfile."
+      }
+    },
+    {
+      "package": "diff",
+      "id": "GHSA-73rr-hh4g-fpgx",
+      "url": "https://github.com/advisories/GHSA-73rr-hh4g-fpgx",
+      "severity": "low",
+      "affected_range": ">=6.0.0 <8.0.3",
+      "scope": "development_build_tooling",
+      "disposition": {
+        "status": "not_affected_in_reviewed_usage",
+        "reason": "EAS fingerprint calls diffLines, not vulnerable parsePatch/applyPatch.",
+        "consumers": [
+          "eas-cli@23.2.0"
+        ]
+      }
+    },
+    {
+      "package": "joi",
+      "id": "GHSA-q7cg-457f-vx79",
+      "url": "https://github.com/advisories/GHSA-q7cg-457f-vx79",
+      "severity": "moderate",
+      "affected_range": "<17.13.4",
+      "scope": "development_build_tooling",
+      "disposition": {
+        "status": "patched",
+        "reason": "Affected instances absent from final advisory result; see exact version changes and lockfile."
+      }
+    },
+    {
+      "package": "joi",
+      "id": "GHSA-6w3j-5fw6-r9vr",
+      "url": "https://github.com/advisories/GHSA-6w3j-5fw6-r9vr",
+      "severity": "low",
+      "affected_range": ">=17.2.0 <17.13.6",
+      "scope": "development_build_tooling",
+      "disposition": {
+        "status": "patched",
+        "reason": "Affected instances absent from final advisory result; see exact version changes and lockfile."
+      }
+    },
+    {
+      "package": "joi",
+      "id": "GHSA-gg4h-3hg2-grpc",
+      "url": "https://github.com/advisories/GHSA-gg4h-3hg2-grpc",
+      "severity": "low",
+      "affected_range": ">=16.0.0 <17.13.5",
+      "scope": "development_build_tooling",
+      "disposition": {
+        "status": "patched",
+        "reason": "Affected instances absent from final advisory result; see exact version changes and lockfile."
+      }
+    },
+    {
+      "package": "js-yaml",
+      "id": "GHSA-2883-xcg3-v3hh",
+      "url": "https://github.com/advisories/GHSA-2883-xcg3-v3hh",
+      "severity": "high",
+      "affected_range": ">=4.0.0 <4.3.2",
+      "scope": "development_build_tooling",
+      "disposition": {
+        "status": "patched",
+        "reason": "Affected instances absent from final advisory result; see exact version changes and lockfile."
+      }
+    },
+    {
+      "package": "minimatch",
+      "id": "GHSA-3ppc-4f35-3m26",
+      "url": "https://github.com/advisories/GHSA-3ppc-4f35-3m26",
+      "severity": "high",
+      "affected_range": ">=5.0.0 <5.1.7",
+      "scope": "development_build_tooling",
+      "disposition": {
+        "status": "patched",
+        "reason": "Affected instances absent from final advisory result; see exact version changes and lockfile."
+      }
+    },
+    {
+      "package": "minimatch",
+      "id": "GHSA-7r86-cg39-jmmj",
+      "url": "https://github.com/advisories/GHSA-7r86-cg39-jmmj",
+      "severity": "high",
+      "affected_range": ">=5.0.0 <5.1.8",
+      "scope": "development_build_tooling",
+      "disposition": {
+        "status": "patched",
+        "reason": "Affected instances absent from final advisory result; see exact version changes and lockfile."
+      }
+    },
+    {
+      "package": "minimatch",
+      "id": "GHSA-23c5-xmqv-rm74",
+      "url": "https://github.com/advisories/GHSA-23c5-xmqv-rm74",
+      "severity": "high",
+      "affected_range": ">=5.0.0 <5.1.8",
+      "scope": "development_build_tooling",
+      "disposition": {
+        "status": "patched",
+        "reason": "Affected instances absent from final advisory result; see exact version changes and lockfile."
+      }
+    },
+    {
+      "package": "nanoid",
+      "id": "GHSA-28wg-ghj8-5hjv",
+      "url": "https://github.com/advisories/GHSA-28wg-ghj8-5hjv",
+      "severity": "high",
+      "affected_range": "<3.3.16",
+      "scope": "development_build_tooling",
+      "disposition": {
+        "status": "patched",
+        "reason": "Affected instances absent from final advisory result; see exact version changes and lockfile."
+      }
+    },
+    {
+      "package": "nanoid",
+      "id": "GHSA-2v37-7h3g-55p8",
+      "url": "https://github.com/advisories/GHSA-2v37-7h3g-55p8",
+      "severity": "high",
+      "affected_range": "<3.3.18",
+      "scope": "development_build_tooling",
+      "disposition": {
+        "status": "patched",
+        "reason": "Affected instances absent from final advisory result; see exact version changes and lockfile."
+      }
+    },
+    {
+      "package": "nanoid",
+      "id": "GHSA-xwg4-73v4-xw9w",
+      "url": "https://github.com/advisories/GHSA-xwg4-73v4-xw9w",
+      "severity": "high",
+      "affected_range": "<3.3.12",
+      "scope": "development_build_tooling",
+      "disposition": {
+        "status": "patched",
+        "reason": "Affected instances absent from final advisory result; see exact version changes and lockfile."
+      }
+    },
+    {
+      "package": "next",
+      "id": "GHSA-p293-qw3h-jr36",
+      "url": "https://github.com/advisories/GHSA-p293-qw3h-jr36",
+      "severity": "critical",
+      "affected_range": ">=16.0.0 <16.3.3",
+      "scope": "application_runtime",
+      "disposition": {
+        "status": "patched",
+        "reason": "Affected instances absent from final advisory result; see exact version changes and lockfile."
+      }
+    },
+    {
+      "package": "next",
+      "id": "GHSA-2xp9-vwfh-vxw4",
+      "url": "https://github.com/advisories/GHSA-2xp9-vwfh-vxw4",
+      "severity": "critical",
+      "affected_range": ">=16.0.0 <16.3.3",
+      "scope": "application_runtime",
+      "disposition": {
+        "status": "patched",
+        "reason": "Affected instances absent from final advisory result; see exact version changes and lockfile."
+      }
+    },
+    {
+      "package": "tar",
+      "id": "GHSA-r292-9mhp-454m",
+      "url": "https://github.com/advisories/GHSA-r292-9mhp-454m",
+      "severity": "high",
+      "affected_range": "<=7.5.20",
+      "scope": "development_build_tooling",
+      "disposition": {
+        "status": "patched",
+        "reason": "Affected instances absent from final advisory result; see exact version changes and lockfile."
+      }
+    },
+    {
+      "package": "ts-deepmerge",
+      "id": "GHSA-87mf-gv2c-c62c",
+      "url": "https://github.com/advisories/GHSA-87mf-gv2c-c62c",
+      "severity": "moderate",
+      "affected_range": "<8.0.0",
+      "scope": "development_build_tooling",
+      "disposition": {
+        "status": "outside_approved_workflow",
+        "reason": "Only EAS new-project scaffolding consumer; no application path or repository workflow invokes it. Reassess before eas new/untrusted template use.",
+        "consumers": [
+          "eas-cli@23.2.0"
+        ]
+      }
+    },
+    {
+      "package": "uuid",
+      "id": "GHSA-w5hq-g745-h8pq",
+      "url": "https://github.com/advisories/GHSA-w5hq-g745-h8pq",
+      "severity": "moderate",
+      "affected_range": "<11.1.1",
+      "scope": "development_build_tooling",
+      "disposition": {
+        "status": "not_affected_in_reviewed_usage",
+        "reason": "Only v1 and v4 without output buffers; affected v3/v5/v6 APIs not used by the three parents.",
+        "consumers": [
+          "xcode@3.0.1",
+          "@expo/bunyan@4.0.1",
+          "@expo/rudder-sdk-node@1.1.1"
+        ]
+      }
+    },
+    {
+      "package": "yaml",
+      "id": "GHSA-48c2-rrv3-qjmp",
+      "url": "https://github.com/advisories/GHSA-48c2-rrv3-qjmp",
+      "severity": "moderate",
+      "affected_range": ">=2.0.0 <2.8.3",
+      "scope": "development_build_tooling",
+      "disposition": {
+        "status": "patched",
+        "reason": "Affected instances absent from final advisory result; see exact version changes and lockfile."
+      }
+    }
+  ]
+}

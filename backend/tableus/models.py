@@ -5,6 +5,7 @@ from enum import StrEnum
 from sqlalchemy import (
     JSON,
     Boolean,
+    CheckConstraint,
     DateTime,
     Float,
     ForeignKey,
@@ -43,10 +44,53 @@ class Profile(Base):
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=now_utc)
 
 
+class AccountDeletion(Base):
+    """Private durable deletion queue and minimal completed tombstone."""
+
+    __tablename__ = "account_deletions"
+    __table_args__ = (
+        Index("ix_account_deletions_due", "status", "next_retry_at"),
+        CheckConstraint("status IN ('pending', 'completed')", name="ck_account_deletions_status"),
+    )
+    subject_hash: Mapped[str] = mapped_column(String(64), primary_key=True)
+    auth_subject: Mapped[str | None] = mapped_column(String(64), nullable=True)
+    status: Mapped[str] = mapped_column(String(16), default="pending")
+    requested_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=now_utc)
+    completed_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True), nullable=True)
+    attempts: Mapped[int] = mapped_column(Integer, default=0)
+    next_retry_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True), nullable=True)
+    lease_token: Mapped[str | None] = mapped_column(String(36), nullable=True)
+    lease_until: Mapped[datetime | None] = mapped_column(DateTime(timezone=True), nullable=True)
+    last_error_code: Mapped[str | None] = mapped_column(String(32), nullable=True)
+    needs_attention: Mapped[bool] = mapped_column(Boolean, default=False)
+
+
+class CohortCounter(Base):
+    """Private durable quota ledger; subject hashes outlive profile deletion."""
+
+    __tablename__ = "cohort_counters"
+    __table_args__ = (
+        CheckConstraint("kind IN ('ai', 'places', 'plans')", name="ck_cohort_counters_kind"),
+        CheckConstraint("used >= 0", name="ck_cohort_counters_used"),
+    )
+    subject_hash: Mapped[str] = mapped_column(String(64), primary_key=True)
+    kind: Mapped[str] = mapped_column(String(12), primary_key=True)
+    period_key: Mapped[str] = mapped_column(String(10), primary_key=True)
+    used: Mapped[int] = mapped_column(Integer, default=0)
+    updated_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=now_utc)
+
+
 class Invite(Base):
     __tablename__ = "invites"
+    __table_args__ = (
+        CheckConstraint(
+            "recipient_email_hash IS NULL OR max_uses = 1",
+            name="ck_invites_recipient_one_use",
+        ),
+    )
     id: Mapped[str] = mapped_column(String(36), primary_key=True, default=new_id)
     code_hash: Mapped[str] = mapped_column(String(64), unique=True, index=True)
+    recipient_email_hash: Mapped[str | None] = mapped_column(String(64), nullable=True)
     max_uses: Mapped[int] = mapped_column(Integer, default=1)
     use_count: Mapped[int] = mapped_column(Integer, default=0)
     expires_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
@@ -104,6 +148,13 @@ class Plan(Base):
     share_token_hash: Mapped[str] = mapped_column(String(64), unique=True, index=True)
     location_label: Mapped[str] = mapped_column(String(160))
     location_place_id: Mapped[str | None] = mapped_column(String(255), nullable=True)
+    metadata_author_id: Mapped[str | None] = mapped_column(
+        ForeignKey("profiles.id", ondelete="SET NULL"), nullable=True
+    )
+    metadata_provenance: Mapped[str] = mapped_column(String(20), default="legacy_unknown")
+    metadata_version: Mapped[int] = mapped_column(Integer, default=1)
+    metadata_needs_replacement: Mapped[bool] = mapped_column(Boolean, default=False)
+    content_epoch: Mapped[int] = mapped_column(Integer, default=0)
     latitude: Mapped[float | None] = mapped_column(Float, nullable=True)
     longitude: Mapped[float | None] = mapped_column(Float, nullable=True)
     active_run_id: Mapped[str | None] = mapped_column(String(36))
@@ -133,7 +184,23 @@ class RecommendationRun(Base):
     plan_id: Mapped[str] = mapped_column(ForeignKey("plans.id", ondelete="CASCADE"), index=True)
     query: Mapped[str] = mapped_column(String(500))
     provider: Mapped[str] = mapped_column(String(40))
+    requester_id: Mapped[str | None] = mapped_column(
+        ForeignKey("profiles.id", ondelete="SET NULL"), nullable=True
+    )
+    location_author_id: Mapped[str | None] = mapped_column(
+        ForeignKey("profiles.id", ondelete="SET NULL"), nullable=True
+    )
+    location_version: Mapped[int | None] = mapped_column(Integer, nullable=True)
+    provenance: Mapped[str] = mapped_column(String(20), default="legacy_unknown")
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=now_utc)
+
+
+class RunContributor(Base):
+    __tablename__ = "run_contributors"
+    __table_args__ = (UniqueConstraint("run_id", "profile_id"), Index("ix_run_contributors_profile", "profile_id"))
+    id: Mapped[str] = mapped_column(String(36), primary_key=True, default=new_id)
+    run_id: Mapped[str] = mapped_column(ForeignKey("recommendation_runs.id", ondelete="CASCADE"))
+    profile_id: Mapped[str] = mapped_column(ForeignKey("profiles.id", ondelete="CASCADE"))
 
 
 class Candidate(Base):

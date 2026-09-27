@@ -1,0 +1,92 @@
+{
+  "schema_version": 1,
+  "recorded_at": "2026-09-23T03:32:37.913153+00:00",
+  "status": "prepared_only_not_approved",
+  "amendment": "F1-O1",
+  "additional_offline_attempts_requested": 1,
+  "native_attempts_executed": 0,
+  "limit_seconds": 1800,
+  "work_deadline_seconds": 1770,
+  "cleanup_reserve_seconds": 30,
+  "new_builds": 0,
+  "lifecycle_reruns": 0,
+  "application_sha": "8972865893a3f018a064594457dc9cc664f8a61f",
+  "artifact_sha256": "98c1535bfe6f7cad0c8e467454f5128c71f4aae21b8b41a5aba1c1a33f1e391d",
+  "build_operator_sha": "16603dd0cf36d27b492e57a02d3c6c438a2563c4",
+  "instrumented_operator": "Private F1-O1 copies bound by hashes, not falsely identified as frozen application SHA",
+  "manifest": {
+    "amendment": "F1-O1",
+    "status": "proposal_only_not_executed",
+    "application_sha": "8972865893a3f018a064594457dc9cc664f8a61f",
+    "device_id": "CBB4FAB4-734C-413C-9F10-850329AC9A01",
+    "build_id": "local-ios-test-8972865-f1-01",
+    "original_failed_output": "/Users/brianchei/repos/Tableus-ai-agent-dev/.artifacts/mobile/8972865893a3f018a064594457dc9cc664f8a61f/native-validation-f1/test-ios-offline",
+    "proposed_fresh_output": "/Users/brianchei/repos/Tableus-ai-agent-dev/.artifacts/mobile/8972865893a3f018a064594457dc9cc664f8a61f/native-validation-f1/test-ios-offline-f1-o1",
+    "limit_seconds": 1800,
+    "separate_owner_approval_required": true,
+    "frozen_runner_source_sha256": "54bca226db986131b855396b79a43cb66218fd219455af543080c8a92796f63e",
+    "frozen_proxy_source_sha256": "4bd68b57b1c2954d00e44509da2a2df32077cd724cc02368a15dc6298f4b50ff",
+    "files_sha256": {
+      "README.md": "09af55199089935d5b230d871e519181eb72a3fc3d5c8ed2501f0a06b0ef130e",
+      "checks.json": "e4f9bcb40f2a6b95330be47f8b17074a3ebcdb908a38da3b5af9b7280218e16a",
+      "driver.py": "928a98b0b9d576510ef6670841ba0a99478fc469e11b2c3e7c829969d89520a4",
+      "identity-review.json": "6b7253d75b027ae138028b0152771f765341b6aeadfb61cebb743add65670c2a",
+      "offline_check.mjs": "245b846f708479e7a706ab6d81f54a528695b6b9b93e52ef4bacde8805130ebb",
+      "operator/mobile-fault-proxy.mjs": "98c33b5d88f3aa2bd2baa58ab44c127105075ba28ade0d9f1872c35a6905eef0",
+      "operator/mobile-offline-e2e.mjs": "3019103783c170d672f54ae0813dded7bbfabc8352982320372beb74bb73dfb8",
+      "prepare.py": "4b5d99d94f488cd5928be3f395b5a0315fb3a4d874c670019b1e1c6fcd2ad9ce"
+    },
+    "root_review": "identity-review.json"
+  },
+  "checks": {
+    "recorded_at": "2026-09-23T03:31:36.184796+00:00",
+    "status": "passed_offline_preparation_only",
+    "checks": [
+      "Pinned source transformations exact",
+      "Python AST",
+      "Node syntax for both generated operators",
+      "Mocked actual proxy journal ordering and three-error consumption",
+      "Mocked actual runner catch writes parseable failure snapshot",
+      "No headers/bodies leaked to mocked event journal",
+      "Driver refuses absent approval before any native command",
+      "Instrumented operator hashes separately identified in driver and summaries",
+      "Clean frozen source workspace and unused proposed output",
+      "Private files 0600/directories0700"
+    ],
+    "driver_gate_exit": 1,
+    "driver_gate_stderr": "Separate F1-O1 owner approval required; proposal is not executable yet",
+    "native_attempts": 0,
+    "application_changes": 0,
+    "full_app_checks": "Reused exact 8972865 prior passing make-ready target set; no application bytes changed."
+  },
+  "durable_bundle": "/Users/brianchei/repos/Tableus-ai-agent-dev/.artifacts/mobile/8972865893a3f018a064594457dc9cc664f8a61f/native-validation-f1/runtime-preparation-d2/f1-offline-assessment",
+  "durable_manifest_sha256": "bcf16f564ed7023cd8cbf0f80c518c5ab3f4e5fe6baeea575e04fb74e85cc236",
+  "archive_index": "/Users/brianchei/repos/Tableus-ai-agent-dev/.artifacts/mobile/8972865893a3f018a064594457dc9cc664f8a61f/native-validation-f1/runtime-preparation-d2/index.json",
+  "archive_index_sha256": "dfa157dbfaceb3b3f764a4435be4b261dfa20fee31d824266ccd72fe565f2610",
+  "proposed_command": [
+    "/usr/bin/env",
+    "TABLEUS_F1_O1_APPROVED=1",
+    "/opt/homebrew/opt/python@3.14/bin/python3.14",
+    "-B",
+    "/Users/brianchei/repos/Tableus-ai-agent-dev/.artifacts/mobile/8972865893a3f018a064594457dc9cc664f8a61f/native-validation-f1/runtime-preparation-d2/f1-offline-assessment/driver.py"
+  ],
+  "pre_execution_checks": [
+    "Record owner approval matching this immutable amendment",
+    "Verify archived manifest/file hashes and fresh artifact/source proof",
+    "Verify exact disposable simulator and free loopback ports7999/8000/8001",
+    "Verify proposed output absent; original failed output retained"
+  ],
+  "stop_on_first_native_failure": true,
+  "automatic_retry": false,
+  "if_passed": "Root reviews complete 11-flow/5-phase result and journal, then changes only downstream offline prerequisite paths/operator identity verification to the immutable O1 result. Continue already-authorized cold/warm links and exactly two Account export cycles only after each preceding gate.",
+  "excluded": [
+    "App changes/rebuild",
+    "Additional D2/LLDB capture",
+    "Lifecycle replay",
+    "Android before all iOS gates and fresh capacity",
+    "Canonical/auth/physical probes",
+    "N2/readiness updates",
+    "Live provider/OTP/canary budget changes",
+    "Merge/deploy/cleanup/store changes"
+  ]
+}

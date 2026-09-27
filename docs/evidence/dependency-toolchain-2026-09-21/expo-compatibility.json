@@ -1,0 +1,144 @@
+{
+  "method": "Installed Expo 57.0.23 bundledNativeModules.json; offline check, not a fresh Doctor service result",
+  "sdk_unchanged": true,
+  "react_native_unchanged": true,
+  "excluded": [
+    "jest",
+    "jest-expo",
+    "react-native"
+  ],
+  "dependencies": [
+    {
+      "name": "@react-native-community/netinfo",
+      "expected": "12.0.1",
+      "locked": "12.0.1",
+      "excluded": false
+    },
+    {
+      "name": "@sentry/react-native",
+      "expected": "~7.11.0",
+      "locked": "7.11.0",
+      "excluded": false
+    },
+    {
+      "name": "expo-build-properties",
+      "expected": "~57.0.18",
+      "locked": "57.0.15",
+      "excluded": false
+    },
+    {
+      "name": "expo-constants",
+      "expected": "~57.0.18",
+      "locked": "57.0.18",
+      "excluded": false
+    },
+    {
+      "name": "expo-file-system",
+      "expected": "~57.0.7",
+      "locked": "57.0.7",
+      "excluded": false
+    },
+    {
+      "name": "expo-image",
+      "expected": "~57.0.5",
+      "locked": "57.0.3",
+      "excluded": false
+    },
+    {
+      "name": "expo-image-picker",
+      "expected": "~57.0.18",
+      "locked": "57.0.14",
+      "excluded": false
+    },
+    {
+      "name": "expo-linking",
+      "expected": "~57.0.10",
+      "locked": "57.0.8",
+      "excluded": false
+    },
+    {
+      "name": "expo-router",
+      "expected": "~57.0.21",
+      "locked": "57.0.17",
+      "excluded": false
+    },
+    {
+      "name": "expo-secure-store",
+      "expected": "~57.0.4",
+      "locked": "57.0.2",
+      "excluded": false
+    },
+    {
+      "name": "expo-sharing",
+      "expected": "~57.0.20",
+      "locked": "57.0.16",
+      "excluded": false
+    },
+    {
+      "name": "expo-status-bar",
+      "expected": "~57.0.1",
+      "locked": "57.0.1",
+      "excluded": false
+    },
+    {
+      "name": "expo-updates",
+      "expected": "~57.0.22",
+      "locked": "57.0.19",
+      "excluded": false
+    },
+    {
+      "name": "react",
+      "expected": "19.2.3",
+      "locked": "19.2.3",
+      "excluded": false
+    },
+    {
+      "name": "react-dom",
+      "expected": "19.2.3",
+      "locked": "19.2.3",
+      "excluded": false
+    },
+    {
+      "name": "react-native",
+      "expected": "0.86.3",
+      "locked": "0.86.2",
+      "excluded": true
+    },
+    {
+      "name": "react-native-gesture-handler",
+      "expected": "~2.32.0",
+      "locked": "2.32.0",
+      "excluded": false
+    },
+    {
+      "name": "react-native-reanimated",
+      "expected": "4.5.1",
+      "locked": "4.5.1",
+      "excluded": false
+    },
+    {
+      "name": "react-native-safe-area-context",
+      "expected": "~5.7.0",
+      "locked": "5.7.0",
+      "excluded": false
+    },
+    {
+      "name": "react-native-screens",
+      "expected": "~4.26.0",
+      "locked": "4.26.2",
+      "excluded": false
+    },
+    {
+      "name": "react-native-web",
+      "expected": "~0.21.0",
+      "locked": "0.21.2",
+      "excluded": false
+    },
+    {
+      "name": "react-native-worklets",
+      "expected": "0.10.1",
+      "locked": "0.10.1",
+      "excluded": false
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "application_sha": "2ad48a8d8ec4d3aa9a7bd52061b823bb55960bcd",
+  "comparison_sha": "6b9719b4e63e34803f2e7c2598e45851790df661",
+  "previous_review_digest": "046bba5a771112ef1e49888b6a09235f9c6d259b757b81f90f85607785795122",
+  "unchanged_previously_reviewed_files": 11,
+  "reviewed_files": 14,
+  "runtime_delta_paths": [
+    "mobile/app/plans/[id].tsx"
+  ],
+  "test_delta_paths": [
+    "mobile/src/providers/plan-refresh.component.test.tsx"
+  ],
+  "owner_acceptance_pending": true
+}

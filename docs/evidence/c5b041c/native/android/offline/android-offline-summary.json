@@ -1,0 +1,27 @@
+{
+  "platform": "android",
+  "device": "Android API 36 ARM64 emulator",
+  "build_id": "local-android-test-c5b041c",
+  "git_sha": "c5b041c85f4f7b959436c13bef48c959622c624f",
+  "app": "TableUs.apk",
+  "artifact_sha256": "716370574aa91aed4834c37a9866011c9a114b11d3162007a903840c18d7b860",
+  "app_id": "com.tableus.app",
+  "provider_mode": "deterministic",
+  "places_provider_mode": "deterministic",
+  "ai_provider_mode": "deterministic",
+  "auth_mode": "demo",
+  "create_request_count": 2,
+  "create_same_key_replay": true,
+  "plan_count": 1,
+  "offline_constraint_request_count": 0,
+  "recovered_constraint_request_count": 1,
+  "candidate_count": 4,
+  "finalize_request_count": 2,
+  "finalize_same_key_replay": true,
+  "finalized_event_count": 1,
+  "screenshots": [
+    "android-offline-retry.png",
+    "android-recovered-finalized.png"
+  ],
+  "device_identifier_redacted": true
+}

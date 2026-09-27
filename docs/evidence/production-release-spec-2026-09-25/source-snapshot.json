@@ -1,0 +1,157 @@
+{
+  "observed_date": "2026-09-25",
+  "planning_base": "a79fd60ad7bbed397ad325caef1c2313ef29c80c",
+  "application_sha": "484632517345e7858f48caf8fa7b128f9d9dab80",
+  "native_evidence_sha": "246853f219b4567be12f1cd949a517c4a41ba5e7",
+  "native_packet_sha256": "cc6bc9046c2b9dd523987845217bdc054b20cc8cc140a5f2ee55618878a19028",
+  "native_execution_authorized_here": false,
+  "sources": [
+    {
+      "path": "AGENTS.md",
+      "sha256": "01ce752ae68e3142915513d842170d751f6ef1bf97ac7c7da476fcdaf719b774",
+      "commit": "a79fd60ad7bbed397ad325caef1c2313ef29c80c"
+    },
+    {
+      "path": "docs/decisions.md",
+      "sha256": "5a24bd983d62c2e5009c623c368dbf99eee29c3897b68feca41bcdc29fa94ddb",
+      "commit": "a79fd60ad7bbed397ad325caef1c2313ef29c80c"
+    },
+    {
+      "path": "docs/cumulative-release-acceptance.md",
+      "sha256": "d3b3581b3876bd5b56821c0fc71a56c61dade04fa622af022e5cb5158ab8fd33",
+      "commit": "a79fd60ad7bbed397ad325caef1c2313ef29c80c"
+    },
+    {
+      "path": "docs/account-lifecycle.md",
+      "sha256": "5526050061d64b3531cf46671e5d038514d47cc70876264cb6b4f1ffcb61c674",
+      "commit": "a79fd60ad7bbed397ad325caef1c2313ef29c80c"
+    },
+    {
+      "path": "docs/account-lifecycle-operations.md",
+      "sha256": "128df31f0f4d85840637c6731ab2cfe36c196b3e938762d8125d4d57d8b158bf",
+      "commit": "a79fd60ad7bbed397ad325caef1c2313ef29c80c"
+    },
+    {
+      "path": "docs/recipient-invites.md",
+      "sha256": "2760be71ad60d29353220bef5fdd5289bc589f46aeebe2d3f3a7526a1a5a58e4",
+      "commit": "a79fd60ad7bbed397ad325caef1c2313ef29c80c"
+    },
+    {
+      "path": "docs/cohort-controls.md",
+      "sha256": "0670a79b82f05c37e7dde574c67794355532d7d1e87467990cb759ecdecc41c3",
+      "commit": "a79fd60ad7bbed397ad325caef1c2313ef29c80c"
+    },
+    {
+      "path": "docs/release-runbook.md",
+      "sha256": "c21c3d737a6671a5f690ac8b2e99aceb6dc69ad4f908149cf64ff68944aa1d4c",
+      "commit": "a79fd60ad7bbed397ad325caef1c2313ef29c80c"
+    },
+    {
+      "path": "docs/handoffs/2026-09-21-phase-w-complete.md",
+      "sha256": "5f4295b6bb582bb839f42866f128de62aaa549101656536ad5f46cb519dbe09c",
+      "commit": "a79fd60ad7bbed397ad325caef1c2313ef29c80c"
+    },
+    {
+      "path": "packages/domain/src/public-info.ts",
+      "sha256": "ee6dfde35f0f104ce2e73fdacb2a64af9402a155872a273907239ac9d33c1d17",
+      "commit": "a79fd60ad7bbed397ad325caef1c2313ef29c80c"
+    },
+    {
+      "path": "mobile/app.config.ts",
+      "sha256": "50d21693801b982aae362dbf467c9de210a3e77685241a0ea447e95a053290dd",
+      "commit": "a79fd60ad7bbed397ad325caef1c2313ef29c80c"
+    },
+    {
+      "path": "mobile/eas.json",
+      "sha256": "4ce954f5e596f9b9bf222dd882d58aecff0520ea2c360fee33335177edf4e4ed",
+      "commit": "a79fd60ad7bbed397ad325caef1c2313ef29c80c"
+    },
+    {
+      "path": "frontend/next.config.ts",
+      "sha256": "613eeb24719c6dc0ba062a678d9c9b9dce8444ad418e48a4c11c8951e8403db1",
+      "commit": "a79fd60ad7bbed397ad325caef1c2313ef29c80c"
+    },
+    {
+      "path": "frontend/app/lib/runtime-config.ts",
+      "sha256": "8422c7892e2a5cec3705d178dfa39d98d87fbbb03191372321d3882ad82ba355",
+      "commit": "a79fd60ad7bbed397ad325caef1c2313ef29c80c"
+    },
+    {
+      "path": "frontend/app/lib/site-association.ts",
+      "sha256": "1a848ce4ca5b4640a4e4e261c6738ff710a63d745b25963b96db3d435007a93a",
+      "commit": "a79fd60ad7bbed397ad325caef1c2313ef29c80c"
+    },
+    {
+      "path": "frontend/app/api/site-association/apple/route.ts",
+      "sha256": "1e80e616086e3024a57cfc6de4d775e976563594700ccfefcff8ddea0f497bfc",
+      "commit": "a79fd60ad7bbed397ad325caef1c2313ef29c80c"
+    },
+    {
+      "path": "frontend/app/api/site-association/android/route.ts",
+      "sha256": "c8f9c41b2855c479ad9df165fa72e84b36c305ad28d7c07d603437686e8b161a",
+      "commit": "a79fd60ad7bbed397ad325caef1c2313ef29c80c"
+    },
+    {
+      "path": "frontend/app/privacy/page.tsx",
+      "sha256": "8ef6d5812ac7ef4d59a55508b131cf8f246bd7bc4f79d2084fb0970af561564c",
+      "commit": "a79fd60ad7bbed397ad325caef1c2313ef29c80c"
+    },
+    {
+      "path": "mobile/app/privacy.tsx",
+      "sha256": "acdc909a029299a2d22a9b8b7f0ab47c9bdcb5057e1bb7379b9b164c1ee939d5",
+      "commit": "a79fd60ad7bbed397ad325caef1c2313ef29c80c"
+    },
+    {
+      "path": "frontend/app/terms/page.tsx",
+      "sha256": "d2492280ed90e6cb9f23b95dda8c782c2f49146cf0026787b0e0efa836a2ecae",
+      "commit": "a79fd60ad7bbed397ad325caef1c2313ef29c80c"
+    },
+    {
+      "path": "mobile/app/terms.tsx",
+      "sha256": "07d60eba249ecff11cec3ebc94fe0b04b95cf346659af2deeb2bcc59fbe84149",
+      "commit": "a79fd60ad7bbed397ad325caef1c2313ef29c80c"
+    },
+    {
+      "path": "backend/tableus/api.py",
+      "sha256": "1722eeea118f046bb6c7cd4feebf596ffa334883916ad36a2a6b026d313485f9",
+      "commit": "a79fd60ad7bbed397ad325caef1c2313ef29c80c"
+    },
+    {
+      "path": "backend/tableus/models.py",
+      "sha256": "2b33bcd63169b0e26ed7ae0c9017b98e02183a1c47987d0b3c2cc219a2d9d03b",
+      "commit": "a79fd60ad7bbed397ad325caef1c2313ef29c80c"
+    },
+    {
+      "path": "backend/tableus/account_lifecycle.py",
+      "sha256": "e7dfdc7f1701e5b5d846b5afcd7b640f7c724e52865cf0ab78b73180f898c3a7",
+      "commit": "a79fd60ad7bbed397ad325caef1c2313ef29c80c"
+    },
+    {
+      "path": "backend/tableus/config.py",
+      "sha256": "d22c2a5d955b749c2f71180e61864b13bb85f7fddb56bebd73e7e3f791bc320a",
+      "commit": "a79fd60ad7bbed397ad325caef1c2313ef29c80c"
+    }
+  ],
+  "official_references": [
+    {
+      "url": "https://supabase.com/changelog",
+      "accessed": "2026-09-25"
+    },
+    {
+      "url": "https://docs.expo.dev/eas-update/code-signing/",
+      "accessed": "2026-09-25"
+    },
+    {
+      "url": "https://developer.android.com/studio/publish/app-signing",
+      "accessed": "2026-09-25"
+    },
+    {
+      "url": "https://developer.apple.com/support/offering-account-deletion-in-your-app/",
+      "accessed": "2026-09-25"
+    },
+    {
+      "url": "https://support.google.com/googleplay/android-developer/answer/13327111",
+      "accessed": "2026-09-25"
+    }
+  ]
+}

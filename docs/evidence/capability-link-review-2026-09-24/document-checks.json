@@ -1,0 +1,20 @@
+{
+  "checks": "passed",
+  "source_hashes": 30,
+  "native_commit_hashes": 2,
+  "local_links": 73,
+  "changed_paths": [
+    "docs/capability-link-decision.md",
+    "docs/current-state.md",
+    "docs/decisions.md",
+    "docs/evidence/capability-link-review-2026-09-24/README.md",
+    "docs/evidence/capability-link-review-2026-09-24/manifest.json",
+    "docs/handoffs/2026-09-24-capability-link-review.md",
+    "docs/roadmap.md",
+    "docs/task-packets/active.md"
+  ],
+  "application_delta": false,
+  "runtime_checks": false,
+  "owner_choice": "pending",
+  "review_correction": "New-join Places postcommit concern withdrawn after tracing active_run_id reset; no new API recommended."
+}

@@ -1,453 +1,128 @@
 # Current state
 
-## Implemented
+Updated 2026-09-27. GitHub state and deployment-trigger settings were freshly
+read for [baseline integration](evidence/6dac996/integration.md). Application
+serving identities below remain the September 25 record, not fresh health checks.
 
-- Hackathon-era Next.js discovery, friends, review, and profile experiences.
-- Legacy FastAPI demo endpoints backed by in-memory fixtures.
-- Local environment templates for Node 22 and Python 3.12.
+## Source baseline
 
-## Closed-beta foundation implemented
+| Item | Value |
+| --- | --- |
+| Cumulative local source baseline | Application baseline `4a2f9ecc37070f434df7fc75c1054d5875f21ba9` (`codex/deletion-support`); September 26–27 product/planning realignment on `codex/pilot-realignment` |
+| Refreshed `origin/main` | `e1184eca9b73e1a9f26d1007ab543df9d54c7124` (pull request #6); GitHub still uses `main`, with no branch protection/rulesets |
+| Integration scope | 165 commits from `main` through realignment source `6dac996`, plus publication guard/documentation. No divergence. The native diagnostic branch diverges after `bcc9e52`; do not merge it wholesale. |
+| Root checkout | Stale at `codex/privacy-safe-observability` (`8e9625e`). Use the baseline, not the root checkout. |
 
-- Versioned `/api/v1`, persistence models, migrations, deterministic/live provider
-  adapters, invite access, connections, reviews, and ranked shared plans.
-- Next.js plan/invite surfaces and an Expo Router iOS/Android application.
-- The web invite form only pre-fills the deterministic demo invite in demo
-  mode; Supabase-backed staging requires an explicit issued invite code.
-- Web and mobile keep account creation behind validated invites while giving
-  returning invite-approved users a separate email-OTP sign-in path that checks
-  `/api/v1/me` without consuming another invite.
-- Supabase-backed web sessions load the authenticated profile and connections
-  from `/api/v1`, including after Supabase replaces the active session; legacy
-  demo identity switching remains demo-only.
-- Web and Expo account settings expose a versioned application-data export and
-  server-enforced typed-confirmation deletion controls. The export includes the
-  profile, connections, reviews, invite-redemption timestamps, the user's plan
-  memberships/constraints, votes, and authored plan events while excluding
-  email/invite/share-token hashes and provider/auth secrets. A shared read-only
-  readiness response reports organized-plan blockers. Eligible profile deletion
-  anonymizes retained plan-event actors; neither client silently deletes the
-  separate Supabase Auth record.
-- Generated OpenAPI TypeScript contract, GitHub CI, EAS workflows, browser/API
-  smoke journeys, privacy controls, telemetry hooks, and deployment templates.
-- The shared TypeScript client can resolve a demo identity per request. Expo
-  uses that capability only in local-E2E builds, where a hidden deep link selects
-  one of the two seeded profiles in SecureStore and clears query caches. Demo
-  mode, the Expo test flag, and a loopback API URL are all required.
-- Mobile plan workspaces use explicit accessible ranking controls, restore the
-  viewer's persisted vote, show saved constraint/vote states, and permit
-  constraint revision during voting with a warning that recommendations and
-  votes will be invalidated.
-- A root `mobile-e2e` runner installs one simulator/APK artifact, starts a clean
-  deterministic backend, drives organizer and guest Maestro phases, checks 5/5/2
-  scoring and stale-run cleanup through the UI, and deletes raw token-bearing
-  output. Host API access is limited to plan discovery and share-token rotation.
-- Mobile Supabase authentication is coordinated above the router with explicit
-  loading, signed-out, verification, retryable redemption, and approved states.
-  Its versioned SecureStore transaction retains only normalized email, display
-  name, redemption grant, mode, and expiry; invite codes and email OTPs remain
-  memory-only. Restored sessions are checked through `/api/v1/me`, product routes
-  require approval, and signed-out private-plan links return to their in-memory
-  join intent after authentication.
-- Supabase session refresh follows React Native foreground state, account changes
-  and sign-out clear TanStack Query state, and the shared API client performs at
-  most one explicit refresh/retry after `401` while preserving idempotency keys.
-  It never retries `403` or switches authentication modes.
-- Mobile product reads remain in TanStack Query memory for the current process
-  only. NetInfo drives an accessible global offline banner and explicit read
-  refetch on reconnect/foreground; offline refresh leaves cached data visible.
-  Product writes are never queued or automatically replayed. Known-offline and
-  ambiguous network failures preserve form intent in memory and require an
-  accessible Retry or Dismiss action; retry reuses one payload and idempotency
-  key, while editing discards the attempt. Authentication retains its separate
-  session coordinator, and photo retry requires choosing the image again.
-- Every shared client write carries an idempotency key, including through the
-  one-time `401` refresh path. The closed-beta API caches successful responses
-  for 24 hours in one process and rejects a same-actor/key request whose body
-  fingerprint differs with `409 idempotency_conflict`. This ledger is not yet
-  durable across API restarts or shared across horizontally scaled instances.
-- `make mobile-offline-e2e` starts a clean backend on loopback port 8001 and a
-  fault proxy on 8000, then proves dropped-after-commit create/finalize replay,
-  zero-request known-offline constraints, and explicit recovery on one exact-SHA
-  test artifact per platform. The test-only connectivity deep link is triple-
-  gated by local-E2E, demo mode, and loopback API configuration and is memory-only.
-- Deterministic simulator/emulator evidence may use `eas build --local` when
-  hosted EAS test-build allowance is unavailable. `make local-mobile-build-receipt`
-  records only the exact candidate SHA, sanitized local build ID/profile, artifact
-  checksum, EAS CLI version, host OS/architecture, and artifact-inspection result.
-  Local receipts do not replace hosted EAS metadata for production or store builds.
-- Dedicated `auth-test-ios` and `auth-test-android` EAS profiles use the preview
-  environment with Supabase auth and deterministic staging providers. They
-  compile without demo identity configuration, loopback API defaults, cleartext
-  networking, or local-E2E enablement. A separate gated refresh screen exposes
-  only pass/fail status.
-- `make mobile-auth-e2e` provides redacted interactive Maestro phases for invalid
-  invite, signup, join-intent return, persistence, explicit/foreground refresh,
-  sign-out, and returning sign-in. Sensitive flow values use Maestro's supported
-  prefixed shell variables rather than command arguments, and an optional phase
-  resume records skipped checks honestly for local stabilization. A read-only
-  operator script reports invite usage/redemption/validation counts by invite ID
-  without personal or secret data.
-- The auth-test-only mobile account check validates export structure and deletion
-  readiness while displaying aggregate counts only. `make mobile-account-e2e`
-  signs an existing approved user in and records sanitized iOS/Android evidence
-  without issuing a deletion request.
-- Separate migration/runtime database credentials, a private application schema,
-  an invite-only Supabase pre-signup hook, email-bound invite redemption, and a
-  hashed invite administration CLI.
-- Railway configuration keeps the privileged migration credential outside the
-  hosted service; approved migrations run separately before runtime deployment.
-- Fail-closed Apple/Android association manifests, production-shaped Expo link
-  configuration, Railway port handling, expanded beta disclosures, and visible
-  attribution on live Google Maps candidates.
-- Verified-link implementation now targets the dedicated canonical host
-  `links.table-us.com`. Shared domain helpers generate every web/mobile auth and
-  private-plan URL, reject unsafe origins, and replace custom-scheme or
-  current-origin sharing. Expo matches `/join/*` and exact `/auth` while leaving
-  `/auth/confirm` on the web. A native-intent rewrite normalizes cold-start HTTPS
-  paths, retains only the allowlisted auth mode or join token, and leaves other
-  origins plus the development scheme unchanged. Web join auth renders inline
-  and mobile auth is presented over the retained join route, so neither client
-  persists the share token outside the current navigation process. Both expose
-  an accessible invalid/expired/rotated state.
-- `links-test-ios` and `links-test-android` inherit the Supabase-authenticated
-  preview environment without demo or local/auth-E2E controls. Signed-artifact
-  inspection verifies exact SHA, HTTPS staging markers, native associations,
-  Apple Team ID or Android certificate, and forbidden origins. The redacted
-  `make mobile-links-e2e` runner verifies hosted manifests, native routing,
-  returning OTP, retained join intent, and rotated-link handling while deleting
-  raw private URLs and Maestro output. Expo SDK 57 iOS artifacts are inspected
-  through `EXConstants.bundle/app.config`; the legacy config path remains
-  accepted. EAS CLI 22.4.0 is the minimum local-build version, and locally
-  generated credential/keystore files are ignored.
-- Verified-link DNS, TLS, canonical staging deployment, signing identifiers, and
-  both direct association endpoints are configured. Exact candidate
-  `341d67ec73c96f96f19c6e0e2911677e973a7d61` is deployed to Vercel and produced
-  inspected physical-iOS and ARM64-Android signed artifacts. Android automation
-  and a user-observed physical-iPhone journey proved web fallback, native auth
-  and join routing, returning code authentication with retained join intent,
-  and rotated-link rejection. Apple diagnostics approved the exact signed app
-  identifier and Android reported the canonical host verified. Sanitized
-  evidence is in `docs/evidence/341d67e/`; production Play App Signing remains a
-  later fingerprint and store-release gate.
-- Next.js is pinned to 16.3.1 to resolve direct security advisories. npm still
-  reports Expo/React Native build-tool advisories whose proposed remediation is
-  an unsupported SDK downgrade; track upstream SDK 57 patches before release.
-- The Maps staging implementation now splits Places and AI modes, reports mixed
-  readiness, and uses Places API New Text/Nearby/Details calls with explicit
-  field masks, US-only location validation, 5 km filtering, bounded retries,
-  four-way detail concurrency, and no fixture fallback. New resolved plans store
-  the user's normalized label and a Place ID with null coordinates; legacy
-  deterministic coordinate plans remain readable. Plan lists are summary-only,
-  web polls a lightweight revision before refreshing detail, and live logical
-  operations are process-rate-limited and recorded as aggregate attempt/result
-  counts. Web and Expo require explicit location selection with Google Maps
-  attribution and keep provider display content in memory only. Focused checks,
-  empty/previous migration checks, API drift validation, `make ready`, and
-  sequential Expo Go iOS/Android location-create smokes pass locally. Live
-  staging proved that a city-level Text Search result can omit the postal
-  address despite returning a populated `200`; location validation now prefers
-  the postal region and uses the transient country address component only when
-  the postal region is absent. It remains fail-closed unless the resulting
-  country is conclusively `US`, and neither field is persisted.
-  Exact candidate `4a790b4ee40a12cdba8540fb12da586b3373a895`
-  passed public CI and is deployed to Railway and Vercel. Sanitized staging
-  evidence proves two approved users, live location resolution, one persistent
-  joined plan, four distinct candidates, refreshed Google details, aggregate
-  provider usage, null stored coordinates, and a candidate schema with no Google
-  display fields. Evidence is in `docs/evidence/4a790b4/maps-staging/`. Pull
-  request #3 was merged to `main` as `7109cdcde86bd125c86c38980e823ab0a07abdc9`.
-- Gemini staging hardening is implemented around `google-genai==1.75.0` and
-  pinned `gemini-3.1-flash-lite`. Recommendation prompts use
-  request-local aliases and normalized TableUs fields instead of Place IDs,
-  names, addresses, coordinates, or Google response bodies. Recommendation,
-  photo, and taste outputs use strict bounded schemas, privacy/safety guards,
-  no tools or grounding, minimal Gemini 3 thinking, 12-second timeouts, and at
-  most three explicitly classified attempts without silent fallback. Photos are
-  resized to a maximum 1600-pixel edge after metadata stripping; taste inputs
-  are bounded to 25 reviews and 12,000 characters. Every API AI call records
-  aggregate token/cost totals and error outcomes, is limited to five operations
-  per approved user and 30 globally per minute, and reserves against a
-  database-backed rolling `$4` staging ceiling. Existing provider-usage columns
-  are reused, so no migration is required. The frozen deterministic evaluator,
-  checkpointed `$0.25` live evaluator, exact-SHA two-user staging runner,
-  privacy disclosures, and generated client contract are updated. Exact SHAs
-  `90691b1c53812fc140da465e1b5e362c781f1139`,
-  `e89d5c4f1664ab0ec0e7d5bec3dd196439283aeb`, and
-  `82c1d45f010a686df8802ab4b8a502731aa1be6f` passed public CI. Live validation
-  against all three candidates stopped before inference and consumed zero
-  reported tokens and `$0`. The first exposed unsupported generated
-  `minLength`, `maxLength`, and `pattern` wire keywords. The third proved that
-  Gemini 3.1 also rejects Pydantic's `additionalProperties` wire metadata;
-  removing it and non-semantic `title` metadata advances the same request from
-  `400` schema rejection to provider quota handling while strict Pydantic
-  validation remains local. The second
-  proved project import, Tier 1 billing, credential authorization, IP
-  restrictions, and catalog visibility, but new-project generation returned
-  `404` for Gemini 2.5 Flash-Lite. Google identifies Gemini 3.1 Flash-Lite as the
-  stable replacement. The owner approved that model at `$0.25` per million input
-  tokens and `$1.50` per million output/thinking tokens. Plain and corrected-
-  schema 3.1 requests currently reach Google but return generic
-  `429 RESOURCE_EXHAUSTED`; billing is confirmed active and linked, and the
-  response is not reported as overload or a client rate-limit violation. A new
-  implementation now selects Gemini Enterprise Agent Platform explicitly through
-  `google-genai`'s `enterprise=True` transport, pins readiness/evaluation evidence
-  to `agent-platform`, and retains the same model, privacy guards, schemas, and
-  spend ceilings. Exact candidate
-  `0b7de266d4b053d49267b2ac22bd85052ab3ab8f` passed public CI run
-  `32911321560`. Its capped live evaluation stopped before inference with six
-  terminal failures, zero tokens, and `$0`; a minimal sanitized request then
-  isolated `401` authentication. Google documents that standard API keys have
-  no IAM principal and cannot authenticate Agent Platform, while the required
-  service-account-bound authorization key is blocked by the managed
-  `disableServiceAccountApiKeyCreation` policy unless Agent Platform is
-  allowlisted. The unused standard key was revoked, its Railway and Keychain
-  values were removed, and Railway's prior Developer API key was restored with
-  deploy suppression. The owner then approved a project-only policy override
-  that preserves `generativelanguage.googleapis.com` and adds only
-  `aiplatform.googleapis.com`. A new authorization key is bound to the existing
-  least-privilege runtime identity and restricted to Agent Platform plus
-  Railway's three IPs. The repeated exact-SHA evaluation authenticated and
-  reached inference: two taste cases passed, while three recommendation cases
-  failed an unconstrained `outcome` value and the photo request returned `400`.
-  Sanitized probes isolated both defects: recommendation wire output needs enum
-  constraints, and multimodal `Content` needs `role="user"`. The local adapter
-  adds request-local candidate enums, an outcome enum, and the explicit photo
-  role. Exact candidate `2eb428a05913c60dd1af1ae59fdd79fb233c5ede`
-  passed public CI run `32915965276`. Its frozen six-case Agent Platform
-  evaluation passed 6/6 in one attempt per case for `$0.0018905`, including
-  grounded recommendations, prompt injection, constraints, synthetic photo,
-  and synthetic taste cases. Railway deployment
-  `a1030828-a505-417e-8285-c2b49dbbb39c` and Vercel deployment
-  `dpl_Ad4H9FqVAQJviSkP2KYTKWMkKxbt` are pinned to that SHA. Readiness reports
-  Supabase auth, live Places, live AI, `provider_mode=live`, and
-  `ai_backend=agent-platform`. Sanitized two-user evidence proves four distinct
-  grounded candidates, policy-safe candidate persistence, and aggregate token
-  and cost accounting. Staging now runs live Places and live Gemini.
+The last full local readiness at the baseline's application source passed 214
+Python and 317 JavaScript tests with zero skips, plus lint, types, contract
+generation, web and Expo-web builds and deterministic smoke
+([handoff](handoffs/2026-09-25-deletion-support.md)). [Integration PR #7](https://github.com/TableUs-AI-Agent/Tableus-ai-agent-dev/pull/7)
+is open. Hosted CI on `bb3f20e` passed all 214 Python and 317 JavaScript tests,
+restricted-role migrations, lint/types, deterministic evaluation, contracts and
+builds. Three of four browser journeys passed; the account test still expected
+the superseded application-only deletion UI. That assertion and the first run's
+Homebrew-specific Python wrapper are corrected; a complete replacement hosted
+pass is still required before merge. The
+[integration review](evidence/6dac996/integration.md) distinguishes reused local
+checks from the PR's hosted result.
 
-## External dependencies not provisioned in source
+Vercel project Git auto-deployment is enabled, but repository configuration now
+excludes `codex/pilot-realignment` and `main`. Other branches still need trigger
+review before pushing. Railway currently has no deployment triggers and PR
+environments are disabled. No hosting setting or running deployment was changed.
 
-- Supabase staging client environment wiring. The `TableUs Staging` project is
-  provisioned in East US and linked locally. Resend-backed custom SMTP is
-  configured with the required `resend` username and a verified `table-us.com`
-  sending domain. Confirm signup and Magic Link present Supabase's `Token` as the
-  verification code. Supabase currently emits eight digits while the custom
-  template still says "six-digit"; that copy must be corrected before beta. A
-  real invite-approved OTP completed the Auth hook, email delivery,
-  code verification, invite redemption, profile creation, and authenticated
-  redirect to `/plans`. Sanitized staging evidence showed exactly one profile,
-  one redemption, one consumed pending validation, and one used invite. Alembic
-  revision `8b1d4a6c2e90` is applied and verified against staging. The
-  `plan_events.actor_id` column is nullable and its profile foreign key uses
-  `ON DELETE SET NULL`, preserving audit history when an eligible application
-  profile is removed. The project's owner
-  credential has been rotated, the least-privilege `tableus_runtime` role is
-  active, and the Before User Created hook is enabled against
-  `app.hook_restrict_signup_to_validated_invite`. Owner and runtime credentials
-  are stored separately in macOS Keychain. One superseded unused invite remains
-  active until 2026-08-27; its plaintext is unavailable and it should be revoked
-  or allowed to expire before external beta access.
-- Railway staging project `tableus-staging`, environment `staging`, and service
-  `api` are provisioned. Deployment `bed50df4-5ced-465f-8492-a24147e8f663`
-  serves `https://api-staging-3795.up.railway.app` from exact SHA
-  `4920d99b11b06c4e0aa1c4afc3f91763bb53ee1c`; readiness reports Supabase
-  Auth, live Places, live Agent Platform Gemini, `provider_mode=live`, and the
-  gated staging telemetry configuration. High-availability static
-  outbound IPs are active. Railway holds the runtime database credential,
-  application secret, Places-only server key, Agent Platform authorization key,
-  and staging telemetry runtime values restricted to their intended services.
-  The first CLI-created key was revoked immediately after its creation response
-  exposed the value; only the non-exposed restricted replacement remains in
-  Railway and the operator Keychain.
-- Vercel staging client variables and `https://tableus-staging.vercel.app` are
-  live from exact SHA `4920d99b11b06c4e0aa1c4afc3f91763bb53ee1c`
-  through deployment `dpl_4M7eSvsht9UNB2wqmCjZ1pVUmHiD`. The production-facing
-  `https://links.table-us.com`, `table-us.com`, and `www.table-us.com` aliases
-  remain on their prior validated deployment and were not moved by this staging
-  gate. An authenticated
-  Browser session showed the active `Jung` profile after the Supabase session
-  changed, verifying the deployed identity-refresh fix. The hosted two-user
-  journey then covered plan creation, private-link joining, per-user constraints,
-  exactly four deterministic candidates, two persisted 3/2/1 votes, organizer-
-  only finalization, deterministic tie resolution, reopening, and refinalization.
-  Public invite and privacy routes return 200. Apple and Android association
-  manifests now return direct JSON 200 responses with the inspected preview
-  signing identifiers and only the allowlisted native routes.
-- Expo project `@tableus/tableus` is provisioned as
-  `0601c3b9-0082-454c-b636-45a1fe377f7b`. Its preview environment contains only
-  the staging API URL, Supabase URL/publishable client key, EAS project ID, and
-  staging link host, plus the staging-only Sentry/PostHog public client values
-  and source-map upload configuration required by telemetry-test builds. Preview
-  profiles remain Supabase-authenticated; deterministic test profiles explicitly
-  enable demo mode, while telemetry-test profiles do not. All checked-in
-  workflows validate after replacing paid EAS-hosted Maestro
-  jobs with build-artifact jobs for local Maestro execution. The earlier
-  `bc0d2f3` artifacts remain recorded as invalid because they sent a demo identity
-  to Supabase-authenticated staging. Exact-SHA replacement builds
-  `8d5ffefb-28ad-42a1-966d-426af059046b` (iOS simulator) and
-  `41e5ece8-58d9-4d5f-84ff-a67dd2dfa607` (Android APK) finished from
-  `9dd39fe9db72c52f96db4cf596401d32493a510f`. Their downloaded bundles contain
-  the localhost deterministic endpoint and demo identity with no Railway hostname
-  match. Separate clean-backend Maestro runs passed on iPhone 17 Pro/iOS 26.5 and
-  an API 36 ARM64 Android emulator: no auth error, a real POST-backed plan create,
-  refreshed plan-card selection, and navigation to `Your constraints`. The flow
-  now dismisses the keyboard, requires the title field to reset after creation,
-  and matches React Native's combined accessible card label, eliminating the two
-  remaining false-positive paths. Test-only local networking remains isolated
-  from preview/production builds. The supplied `@tableus/brian` project remains
-  untouched and unused. Apple and Google Play store credentials remain
-  unprovisioned.
-- Replacement account-control auth-test artifacts were built from exact SHA
-  `119171a2d9370b0929bc8d19da819538864745f0`: iOS simulator build
-  `e64bb9a4-0fff-48f7-abae-235ec860b7af` and Android APK build
-  `5dd01949-47bd-4485-874b-1cd19a1c7c39`. Both passed bundle inspection for the
-  HTTPS Railway staging API, Supabase staging configuration, and
-  `authE2E=true`, with no demo identities, loopback endpoints, local-E2E mode,
-  service-role markers, or production endpoints. Standard artifact SHA-256
-  checksums and build evidence are recorded in `docs/evidence/119171a/`. The
-  superseded partial evidence remains documented in `docs/evidence/8cde193/`.
-- The isolated `TableUs Staging Maps` Google project has billing attached,
-  Places API New enabled as its only product API, a $10 monthly budget with
-  50/80/100-percent alerts, and granted 60-request/minute preferences for Text,
-  Nearby, and Details. The separate billed `TableUs Staging AI` project has a
-  `$5` monthly budget with 50/80/100-percent alerts. The Agent Platform API is
-  enabled and the bound runtime identity has least-privilege
-  `roles/aiplatform.expressUser`. Its existing authorization key remains
-  service-account-bound, restricted to the standalone Gemini Developer API and
-  Railway's three staging static outbound IPs, and stored only in Railway
-  staging and the operator Keychain. A standard Agent Platform-only key was
-  proven insufficient with `401` because it had no bound IAM principal and was
-  revoked before activation. The staging AI project now has a project-only
-  managed-policy override whose complete allowlist is the existing standalone
-  Gemini API plus Agent Platform. A separate Agent Platform authorization key is
-  bound to the same runtime identity, limited to `aiplatform.googleapis.com` and
-  Railway's three addresses, and stored in Railway with deploy suppression plus
-  the operator Keychain. A first standard key whose value appeared in CLI output
-  was revoked immediately before use or storage. Three isolated free-tier Sentry
-  staging projects and one isolated US PostHog staging project are provisioned.
-  Runtime/build credentials remain scoped to staging, and separate read-only
-  evidence credentials remain in the operator Keychain.
+## Deployed staging
 
-## Release gates still requiring an owner or external system
+| Component | Source | Notes |
+| --- | --- | --- |
+| API (Railway `tableus-staging`) | `f94a1d9` | Supabase auth, live Places, live Gemini through Agent Platform, anonymous telemetry |
+| Web aliases `tableus-staging.vercel.app`, `links.table-us.com` | `ed8330a` | Dependency-patched web; API remains `f94a1d9` |
+| Accepted native artifacts | `f94a1d9` | Isolated-staging acceptance with an owner-accepted simulator AppHang risk ([closeout](evidence/ios27-staging-f94a1d9/closeout.md)) |
+| Production-facing `table-us.com` | `e1184ec` | Not a pilot target |
 
-- Add the production Google Play App Signing fingerprint alongside the preview
-  signer when production store artifacts are approved. Production/store builds
-  and submission remain separate later gates; they do not invalidate the
-  completed exact-SHA preview verified-link evidence in
-  `docs/evidence/341d67e/`.
-- Confirm the final domain and support/privacy contact, obtain legal review of
-  the beta notices, and validate Google Maps attribution against the production
-  presentation and current brand requirements.
-- Complete the remaining exact-SHA failure-state evidence. Exact-SHA
-  returning-user OTP and authenticated-identity evidence is
-  green. A second invite-approved account redeemed successfully, bringing
-  sanitized staging evidence to two profiles, two redemptions, and two invite
-  uses. The stale global identity cache exposed by that session change is fixed
-  and verified on staging. The full two-user deterministic planning journey is
-  green. Share-token rotation invalidated the prior private link with an explicit
-  failure state. Xcode 26.6 with iOS 26.5 simulators, Android platform tools
-  37.0.1 with an API 36 ARM64 emulator, and Maestro 2.8.0 are installed locally.
-  Device execution invalidated the prior mobile evidence because both old
-  artifacts called the Supabase staging API with a demo identity. Replacement
-  exact-SHA iOS/Android artifacts now pass the tightened local deterministic plan
-  create/open smoke on both platforms. The local two-user join, constraint,
-  recommendation, voting, authorization, finalization, reopening, token-rotation,
-  and stale-run suite now passes from exact SHA
-  `a78a6d27229bc464d4998bdf3c3593f4167a831b` on iOS simulator build
-  `d192d04a-73e8-401c-98ac-b6c7a3a9c551` and Android APK build
-  `6dba0079-72fe-4c23-aa03-95028a7506c4`. Both bundles passed loopback/demo
-  inspection with no Railway hostname, and both full journeys passed
-  independently on iPhone 17 Pro/iOS 26.5 and the API 36 ARM64 emulator.
-  Sanitized summaries and screenshots are in `docs/evidence/a78a6d2/`.
-  Mobile OTP/invite automation is final from exact SHA
-  `d6d1b3a99318aff5c904029328e6395a6e4236e4`. iOS simulator build
-  `8bbf7822-ffa7-4a61-9670-2ebc6e16cad7` and Android APK build
-  `3d6d40ad-43ed-45c6-ab8c-ad254c076322` passed artifact inspection and full
-  real Supabase journeys covering invalid-invite rejection, signup, protected
-  routing, join-intent restoration, relaunch persistence, explicit and
-  foreground refresh, sign-out, and returning sign-in. Both one-use invites
-  show one use, one redemption, and no active pending validation. Sanitized
-  summaries and screenshots are in `docs/evidence/d6d1b3a/`.
-  Offline-retry implementation and device evidence are complete from exact SHA
-  `9acf4fe2a648d4226be028d947ca8d08d7fc7029`. Local iOS simulator build
-  `local-ios-9acf4fe-20260822` and ARM64 Android APK build
-  `local-android-9acf4fe-20260822` passed exact-SHA, loopback/demo, and
-  forbidden-origin inspection. Clean iPhone 17 Pro/iOS 26.5 and API 36 ARM64
-  journeys each proved two create attempts yield one plan, known-offline
-  constraints yield zero requests until explicit retry, four candidates are
-  generated, and two finalization attempts yield one finalized event through
-  same-key replay. The root safe-area fix keeps the connectivity alert below the
-  system status bar, and the iOS flow uses Maestro's documented stable-header tap
-  instead of its flaky `hideKeyboard` gesture. Sanitized evidence is in
-  `docs/evidence/9acf4fe/`. Local Android builds use the target ARM64 ABI, bounded
-  Gradle/CMake concurrency, sequential simulators, and file-backed temporary logs
-  after a four-ABI build and a very long tool transcript caused severe host and
-  Codex desktop memory pressure. Expo currently reports the free-plan iOS
-  build allowance exhausted until September 1, 2026. Account
-  export/deletion controls are deployed,
-  the staging migration is verified, and replacement read-only account-control
-  journeys passed from exact SHA
-  `119171a2d9370b0929bc8d19da819538864745f0` on iOS simulator build
-  `e64bb9a4-0fff-48f7-abae-235ec860b7af` and Android APK build
-  `5dd01949-47bd-4485-874b-1cd19a1c7c39`. Both journeys proved returning sign-in
-  and aggregate-only export/deletion-readiness validation with the corrected
-  semantic accessibility label, stale-session normalization, and standard
-  evidence checksums. Sanitized summaries and screenshots are in
-  `docs/evidence/119171a/account-controls/`. No application profile or Supabase
-  Auth identity was deleted. Other failure-state checks remain.
-  Maps staging evidence is green from exact SHA
-  `4a790b4ee40a12cdba8540fb12da586b3373a895`. The first attempt stopped on a
-  city result without `postalAddress.regionCode`; Google aggregate telemetry
-  confirmed a populated `200`, and no raw artifact was retained. The corrected
-  rerun passed end to end with policy-safe persistence and sanitized evidence,
-  and pull request #3 is merged. Three pinned-model Gemini candidates passed
-  public CI, and the isolated billed AI project, budget, and final restricted
-  authorization key are provisioned. Their Developer API live evaluators
-  stopped before inference at zero reported cost: first on generated schema keywords, then on
-  unavailable Gemini 2.5 generation, and finally on Gemini 3.1 strict-object
-  metadata followed by generic `429 RESOURCE_EXHAUSTED`. The key is restored to
-  Railway-only restrictions. Agent Platform candidate `0b7de266` also passed
-  public CI; its first evaluation stopped at `401`, zero tokens, and `$0` because
-  a standard key has no IAM principal. The owner approved a project-only policy
-  allowance and a new bound authorization key. After the enum and multimodal
-  role corrections, exact candidate `2eb428a05913c60dd1af1ae59fdd79fb233c5ede`
-  passed public CI, the six-case paid evaluation, and sanitized two-user staging
-  evidence. Staging now runs live Places and live Agent Platform Gemini. The
-  superseded Developer API key is revoked; the active bound key is restricted
-  to Agent Platform and Railway's three static egress addresses.
-- Obtain explicit approval before any production migration, deployment, EAS
-  build/submission, paid live-AI evaluation, or cohort invitation.
+On the recorded deployment state, the later features below are not deployed.
+Four migrations added after `f94a1d9` are expected to be pending: account deletion queue, shared-content
+provenance, cohort counters and recipient-bound invites. After that last
+migration, any unused legacy unbound invite code in staging is rejected for new
+signups and must be reissued to a named recipient.
 
-## Privacy-safe observability staging validation
+## Product
 
-- Web and mobile now use random process-memory telemetry session UUIDs. The API
-  accepts them only as anonymous request context and never derives analytics
-  identity from an account, email hash, access token, or IP address.
-- PostHog is default-on for the intended closed beta but aggregate-only: memory
-  persistence, no person profiles or identify calls, no autocapture, page/app
-  lifecycle capture, GeoIP, feature flags, surveys, or replay.
-- Sentry is error-only with tracing, profiling, replay, attachments, and
-  breadcrumbs disabled. Shared scrubbers retain stack frames and exact-SHA
-  release correlation while removing messages, users, headers, bodies, query
-  strings, private URL segments, and arbitrary context.
-- Telemetry remains off locally and in deterministic CI. Staging telemetry is
-  gated explicitly and uses isolated resources; production remains disabled.
-- The approved staging passes found and corrected four fail-closed issues before
-  acceptance: a malformed public PostHog key, a missing random anonymous
-  `distinct_id`, web removal of PostHog JS's required public transport token,
-  and an API canary that inherited its caller's platform instead of recording
-  `api`. Regression tests preserve only the validated public `phc_` transport
-  field, keep the random process-memory UUID as `distinct_id`, and force the
-  backend canary's platform to `api`.
-- Exact candidate `4920d99b11b06c4e0aa1c4afc3f91763bb53ee1c` is deployed on
-  Railway and Vercel and produced inspected, sequential, memory-bounded local
-  iOS and ARM64 Android artifacts. The preserved approved iOS session exercised
-  the authenticated API canary without a new OTP; the signed-out Android client
-  correctly emitted client telemetry while its protected API call failed.
-  Aggregate read-only evidence records one exact-release issue in each of the
-  three Sentry projects and PostHog events for `web`, `ios`, `android`, and
-  `api`, with anonymous/error-only modes and no raw payload retained. PostHog's
-  browser bot filter discarded the first default-headless Playwright attempt
-  before `before_send`; a normal Chrome identity produced direct successful
-  ingestion without weakening the filter or changing application code.
-  Sanitized receipts and screenshots are in
-  `docs/evidence/4920d99/observability/`. Public merge remains an explicit gate.
+The core journey is implemented on web, iOS and Android: invite-approved email
+OTP sign-in, shared plans for 2–8 people, per-participant constraints, four
+grounded options from Places and Gemini, top-three ranked voting, organizer
+finalize and reopen, private-link rotation, explicit refresh and explicit retry of
+ambiguous mobile writes. Clients use `/api/v1`; Supabase is used directly only for
+authentication. Earlier candidate evidence is not acceptance of the cumulative
+local application. The API allows organizer finalization with zero or partial
+votes; the agreed pilot counts success only with at least two independent votes.
+
+Hackathon-era surfaces remain visible: web Discover (the current home redirect),
+Friends, Review and Profile, and mobile People, Review and Profile tabs. They are
+not inputs to shared-plan recommendations: that path uses each participant's plan
+constraints (`backend/tableus/api.py`, `generate_recommendations`). The pilot
+will hide these surfaces; see the [roadmap](roadmap.md). No navigation code changed
+during realignment.
+
+## Implemented in the baseline, not deployed
+
+| Capability | Default after deployment | Contract |
+| --- | --- | --- |
+| Full account deletion with recoverable Auth removal | Off today/default (`TABLEUS_ACCOUNT_DELETION_ENABLED=false`); pilot requires approved activation and rehearsal in Priority 3 | [account lifecycle](account-lifecycle.md), [operations](account-lifecycle-operations.md) |
+| Plan transfer, sole-plan removal and legacy application-only deletion | Available subject to authorization/blockers; not disabled by the full-deletion flag | [account lifecycle](account-lifecycle.md) |
+| Shared-content removal and organizer repair on deletion | Applies to legacy and full deletion; not gated by the full-deletion flag | [design](deletion-content-design.md) |
+| Durable per-account quotas: 5 AI and 20 Places operations per UTC day, 20 plan creations per lifetime; operator-only usage reports | On, configurable | [cohort controls](cohort-controls.md) |
+| Recipient-bound, one-use invitations | On after migration | [recipient invites](recipient-invites.md) |
+| Private-link capture into bounded client memory; fragment link emission | Capture on; emission off (`*_JOIN_LINK_FORMAT`) | [private links](private-link-handling.md) |
+| Public account-deletion help and support procedure | Page present; not published operationally | [procedure](deletion-support-procedure.md) |
+
+## Known gaps and risks for the pilot
+
+- Reads of plans with candidates hydrate Places; empty/summary/revision reads do
+  not do that hydration. The default 20 daily logical Places operations per
+  account needs complete-journey sizing, separately from billable attempts/spend.
+- Structured cuisines are intersected only when supplied. Current web/mobile
+  plan forms send free-text notes and empty cuisine arrays. The four-result
+  requirement can still produce no result; its effect on real groups is unmeasured.
+- Anonymous telemetry cannot measure group completion across accounts/sessions.
+  `plan.finalized` currently records only the candidate ID. Priority 2 adds a
+  distinct-voter count and updates the strict payload allowlist used by account
+  deletion; [current cleanup](../backend/tableus/api.py) would otherwise discard
+  it. Whole-plan deletion also removes events through the
+  [foreign key](../backend/tableus/models.py). The [roadmap](roadmap.md) scopes exact
+  counts to retained, instrumented plans and discloses the accepted coverage gaps.
+- Full deletion is implemented but has no hosted activation/worker acceptance.
+  Priority 3 must prove the normal self-service path, organizer-blocker resolution,
+  recovery and truthful retention/copy before invitations. Brian accepts that a
+  known pilot participant who loses sign-in email access may be unable to delete
+  until secure recovery/assisted verification exists. A support contact/escalation
+  route remains required; the [support procedure](deletion-support-procedure.md)
+  cannot initiate deletion from an email request alone.
+- Idempotency, provider reservations and spend coordination are process-local, so
+  the API must run as one process.
+- Ad hoc iOS builds install only on devices included in the provisioning profile;
+  collect all pilot iPhone device IDs before building. Production mobile builds
+  are deliberately disabled until production origins and update policy exist.
+- Hosted restricted-role database setup, migrations and all 214 Python tests
+  passed on `bb3f20e`; full integration CI still requires the corrected browser test.
+- The old frozen dependency graph (`f94a1d9` native artifacts and API image) is
+  not covered beyond September 30; a new candidate from the baseline uses the
+  remediated graph ([disposition](evidence/dependency-toolchain-2026-09-21/README.md)).
+
+## Native validation
+
+The C1–C11 iOS 27 diagnostic campaign did not establish application acceptance
+for `8972865`; several attempts stopped before TableUs ran, including the latest
+memory prerequisite failure. Worktree counts do not establish the cause of RAM
+pressure. Original refresh failures, accessibility-driver crashes, initialization
+stall and AppHang remain unresolved findings, not automatically application defects
+or resolved issues. Native history remains in its task at `c680b59`.
+
+Brian replaced that campaign as the pilot gate with candidate-bound physical
+device acceptance, including airplane-mode/visible retry and explicit finding
+dispositions. One bounded `mobile-offline-e2e` run on a separate local test artifact
+from the candidate covers writes whose responses are lost; its selected platform
+and test configuration are explicit, not physical or cross-platform proof. A
+signed physical-iPhone iOS 27 startup check passed for `f94a1d9`. Pilot native
+acceptance uses the [pilot checklist](release-readiness-checklist.md); old device
+results do not accept the new bytes. No task was messaged or stopped by this review.

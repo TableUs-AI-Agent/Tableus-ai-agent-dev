@@ -18,6 +18,8 @@ function freshStats() {
     droppedBeforeSend: 0,
     droppedAfterCommit: 0,
     idempotentReplays: 0,
+    delayedResponses: 0,
+    syntheticErrors: 0,
   };
 }
 
@@ -64,7 +66,14 @@ const proxy = createServer(async (clientRequest, clientResponse) => {
   const body = await readBody(clientRequest);
   increment(stats.requests, key);
   recordKey(key, clientRequest.headers["idempotency-key"]);
+  const delayMs = fault?.delayMs ?? 0;
   const mode = consumeFault(method, url.pathname);
+
+  if (mode === "respond-error") {
+    stats.syntheticErrors += 1;
+    json(clientResponse, 503, { error: { code: "fixture_unavailable", message: "Fixture refresh unavailable." } });
+    return;
+  }
 
   if (mode === "fail-before-send") {
     stats.droppedBeforeSend += 1;
@@ -86,12 +95,22 @@ const proxy = createServer(async (clientRequest, clientResponse) => {
       if (upstreamResponse.headers["x-idempotent-replay"] === "true") stats.idempotentReplays += 1;
       if (mode === "forward-then-drop-response") {
         stats.droppedAfterCommit += 1;
-        clientRequest.socket.destroy();
+        const responseBody = Buffer.concat(chunks);
+        clientResponse.writeHead(upstreamResponse.statusCode ?? 502, upstreamResponse.headers);
+        clientResponse.flushHeaders();
+        if (responseBody.length > 0) clientResponse.write(responseBody.subarray(0, 1));
+        clientResponse.destroy();
         return;
       }
       const responseBody = Buffer.concat(chunks);
-      clientResponse.writeHead(upstreamResponse.statusCode ?? 502, upstreamResponse.headers);
-      clientResponse.end(responseBody);
+      const send = () => {
+        clientResponse.writeHead(upstreamResponse.statusCode ?? 502, upstreamResponse.headers);
+        clientResponse.end(responseBody);
+      };
+      if (mode === "delay-response") {
+        stats.delayedResponses += 1;
+        setTimeout(send, delayMs);
+      } else send();
     });
   });
   upstream.on("error", () => clientRequest.socket.destroy());
@@ -108,11 +127,16 @@ const control = createServer(async (request, response) => {
   }
   if (request.method === "POST" && url.pathname === "/configure") {
     const body = JSON.parse(String(await readBody(request)) || "{}");
-    const modes = new Set(["pass", "fail-before-send", "forward-then-drop-response"]);
-    if (!modes.has(body.mode) || !["POST", "PUT", "PATCH", "DELETE"].includes(body.method) || typeof body.path !== "string" || !body.path.startsWith("/api/v1/")) {
+    const modes = new Set(["pass", "fail-before-send", "forward-then-drop-response", "delay-response", "respond-error"]);
+    const repeat = body.repeat ?? 1;
+    const delayMs = body.delay_ms ?? 0;
+    if (!modes.has(body.mode) || !["GET", "POST", "PUT", "PATCH", "DELETE"].includes(body.method) || typeof body.path !== "string" || !body.path.startsWith("/api/v1/")
+      || !Number.isInteger(repeat) || repeat < 1 || repeat > 3
+      || !Number.isInteger(delayMs) || delayMs < 0 || delayMs > 5000
+      || (body.mode === "delay-response" && delayMs < 1)) {
       return json(response, 400, { configured: false });
     }
-    fault = { mode: body.mode, method: body.method, path: body.path, remaining: 1 };
+    fault = { mode: body.mode, method: body.method, path: body.path, remaining: repeat, delayMs };
     return json(response, 200, { configured: true });
   }
   if (request.method === "GET" && url.pathname === "/stats") {
@@ -127,6 +151,9 @@ const control = createServer(async (request, response) => {
       dropped_before_send_count: stats.droppedBeforeSend,
       dropped_after_commit_count: stats.droppedAfterCommit,
       idempotent_replay_count: stats.idempotentReplays,
+      delayed_response_count: stats.delayedResponses,
+      synthetic_error_count: stats.syntheticErrors,
+      write_request_count: [...stats.requests].reduce((total, [route, count]) => total + (/^(POST|PUT|PATCH|DELETE) /.test(route) ? count : 0), 0),
     });
   }
   return json(response, 404, { error: "not_found" });

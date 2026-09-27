@@ -1,0 +1,20 @@
+{
+  "schema_version": 2,
+  "build_runner": "eas-local-build-plugin",
+  "platform": "ios",
+  "profile": "readiness-ios",
+  "candidate_sha": "c5b041c85f4f7b959436c13bef48c959622c624f",
+  "source_tree_sha": "ef9d4629bb7a5f22c3bd696d7b4355e26dd8ae51",
+  "build_id": "local-ios-readiness-c5b041c",
+  "artifact_sha256": "c089122ea4ab71fc0d93edc2f69b9206ed00688c390ad04f4b5cdae1d2ac299c",
+  "eas_cli_version": "23.2.0",
+  "package_lock_sha256": "ba23ddb7a5b5a8782bcb4efeb8684c92816ff58ad271fbd22c92ca149ada9dd2",
+  "host": {
+    "os": "darwin",
+    "architecture": "arm64"
+  },
+  "inspection_report_sha256": "dbffb862a196c1dd27419e7194a640c4cfe34c95c7d785be4eecaa2d5491488f",
+  "signer_type": "apple-team-id",
+  "signer_identity": "6MHJN5V9UJ",
+  "artifact_inspection_passed": true
+}

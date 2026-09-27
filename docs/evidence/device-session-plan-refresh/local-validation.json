@@ -1,0 +1,48 @@
+{
+  "schema_version": 1,
+  "observed_at": "2026-09-14T21:23:06.021597+00:00",
+  "source_sha": "6b9719b4e63e34803f2e7c2598e45851790df661",
+  "source_sha_note": "Reviewed runtime and test bytes match this committed source; subsequent evidence binding changes documentation only.",
+  "baseline_sha": "1c65f68c6cba9bb675bb898b13b7080f6f97a925",
+  "branch": "codex/device-session-plan-refresh",
+  "make_ready": {
+    "passed": true,
+    "exit_code": 0,
+    "javascript_passed": 204,
+    "python_passed": 98,
+    "python_skipped": 3,
+    "skipped_scope": "Postgres-only migration assertions; no current-candidate CI run",
+    "lint": true,
+    "types": true,
+    "contracts": true,
+    "web_build": true,
+    "expo_web_build": true,
+    "deterministic_smoke": true,
+    "web_js_bytes_report_only": 2820354,
+    "log_sha256": "f55f0a26b6be9cdc2e8d1629eec6ff842473085a57d536ddda68824f4800a913"
+  },
+  "focused_components_passed": 11,
+  "new_regressions": 7,
+  "runtime_file_sha256": {
+    "mobile/app/account.tsx": "736aaebabfa3042e22e7630ae09fdc951ed1b76e07f8df6a2f868bcd3b145a5f",
+    "mobile/app/plans/[id].tsx": "c610fb42a1aa638e45af2fc8611cb2f5128ab9c6d0849b00cdb0aaea01c80434",
+    "mobile/src/providers/app-providers.tsx": "c7c75e9783f2c5473f370d7ec93cf662b268c8425ce6e599e7e63e1632da3195",
+    "mobile/src/providers/auth-provider.tsx": "f1ad8763d32aa807e2a327cf7c129da570b5282f9589f0d626ec44442b633c51"
+  },
+  "scope": {
+    "backend_changed": false,
+    "lockfiles_changed": false,
+    "contracts_changed": false,
+    "security_validator_changed": false,
+    "live_provider_calls": 0,
+    "sign_in_messages": 0,
+    "native_builds": 0,
+    "deployments": 0,
+    "automated_security_scans": 0
+  },
+  "limitations": [
+    "Ordinary source review only; exact-candidate security scan is unapproved and unavailable.",
+    "Supabase and navigation boundaries are mocked in component tests, not replacement-device acceptance.",
+    "Existing native/live/telemetry evidence remains bound to c5b041c."
+  ]
+}

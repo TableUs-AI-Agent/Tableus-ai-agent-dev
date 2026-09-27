@@ -1,0 +1,95 @@
+{
+  "schema_version": 1,
+  "phase": "F1-T2",
+  "status": "local_source_repair_complete_no_native_acceptance",
+  "base_commit": "732189919f06315ffa2165dfa9b97488837d0e4a",
+  "tooling_commit": "Commit containing this result; exact SHA in task handoff. This is not the operator invoked by P3-R1.",
+  "application_sha_unchanged": "8972865893a3f018a064594457dc9cc664f8a61f",
+  "build_operator_sha_unchanged": "16603dd0cf36d27b492e57a02d3c6c438a2563c4",
+  "cause": "Registered debug filenames emitted by pinned Maestro2.8.0 were omitted from log discovery.",
+  "source_files": {
+    "scripts/maestro_xctest_diagnostics.py": "fb69990ecc8e6da249a93bf4ac600830e2f429551797512b3364cca3fa632106",
+    "scripts/maestro_xctest_diagnostics_test.py": "7d604db002dff65e48de69d709797760b6858d61cdb18047ca0652cabc08cc14"
+  },
+  "behavior": "Recognize only exact top-level debug-output/xctest_runner_YYYY-MM-DD_HHMMSS.log and debug-output/<registered flow stem>/logs/device-xctest.log, alongside legacy scheduling/Session names. Retain existing root/symlink/scan/byte bounds, failure latching, and acceptancefalse.",
+  "tests": {
+    "recorded_at": "2026-09-24T04:29:59.086880+00:00",
+    "javascript_tap_passed": 225,
+    "javascript_jest_passed": 68,
+    "javascript_total_passed": 293,
+    "backend_passed": 98,
+    "backend_skipped": 3,
+    "focused_python_cases": 16,
+    "full_readiness_seconds": 44.783,
+    "contract_check": {
+      "command": "npm run contract:check",
+      "exit_code": 0,
+      "result": "No generated schema/OpenAPI drift."
+    },
+    "clarification": "Initial verification.json javascript_passed225 counts TAP only; full JavaScript total293 includes68 Jest tests. Original archive retained unchanged.",
+    "source_log_sha256": "ab2c948f391f6c95c4df60f4fcfe927225561c214789fde301f00f62018b08d6"
+  },
+  "readiness": {
+    "started_at": "2026-09-24T04:28:03.338495+00:00",
+    "command": [
+      "make",
+      "ready"
+    ],
+    "environment_keys": [
+      "CI",
+      "DATABASE_URL",
+      "EAS_DISABLE_UPDATE_CHECK",
+      "ENVIRONMENT",
+      "EXPO_NO_TELEMETRY",
+      "GEMINI_API_KEY",
+      "GOOGLE_MAPS_API_KEY",
+      "HOME",
+      "LANG",
+      "LOGNAME",
+      "MIGRATION_DATABASE_URL",
+      "NEXT_TELEMETRY_DISABLED",
+      "PATH",
+      "POSTHOG_KEY",
+      "PYTHONDONTWRITEBYTECODE",
+      "SENTRY_DSN",
+      "SUPABASE_URL",
+      "TABLEUS_AUTH_MODE",
+      "TABLEUS_DEMO_MODE",
+      "TABLEUS_PROVIDER_MODE",
+      "TABLEUS_TELEMETRY_E2E",
+      "TABLEUS_TELEMETRY_MODE",
+      "TMPDIR",
+      "USER"
+    ],
+    "native_execution": false,
+    "provider_mode": "deterministic",
+    "exit_code": 0,
+    "status": "passed",
+    "elapsed_seconds": 44.783,
+    "finished_at": "2026-09-24T04:28:48.122220+00:00"
+  },
+  "retained_log_replay": {
+    "status": "passed",
+    "recognized_logs": 2,
+    "state": "no_startup_failure_observed",
+    "acceptance": false,
+    "native_calls": 0,
+    "source_hashes": {
+      "debug-output/xctest_runner_2026-09-23_232204.log": "1a33baa3ebab68506dc420f5bd255ee6c1e0b7232e519ec4d1c2c3de41406b61",
+      "debug-output/settings-1/logs/device-xctest.log": "2c093c35aea0b57c7ee8d49a6117f4380e8a0a5d1cad702d5ab86b523be005f0"
+    }
+  },
+  "private_archive": "/Users/brianchei/repos/Tableus-ai-agent-dev/.artifacts/mobile/8972865893a3f018a064594457dc9cc664f8a61f/native-validation-f1/runtime-preparation-t2",
+  "private_archive_index_sha256": "19893bcae3f7aba9c492afcd13c9a91f25af0c50c19cc81cbb058d70904fc4a7",
+  "archive_index_files": 10,
+  "supplement_check_summary_sha256": "77e1b30051626a3c0409d6edd98494756c497502f2a3044cfa22e7ebbf141211",
+  "review_sha256": "e0557371346506efdf0bda4300184d22450e4329b12332bfca98d08cd368daab",
+  "preservation": "Original P3 frozen operator, native output and original proposal/receipts unchanged. Replay uses copies in a private fixture. Existing archive javascript_passed225 is TAP count; supplemental summary adds68Jest for293total.",
+  "limitations": [
+    "Native use of the repaired helper is unverified; no new frozen executable operator exists.",
+    "Clean recognized logs never mean Settings/UI acceptance.",
+    "Blank screenshot versus completed Settings title assertion remains unresolved.",
+    "P3-R1 operation consumed; no further native action or retry."
+  ],
+  "next": "Use retained UI/device logs to investigate the visual discrepancy and prepare stronger visual evidence criteria offline before any new native proposal."
+}

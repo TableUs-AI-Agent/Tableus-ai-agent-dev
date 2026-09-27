@@ -1,0 +1,14 @@
+{
+  "application_sha": "2ad48a8d8ec4d3aa9a7bd52061b823bb55960bcd",
+  "observed_at": "2026-09-15T21:11:52.389416+00:00",
+  "organizer_identity_matched": true,
+  "export_clicked_once": true,
+  "export_ui_result": "Your TableUs application data export was downloaded.",
+  "download_contents_inspected": false,
+  "deletion_readiness_visible": true,
+  "organized_plan_blocker_count": 2,
+  "delete_confirmation_left_empty": true,
+  "delete_action_disabled": true,
+  "account_deleted": false,
+  "returned_to_plans": true
+}

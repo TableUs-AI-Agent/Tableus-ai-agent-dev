@@ -1,0 +1,32 @@
+{
+  "schema_version": 1,
+  "application_sha": "c5b041c85f4f7b959436c13bef48c959622c624f",
+  "approved_at_utc": "2026-09-13T04:39:00Z",
+  "limits": {
+    "returning_messages": 6,
+    "live_journeys": 1,
+    "gemini_estimated_usd": 0.25,
+    "places_outbound_attempts": 100
+  },
+  "baseline_observed_at": "2026-09-13 04:46:03.792984+00",
+  "baseline_aggregate_source": "existing_staging_database_read_only_query",
+  "baseline_gemini_estimated_usd": 0.00443325,
+  "baseline_places_outbound_attempts": 189,
+  "existing_limits": {
+    "places_attempts_30d": 500,
+    "gemini_estimated_usd_30d": 4.0,
+    "live_ai_max_usd": 0.25,
+    "verified_source_sha": "c5b041c85f4f7b959436c13bef48c959622c624f"
+  },
+  "runtime_configuration_changed": false,
+  "raw_personal_data_retained": false,
+  "complete": false,
+  "extra_android_message_approved": true,
+  "extra_android_approval_recorded_at": "2026-09-13T05:22:00.799598+00:00",
+  "allowance_increase_recorded_at": "2026-09-13T07:03:45.810499+00:00",
+  "allowance_increase_owner_approved": true,
+  "additional_message_purposes": [
+    "existing_web_organizer_if_needed",
+    "ios_telemetry_simulator_if_needed"
+  ]
+}

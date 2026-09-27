@@ -1,0 +1,10 @@
+{
+  "schema_version": 1,
+  "platform": "ios",
+  "profile": "test-ios",
+  "candidate_sha": "c5b041c85f4f7b959436c13bef48c959622c624f",
+  "artifact_sha256": "61d4d12a25d2857942402095a9fea24e97e7b0e8d0ddca1d586b4c945c5735f2",
+  "inspection_passed": true,
+  "signer_type": "ios-simulator",
+  "signer_identity": "com.tableus.app"
+}

@@ -1,0 +1,32 @@
+{
+  "schema_version": 1,
+  "application_sha": "6b9719b4e63e34803f2e7c2598e45851790df661",
+  "observed_at": "2026-09-15T04:33:11.364Z",
+  "canonical_origin": "https://links.table-us.com",
+  "http_and_manifest_checks_passed": true,
+  "ios_team_matches_inspected_artifact": true,
+  "android_signer_matches_inspected_artifact": true,
+  "allowed_paths": [
+    "/join/*",
+    "/auth"
+  ],
+  "browser_callback_excluded": true,
+  "manifest_sha256": "8e4448d4f3a8aea7b1e6e57d758888c783b4a671002250f6ecdb5a2fc5fcea2f",
+  "responses": [
+    {
+      "path": "/.well-known/apple-app-site-association",
+      "status": 200,
+      "content_type": "application/json",
+      "redirected": false,
+      "body_sha256": "710eb96b4cb131ad435294629ed493857a0f8d38e9d0cba112fc905f9cc34d63"
+    },
+    {
+      "path": "/.well-known/assetlinks.json",
+      "status": 200,
+      "content_type": "application/json",
+      "redirected": false,
+      "body_sha256": "e2ad9e673a352912bf9782eba015a5bbcfd28069c138d858d37ced66bf411430"
+    }
+  ],
+  "device_link_acceptance_complete": false
+}

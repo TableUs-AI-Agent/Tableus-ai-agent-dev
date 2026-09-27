@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "recorded_at": "2026-09-23T05:16:47.725870+00:00",
+  "owner_response": "approve",
+  "amendment": "F1-O2 exact older iOS support-cache cleanup",
+  "evidence_base_sha": "ac6ed981078175f1625f1c08423d52b10db0df20",
+  "proposal_sha256": "26ae8cdf63f7673ed3a10b2560ce601aa6cb3fd4e1ce8331dcfad85d5e710e1a",
+  "target": "/Users/brianchei/Library/Developer/Xcode/iOS DeviceSupport/iPhone18,2 26.6.1 (23G83)",
+  "operator": "/Users/brianchei/repos/Tableus-ai-agent-dev/.artifacts/mobile/8972865893a3f018a064594457dc9cc664f8a61f/native-validation-f1/storage-followup-o2/f1-o2-old-support-cleanup.py",
+  "operator_sha256": "79ca6e0035129b5dca287966c58cf8cd1d76ccfc77ab10671a44f3347a4d885d",
+  "retained_current_support": "/Users/brianchei/Library/Developer/Xcode/iOS DeviceSupport/iPhone18,2 27.0 (24A437)",
+  "continuation": "Repeat fresh O2 preflight and run already approved sequence with >=20GiB; no extra native allowance or routine approval.",
+  "extra_native_attempts": 0
+}

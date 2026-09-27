@@ -1,0 +1,10 @@
+{
+  "application_sha": "f94a1d9d1125e6c9111aa08eda496f014f20d0c0",
+  "observed_at": "2026-09-16T22:32:29.307455Z",
+  "plan_status": "voting",
+  "candidate_count": 4,
+  "saved_vote_count": 2,
+  "vote_updated_event_count": 4,
+  "latest_vote_updated_at": "2026-09-15T06:33:34.139929Z",
+  "expected_next_checks": "One deliberate vote submission from each readiness device; use event increments rather than unchanged vote creation timestamps."
+}

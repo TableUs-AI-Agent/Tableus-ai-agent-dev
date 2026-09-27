@@ -1,0 +1,23 @@
+{
+  "schema_version": 1,
+  "status": "approved",
+  "owner_reply": "approve",
+  "observed_at": "2026-09-14T22:39:36Z",
+  "thread_id": "01a097ad-4b11-7d62-9813-6ae4cf75f3f5",
+  "turn_id": "01a0a20f-8d30-7550-993e-3f3f40d325c5",
+  "prepared_plan_commit": "9ee4a8035389d2cdd26e2dec2efae0eb39c5ee42",
+  "prepared_plan_path": "docs/evidence/replacement-6b9719b/README.md",
+  "application_sha": "6b9719b4e63e34803f2e7c2598e45851790df661",
+  "tooling_sha": "1c75832ef421335662319635e1b74888476cdb77",
+  "limits": {
+    "additional_places_attempts": 80,
+    "sign_in_emails": 4,
+    "new_gemini_generations": 0,
+    "posthog_canary_events": 5,
+    "sentry_canary_events": 5,
+    "native_concurrency": 1,
+    "places_30_day_start": 269,
+    "places_runtime_backstop": 349
+  },
+  "scope": "Existing staging/Preview exact-source deployment and CI, six sequential local native profiles, source-bound device/session/refresh/readiness/telemetry verification and staging/Preview-only rollback as specified by the prepared plan."
+}

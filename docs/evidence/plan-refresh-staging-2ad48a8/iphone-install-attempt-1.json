@@ -1,0 +1,17 @@
+{
+  "observed_at": "2026-09-15T21:09:54.816463+00:00",
+  "application_sha": "2ad48a8d8ec4d3aa9a7bd52061b823bb55960bcd",
+  "operator_sha": "aabd673386129e51323e63a4ac71f9a7dcf9d2ec",
+  "artifact_sha256": "e08b7adbce9f848c1638f3fb732a141ce37fe62bacdc5121d5bad5a236382359",
+  "profile": "readiness-ios",
+  "build_id": "local-ios-readiness-2ad48a8",
+  "device_family": "physical iPhone",
+  "preinstall_receipt_inspection_and_associations_passed": true,
+  "install_passed": false,
+  "error_domain": "IXRemoteErrorDomain",
+  "error_code": 9,
+  "error": "Installation on this device is prohibited by ManagedConfiguration",
+  "readiness_checklist_started": false,
+  "account_data_deleted": false,
+  "next_action": "Owner resolve installation restriction, then retry same inspected artifact; no rebuild."
+}

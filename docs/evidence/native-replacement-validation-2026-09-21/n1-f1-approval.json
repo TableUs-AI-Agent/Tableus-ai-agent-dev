@@ -1,0 +1,12 @@
+{
+  "schema_version": 1,
+  "approved_amendment": "N1-F1",
+  "owner_response": "approve",
+  "recorded_at": "2026-09-22T03:46:48.351188+00:00",
+  "proposal_commit": "20fe750943b82f97541cb5b8329c99b6f3e0388c",
+  "proposal_sha256": "62f26d01d439ce153ea3c6175e2f1539ed5a6e549e2532b59681a2353abec55c",
+  "scope": "Local native-link remediation and actual route/hook regression coverage; focused checks, one make ready, exact candidate freeze and impact/revalidation proposal. No native build or replay.",
+  "native_attempts_authorized": 0,
+  "live_budget_change": false,
+  "cleanup_authorized": false
+}

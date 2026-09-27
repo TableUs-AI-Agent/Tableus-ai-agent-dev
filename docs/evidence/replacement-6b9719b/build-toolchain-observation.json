@@ -1,0 +1,76 @@
+{
+  "schema_version": 1,
+  "application_sha": "6b9719b4e63e34803f2e7c2598e45851790df661",
+  "observed_at": "2026-09-14T23:20:20.296742+00:00",
+  "phase": "EAS local test-ios build",
+  "expo_doctor": {
+    "checks_passed": 20,
+    "checks_total": 21,
+    "failed_check": "Installed Expo SDK package-version recommendations",
+    "patch_recommendations": [
+      {
+        "package": "expo",
+        "expected": "~57.0.22",
+        "locked": "57.0.18"
+      },
+      {
+        "package": "expo-build-properties",
+        "expected": "~57.0.17",
+        "locked": "57.0.15"
+      },
+      {
+        "package": "expo-constants",
+        "expected": "~57.0.18",
+        "locked": "57.0.16"
+      },
+      {
+        "package": "expo-file-system",
+        "expected": "~57.0.7",
+        "locked": "57.0.6"
+      },
+      {
+        "package": "expo-image",
+        "expected": "~57.0.5",
+        "locked": "57.0.3"
+      },
+      {
+        "package": "expo-image-picker",
+        "expected": "~57.0.17",
+        "locked": "57.0.14"
+      },
+      {
+        "package": "expo-linking",
+        "expected": "~57.0.10",
+        "locked": "57.0.8"
+      },
+      {
+        "package": "expo-router",
+        "expected": "~57.0.21",
+        "locked": "57.0.17"
+      },
+      {
+        "package": "expo-secure-store",
+        "expected": "~57.0.4",
+        "locked": "57.0.2"
+      },
+      {
+        "package": "expo-sharing",
+        "expected": "~57.0.19",
+        "locked": "57.0.16"
+      },
+      {
+        "package": "expo-updates",
+        "expected": "~57.0.22",
+        "locked": "57.0.19"
+      }
+    ],
+    "matches_prior_build_warning": true,
+    "prior_application_sha": "c5b041c85f4f7b959436c13bef48c959622c624f"
+  },
+  "dependency_bytes_changed": false,
+  "native_build_completion_pending": false,
+  "fresh_advisory_query_performed": false,
+  "disposition": "Retain exact frozen dependencies for the approved staging verification; record the existing version warning and review patch updates before production/store acceptance.",
+  "native_profile_completed": "test-ios",
+  "native_artifact_inspection_passed": true
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "application_sha": "2ad48a8d8ec4d3aa9a7bd52061b823bb55960bcd",
+  "operator_sha": "16f3c4c09f12cb6f90892fa659461a3615e8f52f",
+  "platform": "ios",
+  "profile": "readiness-ios",
+  "build_id": "local-ios-readiness-2ad48a8",
+  "artifact_sha256": "e08b7adbce9f848c1638f3fb732a141ce37fe62bacdc5121d5bad5a236382359",
+  "receipt_sha256": "0e8ef4d600cc0cde1e2971672c5285cf3b76516c9b1031d9598cb7eaaf9083ae",
+  "inspection_sha256": "060902047740814e927e39a80a29e548372dcea0d5fcc846a2ac03de9b0d2f67",
+  "source_tree_sha": "02afc0fc88cc6c9658b452dfcaacd4955b92b6b5",
+  "package_lock_sha256": "ba23ddb7a5b5a8782bcb4efeb8684c92816ff58ad271fbd22c92ca149ada9dd2",
+  "verified_at": "2026-09-15T20:47:02.027Z",
+  "compiled_bundle_sha256": "f855cb4edd5f2e23bad9b21fe5595bcf4f02b49868354055a5c1970a002c103a",
+  "verifier_sha256": "955987be1bec279cdf29d4edf7fe86b65ff1a05b58386587d7c0c3bc0d66d47b",
+  "build_host_preflight": {
+    "observed_at": "2026-09-15T20:19:34.876077+00:00",
+    "xcode_setup_passed": true,
+    "xcode_version": "Xcode 27.0\nBuild version 27A266a",
+    "no_booted_simulators": true,
+    "no_connected_android_devices": true,
+    "free_gib": 25.65
+  },
+  "physical_or_live_acceptance_claimed": false,
+  "checks": [
+    {
+      "receipt_and_inspection_validated": true,
+      "reinspection_matches": true,
+      "actual_artifact_bytes_match": true,
+      "source_tree_matches": true,
+      "frozen_lock_matches": true,
+      "embedded_source_matches": true,
+      "hosted_profile_configuration": true,
+      "expected_signer": true,
+      "native_transport_configuration_validated": true,
+      "refresh_correction_in_bundle": true
+    }
+  ],
+  "build": {
+    "status": "passed",
+    "started_at": "2026-09-15T20:19:49.496983+00:00",
+    "finished_at": "2026-09-15T20:46:27.666818+00:00",
+    "free_gib_at_start": 25.272,
+    "free_gib_at_finish": 20.1,
+    "operator_sha": "16f3c4c09f12cb6f90892fa659461a3615e8f52f"
+  }
+}

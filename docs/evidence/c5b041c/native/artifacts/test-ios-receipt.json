@@ -1,0 +1,20 @@
+{
+  "schema_version": 2,
+  "build_runner": "eas-local-build-plugin",
+  "platform": "ios",
+  "profile": "test-ios",
+  "candidate_sha": "c5b041c85f4f7b959436c13bef48c959622c624f",
+  "source_tree_sha": "ef9d4629bb7a5f22c3bd696d7b4355e26dd8ae51",
+  "build_id": "local-ios-test-c5b041c",
+  "artifact_sha256": "61d4d12a25d2857942402095a9fea24e97e7b0e8d0ddca1d586b4c945c5735f2",
+  "eas_cli_version": "23.2.0",
+  "package_lock_sha256": "ba23ddb7a5b5a8782bcb4efeb8684c92816ff58ad271fbd22c92ca149ada9dd2",
+  "host": {
+    "os": "darwin",
+    "architecture": "arm64"
+  },
+  "inspection_report_sha256": "1a1126a80ed8badf3851b25e41af4dd990e94a0304a4de4bf7fa321bd90c20b5",
+  "signer_type": "ios-simulator",
+  "signer_identity": "com.tableus.app",
+  "artifact_inspection_passed": true
+}

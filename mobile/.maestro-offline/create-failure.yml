@@ -19,10 +19,17 @@ appId: com.tableus.app
     visible: "Plans"
     timeout: 30000
 - tapOn: "Plan title"
-- inputText: "Offline resilience dinner"
+# Verify fixture input before any submission; one correction may retype it.
+- retry:
+    maxRetries: 1
+    commands:
+      - eraseText
+      - inputText: "Offline resilience dinner"
+      - assertVisible: "Offline resilience dinner"
 - hideKeyboard
 - tapOn: "City, neighborhood, or ZIP code"
 - inputText: "Boston, MA"
+- assertVisible: "Boston, MA"
 - hideKeyboard
 - tapOn: "Find location"
 - extendedWaitUntil:

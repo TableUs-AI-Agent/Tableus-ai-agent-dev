@@ -1,6 +1,30 @@
 import type { NextConfig } from "next";
 import path from "node:path";
 import { withSentryConfig } from "@sentry/nextjs";
+import { PUBLIC_RUNTIME_POLICY, requireExactHttpsOrigin } from "@tableus/domain";
+import { webApiOrigin } from "./app/lib/runtime-config";
+import { FRAME_PROTECTION_HEADERS, FRAME_PROTECTION_SOURCE, PRIVATE_JOIN_HEADERS, PRIVATE_JOIN_SOURCE } from "./app/lib/security-headers";
+
+if (process.env.VERCEL === "1") {
+  requireExactHttpsOrigin(
+    process.env.NEXT_PUBLIC_API_URL ?? "",
+    PUBLIC_RUNTIME_POLICY.stagingApiOrigin,
+    "Vercel web API origin",
+  );
+  requireExactHttpsOrigin(
+    process.env.TABLEUS_API_ORIGIN ?? "",
+    PUBLIC_RUNTIME_POLICY.stagingApiOrigin,
+    "Vercel server API origin",
+  );
+  requireExactHttpsOrigin(
+    process.env.NEXT_PUBLIC_SUPABASE_URL ?? "",
+    PUBLIC_RUNTIME_POLICY.stagingSupabaseOrigin,
+    "Vercel Supabase origin",
+  );
+  if ((process.env.NEXT_PUBLIC_LINK_ORIGIN ?? "") !== `https://${PUBLIC_RUNTIME_POLICY.linkHost}`) {
+    throw new Error("Vercel link origin does not match the source-controlled TableUs host");
+  }
+}
 
 const nextConfig: NextConfig = {
   transpilePackages: ["@tableus/domain", "@tableus/api-client"],
@@ -15,8 +39,23 @@ const nextConfig: NextConfig = {
       { protocol: "https", hostname: "maps.googleapis.com" },
     ],
   },
+  async headers() {
+    return [
+      {
+        source: FRAME_PROTECTION_SOURCE,
+        headers: [...FRAME_PROTECTION_HEADERS],
+      },
+      {
+        source: PRIVATE_JOIN_SOURCE,
+        headers: [...FRAME_PROTECTION_HEADERS, ...PRIVATE_JOIN_HEADERS],
+      },
+    ];
+  },
   async rewrites() {
-    const origin = process.env.TABLEUS_API_ORIGIN;
+    const configuredOrigin = process.env.TABLEUS_API_ORIGIN;
+    const origin = configuredOrigin
+      ? webApiOrigin(configuredOrigin)
+      : "";
     const rules = [
       {
         source: "/.well-known/apple-app-site-association",

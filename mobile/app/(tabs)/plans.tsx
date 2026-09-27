@@ -6,6 +6,7 @@ import { Pressable, RefreshControl, ScrollView, Text, View } from "react-native"
 
 import { Button, Card, ErrorText, Field } from "@/components/ui";
 import { MutationFeedback } from "@/components/mutation-feedback";
+import { GoogleMapsAttribution } from "@/components/google-maps-attribution";
 import { api } from "@/lib/api";
 import { OFFLINE_REFRESH_MESSAGE, refreshWhenOnline } from "@/lib/offline-refresh";
 import { useRecoverableMutation } from "@/lib/recoverable-mutation";
@@ -71,7 +72,7 @@ export default function PlansScreen() {
           disabled={!locationInput.trim() || lookup.canRetry}
           loading={lookup.isPending}
         />
-        {selectedLocation ? <View accessibilityLiveRegion="polite" style={{ gap: 4, padding: 12, borderWidth: 1, borderColor: colors.line, borderRadius: 14 }}><Text selectable style={{ color: colors.ink, fontWeight: "700" }}>{selectedLocation.label}</Text><Text selectable style={{ color: colors.muted, fontSize: 12, fontWeight: "600" }}>Google Maps</Text></View> : null}
+        {selectedLocation ? <View accessibilityLiveRegion="polite" style={{ gap: 4, padding: 12, borderWidth: 1, borderColor: colors.line, borderRadius: 14 }}><Text selectable style={{ color: colors.ink, fontWeight: "700" }}>{selectedLocation.label}</Text><GoogleMapsAttribution /></View> : null}
         <MutationFeedback failure={create.failure} canRetry={create.canRetry} retryLabel="Retry creating plan" onRetry={create.retry} onDismiss={create.reset} />
         <Button
           label="Create shared plan"

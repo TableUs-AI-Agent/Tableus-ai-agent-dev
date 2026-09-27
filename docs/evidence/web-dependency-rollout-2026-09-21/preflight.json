@@ -1,0 +1,264 @@
+{
+  "schema_version": 1,
+  "observed_at": "2026-09-21T21:56:50.056010+00:00",
+  "phase_status": "incomplete_blocked_before_publication",
+  "application_sha": "ed8330a766b3c4b80a505e075535678394e275e9",
+  "repository_operator_sha": "ed8330a766b3c4b80a505e075535678394e275e9",
+  "review_base": "89dac2d4f9deb428668c0bcf62828e31100b2968",
+  "active_branch": "codex/web-dependency-rollout",
+  "active_worktree": "/Users/brianchei/.codex/worktrees/90bd/Tableus-ai-agent-dev",
+  "detached_source_checkout": "/Users/brianchei/.codex/worktrees/90bd/Tableus-ai-agent-dev/.artifacts/phase-w/source",
+  "release_ref": "codex/web-deps-ed8330a",
+  "private_evidence_root": "/Users/brianchei/.codex/worktrees/90bd/Tableus-ai-agent-dev/.artifacts/phase-w",
+  "vercel": {
+    "project_id": "prj_lPu3pWZiJ5ZRUIab6wiXrJIW930G",
+    "team_id": "team_0Pu6vuMiug12C8K2HQqbgOQG",
+    "node_major": "22.x",
+    "root_directory": null,
+    "install_command": "npm ci",
+    "build_command": "npm run build --workspace @tableus/web",
+    "output_directory": "frontend/.next",
+    "production_branch": "main",
+    "automatic_git_deployments": {
+      "createDeployments": "enabled"
+    },
+    "protection": {
+      "deploymentType": "all_except_custom_domains"
+    },
+    "accepted_preview": {
+      "id": "dpl_5iF8xTCbfuJghn2bRuUSGdKoRiJb",
+      "url": "tableus-staging-i6b1exrb3-briancheis-projects.vercel.app",
+      "sha": "f94a1d9d1125e6c9111aa08eda496f014f20d0c0",
+      "ready_state": "READY"
+    },
+    "actual_staging_alias_target": {
+      "id": "dpl_7yiJcGeeVGHBRzFggodNCLzoiAeX",
+      "url": "tableus-staging-dwuhnprja-briancheis-projects.vercel.app",
+      "git_metadata_sha": "daa89a03e1ba09b4249125476c5d28b7f2a98f31"
+    },
+    "production_target": {
+      "id": "dpl_7csJvHoJH9qgFZDijbwu3w36r2sK",
+      "sha": "e1184eca9b73e1a9f26d1007ab543df9d54c7124"
+    },
+    "alias_map": [
+      {
+        "alias": "tableus-staging.vercel.app",
+        "deploymentId": "dpl_7yiJcGeeVGHBRzFggodNCLzoiAeX",
+        "deployment": {
+          "id": "dpl_7yiJcGeeVGHBRzFggodNCLzoiAeX",
+          "url": "tableus-staging-dwuhnprja-briancheis-projects.vercel.app"
+        },
+        "redirect": null
+      },
+      {
+        "alias": "links.table-us.com",
+        "deploymentId": "dpl_7yiJcGeeVGHBRzFggodNCLzoiAeX",
+        "deployment": {
+          "id": "dpl_7yiJcGeeVGHBRzFggodNCLzoiAeX",
+          "url": "tableus-staging-dwuhnprja-briancheis-projects.vercel.app"
+        },
+        "redirect": null
+      },
+      {
+        "alias": "table-us.com",
+        "deploymentId": "dpl_7csJvHoJH9qgFZDijbwu3w36r2sK",
+        "deployment": {
+          "id": "dpl_7csJvHoJH9qgFZDijbwu3w36r2sK",
+          "url": "tableus-staging-eck69x9mb-briancheis-projects.vercel.app"
+        },
+        "redirect": "www.table-us.com"
+      },
+      {
+        "alias": "www.table-us.com",
+        "deploymentId": "dpl_7csJvHoJH9qgFZDijbwu3w36r2sK",
+        "deployment": {
+          "id": "dpl_7csJvHoJH9qgFZDijbwu3w36r2sK",
+          "url": "tableus-staging-eck69x9mb-briancheis-projects.vercel.app"
+        },
+        "redirect": null
+      }
+    ],
+    "project_domains": [
+      {
+        "name": "links.table-us.com",
+        "apexName": "table-us.com",
+        "projectId": "prj_lPu3pWZiJ5ZRUIab6wiXrJIW930G",
+        "redirect": null,
+        "redirectStatusCode": null,
+        "gitBranch": null,
+        "customEnvironmentId": null,
+        "updatedAt": 1787463043762,
+        "createdAt": 1787463043762,
+        "verified": true
+      },
+      {
+        "name": "table-us.com",
+        "apexName": "table-us.com",
+        "projectId": "prj_lPu3pWZiJ5ZRUIab6wiXrJIW930G",
+        "redirect": "www.table-us.com",
+        "redirectStatusCode": 308,
+        "gitBranch": null,
+        "customEnvironmentId": null,
+        "updatedAt": 1787354556384,
+        "createdAt": 1787354556384,
+        "verified": true
+      },
+      {
+        "name": "www.table-us.com",
+        "apexName": "table-us.com",
+        "projectId": "prj_lPu3pWZiJ5ZRUIab6wiXrJIW930G",
+        "redirect": null,
+        "redirectStatusCode": null,
+        "gitBranch": null,
+        "customEnvironmentId": null,
+        "updatedAt": 1787354556003,
+        "createdAt": 1787354556003,
+        "verified": true
+      },
+      {
+        "name": "tableus-staging.vercel.app",
+        "apexName": "vercel.app",
+        "projectId": "prj_lPu3pWZiJ5ZRUIab6wiXrJIW930G",
+        "redirect": null,
+        "gitBranch": null,
+        "customEnvironmentId": null,
+        "updatedAt": 1787016204486,
+        "createdAt": 1787016204486,
+        "verified": true
+      }
+    ],
+    "source_stamp_preparation": {
+      "attempted": true,
+      "succeeded": false,
+      "remote_environment_unchanged": true,
+      "first_error": "array input invalid JSON (400)",
+      "second_error": "Branch codex/web-deps-ed8330a not found in the connected Git repository (400)",
+      "release_ref_unpublished": true
+    },
+    "sentry_build_env": {
+      "SENTRY_AUTH_TOKEN": "inherited sensitive; decrypted=false; value unavailable",
+      "SENTRY_ORG": "inherited sensitive; value unavailable",
+      "SENTRY_PROJECT": "inherited sensitive; value unavailable",
+      "branch_override_approval": "requested, not received",
+      "empty_cli_values_are_not_evidence_of_disabled_uploads": true
+    }
+  },
+  "api": {
+    "project_id": "93dcd3f4-7c47-4010-9431-fc28638813d2",
+    "service_id": "94aeecda-4575-4fc1-bb08-796bf779ada5",
+    "environment_id": "0f546dbc-222f-48b8-a27b-ff008af4fec9",
+    "deployment_id": "d929fba2-9c1e-4428-8379-ffaae6a3c4d2",
+    "ready": {
+      "status": "ready",
+      "provider_mode": "live",
+      "places_provider_mode": "live",
+      "ai_provider_mode": "live",
+      "ai_backend": "agent-platform",
+      "auth_mode": "supabase",
+      "build_sha": "f94a1d9d1125e6c9111aa08eda496f014f20d0c0",
+      "telemetry_mode": "staging",
+      "analytics_mode": "anonymous",
+      "error_reporting_mode": "errors_only",
+      "telemetry_e2e": true
+    },
+    "allowed_origins": [
+      "https://tableus-staging.vercel.app",
+      "https://links.table-us.com",
+      "https://tableus-staging-3e0h7umke-briancheis-projects.vercel.app",
+      "https://tableus-staging-git-codex-astra-proj-30d7eb-briancheis-projects.vercel.app",
+      "https://tableus-staging-949ez84u1-briancheis-projects.vercel.app",
+      "https://tableus-staging-git-codex-replacemen-ea2809-briancheis-projects.vercel.app",
+      "https://tableus-staging-rk6jt0id1-briancheis-projects.vercel.app",
+      "https://tableus-staging-git-codex-refresh-2ad48a8-briancheis-projects.vercel.app",
+      "https://tableus-staging-le68rjle9-briancheis-projects.vercel.app",
+      "https://tableus-staging-git-codex-ios27-f94a1d9-briancheis-projects.vercel.app",
+      "https://tableus-staging-i6b1exrb3-briancheis-projects.vercel.app"
+    ],
+    "backstop": 429,
+    "new_preview_origin_configured": false
+  },
+  "native": {
+    "application_sha": "f94a1d9d1125e6c9111aa08eda496f014f20d0c0",
+    "changed_or_reinstalled": false
+  },
+  "fresh_source_matches": [
+    {
+      "file": "package.json",
+      "sha256": "981864193ebb31ef7fbd8227621ab60d4edf6785a90927afda96b10912e3a59b",
+      "matches_review": true
+    },
+    {
+      "file": "package-lock.json",
+      "sha256": "c2b5dff8fe1f95cf1fb6e0eb6ba2b85ac92712266cf6fbdf946880b866fb1413",
+      "matches_review": true
+    },
+    {
+      "file": "frontend/package.json",
+      "sha256": "94b26fbded9da4d2a5a02027da1db73ccc48bc3d77dbcf67f624671028488274",
+      "matches_review": true
+    },
+    {
+      "file": "mobile/jest.config.cjs",
+      "sha256": "dc3840261e88d9ce8fc8c2db056738afd54695bc7e704530337029b1951111fa",
+      "matches_review": true
+    },
+    {
+      "file": "mobile/src/lib/router-dependency.component.test.tsx",
+      "sha256": "db1961b7c432c57e514f0bf5a97e4eef29ab6c35c20a40255942727b65118777",
+      "matches_review": true
+    },
+    {
+      "file": "scripts/dependency-compat.test.mjs",
+      "sha256": "bdcbb39ed5af28bf4df7a2d33d8b1103576b56fb82af84d33182ccc880942ce8",
+      "matches_review": true
+    },
+    {
+      "file": "vendor/decode-uri-component-compat/package.json",
+      "sha256": "4bf01697c51c8333b20c3829a42740ce51a452bafafd5f1ba7a0efe3419e9c5b",
+      "matches_review": true
+    },
+    {
+      "file": "vendor/decode-uri-component-compat/index.cjs",
+      "sha256": "6a47dafc28e6645cf165319739dad2bdea43b67ebb5b5e0689f403323afee6db",
+      "matches_review": true
+    }
+  ],
+  "execution_counts": {
+    "ci_runs": 0,
+    "preview_deployments": 0,
+    "successful_remote_config_changes": 0,
+    "alias_changes": 0,
+    "live_places": 0,
+    "live_gemini": 0,
+    "otp_emails": 0,
+    "deliberate_canaries": 0,
+    "native_builds": 0,
+    "local_full_suite_runs": 0,
+    "linux_frozen_install_and_image_check": 1
+  },
+  "limits": {
+    "ci_cap": 1,
+    "preview_cap": 1,
+    "no_retry_after_ci_or_deploy_failure": true
+  },
+  "unverified": [
+    "exact-source CI",
+    "Vercel Linux x64 dependency resolution/build",
+    "new hosted source/bundle",
+    "new hosted provider-free browser",
+    "new hosted image/CDN cache",
+    "exact new Preview CORS",
+    "post-move source and associations"
+  ],
+  "blockers": [
+    "Vercel requires remote branch to exist before branch environment variables; approval requires stamps before publishing branch.",
+    "Inherited sensitive Sentry build credentials cannot be proven inactive; no symbol upload is authorized.",
+    "Future immutable Preview origin is absent from API allowlist; API config/restart needs separate approval before alias activation."
+  ],
+  "residual_risks": [
+    "Unchanged public staging aliases serve daa89a0 Git source metadata; production aliases e1184ec.",
+    "Sampled old immutable URLs redirect anonymous requests to Vercel SSO; they remain accessible to authorized/bypass holders and are preserved.",
+    "All custom project domains have gitBranch=null; future production deployments may reassign them. No alias isolation change is made.",
+    "Unextended September 30 dependency deadline; original native dependencies and simulator AppHang remain unresolved."
+  ]
+}

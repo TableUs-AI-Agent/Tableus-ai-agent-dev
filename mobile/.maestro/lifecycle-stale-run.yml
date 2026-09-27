@@ -14,6 +14,14 @@ appId: com.tableus.app
 - tapOn: "Your constraints"
 - tapOn: "Save constraints"
 - extendedWaitUntil:
+    visible: ".*(Find four options|Retry saving constraints).*"
+    timeout: 30000
+- runFlow:
+    when:
+      visible: "Retry saving constraints"
+    commands:
+      - tapOn: "Retry saving constraints"
+- extendedWaitUntil:
     visible: "Find four options"
     timeout: 30000
 - assertNotVisible: "Sakura Table"

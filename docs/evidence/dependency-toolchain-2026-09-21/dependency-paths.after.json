@@ -1,0 +1,1225 @@
+{
+  "format": "Normalized npm explain graph; duplicate recursive parent objects collapsed",
+  "command": "npm explain uuid diff ts-deepmerge decode-uri-component decode-uri-component-upstream --json",
+  "raw_sha256": "c0b8fb1320188a05a6dfbe1248a3b63b3e831efa274b94f7271d728495b60eb9",
+  "roots": [
+    "node_modules/uuid",
+    "node_modules/@expo/bunyan/node_modules/uuid",
+    "node_modules/@expo/rudder-sdk-node/node_modules/uuid",
+    "node_modules/@expo/steps/node_modules/uuid",
+    "node_modules/eas-cli/node_modules/uuid",
+    "node_modules/diff",
+    "node_modules/ts-node/node_modules/diff",
+    "node_modules/ts-deepmerge",
+    "node_modules/decode-uri-component-upstream"
+  ],
+  "packages": [
+    {
+      "name": "expo",
+      "version": "57.0.23"
+    },
+    {
+      "location": "/Users/brianchei/.codex/worktrees/14a6/Tableus-ai-agent-dev"
+    },
+    {
+      "name": "@tableus/mobile",
+      "version": "0.2.0",
+      "location": "mobile"
+    },
+    {
+      "name": "@jest/core",
+      "version": "29.7.0",
+      "location": "mobile/node_modules/@jest/core"
+    },
+    {
+      "name": "expo-router",
+      "version": "57.0.17",
+      "location": "mobile/node_modules/expo-router"
+    },
+    {
+      "name": "@expo/metro-runtime",
+      "version": "57.0.14",
+      "location": "mobile/node_modules/expo-router/node_modules/@expo/metro-runtime"
+    },
+    {
+      "name": "@expo/ui",
+      "version": "57.0.14",
+      "location": "mobile/node_modules/expo-router/node_modules/@expo/ui"
+    },
+    {
+      "name": "expo-glass-effect",
+      "version": "57.0.1",
+      "location": "mobile/node_modules/expo-router/node_modules/expo-glass-effect"
+    },
+    {
+      "name": "expo-symbols",
+      "version": "57.0.2",
+      "location": "mobile/node_modules/expo-router/node_modules/expo-symbols"
+    },
+    {
+      "name": "jest-cli",
+      "version": "29.7.0",
+      "location": "mobile/node_modules/jest-cli"
+    },
+    {
+      "name": "jest-config",
+      "version": "29.7.0",
+      "location": "mobile/node_modules/jest-config"
+    },
+    {
+      "name": "jest-expo",
+      "version": "57.0.4",
+      "location": "mobile/node_modules/jest-expo"
+    },
+    {
+      "name": "jest",
+      "version": "29.7.0",
+      "location": "mobile/node_modules/jest-expo/node_modules/jest"
+    },
+    {
+      "name": "jest-watch-typeahead",
+      "version": "2.2.1",
+      "location": "mobile/node_modules/jest-expo/node_modules/jest-watch-typeahead"
+    },
+    {
+      "name": "@expo/bunyan",
+      "version": "4.0.1",
+      "location": "node_modules/@expo/bunyan"
+    },
+    {
+      "name": "uuid",
+      "version": "8.3.2",
+      "location": "node_modules/@expo/bunyan/node_modules/uuid"
+    },
+    {
+      "name": "@expo/config",
+      "version": "57.0.9",
+      "location": "node_modules/@expo/config"
+    },
+    {
+      "name": "@expo/config-plugins",
+      "version": "57.0.9",
+      "location": "node_modules/@expo/config-plugins"
+    },
+    {
+      "name": "@expo/dom-webview",
+      "version": "57.0.1",
+      "location": "node_modules/@expo/dom-webview"
+    },
+    {
+      "name": "@expo/inline-modules",
+      "version": "0.1.7",
+      "location": "node_modules/@expo/inline-modules"
+    },
+    {
+      "name": "@expo/local-build-cache-provider",
+      "version": "57.0.8",
+      "location": "node_modules/@expo/local-build-cache-provider"
+    },
+    {
+      "name": "@expo/log-box",
+      "version": "57.0.4",
+      "location": "node_modules/@expo/log-box"
+    },
+    {
+      "name": "@expo/metro-config",
+      "version": "57.0.12",
+      "location": "node_modules/@expo/metro-config"
+    },
+    {
+      "name": "@expo/plugin-help",
+      "version": "5.1.23",
+      "location": "node_modules/@expo/plugin-help"
+    },
+    {
+      "name": "@oclif/core",
+      "version": "2.16.0",
+      "location": "node_modules/@expo/plugin-help/node_modules/@oclif/core"
+    },
+    {
+      "name": "@expo/plugin-warn-if-update-available",
+      "version": "2.5.1",
+      "location": "node_modules/@expo/plugin-warn-if-update-available"
+    },
+    {
+      "name": "@oclif/core",
+      "version": "2.16.0",
+      "location": "node_modules/@expo/plugin-warn-if-update-available/node_modules/@oclif/core"
+    },
+    {
+      "name": "@expo/prebuild-config",
+      "version": "57.0.16",
+      "location": "node_modules/@expo/prebuild-config"
+    },
+    {
+      "name": "@expo/rudder-sdk-node",
+      "version": "1.1.1",
+      "location": "node_modules/@expo/rudder-sdk-node"
+    },
+    {
+      "name": "uuid",
+      "version": "8.3.2",
+      "location": "node_modules/@expo/rudder-sdk-node/node_modules/uuid"
+    },
+    {
+      "name": "@expo/steps",
+      "version": "23.1.0",
+      "location": "node_modules/@expo/steps"
+    },
+    {
+      "name": "uuid",
+      "version": "11.1.1",
+      "location": "node_modules/@expo/steps/node_modules/uuid"
+    },
+    {
+      "name": "@jest/core",
+      "version": "30.4.2",
+      "location": "node_modules/@jest/core"
+    },
+    {
+      "name": "@sentry/react-native",
+      "version": "7.11.0",
+      "location": "node_modules/@sentry/react-native"
+    },
+    {
+      "name": "@testing-library/react-native",
+      "version": "14.0.1",
+      "location": "node_modules/@testing-library/react-native"
+    },
+    {
+      "name": "babel-preset-expo",
+      "version": "57.0.12",
+      "location": "node_modules/babel-preset-expo"
+    },
+    {
+      "name": "create-jest",
+      "version": "29.7.0",
+      "location": "node_modules/create-jest"
+    },
+    {
+      "name": "jest-config",
+      "version": "29.7.0",
+      "location": "node_modules/create-jest/node_modules/jest-config"
+    },
+    {
+      "name": "decode-uri-component-upstream",
+      "version": "0.5.0",
+      "location": "node_modules/decode-uri-component-upstream"
+    },
+    {
+      "name": "diff",
+      "version": "7.0.0",
+      "location": "node_modules/diff"
+    },
+    {
+      "name": "eas-cli",
+      "version": "23.2.0",
+      "location": "node_modules/eas-cli"
+    },
+    {
+      "name": "@expo/config",
+      "version": "55.0.10",
+      "location": "node_modules/eas-cli/node_modules/@expo/config"
+    },
+    {
+      "name": "@expo/config-plugins",
+      "version": "55.0.7",
+      "location": "node_modules/eas-cli/node_modules/@expo/config-plugins"
+    },
+    {
+      "name": "@expo/prebuild-config",
+      "version": "9.0.12",
+      "location": "node_modules/eas-cli/node_modules/@expo/prebuild-config"
+    },
+    {
+      "name": "@expo/config",
+      "version": "11.0.13",
+      "location": "node_modules/eas-cli/node_modules/@expo/prebuild-config/node_modules/@expo/config"
+    },
+    {
+      "name": "@expo/config-plugins",
+      "version": "10.1.2",
+      "location": "node_modules/eas-cli/node_modules/@expo/prebuild-config/node_modules/@expo/config-plugins"
+    },
+    {
+      "name": "uuid",
+      "version": "11.1.1",
+      "location": "node_modules/eas-cli/node_modules/uuid"
+    },
+    {
+      "name": "expo",
+      "version": "57.0.23",
+      "location": "node_modules/expo"
+    },
+    {
+      "name": "expo-asset",
+      "version": "57.0.17",
+      "location": "node_modules/expo-asset"
+    },
+    {
+      "name": "expo-build-properties",
+      "version": "57.0.15",
+      "location": "node_modules/expo-build-properties"
+    },
+    {
+      "name": "expo-constants",
+      "version": "57.0.18",
+      "location": "node_modules/expo-constants"
+    },
+    {
+      "name": "expo-file-system",
+      "version": "57.0.7",
+      "location": "node_modules/expo-file-system"
+    },
+    {
+      "name": "expo-font",
+      "version": "57.0.4",
+      "location": "node_modules/expo-font"
+    },
+    {
+      "name": "expo-image",
+      "version": "57.0.3",
+      "location": "node_modules/expo-image"
+    },
+    {
+      "name": "expo-image-loader",
+      "version": "57.0.1",
+      "location": "node_modules/expo-image-loader"
+    },
+    {
+      "name": "expo-image-picker",
+      "version": "57.0.14",
+      "location": "node_modules/expo-image-picker"
+    },
+    {
+      "name": "expo-keep-awake",
+      "version": "57.0.2",
+      "location": "node_modules/expo-keep-awake"
+    },
+    {
+      "name": "expo-linking",
+      "version": "57.0.8",
+      "location": "node_modules/expo-linking"
+    },
+    {
+      "name": "expo-manifests",
+      "version": "57.0.1",
+      "location": "node_modules/expo-manifests"
+    },
+    {
+      "name": "expo-secure-store",
+      "version": "57.0.2",
+      "location": "node_modules/expo-secure-store"
+    },
+    {
+      "name": "expo-sharing",
+      "version": "57.0.16",
+      "location": "node_modules/expo-sharing"
+    },
+    {
+      "name": "expo-status-bar",
+      "version": "57.0.1",
+      "location": "node_modules/expo-status-bar"
+    },
+    {
+      "name": "expo-updates",
+      "version": "57.0.19",
+      "location": "node_modules/expo-updates"
+    },
+    {
+      "name": "expo-updates-interface",
+      "version": "57.0.1",
+      "location": "node_modules/expo-updates-interface"
+    },
+    {
+      "name": "@expo/cli",
+      "version": "57.0.25",
+      "location": "node_modules/expo/node_modules/@expo/cli"
+    },
+    {
+      "name": "@expo/router-server",
+      "version": "57.0.10",
+      "location": "node_modules/expo/node_modules/@expo/cli/node_modules/@expo/router-server"
+    },
+    {
+      "name": "jest",
+      "version": "30.4.2",
+      "location": "node_modules/jest"
+    },
+    {
+      "name": "jest-cli",
+      "version": "30.4.2",
+      "location": "node_modules/jest-cli"
+    },
+    {
+      "name": "jest-config",
+      "version": "30.4.2",
+      "location": "node_modules/jest-config"
+    },
+    {
+      "name": "posthog-react-native",
+      "version": "4.65.0",
+      "location": "node_modules/posthog-react-native"
+    },
+    {
+      "name": "ts-deepmerge",
+      "version": "6.2.0",
+      "location": "node_modules/ts-deepmerge"
+    },
+    {
+      "name": "ts-node",
+      "version": "10.9.2",
+      "location": "node_modules/ts-node"
+    },
+    {
+      "name": "diff",
+      "version": "4.0.4",
+      "location": "node_modules/ts-node/node_modules/diff"
+    },
+    {
+      "name": "uuid",
+      "version": "7.0.3",
+      "location": "node_modules/uuid"
+    },
+    {
+      "name": "xcode",
+      "version": "3.0.1",
+      "location": "node_modules/xcode"
+    },
+    {
+      "name": "@tableus/decode-uri-component-compat",
+      "version": "0.2.3",
+      "location": "vendor/decode-uri-component-compat"
+    }
+  ],
+  "edges": [
+    {
+      "from": "/Users/brianchei/.codex/worktrees/14a6/Tableus-ai-agent-dev",
+      "to": "node_modules/eas-cli",
+      "spec": "23.2.0",
+      "type": "dev"
+    },
+    {
+      "from": "mobile",
+      "to": "mobile/node_modules/expo-router",
+      "spec": "~57.0.17",
+      "type": "prod"
+    },
+    {
+      "from": "mobile",
+      "to": "mobile/node_modules/jest-expo",
+      "spec": "57.0.4",
+      "type": "dev"
+    },
+    {
+      "from": "mobile",
+      "to": "node_modules/@sentry/react-native",
+      "spec": "~7.11.0",
+      "type": "prod"
+    },
+    {
+      "from": "mobile",
+      "to": "node_modules/@testing-library/react-native",
+      "spec": "14.0.1",
+      "type": "dev"
+    },
+    {
+      "from": "mobile",
+      "to": "node_modules/expo-build-properties",
+      "spec": "~57.0.15",
+      "type": "prod"
+    },
+    {
+      "from": "mobile",
+      "to": "node_modules/expo-constants",
+      "spec": "~57.0.11",
+      "type": "prod"
+    },
+    {
+      "from": "mobile",
+      "to": "node_modules/expo-file-system",
+      "spec": "~57.0.3",
+      "type": "prod"
+    },
+    {
+      "from": "mobile",
+      "to": "node_modules/expo-image-picker",
+      "spec": "~57.0.14",
+      "type": "prod"
+    },
+    {
+      "from": "mobile",
+      "to": "node_modules/expo-image",
+      "spec": "~57.0.3",
+      "type": "prod"
+    },
+    {
+      "from": "mobile",
+      "to": "node_modules/expo-linking",
+      "spec": "~57.0.8",
+      "type": "prod"
+    },
+    {
+      "from": "mobile",
+      "to": "node_modules/expo-secure-store",
+      "spec": "~57.0.2",
+      "type": "prod"
+    },
+    {
+      "from": "mobile",
+      "to": "node_modules/expo-sharing",
+      "spec": "~57.0.16",
+      "type": "prod"
+    },
+    {
+      "from": "mobile",
+      "to": "node_modules/expo-status-bar",
+      "spec": "~57.0.1",
+      "type": "prod"
+    },
+    {
+      "from": "mobile",
+      "to": "node_modules/expo-updates",
+      "spec": "~57.0.19",
+      "type": "prod"
+    },
+    {
+      "from": "mobile",
+      "to": "node_modules/expo",
+      "spec": "57.0.23",
+      "type": "prod"
+    },
+    {
+      "from": "mobile",
+      "to": "node_modules/jest",
+      "spec": "30.4.2",
+      "type": "dev"
+    },
+    {
+      "from": "mobile",
+      "to": "node_modules/posthog-react-native",
+      "spec": "^4.63.2",
+      "type": "prod"
+    },
+    {
+      "from": "mobile/node_modules/@jest/core",
+      "to": "mobile/node_modules/jest-config",
+      "spec": "^29.7.0",
+      "type": "prod"
+    },
+    {
+      "from": "mobile/node_modules/expo-router",
+      "to": "mobile/node_modules/expo-router/node_modules/@expo/metro-runtime",
+      "spec": "^57.0.14",
+      "type": "prod"
+    },
+    {
+      "from": "mobile/node_modules/expo-router",
+      "to": "mobile/node_modules/expo-router/node_modules/@expo/ui",
+      "spec": "^57.0.14",
+      "type": "prod"
+    },
+    {
+      "from": "mobile/node_modules/expo-router",
+      "to": "mobile/node_modules/expo-router/node_modules/expo-glass-effect",
+      "spec": "^57.0.1",
+      "type": "prod"
+    },
+    {
+      "from": "mobile/node_modules/expo-router",
+      "to": "mobile/node_modules/expo-router/node_modules/expo-symbols",
+      "spec": "^57.0.2",
+      "type": "prod"
+    },
+    {
+      "from": "mobile/node_modules/expo-router",
+      "to": "node_modules/@expo/log-box",
+      "spec": "^57.0.4",
+      "type": "prod"
+    },
+    {
+      "from": "mobile/node_modules/expo-router",
+      "to": "node_modules/@testing-library/react-native",
+      "spec": ">= 13.2.0",
+      "type": "peerOptional"
+    },
+    {
+      "from": "mobile/node_modules/expo-router",
+      "to": "node_modules/expo-constants",
+      "spec": "^57.0.15",
+      "type": "peer"
+    },
+    {
+      "from": "mobile/node_modules/expo-router",
+      "to": "node_modules/expo-linking",
+      "spec": "^57.0.8",
+      "type": "peer"
+    },
+    {
+      "from": "mobile/node_modules/expo-router",
+      "to": "node_modules/expo",
+      "spec": "*",
+      "type": "peer"
+    },
+    {
+      "from": "mobile/node_modules/expo-router/node_modules/@expo/metro-runtime",
+      "to": "node_modules/@expo/log-box",
+      "spec": "^57.0.4",
+      "type": "prod"
+    },
+    {
+      "from": "mobile/node_modules/expo-router/node_modules/@expo/metro-runtime",
+      "to": "node_modules/expo",
+      "spec": "*",
+      "type": "peer"
+    },
+    {
+      "from": "mobile/node_modules/expo-router/node_modules/@expo/ui",
+      "to": "node_modules/expo",
+      "spec": "*",
+      "type": "peer"
+    },
+    {
+      "from": "mobile/node_modules/expo-router/node_modules/expo-glass-effect",
+      "to": "node_modules/expo",
+      "spec": "*",
+      "type": "peer"
+    },
+    {
+      "from": "mobile/node_modules/expo-router/node_modules/expo-symbols",
+      "to": "node_modules/expo-font",
+      "spec": "*",
+      "type": "peer"
+    },
+    {
+      "from": "mobile/node_modules/expo-router/node_modules/expo-symbols",
+      "to": "node_modules/expo",
+      "spec": "*",
+      "type": "peer"
+    },
+    {
+      "from": "mobile/node_modules/jest-cli",
+      "to": "mobile/node_modules/@jest/core",
+      "spec": "^29.7.0",
+      "type": "prod"
+    },
+    {
+      "from": "mobile/node_modules/jest-cli",
+      "to": "mobile/node_modules/jest-config",
+      "spec": "^29.7.0",
+      "type": "prod"
+    },
+    {
+      "from": "mobile/node_modules/jest-cli",
+      "to": "node_modules/create-jest",
+      "spec": "^29.7.0",
+      "type": "prod"
+    },
+    {
+      "from": "mobile/node_modules/jest-config",
+      "to": "node_modules/ts-node",
+      "spec": ">=9.0.0",
+      "type": "peerOptional"
+    },
+    {
+      "from": "mobile/node_modules/jest-expo",
+      "to": "mobile/node_modules/jest-expo/node_modules/jest-watch-typeahead",
+      "spec": "2.2.1",
+      "type": "prod"
+    },
+    {
+      "from": "mobile/node_modules/jest-expo",
+      "to": "node_modules/expo",
+      "spec": "*",
+      "type": "peerOptional"
+    },
+    {
+      "from": "mobile/node_modules/jest-expo/node_modules/jest-watch-typeahead",
+      "to": "mobile/node_modules/jest-expo/node_modules/jest",
+      "spec": "^27.0.0 || ^28.0.0 || ^29.0.0",
+      "type": "peer"
+    },
+    {
+      "from": "mobile/node_modules/jest-expo/node_modules/jest",
+      "to": "mobile/node_modules/@jest/core",
+      "spec": "^29.7.0",
+      "type": "prod"
+    },
+    {
+      "from": "mobile/node_modules/jest-expo/node_modules/jest",
+      "to": "mobile/node_modules/jest-cli",
+      "spec": "^29.7.0",
+      "type": "prod"
+    },
+    {
+      "from": "node_modules/@expo/bunyan",
+      "to": "node_modules/@expo/bunyan/node_modules/uuid",
+      "spec": "^8.0.0",
+      "type": "prod"
+    },
+    {
+      "from": "node_modules/@expo/config-plugins",
+      "to": "node_modules/xcode",
+      "spec": "^3.0.1",
+      "type": "prod"
+    },
+    {
+      "from": "node_modules/@expo/config",
+      "to": "node_modules/@expo/config-plugins",
+      "spec": "~57.0.9",
+      "type": "prod"
+    },
+    {
+      "from": "node_modules/@expo/dom-webview",
+      "to": "node_modules/expo",
+      "spec": "*",
+      "type": "peer"
+    },
+    {
+      "from": "node_modules/@expo/inline-modules",
+      "to": "node_modules/@expo/config-plugins",
+      "spec": "~57.0.9",
+      "type": "prod"
+    },
+    {
+      "from": "node_modules/@expo/local-build-cache-provider",
+      "to": "node_modules/@expo/config",
+      "spec": "~57.0.9",
+      "type": "prod"
+    },
+    {
+      "from": "node_modules/@expo/log-box",
+      "to": "node_modules/@expo/dom-webview",
+      "spec": "^57.0.1",
+      "type": "prod"
+    },
+    {
+      "from": "node_modules/@expo/log-box",
+      "to": "node_modules/expo",
+      "spec": "*",
+      "type": "peer"
+    },
+    {
+      "from": "node_modules/@expo/metro-config",
+      "to": "node_modules/@expo/config",
+      "spec": "~57.0.9",
+      "type": "prod"
+    },
+    {
+      "from": "node_modules/@expo/metro-config",
+      "to": "node_modules/expo",
+      "spec": "*",
+      "type": "peerOptional"
+    },
+    {
+      "from": "node_modules/@expo/plugin-help",
+      "to": "node_modules/@expo/plugin-help/node_modules/@oclif/core",
+      "spec": "^2.11.1",
+      "type": "prod"
+    },
+    {
+      "from": "node_modules/@expo/plugin-help/node_modules/@oclif/core",
+      "to": "node_modules/ts-node",
+      "spec": "^10.9.1",
+      "type": "prod"
+    },
+    {
+      "from": "node_modules/@expo/plugin-warn-if-update-available",
+      "to": "node_modules/@expo/plugin-warn-if-update-available/node_modules/@oclif/core",
+      "spec": "^2.11.1",
+      "type": "prod"
+    },
+    {
+      "from": "node_modules/@expo/plugin-warn-if-update-available/node_modules/@oclif/core",
+      "to": "node_modules/ts-node",
+      "spec": "^10.9.1",
+      "type": "prod"
+    },
+    {
+      "from": "node_modules/@expo/prebuild-config",
+      "to": "node_modules/@expo/config-plugins",
+      "spec": "~57.0.9",
+      "type": "prod"
+    },
+    {
+      "from": "node_modules/@expo/prebuild-config",
+      "to": "node_modules/@expo/config",
+      "spec": "~57.0.9",
+      "type": "prod"
+    },
+    {
+      "from": "node_modules/@expo/rudder-sdk-node",
+      "to": "node_modules/@expo/bunyan",
+      "spec": "^4.0.0",
+      "type": "prod"
+    },
+    {
+      "from": "node_modules/@expo/rudder-sdk-node",
+      "to": "node_modules/@expo/rudder-sdk-node/node_modules/uuid",
+      "spec": "^8.3.2",
+      "type": "prod"
+    },
+    {
+      "from": "node_modules/@expo/steps",
+      "to": "node_modules/@expo/steps/node_modules/uuid",
+      "spec": "^11.1.1",
+      "type": "prod"
+    },
+    {
+      "from": "node_modules/@jest/core",
+      "to": "node_modules/jest-config",
+      "spec": "30.4.2",
+      "type": "prod"
+    },
+    {
+      "from": "node_modules/@sentry/react-native",
+      "to": "node_modules/expo",
+      "spec": ">=49.0.0",
+      "type": "peerOptional"
+    },
+    {
+      "from": "node_modules/@testing-library/react-native",
+      "to": "node_modules/jest",
+      "spec": ">=29.0.0",
+      "type": "peerOptional"
+    },
+    {
+      "from": "node_modules/babel-preset-expo",
+      "to": "node_modules/expo",
+      "spec": "*",
+      "type": "peerOptional"
+    },
+    {
+      "from": "node_modules/create-jest",
+      "to": "node_modules/create-jest/node_modules/jest-config",
+      "spec": "^29.7.0",
+      "type": "prod"
+    },
+    {
+      "from": "node_modules/create-jest/node_modules/jest-config",
+      "to": "node_modules/ts-node",
+      "spec": ">=9.0.0",
+      "type": "peerOptional"
+    },
+    {
+      "from": "node_modules/eas-cli",
+      "to": "node_modules/@expo/plugin-help",
+      "spec": "5.1.23",
+      "type": "prod"
+    },
+    {
+      "from": "node_modules/eas-cli",
+      "to": "node_modules/@expo/plugin-warn-if-update-available",
+      "spec": "2.5.1",
+      "type": "prod"
+    },
+    {
+      "from": "node_modules/eas-cli",
+      "to": "node_modules/@expo/rudder-sdk-node",
+      "spec": "1.1.1",
+      "type": "prod"
+    },
+    {
+      "from": "node_modules/eas-cli",
+      "to": "node_modules/@expo/steps",
+      "spec": "23.1.0",
+      "type": "prod"
+    },
+    {
+      "from": "node_modules/eas-cli",
+      "to": "node_modules/diff",
+      "spec": "7.0.0",
+      "type": "prod"
+    },
+    {
+      "from": "node_modules/eas-cli",
+      "to": "node_modules/eas-cli/node_modules/@expo/config-plugins",
+      "spec": "55.0.7",
+      "type": "prod"
+    },
+    {
+      "from": "node_modules/eas-cli",
+      "to": "node_modules/eas-cli/node_modules/@expo/config",
+      "spec": "55.0.10",
+      "type": "prod"
+    },
+    {
+      "from": "node_modules/eas-cli",
+      "to": "node_modules/eas-cli/node_modules/@expo/prebuild-config",
+      "spec": "9.0.12",
+      "type": "prod"
+    },
+    {
+      "from": "node_modules/eas-cli",
+      "to": "node_modules/eas-cli/node_modules/uuid",
+      "spec": "11.1.1",
+      "type": "prod"
+    },
+    {
+      "from": "node_modules/eas-cli",
+      "to": "node_modules/ts-deepmerge",
+      "spec": "6.2.0",
+      "type": "prod"
+    },
+    {
+      "from": "node_modules/eas-cli/node_modules/@expo/config-plugins",
+      "to": "node_modules/xcode",
+      "spec": "^3.0.1",
+      "type": "prod"
+    },
+    {
+      "from": "node_modules/eas-cli/node_modules/@expo/config",
+      "to": "node_modules/eas-cli/node_modules/@expo/config-plugins",
+      "spec": "~55.0.7",
+      "type": "prod"
+    },
+    {
+      "from": "node_modules/eas-cli/node_modules/@expo/prebuild-config",
+      "to": "node_modules/eas-cli/node_modules/@expo/prebuild-config/node_modules/@expo/config-plugins",
+      "spec": "~10.1.2",
+      "type": "prod"
+    },
+    {
+      "from": "node_modules/eas-cli/node_modules/@expo/prebuild-config",
+      "to": "node_modules/eas-cli/node_modules/@expo/prebuild-config/node_modules/@expo/config",
+      "spec": "~11.0.13",
+      "type": "prod"
+    },
+    {
+      "from": "node_modules/eas-cli/node_modules/@expo/prebuild-config/node_modules/@expo/config-plugins",
+      "to": "node_modules/xcode",
+      "spec": "^3.0.1",
+      "type": "prod"
+    },
+    {
+      "from": "node_modules/eas-cli/node_modules/@expo/prebuild-config/node_modules/@expo/config",
+      "to": "node_modules/eas-cli/node_modules/@expo/prebuild-config/node_modules/@expo/config-plugins",
+      "spec": "~10.1.2",
+      "type": "prod"
+    },
+    {
+      "from": "node_modules/expo-asset",
+      "to": "node_modules/expo-constants",
+      "spec": "~57.0.18",
+      "type": "prod"
+    },
+    {
+      "from": "node_modules/expo-asset",
+      "to": "node_modules/expo",
+      "spec": "*",
+      "type": "peer"
+    },
+    {
+      "from": "node_modules/expo-build-properties",
+      "to": "node_modules/expo",
+      "spec": "*",
+      "type": "peer"
+    },
+    {
+      "from": "node_modules/expo-constants",
+      "to": "node_modules/expo",
+      "spec": "*",
+      "type": "peer"
+    },
+    {
+      "from": "node_modules/expo-file-system",
+      "to": "node_modules/expo",
+      "spec": "*",
+      "type": "peer"
+    },
+    {
+      "from": "node_modules/expo-font",
+      "to": "node_modules/expo",
+      "spec": "*",
+      "type": "peer"
+    },
+    {
+      "from": "node_modules/expo-image-loader",
+      "to": "node_modules/expo",
+      "spec": "*",
+      "type": "peer"
+    },
+    {
+      "from": "node_modules/expo-image-picker",
+      "to": "node_modules/expo-image-loader",
+      "spec": "~57.0.1",
+      "type": "prod"
+    },
+    {
+      "from": "node_modules/expo-image-picker",
+      "to": "node_modules/expo",
+      "spec": "*",
+      "type": "peer"
+    },
+    {
+      "from": "node_modules/expo-image",
+      "to": "node_modules/expo",
+      "spec": "*",
+      "type": "peer"
+    },
+    {
+      "from": "node_modules/expo-keep-awake",
+      "to": "node_modules/expo",
+      "spec": "*",
+      "type": "peer"
+    },
+    {
+      "from": "node_modules/expo-linking",
+      "to": "node_modules/expo-constants",
+      "spec": "~57.0.15",
+      "type": "prod"
+    },
+    {
+      "from": "node_modules/expo-manifests",
+      "to": "node_modules/expo",
+      "spec": "*",
+      "type": "peer"
+    },
+    {
+      "from": "node_modules/expo-secure-store",
+      "to": "node_modules/expo",
+      "spec": "*",
+      "type": "peer"
+    },
+    {
+      "from": "node_modules/expo-sharing",
+      "to": "node_modules/@expo/config-plugins",
+      "spec": "^57.0.9",
+      "type": "prod"
+    },
+    {
+      "from": "node_modules/expo-sharing",
+      "to": "node_modules/expo",
+      "spec": "*",
+      "type": "peer"
+    },
+    {
+      "from": "node_modules/expo-status-bar",
+      "to": "node_modules/expo",
+      "spec": "*",
+      "type": "peer"
+    },
+    {
+      "from": "node_modules/expo-updates-interface",
+      "to": "node_modules/expo",
+      "spec": "*",
+      "type": "peer"
+    },
+    {
+      "from": "node_modules/expo-updates",
+      "to": "node_modules/expo-manifests",
+      "spec": "~57.0.1",
+      "type": "prod"
+    },
+    {
+      "from": "node_modules/expo-updates",
+      "to": "node_modules/expo-updates-interface",
+      "spec": "~57.0.1",
+      "type": "prod"
+    },
+    {
+      "from": "node_modules/expo-updates",
+      "to": "node_modules/expo",
+      "spec": "*",
+      "type": "peer"
+    },
+    {
+      "from": "node_modules/expo",
+      "to": "node_modules/@expo/config-plugins",
+      "spec": "~57.0.9",
+      "type": "prod"
+    },
+    {
+      "from": "node_modules/expo",
+      "to": "node_modules/@expo/config",
+      "spec": "~57.0.9",
+      "type": "prod"
+    },
+    {
+      "from": "node_modules/expo",
+      "to": "node_modules/@expo/local-build-cache-provider",
+      "spec": "^57.0.8",
+      "type": "prod"
+    },
+    {
+      "from": "node_modules/expo/node_modules/@expo/cli",
+      "to": "node_modules/@expo/config-plugins",
+      "spec": "~57.0.9",
+      "type": "prod"
+    },
+    {
+      "from": "node_modules/expo/node_modules/@expo/cli",
+      "to": "node_modules/@expo/config",
+      "spec": "~57.0.9",
+      "type": "prod"
+    },
+    {
+      "from": "node_modules/expo/node_modules/@expo/cli",
+      "to": "node_modules/@expo/inline-modules",
+      "spec": "^0.1.7",
+      "type": "prod"
+    },
+    {
+      "from": "node_modules/expo/node_modules/@expo/cli",
+      "to": "node_modules/@expo/log-box",
+      "spec": "^57.0.4",
+      "type": "prod"
+    },
+    {
+      "from": "node_modules/expo/node_modules/@expo/cli",
+      "to": "node_modules/@expo/metro-config",
+      "spec": "~57.0.12",
+      "type": "prod"
+    },
+    {
+      "from": "node_modules/expo/node_modules/@expo/cli",
+      "to": "node_modules/@expo/prebuild-config",
+      "spec": "^57.0.16",
+      "type": "prod"
+    },
+    {
+      "from": "node_modules/expo/node_modules/@expo/cli",
+      "to": "node_modules/expo",
+      "spec": "*",
+      "type": "peer"
+    },
+    {
+      "from": "node_modules/expo/node_modules/@expo/cli",
+      "to": "node_modules/expo/node_modules/@expo/cli/node_modules/@expo/router-server",
+      "spec": "^57.0.10",
+      "type": "prod"
+    },
+    {
+      "from": "node_modules/expo/node_modules/@expo/cli/node_modules/@expo/router-server",
+      "to": "node_modules/expo-constants",
+      "spec": "^57.0.18",
+      "type": "peer"
+    },
+    {
+      "from": "node_modules/expo/node_modules/@expo/cli/node_modules/@expo/router-server",
+      "to": "node_modules/expo-font",
+      "spec": "^57.0.4",
+      "type": "peer"
+    },
+    {
+      "from": "node_modules/expo/node_modules/@expo/cli/node_modules/@expo/router-server",
+      "to": "node_modules/expo",
+      "spec": "*",
+      "type": "peer"
+    },
+    {
+      "from": "node_modules/jest-cli",
+      "to": "node_modules/@jest/core",
+      "spec": "30.4.2",
+      "type": "prod"
+    },
+    {
+      "from": "node_modules/jest-cli",
+      "to": "node_modules/jest-config",
+      "spec": "30.4.2",
+      "type": "prod"
+    },
+    {
+      "from": "node_modules/jest-config",
+      "to": "node_modules/ts-node",
+      "spec": ">=9.0.0",
+      "type": "peerOptional"
+    },
+    {
+      "from": "node_modules/jest",
+      "to": "node_modules/@jest/core",
+      "spec": "30.4.2",
+      "type": "prod"
+    },
+    {
+      "from": "node_modules/jest",
+      "to": "node_modules/jest-cli",
+      "spec": "30.4.2",
+      "type": "prod"
+    },
+    {
+      "from": "node_modules/posthog-react-native",
+      "to": "node_modules/expo-file-system",
+      "spec": ">= 13.0.0",
+      "type": "peerOptional"
+    },
+    {
+      "from": "node_modules/ts-node",
+      "to": "node_modules/ts-node/node_modules/diff",
+      "spec": "^4.0.1",
+      "type": "prod"
+    },
+    {
+      "from": "node_modules/xcode",
+      "to": "node_modules/uuid",
+      "spec": "^7.0.3",
+      "type": "prod"
+    },
+    {
+      "from": "root:expo",
+      "to": "node_modules/@expo/dom-webview",
+      "spec": "~57.0.1",
+      "type": "prod"
+    },
+    {
+      "from": "root:expo",
+      "to": "node_modules/@expo/log-box",
+      "spec": "^57.0.4",
+      "type": "prod"
+    },
+    {
+      "from": "root:expo",
+      "to": "node_modules/@expo/metro-config",
+      "spec": "~57.0.12",
+      "type": "prod"
+    },
+    {
+      "from": "root:expo",
+      "to": "node_modules/babel-preset-expo",
+      "spec": "~57.0.12",
+      "type": "prod"
+    },
+    {
+      "from": "root:expo",
+      "to": "node_modules/expo-asset",
+      "spec": "~57.0.17",
+      "type": "prod"
+    },
+    {
+      "from": "root:expo",
+      "to": "node_modules/expo-constants",
+      "spec": "~57.0.18",
+      "type": "prod"
+    },
+    {
+      "from": "root:expo",
+      "to": "node_modules/expo-file-system",
+      "spec": "~57.0.7",
+      "type": "prod"
+    },
+    {
+      "from": "root:expo",
+      "to": "node_modules/expo-font",
+      "spec": "~57.0.4",
+      "type": "prod"
+    },
+    {
+      "from": "root:expo",
+      "to": "node_modules/expo-keep-awake",
+      "spec": "~57.0.2",
+      "type": "prod"
+    },
+    {
+      "from": "root:expo",
+      "to": "node_modules/expo/node_modules/@expo/cli",
+      "spec": "^57.0.25",
+      "type": "prod"
+    },
+    {
+      "from": "vendor/decode-uri-component-compat",
+      "to": "node_modules/decode-uri-component-upstream",
+      "spec": "npm:decode-uri-component@0.5.0",
+      "type": "prod"
+    }
+  ]
+}

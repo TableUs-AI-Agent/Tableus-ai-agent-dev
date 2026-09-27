@@ -1,0 +1,177 @@
+{
+  "observed_at": "2026-09-21T23:28:39.857490+00:00",
+  "status": "phase_w_complete_staging_web_activated",
+  "phase_w_complete": true,
+  "application_sha": "ed8330a766b3c4b80a505e075535678394e275e9",
+  "repository_operator_sha": "ed8330a766b3c4b80a505e075535678394e275e9",
+  "prior_checkpoint": "514a0136e1eb2ea0c52c315bf92efaf92809dfc9",
+  "published_ref": "refs/heads/codex/web-deps-ed8330a",
+  "remote_ref_verified": "ed8330a766b3c4b80a505e075535678394e275e9\trefs/heads/codex/web-deps-ed8330a",
+  "amendment_approved": true,
+  "preview": {
+    "id": "dpl_3ec5bdvridE1meArFaYWAp8yabKM",
+    "url": "tableus-staging-pees2ewbm-briancheis-projects.vercel.app",
+    "target": null,
+    "readyState": "READY",
+    "nodeVersion": "22.x",
+    "gitSource": {
+      "type": "github",
+      "repoId": 1331770296,
+      "ref": "codex/web-deps-ed8330a",
+      "sha": "ed8330a766b3c4b80a505e075535678394e275e9"
+    },
+    "meta": {
+      "githubCommitAuthorName": "Brian Chei",
+      "githubCommitAuthorEmail": "157544112+brianchei@users.noreply.github.com",
+      "githubCommitMessage": "fix: resolve dependency toolchain exception for replacement candidate",
+      "githubCommitOrg": "TableUs-AI-Agent",
+      "githubCommitRef": "codex/web-deps-ed8330a",
+      "githubCommitRepo": "Tableus-ai-agent-dev",
+      "githubCommitSha": "ed8330a766b3c4b80a505e075535678394e275e9",
+      "githubDeployment": "1",
+      "githubOrg": "TableUs-AI-Agent",
+      "githubRepo": "Tableus-ai-agent-dev",
+      "githubRepoOwnerType": "Organization",
+      "githubCommitRepoId": "1331770296",
+      "githubRepoId": "1331770296",
+      "githubRepoVisibility": "public",
+      "githubHost": "github.com",
+      "githubCommitAuthorLogin": "brianchei",
+      "githubCommitVerification": "unverified",
+      "branchAlias": "tableus-staging-git-codex-web-deps-ed8330a-briancheis-projects.vercel.app",
+      "lambdaRuntimeStats": "{\"nodejs\":3}"
+    },
+    "createdAt": 1790028853060,
+    "buildingAt": 1790028854799,
+    "readyAt": null
+  },
+  "preview_count_for_sha": 1,
+  "preview_creation": "No automatic Preview during pause or after restore; created one explicitly from exact Git branch and SHA.",
+  "branch_overrides": [
+    {
+      "id": "CuW1iFwR54VmJeiA",
+      "key": "SENTRY_AUTH_TOKEN",
+      "value": "",
+      "type": "plain",
+      "target": [
+        "preview"
+      ],
+      "gitBranch": "codex/web-deps-ed8330a"
+    },
+    {
+      "id": "iTzyO7WNNuxsvIfn",
+      "key": "NEXT_PUBLIC_SOURCE_SHA",
+      "value": "ed8330a766b3c4b80a505e075535678394e275e9",
+      "type": "plain",
+      "target": [
+        "preview"
+      ],
+      "gitBranch": "codex/web-deps-ed8330a"
+    },
+    {
+      "id": "bLzSKByqtiNZ7gnv",
+      "key": "TABLEUS_BUILD_SHA",
+      "value": "ed8330a766b3c4b80a505e075535678394e275e9",
+      "type": "plain",
+      "target": [
+        "preview"
+      ],
+      "gitBranch": "codex/web-deps-ed8330a"
+    }
+  ],
+  "all_previous_environment_records_preserved": true,
+  "preview_pause_restored": true,
+  "production_target_preserved": true,
+  "existing_protection_preserved": true,
+  "bypass_credential": "Existing automation-bypass token reused; no secret created/rotated or printed.",
+  "source_build_evidence": {
+    "git_sha": "ed8330a766b3c4b80a505e075535678394e275e9",
+    "root_npm_ci": true,
+    "next_16_3_5": true,
+    "vendor_inclusion": "Exact Git archive contains vendor; whole-repo frozen install resolves required file dependency in CI and Vercel. Git deployment file-tree API returns 404, so no independent remote file-tree hash is claimed.",
+    "node_hosted": "22.x reported by deployment; minor unavailable",
+    "node_ci": "22.23.2",
+    "linux_image_stack": "Measured local x64 16.3.5 / sharp 0.35.4 / sharp-libvips-linux-x64 1.3.3 / libvips 8.18.6 / libheif 1.23.2; hosted sharp/libvips binary versions are frozen-lock inference only.",
+    "build_log_sha256": "31c9179c11ff082e4dc0e906a7aa20dedd23c4bb513b77f68480176617af7b10"
+  },
+  "current_api": {
+    "deployment_id": "24eefe75-9583-4a90-8d3e-48450818dec0",
+    "source_sha": "f94a1d9d1125e6c9111aa08eda496f014f20d0c0",
+    "image_digest": "sha256:92d1605c9100bd54b84c5e5295a93d6eef32c138e00984c2c2788d6a27b82272",
+    "ready": {
+      "status": "ready",
+      "provider_mode": "live",
+      "places_provider_mode": "live",
+      "ai_provider_mode": "live",
+      "ai_backend": "agent-platform",
+      "auth_mode": "supabase",
+      "build_sha": "f94a1d9d1125e6c9111aa08eda496f014f20d0c0",
+      "telemetry_mode": "staging",
+      "analytics_mode": "anonymous",
+      "error_reporting_mode": "errors_only",
+      "telemetry_e2e": true
+    },
+    "only_allowed_origins_changed": true,
+    "image_rebuilt": true,
+    "provenance_evidence": "activation.json"
+  },
+  "native": {
+    "source_sha": "f94a1d9d1125e6c9111aa08eda496f014f20d0c0",
+    "changed": false
+  },
+  "aliases": [
+    {
+      "host": "tableus-staging.vercel.app",
+      "before_deployment_id": "dpl_7yiJcGeeVGHBRzFggodNCLzoiAeX",
+      "deployment_id": "dpl_3ec5bdvridE1meArFaYWAp8yabKM",
+      "redirect": null,
+      "redirect_status": null
+    },
+    {
+      "host": "links.table-us.com",
+      "before_deployment_id": "dpl_7yiJcGeeVGHBRzFggodNCLzoiAeX",
+      "deployment_id": "dpl_3ec5bdvridE1meArFaYWAp8yabKM",
+      "redirect": null,
+      "redirect_status": null
+    },
+    {
+      "host": "table-us.com",
+      "before_deployment_id": "dpl_7csJvHoJH9qgFZDijbwu3w36r2sK",
+      "deployment_id": "dpl_7csJvHoJH9qgFZDijbwu3w36r2sK",
+      "redirect": "www.table-us.com",
+      "redirect_status": 308
+    },
+    {
+      "host": "www.table-us.com",
+      "before_deployment_id": "dpl_7csJvHoJH9qgFZDijbwu3w36r2sK",
+      "deployment_id": "dpl_7csJvHoJH9qgFZDijbwu3w36r2sK",
+      "redirect": null,
+      "redirect_status": null
+    }
+  ],
+  "counts": {
+    "ci_runs": 1,
+    "preview_deployments": 1,
+    "successful_vercel_configuration_mutations": 5,
+    "railway_mutations": 2,
+    "alias_moves": 2,
+    "live_places": 0,
+    "live_gemini": 0,
+    "otp_emails": 0,
+    "deliberate_canaries": 0,
+    "native_builds": 0,
+    "symbol_uploads_initiated": 0,
+    "local_full_suite_reruns": 0,
+    "railway_variable_updates": 1,
+    "api_redeployments": 1
+  },
+  "remaining_gate": null,
+  "residual_risks": [
+    "Production e1184ec remains public and unpatched by this staging rollout; original f94a1d9 and older immutable deployments remain retained. Sampled immutable URLs require SSO, but authorized/bypass access remains.",
+    "No direct hosted sharp/libvips introspection or live browser data/provider verification.",
+    "Future production domain reassignment remains possible because project domains have no preview branch binding.",
+    "Simulator AppHang remains unresolved and isolated-staging-only; September 30 dependency deadline unextended.",
+    "Railway rebuilt the approved existing f94a1d9 source into a new image with matching pinned inputs; fresh API verification covers readiness/CORS, not a full authenticated/live journey."
+  ],
+  "activation_evidence": "activation.json"
+}

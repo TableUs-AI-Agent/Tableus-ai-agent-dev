@@ -1,0 +1,12 @@
+{
+  "application_sha": "f94a1d9d1125e6c9111aa08eda496f014f20d0c0",
+  "observed_at": "2026-09-16T02:14:04.015062+00:00",
+  "organizer_session_survived_reload": true,
+  "expected_organizer_profile_confirmed": true,
+  "export_control_available": true,
+  "web_export_download_not_executed": true,
+  "deletion_readiness_shown": true,
+  "deletion_confirmation_empty": true,
+  "deletion_disabled": true,
+  "returned_to_plans": true
+}

@@ -1,0 +1,22 @@
+{
+  "application_sha": "f94a1d9d1125e6c9111aa08eda496f014f20d0c0",
+  "observed_at": "2026-09-16T02:09:51.176335+00:00",
+  "posthog_project_id": 578352,
+  "posthog_counts": {
+    "web": 1,
+    "ios": 1,
+    "api": 1
+  },
+  "sentry_release_environment_filtered_counts": {
+    "tableus-web-staging": 1,
+    "tableus-mobile-staging": 1,
+    "tableus-api-staging": 1
+  },
+  "sentry_canary_issue_ids": {
+    "web": "7694001131",
+    "mobile": "7694252510",
+    "api": "7694252495"
+  },
+  "android_pending": true,
+  "raw_payloads_retained": false
+}

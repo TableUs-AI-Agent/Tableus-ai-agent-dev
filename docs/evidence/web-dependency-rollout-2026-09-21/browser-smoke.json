@@ -1,0 +1,1618 @@
+{
+  "observed_at": "2026-09-21T22:22:11.670Z",
+  "deployment_id": "dpl_3ec5bdvridE1meArFaYWAp8yabKM",
+  "application_sha": "ed8330a766b3c4b80a505e075535678394e275e9",
+  "browser": "153.0.8010.52",
+  "fresh_context": true,
+  "checks": [
+    {
+      "label": "landing",
+      "requested": "/",
+      "landed": "/discover",
+      "status": 200,
+      "expected_text": "Food plans, shared at the table.",
+      "matched": true
+    },
+    {
+      "label": "invite",
+      "requested": "/invite",
+      "landed": "/invite",
+      "status": 200,
+      "expected_text": "Join TableUs",
+      "matched": true
+    },
+    {
+      "label": "switch-auth-mode",
+      "matched": true
+    },
+    {
+      "label": "auth",
+      "requested": "/auth?mode=sign-in",
+      "landed": "/invite?mode=sign-in",
+      "status": 200,
+      "expected_text": "Welcome back",
+      "matched": true
+    },
+    {
+      "label": "confirm",
+      "requested": "/auth/confirm",
+      "landed": "/invite?error=invalid_callback",
+      "status": 200,
+      "expected_text": "Join TableUs",
+      "matched": true
+    },
+    {
+      "label": "invalid-join",
+      "requested": "/join/not-a-uuid?token=phase-w-invalid",
+      "landed": "/join/not-a-uuid?token=phase-w-invalid",
+      "status": 200,
+      "expected_text": "This private link is invalid, expired, or has been rotated.",
+      "matched": true
+    },
+    {
+      "label": "missing-token",
+      "requested": "/join/00000000-0000-4000-8000-000000000000",
+      "landed": "/join/00000000-0000-4000-8000-000000000000",
+      "status": 200,
+      "expected_text": "This private link is invalid, expired, or has been rotated.",
+      "matched": true
+    }
+  ],
+  "errors": [],
+  "blocked": [
+    {
+      "method": "GET",
+      "origin": "https://vercel.live",
+      "path": "/_next-live/feedback/feedback.js"
+    },
+    {
+      "method": "POST",
+      "origin": "https://o4511977317466112.ingest.us.sentry.io",
+      "path": "/api/4511977329262592/envelope/"
+    },
+    {
+      "method": "POST",
+      "origin": "https://o4511977317466112.ingest.us.sentry.io",
+      "path": "/api/4511977329262592/envelope/"
+    },
+    {
+      "method": "POST",
+      "origin": "https://api-staging-3795.up.railway.app",
+      "path": "/api/restaurants/nearby"
+    },
+    {
+      "method": "GET",
+      "origin": "https://us-assets.i.posthog.com",
+      "path": "/array/[public-key]/config.js"
+    },
+    {
+      "method": "GET",
+      "origin": "https://us-assets.i.posthog.com",
+      "path": "/array/[public-key]/config"
+    },
+    {
+      "method": "GET",
+      "origin": "https://vercel.live",
+      "path": "/_next-live/feedback/feedback.js"
+    },
+    {
+      "method": "POST",
+      "origin": "https://o4511977317466112.ingest.us.sentry.io",
+      "path": "/api/4511977329262592/envelope/"
+    },
+    {
+      "method": "POST",
+      "origin": "https://o4511977317466112.ingest.us.sentry.io",
+      "path": "/api/4511977329262592/envelope/"
+    },
+    {
+      "method": "GET",
+      "origin": "https://us-assets.i.posthog.com",
+      "path": "/array/[public-key]/config.js"
+    },
+    {
+      "method": "GET",
+      "origin": "https://us-assets.i.posthog.com",
+      "path": "/array/[public-key]/config"
+    },
+    {
+      "method": "GET",
+      "origin": "https://vercel.live",
+      "path": "/_next-live/feedback/feedback.js"
+    },
+    {
+      "method": "POST",
+      "origin": "https://o4511977317466112.ingest.us.sentry.io",
+      "path": "/api/4511977329262592/envelope/"
+    },
+    {
+      "method": "POST",
+      "origin": "https://o4511977317466112.ingest.us.sentry.io",
+      "path": "/api/4511977329262592/envelope/"
+    },
+    {
+      "method": "GET",
+      "origin": "https://us-assets.i.posthog.com",
+      "path": "/array/[public-key]/config.js"
+    },
+    {
+      "method": "GET",
+      "origin": "https://us-assets.i.posthog.com",
+      "path": "/array/[public-key]/config"
+    },
+    {
+      "method": "GET",
+      "origin": "https://vercel.live",
+      "path": "/_next-live/feedback/feedback.js"
+    },
+    {
+      "method": "POST",
+      "origin": "https://o4511977317466112.ingest.us.sentry.io",
+      "path": "/api/4511977329262592/envelope/"
+    },
+    {
+      "method": "POST",
+      "origin": "https://o4511977317466112.ingest.us.sentry.io",
+      "path": "/api/4511977329262592/envelope/"
+    },
+    {
+      "method": "GET",
+      "origin": "https://us-assets.i.posthog.com",
+      "path": "/array/[public-key]/config.js"
+    },
+    {
+      "method": "GET",
+      "origin": "https://us-assets.i.posthog.com",
+      "path": "/array/[public-key]/config"
+    },
+    {
+      "method": "GET",
+      "origin": "https://vercel.live",
+      "path": "/_next-live/feedback/feedback.js"
+    },
+    {
+      "method": "POST",
+      "origin": "https://o4511977317466112.ingest.us.sentry.io",
+      "path": "/api/4511977329262592/envelope/"
+    },
+    {
+      "method": "POST",
+      "origin": "https://o4511977317466112.ingest.us.sentry.io",
+      "path": "/api/4511977329262592/envelope/"
+    },
+    {
+      "method": "GET",
+      "origin": "https://us-assets.i.posthog.com",
+      "path": "/array/[public-key]/config.js"
+    },
+    {
+      "method": "GET",
+      "origin": "https://us-assets.i.posthog.com",
+      "path": "/array/[public-key]/config"
+    },
+    {
+      "method": "GET",
+      "origin": "https://vercel.live",
+      "path": "/_next-live/feedback/feedback.js"
+    },
+    {
+      "method": "POST",
+      "origin": "https://o4511977317466112.ingest.us.sentry.io",
+      "path": "/api/4511977329262592/envelope/"
+    },
+    {
+      "method": "POST",
+      "origin": "https://o4511977317466112.ingest.us.sentry.io",
+      "path": "/api/4511977329262592/envelope/"
+    },
+    {
+      "method": "GET",
+      "origin": "https://us-assets.i.posthog.com",
+      "path": "/array/[public-key]/config.js"
+    },
+    {
+      "method": "GET",
+      "origin": "https://us-assets.i.posthog.com",
+      "path": "/array/[public-key]/config"
+    }
+  ],
+  "requests": [
+    {
+      "method": "GET",
+      "origin": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app",
+      "path": "/"
+    },
+    {
+      "method": "GET",
+      "origin": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app",
+      "path": "/_next/static/css/7bcc9ebd8defdb87.css"
+    },
+    {
+      "method": "GET",
+      "origin": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app",
+      "path": "/_next/static/chunks/webpack-d65839e3567f7b9c.js"
+    },
+    {
+      "method": "GET",
+      "origin": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app",
+      "path": "/_next/static/chunks/97e9ee5f-57eadbfa66ee070f.js"
+    },
+    {
+      "method": "GET",
+      "origin": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app",
+      "path": "/_next/static/chunks/c7879cf7-8d04bf519bc81a2d.js"
+    },
+    {
+      "method": "GET",
+      "origin": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app",
+      "path": "/_next/static/chunks/747-0d821b06bc4bf4c6.js"
+    },
+    {
+      "method": "GET",
+      "origin": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app",
+      "path": "/_next/static/chunks/main-app-ceba052889cbb13f.js"
+    },
+    {
+      "method": "GET",
+      "origin": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app",
+      "path": "/_next/static/chunks/d28dc9c7-9b3bb30f583875ae.js"
+    },
+    {
+      "method": "GET",
+      "origin": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app",
+      "path": "/_next/static/chunks/628-6c1c193164d7c953.js"
+    },
+    {
+      "method": "GET",
+      "origin": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app",
+      "path": "/_next/static/chunks/685-5580a06f47a01a4d.js"
+    },
+    {
+      "method": "GET",
+      "origin": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app",
+      "path": "/_next/static/chunks/568-b6bb8ec70c5b4785.js"
+    },
+    {
+      "method": "GET",
+      "origin": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app",
+      "path": "/_next/static/chunks/922-d7683125cf6c60d3.js"
+    },
+    {
+      "method": "GET",
+      "origin": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app",
+      "path": "/_next/static/chunks/app/layout-139aecc5216eb721.js"
+    },
+    {
+      "method": "GET",
+      "origin": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app",
+      "path": "/_next/static/chunks/950-5f83b6c7d4cb5040.js"
+    },
+    {
+      "method": "GET",
+      "origin": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app",
+      "path": "/_next/static/chunks/854-904ac227586214aa.js"
+    },
+    {
+      "method": "GET",
+      "origin": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app",
+      "path": "/_next/static/chunks/app/discover/page-ae28f863df2d352b.js"
+    },
+    {
+      "method": "GET",
+      "origin": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app",
+      "path": "/_next/static/chunks/app/global-error-e9769d1775b5bd1a.js"
+    },
+    {
+      "method": "GET",
+      "origin": "https://vercel.live",
+      "path": "/_next-live/feedback/feedback.js"
+    },
+    {
+      "method": "POST",
+      "origin": "https://o4511977317466112.ingest.us.sentry.io",
+      "path": "/api/4511977329262592/envelope/"
+    },
+    {
+      "method": "POST",
+      "origin": "https://o4511977317466112.ingest.us.sentry.io",
+      "path": "/api/4511977329262592/envelope/"
+    },
+    {
+      "method": "GET",
+      "origin": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app",
+      "path": "/_next/static/chunks/6a1f7758.7bbb0bfe6b211e14.js"
+    },
+    {
+      "method": "GET",
+      "origin": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app",
+      "path": "/_next/static/chunks/83607670-e22b1475274778c0.js"
+    },
+    {
+      "method": "GET",
+      "origin": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app",
+      "path": "/_next/static/chunks/c3f2cda1-9c248a2fa3f93d99.js"
+    },
+    {
+      "method": "GET",
+      "origin": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app",
+      "path": "/_next/static/chunks/59-bdb08cd3444787d6.js"
+    },
+    {
+      "method": "POST",
+      "origin": "https://api-staging-3795.up.railway.app",
+      "path": "/api/restaurants/nearby"
+    },
+    {
+      "method": "GET",
+      "origin": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app",
+      "path": "/plans"
+    },
+    {
+      "method": "GET",
+      "origin": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app",
+      "path": "/discover"
+    },
+    {
+      "method": "GET",
+      "origin": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app",
+      "path": "/friends"
+    },
+    {
+      "method": "GET",
+      "origin": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app",
+      "path": "/review"
+    },
+    {
+      "method": "GET",
+      "origin": "https://us-assets.i.posthog.com",
+      "path": "/array/[public-key]/config.js"
+    },
+    {
+      "method": "GET",
+      "origin": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app",
+      "path": "/profile"
+    },
+    {
+      "method": "GET",
+      "origin": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app",
+      "path": "/discover"
+    },
+    {
+      "method": "GET",
+      "origin": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app",
+      "path": "/plans"
+    },
+    {
+      "method": "GET",
+      "origin": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app",
+      "path": "/friends"
+    },
+    {
+      "method": "GET",
+      "origin": "https://us-assets.i.posthog.com",
+      "path": "/array/[public-key]/config"
+    },
+    {
+      "method": "GET",
+      "origin": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app",
+      "path": "/review"
+    },
+    {
+      "method": "GET",
+      "origin": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app",
+      "path": "/icon.svg"
+    },
+    {
+      "method": "GET",
+      "origin": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app",
+      "path": "/profile"
+    },
+    {
+      "method": "GET",
+      "origin": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app",
+      "path": "/_next/static/chunks/553-5bd29fce376ab578.js"
+    },
+    {
+      "method": "GET",
+      "origin": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app",
+      "path": "/_next/static/chunks/app/plans/page-0bd0a3d89b55ff19.js"
+    },
+    {
+      "method": "GET",
+      "origin": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app",
+      "path": "/_next/static/chunks/80-2a95650d70aed8f4.js"
+    },
+    {
+      "method": "GET",
+      "origin": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app",
+      "path": "/_next/static/chunks/app/review/page-6b5686f497db1ddf.js"
+    },
+    {
+      "method": "GET",
+      "origin": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app",
+      "path": "/_next/static/chunks/506-98f8e3b382ff11c0.js"
+    },
+    {
+      "method": "GET",
+      "origin": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app",
+      "path": "/_next/static/chunks/app/friends/page-d7bfd93623f1e6f0.js"
+    },
+    {
+      "method": "GET",
+      "origin": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app",
+      "path": "/_next/static/chunks/app/profile/page-2e05b98b2a535133.js"
+    },
+    {
+      "method": "GET",
+      "origin": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app",
+      "path": "/invite"
+    },
+    {
+      "method": "GET",
+      "origin": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app",
+      "path": "/_next/static/css/7bcc9ebd8defdb87.css"
+    },
+    {
+      "method": "GET",
+      "origin": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app",
+      "path": "/_next/static/chunks/webpack-d65839e3567f7b9c.js"
+    },
+    {
+      "method": "GET",
+      "origin": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app",
+      "path": "/_next/static/chunks/97e9ee5f-57eadbfa66ee070f.js"
+    },
+    {
+      "method": "GET",
+      "origin": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app",
+      "path": "/_next/static/chunks/c7879cf7-8d04bf519bc81a2d.js"
+    },
+    {
+      "method": "GET",
+      "origin": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app",
+      "path": "/_next/static/chunks/747-0d821b06bc4bf4c6.js"
+    },
+    {
+      "method": "GET",
+      "origin": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app",
+      "path": "/_next/static/chunks/main-app-ceba052889cbb13f.js"
+    },
+    {
+      "method": "GET",
+      "origin": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app",
+      "path": "/_next/static/chunks/d28dc9c7-9b3bb30f583875ae.js"
+    },
+    {
+      "method": "GET",
+      "origin": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app",
+      "path": "/_next/static/chunks/628-6c1c193164d7c953.js"
+    },
+    {
+      "method": "GET",
+      "origin": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app",
+      "path": "/_next/static/chunks/685-5580a06f47a01a4d.js"
+    },
+    {
+      "method": "GET",
+      "origin": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app",
+      "path": "/_next/static/chunks/568-b6bb8ec70c5b4785.js"
+    },
+    {
+      "method": "GET",
+      "origin": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app",
+      "path": "/_next/static/chunks/922-d7683125cf6c60d3.js"
+    },
+    {
+      "method": "GET",
+      "origin": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app",
+      "path": "/_next/static/chunks/app/layout-139aecc5216eb721.js"
+    },
+    {
+      "method": "GET",
+      "origin": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app",
+      "path": "/_next/static/chunks/app/global-error-e9769d1775b5bd1a.js"
+    },
+    {
+      "method": "GET",
+      "origin": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app",
+      "path": "/_next/static/chunks/app/invite/page-382cae1aee686465.js"
+    },
+    {
+      "method": "GET",
+      "origin": "https://vercel.live",
+      "path": "/_next-live/feedback/feedback.js"
+    },
+    {
+      "method": "POST",
+      "origin": "https://o4511977317466112.ingest.us.sentry.io",
+      "path": "/api/4511977329262592/envelope/"
+    },
+    {
+      "method": "POST",
+      "origin": "https://o4511977317466112.ingest.us.sentry.io",
+      "path": "/api/4511977329262592/envelope/"
+    },
+    {
+      "method": "GET",
+      "origin": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app",
+      "path": "/_next/static/chunks/6a1f7758.7bbb0bfe6b211e14.js"
+    },
+    {
+      "method": "GET",
+      "origin": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app",
+      "path": "/plans"
+    },
+    {
+      "method": "GET",
+      "origin": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app",
+      "path": "/discover"
+    },
+    {
+      "method": "GET",
+      "origin": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app",
+      "path": "/friends"
+    },
+    {
+      "method": "GET",
+      "origin": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app",
+      "path": "/review"
+    },
+    {
+      "method": "GET",
+      "origin": "https://us-assets.i.posthog.com",
+      "path": "/array/[public-key]/config.js"
+    },
+    {
+      "method": "GET",
+      "origin": "https://us-assets.i.posthog.com",
+      "path": "/array/[public-key]/config"
+    },
+    {
+      "method": "GET",
+      "origin": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app",
+      "path": "/icon.svg"
+    },
+    {
+      "method": "GET",
+      "origin": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app",
+      "path": "/profile"
+    },
+    {
+      "method": "GET",
+      "origin": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app",
+      "path": "/plans"
+    },
+    {
+      "method": "GET",
+      "origin": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app",
+      "path": "/discover"
+    },
+    {
+      "method": "GET",
+      "origin": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app",
+      "path": "/friends"
+    },
+    {
+      "method": "GET",
+      "origin": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app",
+      "path": "/review"
+    },
+    {
+      "method": "GET",
+      "origin": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app",
+      "path": "/_next/static/chunks/950-5f83b6c7d4cb5040.js"
+    },
+    {
+      "method": "GET",
+      "origin": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app",
+      "path": "/_next/static/chunks/506-98f8e3b382ff11c0.js"
+    },
+    {
+      "method": "GET",
+      "origin": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app",
+      "path": "/_next/static/chunks/app/friends/page-d7bfd93623f1e6f0.js"
+    },
+    {
+      "method": "GET",
+      "origin": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app",
+      "path": "/profile"
+    },
+    {
+      "method": "GET",
+      "origin": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app",
+      "path": "/_next/static/chunks/553-5bd29fce376ab578.js"
+    },
+    {
+      "method": "GET",
+      "origin": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app",
+      "path": "/_next/static/chunks/app/plans/page-0bd0a3d89b55ff19.js"
+    },
+    {
+      "method": "GET",
+      "origin": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app",
+      "path": "/_next/static/chunks/854-904ac227586214aa.js"
+    },
+    {
+      "method": "GET",
+      "origin": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app",
+      "path": "/_next/static/chunks/app/discover/page-ae28f863df2d352b.js"
+    },
+    {
+      "method": "GET",
+      "origin": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app",
+      "path": "/_next/static/chunks/83607670-e22b1475274778c0.js"
+    },
+    {
+      "method": "GET",
+      "origin": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app",
+      "path": "/_next/static/chunks/c3f2cda1-9c248a2fa3f93d99.js"
+    },
+    {
+      "method": "GET",
+      "origin": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app",
+      "path": "/_next/static/chunks/59-bdb08cd3444787d6.js"
+    },
+    {
+      "method": "GET",
+      "origin": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app",
+      "path": "/_next/static/chunks/app/profile/page-2e05b98b2a535133.js"
+    },
+    {
+      "method": "GET",
+      "origin": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app",
+      "path": "/_next/static/chunks/80-2a95650d70aed8f4.js"
+    },
+    {
+      "method": "GET",
+      "origin": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app",
+      "path": "/_next/static/chunks/app/review/page-6b5686f497db1ddf.js"
+    },
+    {
+      "method": "GET",
+      "origin": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app",
+      "path": "/auth"
+    },
+    {
+      "method": "GET",
+      "origin": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app",
+      "path": "/_next/static/css/7bcc9ebd8defdb87.css"
+    },
+    {
+      "method": "GET",
+      "origin": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app",
+      "path": "/_next/static/chunks/webpack-d65839e3567f7b9c.js"
+    },
+    {
+      "method": "GET",
+      "origin": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app",
+      "path": "/_next/static/chunks/97e9ee5f-57eadbfa66ee070f.js"
+    },
+    {
+      "method": "GET",
+      "origin": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app",
+      "path": "/_next/static/chunks/c7879cf7-8d04bf519bc81a2d.js"
+    },
+    {
+      "method": "GET",
+      "origin": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app",
+      "path": "/_next/static/chunks/747-0d821b06bc4bf4c6.js"
+    },
+    {
+      "method": "GET",
+      "origin": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app",
+      "path": "/_next/static/chunks/main-app-ceba052889cbb13f.js"
+    },
+    {
+      "method": "GET",
+      "origin": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app",
+      "path": "/_next/static/chunks/d28dc9c7-9b3bb30f583875ae.js"
+    },
+    {
+      "method": "GET",
+      "origin": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app",
+      "path": "/_next/static/chunks/628-6c1c193164d7c953.js"
+    },
+    {
+      "method": "GET",
+      "origin": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app",
+      "path": "/_next/static/chunks/685-5580a06f47a01a4d.js"
+    },
+    {
+      "method": "GET",
+      "origin": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app",
+      "path": "/_next/static/chunks/568-b6bb8ec70c5b4785.js"
+    },
+    {
+      "method": "GET",
+      "origin": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app",
+      "path": "/_next/static/chunks/922-d7683125cf6c60d3.js"
+    },
+    {
+      "method": "GET",
+      "origin": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app",
+      "path": "/_next/static/chunks/app/layout-139aecc5216eb721.js"
+    },
+    {
+      "method": "GET",
+      "origin": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app",
+      "path": "/_next/static/chunks/app/global-error-e9769d1775b5bd1a.js"
+    },
+    {
+      "method": "GET",
+      "origin": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app",
+      "path": "/_next/static/chunks/app/invite/page-382cae1aee686465.js"
+    },
+    {
+      "method": "GET",
+      "origin": "https://vercel.live",
+      "path": "/_next-live/feedback/feedback.js"
+    },
+    {
+      "method": "POST",
+      "origin": "https://o4511977317466112.ingest.us.sentry.io",
+      "path": "/api/4511977329262592/envelope/"
+    },
+    {
+      "method": "POST",
+      "origin": "https://o4511977317466112.ingest.us.sentry.io",
+      "path": "/api/4511977329262592/envelope/"
+    },
+    {
+      "method": "GET",
+      "origin": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app",
+      "path": "/_next/static/chunks/6a1f7758.7bbb0bfe6b211e14.js"
+    },
+    {
+      "method": "GET",
+      "origin": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app",
+      "path": "/plans"
+    },
+    {
+      "method": "GET",
+      "origin": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app",
+      "path": "/discover"
+    },
+    {
+      "method": "GET",
+      "origin": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app",
+      "path": "/friends"
+    },
+    {
+      "method": "GET",
+      "origin": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app",
+      "path": "/review"
+    },
+    {
+      "method": "GET",
+      "origin": "https://us-assets.i.posthog.com",
+      "path": "/array/[public-key]/config.js"
+    },
+    {
+      "method": "GET",
+      "origin": "https://us-assets.i.posthog.com",
+      "path": "/array/[public-key]/config"
+    },
+    {
+      "method": "GET",
+      "origin": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app",
+      "path": "/icon.svg"
+    },
+    {
+      "method": "GET",
+      "origin": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app",
+      "path": "/profile"
+    },
+    {
+      "method": "GET",
+      "origin": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app",
+      "path": "/discover"
+    },
+    {
+      "method": "GET",
+      "origin": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app",
+      "path": "/friends"
+    },
+    {
+      "method": "GET",
+      "origin": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app",
+      "path": "/plans"
+    },
+    {
+      "method": "GET",
+      "origin": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app",
+      "path": "/_next/static/chunks/950-5f83b6c7d4cb5040.js"
+    },
+    {
+      "method": "GET",
+      "origin": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app",
+      "path": "/_next/static/chunks/506-98f8e3b382ff11c0.js"
+    },
+    {
+      "method": "GET",
+      "origin": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app",
+      "path": "/_next/static/chunks/app/friends/page-d7bfd93623f1e6f0.js"
+    },
+    {
+      "method": "GET",
+      "origin": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app",
+      "path": "/review"
+    },
+    {
+      "method": "GET",
+      "origin": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app",
+      "path": "/profile"
+    },
+    {
+      "method": "GET",
+      "origin": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app",
+      "path": "/_next/static/chunks/854-904ac227586214aa.js"
+    },
+    {
+      "method": "GET",
+      "origin": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app",
+      "path": "/_next/static/chunks/app/discover/page-ae28f863df2d352b.js"
+    },
+    {
+      "method": "GET",
+      "origin": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app",
+      "path": "/_next/static/chunks/553-5bd29fce376ab578.js"
+    },
+    {
+      "method": "GET",
+      "origin": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app",
+      "path": "/_next/static/chunks/app/plans/page-0bd0a3d89b55ff19.js"
+    },
+    {
+      "method": "GET",
+      "origin": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app",
+      "path": "/_next/static/chunks/80-2a95650d70aed8f4.js"
+    },
+    {
+      "method": "GET",
+      "origin": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app",
+      "path": "/_next/static/chunks/app/review/page-6b5686f497db1ddf.js"
+    },
+    {
+      "method": "GET",
+      "origin": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app",
+      "path": "/_next/static/chunks/83607670-e22b1475274778c0.js"
+    },
+    {
+      "method": "GET",
+      "origin": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app",
+      "path": "/_next/static/chunks/c3f2cda1-9c248a2fa3f93d99.js"
+    },
+    {
+      "method": "GET",
+      "origin": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app",
+      "path": "/_next/static/chunks/59-bdb08cd3444787d6.js"
+    },
+    {
+      "method": "GET",
+      "origin": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app",
+      "path": "/_next/static/chunks/app/profile/page-2e05b98b2a535133.js"
+    },
+    {
+      "method": "GET",
+      "origin": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app",
+      "path": "/auth/confirm"
+    },
+    {
+      "method": "GET",
+      "origin": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app",
+      "path": "/_next/static/css/7bcc9ebd8defdb87.css"
+    },
+    {
+      "method": "GET",
+      "origin": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app",
+      "path": "/_next/static/chunks/webpack-d65839e3567f7b9c.js"
+    },
+    {
+      "method": "GET",
+      "origin": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app",
+      "path": "/_next/static/chunks/97e9ee5f-57eadbfa66ee070f.js"
+    },
+    {
+      "method": "GET",
+      "origin": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app",
+      "path": "/_next/static/chunks/c7879cf7-8d04bf519bc81a2d.js"
+    },
+    {
+      "method": "GET",
+      "origin": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app",
+      "path": "/_next/static/chunks/747-0d821b06bc4bf4c6.js"
+    },
+    {
+      "method": "GET",
+      "origin": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app",
+      "path": "/_next/static/chunks/main-app-ceba052889cbb13f.js"
+    },
+    {
+      "method": "GET",
+      "origin": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app",
+      "path": "/_next/static/chunks/d28dc9c7-9b3bb30f583875ae.js"
+    },
+    {
+      "method": "GET",
+      "origin": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app",
+      "path": "/_next/static/chunks/628-6c1c193164d7c953.js"
+    },
+    {
+      "method": "GET",
+      "origin": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app",
+      "path": "/_next/static/chunks/685-5580a06f47a01a4d.js"
+    },
+    {
+      "method": "GET",
+      "origin": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app",
+      "path": "/_next/static/chunks/568-b6bb8ec70c5b4785.js"
+    },
+    {
+      "method": "GET",
+      "origin": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app",
+      "path": "/_next/static/chunks/922-d7683125cf6c60d3.js"
+    },
+    {
+      "method": "GET",
+      "origin": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app",
+      "path": "/_next/static/chunks/app/layout-139aecc5216eb721.js"
+    },
+    {
+      "method": "GET",
+      "origin": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app",
+      "path": "/_next/static/chunks/app/global-error-e9769d1775b5bd1a.js"
+    },
+    {
+      "method": "GET",
+      "origin": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app",
+      "path": "/_next/static/chunks/app/invite/page-382cae1aee686465.js"
+    },
+    {
+      "method": "GET",
+      "origin": "https://vercel.live",
+      "path": "/_next-live/feedback/feedback.js"
+    },
+    {
+      "method": "POST",
+      "origin": "https://o4511977317466112.ingest.us.sentry.io",
+      "path": "/api/4511977329262592/envelope/"
+    },
+    {
+      "method": "POST",
+      "origin": "https://o4511977317466112.ingest.us.sentry.io",
+      "path": "/api/4511977329262592/envelope/"
+    },
+    {
+      "method": "GET",
+      "origin": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app",
+      "path": "/_next/static/chunks/6a1f7758.7bbb0bfe6b211e14.js"
+    },
+    {
+      "method": "GET",
+      "origin": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app",
+      "path": "/plans"
+    },
+    {
+      "method": "GET",
+      "origin": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app",
+      "path": "/discover"
+    },
+    {
+      "method": "GET",
+      "origin": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app",
+      "path": "/friends"
+    },
+    {
+      "method": "GET",
+      "origin": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app",
+      "path": "/review"
+    },
+    {
+      "method": "GET",
+      "origin": "https://us-assets.i.posthog.com",
+      "path": "/array/[public-key]/config.js"
+    },
+    {
+      "method": "GET",
+      "origin": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app",
+      "path": "/profile"
+    },
+    {
+      "method": "GET",
+      "origin": "https://us-assets.i.posthog.com",
+      "path": "/array/[public-key]/config"
+    },
+    {
+      "method": "GET",
+      "origin": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app",
+      "path": "/icon.svg"
+    },
+    {
+      "method": "GET",
+      "origin": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app",
+      "path": "/discover"
+    },
+    {
+      "method": "GET",
+      "origin": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app",
+      "path": "/friends"
+    },
+    {
+      "method": "GET",
+      "origin": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app",
+      "path": "/plans"
+    },
+    {
+      "method": "GET",
+      "origin": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app",
+      "path": "/_next/static/chunks/950-5f83b6c7d4cb5040.js"
+    },
+    {
+      "method": "GET",
+      "origin": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app",
+      "path": "/_next/static/chunks/854-904ac227586214aa.js"
+    },
+    {
+      "method": "GET",
+      "origin": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app",
+      "path": "/_next/static/chunks/app/discover/page-ae28f863df2d352b.js"
+    },
+    {
+      "method": "GET",
+      "origin": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app",
+      "path": "/review"
+    },
+    {
+      "method": "GET",
+      "origin": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app",
+      "path": "/profile"
+    },
+    {
+      "method": "GET",
+      "origin": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app",
+      "path": "/_next/static/chunks/506-98f8e3b382ff11c0.js"
+    },
+    {
+      "method": "GET",
+      "origin": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app",
+      "path": "/_next/static/chunks/app/friends/page-d7bfd93623f1e6f0.js"
+    },
+    {
+      "method": "GET",
+      "origin": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app",
+      "path": "/_next/static/chunks/553-5bd29fce376ab578.js"
+    },
+    {
+      "method": "GET",
+      "origin": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app",
+      "path": "/_next/static/chunks/app/plans/page-0bd0a3d89b55ff19.js"
+    },
+    {
+      "method": "GET",
+      "origin": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app",
+      "path": "/_next/static/chunks/80-2a95650d70aed8f4.js"
+    },
+    {
+      "method": "GET",
+      "origin": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app",
+      "path": "/_next/static/chunks/app/review/page-6b5686f497db1ddf.js"
+    },
+    {
+      "method": "GET",
+      "origin": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app",
+      "path": "/_next/static/chunks/83607670-e22b1475274778c0.js"
+    },
+    {
+      "method": "GET",
+      "origin": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app",
+      "path": "/_next/static/chunks/c3f2cda1-9c248a2fa3f93d99.js"
+    },
+    {
+      "method": "GET",
+      "origin": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app",
+      "path": "/_next/static/chunks/59-bdb08cd3444787d6.js"
+    },
+    {
+      "method": "GET",
+      "origin": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app",
+      "path": "/_next/static/chunks/app/profile/page-2e05b98b2a535133.js"
+    },
+    {
+      "method": "GET",
+      "origin": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app",
+      "path": "/join/not-a-uuid"
+    },
+    {
+      "method": "GET",
+      "origin": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app",
+      "path": "/_next/static/css/7bcc9ebd8defdb87.css"
+    },
+    {
+      "method": "GET",
+      "origin": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app",
+      "path": "/_next/static/chunks/webpack-d65839e3567f7b9c.js"
+    },
+    {
+      "method": "GET",
+      "origin": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app",
+      "path": "/_next/static/chunks/97e9ee5f-57eadbfa66ee070f.js"
+    },
+    {
+      "method": "GET",
+      "origin": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app",
+      "path": "/_next/static/chunks/c7879cf7-8d04bf519bc81a2d.js"
+    },
+    {
+      "method": "GET",
+      "origin": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app",
+      "path": "/_next/static/chunks/747-0d821b06bc4bf4c6.js"
+    },
+    {
+      "method": "GET",
+      "origin": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app",
+      "path": "/_next/static/chunks/main-app-ceba052889cbb13f.js"
+    },
+    {
+      "method": "GET",
+      "origin": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app",
+      "path": "/_next/static/chunks/d28dc9c7-9b3bb30f583875ae.js"
+    },
+    {
+      "method": "GET",
+      "origin": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app",
+      "path": "/_next/static/chunks/628-6c1c193164d7c953.js"
+    },
+    {
+      "method": "GET",
+      "origin": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app",
+      "path": "/_next/static/chunks/685-5580a06f47a01a4d.js"
+    },
+    {
+      "method": "GET",
+      "origin": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app",
+      "path": "/_next/static/chunks/568-b6bb8ec70c5b4785.js"
+    },
+    {
+      "method": "GET",
+      "origin": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app",
+      "path": "/_next/static/chunks/922-d7683125cf6c60d3.js"
+    },
+    {
+      "method": "GET",
+      "origin": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app",
+      "path": "/_next/static/chunks/app/layout-139aecc5216eb721.js"
+    },
+    {
+      "method": "GET",
+      "origin": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app",
+      "path": "/_next/static/chunks/app/join/%5Bid%5D/page-9133d1ab5766bc63.js"
+    },
+    {
+      "method": "GET",
+      "origin": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app",
+      "path": "/_next/static/chunks/app/global-error-e9769d1775b5bd1a.js"
+    },
+    {
+      "method": "GET",
+      "origin": "https://vercel.live",
+      "path": "/_next-live/feedback/feedback.js"
+    },
+    {
+      "method": "POST",
+      "origin": "https://o4511977317466112.ingest.us.sentry.io",
+      "path": "/api/4511977329262592/envelope/"
+    },
+    {
+      "method": "POST",
+      "origin": "https://o4511977317466112.ingest.us.sentry.io",
+      "path": "/api/4511977329262592/envelope/"
+    },
+    {
+      "method": "GET",
+      "origin": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app",
+      "path": "/_next/static/chunks/6a1f7758.7bbb0bfe6b211e14.js"
+    },
+    {
+      "method": "GET",
+      "origin": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app",
+      "path": "/plans"
+    },
+    {
+      "method": "GET",
+      "origin": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app",
+      "path": "/discover"
+    },
+    {
+      "method": "GET",
+      "origin": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app",
+      "path": "/friends"
+    },
+    {
+      "method": "GET",
+      "origin": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app",
+      "path": "/review"
+    },
+    {
+      "method": "GET",
+      "origin": "https://us-assets.i.posthog.com",
+      "path": "/array/[public-key]/config.js"
+    },
+    {
+      "method": "GET",
+      "origin": "https://us-assets.i.posthog.com",
+      "path": "/array/[public-key]/config"
+    },
+    {
+      "method": "GET",
+      "origin": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app",
+      "path": "/icon.svg"
+    },
+    {
+      "method": "GET",
+      "origin": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app",
+      "path": "/profile"
+    },
+    {
+      "method": "GET",
+      "origin": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app",
+      "path": "/friends"
+    },
+    {
+      "method": "GET",
+      "origin": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app",
+      "path": "/plans"
+    },
+    {
+      "method": "GET",
+      "origin": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app",
+      "path": "/_next/static/chunks/950-5f83b6c7d4cb5040.js"
+    },
+    {
+      "method": "GET",
+      "origin": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app",
+      "path": "/_next/static/chunks/506-98f8e3b382ff11c0.js"
+    },
+    {
+      "method": "GET",
+      "origin": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app",
+      "path": "/_next/static/chunks/app/friends/page-d7bfd93623f1e6f0.js"
+    },
+    {
+      "method": "GET",
+      "origin": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app",
+      "path": "/review"
+    },
+    {
+      "method": "GET",
+      "origin": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app",
+      "path": "/_next/static/chunks/553-5bd29fce376ab578.js"
+    },
+    {
+      "method": "GET",
+      "origin": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app",
+      "path": "/_next/static/chunks/app/plans/page-0bd0a3d89b55ff19.js"
+    },
+    {
+      "method": "GET",
+      "origin": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app",
+      "path": "/discover"
+    },
+    {
+      "method": "GET",
+      "origin": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app",
+      "path": "/profile"
+    },
+    {
+      "method": "GET",
+      "origin": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app",
+      "path": "/_next/static/chunks/80-2a95650d70aed8f4.js"
+    },
+    {
+      "method": "GET",
+      "origin": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app",
+      "path": "/_next/static/chunks/app/review/page-6b5686f497db1ddf.js"
+    },
+    {
+      "method": "GET",
+      "origin": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app",
+      "path": "/_next/static/chunks/83607670-e22b1475274778c0.js"
+    },
+    {
+      "method": "GET",
+      "origin": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app",
+      "path": "/_next/static/chunks/c3f2cda1-9c248a2fa3f93d99.js"
+    },
+    {
+      "method": "GET",
+      "origin": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app",
+      "path": "/_next/static/chunks/59-bdb08cd3444787d6.js"
+    },
+    {
+      "method": "GET",
+      "origin": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app",
+      "path": "/_next/static/chunks/app/profile/page-2e05b98b2a535133.js"
+    },
+    {
+      "method": "GET",
+      "origin": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app",
+      "path": "/_next/static/chunks/854-904ac227586214aa.js"
+    },
+    {
+      "method": "GET",
+      "origin": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app",
+      "path": "/_next/static/chunks/app/discover/page-ae28f863df2d352b.js"
+    },
+    {
+      "method": "GET",
+      "origin": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app",
+      "path": "/join/00000000-0000-4000-8000-000000000000"
+    },
+    {
+      "method": "GET",
+      "origin": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app",
+      "path": "/_next/static/css/7bcc9ebd8defdb87.css"
+    },
+    {
+      "method": "GET",
+      "origin": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app",
+      "path": "/_next/static/chunks/webpack-d65839e3567f7b9c.js"
+    },
+    {
+      "method": "GET",
+      "origin": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app",
+      "path": "/_next/static/chunks/97e9ee5f-57eadbfa66ee070f.js"
+    },
+    {
+      "method": "GET",
+      "origin": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app",
+      "path": "/_next/static/chunks/c7879cf7-8d04bf519bc81a2d.js"
+    },
+    {
+      "method": "GET",
+      "origin": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app",
+      "path": "/_next/static/chunks/747-0d821b06bc4bf4c6.js"
+    },
+    {
+      "method": "GET",
+      "origin": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app",
+      "path": "/_next/static/chunks/main-app-ceba052889cbb13f.js"
+    },
+    {
+      "method": "GET",
+      "origin": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app",
+      "path": "/_next/static/chunks/d28dc9c7-9b3bb30f583875ae.js"
+    },
+    {
+      "method": "GET",
+      "origin": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app",
+      "path": "/_next/static/chunks/628-6c1c193164d7c953.js"
+    },
+    {
+      "method": "GET",
+      "origin": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app",
+      "path": "/_next/static/chunks/685-5580a06f47a01a4d.js"
+    },
+    {
+      "method": "GET",
+      "origin": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app",
+      "path": "/_next/static/chunks/568-b6bb8ec70c5b4785.js"
+    },
+    {
+      "method": "GET",
+      "origin": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app",
+      "path": "/_next/static/chunks/922-d7683125cf6c60d3.js"
+    },
+    {
+      "method": "GET",
+      "origin": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app",
+      "path": "/_next/static/chunks/app/layout-139aecc5216eb721.js"
+    },
+    {
+      "method": "GET",
+      "origin": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app",
+      "path": "/_next/static/chunks/app/join/%5Bid%5D/page-9133d1ab5766bc63.js"
+    },
+    {
+      "method": "GET",
+      "origin": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app",
+      "path": "/_next/static/chunks/app/global-error-e9769d1775b5bd1a.js"
+    },
+    {
+      "method": "GET",
+      "origin": "https://vercel.live",
+      "path": "/_next-live/feedback/feedback.js"
+    },
+    {
+      "method": "POST",
+      "origin": "https://o4511977317466112.ingest.us.sentry.io",
+      "path": "/api/4511977329262592/envelope/"
+    },
+    {
+      "method": "POST",
+      "origin": "https://o4511977317466112.ingest.us.sentry.io",
+      "path": "/api/4511977329262592/envelope/"
+    },
+    {
+      "method": "GET",
+      "origin": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app",
+      "path": "/_next/static/chunks/6a1f7758.7bbb0bfe6b211e14.js"
+    },
+    {
+      "method": "GET",
+      "origin": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app",
+      "path": "/plans"
+    },
+    {
+      "method": "GET",
+      "origin": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app",
+      "path": "/discover"
+    },
+    {
+      "method": "GET",
+      "origin": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app",
+      "path": "/friends"
+    },
+    {
+      "method": "GET",
+      "origin": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app",
+      "path": "/review"
+    },
+    {
+      "method": "GET",
+      "origin": "https://us-assets.i.posthog.com",
+      "path": "/array/[public-key]/config.js"
+    },
+    {
+      "method": "GET",
+      "origin": "https://us-assets.i.posthog.com",
+      "path": "/array/[public-key]/config"
+    },
+    {
+      "method": "GET",
+      "origin": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app",
+      "path": "/icon.svg"
+    },
+    {
+      "method": "GET",
+      "origin": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app",
+      "path": "/profile"
+    },
+    {
+      "method": "GET",
+      "origin": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app",
+      "path": "/plans"
+    },
+    {
+      "method": "GET",
+      "origin": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app",
+      "path": "/discover"
+    },
+    {
+      "method": "GET",
+      "origin": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app",
+      "path": "/friends"
+    },
+    {
+      "method": "GET",
+      "origin": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app",
+      "path": "/_next/static/chunks/553-5bd29fce376ab578.js"
+    },
+    {
+      "method": "GET",
+      "origin": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app",
+      "path": "/_next/static/chunks/app/plans/page-0bd0a3d89b55ff19.js"
+    },
+    {
+      "method": "GET",
+      "origin": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app",
+      "path": "/review"
+    },
+    {
+      "method": "GET",
+      "origin": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app",
+      "path": "/profile"
+    },
+    {
+      "method": "GET",
+      "origin": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app",
+      "path": "/_next/static/chunks/950-5f83b6c7d4cb5040.js"
+    },
+    {
+      "method": "GET",
+      "origin": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app",
+      "path": "/_next/static/chunks/506-98f8e3b382ff11c0.js"
+    },
+    {
+      "method": "GET",
+      "origin": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app",
+      "path": "/_next/static/chunks/app/friends/page-d7bfd93623f1e6f0.js"
+    },
+    {
+      "method": "GET",
+      "origin": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app",
+      "path": "/_next/static/chunks/854-904ac227586214aa.js"
+    },
+    {
+      "method": "GET",
+      "origin": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app",
+      "path": "/_next/static/chunks/app/discover/page-ae28f863df2d352b.js"
+    },
+    {
+      "method": "GET",
+      "origin": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app",
+      "path": "/_next/static/chunks/83607670-e22b1475274778c0.js"
+    },
+    {
+      "method": "GET",
+      "origin": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app",
+      "path": "/_next/static/chunks/c3f2cda1-9c248a2fa3f93d99.js"
+    },
+    {
+      "method": "GET",
+      "origin": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app",
+      "path": "/_next/static/chunks/59-bdb08cd3444787d6.js"
+    },
+    {
+      "method": "GET",
+      "origin": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app",
+      "path": "/_next/static/chunks/app/profile/page-2e05b98b2a535133.js"
+    },
+    {
+      "method": "GET",
+      "origin": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app",
+      "path": "/_next/static/chunks/80-2a95650d70aed8f4.js"
+    },
+    {
+      "method": "GET",
+      "origin": "https://tableus-staging-pees2ewbm-briancheis-projects.vercel.app",
+      "path": "/_next/static/chunks/app/review/page-6b5686f497db1ddf.js"
+    }
+  ],
+  "passed": true,
+  "network_policy": "Only GET to exact Preview host permitted; public routes only; all external/telemetry/API/auth mutation requests blocked; no saved sessions loaded.",
+  "limitations": [
+    "Landing is static shell only: automatic POST /api/restaurants/nearby is blocked; resulting fetch-error state is expected under this provider-free guard.",
+    "No saved sessions, authentication success, real joins, live recommendations, telemetry delivery or canaries verified."
+  ],
+  "prior_harness_attempts": [
+    {
+      "result": "launch failed before any request",
+      "cause": "bundled headless shell absent; used installed Chrome thereafter"
+    },
+    {
+      "result": "landing expectation timeout",
+      "cause": "expected auth card on discovery landing; corrected after source review"
+    },
+    {
+      "result": "landing expectation timeout",
+      "cause": "location label requires blocked nearby result; captured DOM then selected observed static shell text"
+    }
+  ],
+  "screenshots": [
+    {
+      "path": "browser-auth.png",
+      "sha256": "35fb57087f5ebbd92996c196604b0d5846154c16fce8c4826419bab7389a70e9"
+    },
+    {
+      "path": "browser-confirm.png",
+      "sha256": "68999eb800bc3c15487ca590b2684d3789858db234b6f273f8842104b9811353"
+    },
+    {
+      "path": "browser-invalid-join.png",
+      "sha256": "713d9771f4a09cd3f14910335bf5c87181765bcf02af495ed63ef3eb3368373b"
+    },
+    {
+      "path": "browser-invite.png",
+      "sha256": "68999eb800bc3c15487ca590b2684d3789858db234b6f273f8842104b9811353"
+    },
+    {
+      "path": "browser-landing.png",
+      "sha256": "5c7eb99dfa60870845dfb391aede81fab05d440dbeedfdad3c60fc19811a13c7"
+    },
+    {
+      "path": "browser-missing-token.png",
+      "sha256": "713d9771f4a09cd3f14910335bf5c87181765bcf02af495ed63ef3eb3368373b"
+    }
+  ],
+  "harness_sha256": "c280cde79696d5752aa216e589884a69918d9b0359be45ef190cb8a730f508b9"
+}

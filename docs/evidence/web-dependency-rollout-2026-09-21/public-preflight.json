@@ -1,0 +1,277 @@
+{
+  "observed_at": "2026-09-21T21:53:45.909150+00:00",
+  "results": [
+    {
+      "kind": "cors",
+      "url": "https://api-staging-3795.up.railway.app/api/v1/me",
+      "origin": "https://tableus-staging.vercel.app",
+      "status": 200,
+      "headers": {
+        "access-control-allow-credentials": "true",
+        "access-control-allow-origin": "https://tableus-staging.vercel.app",
+        "Content-Type": "text/plain; charset=utf-8"
+      },
+      "body_sha256": "565339bc4d33d72817b583024112eb7f5cdf3e5eef0252d6ec1b9c9a94e12bb3",
+      "body_bytes": 2
+    },
+    {
+      "kind": "cors",
+      "url": "https://api-staging-3795.up.railway.app/api/v1/me",
+      "origin": "https://links.table-us.com",
+      "status": 200,
+      "headers": {
+        "access-control-allow-credentials": "true",
+        "access-control-allow-origin": "https://links.table-us.com",
+        "Content-Type": "text/plain; charset=utf-8"
+      },
+      "body_sha256": "565339bc4d33d72817b583024112eb7f5cdf3e5eef0252d6ec1b9c9a94e12bb3",
+      "body_bytes": 2
+    },
+    {
+      "kind": "cors",
+      "url": "https://api-staging-3795.up.railway.app/api/v1/me",
+      "origin": "https://tableus-staging-i6b1exrb3-briancheis-projects.vercel.app",
+      "status": 200,
+      "headers": {
+        "access-control-allow-credentials": "true",
+        "access-control-allow-origin": "https://tableus-staging-i6b1exrb3-briancheis-projects.vercel.app",
+        "Content-Type": "text/plain; charset=utf-8"
+      },
+      "body_sha256": "565339bc4d33d72817b583024112eb7f5cdf3e5eef0252d6ec1b9c9a94e12bb3",
+      "body_bytes": 2
+    },
+    {
+      "kind": "cors",
+      "url": "https://api-staging-3795.up.railway.app/api/v1/me",
+      "origin": "https://phase-w-unapproved.example",
+      "status": 400,
+      "headers": {
+        "access-control-allow-credentials": "true",
+        "Content-Type": "text/plain; charset=utf-8"
+      },
+      "body_sha256": "f80399859bbd7b2cb1cac34d88e0f01461619f351b476926e2465eea789098d4",
+      "body_bytes": 22
+    },
+    {
+      "kind": "host",
+      "url": "https://tableus-staging.vercel.app/",
+      "origin": null,
+      "status": 307,
+      "headers": {
+        "Access-Control-Allow-Origin": "*",
+        "Cache-Control": "public, max-age=0, must-revalidate",
+        "Content-Type": "text/html; charset=utf-8",
+        "Location": "/discover",
+        "X-Vercel-Id": "cle1::c5626-1790027623121-50706a81d590"
+      },
+      "body_sha256": "b7b2c9b2abca21f291dcaf1442843ab8e638e9d1ed34a6f105829b5b7befbd63",
+      "body_bytes": 6106
+    },
+    {
+      "kind": "host",
+      "url": "https://links.table-us.com/",
+      "origin": null,
+      "status": 307,
+      "headers": {
+        "Access-Control-Allow-Origin": "*",
+        "Cache-Control": "public, max-age=0, must-revalidate",
+        "Content-Type": "text/html; charset=utf-8",
+        "Location": "/discover",
+        "X-Vercel-Id": "cle1::fcdwl-1790027623232-aa059fee99ad"
+      },
+      "body_sha256": "b7b2c9b2abca21f291dcaf1442843ab8e638e9d1ed34a6f105829b5b7befbd63",
+      "body_bytes": 6106
+    },
+    {
+      "kind": "host",
+      "url": "https://table-us.com/",
+      "origin": null,
+      "status": 308,
+      "headers": {
+        "Cache-Control": "public, max-age=0, must-revalidate",
+        "Content-Type": "text/plain",
+        "Location": "https://www.table-us.com/",
+        "X-Vercel-Id": "cle1::mrb29-1790027623201-115a438bcd37"
+      },
+      "body_sha256": "7c040f8633b8823d72ed63da9b3b2dfe9846e912c66a64c9433ec9c4815d76c2",
+      "body_bytes": 15
+    },
+    {
+      "kind": "host",
+      "url": "https://www.table-us.com/",
+      "origin": null,
+      "status": 307,
+      "headers": {
+        "Access-Control-Allow-Origin": "*",
+        "Cache-Control": "public, max-age=0, must-revalidate",
+        "Content-Type": "text/html; charset=utf-8",
+        "Location": "/discover",
+        "X-Vercel-Id": "cle1::qf2vb-1790027623170-1f93db535999"
+      },
+      "body_sha256": "9a6421765f33c511286915f39c1864c12dcdc9b94fa1681ade58e774654cdab7",
+      "body_bytes": 6106
+    },
+    {
+      "kind": "host",
+      "url": "https://tableus-staging-i6b1exrb3-briancheis-projects.vercel.app/",
+      "origin": null,
+      "status": 302,
+      "headers": {
+        "Cache-Control": "no-store, max-age=0",
+        "Content-Type": "text/plain",
+        "Location": "https://vercel.com/sso-api [query omitted]",
+        "X-Vercel-Id": "cle1::7tds7-1790027623377-43c430ba12db"
+      },
+      "body_sha256": "7c040f8633b8823d72ed63da9b3b2dfe9846e912c66a64c9433ec9c4815d76c2",
+      "body_bytes": 15
+    },
+    {
+      "kind": "host",
+      "url": "https://tableus-staging-dwuhnprja-briancheis-projects.vercel.app/",
+      "origin": null,
+      "status": 302,
+      "headers": {
+        "Cache-Control": "no-store, max-age=0",
+        "Content-Type": "text/plain",
+        "Location": "https://vercel.com/sso-api [query omitted]",
+        "X-Vercel-Id": "cle1::xgzbt-1790027623606-c5904f621025"
+      },
+      "body_sha256": "7c040f8633b8823d72ed63da9b3b2dfe9846e912c66a64c9433ec9c4815d76c2",
+      "body_bytes": 15
+    },
+    {
+      "kind": "host",
+      "url": "https://tableus-staging-le68rjle9-briancheis-projects.vercel.app/",
+      "origin": null,
+      "status": 302,
+      "headers": {
+        "Cache-Control": "no-store, max-age=0",
+        "Content-Type": "text/plain",
+        "Location": "https://vercel.com/sso-api [query omitted]",
+        "X-Vercel-Id": "cle1::44578-1790027623691-17a10d331de3"
+      },
+      "body_sha256": "7c040f8633b8823d72ed63da9b3b2dfe9846e912c66a64c9433ec9c4815d76c2",
+      "body_bytes": 15
+    },
+    {
+      "kind": "association",
+      "url": "https://links.table-us.com/.well-known/apple-app-site-association",
+      "origin": null,
+      "status": 200,
+      "headers": {
+        "Cache-Control": "public, max-age=300",
+        "Content-Type": "application/json",
+        "X-Vercel-Id": "cle1::iad1::d7s5g-1790027623674-615e49f89d03"
+      },
+      "body_sha256": "710eb96b4cb131ad435294629ed493857a0f8d38e9d0cba112fc905f9cc34d63",
+      "body_bytes": 123,
+      "body": {
+        "applinks": {
+          "apps": [],
+          "details": [
+            {
+              "appIDs": [
+                "6MHJN5V9UJ.com.tableus.app"
+              ],
+              "components": [
+                {
+                  "/": "/join/*"
+                },
+                {
+                  "/": "/auth"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "kind": "association",
+      "url": "https://links.table-us.com/.well-known/assetlinks.json",
+      "origin": null,
+      "status": 200,
+      "headers": {
+        "Cache-Control": "public, max-age=300",
+        "Content-Type": "application/json",
+        "X-Vercel-Id": "cle1::iad1::vdt78-1790027623748-9dbd5b560925"
+      },
+      "body_sha256": "e2ad9e673a352912bf9782eba015a5bbcfd28069c138d858d37ced66bf411430",
+      "body_bytes": 258,
+      "body": [
+        {
+          "relation": [
+            "delegate_permission/common.handle_all_urls"
+          ],
+          "target": {
+            "namespace": "android_app",
+            "package_name": "com.tableus.app",
+            "sha256_cert_fingerprints": [
+              "02:FC:F9:A8:5F:EF:26:D4:61:43:F4:D8:28:7A:32:5B:05:21:1B:B6:77:23:91:32:4C:12:AA:78:60:C6:65:68"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "kind": "association",
+      "url": "https://tableus-staging.vercel.app/.well-known/apple-app-site-association",
+      "origin": null,
+      "status": 200,
+      "headers": {
+        "Cache-Control": "public, max-age=300",
+        "Content-Type": "application/json",
+        "X-Vercel-Id": "cle1::iad1::wcgfn-1790027623938-c858bb99fbc4"
+      },
+      "body_sha256": "710eb96b4cb131ad435294629ed493857a0f8d38e9d0cba112fc905f9cc34d63",
+      "body_bytes": 123,
+      "body": {
+        "applinks": {
+          "apps": [],
+          "details": [
+            {
+              "appIDs": [
+                "6MHJN5V9UJ.com.tableus.app"
+              ],
+              "components": [
+                {
+                  "/": "/join/*"
+                },
+                {
+                  "/": "/auth"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "kind": "association",
+      "url": "https://tableus-staging.vercel.app/.well-known/assetlinks.json",
+      "origin": null,
+      "status": 200,
+      "headers": {
+        "Cache-Control": "public, max-age=300",
+        "Content-Type": "application/json",
+        "X-Vercel-Id": "cle1::iad1::ghhqj-1790027624150-b6aa4659981e"
+      },
+      "body_sha256": "e2ad9e673a352912bf9782eba015a5bbcfd28069c138d858d37ced66bf411430",
+      "body_bytes": 258,
+      "body": [
+        {
+          "relation": [
+            "delegate_permission/common.handle_all_urls"
+          ],
+          "target": {
+            "namespace": "android_app",
+            "package_name": "com.tableus.app",
+            "sha256_cert_fingerprints": [
+              "02:FC:F9:A8:5F:EF:26:D4:61:43:F4:D8:28:7A:32:5B:05:21:1B:B6:77:23:91:32:4C:12:AA:78:60:C6:65:68"
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

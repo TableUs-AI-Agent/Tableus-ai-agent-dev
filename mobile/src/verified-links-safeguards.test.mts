@@ -15,14 +15,15 @@ test("public auth links select mode without accepting private auth fields", () =
 });
 
 test("public auth links remain routable while the session is restoring", () => {
-  assert.match(rootLayout, /<Stack\.Protected guard=\{!auth\.approved\}>\s*<Stack\.Screen name="auth"/s);
+  assert.match(rootLayout, /<Stack\.Protected guard=\{!auth\.approved && auth\.phase !== "deletion"\}>\s*<Stack\.Screen name="auth"/s);
   assert.doesNotMatch(rootLayout, /auth\.phase !== "loading" && !auth\.approved/);
 });
 
 test("signed-out join routes present auth over the retained route", () => {
   assert.match(joinRoute, /Sign in to join/);
   assert.match(joinRoute, /pathname: "\/auth", params: \{ mode: "sign-in" \}/);
-  assert.match(joinRoute, /invalid, expired, or has been rotated/);
+  assert.match(joinRoute, /Reopen your private link/);
+  assert.doesNotMatch(joinRoute, /params: \{[^}]*token/);
   assert.doesNotMatch(joinRoute, /SecureStore|AsyncStorage|localStorage/);
 });
 

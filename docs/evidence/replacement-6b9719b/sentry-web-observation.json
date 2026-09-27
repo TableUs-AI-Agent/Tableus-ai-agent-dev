@@ -1,0 +1,14 @@
+{
+  "sha": "6b9719b4e63e34803f2e7c2598e45851790df661",
+  "observed_at": "2026-09-14T23:48:14.467030+00:00",
+  "project": "tableus-web-staging",
+  "issue_id": "7694001131",
+  "event_id": "571616a34a4945efacd5e9d4a21dd37a",
+  "matching_release_event_count": 1,
+  "environment": "staging",
+  "handled": true,
+  "message_redacted": true,
+  "source_release_verified": true,
+  "method": "authenticated-provider-ui",
+  "raw_payload_retained": false
+}

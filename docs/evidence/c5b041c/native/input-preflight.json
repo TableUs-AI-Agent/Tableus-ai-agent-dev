@@ -1,0 +1,103 @@
+{
+  "application_sha": "c5b041c85f4f7b959436c13bef48c959622c624f",
+  "operator_tooling_sha": "211ff1c7876694a4b2db677ec26fe5741a6770cb",
+  "observed_at": "2026-09-13T01:54:13.641233+00:00",
+  "input_preflights_passed": [
+    "test-ios",
+    "test-android",
+    "readiness-ios",
+    "readiness-android",
+    "telemetry-test-ios",
+    "telemetry-test-android"
+  ],
+  "profiles": {
+    "test-ios": {
+      "apiUrl": "http://127.0.0.1:8000",
+      "localE2E": true,
+      "demoMode": true,
+      "telemetryMode": "off",
+      "authE2E": false,
+      "telemetryE2E": false,
+      "readiness": false,
+      "sourceSha": "c5b041c85f4f7b959436c13bef48c959622c624f"
+    },
+    "test-android": {
+      "apiUrl": "http://127.0.0.1:8000",
+      "localE2E": true,
+      "demoMode": true,
+      "telemetryMode": "off",
+      "authE2E": false,
+      "telemetryE2E": false,
+      "readiness": false,
+      "sourceSha": "c5b041c85f4f7b959436c13bef48c959622c624f"
+    },
+    "readiness-ios": {
+      "apiUrl": "https://api-staging-3795.up.railway.app",
+      "localE2E": false,
+      "demoMode": false,
+      "telemetryMode": "staging",
+      "authE2E": false,
+      "telemetryE2E": false,
+      "readiness": true,
+      "sourceSha": "c5b041c85f4f7b959436c13bef48c959622c624f"
+    },
+    "readiness-android": {
+      "apiUrl": "https://api-staging-3795.up.railway.app",
+      "localE2E": false,
+      "demoMode": false,
+      "telemetryMode": "staging",
+      "authE2E": false,
+      "telemetryE2E": false,
+      "readiness": true,
+      "sourceSha": "c5b041c85f4f7b959436c13bef48c959622c624f"
+    },
+    "telemetry-test-ios": {
+      "apiUrl": "https://api-staging-3795.up.railway.app",
+      "localE2E": false,
+      "demoMode": false,
+      "telemetryMode": "staging",
+      "authE2E": false,
+      "telemetryE2E": true,
+      "readiness": false,
+      "sourceSha": "c5b041c85f4f7b959436c13bef48c959622c624f"
+    },
+    "telemetry-test-android": {
+      "apiUrl": "https://api-staging-3795.up.railway.app",
+      "localE2E": false,
+      "demoMode": false,
+      "telemetryMode": "staging",
+      "authE2E": false,
+      "telemetryE2E": true,
+      "readiness": false,
+      "sourceSha": "c5b041c85f4f7b959436c13bef48c959622c624f"
+    }
+  },
+  "toolchain": {
+    "node": "22.23.1",
+    "eas_cli": "23.2.0",
+    "xcode": "26.6",
+    "xcode_build": "17F113",
+    "ios_simulator_runtime": "26.5",
+    "android_target_api": 36,
+    "android_abi": "arm64-v8a",
+    "android_gradle_jvm": "18.0.2.1",
+    "gradle_compiler_jdk_17_cached": true,
+    "maestro": "2.8.0",
+    "android_emulator": "37.1.11.0"
+  },
+  "durable_storage": "Original checkout .artifacts/mobile/<full-application-sha>/",
+  "artifact_paths_overwritten": false,
+  "native_builds_sequential": true,
+  "private_log_capture_sha256": "0bfc5a93b873bcd2fb5e66b3faa45503b0f1d58a91440c3f04bdb14d5f370da8",
+  "native_journeys_complete": true,
+  "android_expected_signer_matches_canonical_association": true,
+  "ios_simulator_artifact_architectures": [
+    "x86_64",
+    "arm64"
+  ],
+  "hosted_profiles_verified_at": "2026-09-13T02:53:43.890008+00:00",
+  "hosted_private_log_capture_sha256": "e02057e35b3eb5e5e0a1dc6a58384edfd491580109a5844de51914cdb41907f2",
+  "apple_expected_signer_matches_canonical_association": true,
+  "native_journeys_scope": "deterministic lifecycle and offline mutation suites on iOS simulator and ARM64 Android emulator",
+  "android_system_image_from_existing_homebrew_sdk": true
+}

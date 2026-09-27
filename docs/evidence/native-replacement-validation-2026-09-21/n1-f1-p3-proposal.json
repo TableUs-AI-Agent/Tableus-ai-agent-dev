@@ -1,0 +1,166 @@
+{
+  "schema_version": 1,
+  "amendment": "F1-P3",
+  "recorded_at": "2026-09-24T03:55:00.499600+00:00",
+  "status": "prepared_unapproved_unexecuted",
+  "evidence_base_sha": "3505c301ebfc4f1354b9b83a88ebc6f6e7feafd7",
+  "evidence_commit": "Commit containing this proposal; exact SHA in task handoff. No application/build-operator SHA is replaced.",
+  "thread_boundary": "Owner explicitly selected Keep native validation in this task; fresh task with compact handoff after completion or explicit earlier move. Active packet condensed with history retained.",
+  "hypothesis": "The retained iOS27 simulator can progress from XCTest Running tests to driver HTTP readiness and complete one Settings flow under a minimal workload without TableUs reinstall/backend/proxy setup.",
+  "evidence_correlation": {
+    "report": "/Users/brianchei/repos/Tableus-ai-agent-dev/.artifacts/mobile/8972865893a3f018a064594457dc9cc664f8a61f/native-validation-f1/runtime-preparation-p3/analysis/o5-correlation.json",
+    "sha256": "2b5948d384479bec122c5185a4e3254f0671ac6b9c102a80d1824c4eb1c452cd",
+    "source_o5_sha256": "925f6383a157f651f67e60b4a1eab156722e0ff48875472b2090e1633e6a7d58",
+    "source_p2_sha256": "76245ab89a7e3cd200f0c7ca38f3039e99def028e204637ad8436e9ab1c3f849",
+    "o5_retained_original_hashes_verified": 6,
+    "baseline_files_hashed": 3,
+    "finding": "P2 iOS26.5 progressed through HTTP server/status/deviceInfo/UI; O5 iOS27 stalled after Running tests. Control reply label is not an error finding; null error and continued launch are retained. No runner stack proves the underlying stall.",
+    "limitations": [
+      "Different runtime/target/time/workload; cannot assign cause to OS or TableUs.",
+      "Exact testmanagerd control-reply text unavailable in inspected baseline logs; no null-error failure claim.",
+      "Baseline contains BUILD INTERRUPTED after successful persistent HTTP runner teardown; acceptance relies on recorded Maestro/UI/platform results, not raw XCTest suite completion.",
+      "No verified historical JAR digest in this comparison; the new probe will pin current installed jar bytes, not relabel them as earlier source proof."
+    ]
+  },
+  "probe_bundle": "/Users/brianchei/repos/Tableus-ai-agent-dev/.artifacts/mobile/8972865893a3f018a064594457dc9cc664f8a61f/native-validation-f1/runtime-preparation-p3/operator",
+  "archive_index": "/Users/brianchei/repos/Tableus-ai-agent-dev/.artifacts/mobile/8972865893a3f018a064594457dc9cc664f8a61f/native-validation-f1/runtime-preparation-p3/index.json",
+  "archive_index_sha256": "eb43139cd048081f485c4549b44c238446fb48ffb8db9786729942ee18a87aa3",
+  "probe_manifest_sha256": "ea3ce98fb06d3fbcc5db8178691d0939a92a9ea0eac1b39820c7b7ecb199ec2e",
+  "driver_sha256": "f57a2135a1fd0870137b4edd3b14672d97d1e1bae153b2becd330f0b5573d80f",
+  "files_sha256": {
+    "README.md": "6730275d919ce104868609bbc2d86174f0c5ee8848427c36077198718e930359",
+    "driver.py": "f57a2135a1fd0870137b4edd3b14672d97d1e1bae153b2becd330f0b5573d80f",
+    "maestro": "673ba46153761193914574e0bc825873dcd7283fd8ee96c57c9b9675b7108831",
+    "maestro_xctest_diagnostics.py": "267ac6d9c51fa7313ff10aa9ca7253ed2b5404723fc9583df6e19c6aac997759",
+    "platform_monitor.py": "9da3dc8687c64e17362c285d6522f64a679d0e142a859271d4fd87c528eeffd6",
+    "settings-1.yml": "c14ad3ac7cdfe4f99facfff070f3c40abe80a6d1471e6a07425ae6dbfadf68eb",
+    "t1_base.py": "5de80781f2fe091547dbdb4ed397bad066868266f04726d9637f2a318c9adf86",
+    "test_p3.py": "4e52ac3ee79383e28e759098b086911d601f596e02f14590b6aa488851bb67a4"
+  },
+  "private_archive": {
+    "files": 18,
+    "bytes": 447462
+  },
+  "device_id": "0EFFA766-DCDD-49E5-84B0-D3593B68709A",
+  "device_name": "TableUs-N1-F1-O3-iOS27-8972865",
+  "runtime": "iOS27.0/24A434",
+  "device_type": "iPhone17Pro",
+  "initial_state": "Shutdown",
+  "older_targets_must_remain_shutdown": [
+    "2408A54F-A1C5-4388-8B46-6A987FE3B578",
+    "CBB4FAB4-734C-413C-9F10-850329AC9A01"
+  ],
+  "application_sha_unchanged": "8972865893a3f018a064594457dc9cc664f8a61f",
+  "build_operator_sha_unchanged": "16603dd0cf36d27b492e57a02d3c6c438a2563c4",
+  "tool_pins": {
+    "maestro_version": "2.8.0",
+    "maestro_launcher_sha256": "78c82065869bbabf4659e52284defd346de897d58675c6ba1dc7c70c12aed07f",
+    "maestro_ios_driver_jar_sha256": "10fcf5f711ecd9f53d571e0666c7f2cb3828aa83c4c74c78da0747cd13a8294b",
+    "xcode_version": "27.0",
+    "xcode_build": "27A266a",
+    "xcode_version_plist_sha256": "99aa0f4ffa738d03c9d86b273745d4a3945c7cdc7462221033fb807463d895e9",
+    "historical_jar_identity_claimed": false
+  },
+  "settings_flow": {
+    "source": "Byte-identical P2 settings-1.yml",
+    "sha256": "c14ad3ac7cdfe4f99facfff070f3c40abe80a6d1471e6a07425ae6dbfadf68eb",
+    "app_id": "com.apple.Preferences",
+    "actions": [
+      "launch without clearing state",
+      "assert Settings title with unchanged 5000ms timeout",
+      "retain settings-probe-1 screenshot"
+    ],
+    "max_maestro_invocations": 1,
+    "max_boots": 1,
+    "max_control_queries": 1,
+    "automatic_retry": false,
+    "downstream_continuation": false
+  },
+  "limits": {
+    "total_seconds": 420,
+    "total_cleanup_reserve_seconds": 60,
+    "flow_seconds": 240,
+    "flow_cleanup_reserve_seconds": 30,
+    "control_query_seconds": 30,
+    "postflow_observation_seconds": 5,
+    "host_process_query_seconds": 5
+  },
+  "explicit_limit_amendment": "P3 host flow window240s incl30s cleanup versus old P2 85s cap; built-in Maestro/XCTest/UI timeouts unchanged. O5 startup death occurred160.792s after invocation; short old cap would stop before it. No execution authorized by preparation.",
+  "preflight": [
+    "approved exact manifest and files",
+    "exact target/runtime/Xcode/Maestro inputs",
+    "both older targets Shutdown before boot and flow",
+    "fresh output absent",
+    ">=20GiB free before boot and flow",
+    "ports7999/8000/8001 idle",
+    "unique SpringBoard/launchd_sim identity and no unexpected TableUs",
+    "full240s flow window remains inside420s total with60s final cleanup reserve"
+  ],
+  "fresh_output": "/Users/brianchei/repos/Tableus-ai-agent-dev/.artifacts/mobile/8972865893a3f018a064594457dc9cc664f8a61f/native-validation-f1/test-ios-settings-platform-probe-03",
+  "command": [
+    "/opt/homebrew/opt/python@3.14/bin/python3.14",
+    "/Users/brianchei/repos/Tableus-ai-agent-dev/.artifacts/mobile/8972865893a3f018a064594457dc9cc664f8a61f/native-validation-f1/runtime-preparation-p3/operator/driver.py"
+  ],
+  "required_approval_environment": {
+    "TABLEUS_F1_P3_APPROVED": "1",
+    "TABLEUS_F1_P3_DEVICE_ID": "0EFFA766-DCDD-49E5-84B0-D3593B68709A",
+    "TABLEUS_F1_P3_MANIFEST_SHA256": "ea3ce98fb06d3fbcc5db8178691d0939a92a9ea0eac1b39820c7b7ecb199ec2e"
+  },
+  "stop_conditions": [
+    "first required preflight/command failure",
+    "startup failure marker",
+    "target/platform identity change or unexpected TableUs",
+    "relevant target SpringBoard/TableUs crash",
+    "UI assertion or five-command evidence failure",
+    "capacity/evidence failure",
+    "interrupt or deadline"
+  ],
+  "cleanup": "Snapshot before child stop; owned group and freshly proven per-PID collectors within flow deadline; retain Settings terminate/shutdown outcomes; confirm target Shutdown, idle ports, absent known parent/SpringBoard/runner and target/output-path processes. Missing proof fails acceptance.",
+  "monitor_limit": "SpringBoard/parent, unexpected TableUs and recognized XCTest startup logs; not an all-service crash census.",
+  "outcome_interpretation": {
+    "pass": "One minimal iOS27 startup/Settings/cleanup baseline; no cause or TableUs acceptance.",
+    "same_bootstrap_failure": "TableUs execution/offline services not necessary for this recurrence; root cause still unknown.",
+    "other_or_incomplete": "Inconclusive; retain and stop without retry."
+  },
+  "checks": {
+    "fresh": {
+      "python_mocked_tests": 9,
+      "python_syntax_files": 6,
+      "audit_hook_blocked_events": [],
+      "verification": "/Users/brianchei/repos/Tableus-ai-agent-dev/.artifacts/mobile/8972865893a3f018a064594457dc9cc664f8a61f/native-validation-f1/runtime-preparation-p3/checks/verification.json",
+      "verification_sha256": "132761957ca59bf9fac5c3ebe3105b4e9b64d9b118212abe36856aab4b4c5719",
+      "oracle_replay": "Retained P2 commands/screenshot accepted under synthetic registration; structural parsing only, no native evidence.",
+      "oracle_replay_sha256": "a4b316fe2da9d38c5b866a15267e791b748f21a26192b31ce50969dbff89e26e",
+      "source_gate": "Read-only source_gate passed; output absent at preparation; no fresh capacity or device-state observation claimed.",
+      "archive_hashes_verified": 18,
+      "review": "Sol implementation; Astra integration/guard corrections and independently audited mocks/oracle/archive; Luna read-only proposal consistency.",
+      "full_readiness": {
+        "status": "passed",
+        "make_ready_invocations": 1,
+        "javascript_passed": 293,
+        "backend_python_passed": 98,
+        "backend_python_skipped": 3,
+        "elapsed_seconds": 47.128,
+        "archive": "/Users/brianchei/repos/Tableus-ai-agent-dev/.artifacts/mobile/8972865893a3f018a064594457dc9cc664f8a61f/native-validation-f1/runtime-verification-p3",
+        "index_sha256": "6db57c0fbeed83fb801b5c967ff9d823c103c103372575b1f22343feff4fe8dc",
+        "contract_check": "passed, no drift",
+        "native_operations": 0
+      }
+    },
+    "reused": "Frozen native results retain their original application/device/OS binding. T1 retained archive is unchanged and its observer/platform/base helpers are copied byte-identically. P3 has fresh focused and full readiness verification.",
+    "native_operations": 0,
+    "signals": 0,
+    "live_provider_calls": 0
+  },
+  "not_included": [
+    "TableUs install/launch/build",
+    "backend/proxy",
+    "device create/erase/delete",
+    "tool/runtime upgrade",
+    "Settings values change",
+    "repeat flow or TableUs offline replay",
+    "links/exports/Android/N2",
+    "merge/deploy/cloud/secrets/paid evaluation/destructive cleanup/security scans"
+  ],
+  "unresolved": "Original refresh, O1/O2 crashes, historical AppHang, iOS27 app acceptance, canonical/auth, links/exports, Android and N2 remain. T1 diagnostic layout is itself unverified natively. No prior budget resets."
+}

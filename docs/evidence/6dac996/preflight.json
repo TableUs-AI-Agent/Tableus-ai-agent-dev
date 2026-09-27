@@ -1,0 +1,53 @@
+{
+  "observed_at": "2026-09-27T05:30:37.964208+00:00",
+  "review_base": "e1184eca9b73e1a9f26d1007ab543df9d54c7124",
+  "realignment_source": "6dac9960df8d8abe2e170b032a2f400276e6eb22",
+  "github": {
+    "default_branch": "main",
+    "open_prs_at_start": 0,
+    "main_protected": false,
+    "rulesets": [],
+    "last_passed_ci_run": 35661503170,
+    "last_passed_ci_source": "ed8330a766b3c4b80a505e075535678394e275e9"
+  },
+  "vercel": {
+    "project_id": "prj_lPu3pWZiJ5ZRUIab6wiXrJIW930G",
+    "team_id": "team_0Pu6vuMiug12C8K2HQqbgOQG",
+    "production_branch": "main",
+    "preview_deployments_disabled": false,
+    "git_provider_options": {
+      "createDeployments": "enabled"
+    },
+    "auto_assign_custom_domains": true,
+    "targets": {
+      "production": {
+        "id": "dpl_7csJvHoJH9qgFZDijbwu3w36r2sK",
+        "url": "tableus-staging-eck69x9mb-briancheis-projects.vercel.app",
+        "readyState": "READY",
+        "target": "production"
+      },
+      "preview": {
+        "id": "dpl_3ec5bdvridE1meArFaYWAp8yabKM",
+        "url": "tableus-staging-pees2ewbm-briancheis-projects.vercel.app",
+        "readyState": "READY",
+        "target": null
+      }
+    }
+  },
+  "railway": {
+    "deploymentTriggers": {
+      "edges": []
+    },
+    "id": "93dcd3f4-7c47-4010-9431-fc28638813d2",
+    "name": "tableus-staging",
+    "prDeploys": false
+  },
+  "repository_guard": {
+    "file": "vercel.json",
+    "git.deploymentEnabled": {
+      "codex/pilot-realignment": false,
+      "main": false
+    }
+  },
+  "external_changes_performed": []
+}

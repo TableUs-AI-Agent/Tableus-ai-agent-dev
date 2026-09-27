@@ -1,0 +1,23 @@
+{
+  "operator_sha": "fecefa9d51f1e1901495ac304978caec6eb88a1d",
+  "artifact_sha256": "66f17d41fd32cb3664de1c9da747c35a789c8c0d39a6db24cd6aab13320ab5d9",
+  "application_sha": "f94a1d9d1125e6c9111aa08eda496f014f20d0c0",
+  "platform": "ios",
+  "attempt": 1,
+  "status": "passed",
+  "phase": "offline",
+  "started_at": "2026-09-16T01:18:05.197035+00:00",
+  "checks": [
+    {
+      "phase": "lifecycle",
+      "passed": true,
+      "summary": "/Users/brianchei/repos/Tableus-ai-agent-dev/.artifacts/mobile/f94a1d9d1125e6c9111aa08eda496f014f20d0c0/evidence/ios/lifecycle/ios-summary.json"
+    },
+    {
+      "phase": "offline",
+      "passed": true,
+      "summary": "/Users/brianchei/repos/Tableus-ai-agent-dev/.artifacts/mobile/f94a1d9d1125e6c9111aa08eda496f014f20d0c0/evidence/ios/offline/ios-offline-summary.json"
+    }
+  ],
+  "finished_at": "2026-09-16T01:36:41.259026+00:00"
+}

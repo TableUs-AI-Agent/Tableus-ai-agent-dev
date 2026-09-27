@@ -1,0 +1,32 @@
+{
+  "schema_version": 1,
+  "sha": "c5b041c85f4f7b959436c13bef48c959622c624f",
+  "passed": true,
+  "platform": "android",
+  "build_id": "local-android-readiness-c5b041c",
+  "artifact_name": "TableUs.apk",
+  "artifact_sha256": "8d59d69fd5fe1a19e6eaa0ea1330a36084e01119bf66b9d0751454df098779a8",
+  "inspection_passed": true,
+  "association_passed": true,
+  "staging_readiness_passed": true,
+  "phases": {
+    "returning_authentication": true,
+    "session_persistence": true,
+    "verified_auth_link": true,
+    "verified_join_link": true,
+    "live_location_and_four_candidates": true,
+    "foreground_refresh": true,
+    "cross_client_vote": true,
+    "organizer_authorization": true,
+    "rotated_link_rejected": true,
+    "account_controls_read_only": true
+  },
+  "verification_method": "assembled_from_durable_owner_UI_and_source_runner_installation_observations",
+  "original_interactive_runner_completed": false,
+  "recorded_at": "2026-09-13T08:14:19.166289+00:00",
+  "source_progress_report": "android-readiness-progress.json",
+  "foreground_observation_context": "return_to_current_plan_after_emulator_restart",
+  "raw_personal_data_retained": false,
+  "restricted_google_content_retained": false,
+  "screenshots_retained_by_runner": false
+}

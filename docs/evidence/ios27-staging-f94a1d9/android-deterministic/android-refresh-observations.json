@@ -1,0 +1,157 @@
+{
+  "schema_version": 1,
+  "application_sha": "f94a1d9d1125e6c9111aa08eda496f014f20d0c0",
+  "operator_sha": "cf26de100e68e4f0ea8a448ba2f9ec433ee2f2f8",
+  "observations": [
+    {
+      "phase": "initial",
+      "stage": "immediate",
+      "observed": {
+        "request_count": 1,
+        "upstream_request_count": 1,
+        "same_idempotency_key": false,
+        "dropped_before_send_count": 0,
+        "dropped_after_commit_count": 0,
+        "idempotent_replay_count": 0,
+        "delayed_response_count": 0,
+        "synthetic_error_count": 0,
+        "write_request_count": 0
+      }
+    },
+    {
+      "phase": "initial",
+      "stage": "settled",
+      "observed": {
+        "request_count": 1,
+        "upstream_request_count": 1,
+        "same_idempotency_key": false,
+        "dropped_before_send_count": 0,
+        "dropped_after_commit_count": 0,
+        "idempotent_replay_count": 0,
+        "delayed_response_count": 0,
+        "synthetic_error_count": 0,
+        "write_request_count": 0
+      }
+    },
+    {
+      "phase": "scrolling",
+      "stage": "immediate",
+      "observed": {
+        "request_count": 0,
+        "upstream_request_count": 0,
+        "same_idempotency_key": false,
+        "dropped_before_send_count": 0,
+        "dropped_after_commit_count": 0,
+        "idempotent_replay_count": 0,
+        "delayed_response_count": 0,
+        "synthetic_error_count": 0,
+        "write_request_count": 0
+      }
+    },
+    {
+      "phase": "scrolling",
+      "stage": "settled",
+      "observed": {
+        "request_count": 0,
+        "upstream_request_count": 0,
+        "same_idempotency_key": false,
+        "dropped_before_send_count": 0,
+        "dropped_after_commit_count": 0,
+        "idempotent_replay_count": 0,
+        "delayed_response_count": 0,
+        "synthetic_error_count": 0,
+        "write_request_count": 0
+      }
+    },
+    {
+      "phase": "slow_refresh",
+      "stage": "immediate",
+      "observed": {
+        "request_count": 1,
+        "upstream_request_count": 1,
+        "same_idempotency_key": false,
+        "dropped_before_send_count": 0,
+        "dropped_after_commit_count": 0,
+        "idempotent_replay_count": 0,
+        "delayed_response_count": 1,
+        "synthetic_error_count": 0,
+        "write_request_count": 0
+      }
+    },
+    {
+      "phase": "slow_refresh",
+      "stage": "settled",
+      "observed": {
+        "request_count": 1,
+        "upstream_request_count": 1,
+        "same_idempotency_key": false,
+        "dropped_before_send_count": 0,
+        "dropped_after_commit_count": 0,
+        "idempotent_replay_count": 0,
+        "delayed_response_count": 1,
+        "synthetic_error_count": 0,
+        "write_request_count": 0
+      }
+    },
+    {
+      "phase": "failed_refresh",
+      "stage": "immediate",
+      "observed": {
+        "request_count": 2,
+        "upstream_request_count": 0,
+        "same_idempotency_key": false,
+        "dropped_before_send_count": 0,
+        "dropped_after_commit_count": 0,
+        "idempotent_replay_count": 0,
+        "delayed_response_count": 0,
+        "synthetic_error_count": 2,
+        "write_request_count": 0
+      }
+    },
+    {
+      "phase": "failed_refresh",
+      "stage": "settled",
+      "observed": {
+        "request_count": 2,
+        "upstream_request_count": 0,
+        "same_idempotency_key": false,
+        "dropped_before_send_count": 0,
+        "dropped_after_commit_count": 0,
+        "idempotent_replay_count": 0,
+        "delayed_response_count": 0,
+        "synthetic_error_count": 2,
+        "write_request_count": 0
+      }
+    },
+    {
+      "phase": "recovered_refresh",
+      "stage": "immediate",
+      "observed": {
+        "request_count": 1,
+        "upstream_request_count": 1,
+        "same_idempotency_key": false,
+        "dropped_before_send_count": 0,
+        "dropped_after_commit_count": 0,
+        "idempotent_replay_count": 0,
+        "delayed_response_count": 0,
+        "synthetic_error_count": 0,
+        "write_request_count": 0
+      }
+    },
+    {
+      "phase": "recovered_refresh",
+      "stage": "settled",
+      "observed": {
+        "request_count": 1,
+        "upstream_request_count": 1,
+        "same_idempotency_key": false,
+        "dropped_before_send_count": 0,
+        "dropped_after_commit_count": 0,
+        "idempotent_replay_count": 0,
+        "delayed_response_count": 0,
+        "synthetic_error_count": 0,
+        "write_request_count": 0
+      }
+    }
+  ]
+}

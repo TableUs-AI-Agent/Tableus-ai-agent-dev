@@ -1,0 +1,371 @@
+{
+  "private_root": "/Users/brianchei/.codex/worktrees/90bd/Tableus-ai-agent-dev/.artifacts/phase-w",
+  "note": "Private payloads may contain credentials. Do not copy raw files into commits or messages. Hashes retain provenance only.",
+  "files": [
+    {
+      "path": "linux-check.cjs",
+      "bytes": 3444,
+      "sha256": "d201c4ab0483bedea7f0d0f8b09f15b99a44c4b8a255a6e0c1b89f915bc340c7"
+    },
+    {
+      "path": "linux-evidence/fixture.avif",
+      "bytes": 287,
+      "sha256": "63c9e7294c51ee398c205c00cd250e4ca3995d8d31d945f74da5cb43f7533b54"
+    },
+    {
+      "path": "linux-evidence/fixture.jpeg",
+      "bytes": 275,
+      "sha256": "eba1bccaf628f85f1b9a90d89e24f4aa38d03b8aa5aefb1fd23739d8c68d4943"
+    },
+    {
+      "path": "linux-evidence/fixture.png",
+      "bytes": 126,
+      "sha256": "749160c2c8475c8850e73e6d285f88136d7c7f9011da81d51b25865618b064e8"
+    },
+    {
+      "path": "linux-evidence/install-and-image-check.log",
+      "bytes": 4292,
+      "sha256": "6dd58efaff21f168733fbea699c4d65f9f69fcadbec2d4100603399d477e84ba"
+    },
+    {
+      "path": "linux-evidence/linux-image-check.json",
+      "bytes": 2742,
+      "sha256": "c42acea5c8f0682353ba9ba7327c39a43aa87cd3fc563943b64de7666ce59463"
+    },
+    {
+      "path": "linux-run.sh",
+      "bytes": 156,
+      "sha256": "658eb5d19dbe82efc26d72ec8ddcf645ea49f8155c08337c406bb3e5de1173a3"
+    },
+    {
+      "path": "private/NEXT_PUBLIC_SOURCE_SHA-request.json",
+      "bytes": 166,
+      "sha256": "db311dec9df8f79d7975b9c829cf9f32012daebf6e180835586c044f3910a627"
+    },
+    {
+      "path": "private/TABLEUS_BUILD_SHA-request.json",
+      "bytes": 161,
+      "sha256": "7c2373a65c3eed67da709e61382ee1affb898c597ba8125ce2e48adaa97202e6"
+    },
+    {
+      "path": "private/TABLEUS_BUILD_SHA-response.json",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "private/TABLEUS_BUILD_SHA-response.stderr",
+      "bytes": 156,
+      "sha256": "369acc1217b578cf02cc2ee647afc9482b6844502507b6de2c1fcdb858bf2e43"
+    },
+    {
+      "path": "private/alias-links.table-us.com.json",
+      "bytes": 634,
+      "sha256": "a1a03033698548637d071a5bde348f4be8080d37eb40252d10e22fa392686a47"
+    },
+    {
+      "path": "private/alias-links.table-us.com.stderr",
+      "bytes": 68,
+      "sha256": "32b8ef8040534478604940be925df5f5e06826caf96d4b7f883469d555cd632f"
+    },
+    {
+      "path": "private/alias-table-us.com.json",
+      "bytes": 641,
+      "sha256": "71d587b439983a7e79cca84408ddbbbb7f9168f56df39530e1da5ca1df7e6588"
+    },
+    {
+      "path": "private/alias-table-us.com.stderr",
+      "bytes": 68,
+      "sha256": "32b8ef8040534478604940be925df5f5e06826caf96d4b7f883469d555cd632f"
+    },
+    {
+      "path": "private/alias-tableus-staging.vercel.app.json",
+      "bytes": 642,
+      "sha256": "99e57cde017d22504b1395b5718106e780431469a218f7db928d7a42a30028d8"
+    },
+    {
+      "path": "private/alias-tableus-staging.vercel.app.stderr",
+      "bytes": 68,
+      "sha256": "32b8ef8040534478604940be925df5f5e06826caf96d4b7f883469d555cd632f"
+    },
+    {
+      "path": "private/alias-target-detail.json",
+      "bytes": 13611,
+      "sha256": "44f58b10230d2173b15258f90e4d276ac4183c5bcdb604d31301f9a464082dbd"
+    },
+    {
+      "path": "private/alias-target-detail.stderr",
+      "bytes": 68,
+      "sha256": "32b8ef8040534478604940be925df5f5e06826caf96d4b7f883469d555cd632f"
+    },
+    {
+      "path": "private/alias-www.table-us.com.json",
+      "bytes": 632,
+      "sha256": "4048fa24acba6afbd5a0283e32d298c5648a2cef718370ee8bd3500f0ea38cd9"
+    },
+    {
+      "path": "private/alias-www.table-us.com.stderr",
+      "bytes": 68,
+      "sha256": "32b8ef8040534478604940be925df5f5e06826caf96d4b7f883469d555cd632f"
+    },
+    {
+      "path": "private/all-deployments-before.json",
+      "bytes": 144695,
+      "sha256": "e60598b68b07ba66fe22a88b5db8f850063e11e78e03b1863554d22681e15b3b"
+    },
+    {
+      "path": "private/all-deployments-before.stderr",
+      "bytes": 68,
+      "sha256": "32b8ef8040534478604940be925df5f5e06826caf96d4b7f883469d555cd632f"
+    },
+    {
+      "path": "private/api-ready-before.json",
+      "bytes": 319,
+      "sha256": "bd16fa6cfab0eee91e125bc89d7d2f7b121c9865cddd2d14df13e87f3af583c5"
+    },
+    {
+      "path": "private/api-ready-before.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "private/env-after-array-rejection.json",
+      "bytes": 31332,
+      "sha256": "64538d19f47c3e23c3783d0b3baf39fe62e36fe90f2849d222a33ca4fcf140a9"
+    },
+    {
+      "path": "private/env-final.json",
+      "bytes": 31332,
+      "sha256": "64538d19f47c3e23c3783d0b3baf39fe62e36fe90f2849d222a33ca4fcf140a9"
+    },
+    {
+      "path": "private/env-final.stderr",
+      "bytes": 68,
+      "sha256": "32b8ef8040534478604940be925df5f5e06826caf96d4b7f883469d555cd632f"
+    },
+    {
+      "path": "private/env-pull.log",
+      "bytes": 243,
+      "sha256": "79ce4855d478cf50a2d4f54a1c2d474bf7f7b1d21d7ae81cee5f3cd4a2a9407e"
+    },
+    {
+      "path": "private/github-hooks-before.json",
+      "bytes": 2,
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    {
+      "path": "private/github-workflows.json",
+      "bytes": 534,
+      "sha256": "fc17a489713bd35e856317aef050c8e96fb124674467a05c74d8e8c68698cb4c"
+    },
+    {
+      "path": "private/github-workflows.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "private/http-068c8fe35a149ee7.body",
+      "bytes": 2,
+      "sha256": "565339bc4d33d72817b583024112eb7f5cdf3e5eef0252d6ec1b9c9a94e12bb3"
+    },
+    {
+      "path": "private/http-13d8245389354e66.body",
+      "bytes": 6106,
+      "sha256": "b7b2c9b2abca21f291dcaf1442843ab8e638e9d1ed34a6f105829b5b7befbd63"
+    },
+    {
+      "path": "private/http-1a1c2fade9e1d26b.body",
+      "bytes": 15,
+      "sha256": "7c040f8633b8823d72ed63da9b3b2dfe9846e912c66a64c9433ec9c4815d76c2"
+    },
+    {
+      "path": "private/http-3988f33bbe7f223e.body",
+      "bytes": 123,
+      "sha256": "710eb96b4cb131ad435294629ed493857a0f8d38e9d0cba112fc905f9cc34d63"
+    },
+    {
+      "path": "private/http-3b234fb2471bf447.body",
+      "bytes": 15,
+      "sha256": "7c040f8633b8823d72ed63da9b3b2dfe9846e912c66a64c9433ec9c4815d76c2"
+    },
+    {
+      "path": "private/http-43d736d487dec1cc.body",
+      "bytes": 258,
+      "sha256": "e2ad9e673a352912bf9782eba015a5bbcfd28069c138d858d37ced66bf411430"
+    },
+    {
+      "path": "private/http-68271a9e20bb2391.body",
+      "bytes": 2,
+      "sha256": "565339bc4d33d72817b583024112eb7f5cdf3e5eef0252d6ec1b9c9a94e12bb3"
+    },
+    {
+      "path": "private/http-6d61be67d29705b5.body",
+      "bytes": 6106,
+      "sha256": "9a6421765f33c511286915f39c1864c12dcdc9b94fa1681ade58e774654cdab7"
+    },
+    {
+      "path": "private/http-9006f51ce3ba85fb.body",
+      "bytes": 6106,
+      "sha256": "b7b2c9b2abca21f291dcaf1442843ab8e638e9d1ed34a6f105829b5b7befbd63"
+    },
+    {
+      "path": "private/http-adaf570867750b55.body",
+      "bytes": 22,
+      "sha256": "f80399859bbd7b2cb1cac34d88e0f01461619f351b476926e2465eea789098d4"
+    },
+    {
+      "path": "private/http-bc6916bf8b2d6c46.body",
+      "bytes": 258,
+      "sha256": "e2ad9e673a352912bf9782eba015a5bbcfd28069c138d858d37ced66bf411430"
+    },
+    {
+      "path": "private/http-c745055320b3a4df.body",
+      "bytes": 15,
+      "sha256": "7c040f8633b8823d72ed63da9b3b2dfe9846e912c66a64c9433ec9c4815d76c2"
+    },
+    {
+      "path": "private/http-cdfb71f6ab01f3ad.body",
+      "bytes": 123,
+      "sha256": "710eb96b4cb131ad435294629ed493857a0f8d38e9d0cba112fc905f9cc34d63"
+    },
+    {
+      "path": "private/http-f6260ee04b79b979.body",
+      "bytes": 15,
+      "sha256": "7c040f8633b8823d72ed63da9b3b2dfe9846e912c66a64c9433ec9c4815d76c2"
+    },
+    {
+      "path": "private/http-f9c6521c1ef8b8fb.body",
+      "bytes": 2,
+      "sha256": "565339bc4d33d72817b583024112eb7f5cdf3e5eef0252d6ec1b9c9a94e12bb3"
+    },
+    {
+      "path": "private/linux-container-inspect.json",
+      "bytes": 8383,
+      "sha256": "1830267bdd47ac65c98c501f9b0e1c595bc913a501f997ee4f8ededd726cbf49"
+    },
+    {
+      "path": "private/linux-container-inspect.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "private/linux-image-inspect.json",
+      "bytes": 1917,
+      "sha256": "c11feb72453b710b0f2306ec16f73c9ca9362609a5c33b05e9451c2f0a5563ab"
+    },
+    {
+      "path": "private/linux-image-inspect.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "private/old-build-events.json",
+      "bytes": 34598,
+      "sha256": "c54614fdd214f90fadc325d5ca139da0929a5847df2a33855c983cd81e61e1a2"
+    },
+    {
+      "path": "private/old-build-events.stderr",
+      "bytes": 68,
+      "sha256": "32b8ef8040534478604940be925df5f5e06826caf96d4b7f883469d555cd632f"
+    },
+    {
+      "path": "private/preview-before.env",
+      "bytes": 2865,
+      "sha256": "ee0a43c02f1d651a3222cf1995b3248ba52c4803f7e19c86889f1c762080cfea"
+    },
+    {
+      "path": "private/public-preflight.json",
+      "bytes": 9566,
+      "sha256": "977b69cf3040c034a03bfff308044c58bd665bd0f83ebc5d2f902220cd40381e"
+    },
+    {
+      "path": "private/railway-status-before.json",
+      "bytes": 11101,
+      "sha256": "ee2fbdaa327cc83ccdfa27c6e2e7a7bdec1548b39532223ff214116b8b2be823"
+    },
+    {
+      "path": "private/railway-status-before.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "private/railway-vars-before.json",
+      "bytes": 2969,
+      "sha256": "01fff2b9f0cff686519776b4a4fa7886454ff5b573ae5ba194eec89f0bf38c03"
+    },
+    {
+      "path": "private/railway-vars-before.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "private/remote-release-ref.json",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "private/remote-release-ref.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "private/source-stamps-request.json",
+      "bytes": 408,
+      "sha256": "0d3fde379e5cf034ab8186e569643ada292ee1ffa95db7e1aef00ce1d9161c27"
+    },
+    {
+      "path": "private/source-stamps-response.json",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "private/vercel-deployments-before.json",
+      "bytes": 32601,
+      "sha256": "7cd5dec3dafd3bc511791b1ca060e06497b13435e544f908583a798df3f8d079"
+    },
+    {
+      "path": "private/vercel-deployments-before.stderr",
+      "bytes": 68,
+      "sha256": "32b8ef8040534478604940be925df5f5e06826caf96d4b7f883469d555cd632f"
+    },
+    {
+      "path": "private/vercel-domains-before.json",
+      "bytes": 1085,
+      "sha256": "8a551680b4ace09f369144f8f6c16a2cb7600404dc78023e3eaa5c3dbebc0dfb"
+    },
+    {
+      "path": "private/vercel-domains-before.stderr",
+      "bytes": 68,
+      "sha256": "32b8ef8040534478604940be925df5f5e06826caf96d4b7f883469d555cd632f"
+    },
+    {
+      "path": "private/vercel-env-before.json",
+      "bytes": 31332,
+      "sha256": "64538d19f47c3e23c3783d0b3baf39fe62e36fe90f2849d222a33ca4fcf140a9"
+    },
+    {
+      "path": "private/vercel-env-before.stderr",
+      "bytes": 222,
+      "sha256": "30cfeeebd46768fc223d3bdc4cd8822e32e4ff2e9fa5152dc0d6bd0d042f05eb"
+    },
+    {
+      "path": "private/vercel-old-preview.json",
+      "bytes": 15192,
+      "sha256": "fc060042160da736095ec95d54b6ae734c611bc751e6220ac3c702ca6a8eac95"
+    },
+    {
+      "path": "private/vercel-old-preview.stderr",
+      "bytes": 68,
+      "sha256": "32b8ef8040534478604940be925df5f5e06826caf96d4b7f883469d555cd632f"
+    },
+    {
+      "path": "private/vercel-project-before.json",
+      "bytes": 40514,
+      "sha256": "98f386bb042a1924d4b737d703795decdf2d6bcc10b50d7535236fdf885f42e2"
+    },
+    {
+      "path": "source-ed8330a.tar",
+      "bytes": 21227520,
+      "sha256": "0f0e9c365835adbf70fe43617b89f7c63db17462944a7c7438639bd16d6530cb"
+    }
+  ]
+}

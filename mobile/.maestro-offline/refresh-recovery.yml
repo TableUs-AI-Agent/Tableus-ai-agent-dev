@@ -1,0 +1,14 @@
+appId: com.tableus.app
+---
+- tapOn:
+    text: "Refresh plan"
+    enabled: true
+    waitToSettleTimeoutMs: 100
+- extendedWaitUntil:
+    notVisible: "Fixture refresh unavailable."
+    timeout: 30000
+- assertVisible:
+    text: "Refresh plan"
+    enabled: true
+- assertVisible: "Refresh fixture dinner"
+- takeScreenshot: "refresh-recovered"

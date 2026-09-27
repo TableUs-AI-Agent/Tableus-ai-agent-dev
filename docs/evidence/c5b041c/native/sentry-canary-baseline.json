@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "application_sha": "c5b041c85f4f7b959436c13bef48c959622c624f",
+  "observed_at": "2026-09-13T04:09:21Z",
+  "organization_slug": "tableus-staging",
+  "projects": [
+    "tableus-api-staging",
+    "tableus-mobile-staging",
+    "tableus-web-staging"
+  ],
+  "observation_method": "authenticated_sentry_web_ui",
+  "release_filter": "c5b041c85f4f7b959436c13bef48c959622c624f",
+  "environment_filter": "staging",
+  "stats_period": "14d",
+  "matching_issues": 0,
+  "provider_empty_state_observed": true,
+  "access_restored_by_owner": true,
+  "canaries_sent_during_observation": false,
+  "delivery_acceptance_complete": false,
+  "raw_issue_payloads_retained": false
+}

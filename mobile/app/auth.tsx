@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useLocalSearchParams } from "expo-router";
+import { router, useLocalSearchParams } from "expo-router";
 import { Pressable, ScrollView, Text } from "react-native";
 
 import { Button, Card, ErrorText, Field } from "@/components/ui";
@@ -56,7 +56,14 @@ export default function AuthScreen() {
           : "Sign in with the email for your invite-approved TableUs account."}
       </Text>
       <Card>
-        {awaitingCode || awaitingRedemption ? (
+        {auth.phase === "loading" ? (
+          <Text accessibilityRole="alert" style={{ color: colors.muted }}>Restoring your session…</Text>
+        ) : auth.phase === "restore_failed" ? (
+          <>
+            <ErrorText message={auth.error} />
+            <Button label="Retry session restoration" onPress={auth.retryRestore} />
+          </>
+        ) : awaitingCode || awaitingRedemption ? (
           <>
             <Text selectable accessibilityLabel="Verification email" style={{ color: colors.ink, fontWeight: "700" }}>
               Continue as {maskEmail(auth.pending?.email ?? "")}
@@ -97,6 +104,7 @@ export default function AuthScreen() {
           </>
         )}
       </Card>
+      <Text accessibilityRole="link" onPress={() => router.push("/account-deletion")} style={{ color: colors.accent, fontWeight: "700", textAlign: "center" }}>Request account deletion without signing in</Text>
     </ScrollView>
   );
 }

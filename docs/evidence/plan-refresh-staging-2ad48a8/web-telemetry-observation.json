@@ -1,0 +1,36 @@
+{
+  "schema_version": 1,
+  "application_sha": "2ad48a8d8ec4d3aa9a7bd52061b823bb55960bcd",
+  "observed_at": "2026-09-15T20:41:57.646Z",
+  "platform": "web",
+  "ui_result": "Telemetry checks sent",
+  "ui_send_count": 1,
+  "posthog": {
+    "project_id": 578352,
+    "event": "telemetry_e2e",
+    "release": "2ad48a8d8ec4d3aa9a7bd52061b823bb55960bcd",
+    "platform_count": 1,
+    "aggregation_field": "aggregated_value",
+    "query_type": "TrendsQuery total BoldNumber",
+    "query_from": "2026-09-15T19:49:49Z",
+    "delivery_verified": true,
+    "method": "project-scoped-connector-aggregate"
+  },
+  "sentry": {
+    "organization": "tableus-staging",
+    "project": "tableus-web-staging",
+    "issue_id": 7694001131,
+    "event_id": "bfe53472ed2145de9f4b315ead97b689",
+    "release": "2ad48a8d8ec4d3aa9a7bd52061b823bb55960bcd",
+    "environment": "staging",
+    "handled": true,
+    "redacted_message": true,
+    "delivery_verified": true,
+    "method": "authenticated-provider-event-detail-ui",
+    "geography_value_retained": false,
+    "geography_visible_in_provider_ui": true,
+    "geography_enrichment_source_verified": false
+  },
+  "raw_payloads_retained": false,
+  "api_companion_sent": false
+}

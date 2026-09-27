@@ -1,0 +1,107 @@
+{
+  "expo_before": "57.0.18",
+  "expo_after": "57.0.23",
+  "react_native_unchanged": "0.86.2",
+  "lock_changes": [
+    {
+      "path": "node_modules/@expo/fingerprint",
+      "before": "0.20.11",
+      "after": "0.20.13"
+    },
+    {
+      "path": "node_modules/@expo/fingerprint/node_modules/brace-expansion",
+      "before": "5.0.9",
+      "after": "5.0.12"
+    },
+    {
+      "path": "node_modules/@expo/metro-file-map",
+      "before": "57.0.2",
+      "after": "57.0.3"
+    },
+    {
+      "path": "node_modules/@expo/prebuild-config",
+      "before": "57.0.15",
+      "after": "57.0.16"
+    },
+    {
+      "path": "node_modules/@expo/xcpretty",
+      "before": "4.4.4",
+      "after": "4.4.5"
+    },
+    {
+      "path": "node_modules/agent-cli-detector",
+      "before": "0.1.6",
+      "after": "0.1.7"
+    },
+    {
+      "path": "node_modules/babel-preset-expo",
+      "before": "57.0.9",
+      "after": "57.0.12"
+    },
+    {
+      "path": "node_modules/compression",
+      "before": "1.8.1",
+      "after": "1.8.2"
+    },
+    {
+      "path": "node_modules/eas-cli/node_modules/agent-cli-detector",
+      "before": "0.1.7",
+      "after": null
+    },
+    {
+      "path": "node_modules/expo",
+      "before": "57.0.18",
+      "after": "57.0.23"
+    },
+    {
+      "path": "node_modules/expo-asset",
+      "before": "57.0.15",
+      "after": "57.0.17"
+    },
+    {
+      "path": "node_modules/expo-constants",
+      "before": "57.0.16",
+      "after": "57.0.18"
+    },
+    {
+      "path": "node_modules/expo-file-system",
+      "before": "57.0.6",
+      "after": "57.0.7"
+    },
+    {
+      "path": "node_modules/expo-font",
+      "before": "57.0.2",
+      "after": "57.0.4"
+    },
+    {
+      "path": "node_modules/expo-keep-awake",
+      "before": "57.0.1",
+      "after": "57.0.2"
+    },
+    {
+      "path": "node_modules/expo-modules-autolinking",
+      "before": "57.0.12",
+      "after": "57.0.13"
+    },
+    {
+      "path": "node_modules/expo-modules-core",
+      "before": "57.0.14",
+      "after": "57.0.18"
+    },
+    {
+      "path": "node_modules/expo-modules-jsi",
+      "before": "57.0.6",
+      "after": "57.1.0"
+    },
+    {
+      "path": "node_modules/expo/node_modules/@expo/cli",
+      "before": "57.0.20",
+      "after": "57.0.25"
+    },
+    {
+      "path": "node_modules/expo/node_modules/@expo/cli/node_modules/@expo/router-server",
+      "before": "57.0.8",
+      "after": "57.0.10"
+    }
+  ]
+}

@@ -1,0 +1,35 @@
+{
+  "application_sha": "6b9719b4e63e34803f2e7c2598e45851790df661",
+  "observed_at": "2026-09-15T01:06:24.832121+00:00",
+  "free_gib": 15.789,
+  "minimum_build_start_gib": 20,
+  "cleanup_executed": true,
+  "explicit_cleanup_approval_received": true,
+  "requires_approval_to_delete": true,
+  "automatic_review_rejection": "Earlier simulator deletion rejected because AGENTS.md requires explicit destructive-cleanup approval.",
+  "estimated_reclaim_gib": 4.744,
+  "preserved": [
+    "All inspected artifacts, receipts, source, summaries and diagnostic screenshots",
+    "Previously saved live iOS simulator and TableUs_API_36 Android account sessions",
+    "Physical iPhone data"
+  ],
+  "next_step_after_approval": "Remove only the two listed disposable test devices, remeasure free space, and resume only the remaining four builds if at least 20 GiB is available.",
+  "targets": [
+    {
+      "name": "TableUsReplacement-Deterministic",
+      "kind": "ios-simulator",
+      "created_for_this_run": true,
+      "stopped": true,
+      "allocated_gib": 2.362
+    },
+    {
+      "name": "TableUsReplacement_Deterministic",
+      "kind": "isolated-android-avd",
+      "created_for_this_run": true,
+      "stopped": true,
+      "allocated_gib": 2.383
+    }
+  ],
+  "execution_record": "disk-cleanup-execution.json",
+  "approval_record": "disk-cleanup-approval.json"
+}

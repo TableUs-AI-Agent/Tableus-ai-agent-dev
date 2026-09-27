@@ -1,0 +1,121 @@
+{
+  "date": "2026-09-24",
+  "base_sha": "bcc9e52d8c501dba9f51e881a7350c0959301255",
+  "application_commit": "5f8569e5b16088f64f358c64056e6dce4b191901",
+  "branch": "codex/account-lifecycle-backend",
+  "worktree": "/Users/brianchei/.codex/worktrees/account-lifecycle-backend/Tableus-ai-agent-dev",
+  "verification": {
+    "make_ready": "pass; one complete invocation",
+    "javascript_tests_passed": 296,
+    "python_tests_passed": 120,
+    "python_tests_skipped": 4,
+    "skips": "three existing PostgreSQL migration assertions and one new PostgreSQL advisory-lock assertion",
+    "contract_check": "pass; regeneration matches staged contract",
+    "sqlite_migration": "fresh database upgrade to 6d7e3b91a2c4 passed",
+    "restart_probe": "two separate Python processes, file-backed SQLite, mocked provider failure then success; raw Auth subject cleared",
+    "review": "root integration review plus bounded Sol correctness review; transfer replay finding fixed"
+  },
+  "source_files": [
+    {
+      "path": "backend/.env.example",
+      "sha256": "46fe74ccf74c7497103de6b26eac219a865694bcf4d01c28fcf6ca64d14153ad"
+    },
+    {
+      "path": "backend/alembic/versions/6d7e3b91a2c4_account_deletion_queue.py",
+      "sha256": "6fcb8c8d0022bbdc92b21a7df68b2377d64749eefd211ca7d2ec0f6e6598e434"
+    },
+    {
+      "path": "backend/main.py",
+      "sha256": "c24c20c4131603ea9b4b5920fa26f739f7acdc5c358bdfccaee8731d641e6ba2"
+    },
+    {
+      "path": "backend/scripts/process_account_deletions.py",
+      "sha256": "89b0ad19fd513a1e6da6dbb6fa72886c1163965994a44bbfd605bb94b42cd55a"
+    },
+    {
+      "path": "backend/tableus/account_lifecycle.py",
+      "sha256": "e7dfdc7f1701e5b5d846b5afcd7b640f7c724e52865cf0ab78b73180f898c3a7"
+    },
+    {
+      "path": "backend/tableus/api.py",
+      "sha256": "85ddbb663dbeec4f16c6f3ef173313563e9accaaf501a6f8e27141f660af8849"
+    },
+    {
+      "path": "backend/tableus/auth.py",
+      "sha256": "4891a847ba45b412f5ac266a0e733b44a045cbcca219dcd2e2a69c81461cb888"
+    },
+    {
+      "path": "backend/tableus/auth_removal.py",
+      "sha256": "d2f2c67d0d8d3746db2091e467cc4a994f38e0ad284a93f317c096966c91362a"
+    },
+    {
+      "path": "backend/tableus/config.py",
+      "sha256": "570510caf442761e0c9223f4038d491b6e442cc4e5673144d0dc0069d0743b62"
+    },
+    {
+      "path": "backend/tableus/models.py",
+      "sha256": "d33fc362912aaa1abdbb5ccdd3f906f907c785666f73409d1b696db92d58f234"
+    },
+    {
+      "path": "backend/tableus/request_controls.py",
+      "sha256": "68e388901a466f1962faf392f851d06815c8c6868f4782ff0faa17561f1aa75d"
+    },
+    {
+      "path": "backend/tableus/schemas.py",
+      "sha256": "2906066c465dc097159bc5739c0ccbe019fa29935b18da90378cdfd7c5171ad6"
+    },
+    {
+      "path": "backend/tests/test_account_lifecycle.py",
+      "sha256": "a65d94fd217018fa80d3c135292390add79972c8acc4f8441aa31d08f2c32e76"
+    },
+    {
+      "path": "backend/tests/test_api.py",
+      "sha256": "eb851a3c6fab14930c2683c3dbed5203ee4dea854f31afb57d9a99c6c113ae6d"
+    },
+    {
+      "path": "backend/tests/test_auth_removal.py",
+      "sha256": "9eec37ae2fbb341004c6b62dce2db702bbc72b75da807a6016fe168f43bc3c0e"
+    },
+    {
+      "path": "docs/openapi.json",
+      "sha256": "edace1d2419e8e58325c456b891a039432d869df6dcef35825d10ac8f68880b4"
+    },
+    {
+      "path": "packages/api-client/src/schema.ts",
+      "sha256": "fbe0268b578aab9c4d9e6ff5d20fc16cf16f03f8fc679eed7bef32e01e13cdcb"
+    }
+  ],
+  "private_evidence": [
+    {
+      "path": ".artifacts/account-lifecycle/make-ready.log",
+      "sha256": "371cf777ba661def92bedf3ecb03ce0f0c75c3ae08c39153eb9e0acea56c592b"
+    },
+    {
+      "path": ".artifacts/account-lifecycle/contract-check.log",
+      "sha256": "8f77113096bc540c3a6edcb8e89a76f69f4d1693390de1017ca2634a09d6f924"
+    },
+    {
+      "path": "backend/.artifacts/account-lifecycle/migration.log",
+      "sha256": "2e8025014b51b5df8001121999563a062a8d75f50f8389b8b194d8c52d3e7627"
+    },
+    {
+      "path": "backend/.artifacts/account-lifecycle/restart_probe.py",
+      "sha256": "6c9fe4f45af3991c8684e983f4c81d63ca5d21d7e4a1ccd6929d9489b226520c"
+    },
+    {
+      "path": "backend/.artifacts/account-lifecycle/restart-first.log",
+      "sha256": "89a6c003a1b9da375a0ee1c2e7bd96630ae83baf52811506f6183a31a09cc449"
+    },
+    {
+      "path": "backend/.artifacts/account-lifecycle/restart-second.log",
+      "sha256": "8baf50be0bd66521f846149e9312573f63075210e4db97e119f88526bb65713e"
+    }
+  ],
+  "limits": [
+    "No PostgreSQL runtime: no local server binary; Docker daemon unavailable.",
+    "No live Auth verification, deployment, scheduler or credential provisioning.",
+    "No native operations or new validation of native candidate.",
+    "Web/mobile UI remains on legacy application-data deletion.",
+    "Feature defaults off; retention windows and hosted activation remain separate work."
+  ]
+}

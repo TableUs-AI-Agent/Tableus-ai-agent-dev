@@ -1,0 +1,26 @@
+{
+  "schema_version": 1,
+  "application_sha": "f94a1d9d1125e6c9111aa08eda496f014f20d0c0",
+  "observed_at": "2026-09-21T19:07:33.905Z",
+  "artifact_receipt_checks_passed": 6,
+  "source_review_validator_passed": true,
+  "pending_input_privacy_validation_passed": true,
+  "cumulative_validator_passed": false,
+  "expected_rejection": "android.passed must be true",
+  "unresolved_items": [
+    "same_preexisting_android_session_renewal_after_ios_signout",
+    "fresh_provider_usage_reconciliation",
+    "isolated_simulator_apphang_disposition"
+  ],
+  "release_attestations": "Carried from recorded August 26 owner controls via c5b041c pending input; no new owner signature",
+  "new_builds": 0,
+  "new_live_operations": 0,
+  "public_health_and_association_recheck": "closeout-public-recheck.json",
+  "operator_attempts": [
+    {
+      "operation": "read candidate lock blob",
+      "first_result": "local child-process output buffer too small",
+      "resolution": "increased output buffer and reran successfully; no external operation"
+    }
+  ]
+}

@@ -1,0 +1,78 @@
+{
+  "schema_version": 1,
+  "recorded_at": "2026-09-22T02:08:41.017799+00:00",
+  "application_sha": "ed8330a766b3c4b80a505e075535678394e275e9",
+  "build_operator_sha": "16603dd0cf36d27b492e57a02d3c6c438a2563c4",
+  "build_id": "local-ios-test-ed8330a-2d-01",
+  "artifact_sha256": "fda161a75d1d895ef88e3530847d9b7dde5dad3a5f1f01680c9ea0c06c9db0b9",
+  "source_tree_sha": "b2525521411b122fb0f96aeecdcc650e6f04cf61",
+  "package_lock_sha256": "c2b5dff8fe1f95cf1fb6e0eb6ba2b85ac92712266cf6fbdf946880b866fb1413",
+  "build_status": "succeeded",
+  "build_started_at": "2026-09-22T01:46:40.132697+00:00",
+  "build_finished_at": "2026-09-22T02:00:20.737052+00:00",
+  "build_exit_code": 0,
+  "inventory_missing": [],
+  "inventory_errors": [],
+  "diagnostic_files": 42,
+  "matching_uuids": {
+    "arm64": "2C59093F-F2C4-3393-B85D-326ED07D51C5",
+    "x86_64": "95E011FC-7887-323D-A691-CFDDB5E73EBA"
+  },
+  "runtime_native_frame": {
+    "status": "passed",
+    "method": "LLDB startup breakpoint; independently resolved captured PC with atos and exact dSYM",
+    "load_address": "0x0000000102d48000",
+    "pc": "0x0000000102d4b470",
+    "atos_result": "AppDelegate.application(_:didFinishLaunchingWithOptions:) (in TableUs) (AppDelegate.swift:18)",
+    "deliberate_debugger_pause_not_hang_test": true,
+    "initial_harness_error": "Unsupported image list -l option; corrected to --header; both logs retained."
+  },
+  "javascript_map": {
+    "retained": true,
+    "app_and_decoder_sources_match": 46,
+    "source_content_mismatches": 0,
+    "captured_runtime_JS_frame_resolved": false,
+    "status": "source association verified; composed map retained; runtime usability blocked on a local stack capture method",
+    "capture_method_review": {
+      "candidate_local_stack_outlet": "none found in deterministic app routes; explicit emitter is gated telemetry canary",
+      "hermes_exported_symbol_probe": "No captureStackTrace/getDebugger/getStackTrace symbols matched xcrun nm -arch arm64 -gU on packaged hermesvm",
+      "scope_limit": "No app instrumentation or telemetry enabled; this is not proof every debugger technique is impossible."
+    }
+  },
+  "device": {
+    "new_disposable_ios_26_5": true,
+    "accepted_devices_untouched": true,
+    "app_installed": true,
+    "debug_launch_only": true,
+    "app_terminated_after_capture": true
+  },
+  "checks_not_run": [
+    "lifecycle runner",
+    "offline/refresh runner",
+    "synthetic link matrix",
+    "export/relaunch AppHang diagnostic",
+    "Android build/device checks",
+    "N2"
+  ],
+  "attempts_consumed": {
+    "test-ios": 1,
+    "test-android": 0
+  },
+  "free_gib_after": 29.56,
+  "N1_complete": false,
+  "private_root": "/Users/brianchei/repos/Tableus-ai-agent-dev/.artifacts/mobile/ed8330a766b3c4b80a505e075535678394e275e9/native-validation-2d",
+  "private_file_sha256": {
+    "test-ios.receipt.json": "4e4eb1348d4c80df606a35d488bfdf53ccf5241bd5dfc240fb1fd05f7fd3f4da",
+    "test-ios.inspection.json": "67f20bed5d7c570375ce9bdd3b5090c3f191699f640a133cc904c2daa4501fe5",
+    "test-ios.driver.json": "af53002ed3c0c54cc9d79e262184d25f0cfee9c5b22f89c5974c1f4f9f50aca2",
+    "test-ios.driver.log": "21dd9710f3840d91cbbbccbbe2acad947df588033a1cd638335542267eece88b",
+    "test-ios-driver.py": "ba55a6aaa6332e91412f01ad0d02d54a80ff9b57acf6efd23109eff961e7443a",
+    "test-ios.diagnostics/inventory.json": "c50a5333c92ffbd498846d1cedb2120b0b91a130a350b147d13a4cef97a3d94e",
+    "test-ios.diagnostics/build.log": "2320d8d6659228276ca497cddd48b7ec4e4ce3efbc8657c04c9bbb92bcc35ef0",
+    "test-ios.diagnostics/application.js.map": "b290603d25a94b5b7042b8008481a4b53d58ca11cc1b9ca2549a721ff519da2c",
+    "test-ios.app/main.jsbundle": "09ebe6bf8078002b82d514de6c3522e81b640f59274d94347ba22cc29b7adff9",
+    "ios-native-frame.log": "33d49bbb9416a8da0ee9704c6203fa589661a7a3a2d578ff730c5620dae985eb",
+    "ios-native-frame-corrected.log": "d10e0651abd48accd402b40cca3cd7d7c0ab591d8afd99d379d5551206b37737",
+    "ios-device.json": "e86022f940e54f468716d562bdb37c33f4aaf9c382269abc2378154850e84165"
+  }
+}

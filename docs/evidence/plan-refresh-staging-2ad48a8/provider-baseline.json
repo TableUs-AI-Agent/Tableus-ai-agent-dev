@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "application_sha": "2ad48a8d8ec4d3aa9a7bd52061b823bb55960bcd",
+  "observed_at": "2026-09-15 19:49:49.852645+00",
+  "places_attempts_all_time": 329,
+  "places_attempts_30d": 329,
+  "gemini_usage_rows": 9,
+  "gemini_estimated_usd": 0.0050015,
+  "latest_usage_at": "2026-09-15 06:33:43.488754+00",
+  "prior_backstop": 349,
+  "approved_backstop": 409,
+  "new_run_places_limit": 80
+}

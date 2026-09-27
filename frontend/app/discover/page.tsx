@@ -54,7 +54,6 @@ type SearchResult = {
   location?: ActiveLocation;
 };
 
-const LOCATION_STORAGE_KEY = "tableus.activeLocation";
 const DEFAULT_LOCATION: ActiveLocation = {
   label: "Boston, MA",
   latitude: 42.3601,
@@ -124,22 +123,6 @@ function hydrateRestaurant(restaurant: Restaurant) {
     ...restaurant,
     photo_url: safeRestaurantImage(restaurant),
   };
-}
-
-function readStoredLocation() {
-  if (typeof window === "undefined") return null;
-  try {
-    const raw = window.localStorage.getItem(LOCATION_STORAGE_KEY);
-    if (!raw) return null;
-    return JSON.parse(raw) as ActiveLocation;
-  } catch {
-    return null;
-  }
-}
-
-function persistLocation(location: ActiveLocation) {
-  if (typeof window === "undefined") return;
-  window.localStorage.setItem(LOCATION_STORAGE_KEY, JSON.stringify(location));
 }
 
 function getErrorMessage(error: unknown) {
@@ -492,9 +475,7 @@ export default function DiscoverPage() {
     return () => window.clearTimeout(resetTimer);
   }, [currentUser?.id]);
 
-  async function loadNearby(location: ActiveLocation, persist = false) {
-    if (persist) persistLocation(location);
-
+  async function loadNearby(location: ActiveLocation) {
     setLoadingNearby(true);
     setError("");
 
@@ -538,27 +519,21 @@ export default function DiscoverPage() {
     let active = true;
 
     async function initializeLocation() {
-      const stored = readStoredLocation();
-      if (stored && active) {
-        await loadNearby(stored, false);
-        return;
-      }
-
       const grantedLocation = await getGrantedBrowserLocation();
       if (grantedLocation && active) {
-        await loadNearby(grantedLocation, true);
+        await loadNearby(grantedLocation);
         return;
       }
 
       if (!active) return;
-      await loadNearby(DEFAULT_LOCATION, false);
+      await loadNearby(DEFAULT_LOCATION);
     }
 
     void initializeLocation();
     return () => {
       active = false;
     };
-  }, []);
+  }, [currentUser?.id]);
 
   async function animateConvergence(response: SearchResult, token: number) {
     const topRestaurants = response.top_restaurants.map(hydrateRestaurant);
@@ -662,7 +637,7 @@ export default function DiscoverPage() {
         method: "POST",
         body: JSON.stringify({ query: locationInput.trim() }),
       });
-      await loadNearby({ ...resolved, radius_meters: 2000 }, true);
+      await loadNearby({ ...resolved, radius_meters: 2000 });
       setLocationInput("");
       setShowLocationEditor(false);
     } catch (err) {
@@ -682,8 +657,7 @@ export default function DiscoverPage() {
           latitude: position.coords.latitude,
           longitude: position.coords.longitude,
           radius_meters: 2000,
-        },
-        true
+        }
       );
       setShowLocationEditor(false);
     } catch (err) {

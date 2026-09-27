@@ -1,0 +1,17 @@
+{
+  "application_sha": "f94a1d9d1125e6c9111aa08eda496f014f20d0c0",
+  "recorded_at": "2026-09-16T22:43:59Z",
+  "evidence_kind": "owner_confirmation_of_requested_steps",
+  "platforms": [
+    "physical-ios",
+    "android"
+  ],
+  "voting_state_returned": true,
+  "prior_three_selections_preserved": true,
+  "vote_submission_control_available": true,
+  "no_additional_vote_requested": true,
+  "json_export_share_sheet_opened_and_dismissed": true,
+  "deletion_readiness_shown": true,
+  "deletion_confirmation_left_empty": true,
+  "returned_to_plans": true
+}

@@ -1,0 +1,204 @@
+{
+  "schema_version": 1,
+  "amendment": "F1-P1",
+  "recorded_at": "2026-09-23T04:27:17.031158+00:00",
+  "status": "failed",
+  "evidence_base_sha": "01cac2b802ce0615d1fdd95694185d522a42384f",
+  "evidence_commit": "commit containing this checkpoint; distinct from application/build/probe operator identities",
+  "application_sha_unchanged": "8972865893a3f018a064594457dc9cc664f8a61f",
+  "build_operator_sha_unchanged": "16603dd0cf36d27b492e57a02d3c6c438a2563c4",
+  "approval": "n1-f1-p1-approval.json",
+  "approval_sha256": "8980675923ef8db99a8ae1d2f26a1212c121169021d2165b7f57b1d341e6d955",
+  "proposal_sha256": "6e27ac766bd22b3c6bf1e15dc381732b5b14f84ac1c9e303e4c6c62c1fd5c0d8",
+  "probe_manifest_sha256": "65ffeb9e5b04243a8c42a2a8a58010561b7a025a14719b4687f37e8fc4df2eeb",
+  "probe_driver_sha256": "ac2196d0d0709010abd24f6fabeb34cbe25a980ab31a71a22f73fbcf8b4d37e0",
+  "private_root": "/Users/brianchei/repos/Tableus-ai-agent-dev/.artifacts/mobile/8972865893a3f018a064594457dc9cc664f8a61f/native-validation-f1",
+  "device_id": "CBB4FAB4-734C-413C-9F10-850329AC9A01",
+  "started_at": "2026-09-23T04:22:22.768899+00:00",
+  "finished_at": "2026-09-23T04:23:47.638934+00:00",
+  "elapsed_seconds": 84.869,
+  "limit_seconds": 300,
+  "preflight_status": "passed",
+  "preflight_free_gib": 20.03,
+  "flows": [
+    {
+      "index": 1,
+      "started_at": "2026-09-23T04:22:26.653146+00:00",
+      "command": [
+        "/Users/brianchei/repos/Tableus-ai-agent-dev/.artifacts/mobile/8972865893a3f018a064594457dc9cc664f8a61f/native-validation-f1/runtime-tools-f1/maestro",
+        "--device",
+        "CBB4FAB4-734C-413C-9F10-850329AC9A01",
+        "test",
+        "--test-output-dir=results",
+        "/Users/brianchei/repos/Tableus-ai-agent-dev/.artifacts/mobile/8972865893a3f018a064594457dc9cc664f8a61f/native-validation-f1/runtime-preparation-o1/f1-platform-probe-preparation/settings-1.yml"
+      ],
+      "status": "passed",
+      "exit_code": 0,
+      "commands_evidence": {
+        "path": "/Users/brianchei/repos/Tableus-ai-agent-dev/.artifacts/mobile/8972865893a3f018a064594457dc9cc664f8a61f/native-validation-f1/test-ios-settings-platform-probe-01/maestro-results/settings-1-1kuzo1ro/2026-09-22_232227/settings-1/commands.json",
+        "sha256": "65063e6a9e855268d44447f39d859102b40aaf717af217d65a62e16e3509de8d"
+      },
+      "finished_at": "2026-09-23T04:23:02.639501+00:00",
+      "screenshot": "/Users/brianchei/repos/Tableus-ai-agent-dev/.artifacts/mobile/8972865893a3f018a064594457dc9cc664f8a61f/native-validation-f1/test-ios-settings-platform-probe-01/maestro-results/settings-1-1kuzo1ro/2026-09-22_232227/settings-1/takeScreenshot/settings-probe-1.png"
+    },
+    {
+      "index": 2,
+      "started_at": "2026-09-23T04:23:03.225413+00:00",
+      "command": [
+        "/Users/brianchei/repos/Tableus-ai-agent-dev/.artifacts/mobile/8972865893a3f018a064594457dc9cc664f8a61f/native-validation-f1/runtime-tools-f1/maestro",
+        "--device",
+        "CBB4FAB4-734C-413C-9F10-850329AC9A01",
+        "test",
+        "--test-output-dir=results",
+        "/Users/brianchei/repos/Tableus-ai-agent-dev/.artifacts/mobile/8972865893a3f018a064594457dc9cc664f8a61f/native-validation-f1/runtime-preparation-o1/f1-platform-probe-preparation/settings-2.yml"
+      ],
+      "status": "failed",
+      "finished_at": "2026-09-23T04:23:40.747639+00:00",
+      "error": "Command '['xcrun', 'simctl', 'spawn', 'CBB4FAB4-734C-413C-9F10-850329AC9A01', 'launchctl', 'list']' timed out after 8 seconds"
+    }
+  ],
+  "command_evidence": [
+    {
+      "path": "test-ios-settings-platform-probe-01/maestro-results/settings-1-1kuzo1ro/2026-09-22_232227/settings-1/commands.json",
+      "sha256": "65063e6a9e855268d44447f39d859102b40aaf717af217d65a62e16e3509de8d",
+      "statuses": [
+        "COMPLETED",
+        "COMPLETED",
+        "COMPLETED",
+        "COMPLETED",
+        "COMPLETED"
+      ],
+      "command_types": [
+        "defineVariablesCommand",
+        "applyConfigurationCommand",
+        "launchAppCommand",
+        "assertConditionCommand",
+        "takeScreenshotCommand"
+      ]
+    },
+    {
+      "path": "test-ios-settings-platform-probe-01/maestro-results/settings-2-wlp1pmfm/2026-09-22_232305/settings-2/commands.json",
+      "sha256": "bb36da57ee53063ed75ec3e8bb6f202364faf01c56c6d06fd6e21e634ed98c3d",
+      "statuses": [
+        "COMPLETED",
+        "COMPLETED",
+        "COMPLETED",
+        "COMPLETED",
+        "COMPLETED"
+      ],
+      "command_types": [
+        "defineVariablesCommand",
+        "applyConfigurationCommand",
+        "launchAppCommand",
+        "assertConditionCommand",
+        "takeScreenshotCommand"
+      ]
+    }
+  ],
+  "screenshots": [
+    {
+      "path": "/Users/brianchei/repos/Tableus-ai-agent-dev/.artifacts/mobile/8972865893a3f018a064594457dc9cc664f8a61f/native-validation-f1/test-ios-settings-platform-probe-01/maestro-results/settings-1-1kuzo1ro/2026-09-22_232227/settings-1/takeScreenshot/settings-probe-1.png",
+      "sha256": "f19da817a3c9cbabc2c5a318d8658b66d16724e1468d07f01aeacc14ba1552e5"
+    }
+  ],
+  "observations": {
+    "count": 42,
+    "springboard_pids": [
+      17600
+    ],
+    "tableus_pids": [],
+    "stop_reasons": []
+  },
+  "new_crash_reports": [],
+  "cleanup": {
+    "settings_terminate_exit": 0,
+    "maestro_process_cleanup": {
+      "stopped": true,
+      "exit_code": -9,
+      "signal": "SIGKILL"
+    },
+    "final_health": {
+      "at": "2026-09-23T04:23:45.596789+00:00",
+      "springboard_pid": 17600,
+      "tableus_pids": []
+    }
+  },
+  "error": "Command '['xcrun', 'simctl', 'spawn', 'CBB4FAB4-734C-413C-9F10-850329AC9A01', 'launchctl', 'list']' timed out after 8 seconds",
+  "additional_runs_used": 1,
+  "additional_runs_remaining": 0,
+  "ui_flows_with_all_commands_completed": 2,
+  "accepted_probe_flows": 1,
+  "third_invocation_started": false,
+  "classification": "Inconclusive platform probe: its simulator-monitor subprocess timed out during the second Settings flow; this is not an observed SpringBoard or TableUs crash.",
+  "post_stop": {
+    "recorded_at": "2026-09-23T04:26:05.448716+00:00",
+    "target_processes": [
+      {
+        "pid": 17600,
+        "ppid": 94306,
+        "start": "Tue Sep 22 22:56:56 2026",
+        "executable": "/Library/Developer/CoreSimulator/Volumes/iOS_23F77/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 26.5.simruntime/Contents/Resources/RuntimeRoot/System/Library/CoreServices/SpringBoard.app/SpringBoard"
+      },
+      {
+        "pid": 94306,
+        "ppid": 1,
+        "start": "Tue Sep 22 21:07:12 2026",
+        "executable": "launchd_sim"
+      }
+    ],
+    "matching_automation_processes": [],
+    "ports": {
+      "7999": {
+        "exit_code": 1,
+        "free": true
+      },
+      "8000": {
+        "exit_code": 1,
+        "free": true
+      },
+      "8001": {
+        "exit_code": 1,
+        "free": true
+      }
+    },
+    "new_late_TableUs_or_SpringBoard_reports": [],
+    "source": "Read-only host ps/lsof/report inventory; no simulator command or app launch."
+  },
+  "tableus_validation_granted": false,
+  "automatic_tableus_continuation": false,
+  "original_refresh_failure": "Unresolved; Settings-only probe does not exercise TableUs.",
+  "O1_platform_crash": "Retained; this probe does not erase or explain the prior crash.",
+  "private_files_sha256": {
+    "test-ios-settings-platform-probe-01/maestro-1.log": "090aeba9a0adcc54628a528020ed63937528c07a59ec9ec48e21b08334b9206d",
+    "test-ios-settings-platform-probe-01/maestro-2.log": "b634316e7ab3d4051cdcb0d1432c609860b401fc06ad3eaa959d2f4f6a5473f9",
+    "test-ios-settings-platform-probe-01/maestro-results/settings-1-1kuzo1ro/2026-09-22_232227/settings-1/commands.json": "65063e6a9e855268d44447f39d859102b40aaf717af217d65a62e16e3509de8d",
+    "test-ios-settings-platform-probe-01/maestro-results/settings-1-1kuzo1ro/2026-09-22_232227/settings-1/logs/device-simulator.log": "544b3424a40ff2f1013ededaebbbb7323d61244d4a8887708c614c70e0b69a0e",
+    "test-ios-settings-platform-probe-01/maestro-results/settings-1-1kuzo1ro/2026-09-22_232227/settings-1/logs/device-xctest.log": "4139c16f661111782c853991b7142eed857892e5902364f0466bd3fa219d03e1",
+    "test-ios-settings-platform-probe-01/maestro-results/settings-1-1kuzo1ro/2026-09-22_232227/settings-1/logs/maestro.log": "f543f3bd3d7847152e3538d0b1b76a903fcc88d8f3902c5b1050b7a8cc5ef97d",
+    "test-ios-settings-platform-probe-01/maestro-results/settings-1-1kuzo1ro/2026-09-22_232227/settings-1/manifest.json": "5c4e80398943b5e913424bf42f46adeb45f72527cca558c7137c328949cb5d3b",
+    "test-ios-settings-platform-probe-01/maestro-results/settings-1-1kuzo1ro/2026-09-22_232227/settings-1/takeScreenshot/settings-probe-1.png": "f19da817a3c9cbabc2c5a318d8658b66d16724e1468d07f01aeacc14ba1552e5",
+    "test-ios-settings-platform-probe-01/maestro-results/settings-1-1kuzo1ro/2026-09-22_232227/xctest_runner_2026-09-22_232230.log": "14cf25fdb760793944ec7e238883194a179f90b43200dddd43c8962dbf8a27ef",
+    "test-ios-settings-platform-probe-01/maestro-results/settings-1-1kuzo1ro/operator-invocation.json": "fc5a1b76b724cbdae1696a7c567853b61abdec28bad8ec9ed43dbe63c0cccf26",
+    "test-ios-settings-platform-probe-01/maestro-results/settings-2-wlp1pmfm/2026-09-22_232305/settings-2/commands.json": "bb36da57ee53063ed75ec3e8bb6f202364faf01c56c6d06fd6e21e634ed98c3d",
+    "test-ios-settings-platform-probe-01/maestro-results/settings-2-wlp1pmfm/2026-09-22_232305/settings-2/logs/device-simulator.log": "6c04bfe7bfdc1264b1c73c07e9e49d74f9ad5b7e1e6513da28a5bc8da8793f4a",
+    "test-ios-settings-platform-probe-01/maestro-results/settings-2-wlp1pmfm/2026-09-22_232305/settings-2/logs/device-xctest.log": "c1e9f33d898a58abd14cfb5deea475c8cef1725764d47a2bbef57844dfd5c87d",
+    "test-ios-settings-platform-probe-01/maestro-results/settings-2-wlp1pmfm/2026-09-22_232305/settings-2/logs/maestro.log": "df6f807957a286991021b83fa249b8fa9a7a4c17fb19905cc676a46dd4018bd4",
+    "test-ios-settings-platform-probe-01/maestro-results/settings-2-wlp1pmfm/2026-09-22_232305/settings-2/manifest.json": "efb5df27d41f36194ec6bcb3c9764ff52143b1abe6e9196ff74cb6fa6be259ec",
+    "test-ios-settings-platform-probe-01/maestro-results/settings-2-wlp1pmfm/2026-09-22_232305/settings-2/takeScreenshot/settings-probe-2.png": "e9724677f8dbe0181d18eaab95b1ee6c167e0997e94e4a112ae836b3aa118018",
+    "test-ios-settings-platform-probe-01/maestro-results/settings-2-wlp1pmfm/2026-09-22_232305/xctest_runner_2026-09-22_232308.log": "c1e9f33d898a58abd14cfb5deea475c8cef1725764d47a2bbef57844dfd5c87d",
+    "test-ios-settings-platform-probe-01/maestro-results/settings-2-wlp1pmfm/operator-invocation.json": "e2a4ba4b1995b3aea220ba25abaab52f6d89de2e196fa111fedbe43f9054dd03",
+    "test-ios-settings-platform-probe-01/post-stop-check.json": "8a4dba7a45fbae8ea3275f86d281a9623631627eb9b4329993b5a1217b82c0b3",
+    "test-ios-settings-platform-probe-01/result.json": "c448203ebb90d78947ca87b3fad62ce0ed118830ac367d388b2155bf259946c4",
+    "test-ios-settings-platform-probe-01/settings-terminate.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "p1-preflight/approval.json": "8980675923ef8db99a8ae1d2f26a1212c121169021d2165b7f57b1d341e6d955",
+    "p1-preflight/preflight.json": "9806b28526dcf2e65918029f2de2f91ebad7ec8efe66dbcd01524657eed4b8f0"
+  },
+  "prepared_followup": {
+    "proposal": "n1-f1-p2-proposal.json",
+    "proposal_sha256": "27865e7254423cf04745dd0feed1c27b49037e151fd4136ffd3ed5410537f1c8",
+    "archive_index": "/Users/brianchei/repos/Tableus-ai-agent-dev/.artifacts/mobile/8972865893a3f018a064594457dc9cc664f8a61f/native-validation-f1/runtime-preparation-p1/index.json",
+    "archive_index_sha256": "58a3a81ff4b19adf456ef01048578f4453f2c4e02ac93af2feed781b5a82db64",
+    "archive_file_count": 12,
+    "P2_executed": false
+  }
+}

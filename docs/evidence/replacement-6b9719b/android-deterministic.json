@@ -1,0 +1,61 @@
+{
+  "application_sha": "6b9719b4e63e34803f2e7c2598e45851790df661",
+  "platform": "android",
+  "accepted_at": "2026-09-15T01:05:38.295397+00:00",
+  "lifecycle_passed": true,
+  "offline_passed": true,
+  "artifact_sha256": "80b35fbe955e9c335d5f30dfc819e6f78a294fc3b195947fddcea687db6cb681",
+  "evidence": {
+    "lifecycle": {
+      "attempt": 2,
+      "summary_sha256": "b7250911833806b82e49f797d4641a6180531a89b15064844cf962335ad8a7d9",
+      "screenshots_visually_reviewed": [
+        "android-finalized-plan.png",
+        "android-rotated-link.png"
+      ]
+    },
+    "offline": {
+      "attempt": 3,
+      "summary_sha256": "0196a051ad96aad232293632d54e95093d388d544c385f2d0811e08ae7cebbc6",
+      "screenshots_visually_reviewed": [
+        "android-offline-retry.png",
+        "android-recovered-finalized.png"
+      ],
+      "request_invariants": {
+        "create_request_count": 2,
+        "create_same_key_replay": true,
+        "plan_count": 1,
+        "offline_constraint_request_count": 0,
+        "recovered_constraint_request_count": 1,
+        "candidate_count": 4,
+        "finalize_request_count": 2,
+        "finalize_same_key_replay": true,
+        "finalized_event_count": 1
+      },
+      "navigation_overlay": {
+        "original_sha256": "53edc293db7bbe2b6039627dd3680b8f91c64341bc33b671957273434d583b0e",
+        "adapted_sha256": "3afbc15a2e6973bc81cb318f59cd358da2f0c0f0bf2b6c84b921821a4c832fb7",
+        "change": "Capture viewport, scroll retry action into view, then run the unchanged visibility assertion.",
+        "assertions_removed": 0,
+        "application_changed": false,
+        "frozen_checkout_changed": false
+      },
+      "navigation_screenshots_visually_reviewed": [
+        "retry-before-scroll.png",
+        "retry-after-scroll.png"
+      ]
+    }
+  },
+  "earlier_failures_retained": [
+    {
+      "attempt": 1,
+      "phase": "startup",
+      "observation": "System UI unresponsive dialog obscured the Plans screen; four-core retry completed lifecycle."
+    },
+    {
+      "attempt": 2,
+      "phase": "offline-finalize",
+      "observation": "Retry action was clipped at the bottom of the viewport. Explicit scrolling retained the original assertion and completed the suite."
+    }
+  ]
+}

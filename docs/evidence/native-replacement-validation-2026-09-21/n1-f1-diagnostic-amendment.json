@@ -1,0 +1,62 @@
+{
+  "schema_version": 1,
+  "status": "prepared_only_not_approved",
+  "recorded_at": "2026-09-23T02:23:03.417882+00:00",
+  "requested_additional_captures": 1,
+  "new_builds": 0,
+  "manifest": {
+    "status": "proposal_only_no_approval_recorded",
+    "approval_gate": "TABLEUS_F1_D2_APPROVED=1 only after separate owner approval and root review of these exact hashes",
+    "application_sha": "8972865893a3f018a064594457dc9cc664f8a61f",
+    "operator_sha": "16603dd0cf36d27b492e57a02d3c6c438a2563c4",
+    "simulator": "CBB4FAB4-734C-413C-9F10-850329AC9A01",
+    "output": "js-runtime-trace-f1-03",
+    "artifact_proof": ".artifacts/f1-native-preparation/artifact-proof.json",
+    "artifact_proof_sha256": "5e0ebbad3f27c4ea9f9cb913e9def0f54c6aa367f3e73f0f298c382303532a15",
+    "artifact_sha256": "98c1535bfe6f7cad0c8e467454f5128c71f4aae21b8b41a5aba1c1a33f1e391d",
+    "main_jsbundle_sha256": "315e6428d6cbd344541055260ba75168d9fde90ca660a047413c9599891b01f4",
+    "hermes_sha256": "94803d207c51b8a07744a66f718a2d2c6cd9e4355eb47f2b335f963e59189ece",
+    "hermes_uuid": "75872184-F738-3E5C-B47A-FD4BCE09605A",
+    "python_executable": "/opt/homebrew/opt/python@3.14/bin/python3.14",
+    "reason": "F1-02 LLDB start command timed out at 45 seconds while transcript ended at continue; no sampler or profile was produced and phase timing was unavailable.",
+    "scope": "One separately authorized diagnostic only; exact installed F1 app, D1 Hermes sampler, no build, app byte change, prewarm, link launch, behavior runner, or automatic retry.",
+    "timing": {
+      "overall_seconds": 120,
+      "work_seconds": 110,
+      "termination_reserve_seconds": 10,
+      "lldb_start_cap_seconds": 65,
+      "start_reserve_after_seconds": 26,
+      "fixed_hold_seconds": 16,
+      "scheduled_sampler_stop_seconds": 12,
+      "minimum_dump_readout_reserve_seconds": 10
+    },
+    "scripts": {
+      "driver.py": "f748985a4ca3e7d6802b17aa39a67678efc63fabe1538941b0238251e45cb038",
+      "capture.py": "e5303a68e82dd79ecdb437cbcff731591dc6dcc51ee224574026a644b9b2bfb3"
+    }
+  },
+  "prepared_directory": "/Users/brianchei/.codex/worktrees/ea6d/Tableus-ai-agent-dev/.artifacts/f1-native-preparation/diagnostic-proposed-v3",
+  "durable_archive_directory": "/Users/brianchei/repos/Tableus-ai-agent-dev/.artifacts/mobile/8972865893a3f018a064594457dc9cc664f8a61f/native-validation-f1/operator-preparation/f1-native-preparation/diagnostic-proposed-v3",
+  "prepared_file_sha256": {
+    "driver.py": "f748985a4ca3e7d6802b17aa39a67678efc63fabe1538941b0238251e45cb038",
+    "capture.py": "e5303a68e82dd79ecdb437cbcff731591dc6dcc51ee224574026a644b9b2bfb3",
+    "manifest.json": "6ded6d1f441f0d0e0155635b082d96878d546810e3441024ab5a8b39c59b958e",
+    "README.md": "49ff7fa465e453e4f459eb48f662ba8249c67cd62827797a909f4c79a08dc57a"
+  },
+  "pre_execution_root_checks": [
+    "Fresh independent artifact/source/UUID verification to new private proof, compare against pinned artifact identity",
+    "Verify exact prepared hashes and no existing output",
+    "Verify same installed disposable target; unchanged application bytes",
+    "Record owner approval before setting the approval environment gate"
+  ],
+  "offline_checks": [
+    "Python AST syntax",
+    "Manifest script hashes",
+    "Help path does not launch target",
+    "Fresh output directory unused",
+    "Launch cleanup guard and measured-over-budget failure reviewed"
+  ],
+  "executed": false,
+  "N1_complete": false,
+  "remaining_authority": "Only this additional capture needs extension; successful proof unlocks the existing bounded F1 local runtime sequence, with original first-failure stop and separate unresolved gates."
+}

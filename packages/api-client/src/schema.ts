@@ -432,6 +432,24 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/me/deletion": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Full Deletion Status */
+        get: operations["full_deletion_status_api_v1_me_deletion_get"];
+        put?: never;
+        /** Request Full Deletion */
+        post: operations["request_full_deletion_api_v1_me_deletion_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v1/me/export": {
         parameters: {
             query?: never;
@@ -441,6 +459,23 @@ export interface paths {
         };
         /** Export Me */
         get: operations["export_me_api_v1_me_export_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/me/organized-plans": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Organized Plans */
+        get: operations["organized_plans_api_v1_me_organized_plans_get"];
         put?: never;
         post?: never;
         delete?: never;
@@ -478,7 +513,8 @@ export interface paths {
         get: operations["get_plan_api_v1_plans__plan_id__get"];
         put?: never;
         post?: never;
-        delete?: never;
+        /** Delete Sole Plan */
+        delete: operations["delete_sole_plan_api_v1_plans__plan_id__delete"];
         options?: never;
         head?: never;
         patch?: never;
@@ -533,6 +569,23 @@ export interface paths {
         options?: never;
         head?: never;
         patch?: never;
+        trace?: never;
+    };
+    "/api/v1/plans/{plan_id}/metadata": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        /** Replace Plan Metadata */
+        patch: operations["replace_plan_metadata_api_v1_plans__plan_id__metadata_patch"];
         trace?: never;
     };
     "/api/v1/plans/{plan_id}/recommendations": {
@@ -603,6 +656,23 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/plans/{plan_id}/transfer-ownership": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Transfer Plan Ownership */
+        post: operations["transfer_plan_ownership_api_v1_plans__plan_id__transfer_ownership_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v1/plans/{plan_id}/vote": {
         parameters: {
             query?: never;
@@ -627,7 +697,10 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** Provider Usage Summary */
+        /**
+         * Provider Usage Summary
+         * @description Operator-only aggregate usage within the preceding 1–30 days.
+         */
         get: operations["provider_usage_summary_api_v1_provider_usage_summary_get"];
         put?: never;
         post?: never;
@@ -756,6 +829,11 @@ export interface components {
              * @constant
              */
             deletion_scope: "application_profile";
+            /**
+             * Full Deletion Available
+             * @default false
+             */
+            full_deletion_available: boolean;
             /** Organized Plan Count */
             organized_plan_count: number;
             /**
@@ -764,6 +842,30 @@ export interface components {
              * @constant
              */
             supabase_auth_removal: "operator_required";
+        };
+        /** AccountDeletionOut */
+        AccountDeletionOut: {
+            /** Completed At */
+            completed_at?: string | null;
+            /** Last Error Code */
+            last_error_code?: string | null;
+            /**
+             * Needs Attention
+             * @default false
+             */
+            needs_attention: boolean;
+            /** Next Retry At */
+            next_retry_at?: string | null;
+            /**
+             * Requested At
+             * Format: date-time
+             */
+            requested_at: string;
+            /**
+             * Status
+             * @enum {string}
+             */
+            status: "pending" | "completed";
         };
         /** AccountExportConnection */
         AccountExportConnection: {
@@ -951,6 +1053,14 @@ export interface components {
                 [key: string]: unknown;
             };
         };
+        /** Envelope[AccountDeletionOut] */
+        Envelope_AccountDeletionOut_: {
+            data: components["schemas"]["AccountDeletionOut"];
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+        };
         /** Envelope[AccountExportOut] */
         Envelope_AccountExportOut_: {
             data: components["schemas"]["AccountExportOut"];
@@ -994,6 +1104,14 @@ export interface components {
         /** Envelope[LocationOut] */
         Envelope_LocationOut_: {
             data: components["schemas"]["LocationOut"];
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+        };
+        /** Envelope[ManagedPlanOut] */
+        Envelope_ManagedPlanOut_: {
+            data: components["schemas"]["ManagedPlanOut"];
             /** Meta */
             meta?: {
                 [key: string]: unknown;
@@ -1059,6 +1177,15 @@ export interface components {
         Envelope_list_ConnectionOut__: {
             /** Data */
             data: components["schemas"]["ConnectionOut"][];
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+        };
+        /** Envelope[list[ManagedPlanOut]] */
+        Envelope_list_ManagedPlanOut__: {
+            /** Data */
+            data: components["schemas"]["ManagedPlanOut"][];
             /** Meta */
             meta?: {
                 [key: string]: unknown;
@@ -1192,6 +1319,33 @@ export interface components {
             /** Query */
             query: string;
         };
+        /** ManagedPlanOut */
+        ManagedPlanOut: {
+            /** Id */
+            id: string;
+            /** Organizer Id */
+            organizer_id: string;
+            /** Participants */
+            participants: components["schemas"]["ManagedPlanParticipantOut"][];
+            /** Title */
+            title: string;
+            /**
+             * Updated At
+             * Format: date-time
+             */
+            updated_at: string;
+            /** Viewer Is Organizer */
+            viewer_is_organizer: boolean;
+        };
+        /** ManagedPlanParticipantOut */
+        ManagedPlanParticipantOut: {
+            /** Display Name */
+            display_name: string;
+            /** Is Organizer */
+            is_organizer: boolean;
+            /** Profile Id */
+            profile_id: string;
+        };
         /** NearbyRequest */
         NearbyRequest: {
             /** Latitude */
@@ -1289,6 +1443,11 @@ export interface components {
             location_label: string;
             /** Longitude */
             longitude: number | null;
+            /**
+             * Metadata Needs Replacement
+             * @default false
+             */
+            metadata_needs_replacement: boolean;
             /** My Vote */
             my_vote: string[] | null;
             /** Organizer Id */
@@ -1459,6 +1618,11 @@ export interface components {
             preferences_text: string;
             /** Share Taste */
             share_taste: boolean;
+        };
+        /** TransferOwnershipIn */
+        TransferOwnershipIn: {
+            /** Recipient Profile Id */
+            recipient_profile_id: string;
         };
         /** ValidationError */
         ValidationError: {
@@ -2396,6 +2560,74 @@ export interface operations {
             };
         };
     };
+    full_deletion_status_api_v1_me_deletion_get: {
+        parameters: {
+            query?: never;
+            header?: {
+                authorization?: string | null;
+                "x-demo-user-id"?: string | null;
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_AccountDeletionOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    request_full_deletion_api_v1_me_deletion_post: {
+        parameters: {
+            query?: never;
+            header?: {
+                authorization?: string | null;
+                "x-demo-user-id"?: string | null;
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["DeleteAccountIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_AccountDeletionOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
     export_me_api_v1_me_export_get: {
         parameters: {
             query?: never;
@@ -2415,6 +2647,38 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["Envelope_AccountExportOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    organized_plans_api_v1_me_organized_plans_get: {
+        parameters: {
+            query?: never;
+            header?: {
+                authorization?: string | null;
+                "x-demo-user-id"?: string | null;
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_ManagedPlanOut__"];
                 };
             };
             /** @description Validation Error */
@@ -2530,6 +2794,44 @@ export interface operations {
             };
         };
     };
+    delete_sole_plan_api_v1_plans__plan_id__delete: {
+        parameters: {
+            query?: never;
+            header?: {
+                authorization?: string | null;
+                "x-demo-user-id"?: string | null;
+            };
+            path: {
+                plan_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["DeleteAccountIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_DeleteAccountOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
     update_constraints_api_v1_plans__plan_id__constraints_patch: {
         parameters: {
             query?: never;
@@ -2621,6 +2923,44 @@ export interface operations {
         requestBody: {
             content: {
                 "application/json": components["schemas"]["PlanJoinIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_PlanOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    replace_plan_metadata_api_v1_plans__plan_id__metadata_patch: {
+        parameters: {
+            query?: never;
+            header?: {
+                authorization?: string | null;
+                "x-demo-user-id"?: string | null;
+            };
+            path: {
+                plan_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["PlanCreateIn"];
             };
         };
         responses: {
@@ -2784,6 +3124,44 @@ export interface operations {
             };
         };
     };
+    transfer_plan_ownership_api_v1_plans__plan_id__transfer_ownership_post: {
+        parameters: {
+            query?: never;
+            header?: {
+                authorization?: string | null;
+                "x-demo-user-id"?: string | null;
+            };
+            path: {
+                plan_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["TransferOwnershipIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_ManagedPlanOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
     vote_api_v1_plans__plan_id__vote_put: {
         parameters: {
             query?: never;
@@ -2824,7 +3202,9 @@ export interface operations {
     };
     provider_usage_summary_api_v1_provider_usage_summary_get: {
         parameters: {
-            query?: never;
+            query?: {
+                days?: number;
+            };
             header?: {
                 authorization?: string | null;
                 "x-demo-user-id"?: string | null;

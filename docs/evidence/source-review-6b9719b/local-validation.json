@@ -1,0 +1,62 @@
+{
+  "schema_version": 1,
+  "observed_at": "2026-09-14T21:50:51.523322+00:00",
+  "application_source_sha": "6b9719b4e63e34803f2e7c2598e45851790df661",
+  "tooling_source_sha": "1c75832ef421335662319635e1b74888476cdb77",
+  "tooling_sha_note": "Checks ran on working-tree file bytes committed at this SHA. The later evidence binding changes documentation only.",
+  "deployed_source_sha": "c5b041c85f4f7b959436c13bef48c959622c624f",
+  "branch": "codex/staging-source-review",
+  "policy": "staging-source-review-v1",
+  "report_sha256": "046bba5a771112ef1e49888b6a09235f9c6d259b757b81f90f85607785795122",
+  "owner_acceptance": "pending",
+  "focused_tests": {
+    "passed": 14,
+    "log_sha256": "cbc3880e2a061b050ae2392eb9c51490eaed0cfac0576f22ee6791a2ede02717"
+  },
+  "make_ready": {
+    "passed": true,
+    "exit_code": 0,
+    "javascript_passed": 212,
+    "python_passed": 98,
+    "python_skipped": 3,
+    "skipped_scope": "Postgres-only local checks; no current-candidate CI run",
+    "lint": true,
+    "types": true,
+    "contracts": true,
+    "web_build": true,
+    "expo_web_build": true,
+    "deterministic_smoke": true,
+    "web_js_bytes_report_only": 2820354,
+    "log_sha256": "2d1409f4ccaf06e190691899ceb923017903a9e11260e1b504bbab04fe996d36"
+  },
+  "evidence_checks": {
+    "reviewed_git_blobs_verified": 11,
+    "required_coverage_areas_present": 7,
+    "report_digest_matches": true,
+    "candidate_check_evidence_digest_matches": true,
+    "pending_owner_acceptance_rejected": true,
+    "legacy_pending_input_unchanged_and_rejected": true,
+    "application_paths_unchanged": true
+  },
+  "tooling_file_sha256": {
+    "scripts/cumulative-readiness-evidence.mjs": "16ffb33439222282d4087f2bc6e315d4f6d157cfbc1fc83d97b6dcf39bee3011",
+    "scripts/readiness-evidence-utils.mjs": "b8cb275a71dd1a28bff802f1e01986491cf70421b357e1e35645f9b6d712f7fd",
+    "scripts/readiness-evidence-utils.test.mjs": "7c0ef089279a7c86a917244bcfa316f1d2545fb58d49bbd815615fa2b609573a",
+    "scripts/source-review-evidence.mjs": "886b780d31aac608e139cda147345c970ed60558c75d2ca73719d5c9bdf6ba9f"
+  },
+  "scope": {
+    "automated_security_scans": 0,
+    "live_provider_calls": 0,
+    "sign_in_messages": 0,
+    "native_builds": 0,
+    "deployments": 0,
+    "pushes": 0
+  },
+  "limitations": [
+    "Operator tooling and targeted source review only; not an independent audit or plugin scan.",
+    "Owner acceptance of the concrete report remains pending.",
+    "Two medium staging findings remain open: shared provider quotas and capabilities in URLs.",
+    "Replacement application still needs authorized real-session native and hosted verification.",
+    "Cumulative staging, production, store and cohort approval are not established."
+  ]
+}

@@ -1,0 +1,49 @@
+{
+  "schema_version": 1,
+  "application_sha": "f94a1d9d1125e6c9111aa08eda496f014f20d0c0",
+  "operator_sha": "825b25854ea26b720d9e6aef395acedf29a10a27",
+  "platform": "ios",
+  "profile": "telemetry-test-ios",
+  "build_id": "local-ios-telemetry-test-f94a1d9",
+  "artifact_sha256": "81075451eb36d6c5d583df8322f48eea98ec7d9eda3fdb932ecf37e2716af5eb",
+  "receipt_sha256": "8f1a502c46cb855d17413188d87c37d2b6b5426f069c96a336282d277ffbb583",
+  "inspection_sha256": "39284a0ad15cdd64d73da3c1b4c9e5e37fe98893e2aa046bb26523515057d19c",
+  "source_tree_sha": "b1d4c75e5616ee89cfeedd5d3170ae8036a0f9bf",
+  "package_lock_sha256": "7af3277d19094e0275e35b39b5a04c195b7ddf75d4b517983f120bf72fe299f3",
+  "verified_at": "2026-09-16T00:39:03.240Z",
+  "compiled_bundle_sha256": "88707c57403bc351f4e90ed43cf1338b2154f4b7488752a3e388759cda638971",
+  "verifier_sha256": "0448e256db5fd75d92b15526d62966b22b35ee5dbf761870afea9c61ff949f72",
+  "build_host_preflight": {
+    "observed_at": "2026-09-15T22:54:18.273158+00:00",
+    "application_sha": "f94a1d9d1125e6c9111aa08eda496f014f20d0c0",
+    "build_environment": {
+      "ANDROID_HOME": "/Users/brianchei/Library/Android/sdk",
+      "JAVA_HOME": "/Users/brianchei/Library/Java/JavaVirtualMachines/openjdk-18.0.2.1/Contents/Home",
+      "DEVELOPER_DIR": "/Applications/Xcode.app/Contents/Developer",
+      "ORG_GRADLE_PROJECT_reactNativeArchitectures": "arm64-v8a"
+    },
+    "unset_build_environment": [
+      "ANDROID_SDK_ROOT"
+    ],
+    "xcode_version": "27.0",
+    "xcode_build": "27A266a",
+    "ios_simulator_sdk": "27.0",
+    "free_gib": 19.76,
+    "all_five_input_preflights_passed": true
+  },
+  "physical_or_live_acceptance_claimed": false,
+  "checks": [
+    {
+      "receipt_and_inspection_validated": true,
+      "reinspection_matches": true,
+      "actual_artifact_bytes_match": true,
+      "source_tree_matches": true,
+      "frozen_lock_matches": true,
+      "embedded_source_matches": true,
+      "hosted_profile_configuration": true,
+      "expected_signer": true,
+      "native_transport_configuration_validated": true,
+      "refresh_correction_in_bundle": true
+    }
+  ]
+}

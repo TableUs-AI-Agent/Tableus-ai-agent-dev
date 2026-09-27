@@ -26,7 +26,7 @@ export function AppProviders({ children }: PropsWithChildren) {
             retry: 2,
             networkMode: "online",
             refetchOnReconnect: true,
-            refetchOnWindowFocus: true,
+            refetchOnWindowFocus: "always",
           },
           mutations: { retry: 0, networkMode: "always" },
         },

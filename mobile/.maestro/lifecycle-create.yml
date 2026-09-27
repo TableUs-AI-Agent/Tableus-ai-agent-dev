@@ -21,7 +21,7 @@ appId: com.tableus.app
     visible: "Plans"
     timeout: 30000
 - tapOn:
-    text: "Plan title|Friday dinner"
+    text: "Plan title"
     retryTapIfNoChange: true
 - inputText: "Mobile lifecycle dinner"
 - hideKeyboard
@@ -33,6 +33,14 @@ appId: com.tableus.app
     visible: "Google Maps"
     timeout: 30000
 - tapOn: "Create shared plan"
+- extendedWaitUntil:
+    visible: ".*(Friday dinner|Retry creating plan).*"
+    timeout: 30000
+- runFlow:
+    when:
+      visible: "Retry creating plan"
+    commands:
+      - tapOn: "Retry creating plan"
 - extendedWaitUntil:
     visible: "Friday dinner"
     timeout: 30000

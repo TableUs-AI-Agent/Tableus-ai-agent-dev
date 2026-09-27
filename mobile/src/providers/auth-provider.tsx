@@ -1,4 +1,4 @@
-import { ApiError } from "@tableus/api-client";
+import { ApiError, withAuthTimeout } from "@tableus/api-client";
 import type { Session } from "@supabase/supabase-js";
 import { useQueryClient } from "@tanstack/react-query";
 import {
@@ -14,6 +14,7 @@ import {
 import { AppState } from "react-native";
 
 import { api } from "@/lib/api";
+import type { AccountDeletionStatus } from "@/lib/account-controls";
 import { applyAuthAppState, performSignOutCleanup, shouldClearQueryCache } from "@/lib/auth-lifecycle";
 import { resolveApproval, startAuthTransaction } from "@/lib/auth-operations";
 import {
@@ -25,8 +26,9 @@ import {
 } from "@/lib/auth-transaction";
 import { isSupabaseConfigured, secureAuthStorage, supabase } from "@/lib/supabase";
 import { captureTelemetry } from "@/lib/telemetry";
+import { pendingJoinStore } from "@/lib/pending-join";
 
-export type AuthPhase = "loading" | "signed_out" | "pending_verification" | "redeem_pending" | "approved";
+export type AuthPhase = "loading" | "restore_failed" | "signed_out" | "pending_verification" | "redeem_pending" | "approved" | "deletion";
 type Profile = { id: string; display_name: string; share_taste: boolean };
 
 type AuthContextValue = {
@@ -36,10 +38,16 @@ type AuthContextValue = {
   error: string;
   pending: PendingAuthTransaction | null;
   profile: Profile | null;
+  subject: string | null;
+  deletionStatus: AccountDeletionStatus | null;
+  beginDeletion: (subject: string) => void;
+  setDeletionOutcome: (subject: string, status: AccountDeletionStatus) => void;
+  refreshDeletionStatus: () => Promise<void>;
   beginJoin: (input: { invite: string; email: string; displayName: string }) => Promise<void>;
   beginSignIn: (email: string) => Promise<void>;
   verifyCode: (code: string) => Promise<void>;
   finishApproval: () => Promise<void>;
+  retryRestore: () => void;
   cancelPending: () => Promise<void>;
   signOut: () => Promise<void>;
   clearError: () => void;
@@ -58,9 +66,13 @@ export function AuthProvider({ children }: PropsWithChildren) {
   const [session, setSession] = useState<Session | null>(null);
   const [pending, setPending] = useState<PendingAuthTransaction | null>(null);
   const [profile, setProfile] = useState<Profile | null>(null);
+  const [deletionStatus, setDeletionStatus] = useState<AccountDeletionStatus | null>(null);
+  const [deletionSubject, setDeletionSubject] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState("");
+  const [restoreAttempt, setRestoreAttempt] = useState(0);
   const subjectRef = useRef<string | null>(null);
+  const deletionSubjectRef = useRef<string | null>(null);
   const pendingRef = useRef<PendingAuthTransaction | null>(null);
   const phaseRef = useRef<AuthPhase>(phase);
 
@@ -76,10 +88,65 @@ export function AuthProvider({ children }: PropsWithChildren) {
 
   const observeSession = useCallback((next: Session | null) => {
     const nextSubject = next?.user.id ?? null;
+    pendingJoinStore.setSubject(nextSubject);
     if (shouldClearQueryCache(subjectRef.current, nextSubject)) queryClient.clear();
+    if (nextSubject && subjectRef.current !== nextSubject) {
+      setDeletionStatus(null);
+      setDeletionSubject(null);
+      deletionSubjectRef.current = null;
+    }
     subjectRef.current = nextSubject;
     setSession(next);
   }, [queryClient]);
+
+  const beginDeletion = useCallback((subject: string) => {
+    if (subjectRef.current !== null && subjectRef.current !== subject) return;
+    pendingJoinStore.clear();
+    deletionSubjectRef.current = subject;
+    setDeletionSubject(subject);
+    setProfile(null);
+    setDeletionStatus(null);
+    queryClient.clear();
+    updatePhase("deletion");
+  }, [queryClient, updatePhase]);
+
+  const setDeletionOutcome = useCallback((subject: string, status: AccountDeletionStatus) => {
+    if (subjectRef.current !== subject && deletionSubjectRef.current !== subject) return;
+    deletionSubjectRef.current = subject;
+    setDeletionSubject(subject);
+    setProfile(null);
+    setDeletionStatus(status);
+    setError("");
+    queryClient.clear();
+    updatePhase("deletion");
+  }, [queryClient, updatePhase]);
+
+  const refreshDeletionStatus = useCallback(async () => {
+    const subject = subjectRef.current ?? deletionSubjectRef.current;
+    if (!subject) return;
+    try {
+      const status = await api.get<AccountDeletionStatus>("/api/v1/me/deletion", { expectedSubject: subject });
+      if (subjectRef.current !== subject && deletionSubjectRef.current !== subject) return;
+      setDeletionOutcome(subject, status);
+    } catch (caught) {
+      if (subjectRef.current !== subject && deletionSubjectRef.current !== subject) return;
+      if (caught instanceof ApiError && caught.status === 404) {
+        try {
+          const currentProfile = await api.get<Profile>("/api/v1/me", { expectedSubject: subject });
+          if (subjectRef.current !== subject) return;
+          setDeletionStatus(null);
+          setDeletionSubject(null);
+          deletionSubjectRef.current = null;
+          setProfile(currentProfile);
+          setError("");
+          updatePhase("approved");
+          return;
+        } catch { /* A missing profile must never restore private routes. */ }
+      }
+      setError("Could not confirm deletion status. Reconnect with this session, or contact support if it has expired.");
+      updatePhase("deletion");
+    }
+  }, [setDeletionOutcome, updatePhase]);
 
   const clearStoredPending = useCallback(async () => {
     await clearPendingTransaction(secureAuthStorage);
@@ -87,27 +154,54 @@ export function AuthProvider({ children }: PropsWithChildren) {
   }, [updatePending]);
 
   const rejectUnapprovedSession = useCallback(async (message: string) => {
+    pendingJoinStore.clear();
     await clearStoredPending();
     await supabase.auth.signOut({ scope: "local" });
     observeSession(null);
     setProfile(null);
+    setDeletionStatus(null);
+    setDeletionSubject(null);
+    deletionSubjectRef.current = null;
     setError(message);
     updatePhase("signed_out");
   }, [clearStoredPending, observeSession, updatePhase]);
 
-  const completeApproval = useCallback(async (transaction: PendingAuthTransaction | null) => {
+  const completeApproval = useCallback(async (transaction: PendingAuthTransaction | null, isCurrent: () => boolean = () => true) => {
+    const approvalSubject = subjectRef.current;
     const result = await resolveApproval(transaction, {
-      redeem: (body) => api.post<Profile>("/api/v1/access/redeem", body),
-      getProfile: () => api.get<Profile>("/api/v1/me"),
+      redeem: (body) => api.post<Profile>("/api/v1/access/redeem", body, { expectedSubject: approvalSubject ?? undefined }),
+      getProfile: () => api.get<Profile>("/api/v1/me", { expectedSubject: approvalSubject ?? undefined }),
     });
+    if (!isCurrent()) return false;
     if (result.kind === "approved") {
       await clearStoredPending();
+      if (!isCurrent()) return false;
       setProfile(result.profile);
+      setDeletionStatus(null);
+      setDeletionSubject(null);
+      deletionSubjectRef.current = null;
       setError("");
       updatePhase("approved");
       captureTelemetry("auth_approved", { mode: transaction?.mode === "join" ? "signup" : "sign_in" });
       await queryClient.invalidateQueries();
       return true;
+    }
+    if (result.kind === "unapproved" || result.kind === "invalid_invite") {
+      try {
+        const deletion = await api.get<AccountDeletionStatus>("/api/v1/me/deletion", { expectedSubject: approvalSubject ?? undefined });
+        if (!isCurrent()) return false;
+        setDeletionOutcome(subjectRef.current ?? "", deletion);
+        return false;
+      } catch (caught) {
+        if (!isCurrent()) return false;
+        if (!(caught instanceof ApiError && (caught.status === 403 || caught.status === 404))) {
+          setProfile(null);
+          queryClient.clear();
+          setError("Could not confirm account status. Reconnect with this session, or contact support if it has expired.");
+          updatePhase("restore_failed");
+          return false;
+        }
+      }
     }
     if (result.kind === "unapproved") {
       await rejectUnapprovedSession("This email has not joined the TableUs beta yet. Join with an invite first.");
@@ -120,25 +214,38 @@ export function AuthProvider({ children }: PropsWithChildren) {
     setError(safeMessage(result.error, "Could not finish authentication. Reconnect and try again."));
     updatePhase("redeem_pending");
     return false;
-  }, [clearStoredPending, queryClient, rejectUnapprovedSession, updatePhase]);
+  }, [clearStoredPending, queryClient, rejectUnapprovedSession, setDeletionOutcome, updatePhase]);
 
   const finishApproval = useCallback(async () => {
     if (!isSupabaseConfigured) return;
     setBusy(true);
     setError("");
     try {
-      const currentSession = session ?? (await supabase.auth.getSession()).data.session;
+      const currentSession = session ?? await withAuthTimeout(async () => {
+        const { data, error: sessionError } = await supabase.auth.getSession();
+        if (sessionError) throw sessionError;
+        return data.session;
+      });
       if (!currentSession) {
         updatePhase(pendingRef.current ? "pending_verification" : "signed_out");
         setError("Your verification session is missing. Enter a current email code or start again.");
         return;
       }
       observeSession(currentSession);
-      await completeApproval(pendingRef.current);
+      await completeApproval(pendingRef.current, () => subjectRef.current === currentSession.user.id);
+    } catch {
+      setError("Could not restore your session. Reconnect and try again.");
+      updatePhase(session ? "redeem_pending" : "restore_failed");
     } finally {
       setBusy(false);
     }
   }, [completeApproval, observeSession, session, updatePhase]);
+
+  const retryRestore = useCallback(() => {
+    updatePhase("loading");
+    setError("");
+    setRestoreAttempt((attempt) => attempt + 1);
+  }, [updatePhase]);
 
   const begin = useCallback(async (mode: AuthMode, input: { invite?: string; email: string; displayName?: string }) => {
     setBusy(true);
@@ -190,7 +297,7 @@ export function AuthProvider({ children }: PropsWithChildren) {
     observeSession(data.session);
     updatePhase("redeem_pending");
     try {
-      await completeApproval(transaction);
+      await completeApproval(transaction, () => subjectRef.current === data.session?.user.id);
     } finally {
       setBusy(false);
     }
@@ -199,10 +306,14 @@ export function AuthProvider({ children }: PropsWithChildren) {
   const cancelPending = useCallback(async () => {
     setBusy(true);
     try {
+      pendingJoinStore.clear();
       await clearStoredPending();
       if (session) await supabase.auth.signOut({ scope: "local" });
       observeSession(null);
       setProfile(null);
+      setDeletionStatus(null);
+      setDeletionSubject(null);
+      deletionSubjectRef.current = null;
       setError("");
       updatePhase("signed_out");
     } finally {
@@ -215,13 +326,22 @@ export function AuthProvider({ children }: PropsWithChildren) {
     try {
       await performSignOutCleanup({
         clearPending: clearStoredPending,
-        signOut: async () => { await supabase.auth.signOut(); },
+        signOut: async () => {
+          const { error: signOutError } = await supabase.auth.signOut({ scope: "local" });
+          if (signOutError) throw signOutError;
+        },
         clearCache: () => queryClient.clear(),
       });
+      pendingJoinStore.clear();
       observeSession(null);
       setProfile(null);
+      setDeletionStatus(null);
+      setDeletionSubject(null);
+      deletionSubjectRef.current = null;
       setError("");
       updatePhase("signed_out");
+    } catch {
+      setError("Could not sign out on this device. Reconnect and try again.");
     } finally {
       setBusy(false);
     }
@@ -230,40 +350,72 @@ export function AuthProvider({ children }: PropsWithChildren) {
   useEffect(() => {
     if (!isSupabaseConfigured) return;
     let active = true;
+    let restorationCancelled = false;
+    let eventVersion = 0;
+    const isCurrent = () => active && !restorationCancelled;
     const { data: { subscription } } = supabase.auth.onAuthStateChange((event, nextSession) => {
       if (!active) return;
+      // The bounded read below owns INITIAL_SESSION. No async SDK work inside
+      // this callback: Supabase holds its auth lock while notifying listeners.
+      if (event === "INITIAL_SESSION") return;
+      const version = ++eventVersion;
+      const previousSubject = subjectRef.current;
+      const previousDeletionSubject = deletionSubjectRef.current;
       observeSession(nextSession);
       if (event === "SIGNED_OUT") {
+        pendingJoinStore.clear();
+        restorationCancelled = true;
         void clearPendingTransaction(secureAuthStorage);
         updatePending(null);
         setProfile(null);
-        updatePhase("signed_out");
+        if (phaseRef.current !== "deletion") {
+          setDeletionStatus(null);
+          setDeletionSubject(null);
+          updatePhase("signed_out");
+        } else {
+          setError("This session has ended. If deletion is still pending or unconfirmed, contact support.");
+        }
         queryClient.clear();
+      } else if (event === "SIGNED_IN" && (phaseRef.current === "loading" || phaseRef.current === "restore_failed" || phaseRef.current === "signed_out" || (previousSubject && nextSession && previousSubject !== nextSession.user.id) || (previousDeletionSubject && nextSession && previousDeletionSubject !== nextSession.user.id))) {
+        restorationCancelled = true;
+        setProfile(null);
+        updatePhase("loading");
+        setTimeout(() => { if (active && version === eventVersion) retryRestore(); }, 0);
       }
     });
 
-    void (async () => {
+    void withAuthTimeout(async () => {
       const [storedPending, sessionResult] = await Promise.all([
         loadPendingTransaction(secureAuthStorage),
         supabase.auth.getSession(),
       ]);
-      if (!active) return;
+      if (sessionResult.error) throw sessionResult.error;
+      return { storedPending, restoredSession: sessionResult.data.session };
+    }).then(async ({ storedPending, restoredSession }) => {
+      if (!isCurrent()) return;
       updatePending(storedPending);
-      const restoredSession = sessionResult.data.session;
       observeSession(restoredSession);
       if (restoredSession) {
         updatePhase("redeem_pending");
-        await completeApproval(storedPending);
+        await completeApproval(storedPending, () => isCurrent() && subjectRef.current === restoredSession.user.id);
       } else {
         updatePhase(storedPending ? "pending_verification" : "signed_out");
       }
-    })();
+    }).catch(() => {
+      if (!isCurrent()) return;
+      setError("Could not restore your session. Reconnect and try again.");
+      updatePhase("restore_failed");
+    });
 
     return () => {
       active = false;
       subscription.unsubscribe();
     };
-  }, [completeApproval, observeSession, queryClient, updatePending, updatePhase]);
+  }, [completeApproval, observeSession, queryClient, restoreAttempt, retryRestore, updatePending, updatePhase]);
+
+  useEffect(() => {
+    if (!isSupabaseConfigured) pendingJoinStore.setSubject(process.env.EXPO_PUBLIC_DEMO_USER_ID ?? "demo-organizer");
+  }, []);
 
   useEffect(() => {
     if (!isSupabaseConfigured) return;
@@ -271,31 +423,38 @@ export function AuthProvider({ children }: PropsWithChildren) {
     const subscription = AppState.addEventListener("change", (nextState) => {
       void applyAuthAppState(nextState, supabase.auth);
       if (nextState === "active") {
-        if (phaseRef.current === "approved") void queryClient.invalidateQueries();
-        else if (phaseRef.current === "redeem_pending") void finishApproval();
+        // AppProviders owns query refresh on foreground. Auth only resumes
+        // unfinished approval here, avoiding a second invalidation/refetch.
+        if (phaseRef.current === "redeem_pending") void finishApproval();
       }
     });
     return () => {
       subscription.remove();
       void supabase.auth.stopAutoRefresh();
     };
-  }, [finishApproval, queryClient]);
+  }, [finishApproval]);
 
   const value = useMemo<AuthContextValue>(() => ({
     phase,
-    approved: !isSupabaseConfigured || phase === "approved",
+    approved: phase === "approved",
     busy,
     error,
     pending,
     profile,
+    subject: session?.user.id ?? profile?.id ?? deletionSubject,
+    deletionStatus,
+    beginDeletion,
+    setDeletionOutcome,
+    refreshDeletionStatus,
     beginJoin,
     beginSignIn,
     verifyCode,
     finishApproval,
+    retryRestore,
     cancelPending,
     signOut,
     clearError: () => setError(""),
-  }), [beginJoin, beginSignIn, busy, cancelPending, error, finishApproval, pending, phase, profile, signOut, verifyCode]);
+  }), [beginDeletion, beginJoin, beginSignIn, busy, cancelPending, deletionStatus, deletionSubject, error, finishApproval, pending, phase, profile, refreshDeletionStatus, retryRestore, session, setDeletionOutcome, signOut, verifyCode]);
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }

@@ -1,0 +1,129 @@
+{
+  "schema_version": 1,
+  "application_sha": "2ad48a8d8ec4d3aa9a7bd52061b823bb55960bcd",
+  "operator_sha": "6a1a3a1b815c780d51aac0d282a0a40bdcecd77c",
+  "observed_at": "2026-09-15T20:13:48.903432+00:00",
+  "passed": true,
+  "railway": {
+    "deployment_id": "6fcc6835-d22a-4125-b80f-df671a415741",
+    "status": "SUCCESS",
+    "commit_sha": "2ad48a8d8ec4d3aa9a7bd52061b823bb55960bcd",
+    "readiness": {
+      "status": "ready",
+      "provider_mode": "live",
+      "places_provider_mode": "live",
+      "ai_provider_mode": "live",
+      "ai_backend": "agent-platform",
+      "auth_mode": "supabase",
+      "build_sha": "2ad48a8d8ec4d3aa9a7bd52061b823bb55960bcd",
+      "telemetry_mode": "staging",
+      "analytics_mode": "anonymous",
+      "error_reporting_mode": "errors_only",
+      "telemetry_e2e": true
+    },
+    "changed_configuration_keys": [
+      "ALLOWED_ORIGINS",
+      "PLACES_RUNTIME_MAX_ATTEMPTS_30D",
+      "TABLEUS_BUILD_SHA",
+      "TABLEUS_SOURCE_SHA"
+    ],
+    "places_runtime_max_attempts_30d": 409,
+    "cors": [
+      {
+        "origin": "https://tableus-staging-rk6jt0id1-briancheis-projects.vercel.app",
+        "status": 200,
+        "allow_origin": "https://tableus-staging-rk6jt0id1-briancheis-projects.vercel.app",
+        "allow_credentials": "true"
+      },
+      {
+        "origin": "https://tableus-staging-git-codex-refresh-2ad48a8-briancheis-projects.vercel.app",
+        "status": 200,
+        "allow_origin": "https://tableus-staging-git-codex-refresh-2ad48a8-briancheis-projects.vercel.app",
+        "allow_credentials": "true"
+      }
+    ]
+  },
+  "vercel": {
+    "deployment_id": "dpl_7WqJNTybVFA425ABS7uB3rWGkPKu",
+    "status": "READY",
+    "git_sha": "2ad48a8d8ec4d3aa9a7bd52061b823bb55960bcd",
+    "git_branch": "codex/refresh-2ad48a8",
+    "url": "https://tableus-staging-rk6jt0id1-briancheis-projects.vercel.app",
+    "served_source": {
+      "application_sha": "2ad48a8d8ec4d3aa9a7bd52061b823bb55960bcd",
+      "observed_at": "2026-09-15T20:11:03.880356+00:00",
+      "url": "https://tableus-staging-rk6jt0id1-briancheis-projects.vercel.app",
+      "sign_in_page_status": 200,
+      "source_in_served_bundles": true,
+      "matching_bundles": [
+        {
+          "path": "/_next/static/chunks/747-ab3207b09df123be.js",
+          "sha256": "d7c4ba2b61518249546fb89d82adf3d83ee0d46b879cae62b0fe9a31b2f3fded"
+        },
+        {
+          "path": "/_next/static/chunks/main-app-5a95c85585e250df.js",
+          "sha256": "86104b8e979a36de3c83ae874b5a14ecd8de96c95044f94f334048b1c89f74e0"
+        },
+        {
+          "path": "/_next/static/chunks/app/layout-52320a78b4978234.js",
+          "sha256": "f8ca62dd672870110db79d36aff19ab068a89c87f7eb868aa4e70799deb82265"
+        },
+        {
+          "path": "/_next/static/chunks/app/invite/page-110788627d34fc49.js",
+          "sha256": "735326abbabd06b5f656af4610426093668e31a6547b13abed299269fa7da544"
+        }
+      ],
+      "html_sha256": "021aae99de8c26df4bd560000dc183adf67f245ea6215492333ab3e73bb2040f",
+      "existing_protection_bypass_reused": true,
+      "new_secrets_created": false,
+      "client_javascript_executed": false
+    },
+    "production_deployment_id": "dpl_7csJvHoJH9qgFZDijbwu3w36r2sK",
+    "production_aliases": [
+      "www.table-us.com",
+      "links.table-us.com",
+      "tableus-staging.vercel.app",
+      "table-us.com",
+      "tableus-staging-briancheis-projects.vercel.app",
+      "tableus-staging-git-main-briancheis-projects.vercel.app"
+    ],
+    "production_unchanged": true,
+    "protection_unchanged": true,
+    "new_credentials_created": false
+  },
+  "canonical_associations": {
+    "apple_sha256": "710eb96b4cb131ad435294629ed493857a0f8d38e9d0cba112fc905f9cc34d63",
+    "android_sha256": "e2ad9e673a352912bf9782eba015a5bbcfd28069c138d858d37ced66bf411430",
+    "both_http_200_json_without_redirect": true,
+    "expected_ios_identity": true,
+    "expected_android_signer": true,
+    "auth_confirmation_path_excluded": true
+  },
+  "ci": {
+    "run_id": 35016584574,
+    "url": "https://github.com/TableUs-AI-Agent/Tableus-ai-agent-dev/actions/runs/35016584574",
+    "conclusion": "success",
+    "javascript_tests_passed": 216,
+    "python_tests_passed": 101,
+    "browser_tests_passed": 4,
+    "deterministic_ai_cases_passed": 7,
+    "raw_log_sha256": "d38062ab5ec507cc86491daf015ce4d761d5946b09191e3e9364ad3fd3ca20d6"
+  },
+  "provider_observation": {
+    "observed_at": "2026-09-15 20:12:29.878249+00",
+    "places_attempts_all_time": 329,
+    "places_attempts_30d": 329,
+    "gemini_usage_rows": 9,
+    "gemini_estimated_usd": 0.0050015,
+    "latest_usage_at": "2026-09-15 06:33:43.488754+00"
+  },
+  "new_run_usage": {
+    "places_attempts": 0,
+    "sign_in_messages": 0,
+    "gemini_generations": 0,
+    "analytics_canaries": 0,
+    "error_canaries": 0
+  },
+  "native_builds_started": 0,
+  "native_gate": "Xcode license/setup is pending owner completion; no native build started."
+}

@@ -1,0 +1,49 @@
+{
+  "prepared_at": "2026-09-15T20:51:24.753129+00:00",
+  "owner_approval_pending": true,
+  "automatic_approval_review_rejected": true,
+  "deletion_performed": false,
+  "reason": "Explicit cleanup approval required by repository AGENTS.md",
+  "scope": [
+    {
+      "path": "/Users/brianchei/.npm/_npx/cec30832843bb978",
+      "package": "eas-cli-local-build-plugin",
+      "installed_version": "22.0.0",
+      "disk_bytes": 154095616
+    },
+    {
+      "path": "/Users/brianchei/.npm/_npx/ef685c6f911b3820",
+      "package": "eas-cli-local-build-plugin",
+      "installed_version": "23.0.0",
+      "disk_bytes": 155860992
+    },
+    {
+      "path": "/Users/brianchei/.npm/_npx/802c0adac2da20b8",
+      "package": "eas-cli",
+      "installed_version": "22.6.0",
+      "disk_bytes": 167596032
+    },
+    {
+      "path": "/Users/brianchei/.npm/_npx/a87b1a52244dc211",
+      "package": "eas-cli",
+      "installed_version": "23.0.0",
+      "disk_bytes": 167624704
+    },
+    {
+      "path": "/Users/brianchei/.npm/_npx/6bc7bae5c2059953",
+      "package": "eas-cli",
+      "installed_version": "23.0.0",
+      "disk_bytes": 158552064
+    }
+  ],
+  "estimated_reclaimed_gib": 0.749,
+  "free_gib": 19.763,
+  "preserved": [
+    "current repository-locked EAS CLI 23.2.0",
+    "current cached local build plugin 23.1.0",
+    "all signed artifacts and receipts",
+    "all saved simulators and emulators",
+    "all raw logs and evidence"
+  ],
+  "free_gib_observed_after_preparation": 19.741
+}

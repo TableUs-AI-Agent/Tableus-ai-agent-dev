@@ -1,0 +1,23 @@
+{
+  "application_sha": "f94a1d9d1125e6c9111aa08eda496f014f20d0c0",
+  "railway_deployment_id": "ffdd2bf8-f554-4942-88ac-710c4ce5cbda",
+  "railway_status": "SUCCESS",
+  "preview_deployment_id": "dpl_5iF8xTCbfuJghn2bRuUSGdKoRiJb",
+  "preview_url": "https://tableus-staging-i6b1exrb3-briancheis-projects.vercel.app",
+  "source_variable_scope": {
+    "git_branch": "codex/ios27-f94a1d9",
+    "target": "preview",
+    "keys": [
+      "TABLEUS_BUILD_SHA",
+      "NEXT_PUBLIC_SOURCE_SHA"
+    ]
+  },
+  "rejected_initial_preview": "dpl_JAB7DRA2MnojnjkKycfR8dQDLhnw",
+  "rejection_reason": "Correct Git source but served old 2ad48a8 source metadata from global Preview variables. Branch-scoped overrides and a fresh Git-source deployment corrected it.",
+  "native_builds_started": 0,
+  "native_build_hold": "Free disk 19.76 GiB, below approved 20 GiB start threshold. Awaiting permission to remove only the generated frontend/.next cache (437 MiB).",
+  "provider_operations_this_phase": 0,
+  "sign_in_emails_this_phase": 0,
+  "new_generation_this_phase": 0,
+  "observed_at": "2026-09-15T22:57:07.964369+00:00"
+}

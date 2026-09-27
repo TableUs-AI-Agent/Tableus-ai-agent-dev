@@ -1,0 +1,37 @@
+{
+  "application_sha": "c5b041c85f4f7b959436c13bef48c959622c624f",
+  "checks": [
+    {
+      "profile": "readiness-ios",
+      "artifact_sha256": "c089122ea4ab71fc0d93edc2f69b9206ed00688c390ad04f4b5cdae1d2ac299c",
+      "bundle_sha256": "11b895bbe2775d8cf722af74e47b6a4a0447917b973955f30b3b268dfb5c7e16",
+      "expected_source_literal_present": true,
+      "inherited_source_literal_present": false,
+      "runtime_delivery_verified": false
+    },
+    {
+      "profile": "readiness-android",
+      "artifact_sha256": "8d59d69fd5fe1a19e6eaa0ea1330a36084e01119bf66b9d0751454df098779a8",
+      "bundle_sha256": "6f9821f70702720b27b1618d2728ecc4f89ba3de239b69a4bbbf70d6af5ba997",
+      "expected_source_literal_present": true,
+      "inherited_source_literal_present": false,
+      "runtime_delivery_verified": false
+    },
+    {
+      "profile": "telemetry-test-ios",
+      "artifact_sha256": "198ee544b6ac63eff9011330a6ed404852acc8d68af0d831026be79a6bd4a9da",
+      "bundle_sha256": "11b895bbe2775d8cf722af74e47b6a4a0447917b973955f30b3b268dfb5c7e16",
+      "expected_source_literal_present": true,
+      "inherited_source_literal_present": false,
+      "runtime_delivery_verified": false
+    },
+    {
+      "profile": "telemetry-test-android",
+      "artifact_sha256": "47e5249afbf808575f1b8986cf7021edfb489a70985d6dbfac741bc1fd961832",
+      "bundle_sha256": "6f9821f70702720b27b1618d2728ecc4f89ba3de239b69a4bbbf70d6af5ba997",
+      "expected_source_literal_present": true,
+      "inherited_source_literal_present": false,
+      "runtime_delivery_verified": false
+    }
+  ]
+}

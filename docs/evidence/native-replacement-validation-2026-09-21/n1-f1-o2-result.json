@@ -1,0 +1,455 @@
+{
+  "schema_version": 1,
+  "recorded_at": "2026-09-23T05:28:33.015572+00:00",
+  "status": "stopped_on_first_new_platform_failure",
+  "amendment": "F1-O2",
+  "application_sha": "8972865893a3f018a064594457dc9cc664f8a61f",
+  "build_operator_sha": "16603dd0cf36d27b492e57a02d3c6c438a2563c4",
+  "artifact_sha256": "98c1535bfe6f7cad0c8e467454f5128c71f4aae21b8b41a5aba1c1a33f1e391d",
+  "build_id": "local-ios-test-8972865-f1-01",
+  "device_id": "CBB4FAB4-734C-413C-9F10-850329AC9A01",
+  "evidence_base_sha": "ac6ed981078175f1625f1c08423d52b10db0df20",
+  "evidence_commit": "Commit containing this record; distinct from application/build operator.",
+  "approval": "n1-f1-o2-approval.json",
+  "driver_summary": {
+    "runner": "offline",
+    "amendment": "F1-O2",
+    "application_sha": "8972865893a3f018a064594457dc9cc664f8a61f",
+    "frozen_runner_source_sha256": "54bca226db986131b855396b79a43cb66218fd219455af543080c8a92796f63e",
+    "instrumented_runner_sha256": "b7d3e3ae92e1ea15d0b627619f43b585819c7a3af3c4e85eb1fd5c0052e45cff",
+    "instrumented_proxy_sha256": "98c33b5d88f3aa2bd2baa58ab44c127105075ba28ade0d9f1872c35a6905eef0",
+    "driver_sha256": "be0ac16f4fe2eb183a001d0ad3d0cb6c6259092830f19cc6a097a1d99c606b7c",
+    "platform_monitor_sha256": "c146ef091e8be5066e65838de39bd00b2c4749346f8288e615fc2c29cbf200f8",
+    "platform_monitor_source_p2_sha256": "25dac7bf07a2892ab9e079d345b975491c28eadc276f714e176ba28da286219c",
+    "p2_result_sha256": "8da36a79072fdd922848faa81672e5d4f959d500a12930ffba4c2fb1dfa00248",
+    "p2_manifest_sha256": "490b582dde6823594d1816fef705f70117b58a13c6a6cc28220e470ed26a33af",
+    "artifact_sha256": "98c1535bfe6f7cad0c8e467454f5128c71f4aae21b8b41a5aba1c1a33f1e391d",
+    "build_id": "local-ios-test-8972865-f1-01",
+    "device_id": "CBB4FAB4-734C-413C-9F10-850329AC9A01",
+    "started_at": "2026-09-23T05:17:36.029146+00:00",
+    "limit_seconds": 1800,
+    "command": [
+      "/Users/brianchei/.local/bin/node",
+      "/Users/brianchei/repos/Tableus-ai-agent-dev/.artifacts/mobile/8972865893a3f018a064594457dc9cc664f8a61f/native-validation-f1/runtime-preparation-p2/f1-o2-preparation/operator/mobile-offline-e2e.mjs",
+      "--platform",
+      "ios",
+      "--device",
+      "CBB4FAB4-734C-413C-9F10-850329AC9A01",
+      "--app",
+      "/Users/brianchei/repos/Tableus-ai-agent-dev/.artifacts/mobile/8972865893a3f018a064594457dc9cc664f8a61f/native-validation-f1/test-ios.app",
+      "--build-id",
+      "local-ios-test-8972865-f1-01",
+      "--evidence",
+      "/Users/brianchei/repos/Tableus-ai-agent-dev/.artifacts/mobile/8972865893a3f018a064594457dc9cc664f8a61f/native-validation-f1/test-ios-offline-f1-o2",
+      "--verify-plan-refresh",
+      "true",
+      "--refresh-sha",
+      "8972865893a3f018a064594457dc9cc664f8a61f"
+    ],
+    "environment_keys": [
+      "DEVELOPER_DIR",
+      "HOME",
+      "JAVA_HOME",
+      "LANG",
+      "LOGNAME",
+      "MAESTRO_CLI_ANALYSIS_NOTIFICATION_DISABLED",
+      "MAESTRO_CLI_NO_ANALYTICS",
+      "MAESTRO_DISABLE_UPDATE_CHECK",
+      "PATH",
+      "TABLEUS_F1_O2_APPROVED",
+      "TABLEUS_MAESTRO_EVIDENCE_ROOT",
+      "TMPDIR",
+      "USER"
+    ],
+    "status": "failed",
+    "new_crash_reports": [],
+    "runner_pid": 36840,
+    "error": "Final platform health failed: Target SpringBoard host identity changed or vanished; Replacement SpringBoard under target parent",
+    "runner_cleanup": {
+      "stopped": true,
+      "exit_code": -2,
+      "signal": "SIGINT"
+    },
+    "exit_code": -2,
+    "app_terminate_exit": 0,
+    "finished_at": "2026-09-23T05:19:04.339203+00:00",
+    "elapsed_seconds": 88.308
+  },
+  "monitor": {
+    "kind": "host-ps",
+    "observations": 70,
+    "bound_identity": {
+      "springboard": {
+        "pid": 17600,
+        "ppid": 94306,
+        "lstart": "Tue Sep 22 22:56:56 2026",
+        "comm": "/Library/Developer/CoreSimulator/Volumes/iOS_23F77/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 26.5.simruntime/Contents/Resources/RuntimeRoot/System/Library/CoreServices/SpringBoard.app/SpringBoard"
+      },
+      "parent": {
+        "pid": 94306,
+        "ppid": 1,
+        "lstart": "Tue Sep 22 21:07:12 2026",
+        "comm": "launchd_sim"
+      }
+    },
+    "first_failed_observation": {
+      "at": "2026-09-23T05:18:55.556384+00:00",
+      "monitor": "host-ps",
+      "springboard": null,
+      "launchd_sim": {
+        "pid": 94306,
+        "ppid": 1,
+        "lstart": "Tue Sep 22 21:07:12 2026",
+        "comm": "launchd_sim"
+      },
+      "replacement_springboard_pids": [
+        37381
+      ],
+      "tableus_pids": [
+        37176
+      ],
+      "tableus_process_matches": [
+        {
+          "pid": 37176,
+          "basis": "target_parent_and_executable_name",
+          "comm": "/Users/brianchei/Library/Developer/CoreSimulator/Devices/CBB4FAB4-734C-413C-9F10-850329AC9A01/data/Containers/Bundle/Application/267774C4-2229-4E4C-A972-55A4F645C8C2/com.tableus.app-1790140683565.app/TableUs"
+        }
+      ],
+      "new_crash_reports": [],
+      "ps_elapsed_seconds": 0.362,
+      "stop_reasons": [
+        "Target SpringBoard host identity changed or vanished",
+        "Replacement SpringBoard under target parent"
+      ]
+    },
+    "final_health": {
+      "at": "2026-09-23T05:18:55.930206+00:00",
+      "monitor": "host-ps",
+      "springboard": null,
+      "launchd_sim": {
+        "pid": 94306,
+        "ppid": 1,
+        "lstart": "Tue Sep 22 21:07:12 2026",
+        "comm": "launchd_sim"
+      },
+      "replacement_springboard_pids": [
+        37381
+      ],
+      "tableus_pids": [
+        37176
+      ],
+      "tableus_process_matches": [
+        {
+          "pid": 37176,
+          "basis": "target_parent_and_executable_name",
+          "comm": "/Users/brianchei/Library/Developer/CoreSimulator/Devices/CBB4FAB4-734C-413C-9F10-850329AC9A01/data/Containers/Bundle/Application/267774C4-2229-4E4C-A972-55A4F645C8C2/com.tableus.app-1790140683565.app/TableUs"
+        }
+      ],
+      "new_crash_reports": [],
+      "ps_elapsed_seconds": 0.191,
+      "stop_reasons": [
+        "Target SpringBoard host identity changed or vanished",
+        "Replacement SpringBoard under target parent"
+      ]
+    }
+  },
+  "preflight": "n1-f1-o2-old-support-result.json",
+  "preflight_free_gib": 25.34,
+  "flow": {
+    "name": "create-failure",
+    "commands_path": "test-ios-offline-f1-o2/maestro-results/create-failure-izpr6ng9/2026-09-23_001751/create-failure/commands.json",
+    "commands_sha256": "a5bc9f2189fa4b65b95016b642244781558caca804334edccbf0262d8efd95fa",
+    "completed_commands": 25,
+    "skipped_commands": 1,
+    "skip": "Exact conditional Open-in-TableUs prompt absent; checked with pinned downstream predicate.",
+    "UI_commands_completed": true,
+    "accepted_full_flow": false,
+    "reason": "Outer platform health failed before successful runner completion; CLI group interrupted.",
+    "screenshot": "test-ios-offline-f1-o2/maestro-results/create-failure-izpr6ng9/2026-09-23_001751/create-failure/takeScreenshot/offline-retry.png"
+  },
+  "flows_invoked": 1,
+  "flows_accepted": 0,
+  "remaining_flows_not_run": 10,
+  "refresh_phases_executed": 0,
+  "proxy": {
+    "journal_events": 10,
+    "plan_create_posts": 1,
+    "retry_posts": 0,
+    "interruption_snapshot": {
+      "at": "2026-09-23T05:18:55.724666+00:00",
+      "reason": "Target SpringBoard host identity changed or vanished; Replacement SpringBoard under target parent",
+      "method": "POST",
+      "route": "/api/v1/plans",
+      "observed": {
+        "request_count": 1,
+        "upstream_request_count": 1,
+        "same_idempotency_key": false,
+        "dropped_before_send_count": 0,
+        "dropped_after_commit_count": 1,
+        "idempotent_replay_count": 0,
+        "delayed_response_count": 0,
+        "synthetic_error_count": 0,
+        "write_request_count": 2
+      }
+    },
+    "interpretation": "One create forwarded200 then committed response dropped. Two total writes include one location-resolution POST; local deterministic services only."
+  },
+  "platform_crash": {
+    "file": "SpringBoard-2026-09-23-001908.ips",
+    "sha256": "a965c5e65648015f4a422a9e66da4f2a39cdf767234a1e79663b7ebc12fe2fae",
+    "captureTime": "2026-09-23 00:18:55.3224 -0500",
+    "procName": "SpringBoard",
+    "pid": 17600,
+    "parentPid": 94306,
+    "exception": {
+      "codes": "0x0000000000000001, 0x0000000000000020",
+      "rawCodes": [
+        1,
+        32
+      ],
+      "type": "EXC_BAD_ACCESS",
+      "signal": "SIGSEGV",
+      "subtype": "KERN_INVALID_ADDRESS at 0x0000000000000020"
+    },
+    "termination": {
+      "flags": 0,
+      "code": 11,
+      "namespace": "SIGNAL",
+      "indicator": "Segmentation fault: 11",
+      "byProc": "exc handler",
+      "byPid": 17600
+    },
+    "faultingThread": 7,
+    "frames": [
+      {
+        "symbol": "__66-[XCTAutomationSession initWithAccessibilityFramework:dataSource:]_block_invoke",
+        "image": "XCTAutomationSupport",
+        "offset": 192
+      },
+      {
+        "symbol": "_dispatch_call_block_and_release",
+        "image": "libdispatch.dylib",
+        "offset": 24
+      },
+      {
+        "symbol": "_dispatch_client_callout",
+        "image": "libdispatch.dylib",
+        "offset": 12
+      },
+      {
+        "symbol": "<deduplicated_symbol>",
+        "image": "libdispatch.dylib",
+        "offset": 24
+      },
+      {
+        "symbol": "_dispatch_root_queue_drain",
+        "image": "libdispatch.dylib",
+        "offset": 880
+      },
+      {
+        "symbol": "_dispatch_worker_thread2",
+        "image": "libdispatch.dylib",
+        "offset": 252
+      },
+      {
+        "symbol": "_pthread_wqthread",
+        "image": "libsystem_pthread.dylib",
+        "offset": 228
+      },
+      {
+        "symbol": "start_wqthread",
+        "image": "libsystem_pthread.dylib",
+        "offset": 8
+      }
+    ]
+  },
+  "crash_report_timing": "Driver stopped on process-identity failure before the .ips appeared; its empty new_crash_reports does not mean no platform crash. Host observer covers both SpringBoard and TableUs; delayed root check retained the report.",
+  "O1_comparison": "Separate recurrence of the same EXC_BAD_ACCESS/SIGSEGV0x20 XCTAutomationSession frame in SpringBoard; no proof of identical trigger or of app causation.",
+  "timeline": [
+    {
+      "at": "2026-09-23T05:18:42.874Z",
+      "event": "Create response upstream200; configured committed response dropped."
+    },
+    {
+      "at": "2026-09-23T05:18:53.688Z",
+      "event": "Last UI command, offline-retry screenshot, completed."
+    },
+    {
+      "at": "2026-09-23T05:18:55.3224Z",
+      "event": "SpringBoard17600 crashed; same O1 faulting signature."
+    },
+    {
+      "at": "2026-09-23T05:18:55.556384Z",
+      "event": "Host monitor detected missing bound PID and replacement37381; TableUs37176 still existed."
+    },
+    {
+      "at": "2026-09-23T05:19:04.339203+00:00",
+      "event": "Runner group interrupted and TableUs terminated; driver failed at88.308seconds."
+    }
+  ],
+  "post_stop": {
+    "recorded_at": "2026-09-23T05:20:58.660278+00:00",
+    "target_processes": [
+      {
+        "pid": 37381,
+        "ppid": 94306,
+        "lstart": "Wed Sep 23 00:18:55 2026",
+        "comm": "/Library/Developer/CoreSimulator/Volumes/iOS_23F77/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 26.5.simruntime/Contents/Resources/RuntimeRoot/System/Library/CoreServices/SpringBoard.app/SpringBoard"
+      }
+    ],
+    "tableus_stopped": true,
+    "listeners": {
+      "7999": {
+        "exit": 1,
+        "output": ""
+      },
+      "8000": {
+        "exit": 1,
+        "output": ""
+      },
+      "8001": {
+        "exit": 1,
+        "output": ""
+      }
+    },
+    "new_target_crashes": [
+      {
+        "file": "SpringBoard-2026-09-23-001908.ips",
+        "sha256": "a965c5e65648015f4a422a9e66da4f2a39cdf767234a1e79663b7ebc12fe2fae",
+        "captureTime": "2026-09-23 00:18:55.3224 -0500",
+        "procName": "SpringBoard",
+        "pid": 17600,
+        "parentPid": 94306,
+        "exception": {
+          "codes": "0x0000000000000001, 0x0000000000000020",
+          "rawCodes": [
+            1,
+            32
+          ],
+          "type": "EXC_BAD_ACCESS",
+          "signal": "SIGSEGV",
+          "subtype": "KERN_INVALID_ADDRESS at 0x0000000000000020"
+        },
+        "termination": {
+          "flags": 0,
+          "code": 11,
+          "namespace": "SIGNAL",
+          "indicator": "Segmentation fault: 11",
+          "byProc": "exc handler",
+          "byPid": 17600
+        },
+        "faultingThread": 7,
+        "frames": [
+          {
+            "symbol": "__66-[XCTAutomationSession initWithAccessibilityFramework:dataSource:]_block_invoke",
+            "image": "XCTAutomationSupport",
+            "offset": 192
+          },
+          {
+            "symbol": "_dispatch_call_block_and_release",
+            "image": "libdispatch.dylib",
+            "offset": 24
+          },
+          {
+            "symbol": "_dispatch_client_callout",
+            "image": "libdispatch.dylib",
+            "offset": 12
+          },
+          {
+            "symbol": "<deduplicated_symbol>",
+            "image": "libdispatch.dylib",
+            "offset": 24
+          },
+          {
+            "symbol": "_dispatch_root_queue_drain",
+            "image": "libdispatch.dylib",
+            "offset": 880
+          },
+          {
+            "symbol": "_dispatch_worker_thread2",
+            "image": "libdispatch.dylib",
+            "offset": 252
+          },
+          {
+            "symbol": "_pthread_wqthread",
+            "image": "libsystem_pthread.dylib",
+            "offset": 228
+          },
+          {
+            "symbol": "start_wqthread",
+            "image": "libsystem_pthread.dylib",
+            "offset": 8
+          }
+        ]
+      }
+    ],
+    "runner_pid_stopped": true
+  },
+  "post_stop_automation": {
+    "recorded_at": "2026-09-23T05:21:50.744124+00:00",
+    "matching_automation_processes": []
+  },
+  "downstream_gate_rejected_actual_failed_result": true,
+  "additional_offline_attempts_used": 1,
+  "additional_offline_attempts_remaining": 0,
+  "automatic_retry": false,
+  "links_run": false,
+  "exports_run": 0,
+  "android_run": false,
+  "original_refresh_failure": "Not reached; unresolved.",
+  "historical_AppHang": "Unresolved; no clearance from this attempt.",
+  "source_verification_reused": {
+    "javascript_tests": 292,
+    "python_tests": 98,
+    "postgres_skips": 3,
+    "source": "n1-f1-result.md",
+    "application_and_tracked_tooling_unchanged": true
+  },
+  "private_files_sha256": {
+    "test-ios-offline-f1-o2/SpringBoard-2026-09-23-001908.ips": "a965c5e65648015f4a422a9e66da4f2a39cdf767234a1e79663b7ebc12fe2fae",
+    "test-ios-offline-f1-o2/app-terminate.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "test-ios-offline-f1-o2/approval.json": "891ac99f2d715b5e15d114cb5ea245058f9fad5cacf67320b0587341d8880fe4",
+    "test-ios-offline-f1-o2/backend.log": "f5ba3f1264dd0f705babb67d918f9780e37ac07dcf0feb58bf85d0cfb7196c4f",
+    "test-ios-offline-f1-o2/driver-result.json": "938728a54f43fa2a886d03baf0337a8eadfe2d2ad9ef3e68c484a37834901276",
+    "test-ios-offline-f1-o2/execution.log": "d4cef4398590fa510b0ad298caa88bd3166db4601b2974bfb25319169a894a3b",
+    "test-ios-offline-f1-o2/fault-proxy-events.ndjson": "19e595e9e9e0f8c54e24951636fdb9c1aca5d40eb4b6a2c04039213e42c8cfe7",
+    "test-ios-offline-f1-o2/fault-proxy.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "test-ios-offline-f1-o2/interruption-proxy-snapshot.json": "d1155f5ab242fab63d73f1bd70a42c919f5b20744e235f4fecb79cc7eafc912f",
+    "test-ios-offline-f1-o2/maestro-results/create-failure-izpr6ng9/2026-09-23_001751/create-failure/commands.json": "a5bc9f2189fa4b65b95016b642244781558caca804334edccbf0262d8efd95fa",
+    "test-ios-offline-f1-o2/maestro-results/create-failure-izpr6ng9/2026-09-23_001751/create-failure/logs/device-simulator.log": "c799d17f427da6a44e6184f1bb5173ad860c30a5ecf995c8ab770a341224ee34",
+    "test-ios-offline-f1-o2/maestro-results/create-failure-izpr6ng9/2026-09-23_001751/create-failure/logs/device-xctest.log": "7753758be6aafee6da93a9c7148c2f1a6312c314aa2888ea22cf968d8103bab5",
+    "test-ios-offline-f1-o2/maestro-results/create-failure-izpr6ng9/2026-09-23_001751/create-failure/logs/maestro.log": "168a214ce846142325a328e0b490f793a2d95df3ac7356484eb815f3138456dd",
+    "test-ios-offline-f1-o2/maestro-results/create-failure-izpr6ng9/2026-09-23_001751/create-failure/manifest.json": "1c8a86c015a2314d9e4eac78132de4704717ee3ff50e35efdd43c077f03aaab9",
+    "test-ios-offline-f1-o2/maestro-results/create-failure-izpr6ng9/2026-09-23_001751/create-failure/takeScreenshot/offline-retry.png": "1eb7ed088eecab7d6e8981856f3a483c6000526f72f29ac1f311ca7af5df31c5",
+    "test-ios-offline-f1-o2/maestro-results/create-failure-izpr6ng9/2026-09-23_001751/xctest_runner_2026-09-23_001753.log": "d31c2e1a676e14f18d314f2c3c03529bf1a07b17f34b3b4f01d3dd78e811c890",
+    "test-ios-offline-f1-o2/maestro-results/create-failure-izpr6ng9/operator-invocation.json": "015a8dcc392294cb998dc547bf79708977167e73ca5a0d3ec345af73203f977a",
+    "test-ios-offline-f1-o2/post-stop-automation-check.json": "d0c963d6b9365640ff8483654dcd043e188b980a00855ad3e8e7b0e1f3dbbd2c",
+    "test-ios-offline-f1-o2/post-stop-check.json": "d91c5a27d6ffa69b72ad92a3bb361b54d91f863872c1bc80a47fc8ec5c69ed87",
+    "test-ios-offline-f1-o2/post-stop-operator.py": "b06efd3e2d61fad747d2ab4f13b641cfc29d7da705b0a95d2f80247568b201a6",
+    "test-ios-offline-f1-o2/post-stop-unified-log.json": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+    "test-ios-offline-f1-o2/runner.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "test-ios-offline-f1-o2/tableus-mobile-offline-e2e-Sm0FMw/flows/constraints-offline.yml": "1de8312716851e8809e82daa202587f6ac0892601d099ad5a6d3852a6c66c53e",
+    "test-ios-offline-f1-o2/tableus-mobile-offline-e2e-Sm0FMw/flows/constraints-retry.yml": "7f9d9e067f33b9023b71b9cdddbe2eeefc87191dcbe73d3aba201a8e9a07e08b",
+    "test-ios-offline-f1-o2/tableus-mobile-offline-e2e-Sm0FMw/flows/create-failure.yml": "79f94557fa32d38487ffde0976d6e6e828da71c6e3fb827df7c84787113a4e46",
+    "test-ios-offline-f1-o2/tableus-mobile-offline-e2e-Sm0FMw/flows/create-retry.yml": "8a7b3e3f909226fb6398ee0cf524f9ff9ce189c2f22e804f7bc6c266c33783d1",
+    "test-ios-offline-f1-o2/tableus-mobile-offline-e2e-Sm0FMw/flows/finalize-failure.yml": "e88a5b2bb0de806a6abc3a01ef4fe96ead3c6bd2e59c203af14997af605d2149",
+    "test-ios-offline-f1-o2/tableus-mobile-offline-e2e-Sm0FMw/flows/finalize-retry.yml": "01132a941f5617c3d291e555d284f7e41d29b3c59e48ad8bdcb3f5f14aaa5922",
+    "test-ios-offline-f1-o2/tableus-mobile-offline-e2e-Sm0FMw/flows/refresh-failure.yml": "4fc82933becd81fea4dc26839883f2f78344cc455a60e1079a714f50ca927a8c",
+    "test-ios-offline-f1-o2/tableus-mobile-offline-e2e-Sm0FMw/flows/refresh-open.yml": "b549bf867d5c168a32e4e10b48e4a5acea926dd75a2953708090bfcde1288047",
+    "test-ios-offline-f1-o2/tableus-mobile-offline-e2e-Sm0FMw/flows/refresh-recovery.yml": "7c43fb3fa0546c1c849d0d119f781b3dbe01f9e87f2f1123cfa0db8248bd6805",
+    "test-ios-offline-f1-o2/tableus-mobile-offline-e2e-Sm0FMw/flows/refresh-scroll.yml": "1b903e242b50a707e5499d81ab1d31ee001e11b9c87a2db3bec224107e6d8573",
+    "test-ios-offline-f1-o2/tableus-mobile-offline-e2e-Sm0FMw/flows/refresh-slow.yml": "c3d733b6829a453552e5ef0153988d9f58e655b1e63680d33e818980cf47dd2f"
+  },
+  "next_action": "Review n1-f1-o3-proposal.json: prepared, pinned one-run iOS27 diagnostic comparison. Owner approval is required; O2 has zero remaining attempts.",
+  "assessment": {
+    "archive": "/Users/brianchei/repos/Tableus-ai-agent-dev/.artifacts/mobile/8972865893a3f018a064594457dc9cc664f8a61f/native-validation-f1/runtime-preparation-o2",
+    "index_sha256": "77ca4ac1f4d6caa0b941a0f3842bab358f6e893c8bd51fb82be1db7e8c1769e6",
+    "file_count": 7,
+    "upstream_issue": "https://github.com/mobile-dev-inc/Maestro/issues/3494",
+    "upstream_compare": "https://github.com/mobile-dev-inc/Maestro/compare/cli-2.8.0...cli-2.10.0",
+    "inference": "No reviewed source-level XCTest/SpringBoard fix found in2.8->2.10; changed iOS source addsappearance APIs. Not a verified remediation.",
+    "runtime_inventory": "Already installed iOS27.0(24A434) available for a separately authorized controlled comparison; no new device created or run.",
+    "export_preparation": "Native attachment, readiness, trace schema and real stall detection remain unverified; no trace recorded or export attempted."
+  },
+  "next_proposal": "n1-f1-o3-proposal.json"
+}

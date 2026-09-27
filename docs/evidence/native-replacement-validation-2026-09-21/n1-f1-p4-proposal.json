@@ -1,0 +1,302 @@
+{
+  "schema_version": 1,
+  "amendment": "F1-P4",
+  "recorded_at": "2026-09-24T05:06:58.567783+00:00",
+  "status": "prepared_unapproved_unexecuted",
+  "preparation_base_sha": "68f1f0fd63a9b456b34bf00766aa0a8ae64d597d",
+  "evidence_commit": "Commit containing this proposal; exact SHA in task handoff.",
+  "application_sha_unchanged": "8972865893a3f018a064594457dc9cc664f8a61f",
+  "build_operator_sha_unchanged": "16603dd0cf36d27b492e57a02d3c6c438a2563c4",
+  "objective": "One explicit Settings launch and assertion/screenshot baseline; metadata can only advance to root visual review.",
+  "archive": "/Users/brianchei/repos/Tableus-ai-agent-dev/.artifacts/mobile/8972865893a3f018a064594457dc9cc664f8a61f/native-validation-f1/runtime-preparation-p4",
+  "index_sha256": "101bbf410c13d1c81976174d9c8c705b1ed49193675a4286854cfb2dd7fb0468",
+  "private_files_verified": 27,
+  "manifest_sha256": "e229f29e108f508ae7bb2e7cbf1f4a25941bed5a7dcf0a6f4d2490471e1131b8",
+  "operator_files_sha256": {
+    "driver.py": "3fd3eb165f0952913c0b1c98b8cf29259fde0fc2d6e405a37ebfef187d326156",
+    "t1_base.py": "5de80781f2fe091547dbdb4ed397bad066868266f04726d9637f2a318c9adf86",
+    "platform_monitor.py": "9da3dc8687c64e17362c285d6522f64a679d0e142a859271d4fd87c528eeffd6",
+    "maestro_xctest_diagnostics.py": "fb69990ecc8e6da249a93bf4ac600830e2f429551797512b3364cca3fa632106",
+    "maestro_ui_evidence.py": "f190289ad6456ffc80894783793dbc063e0ee1381d1efbd4f3bb476c8af6b25f",
+    "maestro": "ffea422da2844cac810ccc24f90750fa8ece78e77bc07676089e0cc4d62da469",
+    "settings-1.yml": "d9fd051ec0d24fb5609d7b3192dd9809b44351a4949f9244817cce36aefa4234",
+    "test_p4.py": "adad5479c1c0acd192d62654e603505c10dea11a1f982637ec6bc2c1bdd6ce44",
+    "README.md": "b6eefa94b85f2c9be21be86872043b3ddbe1b415a9639f25b233eeceea3977d1"
+  },
+  "device_id": "0EFFA766-DCDD-49E5-84B0-D3593B68709A",
+  "runtime": "iOS 27.0 / 24A434",
+  "device_type": "iPhone 17 Pro",
+  "older_targets_must_remain_shutdown": [
+    "2408A54F-A1C5-4388-8B46-6A987FE3B578",
+    "CBB4FAB4-734C-413C-9F10-850329AC9A01"
+  ],
+  "limits": {
+    "total_seconds": 420,
+    "total_cleanup_reserve_seconds": 60,
+    "flow_seconds": 240,
+    "flow_cleanup_reserve_seconds": 30,
+    "control_query_seconds": 30,
+    "external_launch_seconds": 30,
+    "post_launch_reserve_seconds": 5,
+    "postflow_observation_seconds": 5,
+    "host_process_query_seconds": 5,
+    "minimum_free_gib": 20
+  },
+  "operation_allowances_proposed": {
+    "boot": 1,
+    "control_query": 1,
+    "external_settings_launch": 1,
+    "maestro_flow": 1,
+    "retry": 0,
+    "downstream": 0
+  },
+  "flow_sha256": "d9fd051ec0d24fb5609d7b3192dd9809b44351a4949f9244817cce36aefa4234",
+  "flow": "appId: com.apple.Preferences\n---\n- extendedWaitUntil:\n    visible: \"Settings\"\n    timeout: 5000\n- takeScreenshot: \"settings-probe-1\"\n",
+  "external_launch": [
+    "xcrun",
+    "simctl",
+    "launch",
+    "0EFFA766-DCDD-49E5-84B0-D3593B68709A",
+    "com.apple.Preferences"
+  ],
+  "output": "/Users/brianchei/repos/Tableus-ai-agent-dev/.artifacts/mobile/8972865893a3f018a064594457dc9cc664f8a61f/native-validation-f1/test-ios-settings-platform-probe-04",
+  "operator_command": [
+    "/opt/homebrew/opt/python@3.14/bin/python3.14",
+    "/Users/brianchei/repos/Tableus-ai-agent-dev/.artifacts/mobile/8972865893a3f018a064594457dc9cc664f8a61f/native-validation-f1/runtime-preparation-p4/operator/driver.py"
+  ],
+  "approval_environment": {
+    "TABLEUS_F1_P4_APPROVED": "1",
+    "TABLEUS_F1_P4_DEVICE_ID": "0EFFA766-DCDD-49E5-84B0-D3593B68709A",
+    "TABLEUS_F1_P4_MANIFEST_SHA256": "e229f29e108f508ae7bb2e7cbf1f4a25941bed5a7dcf0a6f4d2490471e1131b8"
+  },
+  "approval_status": "No P4 execution approval received. Prior allowances consumed.",
+  "preflight": [
+    "Exact frozen manifest/files, audited installed JARs/launcher and Xcode metadata.",
+    "Fresh output absent; exact retained target initially Shutdown; older targets Shutdown.",
+    "At least 20 GiB free before boot and flow; fresh device/capacity observations required in approved run.",
+    "Idle ports7999/8000/8001, exact SpringBoard/parent identity, no unexpected TableUs.",
+    "Before external launch reserve30s launch+5s host+240s flow within420s total/60s final cleanup reserve."
+  ],
+  "review_gate": [
+    "One registered invocation with exact device/flow path/hash; records do not predate registration.",
+    "Exact four completed command records; no Maestro launch/permission/clear command.",
+    "Canonical bounded XCTest log contains completed Preferences snapshot wholly inside title assertion.",
+    "Permission audit logs retained with hashes; observed permission-operation markers fail.",
+    "Hashed PNG retained; successful driver result is pending_visual_review with acceptance:false.",
+    "Astra inspects bound PNG for Settings title and substantive content. Blank/transition-only UI fails visual baseline."
+  ],
+  "cleanup": "Snapshot before child stop; exact-owned group/collectors within flow cleanup budget; Settings termination and verified target shutdown; confirm Shutdown/idle ports/absent known target, Settings and runner PIDs. Unknown cleanup fails; retain device data and artifacts.",
+  "stop": "First preflight, command, monitored crash/identity, startup, permission-marker, evidence or capacity failure; interruption/deadline. No retry or downstream continuation.",
+  "static_initialization_review": {
+    "status": "static_relevant_callpath_review",
+    "reviewer": "Luna read-only extraction; Astra integration",
+    "method": "javap -c -p on installed JARs, no Maestro CLI or native invocation",
+    "jars": {
+      "maestro-cli-2.8.0.jar": "716859d8aedc224d3d86c1a3e4b1ef74b9802b93ed390458821666819ddf0697",
+      "maestro-client.jar": "98ee8e1a46e79a062a3140fd725b34860dd56ba22fb36e763d54c02e039f4d1e",
+      "maestro-orchestra.jar": "a541787649ed49420987b17889eaa947efd07d933dbbe66bccc6f11dcac27fb5",
+      "maestro-ios.jar": "025821d6a9ea4a87ea264554f5ccbe8214fe8ecae2506d46c32b326aa833349e",
+      "maestro-ios-driver.jar": "10fcf5f711ecd9f53d571e0666c7f2cb3828aa83c4c74c78da0747cd13a8294b"
+    },
+    "paths": [
+      {
+        "method": "maestro.cli.runner.MaestroCommandRunner.runCommands",
+        "offsets": "91-155 constructs Orchestra; 280-289 calls Orchestra.runFlow",
+        "finding": "No implicit target launch/permissions/clear operations in inspected method."
+      },
+      {
+        "method": "maestro.orchestra.Orchestra.runFlow",
+        "offsets": "121-163,201-450 initialization; command execution at714/885/1115/1657/2187",
+        "finding": "Config/JS/AndroidChromeDevTools/listeners and commands; no implicit target launch, permission, app-state clear or keychain-clear calls found."
+      },
+      {
+        "method": "maestro.orchestra.Orchestra.executeCommand ApplyConfigurationCommand branch",
+        "offsets": "3980-3987",
+        "finding": "Returns false directly; no target mutation."
+      },
+      {
+        "method": "MaestroSessionManager.createIOS",
+        "offsets": "408-587",
+        "finding": "Constructs LocalXCTestInstaller, XCTestDriverClient, XCTestIOSDevice, IOSDriver then Maestro.Companion.ios."
+      },
+      {
+        "method": "Maestro.Companion.ios -> IOSDriver.open -> XCTestIOSDevice.open -> XCTestDriverClient.restartXCTestRunner",
+        "offsets": "Companion9-24;IOSDriver268-287/lambda2074-2080;XCTestIOSDevice46-55",
+        "finding": "Auxiliary XCTest runner start/restart and conditional uninstall when reinstallDriver=true; no inspected target Preferences permission/clear/launch call."
+      },
+      {
+        "method": "IOSDriver.viewHierarchy -> XCTestIOSDevice.viewHierarchy",
+        "offsets": "563-569;66-72/lambda527-538",
+        "finding": "Delegates hierarchy request without appId. Assertion-only flow relies on already displayed UI; it does not set Preferences as an explicit hierarchy target."
+      },
+      {
+        "method": "XCTestIOSDevice.viewHierarchy$lambda$1 -> XCTestDriverClient.viewHierarchy",
+        "offsets": "527-534 calls emptySet request;244-263 builds ViewHierarchyRequest(installedApps,bool)",
+        "finding": "No appId field in request. XCTestIOSDevice has deviceId/client/getInstalledApps fields and no configured target appId. activeAppId used in gesture paths, not this hierarchy request."
+      }
+    ],
+    "limits": [
+      "Static selected-callpath review, not a blanket proof of all native side effects.",
+      "Auxiliary XCTest initialization is part of any Maestro session and can still fail.",
+      "Prior Settings permission states are unknown; no reset/revoke authorized.",
+      "No native execution or compatibility/visual acceptance claimed.",
+      "Native XCTest exact hierarchy selection was not inspected. Expected-app hierarchy and root PNG gates are required; external launch ordering is not a proven rendering fix."
+    ]
+  },
+  "checks": {
+    "mocked_tests": 15,
+    "syntax_files": 7,
+    "synthetic_integration": {
+      "status": "passed",
+      "cases": [
+        "extra_flag_rejected_before_registration",
+        "extra_flag_rejected_before_registration",
+        "real_wrapper_registration_discovery_with_two_expected_log_types_pending_review",
+        "png_header_does_not_grant_acceptance",
+        "wrong_app_hierarchy_rejected",
+        "stale_command_rejected",
+        "multiple_registered_invocations_rejected"
+      ],
+      "blocked_process_signal_events": [],
+      "native_operations": 0,
+      "synthetic": true,
+      "meaning": "File/metadata integration only. Synthetic PNG is header-only and no visual acceptance is granted.",
+      "operator_files_sha256": {
+        "test_p4.py": "adad5479c1c0acd192d62654e603505c10dea11a1f982637ec6bc2c1bdd6ce44",
+        "maestro_xctest_diagnostics.py": "fb69990ecc8e6da249a93bf4ac600830e2f429551797512b3364cca3fa632106",
+        "t1_base.py": "5de80781f2fe091547dbdb4ed397bad066868266f04726d9637f2a318c9adf86",
+        "platform_monitor.py": "9da3dc8687c64e17362c285d6522f64a679d0e142a859271d4fd87c528eeffd6",
+        "maestro": "ffea422da2844cac810ccc24f90750fa8ece78e77bc07676089e0cc4d62da469",
+        "README.md": "b6eefa94b85f2c9be21be86872043b3ddbe1b415a9639f25b233eeceea3977d1",
+        "maestro_ui_evidence.py": "f190289ad6456ffc80894783793dbc063e0ee1381d1efbd4f3bb476c8af6b25f",
+        "manifest.json": "e229f29e108f508ae7bb2e7cbf1f4a25941bed5a7dcf0a6f4d2490471e1131b8",
+        "settings-1.yml": "d9fd051ec0d24fb5609d7b3192dd9809b44351a4949f9244817cce36aefa4234",
+        "driver.py": "3fd3eb165f0952913c0b1c98b8cf29259fde0fc2d6e405a37ebfef187d326156"
+      }
+    },
+    "blocked_process_signal_events": [],
+    "make_ready": {
+      "started_at": "2026-09-24T05:02:52.636552+00:00",
+      "command": [
+        "make",
+        "ready"
+      ],
+      "environment_keys": [
+        "CI",
+        "DATABASE_URL",
+        "EAS_DISABLE_UPDATE_CHECK",
+        "ENVIRONMENT",
+        "EXPO_NO_TELEMETRY",
+        "GEMINI_API_KEY",
+        "GOOGLE_MAPS_API_KEY",
+        "HOME",
+        "LANG",
+        "LOGNAME",
+        "MIGRATION_DATABASE_URL",
+        "NEXT_TELEMETRY_DISABLED",
+        "PATH",
+        "POSTHOG_KEY",
+        "PYTHONDONTWRITEBYTECODE",
+        "SENTRY_DSN",
+        "SUPABASE_URL",
+        "TABLEUS_AUTH_MODE",
+        "TABLEUS_DEMO_MODE",
+        "TABLEUS_PROVIDER_MODE",
+        "TABLEUS_TELEMETRY_E2E",
+        "TABLEUS_TELEMETRY_MODE",
+        "TMPDIR",
+        "USER"
+      ],
+      "native_execution": false,
+      "provider_mode": "deterministic",
+      "exit_code": 0,
+      "status": "passed",
+      "elapsed_seconds": 202.462,
+      "finished_at": "2026-09-24T05:06:15.100382+00:00"
+    },
+    "make_ready_invocations": 2,
+    "earlier_sandbox_attempt": {
+      "started_at": "2026-09-24T05:01:40.270194+00:00",
+      "command": [
+        "make",
+        "ready"
+      ],
+      "environment_keys": [
+        "CI",
+        "DATABASE_URL",
+        "EAS_DISABLE_UPDATE_CHECK",
+        "ENVIRONMENT",
+        "EXPO_NO_TELEMETRY",
+        "GEMINI_API_KEY",
+        "GOOGLE_MAPS_API_KEY",
+        "HOME",
+        "LANG",
+        "LOGNAME",
+        "MIGRATION_DATABASE_URL",
+        "NEXT_TELEMETRY_DISABLED",
+        "PATH",
+        "POSTHOG_KEY",
+        "PYTHONDONTWRITEBYTECODE",
+        "SENTRY_DSN",
+        "SUPABASE_URL",
+        "TABLEUS_AUTH_MODE",
+        "TABLEUS_DEMO_MODE",
+        "TABLEUS_PROVIDER_MODE",
+        "TABLEUS_TELEMETRY_E2E",
+        "TABLEUS_TELEMETRY_MODE",
+        "TMPDIR",
+        "USER"
+      ],
+      "native_execution": false,
+      "provider_mode": "deterministic",
+      "exit_code": 2,
+      "status": "failed",
+      "elapsed_seconds": 44.947,
+      "finished_at": "2026-09-24T05:02:25.218024+00:00"
+    },
+    "sandbox_failure": "Local fault-proxy listener 127.0.0.1:18981 denied with EPERM. Retained and rerun with loopback permission; no source change.",
+    "javascript_passed": 294,
+    "backend_passed": 98,
+    "postgresql_skipped": 3,
+    "contract_drift": "none",
+    "native_operations": 0,
+    "prior_archives": {
+      "checked_at": "2026-09-24T04:53:58.621627+00:00",
+      "status": "passed",
+      "prior_archives": {
+        "runtime-preparation-v1": {
+          "index_sha256": "5880ed4052387a15fdc9363c34b4bb51b39e31f609e39846cf27512678f10217",
+          "files_verified": 14
+        },
+        "runtime-preparation-p3": {
+          "index_sha256": "eb43139cd048081f485c4549b44c238446fb48ffb8db9786729942ee18a87aa3",
+          "files_verified": 18
+        },
+        "runtime-execution-p3r1": {
+          "index_sha256": "04315d494d461cf569065c7e6cfe41fefbd636732709a0a2f80717a55b701cec",
+          "files_verified": 45
+        }
+      },
+      "native_calls": 0
+    },
+    "source_gate": "Read-only exact source gate checked in both preparation and durable archive; native main not called.",
+    "review": "Sol implementation/mocks; Luna static bytecode extraction; Astra review, corrections, audited checks and archive integration."
+  },
+  "not_included": [
+    "TableUs launch/install/build",
+    "backend/proxy",
+    "new device/erase/delete/data cleanup",
+    "permission reset/revoke or intentional Settings permission configuration",
+    "live-provider requests",
+    "downstream native flows/Android/N2",
+    "merge/deploy/cloud/secrets/store submissions"
+  ],
+  "limitations": [
+    "Changed launch ordering is diagnostic, not a proven fix; original blank-image cause remains unresolved.",
+    "Java hierarchy request has no appId; native selection unverified. Expected-app and visual gates remain required.",
+    "Maestro setup starts/restarts auxiliary XCTest; assertion-only does not mean no infrastructure side effects.",
+    "No permission baseline was retained in P3-R1. No claim individual permission states are unchanged.",
+    "Monitor covers known platform/app/startup failures, not every system-service crash.",
+    "A passed Settings baseline does not validate TableUs, clear prior app/platform failures, or reopen later budgets."
+  ]
+}

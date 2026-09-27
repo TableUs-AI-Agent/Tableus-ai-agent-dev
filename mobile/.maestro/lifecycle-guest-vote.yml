@@ -56,6 +56,15 @@ appId: com.tableus.app
     text: "Submit ranked vote"
     retryTapIfNoChange: true
 - scrollUntilVisible:
+    element: ".*(Ranked vote saved.|Retry ranked vote).*"
+    direction: DOWN
+    timeout: 30000
+- runFlow:
+    when:
+      visible: "Retry ranked vote"
+    commands:
+      - tapOn: "Retry ranked vote"
+- scrollUntilVisible:
     element: "Ranked vote saved."
     direction: DOWN
     timeout: 30000

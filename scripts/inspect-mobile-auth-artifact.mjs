@@ -1,8 +1,18 @@
 #!/usr/bin/env node
 
-import { existsSync, readFileSync, readdirSync, statSync } from "node:fs";
-import { extname, join, resolve } from "node:path";
-import { spawnSync } from "node:child_process";
+import { existsSync, mkdirSync, writeFileSync } from "node:fs";
+import { dirname, resolve } from "node:path";
+
+import { artifactChecksum } from "./evidence-utils.mjs";
+import {
+  embeddedAppConfiguration,
+  androidManifest,
+  inspectionReport,
+  iosAllowsLocalNetworking,
+  verifyAndroidSigner,
+  verifyIosSimulatorBundle,
+} from "./mobile-artifact-security.mjs";
+import { validateAuthAppConfig } from "./readiness-inspection-lib.mjs";
 
 function parseArgs(argv) {
   const result = {};
@@ -15,52 +25,39 @@ function parseArgs(argv) {
   return result;
 }
 
-function artifactBytes(path) {
-  if (!statSync(path).isDirectory()) {
-    if (extname(path) !== ".apk") return readFileSync(path);
-    const result = spawnSync("unzip", ["-p", path], { encoding: null, maxBuffer: 512 * 1024 * 1024 });
-    if (result.error) throw result.error;
-    if (result.status !== 0) throw new Error("Could not inspect Android APK contents.");
-    return result.stdout;
-  }
-  const chunks = [];
-  const visit = (directory) => {
-    for (const entry of readdirSync(directory)) {
-      const current = join(directory, entry);
-      if (statSync(current).isDirectory()) visit(current);
-      else chunks.push(readFileSync(current));
-    }
-  };
-  visit(path);
-  return Buffer.concat(chunks);
-}
-
 const args = parseArgs(process.argv.slice(2));
 const artifact = resolve(args.artifact ?? "");
-if (!existsSync(artifact) || !args.sha || !args["api-url"] || !args["supabase-url"]) {
-  throw new Error("--artifact, --sha, --api-url, and --supabase-url are required");
+const platform = args.platform;
+const profile = `auth-test-${platform}`;
+if (!existsSync(artifact) || !["ios", "android"].includes(platform) || !args.sha || !args["api-url"] || !args["supabase-url"] || !args["link-host"]) {
+  throw new Error("--platform, --artifact, --sha, --api-url, --supabase-url, and --link-host are required");
 }
-if (!args["api-url"].startsWith("https://") || !args["supabase-url"].startsWith("https://")) {
-  throw new Error("Auth artifacts require HTTPS API and Supabase URLs.");
-}
+if (platform === "android" && !args["android-fingerprint"]) throw new Error("--android-fingerprint is required for Android auth inspection");
 
-const content = artifactBytes(artifact).toString("latin1");
-for (const required of [args.sha, args["api-url"], args["supabase-url"], "authE2E"]) {
-  if (!content.includes(required)) throw new Error(`Artifact is missing required marker: ${required}`);
+const configuration = embeddedAppConfiguration(platform, artifact, artifact);
+validateAuthAppConfig(configuration, {
+  sha: args.sha,
+  apiUrl: args["api-url"],
+  supabaseUrl: args["supabase-url"],
+  linkHost: args["link-host"],
+  forbiddenOrigins: (args["forbidden-origins"] ?? "").split(","),
+});
+
+let signerType;
+let signerIdentity;
+if (platform === "ios") {
+  signerType = "ios-simulator";
+  signerIdentity = verifyIosSimulatorBundle(artifact);
+  if (iosAllowsLocalNetworking(artifact)) throw new Error("Auth iOS artifact permits local networking");
+} else {
+  signerType = "android-sha256-cert";
+  signerIdentity = verifyAndroidSigner(artifact, args["android-fingerprint"]);
+  if (androidManifest(artifact).includes('android:usesCleartextTraffic="true"')) throw new Error("Auth Android artifact permits cleartext traffic");
 }
-const forbidden = [
-  "demo-organizer",
-  "demo-guest",
-  "http://127.0.0.1:8000",
-  "http://localhost:8000",
-  "http://[::1]:8000",
-  "service_role",
-  "SUPABASE_SERVICE_ROLE",
-  ...(args["forbidden-origins"] ?? "").split(",").filter(Boolean),
-];
-for (const marker of forbidden) {
-  if (content.includes(marker)) throw new Error(`Artifact contains forbidden marker: ${marker}`);
+const report = inspectionReport({ platform, profile, candidateSha: args.sha, artifact, signerType, signerIdentity });
+if (artifactChecksum(artifact) !== report.artifact_sha256) throw new Error("Artifact changed during auth inspection");
+if (args.output) {
+  mkdirSync(dirname(resolve(args.output)), { recursive: true });
+  writeFileSync(resolve(args.output), `${JSON.stringify(report, null, 2)}\n`, { mode: 0o600 });
 }
-if (!/localE2E.{0,24}(false|0)/s.test(content)) throw new Error("Artifact does not prove localE2E=false.");
-if (!/authE2E.{0,24}(true|1)/s.test(content)) throw new Error("Artifact does not prove authE2E=true.");
-process.stdout.write("Mobile auth artifact inspection passed.\n");
+process.stdout.write(`${JSON.stringify(report)}\n`);

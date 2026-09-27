@@ -1,0 +1,55 @@
+{
+  "schema_version": 1,
+  "recorded_at": "2026-09-23T04:58:34.800886+00:00",
+  "status": "blocked_before_native_execution",
+  "amendment": "F1-O2",
+  "approval": "n1-f1-o2-approval.json",
+  "evidence_base_sha": "346e7efbdc447c7d7368832d10824787608d8bf2",
+  "application_sha": "8972865893a3f018a064594457dc9cc664f8a61f",
+  "device_id": "CBB4FAB4-734C-413C-9F10-850329AC9A01",
+  "preflight_failure": {
+    "stage": "disk_capacity",
+    "required_free_gib": 20,
+    "observed_free_gib": 19.374618530273438,
+    "error": "AssertionError: 19.374618530273438",
+    "read_only_checks_before_capacity": "archive/operator/downstream/wrapper hashes, exact clean source, booted target/runtime, stopped app and idle ports passed"
+  },
+  "latest_inspection_free_gib": 19.393,
+  "native_driver_started": false,
+  "native_attempts_consumed": 0,
+  "native_attempts_remaining": 1,
+  "links_cases_executed": 0,
+  "exports_executed": 0,
+  "o2_output_absent": true,
+  "cache_deletion_performed": false,
+  "proposed_cleanup": {
+    "status": "prepared_unapproved",
+    "targets": [
+      {
+        "path": "/Users/brianchei/.npm/_cacache",
+        "allocated_kib": 512812,
+        "allocated_gib": 0.489
+      },
+      {
+        "path": "/Users/brianchei/Library/Caches/CocoaPods/Pods",
+        "allocated_kib": 994072,
+        "allocated_gib": 0.948
+      }
+    ],
+    "allocated_gib_total": 1.437,
+    "inactivity_checks": "No cache open files or matching package/build process at inspection; repeat before deletion.",
+    "operator": "/Users/brianchei/repos/Tableus-ai-agent-dev/.artifacts/mobile/8972865893a3f018a064594457dc9cc664f8a61f/native-validation-f1/capacity-preparation-o2/f1-o2-cache-cleanup.py",
+    "required_environment": {
+      "TABLEUS_F1_O2_CACHE_CLEANUP_APPROVED": "1"
+    },
+    "scope": "Delete only the two exact regenerable download-cache directories. Preserve source, installed dependencies, app artifacts, native evidence and sessions. No chmod or protection bypass.",
+    "continuation": "Repeat fresh O2 preflight; run the already approved offline attempt only with >=20 GiB; continue conditional links/exports on passing gates. No additional native allowance granted."
+  },
+  "private_evidence_sha256": {
+    "/Users/brianchei/repos/Tableus-ai-agent-dev/.artifacts/mobile/8972865893a3f018a064594457dc9cc664f8a61f/native-validation-f1/capacity-preparation-o2/n1-f1-o2-approval.json": "891ac99f2d715b5e15d114cb5ea245058f9fad5cacf67320b0587341d8880fe4",
+    "/Users/brianchei/repos/Tableus-ai-agent-dev/.artifacts/mobile/8972865893a3f018a064594457dc9cc664f8a61f/native-validation-f1/capacity-preparation-o2/f1-o2-preflight.py": "6c90eba96949b7a58e2edf550853ab41906e3f265c2845713cd7ddbd49bb7d71",
+    "/Users/brianchei/repos/Tableus-ai-agent-dev/.artifacts/mobile/8972865893a3f018a064594457dc9cc664f8a61f/native-validation-f1/capacity-preparation-o2/f1-o2-capacity-inspection.json": "7855a312309d9b659ad8ce224cf8b5308306354c3c96ff2d694538b2a0799be9",
+    "/Users/brianchei/repos/Tableus-ai-agent-dev/.artifacts/mobile/8972865893a3f018a064594457dc9cc664f8a61f/native-validation-f1/capacity-preparation-o2/f1-o2-capacity-inspect.py": "6ed8e89abbf140f1ab41610f444dd933a568e249342ac6ce792054ce1018e89f",
+    "/Users/brianchei/repos/Tableus-ai-agent-dev/.artifacts/mobile/8972865893a3f018a064594457dc9cc664f8a61f/native-validation-f1/capacity-preparation-o2/f1-o2-cache-cleanup.py": "38ad4f886f1be9e5ab83bfcba99f17a76b2f63eec34a5e1a8a741c62bd7d6b35"
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "schema_version": 1,
+  "recorded_at": "2026-09-23T05:50:13.903186+00:00",
+  "amendment": "F1-O3",
+  "owner_response": "approve",
+  "evidence_base_sha": "b15c8e0889c40a9d16dd9e0e899fc800fbec9321",
+  "proposal": "n1-f1-o3-proposal.json",
+  "proposal_sha256": "efa1044e28c6724eac9d8b0f3cd89f20bbbdce6bbe3946aae07467609e66ee47",
+  "operator_archive": "/Users/brianchei/repos/Tableus-ai-agent-dev/.artifacts/mobile/8972865893a3f018a064594457dc9cc664f8a61f/native-validation-f1/runtime-preparation-o3",
+  "manifest_sha256": "bf7532aa0502b694d7d0f5e2ee2d67806ceed21a3fa26f30d08c5863b9d15f25",
+  "driver_sha256": "b22976c7fa041ecf4ccba3b6529686aa5dbdd9c320a9e9ff83ee53d7222864ff",
+  "application_sha": "8972865893a3f018a064594457dc9cc664f8a61f",
+  "artifact_sha256": "98c1535bfe6f7cad0c8e467454f5128c71f4aae21b8b41a5aba1c1a33f1e391d",
+  "build_operator_sha": "16603dd0cf36d27b492e57a02d3c6c438a2563c4",
+  "device_create_attempts": 1,
+  "offline_attempts": 1,
+  "total_limit_seconds": 2100,
+  "runner_limit_seconds": 1800,
+  "scope": "One new iPhone17Pro target on installed iOS27.0(24A434), same artifact/Maestro2.8/11offline flows/5refresh phases; first failure stops. Preserve device and evidence; terminate owned app/services and shut down only verified new target.",
+  "diagnostic_only": true,
+  "downstream_continuation": false,
+  "prior_limits_reopened": false
+}

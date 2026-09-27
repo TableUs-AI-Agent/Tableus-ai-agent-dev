@@ -1,13 +1,13 @@
 #!/usr/bin/env node
 
-import { copyFileSync, cpSync, existsSync, mkdirSync, mkdtempSync, readdirSync, rmSync, statSync, writeFileSync } from "node:fs";
+import { cpSync, existsSync, mkdirSync, mkdtempSync, readdirSync, rmSync, statSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { basename, dirname, extname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
-import { createInterface } from "node:readline/promises";
 import { spawnSync } from "node:child_process";
 
-import { artifactChecksum } from "./evidence-utils.mjs";
+import { promptSecret, promptVisible } from "./prompt-utils.mjs";
+import { assertArtifactUnchanged, stageVerifiedArtifact } from "./mobile-artifact-security.mjs";
 
 const repoRoot = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const flowSource = join(repoRoot, "mobile", ".maestro-links");
@@ -65,23 +65,6 @@ async function verifyWebFallback(joinUrl) {
   if (joinResponse.status !== 200 || new URL(joinResponse.url).pathname !== new URL(joinUrl).pathname) throw new Error("Web join fallback is unavailable.");
 }
 
-function collectScreenshot(root, evidenceDir, platform) {
-  const matches = [];
-  const visit = (directory) => {
-    for (const entry of readdirSync(directory)) {
-      const path = join(directory, entry);
-      if (statSync(path).isDirectory()) visit(path);
-      else if (entry === "verified-link-route.png" || entry === "rotated-link.png") matches.push(path);
-    }
-  };
-  visit(root);
-  return matches.map((source) => {
-    const destination = join(evidenceDir, `${platform}-${basename(source)}`);
-    copyFileSync(source, destination);
-    return basename(destination);
-  });
-}
-
 function snapshot(directory) {
   return existsSync(directory) ? new Set(readdirSync(directory)) : new Set();
 }
@@ -109,13 +92,40 @@ const buildId = args["build-id"];
 const origin = new URL(args.origin ?? "").origin;
 const evidenceDir = resolve(args.evidence ?? "");
 if (!new Set(["ios", "android"]).has(platform)) throw new Error("--platform must be ios or android");
-if (!device || !existsSync(appPath) || !buildId || !args.evidence) throw new Error("--device, --app, --build-id, and --evidence are required");
+if (!device || !existsSync(appPath) || !buildId || !args.evidence || !args.sha || !args.receipt || !args["api-url"] || !args["supabase-url"]) {
+  throw new Error("--device, --app, --build-id, --evidence, --sha, --receipt, --api-url, and --supabase-url are required");
+}
+if (platform === "ios" && !args["apple-team-id"]) throw new Error("--apple-team-id is required for iOS link evidence");
+if (platform === "android" && !args["android-fingerprint"]) throw new Error("--android-fingerprint is required for Android link evidence");
 if (origin !== expectedOrigin || args.origin !== expectedOrigin) throw new Error(`Verified-link evidence requires ${expectedOrigin}.`);
 await preflight(platform);
 
-const terminal = createInterface({ input: process.stdin, output: process.stdout });
-const email = (await terminal.question("Returning approved account email: ")).trim().toLowerCase();
-const joinUrl = (await terminal.question("Freshly rotated old private join URL (not retained): ")).trim();
+const verificationRoot = mkdtempSync(join(tmpdir(), "tableus-mobile-links-verified-"));
+process.once("exit", () => rmSync(verificationRoot, { recursive: true, force: true }));
+const verified = stageVerifiedArtifact({
+  artifact: appPath,
+  receiptPath: resolve(args.receipt),
+  platform,
+  profile: `links-test-${platform}`,
+  candidateSha: args.sha,
+  buildId,
+  destination: join(verificationRoot, "install"),
+  signerType: platform === "ios" ? "apple-team-id" : "android-sha256-cert",
+  signerIdentity: platform === "ios" ? args["apple-team-id"] : args["android-fingerprint"],
+});
+const inspectorArgs = [
+  "scripts/inspect-mobile-links-artifact.mjs", "--platform", platform, "--artifact", verified.path,
+  "--sha", args.sha, "--api-url", args["api-url"], "--supabase-url", args["supabase-url"],
+  "--link-host", "links.table-us.com", "--profile", `links-test-${platform}`,
+];
+if (args["apple-team-id"]) inspectorArgs.push("--apple-team-id", args["apple-team-id"]);
+if (args["android-fingerprint"]) inspectorArgs.push("--android-fingerprint", args["android-fingerprint"]);
+if (args["forbidden-origins"]) inspectorArgs.push("--forbidden-origins", args["forbidden-origins"]);
+run(process.execPath, inspectorArgs);
+assertArtifactUnchanged(verified.path, verified.digest);
+
+const email = (await promptSecret("Returning approved account email: ")).trim().toLowerCase();
+const joinUrl = (await promptSecret("Freshly rotated old private join URL (not retained): ")).trim();
 const parsedJoin = new URL(joinUrl);
 if (!email || parsedJoin.origin !== expectedOrigin || !parsedJoin.pathname.startsWith("/join/") || !parsedJoin.searchParams.get("token")) {
   throw new Error("An approved email and canonical private join URL are required.");
@@ -161,12 +171,14 @@ let appleDiagnosticsApproved = false;
 let notesTapConfirmed = false;
 try {
   if (platform === "ios") {
-    const installApp = extractIosApp(appPath, installRoot);
+    assertArtifactUnchanged(verified.path, verified.digest);
+    const installApp = extractIosApp(verified.path, installRoot);
     run("xcrun", ["devicectl", "device", "install", "app", "--device", device, installApp], { env: { DEVELOPER_DIR: developerDir }, secrets });
-    appleDiagnosticsApproved = (await terminal.question(`Did Apple Associated Domains Diagnostics approve ${expectedOrigin}? Type yes: `)).trim().toLowerCase() === "yes";
+    appleDiagnosticsApproved = (await promptVisible(`Did Apple Associated Domains Diagnostics approve ${expectedOrigin}? Type yes: `)).trim().toLowerCase() === "yes";
     if (!appleDiagnosticsApproved) throw new Error("Apple Associated Domains Diagnostics approval is required.");
   } else {
-    run(adb, ["-s", device, "install", "-r", appPath], { secrets });
+    assertArtifactUnchanged(verified.path, verified.digest);
+    run(adb, ["-s", device, "install", "-r", verified.path], { secrets });
     run(adb, ["-s", device, "shell", "pm", "set-app-links", "--package", appId, "0", "all"], { secrets });
     run(adb, ["-s", device, "shell", "pm", "verify-app-links", "--re-verify", appId], { secrets });
     await new Promise((resolveWait) => setTimeout(resolveWait, 20_000));
@@ -176,26 +188,23 @@ try {
   }
 
   flow("routes-and-send.yml", { AUTH_URL: authUrl, JOIN_URL: joinUrl, EMAIL: email });
-  const otp = (await terminal.question("Returning sign-in OTP from the newest email: ")).trim();
+  const otp = (await promptSecret("Returning sign-in OTP from the newest email: ")).trim();
   if (!otp) throw new Error("Returning sign-in OTP is required.");
   secrets.push(otp);
   flow("verify-rotated.yml", { OTP: otp });
 
   if (platform === "ios") {
-    notesTapConfirmed = (await terminal.question("After tapping the same private link in Notes or Messages, did TableUs open the join screen? Type yes: ")).trim().toLowerCase() === "yes";
+    notesTapConfirmed = (await promptVisible("After tapping the same private link in Notes or Messages, did TableUs open the join screen? Type yes: ")).trim().toLowerCase() === "yes";
     if (!notesTapConfirmed) throw new Error("A Notes or Messages Universal Link tap is required.");
   }
 
-  const screenshots = collectScreenshot(temporaryRoot, evidenceDir, platform);
-  const gitResult = spawnSync("git", ["rev-parse", "HEAD"], { cwd: repoRoot, encoding: "utf8" });
-  if (gitResult.status !== 0) throw new Error("Could not resolve the candidate SHA.");
   const summary = {
     platform,
     device,
     build_id: buildId,
-    git_sha: gitResult.stdout.trim(),
+    git_sha: args.sha,
     artifact: basename(appPath),
-    artifact_sha256: artifactChecksum(appPath),
+    artifact_sha256: verified.digest,
     app_id: appId,
     link_origin: expectedOrigin,
     association_files_valid: true,
@@ -208,13 +217,13 @@ try {
     android_domain_verified: platform === "android" ? domainVerified : null,
     apple_diagnostics_approved: platform === "ios" ? appleDiagnosticsApproved : null,
     ios_notes_or_messages_tap: platform === "ios" ? notesTapConfirmed : null,
-    screenshots,
+    screenshots_retained_by_runner: false,
   };
   writeFileSync(join(evidenceDir, `${platform}-verified-links-summary.json`), `${JSON.stringify(summary, null, 2)}\n`);
   process.stdout.write(`TableUs ${platform} verified-link journey passed.\n`);
 } finally {
-  terminal.close();
   rmSync(temporaryRoot, { recursive: true, force: true });
+  rmSync(verificationRoot, { recursive: true, force: true });
   removeNewEntries(maestroTests, testsBefore);
   removeNewEntries(maestroLogs, logsBefore);
 }

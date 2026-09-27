@@ -21,6 +21,11 @@
             "title": "Deletion Scope",
             "type": "string"
           },
+          "full_deletion_available": {
+            "default": false,
+            "title": "Full Deletion Available",
+            "type": "boolean"
+          },
           "organized_plan_count": {
             "title": "Organized Plan Count",
             "type": "integer"
@@ -38,6 +43,69 @@
           "organized_plan_count"
         ],
         "title": "AccountControlOut",
+        "type": "object"
+      },
+      "AccountDeletionOut": {
+        "properties": {
+          "completed_at": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Completed At"
+          },
+          "last_error_code": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Last Error Code"
+          },
+          "needs_attention": {
+            "default": false,
+            "title": "Needs Attention",
+            "type": "boolean"
+          },
+          "next_retry_at": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Next Retry At"
+          },
+          "requested_at": {
+            "format": "date-time",
+            "title": "Requested At",
+            "type": "string"
+          },
+          "status": {
+            "enum": [
+              "pending",
+              "completed"
+            ],
+            "title": "Status",
+            "type": "string"
+          }
+        },
+        "required": [
+          "status",
+          "requested_at"
+        ],
+        "title": "AccountDeletionOut",
         "type": "object"
       },
       "AccountExportConnection": {
@@ -486,6 +554,23 @@
         "title": "Envelope[AccountControlOut]",
         "type": "object"
       },
+      "Envelope_AccountDeletionOut_": {
+        "properties": {
+          "data": {
+            "$ref": "#/components/schemas/AccountDeletionOut"
+          },
+          "meta": {
+            "additionalProperties": true,
+            "title": "Meta",
+            "type": "object"
+          }
+        },
+        "required": [
+          "data"
+        ],
+        "title": "Envelope[AccountDeletionOut]",
+        "type": "object"
+      },
       "Envelope_AccountExportOut_": {
         "properties": {
           "data": {
@@ -586,6 +671,23 @@
           "data"
         ],
         "title": "Envelope[LocationOut]",
+        "type": "object"
+      },
+      "Envelope_ManagedPlanOut_": {
+        "properties": {
+          "data": {
+            "$ref": "#/components/schemas/ManagedPlanOut"
+          },
+          "meta": {
+            "additionalProperties": true,
+            "title": "Meta",
+            "type": "object"
+          }
+        },
+        "required": [
+          "data"
+        ],
+        "title": "Envelope[ManagedPlanOut]",
         "type": "object"
       },
       "Envelope_PlanCreated_": {
@@ -726,6 +828,27 @@
           "data"
         ],
         "title": "Envelope[list[ConnectionOut]]",
+        "type": "object"
+      },
+      "Envelope_list_ManagedPlanOut__": {
+        "properties": {
+          "data": {
+            "items": {
+              "$ref": "#/components/schemas/ManagedPlanOut"
+            },
+            "title": "Data",
+            "type": "array"
+          },
+          "meta": {
+            "additionalProperties": true,
+            "title": "Meta",
+            "type": "object"
+          }
+        },
+        "required": [
+          "data"
+        ],
+        "title": "Envelope[list[ManagedPlanOut]]",
         "type": "object"
       },
       "Envelope_list_PlaceOut__": {
@@ -1052,6 +1175,71 @@
         "title": "LocationResolveRequest",
         "type": "object"
       },
+      "ManagedPlanOut": {
+        "properties": {
+          "id": {
+            "title": "Id",
+            "type": "string"
+          },
+          "organizer_id": {
+            "title": "Organizer Id",
+            "type": "string"
+          },
+          "participants": {
+            "items": {
+              "$ref": "#/components/schemas/ManagedPlanParticipantOut"
+            },
+            "title": "Participants",
+            "type": "array"
+          },
+          "title": {
+            "title": "Title",
+            "type": "string"
+          },
+          "updated_at": {
+            "format": "date-time",
+            "title": "Updated At",
+            "type": "string"
+          },
+          "viewer_is_organizer": {
+            "title": "Viewer Is Organizer",
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "id",
+          "title",
+          "organizer_id",
+          "viewer_is_organizer",
+          "updated_at",
+          "participants"
+        ],
+        "title": "ManagedPlanOut",
+        "type": "object"
+      },
+      "ManagedPlanParticipantOut": {
+        "properties": {
+          "display_name": {
+            "title": "Display Name",
+            "type": "string"
+          },
+          "is_organizer": {
+            "title": "Is Organizer",
+            "type": "boolean"
+          },
+          "profile_id": {
+            "title": "Profile Id",
+            "type": "string"
+          }
+        },
+        "required": [
+          "profile_id",
+          "display_name",
+          "is_organizer"
+        ],
+        "title": "ManagedPlanParticipantOut",
+        "type": "object"
+      },
       "NearbyRequest": {
         "properties": {
           "latitude": {
@@ -1313,6 +1501,11 @@
               }
             ],
             "title": "Longitude"
+          },
+          "metadata_needs_replacement": {
+            "default": false,
+            "title": "Metadata Needs Replacement",
+            "type": "boolean"
           },
           "my_vote": {
             "anyOf": [
@@ -1790,6 +1983,21 @@
           "share_taste"
         ],
         "title": "TasteProfileOut",
+        "type": "object"
+      },
+      "TransferOwnershipIn": {
+        "properties": {
+          "recipient_profile_id": {
+            "maxLength": 64,
+            "minLength": 1,
+            "title": "Recipient Profile Id",
+            "type": "string"
+          }
+        },
+        "required": [
+          "recipient_profile_id"
+        ],
+        "title": "TransferOwnershipIn",
         "type": "object"
       },
       "ValidationError": {
@@ -3240,6 +3448,144 @@
         ]
       }
     },
+    "/api/v1/me/deletion": {
+      "get": {
+        "operationId": "full_deletion_status_api_v1_me_deletion_get",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "authorization",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Authorization"
+            }
+          },
+          {
+            "in": "header",
+            "name": "x-demo-user-id",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "X-Demo-User-Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_AccountDeletionOut_"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Full Deletion Status",
+        "tags": [
+          "v1"
+        ]
+      },
+      "post": {
+        "operationId": "request_full_deletion_api_v1_me_deletion_post",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "authorization",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Authorization"
+            }
+          },
+          {
+            "in": "header",
+            "name": "x-demo-user-id",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "X-Demo-User-Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DeleteAccountIn"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_AccountDeletionOut_"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Request Full Deletion",
+        "tags": [
+          "v1"
+        ]
+      }
+    },
     "/api/v1/me/export": {
       "get": {
         "operationId": "export_me_api_v1_me_export_get",
@@ -3300,6 +3646,71 @@
           }
         },
         "summary": "Export Me",
+        "tags": [
+          "v1"
+        ]
+      }
+    },
+    "/api/v1/me/organized-plans": {
+      "get": {
+        "operationId": "organized_plans_api_v1_me_organized_plans_get",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "authorization",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Authorization"
+            }
+          },
+          {
+            "in": "header",
+            "name": "x-demo-user-id",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "X-Demo-User-Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_list_ManagedPlanOut__"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Organized Plans",
         "tags": [
           "v1"
         ]
@@ -3444,6 +3855,88 @@
       }
     },
     "/api/v1/plans/{plan_id}": {
+      "delete": {
+        "operationId": "delete_sole_plan_api_v1_plans__plan_id__delete",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "plan_id",
+            "required": true,
+            "schema": {
+              "title": "Plan Id",
+              "type": "string"
+            }
+          },
+          {
+            "in": "header",
+            "name": "authorization",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Authorization"
+            }
+          },
+          {
+            "in": "header",
+            "name": "x-demo-user-id",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "X-Demo-User-Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DeleteAccountIn"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_DeleteAccountOut_"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Delete Sole Plan",
+        "tags": [
+          "v1"
+        ]
+      },
       "get": {
         "operationId": "get_plan_api_v1_plans__plan_id__get",
         "parameters": [
@@ -3769,6 +4262,90 @@
         ]
       }
     },
+    "/api/v1/plans/{plan_id}/metadata": {
+      "patch": {
+        "operationId": "replace_plan_metadata_api_v1_plans__plan_id__metadata_patch",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "plan_id",
+            "required": true,
+            "schema": {
+              "title": "Plan Id",
+              "type": "string"
+            }
+          },
+          {
+            "in": "header",
+            "name": "authorization",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Authorization"
+            }
+          },
+          {
+            "in": "header",
+            "name": "x-demo-user-id",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "X-Demo-User-Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PlanCreateIn"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_PlanOut_"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Replace Plan Metadata",
+        "tags": [
+          "v1"
+        ]
+      }
+    },
     "/api/v1/plans/{plan_id}/recommendations": {
       "post": {
         "operationId": "generate_recommendations_api_v1_plans__plan_id__recommendations_post",
@@ -4075,6 +4652,90 @@
         ]
       }
     },
+    "/api/v1/plans/{plan_id}/transfer-ownership": {
+      "post": {
+        "operationId": "transfer_plan_ownership_api_v1_plans__plan_id__transfer_ownership_post",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "plan_id",
+            "required": true,
+            "schema": {
+              "title": "Plan Id",
+              "type": "string"
+            }
+          },
+          {
+            "in": "header",
+            "name": "authorization",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Authorization"
+            }
+          },
+          {
+            "in": "header",
+            "name": "x-demo-user-id",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "X-Demo-User-Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TransferOwnershipIn"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_ManagedPlanOut_"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Transfer Plan Ownership",
+        "tags": [
+          "v1"
+        ]
+      }
+    },
     "/api/v1/plans/{plan_id}/vote": {
       "put": {
         "operationId": "vote_api_v1_plans__plan_id__vote_put",
@@ -4161,8 +4822,21 @@
     },
     "/api/v1/provider-usage/summary": {
       "get": {
+        "description": "Operator-only aggregate usage within the preceding 1\u201330 days.",
         "operationId": "provider_usage_summary_api_v1_provider_usage_summary_get",
         "parameters": [
+          {
+            "in": "query",
+            "name": "days",
+            "required": false,
+            "schema": {
+              "default": 30,
+              "maximum": 30,
+              "minimum": 1,
+              "title": "Days",
+              "type": "integer"
+            }
+          },
           {
             "in": "header",
             "name": "authorization",

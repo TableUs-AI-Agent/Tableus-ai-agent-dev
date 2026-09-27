@@ -1,0 +1,54 @@
+{
+  "schema_version": 1,
+  "base_commit": "83420fba6640ed11df1b445c1caa7e8eb4a2b740",
+  "javascript_tests_passed": 226,
+  "python_tests_passed": 98,
+  "postgres_tests_skipped_locally": 3,
+  "focused_tests_passed": 24,
+  "make_ready_exit_code": 0,
+  "readiness_targets_passed": [
+    "lint",
+    "typecheck",
+    "test",
+    "contract",
+    "build",
+    "smoke",
+    "perf"
+  ],
+  "actual_prebuild": {
+    "passed": true,
+    "native_compilation_performed": false,
+    "provider_calls": 0,
+    "expo_version": "57.0.23",
+    "missing_scene_rejected_before": true,
+    "scene_manifest_valid_after": true,
+    "app_delegate_matches_reviewed_migration": true,
+    "unrelated_plist_and_project_unchanged": true,
+    "repeated_prebuild_identical_except_sentry_uuid": true,
+    "generated_app_delegate_sha256": "f3f5fcd29a84b9d90b892d632e53ebbe3b33b486db0ea91759f14e30caa79917",
+    "generated_info_sha256": "da0b2c9cd8da634358080ca6ef44c6e5928cfae8dedf7ac63531c882a6fcf97c"
+  },
+  "actual_sdk_preflight": {
+    "sdk": "27.0",
+    "new_runtime_passes": true,
+    "old_source_runtime_rejected": true
+  },
+  "native_compilation_performed": false,
+  "devices_started_or_installed": false,
+  "live_provider_calls": 0,
+  "sign_in_emails": 0,
+  "deployments": 0,
+  "security_scan_started": false,
+  "retained_harness_failures": [
+    "Scratch initially omitted mobile workspace dependencies",
+    "CommonJS plist export required its default property",
+    "Expo plist uses null-prototype dictionaries; fixed comparator and added round-trip regression",
+    "Sentry regenerates its phase UUID; comparison now normalizes only that ID"
+  ],
+  "log_sha256": {
+    "make-ready.log": "bc6ac668d647fa2bbebcc7c168e51b30d318e6ecdbc60785b76a13e6591bc61a",
+    "focused.log": "1b7520fc35c4ef3cdf3de3378b6f768a68c086cd4ec9ddd293a8e1168830fb1b",
+    "old-source-preflight.log": "519ccfb2670687d22b31f34852e923b0581704319a8ca6720cb3183ec68b0eb8",
+    "prebuild-verification-v5/summary.json": "3e6e72f49ddec469f14071ec7d4e26b9c837dcb846aec21b9b88077dcc4674f8"
+  }
+}

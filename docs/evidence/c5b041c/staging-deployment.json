@@ -1,0 +1,175 @@
+{
+  "schema_version": 1,
+  "application_sha": "c5b041c85f4f7b959436c13bef48c959622c624f",
+  "branch": "codex/astra-project-reassessment",
+  "observed_at": "2026-09-13T00:43:43.870317+00:00",
+  "owner_approval": {
+    "local_date": "2026-09-12",
+    "response": "APPROVE",
+    "scope": "Push c5b041c, run CI, and deploy to the existing Railway staging and Vercel Preview targets; routine source stamps and exact Preview CORS configuration included."
+  },
+  "source_pushed": true,
+  "ci": {
+    "run_id": 34728044149,
+    "url": "https://github.com/TableUs-AI-Agent/Tableus-ai-agent-dev/actions/runs/34728044149",
+    "head_sha": "c5b041c85f4f7b959436c13bef48c959622c624f",
+    "status": "completed",
+    "conclusion": "success",
+    "created_at": "2026-09-13T00:28:17Z",
+    "completed_at": "2026-09-13T00:32:26Z",
+    "javascript_tests_passed": 197,
+    "python_tests_passed": 101,
+    "postgres_migration_tests_passed": 3,
+    "browser_tests_passed": 4,
+    "deterministic_ai_cases_passed": 7,
+    "checks": [
+      "locked installs",
+      "Postgres migration",
+      "lint",
+      "types",
+      "JavaScript and Python tests",
+      "deterministic AI evaluation",
+      "OpenAPI and shared contract checks",
+      "web and Expo-web builds",
+      "Playwright Chromium",
+      "deterministic smoke"
+    ]
+  },
+  "railway": {
+    "project_id": "93dcd3f4-7c47-4010-9431-fc28638813d2",
+    "service_id": "94aeecda-4575-4fc1-bb08-796bf779ada5",
+    "environment": "staging",
+    "environment_id": "0f546dbc-222f-48b8-a27b-ff008af4fec9",
+    "deployment_id": "dcccd4a1-cca7-489b-9d7d-81e4019aad0c",
+    "status": "SUCCESS",
+    "created_at": "2026-09-13T00:42:02.800Z",
+    "ready_at": "2026-09-13T00:42:22.894Z",
+    "git_commit_sha": "c5b041c85f4f7b959436c13bef48c959622c624f",
+    "source_method": "serviceInstanceDeployV2 with explicit commitSha",
+    "source_metadata_branch": "main",
+    "source_metadata_branch_note": "Connected service branch label; explicit deployment commitHash and public build_sha both equal application_sha. No merge or branch reassignment performed.",
+    "source_stamp_keys_updated": [
+      "TABLEUS_BUILD_SHA",
+      "TABLEUS_SOURCE_SHA"
+    ],
+    "config_keys_updated": [
+      "ALLOWED_ORIGINS"
+    ],
+    "base_url": "https://api-staging-3795.up.railway.app",
+    "readiness": {
+      "status": "ready",
+      "provider_mode": "live",
+      "places_provider_mode": "live",
+      "ai_provider_mode": "live",
+      "ai_backend": "agent-platform",
+      "auth_mode": "supabase",
+      "build_sha": "c5b041c85f4f7b959436c13bef48c959622c624f",
+      "telemetry_mode": "staging",
+      "analytics_mode": "anonymous",
+      "error_reporting_mode": "errors_only",
+      "telemetry_e2e": true
+    },
+    "cors_preflights": [
+      {
+        "origin": "https://tableus-staging.vercel.app",
+        "status": 200,
+        "allow_origin": "https://tableus-staging.vercel.app",
+        "allow_credentials": "true",
+        "body": "OK"
+      },
+      {
+        "origin": "https://links.table-us.com",
+        "status": 200,
+        "allow_origin": "https://links.table-us.com",
+        "allow_credentials": "true",
+        "body": "OK"
+      },
+      {
+        "origin": "https://tableus-staging-3e0h7umke-briancheis-projects.vercel.app",
+        "status": 200,
+        "allow_origin": "https://tableus-staging-3e0h7umke-briancheis-projects.vercel.app",
+        "allow_credentials": "true",
+        "body": "OK"
+      },
+      {
+        "origin": "https://tableus-staging-git-codex-astra-proj-30d7eb-briancheis-projects.vercel.app",
+        "status": 200,
+        "allow_origin": "https://tableus-staging-git-codex-astra-proj-30d7eb-briancheis-projects.vercel.app",
+        "allow_credentials": "true",
+        "body": "OK"
+      },
+      {
+        "origin": "https://untrusted.invalid",
+        "status": 400,
+        "allow_origin": null,
+        "allow_credentials": "true",
+        "body": "Disallowed CORS origin"
+      }
+    ],
+    "first_attempt_cors": {
+      "status": 400,
+      "reason": "New Preview origin was absent from the existing exact-origin allowlist."
+    },
+    "superseded_deployment_id": "e9af163c-f156-4acb-86bb-c801ac5716b9"
+  },
+  "vercel": {
+    "project_id": "prj_lPu3pWZiJ5ZRUIab6wiXrJIW930G",
+    "project_name": "tableus-staging",
+    "team_id": "team_0Pu6vuMiug12C8K2HQqbgOQG",
+    "deployment_id": "dpl_9zGVqXpFNQkCzSXBaecR18hqMs2M",
+    "url": "https://tableus-staging-3e0h7umke-briancheis-projects.vercel.app",
+    "target": "preview",
+    "api_target": null,
+    "status": "READY",
+    "git_source": {
+      "type": "github",
+      "repoId": 1331770296,
+      "ref": "codex/astra-project-reassessment",
+      "sha": "c5b041c85f4f7b959436c13bef48c959622c624f"
+    },
+    "created_at": "2026-09-13T00:37:57.699000+00:00",
+    "building_at": "2026-09-13T00:37:58.933000+00:00",
+    "ready_at": "2026-09-13T00:41:34.482000+00:00",
+    "build_duration_seconds": 215.549,
+    "framework": "nextjs",
+    "preview_aliases": [
+      "tableus-staging-git-codex-astra-proj-30d7eb-briancheis-projects.vercel.app"
+    ],
+    "source_stamp_keys_updated": [
+      "TABLEUS_BUILD_SHA",
+      "NEXT_PUBLIC_SOURCE_SHA"
+    ],
+    "stamp_update_scope": "Existing Preview entries only; new build triggered after both successful updates.",
+    "superseded_automatic_preview_id": "dpl_GyjWpv94HjR853H4uAzZg2AQvc2L",
+    "superseded_preview_reason": "Push-triggered Preview built before updating source stamps; final Preview explicitly rebuilt from the same Git SHA.",
+    "production_target_id": "dpl_7csJvHoJH9qgFZDijbwu3w36r2sK",
+    "production_target_and_aliases_preserved": true,
+    "deployment_protection_preserved": true,
+    "other_environment_entries_preserved": true,
+    "deployment_protection": {
+      "deploymentType": "all_except_custom_domains"
+    },
+    "verification_method": "Deployment API metadata, build logs and project before/after comparison; no interactive hosted auth session."
+  },
+  "private_log_sha256": {
+    "github_ci": "a19f28c159cfcbca372716051f3dbf4782fc6361741b64d48d65c00520b9c973",
+    "vercel_build": "9323ecefe50b84c01d5901e48cfce92ebb4b674459ea72c1ab53eb485caeaf5b"
+  },
+  "limits": {
+    "paid_live_provider_calls_run": 0,
+    "emails_or_otps_sent": 0,
+    "native_builds_run": 0,
+    "security_plugin_scans_started": 0,
+    "production_deployments_run": 0,
+    "store_submissions_run": 0,
+    "new_resources_or_credentials_created": 0
+  },
+  "remaining_acceptance": [
+    "current-candidate native artifacts and device journeys",
+    "canonical fallback and association acceptance",
+    "current-candidate real-session web/native journey",
+    "isolated current-candidate telemetry evidence",
+    "security-evidence policy and cumulative sign-off",
+    "production, store and cohort gates"
+  ]
+}

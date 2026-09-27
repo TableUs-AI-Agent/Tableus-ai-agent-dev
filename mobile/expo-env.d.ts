@@ -9,6 +9,7 @@ declare namespace NodeJS {
     EXPO_PUBLIC_DEMO_MODE?: string;
     EXPO_PUBLIC_EAS_PROJECT_ID?: string;
     EXPO_PUBLIC_LINK_HOST?: string;
+    EXPO_PUBLIC_JOIN_LINK_FORMAT?: "query" | "fragment";
     EXPO_PUBLIC_SENTRY_DSN?: string;
     EXPO_PUBLIC_POSTHOG_KEY?: string;
     EXPO_PUBLIC_POSTHOG_HOST?: string;

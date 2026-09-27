@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "application_sha": "6b9719b4e63e34803f2e7c2598e45851790df661",
+  "observed_at": "2026-09-15T05:21:47.398063+00:00",
+  "initial_view": "Plans unavailable; network unavailable",
+  "retry_count": 1,
+  "plans_restored": true,
+  "organizer_session_retained": true,
+  "additional_sign_in_messages": 0,
+  "staging_readiness_http_status": 200,
+  "staging_readiness_source_matches": true,
+  "existing_plan_participant_count": 3,
+  "existing_plan_status": "voting",
+  "underlying_network_cause_established": false
+}

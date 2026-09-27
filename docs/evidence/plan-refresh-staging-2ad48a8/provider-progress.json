@@ -1,0 +1,17 @@
+{
+  "application_sha": "2ad48a8d8ec4d3aa9a7bd52061b823bb55960bcd",
+  "observation": {
+    "observed_at": "2026-09-15T21:10:34.377515Z",
+    "places_attempts_all_time": 329,
+    "places_attempts_30d": 329,
+    "gemini_usage_rows": 9,
+    "gemini_estimated_usd": 0.0050015,
+    "latest_usage_at": "2026-09-15T06:33:43.488754Z"
+  },
+  "places_attempts_used": 0,
+  "places_attempts_limit": 80,
+  "sign_in_messages_used": 1,
+  "sign_in_messages_limit": 4,
+  "gemini_generations_used": 0,
+  "gemini_generations_limit": 0
+}

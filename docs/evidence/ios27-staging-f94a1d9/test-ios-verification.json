@@ -1,0 +1,28 @@
+{
+  "schema_version": 1,
+  "application_sha": "f94a1d9d1125e6c9111aa08eda496f014f20d0c0",
+  "operator_sha": "19e7a5ccadef92ab54bb186a9c6067c3b410c8ee",
+  "platform": "ios",
+  "profile": "test-ios",
+  "build_id": "local-ios-test-f94a1d9",
+  "artifact_sha256": "66f17d41fd32cb3664de1c9da747c35a789c8c0d39a6db24cd6aab13320ab5d9",
+  "receipt_sha256": "ecc385a6914b34d7dffcd205557c1ccf5c977b25ba88c93ce529b0b55775b701",
+  "inspection_sha256": "0078527921dbb4bc49fa4c50beae9b9c50d7f2d4f0afbd6a82bac442c545cf14",
+  "source_tree_sha": "b1d4c75e5616ee89cfeedd5d3170ae8036a0f9bf",
+  "package_lock_sha256": "7af3277d19094e0275e35b39b5a04c195b7ddf75d4b517983f120bf72fe299f3",
+  "verified_at": "2026-09-16T00:05:39.008Z",
+  "checks": [
+    {
+      "receipt_and_inspection_validated": true,
+      "reinspection_matches": true,
+      "actual_artifact_bytes_match": true,
+      "source_tree_matches": true,
+      "frozen_lock_matches": true,
+      "embedded_source_matches": true,
+      "local_demo_configuration": true,
+      "telemetry_off": true,
+      "native_test_platform_validated": true,
+      "refresh_correction_in_bundle": true
+    }
+  ]
+}

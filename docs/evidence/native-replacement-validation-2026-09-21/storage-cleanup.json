@@ -1,0 +1,48 @@
+{
+  "schema_version": 1,
+  "recorded_at": "2026-09-22T01:39:18.634542+00:00",
+  "owner_authorized": "Remove both unwanted Ollama models, old Cursor agent versions, and Docker installer staging after application update.",
+  "removed_models": [
+    "gemma3:4b",
+    "qwen3.5:latest"
+  ],
+  "removed_model_blobs": 9,
+  "removed_old_cursor_directories": 18,
+  "kept_cursor_versions": [
+    "2026.09.18-9a7762b",
+    "2026.09.15-d2fe57e"
+  ],
+  "docker_app_version": "4.92.0 (240144)",
+  "docker_staging": "Updater had already removed staged application; only empty staging directory removed.",
+  "before_available_kib": 31960000,
+  "after_available_kib": 45600000,
+  "after_available_gib": 43.49,
+  "approx_removed_allocated_gib": 13.26,
+  "preserved": [
+    "TableUs worktrees and artifacts",
+    "Phase W containers",
+    "accepted native apps and device sessions",
+    "Codex task history"
+  ],
+  "N1": "Fresh 40 GiB gate and exact clean operator/input preflight passed; one test-ios attempt started. No device operation yet.",
+  "operator_setup": {
+    "sha": "16603dd0cf36d27b492e57a02d3c6c438a2563c4",
+    "clean": true,
+    "command": "npm ci --offline",
+    "exit_code": 0,
+    "eas_cli_version": "23.2.0",
+    "private_log": "/Users/brianchei/repos/Tableus-ai-agent-dev/.artifacts/mobile/ed8330a766b3c4b80a505e075535678394e275e9/native-validation-2d/operator-install.log",
+    "private_log_sha256": "9fa25d0ac657d2dafca94db7149e27d80612c17b9436fb267ccfed75fac7d1d8",
+    "after_available_kib": 41600000,
+    "after_available_gib": 39.67,
+    "storage_gate_passed": false,
+    "build_attempts_consumed": 0,
+    "devices_created": 0
+  },
+  "additional_cache_cleanup": {
+    "owner_response": "yes",
+    "path": "/Users/brianchei/Library/Application Support/Cursor/CachedData",
+    "removed": true,
+    "free_gib_after": 41.31
+  }
+}

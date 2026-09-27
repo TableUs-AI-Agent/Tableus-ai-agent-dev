@@ -1,0 +1,45 @@
+{
+  "schema_version": 1,
+  "recorded_at": "2026-09-22T04:05:31.596032+00:00",
+  "application_sha": "8972865893a3f018a064594457dc9cc664f8a61f",
+  "previous_native_application_sha": "ed8330a766b3c4b80a505e075535678394e275e9",
+  "build_operator_sha": "16603dd0cf36d27b492e57a02d3c6c438a2563c4",
+  "evidence_commit": "Commit containing this freeze; distinct from the application and operator commits",
+  "branch": "codex/native-replacement-validation",
+  "worktree": "/Users/brianchei/.codex/worktrees/ea6d/Tableus-ai-agent-dev",
+  "local_result": "n1-f1-result.json",
+  "native_status": "not_built_or_replayed",
+  "source_trees": {
+    "mobile": "5608c78fc1200ca25bac8b0c6e7bf2795669dfcc",
+    "frontend": "d8a2a4f71b2de57e4898570d5676747d0c28fb45",
+    "backend": "fc576d49099aa378c5b21f6796e47f5aea156de2",
+    "packages": "ea8a044159b46b6578c3755a6da904fbfa241e7e",
+    "vendor": "1bd9b5b4cdc9a354a9abcbb94263676cf5fe051a",
+    "scripts": "471aa92c8abd3582b307590b5af873e4078a96bf"
+  },
+  "application_and_test_paths_changed_from_prior": [
+    "mobile/app/join/[id].tsx",
+    "mobile/src/lib/links.test.mts",
+    "mobile/src/lib/links.ts",
+    "mobile/src/lib/router-dependency.component.test.tsx"
+  ],
+  "scripts_match_operator": true,
+  "proposed_output_root": "/Users/brianchei/repos/Tableus-ai-agent-dev/.artifacts/mobile/8972865893a3f018a064594457dc9cc664f8a61f/native-validation-f1",
+  "proposed_output_root_exists": false,
+  "capacity": {
+    "available_bytes": 22568960000,
+    "available_gib": 21.02,
+    "required_before_each_build_gib": 40,
+    "stop_below_gib": 20,
+    "gate_passed": false
+  },
+  "future_dispatch_feasibility": {
+    "header": "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Library/Frameworks/XCUIAutomation.framework/Headers/XCUIApplication.h",
+    "sha256": "ec506ad568f7ebf59992373e6d78e4cc6f03f03529ba15c519e9c7d988776b72",
+    "declaration": "- (void)openURL:(NSURL *)url API_AVAILABLE(macos(13.3), ios(16.4), tvos(16.4), watchos(9.4));",
+    "native_execution_performed": false,
+    "note": "API availability only; bound-target dispatch and warm PID continuity require a separately approved feasibility probe."
+  },
+  "additional_native_attempts_authorized_by_f1": 0,
+  "native_validation_proposal": "n1-f1-native-revalidation.md"
+}

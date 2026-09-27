@@ -1,0 +1,28 @@
+{
+  "schema_version": 1,
+  "application_sha": "f94a1d9d1125e6c9111aa08eda496f014f20d0c0",
+  "operator_sha": "4e515268386150ab5c26b92c978b72a366612c54",
+  "platform": "android",
+  "profile": "test-android",
+  "build_id": "local-android-test-f94a1d9",
+  "artifact_sha256": "5ca6c184d0dd716ea80802c3b3d7cd40db6b3b830be7cf5df6249cb7aed4bae7",
+  "receipt_sha256": "9348557d801225aa89dba58d5c22c8cbb5233011bdd99a2d9155e015dd5171ab",
+  "inspection_sha256": "6d9cc43b0c21ced62c2212eccbe62b9d2e80f5efe8cf8b87cab5f3c408c2de95",
+  "source_tree_sha": "b1d4c75e5616ee89cfeedd5d3170ae8036a0f9bf",
+  "package_lock_sha256": "7af3277d19094e0275e35b39b5a04c195b7ddf75d4b517983f120bf72fe299f3",
+  "verified_at": "2026-09-15T23:25:03.955Z",
+  "checks": [
+    {
+      "receipt_and_inspection_validated": true,
+      "reinspection_matches": true,
+      "actual_artifact_bytes_match": true,
+      "source_tree_matches": true,
+      "frozen_lock_matches": true,
+      "embedded_source_matches": true,
+      "local_demo_configuration": true,
+      "telemetry_off": true,
+      "native_test_platform_validated": true,
+      "refresh_correction_in_bundle": true
+    }
+  ]
+}

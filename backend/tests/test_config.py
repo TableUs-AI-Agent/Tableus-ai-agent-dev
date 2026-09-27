@@ -7,7 +7,7 @@ from tableus.config import Settings
 def production_settings(**overrides) -> Settings:
     values = {
         "environment": "production",
-        "database_url": "postgresql://runtime:secret@db.example/tableus",
+        "database_url": "postgresql://tableus_runtime:secret@db.example/tableus",
         "migration_database_url": "postgresql://migrator:secret@db.example/tableus",
         "tableus_runtime_db_role": "tableus_runtime",
         "tableus_auth_mode": "supabase",
@@ -29,18 +29,32 @@ def production_settings(**overrides) -> Settings:
 def test_production_uses_separate_async_database_credentials() -> None:
     settings = production_settings()
 
-    assert settings.sqlalchemy_url.startswith("postgresql+asyncpg://runtime:")
+    assert settings.sqlalchemy_url.startswith("postgresql+asyncpg://tableus_runtime:")
     assert settings.migration_sqlalchemy_url.startswith("postgresql+asyncpg://migrator:")
     assert settings.database_schema == "app"
 
 
 def test_production_rejects_shared_migration_and_runtime_credentials() -> None:
-    runtime_url = "postgresql://runtime:secret@db.example/tableus"
+    runtime_url = "postgresql://tableus_runtime:secret@db.example/tableus"
 
-    with pytest.raises(ValidationError, match="must differ"):
+    with pytest.raises(ValidationError, match="different roles"):
         production_settings(
             database_url=runtime_url,
             migration_database_url=runtime_url,
+        )
+
+
+def test_production_runtime_does_not_require_migration_credentials() -> None:
+    settings = production_settings(migration_database_url="")
+
+    assert settings.environment == "production"
+    assert settings.migration_database_url == ""
+
+
+def test_hosted_migration_credentials_require_a_separate_role() -> None:
+    with pytest.raises(ValidationError, match="different roles"):
+        production_settings(
+            migration_database_url="postgresql://tableus_runtime:other@db.example/tableus"
         )
 
 
@@ -83,6 +97,14 @@ def test_gemini_model_and_spend_ceilings_are_pinned() -> None:
     assert settings.gemini_model == "gemini-3.1-flash-lite"
     assert settings.live_ai_max_usd == 0.25
     assert settings.ai_runtime_max_usd_30d == 4.0
+    assert settings.places_runtime_max_attempts_30d == 150
+    assert (
+        Settings(
+            _env_file=None,
+            places_runtime_max_attempts_30d=500,
+        ).places_runtime_max_attempts_30d
+        == 500
+    )
 
     with pytest.raises(ValidationError, match="gemini-3.1-flash-lite"):
         Settings(_env_file=None, gemini_model="gemini-latest")
@@ -92,13 +114,16 @@ def test_gemini_model_and_spend_ceilings_are_pinned() -> None:
         Settings(_env_file=None, live_ai_max_usd=0.26)
     with pytest.raises(ValidationError):
         Settings(_env_file=None, ai_runtime_max_usd_30d=4.01)
+    with pytest.raises(ValidationError):
+        Settings(_env_file=None, places_runtime_max_attempts_30d=501)
 
 
 def test_telemetry_modes_are_fail_closed_by_environment() -> None:
     assert Settings(_env_file=None).tableus_telemetry_mode == "off"
-    assert Settings(
-        _env_file=None,
+    assert production_settings(
         environment="staging",
+        migration_database_url="",
+        tableus_provider_mode="deterministic",
         tableus_telemetry_mode="staging",
     ).tableus_telemetry_mode == "staging"
     with pytest.raises(ValidationError, match="Staging telemetry"):
@@ -110,3 +135,85 @@ def test_telemetry_modes_are_fail_closed_by_environment() -> None:
 def test_production_requires_telemetry_credentials() -> None:
     with pytest.raises(ValidationError, match="production error reporting"):
         production_settings(posthog_key="")
+
+
+def test_staging_requires_secure_auth_database_secret_and_origins() -> None:
+    baseline = {
+        "environment": "staging",
+        "database_url": "postgresql://tableus_runtime:secret@db.example/tableus",
+        "tableus_runtime_db_role": "tableus_runtime",
+        "tableus_auth_mode": "supabase",
+        "tableus_demo_mode": False,
+        "tableus_app_secret": "a-staging-secret-that-is-at-least-32-bytes",
+        "supabase_url": "https://example.supabase.co",
+        "allowed_origins": "https://tableus-staging.vercel.app,https://links.table-us.com",
+    }
+    assert Settings(_env_file=None, **baseline).environment == "staging"
+
+    for override in [
+        {"tableus_auth_mode": "demo"},
+        {"tableus_demo_mode": True},
+        {"tableus_app_secret": "development-only-change-me-at-least-32-bytes"},
+        {"database_url": "sqlite+aiosqlite:///staging.db"},
+        {"tableus_runtime_db_role": "different_role"},
+        {"supabase_url": "http://127.0.0.1:54321"},
+        {"supabase_url": "https://10.0.0.4"},
+        {"allowed_origins": "http://localhost:3000"},
+        {"allowed_origins": "https://192.168.1.20"},
+        {"allowed_origins": "https://tableus.example/private"},
+    ]:
+        with pytest.raises(ValidationError):
+            Settings(_env_file=None, **{**baseline, **override})
+
+
+def test_staging_accepts_matching_supabase_session_pooler_runtime_role() -> None:
+    project_ref = "mrwdhdeubdiiydmmvlda"
+    settings = production_settings(
+        environment="staging",
+        migration_database_url="",
+        database_url=(
+            f"postgresql://tableus_runtime.{project_ref}:secret@"
+            "aws-0-us-east-1.pooler.supabase.com:5432/postgres?ssl=require"
+        ),
+        supabase_url=f"https://{project_ref}.supabase.co",
+        tableus_provider_mode="deterministic",
+        tableus_telemetry_mode="staging",
+    )
+
+    assert settings.environment == "staging"
+
+
+@pytest.mark.parametrize(
+    "database_url",
+    [
+        (
+            "postgresql://tableus_runtime.wrongprojectref00000:secret@"
+            "aws-0-us-east-1.pooler.supabase.com:5432/postgres?ssl=require"
+        ),
+        (
+            "postgresql://tableus_runtime.mrwdhdeubdiiydmmvlda:secret@"
+            "attacker.example:5432/postgres?ssl=require"
+        ),
+        (
+            "postgresql://tableus_runtime.mrwdhdeubdiiydmmvlda:secret@"
+            "aws-0-us-east-1.pooler.supabase.com:6543/postgres?ssl=require"
+        ),
+    ],
+)
+def test_staging_rejects_untrusted_or_transaction_pooler_runtime_identity(
+    database_url: str,
+) -> None:
+    with pytest.raises(ValidationError, match="TABLEUS_RUNTIME_DB_ROLE"):
+        production_settings(
+            environment="staging",
+            migration_database_url="",
+            database_url=database_url,
+            supabase_url="https://mrwdhdeubdiiydmmvlda.supabase.co",
+            tableus_provider_mode="deterministic",
+            tableus_telemetry_mode="staging",
+        )
+
+
+def test_demo_auth_is_limited_to_development_and_test() -> None:
+    with pytest.raises(ValidationError, match="Hosted environments require Supabase auth"):
+        Settings(_env_file=None, environment="staging")

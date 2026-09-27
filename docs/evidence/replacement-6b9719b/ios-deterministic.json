@@ -1,0 +1,24 @@
+{
+  "application_sha": "6b9719b4e63e34803f2e7c2598e45851790df661",
+  "platform": "ios",
+  "accepted_at": "2026-09-15T00:10:38.611541+00:00",
+  "lifecycle_passed": true,
+  "offline_passed": true,
+  "artifact_sha256": "b20fe1b11178545521521329113e742e84da447d61604cbf3af5d9d55ee7ceb9",
+  "evidence": {
+    "lifecycle": {
+      "summary_sha256": "4a633c5e206265f09c8860b7adab6d4cc6556a0df7f5c36c4f93f7cf3efe6fbe",
+      "screenshots_visually_reviewed": [
+        "ios-finalized-plan.png",
+        "ios-rotated-link.png"
+      ]
+    },
+    "offline": {
+      "summary_sha256": "79feb615dd8e1db9ccd52f98c79e14f47fba9f4a37d2921b068b7bf56e307c6c",
+      "screenshots_visually_reviewed": [
+        "ios-offline-retry.png",
+        "ios-recovered-finalized.png"
+      ]
+    }
+  }
+}
