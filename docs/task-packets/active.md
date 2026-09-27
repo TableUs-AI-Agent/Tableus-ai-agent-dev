@@ -8,9 +8,10 @@ recorded in [decisions](../decisions.md#pilot-follow-up--adopted-2026-09-27).
 The cumulative review is prepared with [evidence](../evidence/6dac996/integration.md).
 Publication uses repository-local Vercel exclusions for this branch and `main`;
 Railway has no current deployment triggers or PR environments. [PR #7](https://github.com/TableUs-AI-Agent/Tableus-ai-agent-dev/pull/7)
-is published; its first CI run exposed a Homebrew-specific test wrapper, now
-corrected to use `python3` from `PATH`. A full replacement hosted pass and an
-explicitly approved merge remain the completion gates.
+is published. Hosted CI exposed a Homebrew-specific Python test wrapper and a
+stale assertion against the old account-deletion UI. Both are corrected; all
+unit/PostgreSQL tests and builds passed on the second run. A full replacement
+hosted pass and an explicitly approved merge remain the completion gates.
 
 - Branch: `codex/pilot-realignment`.
 - Worktree: `/Users/brianchei/repos/Tableus-ai-agent-dev/.worktrees/pilot-realignment`.
@@ -30,8 +31,8 @@ Establish a reviewed, tested baseline on `main` before the focused pilot changes
    gaps. Review automatic Preview side effects before requesting any needed push
    scope; an integration objective does not itself authorize deployment.
 3. Run hosted CI on the proposed source before merge. Restricted-runtime PostgreSQL
-   setup and migrations passed in the first run, but later tests were not reached
-   after the test-wrapper failure. Fix failures and apply impact-based checks
+   checks passed on `bb3f20e`; the corrected account browser journey still needs
+   a complete hosted pass. Fix failures and apply impact-based checks
    from the [workflow](../development-workflow.md).
 4. Merge only with Brian's explicit approval. Record the actual integrated SHA and
    matching CI results. Do not merge the separate native diagnostic branch wholesale;

@@ -11,7 +11,8 @@ staging/native/production acceptance or a new security scan.
 - At publication, application, dependencies, CI, tests and operator code were
   byte-identical to final locally validated application
   `f3efa7a28010454275bf3b32ec52fc43792fdaee`. The CI portability correction below
-  changes one test wrapper only; application and dependency bytes remain unchanged.
+  changes one test wrapper; the next correction updates one stale browser test.
+  Application and dependency bytes remain unchanged.
 - Publication preparation adds only the Vercel Git-deployment guard and documentation.
   Its exact proposed head and hosted CI result belong to the integration PR.
 - The separate native diagnostic branch is not merged. Diagnostics already in
@@ -64,6 +65,31 @@ with a named test, bounded execution and useful spawn-failure diagnostics. Its
 four existing pure Python fixtures pass locally. No native device/toolchain test
 or application behavior changed. A complete hosted pass on the replacement head
 remains required; the failed run is not integration acceptance.
+
+[Run 36298074968](https://github.com/TableUs-AI-Agent/Tableus-ai-agent-dev/actions/runs/36298074968)
+on replacement head `bb3f20eaaca8b004b5aa7921ca876aad58e50e9c` passed all 214
+Python and 317 JavaScript tests with zero skips, restricted-role migrations,
+lint/types, deterministic evaluation, contract checks and web/Expo-web builds.
+Its synthetic merge `b73e30f4fc0245c61b6452deb036d6fb1019ac51` matched the head
+tree `d8f9ae2229ab4b217e8141086eb631244c8aae8a`. Three of four browser journeys
+passed; the account journey failed on obsolete application-only deletion copy
+and controls, confirmed against the implemented lifecycle contract. Smoke was
+not reached. The test now creates its own plan, checks organizer blocking and
+disabled full-deletion availability, verifies the sole-plan confirmation control,
+and retains the versioned export/privacy assertions. No account feature is enabled.
+With that correction, all four journeys passed locally using existing Chrome,
+disposable SQLite and a temporary runner configuration. No browser was installed;
+the hosted replacement still must pass with CI's pinned Chromium and PostgreSQL.
+
+Local readiness on `bb3f20e` completed in stages. The initial sandboxed attempt
+could not bind the fault proxy to loopback; a permitted run passed that test but
+had a 5-second mobile plan-refresh timeout and a following failed assertion.
+The focused file then passed all 11 tests without changes; the full test-stage
+recheck passed all 317 JavaScript tests and 178 Python tests (36 PostgreSQL-only
+skips under SQLite). Lint/types, contract generation, web/Expo-web builds, smoke
+and the report-only bundle baseline passed. The timeout's cause is unestablished;
+retain it as a local test reliability observation, not a proven application defect.
+Hosted PostgreSQL coverage above supplies the locally skipped checks.
 
 Post-publication provider reads found no new Vercel deployment and unchanged
 production/preview targets. Railway's latest staging deployment remains
