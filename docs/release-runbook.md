@@ -85,7 +85,9 @@ requires a matching, concrete approved scope and budget. Preserve completed
 approvals, their exact source/scope and remaining limited-call allowances.
 
 Before any new deployment, resolve its explicit approval and account for
-Vercel's automatic branch-push trigger,
+Vercel's automatic branch-push trigger. The repository excludes
+`codex/pilot-realignment` and `main` from automatic Git deployments; other branches
+are not excluded. Select an explicitly approved deployment path, then
 set source-stamp inputs before the build, and verify the exact Preview URLs in
 the API CORS allowlist. Keep the existing production target/aliases intact.
 Do not push an evidence-only descendant merely to publish receipts if that

@@ -5,7 +5,10 @@
 Priority 1 of the [roadmap](../roadmap.md): prepare the reviewed baseline for
 integration. The product direction and September 27 follow-up decisions are
 recorded in [decisions](../decisions.md#pilot-follow-up--adopted-2026-09-27).
-Integration and hosted acceptance have not yet been performed.
+The cumulative review is prepared with [evidence](../evidence/6dac996/integration.md).
+Publication uses repository-local Vercel exclusions for this branch and `main`;
+Railway has no current deployment triggers or PR environments. Hosted CI and an
+explicitly approved merge remain the completion gates.
 
 - Branch: `codex/pilot-realignment`.
 - Worktree: `/Users/brianchei/repos/Tableus-ai-agent-dev/.worktrees/pilot-realignment`.
@@ -18,8 +21,9 @@ Integration and hosted acceptance have not yet been performed.
 Establish a reviewed, tested baseline on `main` before the focused pilot changes.
 
 1. Inspect actual remote/default-branch state and the cumulative application diff.
-   The recorded 164-commit gap is against cached `origin/main`, not a fresh read.
-   Preserve existing work and resolve material review findings in this objective.
+   September 27 readback confirms `main` at `e1184ec`, 165 commits behind `6dac996`
+   with no divergence. Refresh again before merge. Preserve existing work and
+   resolve material review findings in this objective.
 2. Prepare one reviewable integration PR with exact base/source, checks and known
    gaps. Review automatic Preview side effects before requesting any needed push
    scope; an integration objective does not itself authorize deployment.

@@ -1,15 +1,16 @@
 # Current state
 
-Updated 2026-09-27. Deployment identities are as recorded on 2026-09-25 and were
-not re-read from the hosting providers for this update.
+Updated 2026-09-27. GitHub state and deployment-trigger settings were freshly
+read for [baseline integration](evidence/6dac996/integration.md). Application
+serving identities below remain the September 25 record, not fresh health checks.
 
 ## Source baseline
 
 | Item | Value |
 | --- | --- |
 | Cumulative local source baseline | Application baseline `4a2f9ecc37070f434df7fc75c1054d5875f21ba9` (`codex/deletion-support`); September 26–27 product/planning realignment on `codex/pilot-realignment` |
-| Cached `origin/main` | `e1184ec` (pull request #6, August 26); no remote refresh in this review |
-| Unmerged against cached refs | 164 commits from `e1184ec` to the baseline; remote integration status must be refreshed. Recorded pushed replacement source is `ed8330a` (`origin/codex/web-deps-ed8330a`). The native diagnostic branch diverges after `bcc9e52`; do not merge it wholesale. |
+| Refreshed `origin/main` | `e1184eca9b73e1a9f26d1007ab543df9d54c7124` (pull request #6); GitHub still uses `main`, with no branch protection/rulesets |
+| Integration scope | 165 commits from `main` through realignment source `6dac996`, plus publication guard/documentation. No divergence. The native diagnostic branch diverges after `bcc9e52`; do not merge it wholesale. |
 | Root checkout | Stale at `codex/privacy-safe-observability` (`8e9625e`). Use the baseline, not the root checkout. |
 
 The last full local readiness at the baseline's application source passed 214
@@ -17,7 +18,14 @@ Python and 317 JavaScript tests with zero skips, plus lint, types, contract
 generation, web and Expo-web builds and deterministic smoke
 ([handoff](handoffs/2026-09-25-deletion-support.md)). Hosted CI last ran on
 `ed8330a` (September 21). The lifecycle, quota, invite, private-link and deletion
-work after it has not run in hosted CI.
+work after it requires hosted CI on the proposed integration source. The
+[integration review](evidence/6dac996/integration.md) distinguishes reused local
+checks from the PR's hosted result.
+
+Vercel project Git auto-deployment is enabled, but repository configuration now
+excludes `codex/pilot-realignment` and `main`. Other branches still need trigger
+review before pushing. Railway currently has no deployment triggers and PR
+environments are disabled. No hosting setting or running deployment was changed.
 
 ## Deployed staging
 

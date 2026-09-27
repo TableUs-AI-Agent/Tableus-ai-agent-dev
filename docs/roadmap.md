@@ -68,7 +68,7 @@ hosted CI, device/signing and external-access waits; these are not delivery prom
 
 | Priority | Outcome and reason | Rough effort | Dependencies, risks and completion |
 | --- | --- | --- | --- |
-| 1 | Review and integrate the existing `4a2f9ec` application lineage plus agreed guidance. Establish a reliable starting point before new features. | 1–2 days if CI is healthy | Refresh remote state, review the cumulative diff and pass exact-source hosted CI (including restricted PostgreSQL and browser checks) before an approved merge. Account for Preview side effects before pushing. The separate native diagnostic branch is not merged wholesale. |
+| 1 | Review and integrate the existing `4a2f9ec` application lineage plus agreed guidance. Establish a reliable starting point before new features. | 1–2 days if CI is healthy | Refresh remote state, review the cumulative diff and pass exact-source hosted CI (including restricted PostgreSQL and browser checks) before an approved merge. Vercel Git deployment is excluded for the integration branch and main; verify skips and recheck Railway triggers before merge. The separate native diagnostic branch is not merged wholesale. |
 | 2 | Show Plans and Account only on web/mobile and record participation at finalization, so the experience and measurement match the pilot. | 1–3 days | Preserve auth/join/legal/help routes, account access, code/data/export fields and deep-link safety. Hidden product routes lead to Plans; add mobile Account access before hiding Profile. Add the audit count and a reviewed numeric allowlist entry in deletion cleanup, with focused tests and a read-only measurement query. Navigation/shared-plan checks, one make ready and CI pass. |
 
 ## Next, after the baseline, client and measurement changes

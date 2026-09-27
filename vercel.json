@@ -1,5 +1,11 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
+  "git": {
+    "deploymentEnabled": {
+      "codex/pilot-realignment": false,
+      "main": false
+    }
+  },
   "framework": "nextjs",
   "installCommand": "npm ci",
   "buildCommand": "npm run build --workspace @tableus/web",

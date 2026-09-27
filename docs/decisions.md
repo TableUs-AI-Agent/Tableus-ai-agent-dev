@@ -220,6 +220,13 @@ or replenish closed native/live-provider allowances.
 
 ## Production and operating boundaries
 
+- Priority 1 integration must not activate a deployment. Repository Vercel Git
+  deployment is disabled for `codex/pilot-realignment` and `main`; use separately
+  approved deployment operations for the staging pilot. Other branches retain
+  existing behavior and require trigger review. September 27 readback found no
+  Railway triggers or PR environments; recheck before merge. This implements the
+  already agreed separation between integration, staging and production.
+
 - Production trust origins, signing, store associations and credential policy are
   separate gates. Expo Updates remains disabled until signed-update authority is
   approved. Local source-map/native-symbol upload exception does not apply to stores.
