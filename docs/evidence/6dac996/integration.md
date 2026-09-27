@@ -8,8 +8,10 @@ staging/native/production acceptance or a new security scan.
 - Refreshed GitHub `main`: `e1184eca9b73e1a9f26d1007ab543df9d54c7124`.
 - Reviewed realignment source: `6dac9960df8d8abe2e170b032a2f400276e6eb22`,
   165 commits ahead with no divergence. The application baseline is `4a2f9ec`.
-- Application, dependencies, CI, tests and operator code are byte-identical to
-  final locally validated application `f3efa7a28010454275bf3b32ec52fc43792fdaee`.
+- At publication, application, dependencies, CI, tests and operator code were
+  byte-identical to final locally validated application
+  `f3efa7a28010454275bf3b32ec52fc43792fdaee`. The CI portability correction below
+  changes one test wrapper only; application and dependency bytes remain unchanged.
 - Publication preparation adds only the Vercel Git-deployment guard and documentation.
   Its exact proposed head and hosted CI result belong to the integration PR.
 - The separate native diagnostic branch is not merged. Diagnostics already in
@@ -42,6 +44,31 @@ supports reuse, not relabeling those observations as hosted or native results.
 Hosted CI must run on the proposed head/integration tree before merge, including
 restricted-role PostgreSQL, contract generation, builds, deterministic eval/smoke
 and browser journeys. No additional live-provider or native allowance is implied.
+
+## Hosted integration
+
+[PR #7](https://github.com/TableUs-AI-Agent/Tableus-ai-agent-dev/pull/7) was published
+with owner approval at `dc7989e9639c349bb51410a25966ddb3404713ad` against the base
+above. Its synthetic merge `8f5e4359aeeb5f0ee17507d4e1535e93e3262b73` had the same
+tree as the head: `f0c2ebb6b3d15ffbfdb4fb69b4615e6bd289e0fd`.
+
+[Run 36297785261](https://github.com/TableUs-AI-Agent/Tableus-ai-agent-dev/actions/runs/36297785261)
+passed locked dependency installation, restricted database role setup, migrations,
+lint and type checks. It stopped in the root JavaScript test suite: the Maestro
+identity fixture wrapper tried a Homebrew-only Python path on Linux. Of 112 root
+tests, 111 passed and that wrapper failed before its Python fixtures ran;
+workspace tests and later checks were not reached.
+
+The wrapper now resolves `python3` from `PATH`, matching neighboring wrappers,
+with a named test, bounded execution and useful spawn-failure diagnostics. Its
+four existing pure Python fixtures pass locally. No native device/toolchain test
+or application behavior changed. A complete hosted pass on the replacement head
+remains required; the failed run is not integration acceptance.
+
+Post-publication provider reads found no new Vercel deployment and unchanged
+production/preview targets. Railway's latest staging deployment remains
+`24eefe75-9583-4a90-8d3e-48450818dec0` from September 21, with no pending work,
+deployment triggers or PR environments. No deployment was performed.
 
 ## Publication and merge safeguards
 

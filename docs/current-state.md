@@ -16,9 +16,12 @@ serving identities below remain the September 25 record, not fresh health checks
 The last full local readiness at the baseline's application source passed 214
 Python and 317 JavaScript tests with zero skips, plus lint, types, contract
 generation, web and Expo-web builds and deterministic smoke
-([handoff](handoffs/2026-09-25-deletion-support.md)). Hosted CI last ran on
-`ed8330a` (September 21). The lifecycle, quota, invite, private-link and deletion
-work after it requires hosted CI on the proposed integration source. The
+([handoff](handoffs/2026-09-25-deletion-support.md)). [Integration PR #7](https://github.com/TableUs-AI-Agent/Tableus-ai-agent-dev/pull/7)
+is open. Its first hosted run on `dc7989e` passed role setup, migrations, lint and
+types, then stopped at a test wrapper's hard-coded Homebrew Python path. The
+wrapper now uses `python3` from `PATH`; a complete replacement hosted pass is
+required before merge. The lifecycle, quota, invite, private-link and deletion
+work still has no complete hosted pass after `ed8330a` (September 21). The
 [integration review](evidence/6dac996/integration.md) distinguishes reused local
 checks from the PR's hosted result.
 
@@ -99,7 +102,8 @@ during realignment.
 - Ad hoc iOS builds install only on devices included in the provisioning profile;
   collect all pilot iPhone device IDs before building. Production mobile builds
   are deliberately disabled until production origins and update policy exist.
-- The hosted CI configuration with a restricted database role has not run yet.
+- Hosted restricted-role database setup and migrations passed on the first
+  integration run; the PostgreSQL test suite still awaits a complete hosted pass.
 - The old frozen dependency graph (`f94a1d9` native artifacts and API image) is
   not covered beyond September 30; a new candidate from the baseline uses the
   remediated graph ([disposition](evidence/dependency-toolchain-2026-09-21/README.md)).
