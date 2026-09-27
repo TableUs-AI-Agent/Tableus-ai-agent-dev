@@ -1,6 +1,15 @@
 # Cumulative release-acceptance plan — September 25, 2026
 
-**Recommended next outcome: accept one cumulative candidate in isolated staging,
+**Historical proposal, superseded for the pilot on September 26.** The
+[roadmap](roadmap.md) and [pilot checklist](release-readiness-checklist.md) now own
+ordering and acceptance. Candidate `4846325`, C8 status, native task routing and
+the execution sequence below are dated observations/proposals, not current
+instructions. Retain useful migration/rollback and distribution considerations;
+rebind source, hosted state and approval before reuse. The long simulator campaign
+is no longer a pilot gate. This document does not restart it or override the
+current active packet.
+
+**Original recommended next outcome: accept one cumulative candidate in isolated staging,
 then prepare production/store configuration and distribution.** Current feature
 implementation is locally complete; mobile application acceptance and rollout
 remain. Brian owns all development in this stage and release/rollback decisions.

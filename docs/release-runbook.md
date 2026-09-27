@@ -1,18 +1,21 @@
 # Closed-beta release runbook
 
-Updated 2026-09-21. Start with [current state](current-state.md) and the
+Updated 2026-09-27. Start with [current state](current-state.md) and the
 [active packet](task-packets/active.md). The recipes here do not grant authority
-to create resources, send mail, deploy or start paid calls.
+to create resources, send mail, deploy or start paid calls. For the staging pilot,
+the [pilot gates](release-readiness-checklist.md#pilot-gates) define what must pass.
+Their physical-device and bounded lost-response acceptance supersedes the old simulator campaign
+as a pilot prerequisite; historical recipes below do not reopen it.
 
 ## 1. Establish what already exists
 
-The frozen staging source is `f94a1d9d1125e6c9111aa08eda496f014f20d0c0`.
-Its recorded CI, hosted rollout, six inspected artifacts and completed device
-observations are indexed in [closeout evidence](evidence/ios27-staging-f94a1d9/closeout.md).
+Deployed staging identities are listed in [current state](current-state.md#deployed-staging).
+The last accepted staging source is `f94a1d9d1125e6c9111aa08eda496f014f20d0c0`;
+its evidence is indexed in [closeout evidence](evidence/ios27-staging-f94a1d9/closeout.md).
 Reconcile current external state before resuming live work; do not repeat a
 successful operation merely because a task or coding model changed. Older
 candidates and their evidence are historical, not replacement instructions.
-Use `.worktrees/staging-closeout` for the current task; preserve old worktrees.
+Work from the current baseline branch, not the stale root checkout.
 
 Keep three identities separate:
 
@@ -28,8 +31,9 @@ work. Never relabel old evidence with that new source.
 
 ## 2. Complete cheap local work first
 
-Local verification for the current application is recorded in the
-[scene-repair validation](evidence/ios27-scene-repair/local-validation.json).
+The base application's recorded local checks are in the
+[deletion-support handoff](handoffs/2026-09-25-deletion-support.md).
+Scene-repair evidence describes an older candidate, not the cumulative source.
 The [workflow](development-workflow.md) distinguishes fresh checks from reuse
 when application, tooling and test bytes remain unchanged.
 
@@ -53,6 +57,20 @@ deterministic and telemetry off locally. The canceled plugin scan stays canceled
 Current invite issuance uses the [recipient-bound invite procedure](recipient-invites.md).
 The archived `--max-uses` recipe is incompatible with this candidate. Real
 issuance and sends require their approved roster/scope; no command here grants it.
+
+Before pilot invitations, bind the roster/cap, all-three-platform installation
+access, complete-journey quotas/spend, support/data-handling route and measurement
+method. Activate the built self-service deletion using
+[lifecycle operations](account-lifecycle-operations.md): separately approve the
+server-only Auth-removal secret and hosted worker, verify restricted grants and
+per-process flags, then enable `TABLEUS_ACCOUNT_DELETION_ENABLED=true` and rehearse
+with approved synthetic accounts only. Include API and worker Auth attempts in
+the live allowance. Align privacy/retention copy and prove support escalation.
+Brian accepted the email-access-loss limitation for this bounded pilot; it does
+not permit bypassing verification or promising email-only deletion. Fragment
+emission stays off. Reconcile the actual migration head, four expected
+migrations, runtime grants and Auth hook; never apply a stale list blindly. Rebind
+source, limits and compatible rollback before reusing the prior cumulative plan.
 
 ## 3. Reconcile evidence and external scope
 
@@ -89,8 +107,12 @@ receipt together; copy only sanitized reports to tracked evidence.
 
 Before compilation:
 
+- Collect every pilot iPhone's device ID in the private roster and verify that
+  the ad hoc profile includes all of them before the signed iOS build. Registering
+  a device alone does not update an existing profile; use the approved signing
+  workflow and inspect the resulting profile.
 - Check Node 22, locked EAS CLI, Xcode/Java/Android tools, signer identifiers,
-  available disk and absence of another native build.
+  available disk/memory and absence of another native build.
 - For Android explicitly set `ANDROID_HOME` or `ANDROID_SDK_ROOT` to the
   installed SDK. If both are set they must identify the same SDK. Confirm
   `platforms` and `build-tools` exist.
@@ -149,7 +171,9 @@ maps, dSYM contents, native symbol/shared-library files, mapping files and logs;
 missing/empty diagnostic families and scan errors are explicit. Dependency
 folders and symlinks are excluded from discovery. Retention does not establish
 that a `.so` is unstripped or that a map/dSYM matches the installed executable.
-UUID/build-ID matching and app-frame resolution remain native validation gates.
+UUID/build-ID matching and app-frame resolution remain distribution obligations;
+pilot evidence must distinguish retained files from demonstrated symbolication
+and explicitly record any diagnostic limitation.
 
 Catchable interrupts stop the child process group before final inventory. A
 SIGKILL, host crash or power loss cannot finalize: `status: running` is incomplete
@@ -160,9 +184,37 @@ logs or repeat identical builds after the same unexplained failure. Preserving
 these directories consumes disk; check capacity before each approved build.
 Existing unrelated temporary directories are not cleanup authorization.
 
+For a later iPhone, an approved re-sign can update the accepted IPA's device
+profile without recompiling ([Expo internal distribution guidance](https://docs.expo.dev/build/internal-distribution/)).
+Verify unchanged application payload/configuration and behavior-affecting
+entitlements, allowing signing/provisioning metadata to differ. Inspect and bind
+the new artifact/hash and profile, then record install/launch on the added device.
+Prior behavioral acceptance carries only with that equivalence evidence; changed
+or unproven inputs require impact review and affected checks. The new signed hash
+alone is not proof of a product change or of equivalence. Do not reuse an old
+artifact receipt for the re-signed bytes or infer permission from this recipe.
+
 ## 5. Validate each artifact family before moving on
 
 All native builds, simulators and emulators remain sequential and memory-bounded.
+
+For the staging pilot, use the existing `readiness-ios` and `readiness-android`
+profiles. They extend `preview` for internal distribution, enable staging telemetry
+and have no test controls; no new pilot profile is needed. Accept one signed build
+per platform from the same application candidate on real devices, using the pilot checklist's recovery
+and prior-finding coverage as well as the core journey. Bind signed bytes,
+configuration, source and observed OS/device; installation alone is not acceptance.
+The pilot also requires one bounded `mobile-offline-e2e` run from that application
+candidate on a declared platform, using a separate inspected `test-ios` simulator
+app or `test-android` APK. Its localhost/demo configuration and fault proxy are
+incompatible with the signed staging pilot profiles. Reuse a matching test
+artifact if available; explicitly scope a new build otherwise. Bind the application
+and operator source plus artifact receipt, and omit the optional extended refresh
+campaign. This proves dropped-after-commit create/finalize recovery on that test
+platform, not both physical clients. Other deterministic journeys are optional.
+
+The following historical artifact sequence remains a reference for the later
+distribution gate, whose actual scope must be reviewed for its candidate.
 
 1. Build/inspect `test-ios`; run `mobile-e2e` and `mobile-offline-e2e`.
 2. Build/inspect ARM64 `test-android`; run the same deterministic journeys.
@@ -189,9 +241,11 @@ Supabase staging or send demo identity headers to hosted services.
 
 ## 6. Finish the real two-person journey
 
-Use the selected source's `mobile-readiness-e2e`, `mobile-links-e2e`,
-`telemetry-staging-e2e` and cumulative evidence commands. Each requires the
-source-specific receipts and source-controlled origins shown by its Make target.
+Use physical observations for pilot acceptance and selected automated helpers
+only where they support the platform and approved scope. The source's
+`mobile-readiness-e2e`, `mobile-links-e2e`, `telemetry-staging-e2e` and cumulative
+commands retain their receipts/profile requirements; they do not mandate every
+helper or authorize extra test builds for the pilot.
 
 Preserve existing approved sessions. Request a new OTP only at a live prompt,
 within explicit remaining authorization. Do not retain email, OTP, session,
@@ -201,31 +255,40 @@ Use two distinct approved participants. Organizer creates a plan; guest joins;
 both save constraints; organizer generates four candidates; both rank/vote;
 organizer finalizes/reopens; guest refreshes; old rotated link is rejected.
 Verify failure/recovery and read-only account-control availability.
+The API permits finalization with missing votes. Count pilot success only with
+at least two independent votes; do not change product behavior for the metric.
 
 Physical-iPhone association testing requires actual taps from Notes/Messages
 and observed behavior. A simulator or browser address-bar navigation is not
 equivalent. Request the user's observation when tooling cannot observe it; never
 auto-confirm a manual checklist.
 
-Local artifacts disable Sentry build-time upload only; verify runtime canaries
-separately. Production/store builds must restore and demonstrate source-map and
-native-symbol upload and usable symbolication before approval.
+Local artifacts disable Sentry build-time upload only. Distinguish normal
+allowlisted event delivery, deterministic sanitizer checks and runtime error
+delivery. New canaries need explicit event/provider budgets and, where needed,
+a separately scoped gated artifact. Never add test controls to pilot builds or
+claim unit tests prove runtime transport. Production/store builds must restore
+and demonstrate source-map/native-symbol upload and usable symbolication before approval.
 
 ## 7. Collect cumulative evidence and decide
+
+The cumulative validator is a retained distribution-gate procedure. The staging pilot
+records its gates once with the [pilot checklist](release-readiness-checklist.md#pilot-gates).
 
 ```bash
 make cumulative-readiness-evidence API_URL=<staging-api> SHA=<application-sha> \
   INPUT=<validated-evidence-input.json> EVIDENCE=<sanitized-directory>
 ```
 
-Require complete candidate-bound web, native, deterministic, association,
+For later distribution, rebind the validator inputs and review superseded
+procedural assumptions. Require candidate-bound web, native, deterministic, association,
 telemetry and security-delta evidence plus the recorded owner controls.
 The validator's acceptance does not substitute for real observations or prove
 that a referenced report was generated at a different SHA.
 
 Use the [checklist](release-readiness-checklist.md) for risk ownership and the
-[roadmap](roadmap.md) for later privacy, production configuration, stores and
-cohort work. Merge remains a separate explicit approval.
+[roadmap](roadmap.md) for the pilot and later production, store and cohort work.
+Merge remains a separate explicit approval.
 
 Rollback owner remains Brian Chei. On a bad release stop collection/activation,
 identify the last actually verified deployment/artifact, prepare its restoration,

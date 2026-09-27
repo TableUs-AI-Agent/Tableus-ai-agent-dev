@@ -1,160 +1,99 @@
 # Development workflow
 
-Adopted 2026-09-21; GPT-6 role and autonomy update authorized 2026-09-22.
-Astra orchestrates and has final technical authority. Sol implements most bounded
-work alongside useful Astra review/integration; Luna handles narrow read-only
-summaries or extraction. Astra may take tiny, ambiguous or consequential work
-directly. Delegates do not delegate or grant approvals.
+Updated 2026-09-27. This applies to any coding agent or person working in the
+repository. [AGENTS.md](../AGENTS.md) holds the short rules; this page explains them.
 
-## Start one bounded objective
+## Start an objective
 
-1. Read the active packet and current state; load roadmap and decisions when
-   relevant. Inspect branch, worktree status and the last handoff before selecting
-   a base. The task's default directory may be stale. Preserve dirty files;
-   record any recovery copy by hash.
-2. When a previous task is referenced, read only the necessary recent turns and
-   retrieve older context for a concrete unresolved question. Do not replay the
-   entire transcript or print raw build logs into the new task.
-3. Use a named `codex/<objective>` branch and an isolated worktree for this task.
-   Record base, application candidate, operator version, previous task and active
-   worktree. A fresh conversation does not reset authority, spend or evidence.
-4. Define one observable outcome, scope, exclusions, acceptance checks and stop
-   conditions in `docs/task-packets/active.md`. Keep later objectives in roadmap
-   order. Do not create a new active packet for every intermediate test phase.
+1. Read the [active packet](task-packets/active.md) and [current state](current-state.md);
+   read the roadmap and decisions when the work touches them.
+2. Confirm the branch and base. The root checkout may be stale, and the latest
+   work may be on an unmerged branch. Preserve uncommitted files.
+3. Use a named `codex/<objective>` branch and reuse a suitable checkout for
+   sequential work. Create another for concurrency or necessary isolation;
+   choose the base by ancestry and accepted work, not edit recency.
+4. Keep the objective reviewable in one change. If the active packet does not
+   describe it, update the packet first.
 
-Size this outcome around useful completed behavior, not an individual command or
-receipt. Continue through investigation, supported repairs, focused verification,
-integration, documentation and a concrete handoff in the same turn when authorized.
-A finding, passing test, local commit or completed subphase is a commentary update;
-it does not justify ending the turn while independent work remains. The owner
-reaffirmed this completion preference on 2026-09-24.
+When a previous conversation is referenced, read only what answers a concrete
+question. Handoffs/reviews retain provenance, scoped approvals and limits; they
+do not start a new objective. A new task or model does not replenish spent limits.
 
-Give Sol a bounded implementation brief with stable instructions first and task
-facts last: goal; owned files; acceptance; constraints and approvals; checks;
-time/attempt budget. Ask for changed paths, check results, unresolved risks and
-the exact commit when authorized, rather than full logs. Give Luna a similarly
-bounded read-only summary brief: question; source paths/task turns; output shape;
-uncertainty to escalate; time budget. Explicit model selection at delegation is
-the fallback when the host cannot select a named agent. Mixed-model delegates need
-a self-contained brief with bounded or no inherited history because full-history
-forks inherit the parent's model. Project agent defaults do not reconfigure a
-running task. Reuse an existing bounded child for the same work when possible;
-keep stable role instructions before variable task facts and avoid churning tool
-definitions or prepending timestamps and logs. Cache effects are model-specific;
-do not claim cross-model sharing or measured savings without evidence. Codex owns
-API request caching; project agent configuration has no Responses API cache keys.
+## Keep documents current
 
-### Reusable delegation briefs
+- `current-state.md`: what is implemented and deployed now, and the known gaps.
+- `roadmap.md`: the milestone, ordered priorities, and what is deferred or stopped.
+- `decisions.md`: durable choices, with superseded entries marked in place.
+- `task-packets/active.md`: the current objective, its acceptance and boundaries.
+- Feature contracts (for example `account-lifecycle.md`): implemented behavior.
 
-Sol implementation (Astra fills the task facts before dispatch):
-
-```text
-Implement this bounded objective through meaningful verification and repair.
-Goal: <observable result>. Own: <files>. Acceptance: <behaviors/checks>.
-Constraints: <existing approvals, exclusions, exact source, attempt/spend limits>.
-Budget: <time/attempt bound>. Continue routine decisions and fixes without
-returning for first-draft approval. Escalate material ambiguity or an actual gate
-with evidence; finish independent work. Return changed paths, checks and risks.
-```
-
-Luna summary:
-
-```text
-Summarize <question> using only <source paths/turns>, within <time/output bound>.
-Work read-only. Preserve exact identifiers and unresolved failures; cite sources,
-distinguish observations from assumptions, and flag uncertainty for Astra.
-```
-
-## Keep state small and truthful
-
-- `current-state.md`: what exists and is verified now, plus current blockers.
-- `roadmap.md`: ordered future outcomes and their exit conditions.
-- `decisions.md`: durable product, architecture and operating choices.
-- `task-packets/active.md`: next actions, exact identities and remaining authority.
-- `evidence/<candidate>/`: dated observations, failures, receipts and run ledger.
-
-Replace obsolete current-state paragraphs instead of appending another account of
-the same phase to all four documents. Archive prior narratives before condensation.
-Keep detailed technical decisions discoverable by topic. Commit at meaningful
-phase boundaries, not for every button press. Store private logs outside tracked
-files and print only the relevant failure or phase summary.
-
-A budget ledger retains the original baseline and links amendments separately.
-Count failed operations and companion telemetry events before starting a phase.
-Reconcile at meaningful live-phase boundaries; do not poll unchanged state.
-A new task, candidate or elapsed time grants no additional allowance.
-
-### Batch approvals around complete outcomes
-
-Before requesting a gated action, finish the work that makes its whole scope
-reviewable. Combine connected stages into one proposal when feasible, with exact
-source/artifact/target bindings, success prerequisites, aggregate and per-stage
-attempt/time/disk/spend limits, permitted recovery, retained evidence and cleanup.
-List actions such as resetting a diagnostic app explicitly. Keep unrelated
-production, provider, secret, store and destructive actions outside the scope.
-
-After approval, passing stage boundaries, root screenshot inspection and ordinary
-local repairs are internal checkpoints. Continue without another user confirmation
-within that authority. Native execution stops on the recorded failure condition;
-the agent still finishes cleanup, evidence analysis and independent local work.
-No stage failure silently earns another attempt. A new request is warranted only
-for a material scope/decision change, an exhausted explicitly limited allowance,
-an actual permission boundary, or information necessary to proceed. Prepare a
-substantial combined next action before making that request, rather than another
-single diagnostic command. A broader proposal must not claim that unprepared
-downstream gates or different-device evidence are already satisfied.
+Replace outdated text instead of appending another status paragraph. Do not
+snapshot the document set into `docs/history/`; Git history keeps prior versions.
+Preserve existing referenced snapshots. Commit at meaningful boundaries when
+authorized; leave work uncommitted when requested.
 
 ## Verify according to impact
 
-| Change | Required verification |
+| Change | Verification |
 | --- | --- |
-| Planning/evidence only | Changed-file scope, links/JSON, evidence hashes and source associations; retain the original application validation by exact SHA |
-| Developer-only instructions/agent config | TOML syntax, host config, links and conflicting-instruction checks; no `make ready` or native rebuild solely for these files |
-| Application, contract, application config, dependency or executable tooling | Focused meaningful regressions while iterating; `make ready` once for the completed objective; generated contract drift check |
-| Candidate release verification | Exact-source CI/hosted checks plus affected inspected native artifacts and real platform observations; approval and budget preflight before external steps |
+| Documentation or agent instructions only | Links, paths, configuration syntax and consistency with the other source-of-truth documents |
+| Application code, contracts, dependencies or executable tooling | Focused tests while iterating; `make ready` once before handoff; generated contract drift check |
+| Gate: merge, staging deployment, native pilot build, distribution or cohort activation | Applicable checks from the [release checklist](release-readiness-checklist.md), bound to exact source/artifact and recorded once in `docs/evidence/<commit>/`; reuse matching CI instead of rerunning it at each gate |
 
-Run `make ready` once for a completed application or executable change. Reuse
-its exact-source passing result for later developer-only or evidence checkpoints
-when application, tooling and tests are byte-identical. Record reused versus
-fresh checks explicitly. Public CI, native/device checks, paid evaluation and
-measured performance are not included in `make ready`.
+`make ready` runs lint, types, unit tests, contract generation, web and Expo-web
+builds, deterministic smoke and a report-only bundle-size baseline. It does not run Playwright, native builds, device
+journeys, live providers or hosted checks; hosted CI adds PostgreSQL and Playwright.
 
-Freeze application bytes before expensive verification. Documentation and evidence
-commits do not silently replace the application SHA. On a code change, perform an
-impact review and freeze/review the replacement; never relabel older artifacts.
-Keep native compilation sequential. Verify toolchain, inputs, output storage and
-disk before starting. Reuse only matching artifact bytes, receipts and inspections.
-Honor the active packet's native stop-on-first-failure rule and recorded attempt,
-disk, time and live-provider budgets. A new delegate or workflow edit grants no
-native retry, external action or extra allowance. Routine deterministic local
-test failures can be fixed and retested within the approved implementation scope.
+Evidence records answer "what was verified for this deployed or distributed
+commit". Summarize routine checks and failures in the handoff without a new
+record per command. Retain logs/diagnostics needed to investigate failures or
+verify artifact provenance privately. Application, operator-tooling and evidence
+commits are separate identities; never relabel older observations. Documentation
+edits alone do not invalidate unchanged application checks or require native builds.
 
-## Finish and move to a fresh task
+## Native builds
 
-The handoff includes the exact commit, branch/worktree, application SHA, outcome,
-checks with fresh/reused attribution, evidence paths, unresolved risks, remaining
-approval/budget and one proposed next objective. Do not call an objective complete
-while required checks or decisions are missing. Local implementation completion,
-merge approval, staging acceptance and production activation are distinct outcomes.
-For authorized work, implementation includes meaningful checks, review, fixes and
-commit/handoff; a first draft is not the approval point. Existing user approval
-persists. Seek input only for a missing consequential decision or a still-unapproved
-merge, resource, secret, paid live-AI evaluation, production migration, deployment,
-store submission or destructive cleanup, after finishing independent preparation.
-If a skill requires a pause, link and quote its exact rule and distinguish that
-requirement from interpretation. User instructions supersede repository and skill
-guidelines within higher-priority constraints.
+Build sequentially with file-backed logs and fresh capacity checks. Recorded
+attempts hit disk/memory prerequisites; no root cause follows from worktree counts
+alone. The [runbook](release-runbook.md) holds build and inspection commands.
+Pilot acceptance uses signed builds on real devices plus one bounded lost-response
+test with `mobile-offline-e2e`, on a declared platform and separate local test
+artifact built from the candidate. Collect iPhone device IDs before the signed build.
+Retain explicit dispositions of prior findings; other simulator/emulator checks
+are optional. The canceled campaign's allowances remain closed.
 
-Once the objective is complete, create a fresh task for the next feature/fix as
-requested by the owner. Seed it with the handoff and exact approved starting ref;
-do not carry the full chat history. If integration is pending, say so and preserve
-the branch; do not silently start from stale `main` or merge it. Keep the completed
-worktree and artifacts until cleanup is explicitly authorized. An access outage
-or paused approval gate is a checkpoint in the existing task, not completion.
+Before proposing worktree cleanup, inspect dirty/unpushed work, attached tasks,
+running processes, artifact/symbol paths, references and other consumers. Reclaim
+only the approved scope; preserve useful recovery/evidence. No blanket pruning
+or claim of reduced memory use follows from this planning review.
 
-Agent setup reference: [Codex subagents](https://learn.chatgpt.com/docs/agent-configuration/subagents).
-Behavior guidance: [GPT-6 Astra](https://developers.openai.com/api/docs/guides/latest-model/gpt-6-astra.md)
-and [prompt design](https://developers.openai.com/blog/rethinking-skills-and-prompts-for-gpt-6-astra).
+## Instructions, skills and tools
 
-Caching reference: [GPT-6 prompt caching](https://openai.com/index/better-prompt-caching-for-gpt-6/)
-and [API details](https://developers.openai.com/api/docs/guides/prompt-caching).
+Keep project guidance agent-neutral; `.codex/` holds Codex-only preferences, not
+standing delegation requirements. Read applicable nested instructions, including
+the generated web guidance and its `CLAUDE.md` consumer.
+
+Prefer the existing npm/uv/Make, CI, generated-contract and artifact-inspection
+entry points. Check references and other consumers before retiring tooling;
+optional tests are not automatically unused. Add a tool only for a demonstrated
+gap that simpler existing capabilities cannot handle well.
+
+Load task-specific skills only when their capability applies. Keep activation
+descriptions narrow and supporting references on demand. Project guidance should
+state durable requirements rather than session review logs or model promotions.
+
+## Approvals
+
+Before requesting a gated action from [AGENTS.md](../AGENTS.md#approval-gates),
+finish the independent preparation and present one complete request: exact
+targets, limits, stop conditions and cleanup. After approval, continue through
+passing stages without asking again. Routine deterministic failures may be fixed
+and retested. A bounded external/native campaign failure does not earn an extra
+attempt beyond its approved recovery scope; preserve diagnostics and stop as agreed.
+
+## Hand off
+
+Include the exact base commit and branch, uncommitted changes if any, checks run, evidence for any
+gate, residual risks, anything deferred and the next objective. Local completion,
+merge, staging acceptance and production activation are distinct outcomes; say
+which one was reached.

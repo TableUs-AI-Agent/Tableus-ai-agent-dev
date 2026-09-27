@@ -159,8 +159,14 @@ No whole-provider/backups erasure claim follows from a completed Auth job.
 Before publication/activation, record exact application and hosting targets,
 working privacy/support mailbox delivery and coverage, approved acknowledgment and
 completion expectations, restricted support tool/access/retention, verified case
-binding, and a secure assisted route for access-loss/email-only cases. Then obtain
-a bounded campaign for synthetic recipient identities on the intended environment:
+binding, and the access-loss disposition. For the bounded pilot of people Brian
+knows, he accepted that deletion may be unavailable after loss of sign-in email
+access until secure recovery/assisted verification exists; see the
+[September 27 decision](decisions.md#pilot-follow-up--adopted-2026-09-27). Keep a
+working contact and escalation path, rehearse truthful handling of that limitation,
+and make no email-only completion promise. Revisit the assisted route before
+cohort expansion or store distribution; normal deletion/support gates remain.
+Then obtain a bounded campaign for synthetic recipient identities on the intended environment:
 public page access without app/auth; request receipt; identity mismatch/spoof refusal;
 normal authenticated completion; pending/attention; duplicate request; lost session
 with and without prior case mapping; truthful completion notification. Specify

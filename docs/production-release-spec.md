@@ -4,9 +4,15 @@ Prepared 2026-09-25. Brian owns development and the release decision at this sta
 historical work remains shared. This is a reviewed preparation artifact, not
 production acceptance or permission to create resources, deploy or submit builds.
 
+September 26 sequencing: production/store work follows the staging pilot in the
+[roadmap](roadmap.md). Source identities and inventory below are historical
+snapshots, not fresh readback or pilot gates. Preserve this specification for later
+target selection; the [pilot checklist](release-readiness-checklist.md) owns the
+immediate support, migration and device requirements.
+
 Base: `a79fd60ad7bbed397ad325caef1c2313ef29c80c`.
 Original snapshot application: `484632517345e7858f48caf8fa7b128f9d9dab80`.
-Current application `72c592b511bba6b74bba2521524c6111b9cf5916` adds
+Later recorded application `72c592b511bba6b74bba2521524c6111b9cf5916` adds
 [approved deletion-content behavior](handoffs/2026-09-25-deletion-content.md).
 Rebind acceptance before execution; environment/OTA recommendations remain pending.
 Branch: `codex/production-release-spec`.
@@ -67,7 +73,7 @@ must fail before network traffic; keep local deterministic behavior intact.
 | Worker | Existing bounded runner and [operations procedure](account-lifecycle-operations.md) | Actual scheduler, one-minute cadence proposal, limit 3 / 55-second deadline / 70-second process watchdog; alert owner Brian; no worker deployment presently verified |
 | Providers/budgets | Existing production backend requires live Places/AI plus production telemetry; retain single-process coordination | Approved production provider credentials, cohort cap and bounded spend; do not start a production-configured service during a provider-free rehearsal |
 | Telemetry | Production-specific Sentry/PostHog configuration with existing privacy filtering; source-bound release IDs | Project/environment IDs and artifact map/symbol association; private upload token only in build environment. No canary call authorized here |
-| Rollout flags | Full deletion and fragment emission remain off until their respective gates pass | API/worker flags independently verified; compatible installed link readers before fragment emission |
+| Rollout flags | Full deletion defaults off; pilot activation is now required after lifecycle gates. Fragment emission stays off for the pilot | Verify API/worker flags independently for each environment; pilot acceptance does not activate production. Compatible installed link readers before fragment emission |
 | Version/signing | Source app ID/EAS project preserved unless an explicit decision changes them | Apple team/profile/cert identity and expiry, App Store app ID, Play package/app-signing SHA-256, upload key identity, highest assigned versions; no private keys in evidence |
 
 Current [backend config](../backend/tableus/config.py) enforces hosted credentials

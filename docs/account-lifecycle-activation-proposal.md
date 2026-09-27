@@ -1,5 +1,14 @@
 # Account lifecycle activation proposal
 
+September 27 disposition: the pilot now requires activation of the built
+self-service deletion in Priority 3 of the [roadmap](roadmap.md), superseding the
+September 26 deferral. Use [current operations](account-lifecycle-operations.md)
+and the [pilot checklist](release-readiness-checklist.md) for credential/worker
+approval and synthetic-account rehearsal. This remains a historical proposal:
+rebind its candidate, migration range, native task reservation and next-objective
+statements before reuse. Preserve worker/rollback safeguards; no native campaign,
+budget or deployment is reopened by this document.
+
 **Prepared candidate; not authorization to execute.** Local verification is
 complete. Target reservation, hosted resource identity and release acceptance
 remain unresolved. Do not use this document as a runnable deployment approval.

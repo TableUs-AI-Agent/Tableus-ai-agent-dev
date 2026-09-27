@@ -1,5 +1,15 @@
 # Account deletion, retention and support release specification
 
+September 27 pilot disposition: activate and rehearse the built self-service
+deletion before real invitations, with approved credential/worker provisioning,
+truthful copy and reviewed retained-data treatment. Store work stays deferred.
+Brian accepts delayed/unavailable deletion after loss of sign-in email access
+until secure recovery/assisted verification exists, only for this bounded pilot
+of people he knows. Keep a working contact/escalation path; no email-only deletion
+promise. See the [pilot checklist](release-readiness-checklist.md) and
+[decision](decisions.md#pilot-follow-up--adopted-2026-09-27). The dated inventory
+below is not new legal assessment or operational acceptance.
+
 Prepared 2026-09-25 against application
 `484632517345e7858f48caf8fa7b128f9d9dab80`.
 Brian is the current implementation, operations and decision owner.
@@ -33,8 +43,9 @@ or approve indefinite pseudonymous retention.
 Apple requires in-app initiation of account deletion, clear completion expectations,
 and removal of associated user-generated content. Its guidance does not generally
 allow ordinary apps to require contacting support instead of providing the deletion
-flow. The full-deletion flag remains off, and the newly implemented cleanup
-requires rollout and legacy review; local code alone is not submission readiness.
+flow. The full-deletion flag is off in the recorded state; the pilot now requires
+activation. Cleanup still requires rollout and legacy review, and the pilot's
+access-loss exception does not establish store readiness.
 This is a release-review finding, not a prediction of App Review's decision.
 [Apple account deletion guidance](https://developer.apple.com/support/offering-account-deletion-in-your-app/).
 

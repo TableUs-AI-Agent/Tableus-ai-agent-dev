@@ -1,9 +1,104 @@
 # Current decisions
 
-Consolidated 2026-09-21. This index contains durable choices; run progress belongs
+Consolidated 2026-09-21; pilot direction reconciled with Brian on September 26–27.
+This index contains durable choices; run progress belongs
 in evidence and the active packet. The [full prior decision log](history/2026-09-21/decisions.md)
 is retained with original dates and superseded decisions. Consult it by topic
 when changing a subsystem; it is not a second active task packet.
+
+## Pilot realignment — adopted 2026-09-26
+
+Brian reviewed project direction with the development agents and adopted these
+choices, which take precedence over earlier entries where they conflict:
+
+- **Next milestone:** a staging pilot in which real groups, starting with people
+  Brian knows, complete real dinner decisions on web, iOS and Android. TestFlight,
+  Play, production and cohort expansion follow the pilot.
+- **Beta scope:** only the shared-plan decision (invite-approved sign-in, plans,
+  constraints, four options, ranked votes, organizer finalize/reopen). Discover,
+  Friends, Reviews, Taste/profile and photo analysis are hidden from navigation,
+  not deleted. Each diner uses their own account and constraints; learned tastes
+  are deferred. Plans/Account and required auth/join/privacy/help routes remain.
+- **Participation:** preserve organizer discretion to finalize before all votes
+  arrive. A successful pilot decision needs at least two independent diners'
+  votes; this is a measurement rule, not a new API quorum requirement.
+- **Pilot candidate:** consolidate on `4a2f9ec` and merge it to `main`, then
+  deploy one staging candidate with recipient-bound invites and durable quotas
+  active. Review the cumulative diff and pass hosted CI before an approved merge.
+  Navigation and measurement work produce the later pilot candidate. The initial
+  September 26 choice to leave full deletion off is superseded by the September 27
+  follow-up below. Fragment emission stays off. Shared-content cleanup and
+  plan-management controls apply independently of the full-deletion flag.
+- **Native acceptance for the pilot:** one signed internal build per platform on
+  real devices with startup/relaunch, auth/links, the shared decision, session/
+  sign-out and airplane-mode/visible retry checks, plus the bounded lost-response
+  check defined below. The long automated iOS simulator campaign
+  is not a release gate; its tooling stays on `codex/native-replacement-validation`.
+  Preserve prior refresh, initialization, AppHang and driver findings and explicitly
+  resolve or disposition them on the selected candidate. A user-blocking failure
+  stops pilot use; old staging acceptance does not transfer. All three platforms
+  must pass before invitations and be represented in pilot use. The AppHang symbol
+  requirement below still applies before TestFlight/Play.
+- **Success targets (confirmed, unmeasured):** within three weeks of the first
+  invitation, at least five real groups beyond Brian and test accounts finalize a
+  plan with at least two distinct votes, at least half of eligible plans with a
+  second participant reach that outcome, and every organizer is asked whether
+  the group went and would use TableUs again. Use bounded database aggregates and
+  organizer follow-up; anonymous process-session telemetry cannot measure this
+  cross-person funnel. Definitions and unknown-outcome handling live in the roadmap.
+- **Evidence and documents:** formal source-bound evidence at gates (merge, staging
+  deployment, native pilot builds, distribution, cohort activation). Update
+  current documents in place; stop per-phase snapshots into `docs/history/`.
+  Summarize routine checks and retain useful failure diagnostics and source/
+  artifact bindings. This is not permission to discard evidence or rerun expired
+  allowances. Reuse suitable workspaces for sequential work; isolate when needed.
+- **Agent guidance:** repository instructions are agent-neutral. Brian decides;
+  the agent leading a task owns integration and handoff. Codex model and subagent
+  defaults stay in `.codex/`. This supersedes the 2026-09-22 GPT-6 roles entry.
+
+### Pilot follow-up — adopted 2026-09-27
+
+- **Deletion activation:** use the built self-service deletion for the pilot.
+  Priority 3 provisions the server-only Auth-removal credential and separate hosted
+  worker under explicit approval, follows [operations](account-lifecycle-operations.md),
+  enables `TABLEUS_ACCOUNT_DELETION_ENABLED=true` in the required processes and
+  rehearses only with approved synthetic accounts. Accept compatible clients,
+  organizer-blocker resolution, pending/retry/completion behavior and truthful
+  privacy/retention copy before invitations. The existing default remains off
+  until activation; planning approval does not provision or deploy anything.
+- **Email-access loss:** Brian explicitly accepts that a participant who loses
+  access to their sign-in email may be unable to complete deletion until secure
+  account recovery or assisted verification is available. This is limited to the
+  bounded pilot of people he knows, with a working support contact and escalation
+  path. An email request alone neither initiates nor proves deletion. This removes
+  the assisted-initiation blocker for this pilot only; revisit before expansion
+  or store distribution. It does not waive normal deletion or retention checks.
+- **Participation measurement:** add `distinct_voter_count` from the active run
+  to `plan.finalized`, without a new quorum rule, voter identities or analytics
+  service. Account deletion rebuilds payloads from a strict allowlist; explicitly
+  preserve the validated numeric count even if the candidate/run is gone, and
+  test that cleanup path and its earlier-finalization measurement. A read-only
+  query counts each eligible plan once even after reopen/re-finalize. Whole-plan
+  deletion removes its events. Brian accepts exact counts for retained,
+  instrumented plans with missing historical/deleted coverage disclosed; no
+  deletion-surviving aggregate storage is required for this pilot.
+- **iOS roster and later devices:** collect pilot iPhone device IDs before the
+  first signed iOS build and verify the profile includes them. A later device may
+  use an approved re-sign of an accepted IPA. Reuse prior behavioral acceptance
+  only when application payload/configuration and behavior-affecting entitlements
+  are verified unchanged apart from signing/provisioning metadata. Inspect and
+  bind the new artifact, then install and launch it on the added device. This is
+  not a full re-acceptance; changed or unproven application inputs require impact
+  review and affected checks. Re-signing is still a gated distribution action.
+- **Bounded recovery proof:** physical devices cover airplane mode and visible
+  retry. One candidate-source `mobile-offline-e2e` run on a declared platform
+  covers dropped-after-commit responses for create/finalize. It requires the
+  matching local test profile, deterministic backend and fault proxy, not the
+  signed staging pilot artifact. Scope any extra test build separately; do not
+  enable the old extended refresh campaign or infer physical/both-platform proof.
+
+These decisions set release requirements; they do not authorize external actions
+or replenish closed native/live-provider allowances.
 
 ## Product and platform
 
@@ -15,7 +110,7 @@ when changing a subsystem; it is not a second active task packet.
   organizer finalization/reopening and rotatable private links. Finalized plans
   reject new joins, constraints and regeneration until reopened.
 - Native beta is 2D; maps/3D, broad redesign and new provider/framework work are
-  deferred. GPT-6 development roles are defined below; application inference remains Gemini.
+  deferred. Application inference remains Gemini.
 
 ## Authentication, data and privacy
 
@@ -65,11 +160,11 @@ when changing a subsystem; it is not a second active task packet.
 - Places persistence retains Place IDs and user-owned labels, not provider display
   fields, coordinates or content. Live details are transient and refreshed on demand.
 - Canonical links use `links.table-us.com`, exact `/auth` and `/join/*`; auth
-  confirmation stays web-only. Capability URL risk remains open; authentication,
-  hashed storage, rotation and redaction mitigate isolated staging only. The
-  [capability-link proposal](capability-link-decision.md) recommends fragment
-  transport and existing approved-member join authority; it is not an adopted
-  product decision or production risk acceptance.
+  confirmation stays web-only. September 25 adopted current-link joining by
+  approved members and bounded client capture; the earlier
+  [proposal](capability-link-decision.md) is historical. Fragment emission stays
+  off for the pilot. Initial-request exposure from legacy query links still needs
+  candidate-specific hosted handling/risk review; no production acceptance follows.
 
 ## Reliability, providers and telemetry
 
@@ -85,8 +180,9 @@ when changing a subsystem; it is not a second active task packet.
 - Request admission enforces transport/global limits and body caps before auth,
   parsing and provider work. CORS is inside that boundary. Hosted builds reject
   demo modes, unapproved origins and insufficient runtime credentials.
-- Plan detail does not poll. Hidden routes unsubscribe, foreground refresh is
-  coordinated, explicit refresh coalesces reads and scrolling triggers no refresh.
+- Mobile plan detail does not poll. Hidden mobile routes unsubscribe, foreground
+  refresh is coordinated, explicit refresh coalesces reads and scrolling triggers
+  no refresh. Web polls a provider-free revision and refreshes changed plan detail.
   Previous saved votes, unsent changes and fresh submission success are distinct.
 - PostHog is anonymous and allowlisted with a random process-memory UUID: no
   account identity, persistence, person profiles, GeoIP, autocapture or replay.
@@ -117,6 +213,10 @@ when changing a subsystem; it is not a second active task packet.
   matching bytes; never relabel older artifacts. Staging source-review version two
   binds accepted report and owner approval to immutable candidate/file hashes.
   Legacy scan records keep their original meaning. No new scan without approval.
+- The September 26–27 pilot decisions replace the long campaign with signed
+  physical-device acceptance and one bounded local lost-response run. Other
+  simulator/emulator flows are optional; recovery coverage and residual-risk
+  handling are defined above.
 
 ## Production and operating boundaries
 
@@ -144,6 +244,9 @@ when changing a subsystem; it is not a second active task packet.
   repeated permission. Staging acceptance does not authorize a cohort.
 
 ## Task lifecycle — adopted 2026-09-21
+
+Partly superseded 2026-09-26: reuse worktrees for sequential work unless isolation is needed,
+and model roles follow the agent-neutral guidance above.
 
 Use one bounded feature/fix per conversation and named worktree. Keep current
 state concise, detailed observations in evidence and a compact commit-based
@@ -210,6 +313,9 @@ crashes or authorize a native rebuild; freeze changed application bytes separate
 
 ## GPT-6 development roles and completion — adopted 2026-09-22
 
+Superseded 2026-09-26 by agent-neutral guidance; the Codex defaults remain in
+`.codex/` for Codex sessions. Retained for history.
+
 The owner authorized Astra (`gpt-6-astra`) as primary orchestrator and final
 technical authority, Sol (`gpt-6-sol`) as the implementer for most work, and Luna
 (`gpt-6-luna`) for narrow summaries/extraction. Root defaults remain Astra; child
@@ -234,6 +340,9 @@ API integration to migrate in this change; do not alter Gemini or its budgets.
 [Implementation, sources and verification](evidence/gpt6-development-workflow-2026-09-22/README.md).
 
 ## Substantial objectives and combined approvals — adopted 2026-09-24
+
+Still in force for packaging work and approvals. The native campaign it refers to
+is no longer a pilot gate as of 2026-09-26.
 
 The owner requested sustained work toward broader, complete objectives with fewer
 approval interruptions. Investigation, supported local fixes, verification,
