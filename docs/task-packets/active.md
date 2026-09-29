@@ -76,8 +76,10 @@ and backup availability. The Free plan has no scheduled backups/PITR, so a priva
 logical export was taken through the normal linked CLI on FileVault-encrypted
 storage. Local app/public restore and the four migrations passed against it.
 The signup email now says “verification code,” verified after reload; no email was
-sent. Next: finish telemetry-provider retention readback, then publication/CI/review
-and rollout. Sentry and PostHog need normal sign-in; no credential extraction is
-permitted.
+sent. Brian switched to the TableUs dashboards on September 28; Sentry Developer
+and PostHog Free plan/retention readback is complete. The refreshed database/source
+inventory is unchanged except that old usage aged out of the rolling window.
+Next: publication/CI/review, followed by quiesced migration and rollout under the
+existing approval. No credential extraction is permitted.
 Priority 3 staging acceptance remains open. Priority 4 device/native acceptance,
 real pilot invitations and production remain separate.

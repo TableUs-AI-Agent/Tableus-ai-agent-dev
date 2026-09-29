@@ -317,8 +317,8 @@ publication, live provider call or mail delivery was performed.
   inputs changed after readiness.
 
 No new dependency or migration is added here. Remaining risks are explicitly
-bounded: current-hosted source is older, retention settings still need normal
-dashboard readback, worker image/scheduler delivery needs hosted proof, and
+bounded: current-hosted source is older, worker image/scheduler delivery needs hosted proof, and
 historical attribution cannot be reconstructed. Auth/SMTP, schema and recovery
-preflight results are now in the [execution record](evidence/e5e7d13/execution.md). Native
+and telemetry-retention preflight results are now in the
+[execution record](evidence/e5e7d13/execution.md). Native
 physical-device acceptance and real pilot intake remain intentionally deferred.

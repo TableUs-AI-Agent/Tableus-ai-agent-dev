@@ -493,6 +493,7 @@ The combined incremental ceiling is $20 ($15 providers, $5 hosting); all narrowe
 attempt, email, worker and time limits remain in force. Approval does not permit
 native builds, production, real invitations or legacy data cleanup. Retention
 settings must be verified through normal authenticated access before publication
-and rollout. Supabase Auth/schema/recovery readback is complete; Sentry and PostHog
-retention readback remains open. The routine signup template wording correction
+and rollout. Supabase Auth/schema/recovery readback is complete; TableUs Sentry and
+PostHog plan/retention readback completed September 28. Those event-access windows
+do not approve a retained-data purge policy. The routine signup template wording correction
 preserves the configured OTP length and all delivery/security settings.

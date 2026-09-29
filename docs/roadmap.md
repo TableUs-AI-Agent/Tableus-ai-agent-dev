@@ -74,7 +74,8 @@ was not merged. Priority 2 is complete: Brian approved review and merge, and
 head `1270206`; no deployment occurred ([integration evidence](evidence/f621cf5/integration.md)).
 Priority 3 is authorized in a fresh chat. Independent local preparation is
 complete on `codex/pilot-staging-readiness`. Brian approved the bounded external
-campaign for `e5e7d1`; normal dashboard preflight is still required before execution.
+campaign for `e5e7d1`; normal dashboard preflight is complete. Publication/CI/review
+is next, followed by quiesced migration, rollout and synthetic acceptance.
 
 Effort is a rough planning range in focused engineering days, excluding approval,
 hosted CI, device/signing and external-access waits; these are not delivery promises.

@@ -112,9 +112,44 @@ PostHog connector readback confirms project `578352`, organization
 recording-retention field of 30 days. That field does not establish analytics-event
 retention. The connector's advertised `learn` command is unavailable to this client;
 its supported read-only project/organization schemas were inspected. Billing
-read scope is unavailable; analytics-retention readback remains open. Both PostHog's
-normal dashboard and Sentry's dashboard are signed out; Brian has been asked to
-sign in to each. No scope expansion or substitute credential was requested.
+read scope is unavailable. Brian's initial dashboard sessions exposed only Sellr;
+no Sellr setting was changed or accepted as TableUs evidence. On September 28
+(September 29 UTC), Brian switched to the existing TableUs account. The PostHog
+dashboard now confirms project `578352` and Free plan, with no payment card.
+The connector's supported documentation search establishes the Free plan's
+[one-year events query window](https://posthog.com/docs/data/events-retention).
+This applies to event queries, is distinct from replay retention, and is explicitly
+not a data-deletion mechanism. The privacy setting does not discard IP data;
+the application must continue its existing telemetry allowlist/scrubbing. No
+PostHog setting was changed and no broader access was requested.
+
+Sentry's normal dashboard confirms TableUs Staging, organization
+`4511977317466112` (`tableus-staging`), US data region, Developer plan and no
+payment method. The plan shows 14/5,000 error events, zero dropped errors, and no
+log/replay/span ingestion this cycle; the existing uptime-monitor slot is occupied.
+[Sentry's current policy](https://www.sentry.help/en/articles/13964940-how-long-are-my-organization-s-audit-logs-stored)
+gives Developer events 30 days and organization audit logs indefinite retention.
+These distinct scopes must not be presented as universal erasure deadlines.
+No Sentry setting, monitor or plan was changed. Telemetry-retention preflight is
+complete for this synthetic campaign; retained-data purposes, enforceable purge
+policy, broader provider records and real-pilot/store acceptance remain open as
+specified in the prepared campaign.
+
+The PR description is prepared privately at `/private/tmp/tableus-p3-pr-body.md`.
+Read-only GitHub inspection confirms no existing objective-branch PR. Deployment
+exclusions, worker configuration syntax and unchanged application inputs passed
+local checks. The September 29 `02:21:21Z` refresh confirms the same migration head,
+six profiles, seven Auth users, sixteen plans, eleven runs, eight invites, zero
+active invites/reservations and last provider activity September 17. Older usage
+has aged out of the rolling window: 306 Places attempts and $0.00224625 AI are now
+recorded in thirty days. Re-read immediately before setting the runtime ceiling;
+the current baseline-plus-420 calculation is 726, not an additional allowance.
+Remote main is still `462a7dd`; no objective branch/PR exists. Railway still runs
+the same deployment with one replica, zero Git triggers, `prDeploys=false` and no
+pending changes. Vercel Git deployments are enabled at project level; branch/main
+exclusions remain present in the candidate. Publication can proceed without
+spending a manual deployment allowance. Quiescing API writes remains required
+before any hosted migration.
 
 ## Review and reused verification
 
@@ -138,8 +173,7 @@ change, deployment, invite, synthetic account, email, provider operation or work
 invocation. Campaign incremental spend is zero; existing services continue their
 ordinary billing.
 
-Finish provider-retention readback, then publish the approved candidate,
-run CI/review and follow the migration/rollout/rehearsal order. Missing access is
-a prerequisite, not a request for repeated campaign approval. Do not start paid or
-Auth traffic, substitute credentials, or skip the remaining preflight. Preserve
+Publish the approved candidate, run CI/review and follow the
+migration/rollout/rehearsal order. Do not start paid or Auth traffic, substitute
+credentials, or skip source, role, quiescence and allowance checks. Preserve
 production, existing identities/data, native artifacts and all closed allowances.

@@ -1,10 +1,10 @@
 # Current state
 
-Updated 2026-09-27. Priority 3 read-only inventory freshly confirmed API/web
+Updated 2026-09-28. Priority 3 read-only inventory freshly confirmed API/web
 source, API readiness, migration head, grants, admission counts and deployment
 triggers; see [staging preparation](pilot-staging-preparation.md). Brian approved
 the bounded campaign. Supabase preflight and a private local restore check passed;
-signup email wording was corrected. Retention readback remains open. No deployment,
+signup email wording was corrected. TableUs telemetry-retention readback is complete. No deployment,
 hosted migration, Auth user, email or provider operation changed.
 
 ## Source baseline
@@ -155,8 +155,9 @@ compatibility and required Auth/retention readback. Supabase dashboard checks no
 confirm the hook, custom SMTP, OTP/session settings and app-schema isolation.
 There are no scheduled backups/PITR on this Free-plan project. A private logical
 backup and isolated local app/public restore/migration check passed; the
-[execution record](evidence/e5e7d13/execution.md) records scope, limitations and
-remaining provider-retention readback. The hosted signup email template now says
+[execution record](evidence/e5e7d13/execution.md) records scope and limitations.
+TableUs Sentry Developer and PostHog Free plan/retention readback is complete;
+event windows are not universal erasure deadlines. The hosted signup email template now says
 “verification code” instead of “six-digit code,” matching the configured eight-digit
 OTP without changing security settings. No email, deployment or migration occurred.
 The global Places configuration maximum is now 1,000; default 150 is unchanged.
