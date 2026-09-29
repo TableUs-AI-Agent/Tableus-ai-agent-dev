@@ -10,7 +10,10 @@ only session two waits until September 29 at 9:48:55 p.m. Central for natural ex
 No new account, OTP email or live provider call has been made. Both sessions share
 the original 60-minute and attempt/spend limits;
 [execution evidence](evidence/e5e7d13/execution.md) records the remaining gates and
-consumed allowances. Priority 3 acceptance remains open.
+consumed allowances. Brian chose to operate the mailbox and enter codes in TableUs;
+two separate staging origins are verified signed out in Chrome. Alias-delivery
+confirmation remains pending, so no live session/restart has started. Fresh hosted
+source/alias/grant/count checks passed. Priority 3 acceptance remains open.
 
 ## Source baseline
 

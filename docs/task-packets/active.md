@@ -82,9 +82,16 @@ source deployment or overnight running service is needed.
 
 ## Execute in order
 
-1. Confirm Brian's controlled mailbox operation and isolated synthetic browser
-   sessions for session one; the mailbox question is pending. Only session two
+1. Brian chose to operate the mailbox and enter codes directly in TableUs.
+   Two Chrome sessions on the separate staging origins are verified signed out;
+   the legacy in-app staging session is untouched. Confirmation that the four
+   tagged aliases deliver is pending; use the approved support exchanges first if
+   they have not been tested. No signup email has been sent. Only session two
    waits for expiry. Do not sleep a day inside a tool. No follow-up was scheduled.
+   Fresh read-only preflight passed: expected source/images and all four aliases,
+   API/worker stopped, empty queue/reservations, restricted grants, legacy counts
+   unchanged and zero new provider rows. Places baseline is now 270; re-read and
+   tighten its ceiling at the first restart. Billing/evidence are in execution.md.
 2. Re-read this record and the private fixture/allowance ledger; verify exact source,
    aliases, role, queue, grant state and no unexpected activity. Use fresh isolated
    synthetic browser sessions: the ordinary staging browser has a pre-existing

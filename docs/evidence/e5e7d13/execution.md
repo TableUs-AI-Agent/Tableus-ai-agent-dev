@@ -333,3 +333,27 @@ of an Auth identity; the later D rejection needs no replacement account or OTP.
 The API stays stopped and worker schedule absent between sessions. Session-two
 re-enable doubles as same-image resume, retaining exactly four configuration
 restarts. Mailbox operation remains a prerequisite; no test mail was sent here.
+
+## Session-one preflight, September 29 UTC
+
+Brian selected option 1: he operates the mailbox and enters codes directly in
+TableUs. The four tagged aliases' delivery is not yet confirmed. No signup/code,
+support message, new invitation, API restart or live session started in this pass.
+Chrome's staging and links origins both show the explicit signed-out Account
+state; the old in-app staging identity was neither used nor cleared. The first
+signup form is prepared with an empty invite field and its send button disabled.
+
+Read-only checks confirm the same stopped API/worker image digests, no worker
+schedule, expected source/runtime role/credentials configuration, both new staging
+alias targets and both unchanged production targets. The migration head and legacy
+six profiles/seven Auth users/sixteen plans/eleven runs match; queue and active
+reservations remain empty, with nine invites/one active expiry fixture. Browser
+schema denial, restricted runtime, invoker hook and Auth-admin execute pass.
+Provider rows since rollout remain zero. The fresh rolling Places baseline is
+270, requiring a fresh baseline plus remaining allowance at admission (currently
+690, down from configured 726), never an allowance reset.
+
+Railway's delayed workspace usage is $3.567051228426481, $0.0133275511356165 above
+the pre-rollout baseline across the workspace. It is not exact campaign attribution.
+No hosted configuration or service state changed. The first restart remains unused;
+finish alias-delivery readiness before starting the live clock.

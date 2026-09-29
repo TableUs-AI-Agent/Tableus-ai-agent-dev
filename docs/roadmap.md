@@ -84,6 +84,9 @@ September 29 at 9:48:55 p.m. Central and B's final deletion. The API and worker 
 stopped between sessions; the same four configuration restarts cover both. One of
 six invites and one of four worker invocations are
 consumed; account/email/provider allowances are unused. This is not pilot acceptance.
+Brian will operate the mailbox and enter codes directly. Browser isolation and
+fresh hosted preflight passed; confirmation of tagged-alias delivery remains before
+the first signup attempt. The supervised live clock has not started.
 
 Effort is a rough planning range in focused engineering days, excluding approval,
 hosted CI, device/signing and external-access waits; these are not delivery promises.

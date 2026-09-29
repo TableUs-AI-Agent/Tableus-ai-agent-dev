@@ -542,3 +542,9 @@ and scheduling and stops the API. This retains the four approved configuration
 restarts and four total worker invocations; splitting adds no source deployment,
 account, OTP, provider or spending allowance. Acceptance remains open until both
 sessions and final evidence pass.
+
+Brian selected manual mailbox operation: he enters codes directly into TableUs,
+never into chat. Prepare signed-out sessions on separate staging origins without
+clearing legacy sessions. Verify tagged-alias delivery before signup, using the
+already-scoped support exchanges if prior delivery is unconfirmed; no additional
+mail allowance is created.
