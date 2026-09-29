@@ -20,7 +20,33 @@ tests, 326 JavaScript tests and five browser journeys, zero skips, plus lint/typ
 migrations, deterministic evaluation, contracts, builds and smoke. Local readiness,
 restricted PostgreSQL and browser evidence remain applicable to unchanged inputs.
 
-## Current recovery checkpoint, September 29 at 04:42 UTC
+## Current cutoff checkpoint, September 29 at 22:58 UTC
+
+Both existing API and worker deployments are verified stopped, with null cron and
+next run and future API deletion admission false. The cutoff requested API stop at
+05:28:21 UTC, deployment metadata updated 05:28:27, and the immediate receipt still
+showed stopping. The later provider read verifies stopped; exact instance stop time
+was not captured. Private ledger segment index 1 is marked closed by cutoff with
+its full 49m48.045s allocation charged; `ended_at` remains null rather than inventing
+an exact timestamp. Cumulative allocation consumed is 90/105 minutes, leaving the
+15-minute post-expiry reserve. Restart use remains 2/5; no attempt allowance resets.
+
+A remains unverified. Its last code send was 04:41:40 UTC (September 28 11:41 p.m.
+Central); the reservation expired 05:01:39 UTC and the code itself is also expired.
+Fresh readback: eight Auth users/six profiles, zero active reservations/deletion
+rows/new provider rows. No B/C/D enrollment, group journey or deletion acceptance.
+No new OTP was sent on this turn. User asks where the code is; direct them to the
+Brian inbox receiving the A alias, including Spam, and confirm actual receipt.
+
+**Next: establish that Brian can find the email, then reconcile the incomplete
+first phase against the remaining reserved allocation before any resend/restart.**
+The earlier pending verification instructions are stale. Do not submit the old
+code, reset the clock or automatically extend the approved recovery. Preserve the
+unverified A identity and all legacy data. B's old tab visibility is unconfirmed;
+current user ambient UI lists only the links tab. The temporary Preview CORS origin
+remains configured on the stopped API and must be removed at final containment.
+
+## Historical recovery checkpoint, September 29 at 04:42 UTC
 
 Brian approved the [recovery packet](../p3-rehearsal-recovery.md). Its limits are
 now **105 cumulative live minutes and five same-image API configuration restarts**;
@@ -172,7 +198,7 @@ session-one enable and pause, session-two re-enable and final disable. The
 session-two re-enable also resumes the stopped API using the same image. No extra
 source deployment or overnight running service is needed.
 
-## Execute from the current recovery checkpoint
+## Planned sequence after scope reconciliation (not authorization to restart)
 
 1. Wait for A's owner-entered code and verify actual Plans/profile creation before
    requesting B. The pending async question asks for result only, never the code.
@@ -215,7 +241,7 @@ private worker resource/deployment, four migrations, all six invites and one
 of four worker processing invocations. API configuration restarts: two of five.
 Auth DELETE attempts: zero of twelve. One new Auth user/no new profile; three OTP
 requests, eight support messages, two OTP deliveries/verifications reserved. Live
-Places/AI remain zero. The recovery segment is active at the current checkpoint above. All other ceilings in the
+Places/AI remain zero. The recovery segment is closed by cutoff at the current checkpoint above. All other ceilings in the
 prepared campaign apply, including $15 providers, $5 hosting, $0.25 AI, three
 logical/nine underlying AI attempts, eleven OTP requests/ten deliveries/twenty
 verification submissions, fourteen support messages, twelve refresh/revoke calls

@@ -82,17 +82,17 @@ external browser handoff failed: 105 cumulative live minutes, five same-image AP
 configuration restarts, and the exact existing Preview origin temporarily allowed
 for B. All other original limits and used counters remain unchanged.
 
-Recovery restart 2/5 passed same-image/readiness/CORS checks; the current segment
-runs 04:39:03–05:28:51 UTC September 29, with a cutoff armed. A's fresh code was
-requested at 04:41:40 using the same unverified identity; manual verification is
-pending and its reservation expires 05:01:39 UTC. B's in-app form is prepared without
-send. Three OTP requests, two deliveries and two conservative verification
-reservations are accounted for. All six invites, eight support messages and one
-worker invocation are consumed; no live Places/AI or deletion has run. The earlier
-40 minutes 11.955 seconds are retained, with at least 15 minutes reserved for the
-natural-expiry/final phase after September 29 at 9:48:55 p.m. Central. The API and
-worker must be stopped between phases. This is not pilot acceptance. Brian enters
-codes directly into the visible TableUs forms; no credentials are requested in chat.
+Recovery restart 2/5 passed same-image/readiness/CORS checks, but A did not complete
+verification before the cutoff. The September 29 22:58 UTC check verifies API and
+worker stopped, admission off, no schedules, A unverified, eight Auth users/six
+profiles and no active reservations/deletion/provider rows. The full recovery
+allocation is charged: 90/105 live minutes used, 15 reserved for the post-expiry
+phase. A's September 28 11:41 p.m. Central code and reservation have expired.
+Three OTP requests, two deliveries and two conservative verification reservations
+remain accounted for. All six invites, eight support messages and one worker
+invocation are consumed. First-phase acceptance remains incomplete; reconcile scope
+before another resend/restart. Natural-expiry checking is still not before
+September 29 at 9:48:55 p.m. Central. No pilot acceptance is implied.
 
 Effort is a rough planning range in focused engineering days, excluding approval,
 hosted CI, device/signing and external-access waits; these are not delivery promises.

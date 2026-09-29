@@ -1,23 +1,27 @@
 # Current state
 
-Recovery resumed September 29 at 04:39:03 UTC after Brian's approval. API
-configuration restart 2/5 (`b134094c-b6be-4f04-b8e9-87bbbd3e986a`) reuses the exact
-approved image/source, passes readiness and A/B CORS checks, and enables queue-only
-deletion; the worker is stopped/unscheduled. The recovery segment ends by 05:28:51
-UTC with a cutoff armed. A's fresh code was requested at 04:41:40 through the visible
-in-app links tab, with the same Auth identity; eight Auth users/six profiles and
-one reservation remain. Manual verification is pending; reservation expiry is
-05:01:39 UTC. B's separate in-app Preview form is prepared but unsubmitted.
-Three OTP requests/two deliveries and two conservative verification reservations
-are accounted for. No live Places/AI or deletion has run. The approved ceiling is
-105 cumulative live minutes/five same-image restarts; all other limits are unchanged.
+At the September 29 22:58 UTC check, API and worker deployments are both stopped,
+with no cron or next run and future API deletion admission false. The recovery
+cutoff requested shutdown at 05:28:21 UTC; its immediate read preceded complete
+shutdown, and the later provider read confirms both stopped. Exact instance stop
+time was not captured. The full recovery allocation is charged conservatively:
+90 of 105 approved live minutes are used; 15 remain reserved for the post-expiry
+phase. Two of five same-image configuration restarts are consumed.
+
+A's last code was sent September 28 at 11:41:40 p.m. Central and is expired. The
+associated reservation expired September 29 at 12:01:39 a.m. Central. Fresh database
+readback finds A unverified, eight Auth users/six profiles, zero active reservations,
+zero deletion rows and zero new provider usage. No new code was sent today. Three
+OTP requests/two deliveries and two conservative verification reservations remain
+accounted for. First-phase acceptance is incomplete; reconcile the missing cases
+and remaining phase allocation before any restart/resend. The temporary exact
+Preview CORS origin remains configured on the stopped API pending final removal.
 
 Brian confirmed all eight synthetic support messages reached the four aliases and
 privacy route. Hook/wrong-recipient/revoked-invite checks passed. The original live
 segment stopped after an inaccessible external-browser handoff and consumed
 40 minutes 11.955 seconds; that elapsed time and all prior attempts remain charged.
-The legacy staging browser session is preserved, and both operator forms are now
-in the visible in-app browser. The [approved recovery packet](p3-rehearsal-recovery.md)
+The legacy staging browser session is preserved, and A was handed off in the visible in-app browser. The [approved recovery packet](p3-rehearsal-recovery.md)
 and [execution evidence](evidence/e5e7d13/execution.md) retain the sequence and exact
 bounds. Priority 3 acceptance remains open; no real-pilot activation is implied.
 
@@ -64,7 +68,7 @@ environments are disabled. The approved manual rollout below consumed the API/we
 
 | Component | Source | Notes |
 | --- | --- | --- |
-| API (Railway `tableus-staging`) | `2eefdc5` | Same-image restart `b134094c-b6be-4f04-b8e9-87bbbd3e986a` (2/5) passed readiness and A/B CORS checks; queue-only deletion enabled, inline attempts off. Places ceiling 690; live providers unused. |
+| API (Railway `tableus-staging`) | `2eefdc5` | Same-image restart `b134094c-b6be-4f04-b8e9-87bbbd3e986a` (2/5) passed readiness/CORS, then cutoff stopped it. Future deletion admission/inline attempts off. Places ceiling 690; live providers unused. |
 | Web aliases `tableus-staging.vercel.app`, `links.table-us.com` | `2eefdc5` | READY Preview `dpl_7j4HwYgzPw4139i3W535V5iUFqrv`; public deletion/privacy/terms checked. |
 | Private deletion worker | `2eefdc5` | One empty startup completed and exited; no public domain/healthcheck, restart NEVER, schedule absent. One of four processing invocations consumed. |
 | Accepted native artifacts | `f94a1d9` | Isolated-staging acceptance with an owner-accepted simulator AppHang risk ([closeout](evidence/ios27-staging-f94a1d9/closeout.md)) |

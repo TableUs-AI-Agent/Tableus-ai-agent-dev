@@ -465,3 +465,25 @@ allowances and two verification submissions are conservatively accounted for;
 manual verification remains pending. No B/C/D signup or provider/deletion action.
 The visible in-app A/B forms are retained; private codes and identities are excluded
 from repository evidence. No additional source deployment occurred.
+
+
+## Cutoff reconciliation, September 29 at 22:58 UTC
+
+The local recovery cutoff receipt began 05:28:21.276577 UTC and completed its
+commands 05:28:30.445656 UTC: worker cron removed, future API admission false, API
+stop requested. Its immediate API read still had `deploymentStopped=false`; worker
+was stopped. Fresh readback at this checkpoint verifies both current deployments
+stopped, each with null cron/next run, and admission/inline false. API deployment
+metadata updated at 05:28:27.607 UTC; exact instance stop time was not captured.
+Charge the entire 49m48.045s allocation conservatively rather than fabricate a
+measured end: 90/105 cumulative minutes charged and 15 minutes reserved. Private
+ledger records the closed cutoff state, verification time and accounting basis.
+
+A remains unverified; fresh totals are eight Auth users/six profiles, zero active
+reservations, deletion rows and new provider usage. Its last code was sent at
+04:41:40.659236 UTC (September 28 11:41 p.m. Central), reservation expired
+05:01:39.315729 UTC, and the OTP is now expired too. No new code, account, restart,
+provider request or deletion was performed in response to the owner's question
+about where to find the code. Current ambient UI lists only the links signup tab;
+B visibility is unconfirmed. First-phase acceptance is incomplete. The temporary
+Preview CORS origin remains on the stopped API until final removal.

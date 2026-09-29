@@ -593,3 +593,16 @@ created. Keep the successful in-app handoff and require observable enrollment
 before moving on to B. Browser pointer activation produced no request; after
 readback established that fact, keyboard activation succeeded without a duplicate
 email. This is an operator interaction observation, not proof of an app defect.
+
+
+### Recovery cutoff reconciliation — 2026-09-29
+
+The recovery cutoff ran while awaiting A's manual code entry. Later readback
+verified API/worker stopped, no scheduling and admission off; A remains unverified.
+The exact instance stop timestamp was not captured, so charge the entire allocated
+recovery interval without claiming an exact measured stop time. Ninety of 105
+approved live minutes are consumed; the remaining 15 are reserved for post-expiry
+work. Do not reuse the expired code or automatically spend that reserve on the
+incomplete first phase. Establish mailbox readiness and reconcile remaining scope
+before any further OTP/restart. No additional allowance is inferred from a status
+question, the existing approval, or elapsed stopped time.
