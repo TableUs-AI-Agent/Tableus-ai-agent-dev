@@ -573,3 +573,10 @@ links origin can hold A while preserving the legacy staging-origin session.
 The form is filled but unsubmitted. No old reservation or session token is copied
 between browsers. Reconcile the unfinished acceptance cases and expired grant
 before further live actions; neither a fresh clock nor extra allowance is implied.
+
+Brian subsequently confirmed the visible A form. The existing Preview's unique
+origin provides a second in-app browser identity for B without clearing the legacy
+session or creating another deployment. Adding that exact origin to API CORS,
+45 more supervised live minutes and one additional same-image restart are proposed
+in the [recovery packet](p3-rehearsal-recovery.md), **not yet approved or applied**.
+All other cumulative bounds and stop conditions are retained.

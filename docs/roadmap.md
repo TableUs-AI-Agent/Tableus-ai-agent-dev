@@ -92,7 +92,9 @@ UTC September 29, consuming 40 minutes 11.955 seconds and leaving 19 minutes
 48.045 seconds. Both deployments are stopped; admission for future starts is off
 and no worker schedule exists. A's form is prepared in the visible in-app links
 tab without another OTP. Reconcile recovery and unfinished scope within the
-remaining cumulative bounds before another live action. This is not pilot acceptance. Brian operates
+remaining cumulative bounds before another live action. A/B in-app forms are now
+prepared, and A visibility is owner-confirmed; the bounded [recovery proposal](p3-rehearsal-recovery.md)
+awaits approval. This is not pilot acceptance. Brian operates
 the mailbox and enters codes directly; no credentials are requested in chat.
 
 Effort is a rough planning range in focused engineering days, excluding approval,

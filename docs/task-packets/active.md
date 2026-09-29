@@ -37,9 +37,13 @@ and a subsequent read confirmed completion. No source deployment, configuration
 restart, additional email, provider call or Auth deletion occurred. The existing
 cutoff disarms on the recorded session end; check the private receipt.
 
-**Next: confirm the owner can see the filled in-app A form, then reconcile the
-expired reservation and all unfinished cases against remaining bounds before
-any further OTP or API restart.** The original two-session sequence is incomplete;
+Brian has now confirmed visibility of the filled in-app A form. B's filled form
+is prepared on the existing Preview's distinct origin in a second in-app tab,
+without OTP or a new deployment. The [recovery proposal](../p3-rehearsal-recovery.md)
+requests 45 additional live minutes, one additional same-image configuration
+restart and temporary permission for that exact Preview origin in staging CORS.
+**These changes are not approved. Next: obtain Brian's decision on the concrete
+recovery proposal before any additional OTP or API restart.** The original two-session sequence is incomplete;
 do not claim signup, group or deletion acceptance. Keep all cumulative allowances.
 
 ## Historical live checkpoint, September 29 at 03:44 UTC

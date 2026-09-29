@@ -23,7 +23,10 @@ separate staging origins preserve legacy sessions. Session one used 40 minutes
 A's form is now filled in the visible in-app links-origin tab without sending a
 new code. The old external form must not be submitted. Reconcile recovery and
 the remaining acceptance scope before any additional OTP or restart; no allowance
-was reset. The cutoff is disarmed by the recorded session end. Fresh hosted
+was reset. Brian confirmed A's visible form; B is also prepared on the existing
+Preview's distinct origin in an in-app tab. The [recovery proposal](p3-rehearsal-recovery.md)
+is pending approval and does not change the current ceilings or runtime settings.
+The cutoff is disarmed by the recorded session end. Fresh hosted
 source/alias/grant/count checks passed. Priority 3 acceptance remains open.
 
 ## Source baseline
