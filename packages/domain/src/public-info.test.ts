@@ -13,10 +13,10 @@ import { requireCanonicalUuid } from "./index.ts";
 
 test("closed-beta public contacts use the canonical TableUs domain", () => {
   assert.deepEqual(PUBLIC_CONTACTS, {
-    supportEmail: "support@table-us.com",
+    supportEmail: "brian@table-us.com",
     privacyEmail: "privacy@table-us.com",
   });
-  assert.equal(mailto(PUBLIC_CONTACTS.supportEmail), "mailto:support@table-us.com");
+  assert.equal(mailto(PUBLIC_CONTACTS.supportEmail), "mailto:brian@table-us.com");
   assert.equal(mailto(PUBLIC_CONTACTS.privacyEmail), "mailto:privacy@table-us.com");
 });
 

@@ -38,6 +38,8 @@ class Settings(BaseSettings):
     supabase_jwt_audience: str = "authenticated"
     # Opt-in only after the migration and trusted recovery runner are deployed.
     tableus_account_deletion_enabled: bool = False
+    # Disable inline attempts when a separately enabled worker owns processing.
+    tableus_account_deletion_inline_attempt: bool = True
     supabase_service_role_key: SecretStr = Field(default=SecretStr(""), repr=False)
     cohort_ai_operations_per_day: int = Field(default=5, gt=0, le=1000)
     cohort_places_operations_per_day: int = Field(default=20, gt=0, le=10000)
@@ -55,7 +57,7 @@ class Settings(BaseSettings):
 
     live_ai_max_usd: float = Field(default=0.25, gt=0, le=0.25)
     ai_runtime_max_usd_30d: float = Field(default=4.0, gt=0, le=4.0)
-    places_runtime_max_attempts_30d: int = Field(default=150, gt=0, le=500)
+    places_runtime_max_attempts_30d: int = Field(default=150, gt=0, le=1000)
 
     @field_validator("tableus_runtime_db_role")
     @classmethod

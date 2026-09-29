@@ -1,4 +1,4 @@
-import { BETA_NOTICE_EFFECTIVE_DATE, mailto, PUBLIC_CONTACTS, PUBLIC_POLICY_LINKS } from "@tableus/domain";
+import { ACCOUNT_DELETION_HELP, BETA_NOTICE_EFFECTIVE_DATE, mailto, PUBLIC_CONTACTS, PUBLIC_POLICY_LINKS } from "@tableus/domain";
 import Link from "next/link";
 
 export default function PrivacyPage() {
@@ -13,9 +13,13 @@ export default function PrivacyPage() {
       <h2>Analytics and error reporting</h2>
       <p>During the beta, TableUs sends a small default-on set of anonymous aggregate product events to PostHog using a random in-memory session identifier that resets when the page or app process ends. We do not create analytics person profiles, persist an analytics identifier, use autocapture, collect location through analytics, or record sessions. Unexpected application errors may be sent to Sentry with messages, request bodies, headers, user fields, breadcrumbs, query strings, and private URL segments removed; performance traces, profiling, replay, and attachments are disabled. Raw emails, reviews, queries, precise locations, photos, prompts, provider responses, and complete share tokens are excluded.</p>
       <h2>Sharing and retention</h2>
-      <p>Plan content is visible only to approved participants. Taste-profile sharing is opt-in. Service providers receive only the information required to provide authentication, hosting, database, maps, AI, analytics, and error-reporting services. Beta records are retained while the account is active and for the limited period needed for security, backups, disputes, or legal obligations.</p>
+      <p>Plan content is visible only to approved participants. Taste-profile sharing is opt-in. Service providers receive only the information required to provide authentication, hosting, database, maps, AI, analytics, and error-reporting services. Account data is retained while your account is active.</p>
+      <p>{ACCOUNT_DELETION_HELP.limits}</p>
       <h2>Your choices</h2>
-      <p>You may disable taste sharing, export your application data, or request deletion from account settings. Organized plans must first be transferred or removed. Signing out or deleting application data may not immediately invalidate an already-issued authentication token.</p>
+      <p>{ACCOUNT_DELETION_HELP.inApp}</p>
+      <p>{ACCOUNT_DELETION_HELP.shared}</p>
+      <p>{ACCOUNT_DELETION_HELP.pending}</p>
+      <p>{ACCOUNT_DELETION_HELP.accessLoss}</p>
       <p><Link href="/account-deletion">How to request account deletion without signing in</Link></p>
       <h2>Safety and contact</h2>
       <p>TableUs is not intended for children under 13. Do not submit sensitive medical information. Questions and deletion problems can be sent to <a href={mailto(PUBLIC_CONTACTS.privacyEmail)}>{PUBLIC_CONTACTS.privacyEmail}</a>.</p>

@@ -392,8 +392,8 @@ Keep deletion availability per process. To pause admission while draining, the
 API has deletion disabled and a separately configured worker remains enabled.
 Neither CLI preflight refusal nor a paused API retry may consume an unavailable
 attempt. Aggregate worker status contains counts/ages only, not identity data.
-The [operations procedure](account-lifecycle-operations.md) proposes one finite
-batch of three every minute, explicit attention recovery and stop thresholds;
+The [operations procedure](account-lifecycle-operations.md) now prepares one finite
+batch of three every five minutes on Railway (its minimum supported cadence), explicit attention recovery and stop thresholds;
 no hosted scheduler or activation is authorized by this local completion.
 
 ## Cohort quotas and operator visibility — 2026-09-24
@@ -460,3 +460,40 @@ period. Mailbox coverage, secure assisted completion, actual retention settings
 and publication require their own operational evidence. The [support procedure](deletion-support-procedure.md)
 records those gaps and source-bound case handling; no real messages are authorized
 by this local implementation.
+
+## Priority 3 preparation — 2026-09-27
+
+Brian authorized independent preparation in a fresh chat, preserving closeout
+`810d410` above Priority 2 merge `462a7dd`. The named branch is
+`codex/pilot-staging-readiness`; the complete approval scope subsequently granted
+is recorded in [staging preparation](pilot-staging-preparation.md).
+
+Queue-only admission is an optional operating mode: disabling inline Auth
+attempts leaves transactional cleanup and durable status intact, with the
+separately configured worker responsible for removal. Inline attempts still
+default true; full deletion remains default off. This makes pending/drain
+rehearsal possible without invalid credentials or artificial queue insertion.
+Railway's five-minute minimum replaces the earlier one-minute scheduler proposal;
+worker provisioning and that operating cadence remain part of the gated request.
+
+Brian confirmed the controlled mailbox `brian@table-us.com`, four tagged aliases,
+and general support at the same address. Keep `privacy@table-us.com`, which he
+confirmed forwards to him. This is owner-provided routing information, not tested
+delivery. Preserve two-business-day acknowledgment and no email-only deletion.
+
+Local journey measurements support a proposed 40 Places/3 AI operations per day
+for the bounded staging exercise. The validation maximum for global Places
+attempts is 1,000 while the default stays 150. No live allowance or pilot-cohort
+budget is adopted here; the prepared request separately caps actual attempts,
+spend, fixtures and time. Brian subsequently approved that complete request for
+`e5e7d13478aaea6f526f2de9e6978824a30c79c3`, including publication/CI/review/merge,
+the four staging migrations, one API/web candidate and private worker, existing
+server-only credential configuration and the four-account/six-invite rehearsal.
+The combined incremental ceiling is $20 ($15 providers, $5 hosting); all narrower
+attempt, email, worker and time limits remain in force. Approval does not permit
+native builds, production, real invitations or legacy data cleanup. Retention
+settings must be verified through normal authenticated access before publication
+and rollout. Supabase Auth/schema/recovery readback is complete; TableUs Sentry and
+PostHog plan/retention readback completed September 28. Those event-access windows
+do not approve a retained-data purge policy. The routine signup template wording correction
+preserves the configured OTP length and all delivery/security settings.

@@ -480,3 +480,47 @@ async def test_postgres_subject_lock_waits_for_exclusive_transaction() -> None:
         await first.commit()
         await asyncio.wait_for(waiter, 5)
     assert entered.is_set()
+
+
+@pytest.mark.asyncio
+async def test_queue_only_admission_retry_and_paused_api_worker_drain(
+    client: AsyncClient, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    from tableus.config import get_settings
+
+    subject = "lifecycle-queue-only"
+    await seed_profile(subject)
+    settings = get_settings().model_copy(update={"tableus_account_deletion_inline_attempt": False})
+    monkeypatch.setattr(api, "get_settings", lambda: settings)
+    monkeypatch.setattr(api, "full_deletion_available", lambda: True)
+    auth_calls = []
+
+    async def synthetic_auth_removal(auth_subject: str) -> None:
+        auth_calls.append(auth_subject)
+
+    monkeypatch.setattr(auth_removal, "remove_auth_identity", synthetic_auth_removal)
+    for _ in range(2):
+        response = await client.post(
+            "/api/v1/me/deletion", headers=headers(subject), json={"confirmation": "DELETE"}
+        )
+        assert response.status_code == 200
+        assert response.json()["data"]["status"] == "pending"
+    digest = subject_digest(subject)
+    async with SessionFactory() as session:
+        assert await session.get(Profile, subject) is None
+        row = await session.get(AccountDeletion, digest)
+        assert row is not None and row.attempts == 0 and row.auth_subject == subject
+    assert auth_calls == []
+    monkeypatch.setattr(api, "full_deletion_available", lambda: False)
+    paused = await client.post(
+        "/api/v1/me/deletion", headers=headers(subject), json={"confirmation": "DELETE"}
+    )
+    assert paused.json()["data"]["status"] == "pending"
+    assert await account_lifecycle.process_deletion(digest)
+    assert auth_calls == [subject]
+    completed = await client.get("/api/v1/me/deletion", headers=headers(subject))
+    assert completed.json()["data"]["status"] == "completed"
+    assert (await client.get("/api/v1/me", headers=headers(subject))).status_code == 403
+    async with SessionFactory() as session:
+        row = await session.get(AccountDeletion, digest)
+        assert row is not None and row.auth_subject is None and row.attempts == 1

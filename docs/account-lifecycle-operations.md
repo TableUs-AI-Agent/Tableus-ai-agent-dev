@@ -11,7 +11,12 @@ The API and worker each need the server-only Auth credential and correct Auth
 origin when their deletion capability is enabled. The API checks availability
 before new admission and can make an immediate bounded Auth-removal attempt on a
 request or enabled retry; scheduling a healthy worker alone does not enable it.
-Count both API and worker attempts in an approved live scope. Their enable flags
+Count both API and worker attempts in an approved live scope.
+`TABLEUS_ACCOUNT_DELETION_INLINE_ATTEMPT=false` leaves admission enabled but
+returns the durable pending job without an inline attempt, including explicit
+client retries. This permits deterministic pending/drain rehearsal without faulty
+credentials. It does not enable deletion, remove the credential preflight, or
+change worker retries. A healthy, separately enabled worker is required. Their enable flags
 remain per process, so API admission can pause while the worker drains.
 
 ## Before scheduling
@@ -36,8 +41,14 @@ remain per process, so API admission can pause while the worker drains.
    when processing is disabled. Confirm that its counts match private database
    evidence without exporting subjects or email addresses.
 
-Schedule **one** invocation every minute, skip a tick if the previous one is
-still running, and pass `--limit 3` (the default). One batch has a 55-second
+The prepared Railway worker uses **one** invocation every five minutes (UTC),
+skips a tick if the previous invocation is running, and passes `--limit 3`.
+[Railway cron](https://docs.railway.com/cron-jobs) requires a five-minute minimum;
+this replaces the earlier one-minute proposal. The source-controlled
+[worker configuration](../railway.deletion-worker.toml) must be selected explicitly
+for a separate private service, never the API. It disables automatic restarts and
+uses GNU `timeout` (TERM at 70 seconds, KILL five seconds later), including the
+aggregate status read. Verify `timeout` in the built image before scheduling. One batch has a 55-second
 application deadline and attempts at most three due rows. Each Auth attempt is
 bounded to 15 seconds; a 70-second process watchdog leaves startup and shutdown
 room. Preserve scheduler exit codes and the aggregate line `processed=N`; it
@@ -72,9 +83,9 @@ review them against measured throughput before increasing admission.
 | --- | --- |
 | `attention > 0` or `missing_subject > 0` | Page the owner and inspect the affected private rows. No automatic reset. |
 | Oldest pending age over 15 minutes | Investigate worker executions, leases, Auth availability and due backlog. |
-| Oldest pending age over 60 minutes, or no successful worker run for five minutes while pending is nonzero | Treat as an incident; pause new admission at the API while preserving the queue. |
+| Oldest pending age over 60 minutes, or no successful worker run for 15 minutes while pending is nonzero | Treat as an incident; pause new admission at the API while preserving the queue. |
 | `expired_final_claims > 0` beyond the next worker run | Check runner health; a later batch should classify these as attention. |
-| `ready_due > 0` grows across consecutive minute runs | Check capacity and provider errors before changing the fixed batch limit. |
+| `ready_due > 0` grows across consecutive five-minute runs | Check capacity and provider errors before changing the fixed batch limit. |
 | `worker_available=false` with pending rows | The worker cannot drain them. Repair its private configuration before running a batch. |
 
 Do not alert on `active_leases > 0` alone; an in-flight attempt normally holds a
@@ -134,3 +145,9 @@ Activation and rollback decisions must follow the repository's explicit gates
 for migration, secrets and deployment. See [account lifecycle](account-lifecycle.md)
 for the API/data contract and [release runbook](release-runbook.md) for source
 and evidence binding.
+
+## Priority 3 prepared campaign
+
+The [staging preparation](pilot-staging-preparation.md) binds the exact targets,
+synthetic fixture counts, proposed five-minute schedule, aggregate limits and
+approval boundary. No worker has been provisioned or activated.

@@ -1,19 +1,22 @@
 # Current state
 
-Updated 2026-09-27. GitHub state and deployment-trigger settings were freshly
-read for [Priority 2 publication](evidence/f621cf5/implementation.md). Application
-serving identities below remain the September 25 record, not fresh health checks.
+Updated 2026-09-28. Priority 3 read-only inventory freshly confirmed API/web
+source, API readiness, migration head, grants, admission counts and deployment
+triggers; see [staging preparation](pilot-staging-preparation.md). Brian approved
+the bounded campaign. Supabase preflight and a private local restore check passed;
+signup email wording was corrected. TableUs telemetry-retention readback is complete. No deployment,
+hosted migration, Auth user, email or provider operation changed.
 
 ## Source baseline
 
 | Item | Value |
 | --- | --- |
-| Integrated source baseline | Application lineage `4a2f9ecc37070f434df7fc75c1054d5875f21ba9`, September 26–27 realignment, publication guard and two test-only CI repairs through `97c3c65` |
-| Refreshed `origin/main` | `8ae3c94eb3e41b87f0840cd5aa2b0827c0882af4`, approved merge of [PR #7](https://github.com/TableUs-AI-Agent/Tableus-ai-agent-dev/pull/7) on September 27; GitHub uses `main`, with no branch protection/rulesets at preflight |
-| Integration status | Priority 1 complete. Merge tree exactly matches the passing `97c3c65` candidate. No deployment. The separate native diagnostic branch was not merged; do not merge it wholesale. Priority 2 is implemented locally on `codex/pilot-experience-measurement`; application candidate `f621cf5` passes local readiness and hosted CI on `a08e3d0`; [draft PR #8](https://github.com/TableUs-AI-Agent/Tableus-ai-agent-dev/pull/8) awaits review and approved merge. See the [handoff](evidence/f621cf5/implementation.md). |
+| Integrated source baseline | Priority 1 merge `8ae3c94` plus Priority 2 application candidate `f621cf5` and communication/review documentation through `1270206` |
+| Refreshed `origin/main` | `462a7dd6b3428d21a8fbccfe20a0003361904761`, approved merge of [PR #8](https://github.com/TableUs-AI-Agent/Tableus-ai-agent-dev/pull/8) on September 27 |
+| Integration status | Priorities 1 and 2 complete. The merge tree exactly matches passing CI head `1270206`. No deployment. The separate native diagnostic branch was not merged; do not merge it wholesale. See the [integration evidence](evidence/f621cf5/integration.md). Priority 3 is approved on `codex/pilot-staging-readiness`, preserving local closeout `810d410`; remaining preflight still gates publication and rollout. |
 | Root checkout | Stale at `codex/privacy-safe-observability` (`8e9625e`). Use the baseline, not the root checkout. |
 
-The last full local readiness at the baseline's application source passed 214
+Priority 1 local readiness at its earlier application source passed 214
 Python and 317 JavaScript tests with zero skips, plus lint, types, contract
 generation, web and Expo-web builds and deterministic smoke
 ([handoff](handoffs/2026-09-25-deletion-support.md)). [Integration PR #7](https://github.com/TableUs-AI-Agent/Tableus-ai-agent-dev/pull/7)
@@ -27,17 +30,18 @@ and full rechecks and remains a reliability observation. The
 [integration review](evidence/6dac996/integration.md) distinguishes reused local
 checks from the PR's hosted result.
 
-Priority 2 [hosted CI](https://github.com/TableUs-AI-Agent/Tableus-ai-agent-dev/actions/runs/36301151907)
+Priority 2 [final hosted CI](https://github.com/TableUs-AI-Agent/Tableus-ai-agent-dev/actions/runs/36302260485)
 passed **238 Python tests, 326 JavaScript tests and five browser journeys, zero
 skips**, including restricted PostgreSQL roles/migrations, lint/types, deterministic
-evaluation, contract checks, web/Expo-web builds and smoke. The tested merge tree
-matches the published `a08e3d0` head. Local account/help and private-Join recovery
+evaluation, contract checks, web/Expo-web builds and smoke. The approved merge
+`462a7dd` and tested `1270206` head have the same file tree. Local account/help and private-Join recovery
 checks also passed. No application repair was needed in hosted CI; the
 [handoff](evidence/f621cf5/implementation.md) preserves local dev-cache timeout
 observations and source binding. Documentation closeout does not change app inputs.
 
 Vercel project Git auto-deployment is enabled, but repository configuration now
-excludes `codex/pilot-realignment`, `codex/pilot-experience-measurement` and `main`
+excludes `codex/pilot-realignment`, `codex/pilot-experience-measurement`,
+`codex/pilot-staging-readiness` and `main`
 ([Vercel Git configuration](https://vercel.com/docs/project-configuration/git-configuration)). Other branches still need trigger
 review before pushing. Railway currently has no deployment triggers and PR
 environments are disabled. No hosting setting or running deployment was changed.
@@ -51,9 +55,10 @@ environments are disabled. No hosting setting or running deployment was changed.
 | Accepted native artifacts | `f94a1d9` | Isolated-staging acceptance with an owner-accepted simulator AppHang risk ([closeout](evidence/ios27-staging-f94a1d9/closeout.md)) |
 | Production-facing `table-us.com` | `e1184ec` | Not a pilot target |
 
-On the recorded deployment state, the later features below are not deployed.
-Four migrations added after `f94a1d9` are expected to be pending: account deletion queue, shared-content
-provenance, cohort counters and recipient-bound invites. After that last
+The later features below are not deployed. Fresh hosted Alembic head is
+`8b1d4a6c2e90`; exactly four migrations are pending, in order: deletion queue
+`6d7e3b91a2c4`, cohort counters `ab72e4f39d10`, recipient-bound invites
+`d48f6c2ab913`, shared-content provenance `9a1f2e7c4b80`. After that last
 migration, any unused legacy unbound invite code in staging is rejected for new
 signups and must be reissued to a named recipient.
 
@@ -68,7 +73,7 @@ authentication. Earlier candidate evidence is not acceptance of the cumulative
 local application. The API allows organizer finalization with zero or partial
 votes; the agreed pilot counts success only with at least two independent votes.
 
-The Priority 2 source candidate lands users on Plans and exposes Plans/Account on
+The merged Priority 2 source lands users on Plans and exposes Plans/Account on
 web and mobile. Deferred Discover, Friends/People, Review, Taste/Profile and photo
 entry routes lead to Plans; their implementations, API endpoints and export fields
 remain. Mobile Account has an independent tab plus its existing deletion-recovery
@@ -96,8 +101,10 @@ unknown history/deletion coverage. This does not add a quorum or change ranking.
 ## Known gaps and risks for the pilot
 
 - Reads of plans with candidates hydrate Places; empty/summary/revision reads do
-  not do that hydration. The default 20 daily logical Places operations per
-  account needs complete-journey sizing, separately from billable attempts/spend.
+  not do that hydration. Deterministic two-round journey sizing now measures 18/22/30 organizer
+  operations for 2/4/8 diners (90/226/690 nominal group HTTP attempts). Prepared
+  staging settings propose 40/day with explicit spend/attempt limits; neither
+  the default 20/day nor that proposal is approved live capacity.
 - Structured cuisines are intersected only when supplied. Current web/mobile
   plan forms send free-text notes and empty cuisine arrays. The four-result
   requirement can still produce no result; its effect on real groups is unmeasured.
@@ -107,7 +114,9 @@ unknown history/deletion coverage. This does not add a quorum or change ranking.
   finalizations may have no voter count. Report unknown outcomes and these accepted
   coverage gaps; the retained-plan rate is not complete cohort conversion.
 - Full deletion is implemented but has no hosted activation/worker acceptance.
-  Priority 3 must prove the normal self-service path, organizer-blocker resolution,
+  Priority 3 has prepared queue-only API admission, a separate five-minute Railway
+  worker and four-account rehearsal; external execution must prove the normal
+  self-service path, organizer-blocker resolution,
   recovery and truthful retention/copy before invitations. Brian accepts that a
   known pilot participant who loses sign-in email access may be unable to delete
   until secure recovery/assisted verification exists. A support contact/escalation
@@ -118,13 +127,50 @@ unknown history/deletion coverage. This does not add a quorum or change ranking.
 - Ad hoc iOS builds install only on devices included in the provisioning profile;
   collect all pilot iPhone device IDs before building. Production mobile builds
   are deliberately disabled until production origins and update policy exist.
-- Integration CI is green on the tree merged as `8ae3c94`; later staging/native
+- Integration CI is green on the tree merged as `462a7dd`; later staging/native
   acceptance remains separate. A local plan-refresh component-test timeout
   did not recur in focused/full rechecks or either subsequent hosted run; its
   cause is unestablished.
 - The old frozen dependency graph (`f94a1d9` native artifacts and API image) is
   not covered beyond September 30; a new candidate from the baseline uses the
   remediated graph ([disposition](evidence/dependency-toolchain-2026-09-21/README.md)).
+
+## Priority 3 local preparation
+
+The candidate adds optional worker-only Auth processing via
+`TABLEUS_ACCOUNT_DELETION_INLINE_ATTEMPT=false`; default inline behavior remains
+true, full-deletion admission remains off. Repeated requests in worker-only mode
+return durable status without consuming an attempt. Queue-only/pause/drain checks
+pass against SQLite and restricted PostgreSQL. A separate prepared Railway cron
+uses five-minute ticks, batch three and a 70/75-second TERM/KILL watchdog.
+
+Shared privacy/help copy now explains pending Auth removal, authored-content
+cleanup, retained pseudonymous records without automatic purge, and the accepted
+email-access-loss limitation. Brian confirmed `brian@table-us.com` for support,
+with `privacy@table-us.com` forwarding to him, plus four controlled test aliases.
+No mailbox delivery or publication has occurred. Brian approved the
+[prepared scope](pilot-staging-preparation.md) against `e5e7d1`: six invites, four
+accounts, worker/Auth/email limits, $15 provider/$5 hosting ceilings, rollback
+compatibility and required Auth/retention readback. Supabase dashboard checks now
+confirm the hook, custom SMTP, OTP/session settings and app-schema isolation.
+There are no scheduled backups/PITR on this Free-plan project. A private logical
+backup and isolated local app/public restore/migration check passed; the
+[execution record](evidence/e5e7d13/execution.md) records scope and limitations.
+TableUs Sentry Developer and PostHog Free plan/retention readback is complete;
+event windows are not universal erasure deadlines. The hosted signup email template now says
+“verification code” instead of “six-digit code,” matching the configured eight-digit
+OTP without changing security settings. No email, deployment or migration occurred.
+The global Places configuration maximum is now 1,000; default 150 is unchanged.
+That validation ceiling grants no spending. API/web/native staging identities above
+remain unchanged; no new migration is introduced by this preparation.
+
+Local preparation is complete. Readiness finished in stages after a sandbox
+loopback denial: 206 Python passes with 36 PostgreSQL-only skips, 326 JavaScript
+passes, lint/types, contracts, web/Expo-web builds, smoke and report-only performance.
+An additional restricted-PostgreSQL pass covered 40 selected tests with zero skips;
+two production-build deletion-help browser journeys passed. Current-candidate
+hosted CI, merge and staging acceptance remain unperformed. See the
+[verification and next gate](pilot-staging-preparation.md#local-verification-and-handoff).
 
 ## Native validation
 

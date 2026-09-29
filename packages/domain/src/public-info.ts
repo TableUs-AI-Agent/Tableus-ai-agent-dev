@@ -1,5 +1,5 @@
 export const PUBLIC_CONTACTS = {
-  supportEmail: "support@table-us.com",
+  supportEmail: "brian@table-us.com",
   privacyEmail: "privacy@table-us.com",
 } as const;
 

@@ -18,6 +18,7 @@ export default function AccountDeletionPage() {
       <a className="inline-flex min-h-11 items-center rounded-xl bg-[var(--accent)] px-5 py-3 font-semibold text-[var(--foreground)] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--accent)]" href={mailto(PUBLIC_CONTACTS.privacyEmail)}>Email {PUBLIC_CONTACTS.privacyEmail}</a>
       <p className={text}>If an email app does not open, copy this address: <strong className="select-all break-all font-semibold text-[var(--foreground)]">{PUBLIC_CONTACTS.privacyEmail}</strong></p>
       <p className={text}>{ACCOUNT_DELETION_HELP.acknowledgment}</p>
+      <p className={text}>{ACCOUNT_DELETION_HELP.accessLoss}</p>
     </section>
     <section aria-labelledby="request-in-app" className="space-y-4">
       <h2 id="request-in-app" className={heading}>Request in the app</h2>

@@ -877,7 +877,7 @@ async def request_full_deletion(
         await session.rollback()
         # An admission pause may leave a separate worker draining existing jobs.
         # Return durable status without consuming an unavailable attempt here.
-        if full_deletion_available():
+        if full_deletion_available() and get_settings().tableus_account_deletion_inline_attempt:
             await process_deletion(digest)
         async with SessionFactory() as fresh:
             row = await fresh.get(AccountDeletion, digest)
@@ -902,7 +902,8 @@ async def request_full_deletion(
     await session.commit()
     from .request_controls import invalidate_private_responses
     invalidate_private_responses()
-    await process_deletion(row.subject_hash)
+    if get_settings().tableus_account_deletion_inline_attempt:
+        await process_deletion(row.subject_hash)
     async with SessionFactory() as fresh:
         outcome = await fresh.get(AccountDeletion, row.subject_hash)
         if outcome is None:

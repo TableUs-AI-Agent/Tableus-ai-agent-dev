@@ -1,90 +1,85 @@
-# Active packet: focused pilot experience and measurement
+# Active packet: Priority 3 approved staging campaign
 
-## Status and working identity
+## Identity and authorization
 
-Priority 2 of the [roadmap](../roadmap.md) is implemented and verified. Brian's
-September 27 instruction to continue with the next step approves review and merge
-of PR #8; integration is pending the final published checks. No later priority
-has started. Every response now includes development next steps, as recorded in
-[the workflow](../development-workflow.md#hand-off) and [AGENTS.md](../../AGENTS.md).
-Brian approved publication and hosted CI in this chat on September 27.
-[Draft PR #8](https://github.com/TableUs-AI-Agent/Tableus-ai-agent-dev/pull/8)
-is published; [hosted CI](https://github.com/TableUs-AI-Agent/Tableus-ai-agent-dev/actions/runs/36301151907)
-passed on `a08e3d0f64ed43c839adc4e9d7ae5134a45fbd6a`. The closeout changes only docs.
-The [source-bound handoff](../evidence/f621cf5/implementation.md) and
-[PR description](../evidence/f621cf5/pull-request.md) record verification and limits.
-The product direction and September 27 follow-up decisions are
-recorded in [decisions](../decisions.md#pilot-follow-up--adopted-2026-09-27).
-Priority 1 is complete: Brian approved [PR #7](https://github.com/TableUs-AI-Agent/Tableus-ai-agent-dev/pull/7),
-merged as `8ae3c94eb3e41b87f0840cd5aa2b0827c0882af4`. Its tree matches
-`97c3c65`, which passed [hosted CI](https://github.com/TableUs-AI-Agent/Tableus-ai-agent-dev/actions/runs/36298539456).
-The [integration evidence](../evidence/6dac996/integration.md) records review,
-test-only repairs, validation limits and unchanged deployments.
+Brian authorized the next priority in this fresh chat on September 27, 2026.
+Use `/Users/brianchei/repos/Tableus-ai-agent-dev/.worktrees/pilot-realignment`
+on `codex/pilot-staging-readiness`. The clean starting commit is
+`810d410d32e7dd4ab29dc98a83ae733a304c10b3`, preserving the documentation closeout
+above Priority 2 merge `462a7dd6b3428d21a8fbccfe20a0003361904761`.
+Read-only GitHub branch-tip inspection confirmed that merge remains remote main.
+The root checkout and local main are stale and are not implementation bases.
 
-- Current branch: `codex/pilot-experience-measurement`, created from the approved merge.
-- Worktree: `/Users/brianchei/repos/Tableus-ai-agent-dev/.worktrees/pilot-realignment`.
-- Base for the next change: `8ae3c94eb3e41b87f0840cd5aa2b0827c0882af4` on `origin/main`.
-- The eight pre-existing documentation closeout changes are preserved on this branch.
-- Root checkout `codex/privacy-safe-observability` and local `main` are stale;
-  confirm actual branch/remote state rather than using them as implementation bases.
+Priorities 1 and 2 are integrated; [Priority 2 evidence](../evidence/f621cf5/integration.md)
+binds the unchanged baseline to passing CI. Local preparation is complete; Brian
+approved the exact candidate and bounded execution request below. Finish its
+preflight, publication/CI/review, migration/rollout and synthetic acceptance in order.
 
-## Outcome and scope
+## Bounded outcome
 
-Make the shared-plan experience and completion measurement match the agreed pilot.
+1. Inventory actual API/web source, database migration head, runtime/Auth-hook
+   grants, admission state, configuration and deployment triggers read-only.
+2. Size complete 2–8-person journeys in logical quotas, actual provider attempts
+   and estimated spend using deterministic analysis/tests. Twenty daily Places
+   operations is a code default, not an approved budget.
+3. Prepare a finite deletion worker, provider-compatible schedule, separate
+   admission/drain flags, recovery limits, privacy/retention copy and support route.
+4. Specify synthetic accounts, controlled inboxes and recipient-bound invites;
+   Auth/email/provider ceilings; blocker, recovery and pause/drain cases; stop
+   conditions; compatible migration/rollout/rollback order.
+5. Finish independent implementation and focused checks, then one `make ready`
+   if executable inputs change. Update source-of-truth documents and hand off
+   exact source plus one concrete request for gated external execution.
+6. Under Brian's subsequent approval, execute the prepared campaign in order,
+   recording exact source, hosted evidence and consumed allowances. Stop at its
+   prerequisites, failures and limits; finish with admission and schedule paused.
 
-- Signed-in web/mobile users land on Plans; Plans and Account remain accessible.
-  Hide Discover, Friends/People, Review, Taste/Profile and photo surfaces, including
-  direct entry. Preserve their code/data, endpoints and export fields.
-- Provide mobile Account access before hiding Profile. Preserve invite, auth,
-  private Join, privacy, legal and deletion-help navigation and recovery.
-- Record `distinct_voter_count` for the active run in `plan.finalized`; preserve a
-  validated integer in the range 0–8 through account deletion's strict payload
-  allowlist independently of whether its candidate or run still exists, without
-  retaining voter identities or arbitrary payload fields.
-  Cover zero/one/multiple voters, vote updates, deleting the finalizer/another
-  member, removal of the recorded candidate/run and missing/invalid old fields.
-  The removed-candidate/run test must still count the earlier finalization.
-  Validate a read-only query that counts
-  each eligible plan once across reopen/re-finalize and reports deletion-related
-  coverage gaps. Do not reconstruct missing historical counts from current votes.
-- Preserve organizer finalization discretion; no new quorum or ranking feature.
+## Boundaries
 
-## Sequence and completion
+Read-only inspection, local code/configuration and deterministic checks are
+authorized. Merges, deployment-triggering pushes, hosted migrations/resources,
+secrets, deployments, live Auth/email/provider rehearsal, signed native builds,
+real invitations, production actions and destructive cleanup need explicit approval.
+Brian has supplied approval for the exact bounded campaign below; do not request
+it again. Native builds, real invitations, production and destructive cleanup
+remain outside that approval.
+Do not reopen canceled simulator/security campaigns or reuse spent allowances.
+Keep one API process and fragment emission off. Do not merge the native diagnostic
+branch. Every response includes the next development action, its purpose and gates.
 
-1. Provide mobile Account access, then focus both clients' navigation and landing
-   routes on Plans/Account while preserving the recovery and legal paths above.
-2. Add the finalization count and its strict deletion-cleanup allowlist/test coverage.
-3. Validate the bounded measurement query and user journeys against those changes.
+## Local preparation complete; campaign approved
 
-Completion: focused navigation/recovery, audit-count/cleanup and measurement
-checks, shared-plan browser checks, one `make ready` and CI. Update the lifecycle
-contract for the new safe event field when its implementation changes. Application
-changes produce application candidate `f621cf5dbf0c8663d92be5fe613b9910b68a9953`
-for later acceptance. Publication is complete; merge and deployment remain gated.
+The [prepared campaign](../pilot-staging-preparation.md) records inventory,
+measured journey costs, the separate worker configuration, exact fixtures,
+limits, stop conditions and the combined approval request. Brian confirmed
+`brian@table-us.com` for OTPs/four aliases and general support; keep
+`privacy@table-us.com`, which forwards to him. Delivery is not yet verified.
 
-Local `make ready` passed once: 202 Python tests with 36 PostgreSQL-only skips,
-326 JavaScript tests with zero skips, lint/types, generated contracts, web and
-Expo-web builds, deterministic smoke and report-only bundle baseline. No migration
-or dependency change. The [measurement procedure](../pilot-measurement.md) documents
-the tested bounded query and accepted coverage gaps. Hosted CI passed all 238 Python
-and 326 JavaScript tests plus five browser journeys, with zero skips, including
-restricted PostgreSQL/migrations, builds, contracts and smoke. All five shared-plan/navigation browser journeys,
-five account/deletion-help recovery cases and four private-Join cases pass locally
-with Chrome. Initial local plan-detail responses timed out using the existing dev
-cache; the unchanged application passed after preserving that cache and starting
-a fresh one. Keep the diagnostics; this is not an application defect fix.
+Local readiness completed in stages after a sandbox loopback restriction:
+lint/types, 206 Python tests (36 PostgreSQL-only skips), 326 JavaScript tests,
+contracts without drift, web/Expo-web builds, smoke and report-only performance.
+The separate restricted-PostgreSQL pass ran 40 selected tests with zero skips;
+two production-build browser journeys passed. See the campaign's verification
+section for evidence and limits. No hosted CI, push, merge, hosted migration,
+resource/secret change, runtime configuration change, deployment or live rehearsal
+was performed. The routine signup email wording correction below is the sole
+hosted change so far.
 
-## Boundaries and dependencies
+Brian approved the combined campaign on September 27 against application candidate
+`e5e7d13478aaea6f526f2de9e6978824a30c79c3`. The exact fixture, attempt, spending,
+rollout and stop limits in the prepared campaign remain binding; approval does not
+waive preflight. The [execution record](../evidence/e5e7d13/execution.md) tracks
+progress and consumed allowances.
 
-The completed integration is not staging/native acceptance. Repository configuration
-now excludes this objective branch, `codex/pilot-realignment` and `main` from Vercel
-Git deployment. Read-only preflight confirms Railway has no deployment triggers or
-PR environments. Recheck before any gated release action. Do not merge the separate native
-diagnostic branch wholesale or reopen its closed allowances.
-
-Secrets, resources, migrations, deployments, signed pilot builds,
-real invitations and destructive cleanup retain the [approval gates](../../AGENTS.md#approval-gates).
-Do not resume the canceled simulator/security campaigns or reuse spent allowances.
-The [pilot checklist](../release-readiness-checklist.md) defines later acceptance;
-Priority 3 includes approved deletion activation and synthetic rehearsal, and
-Priority 4 requires the private iPhone roster before its signed build.
+Normal Supabase dashboard readback is complete for Auth/SMTP, exposed schemas
+and backup availability. The Free plan has no scheduled backups/PITR, so a private
+logical export was taken through the normal linked CLI on FileVault-encrypted
+storage. Local app/public restore and the four migrations passed against it.
+The signup email now says “verification code,” verified after reload; no email was
+sent. Brian switched to the TableUs dashboards on September 28; Sentry Developer
+and PostHog Free plan/retention readback is complete. The refreshed database/source
+inventory is unchanged except that old usage aged out of the rolling window.
+Next: publication/CI/review, followed by quiesced migration and rollout under the
+existing approval. No credential extraction is permitted.
+Priority 3 staging acceptance remains open. Priority 4 device/native acceptance,
+real pilot invitations and production remain separate.

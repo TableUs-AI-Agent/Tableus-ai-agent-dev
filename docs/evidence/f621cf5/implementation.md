@@ -91,10 +91,13 @@ base `8ae3c94eb3e41b87f0840cd5aa2b0827c0882af4`. Its tree and the PR head tree b
 are `8be5ff50f40cbacc2193b4b980970d208b649fef`. A subsequent documentation-only
 closeout records these results; it changes no application, test or configuration
 inputs. GitHub's action-runtime notices are nonblocking and were not expanded into
-a toolchain upgrade. The PR remains a draft for review; merge is not approved.
+a toolchain upgrade. Brian subsequently approved review and merge. PR #8 is now
+merged as `462a7dd6b3428d21a8fbccfe20a0003361904761`, matching final passing CI head
+`1270206`; [integration evidence](integration.md) records the gate and unchanged
+deployments. No application changes followed `f621cf5`.
 
-Approval includes routine deterministic CI fixes in this same chat. Merge and
-deployment remain separately gated. Stop for an unexpected deployment trigger,
+Approval included routine deterministic CI fixes and the later explicit merge
+in this same chat. Deployment remains separately gated. Stop for an unexpected deployment trigger,
 new external resource/secret or paid/live requirement, or significant scope
 change. No force push or branch deletion is proposed.
 

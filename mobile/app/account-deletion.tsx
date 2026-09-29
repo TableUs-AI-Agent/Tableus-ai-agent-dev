@@ -20,6 +20,7 @@ export default function AccountDeletionScreen() {
     <Text selectable style={paragraph}>If an email app does not open, copy this address: {PUBLIC_CONTACTS.privacyEmail}</Text>
     {emailError ? <Text accessibilityRole="alert" selectable style={paragraph}>Could not open an email app. Copy the address above to contact us.</Text> : null}
     <Text selectable style={paragraph}>{ACCOUNT_DELETION_HELP.acknowledgment}</Text>
+    <Text selectable style={paragraph}>{ACCOUNT_DELETION_HELP.accessLoss}</Text>
     <Text selectable accessibilityRole="header" style={heading}>Request in the app</Text>
     <Text selectable style={paragraph}>{ACCOUNT_DELETION_HELP.inApp}</Text>
     <Text accessibilityRole="link" onPress={() => router.push("/account")} style={link}>Open Account and data</Text>

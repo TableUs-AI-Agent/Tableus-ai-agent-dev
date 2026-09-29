@@ -7,7 +7,10 @@ and the [pilot checklist](release-readiness-checklist.md) for credential/worker
 approval and synthetic-account rehearsal. This remains a historical proposal:
 rebind its candidate, migration range, native task reservation and next-objective
 statements before reuse. Preserve worker/rollback safeguards; no native campaign,
-budget or deployment is reopened by this document.
+budget or deployment is reopened by this document. The current bounded request is
+[Priority 3 staging preparation](pilot-staging-preparation.md); its five-minute
+Railway schedule and 15-minute missed-run incident threshold replace the older
+one-minute schedule and five-minute threshold retained below as history.
 
 **Prepared candidate; not authorization to execute.** Local verification is
 complete. Target reservation, hosted resource identity and release acceptance
