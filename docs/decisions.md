@@ -606,3 +606,16 @@ work. Do not reuse the expired code or automatically spend that reserve on the
 incomplete first phase. Establish mailbox readiness and reconcile remaining scope
 before any further OTP/restart. No additional allowance is inferred from a status
 question, the existing approval, or elapsed stopped time.
+
+
+### Auth email receipt diagnosis — 2026-09-29
+
+Treat provider delivery status and owner-visible receipt separately. Brian reports
+no OTP email; Resend reports both A messages delivered, with no recipient suppression
+entry. The latest sender matches Brian's address and targets its tagged alias.
+Google documents that self-to-alias mail may bypass Inbox, but that remains a
+hypothesis until mailbox or recipient-side log evidence confirms it. Use a focused
+all-mail search, then exact Message-ID trace if absent. Do not resend or change
+SMTP/DNS/suppression settings based only on provider status or that hypothesis.
+The prior support-mail receipt confirmation remains valid for those eight messages,
+and does not prove receipt of the separate Auth emails.

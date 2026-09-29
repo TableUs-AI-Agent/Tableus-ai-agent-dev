@@ -38,8 +38,20 @@ rows/new provider rows. No B/C/D enrollment, group journey or deletion acceptanc
 No new OTP was sent on this turn. User asks where the code is; direct them to the
 Brian inbox receiving the A alias, including Spam, and confirm actual receipt.
 
-**Next: establish that Brian can find the email, then reconcile the incomplete
-first phase against the remaining reserved allocation before any resend/restart.**
+Brian subsequently reports the code was not received. Resend lists both A Auth
+emails as delivered and the exact alias suppression lookup returns not found. The
+latest sender is `Brian <brian@table-us.com>` with subject `Your TableUs verification
+code`. No code/body was displayed or saved in evidence. Provider acceptance is not
+inbox receipt; self-to-alias Gmail handling is a hypothesis, not a proved cause.
+
+**Next: Brian searches the mailbox receiving the A alias using
+`in:anywhere subject:"Your TableUs verification code" to:brian+tableus-p3-a@table-us.com`
+and reports found/no results, without sharing the code. If absent, inspect the
+recipient-side email logs using the exact message ID stored privately. Reconcile
+the incomplete phase/time reserve before any resend/restart.** No SMTP change,
+suppression removal, DNS edit or additional send is authorized by a guessed cause.
+Three diagnostic status reads are counted; known aggregate status-read use is 15/30.
+
 The earlier pending verification instructions are stale. Do not submit the old
 code, reset the clock or automatically extend the approved recovery. Preserve the
 unverified A identity and all legacy data. B's old tab visibility is unconfirmed;

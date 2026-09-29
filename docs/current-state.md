@@ -17,6 +17,14 @@ accounted for. First-phase acceptance is incomplete; reconcile the missing cases
 and remaining phase allocation before any restart/resend. The temporary exact
 Preview CORS origin remains configured on the stopped API pending final removal.
 
+Brian reports the Auth code email was not received. Resend metadata reports both
+A code messages delivered; the exact alias has no suppression entry. The latest
+message's sender was `Brian <brian@table-us.com>`, subject `Your TableUs verification
+code`. These provider results do not establish inbox placement or owner receipt.
+A focused all-mail search is pending; self-to-alias Gmail handling is only a possible
+explanation. Three read-only delivery diagnostic calls were charged, with no new
+email, SMTP change or service restart. Do not mark the OTP handoff passed.
+
 Brian confirmed all eight synthetic support messages reached the four aliases and
 privacy route. Hook/wrong-recipient/revoked-invite checks passed. The original live
 segment stopped after an inaccessible external-browser handoff and consumed

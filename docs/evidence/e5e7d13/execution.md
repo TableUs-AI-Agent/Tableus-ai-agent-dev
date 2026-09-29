@@ -487,3 +487,23 @@ provider request or deletion was performed in response to the owner's question
 about where to find the code. Current ambient UI lists only the links signup tab;
 B visibility is unconfirmed. First-phase acceptance is incomplete. The temporary
 Preview CORS origin remains on the stopped API until final removal.
+
+
+## Missing Auth email diagnosis, September 29
+
+Brian reports the last Auth email was not received. Read-only Resend metadata lists
+both A Auth messages as `delivered`: sent 03:40:17.259 UTC and 04:41:41.090 UTC.
+The exact alias suppression lookup returns `Suppression not found`. Latest-message
+details identify sender `Brian <brian@table-us.com>`, recipient A's tagged alias, and
+subject `Your TableUs verification code`. Provider email IDs and Message-ID are
+saved in the private allowance ledger; no OTP/body is recorded or displayed.
+These results do not establish Inbox placement or owner receipt.
+
+[Google's self-to-alias guidance](https://knowledge.workspace.google.com/admin/support/troubleshooting/messages-sent-to-email-alias-or-group-arent-in-my-inbox?hl=en)
+provides a possible explanation, not a confirmed diagnosis. A focused Gmail search
+using `in:anywhere` includes mail outside Inbox; the owner was asked to report only
+found/no results. If no message appears, recipient-side Email Log Search using the
+private Message-ID is the next diagnostic. No email, provider action, restart, SMTP
+change, suppression removal or DNS edit was performed. Three delivery-status tool
+calls were charged, bringing known status reads to 15/30. All other counters and
+the stopped-service state remain unchanged.
