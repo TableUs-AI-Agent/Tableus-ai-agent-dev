@@ -20,7 +20,29 @@ tests, 326 JavaScript tests and five browser journeys, zero skips, plus lint/typ
 migrations, deterministic evaluation, contracts, builds and smoke. Local readiness,
 restricted PostgreSQL and browser evidence remain applicable to unchanged inputs.
 
-## Live checkpoint, September 29 at 03:44 UTC
+## Current checkpoint, September 29 at 04:08 UTC
+
+The owner could not find the external tool-created rehearsal window. A's signup
+was not manually verified before its 20-minute invite reservation expired. Do not
+submit that old form. External browser use is not required; the signed-out in-app
+links-origin tab now contains A's filled, unsubmitted invitation form. No new OTP
+was requested, and the legacy in-app staging session is untouched.
+
+Session one ended early at `2026-09-29T04:08:34Z`: **40 minutes 11.955 seconds
+used; 19 minutes 48.045 seconds remain** of the original 60. Future API admission
+is disabled via `--skip-deploys`. API `76028185-7799-46ff-a361-e8571cb00867` and
+worker `18a8f3f8-886e-4dac-ba7e-9804bb584f75` are verified stopped, each with null
+cron/next run. The stop was asynchronous; the initial immediate check was false
+and a subsequent read confirmed completion. No source deployment, configuration
+restart, additional email, provider call or Auth deletion occurred. The existing
+cutoff disarms on the recorded session end; check the private receipt.
+
+**Next: confirm the owner can see the filled in-app A form, then reconcile the
+expired reservation and all unfinished cases against remaining bounds before
+any further OTP or API restart.** The original two-session sequence is incomplete;
+do not claim signup, group or deletion acceptance. Keep all cumulative allowances.
+
+## Historical live checkpoint, September 29 at 03:44 UTC
 
 Brian confirmed all eight marked support messages arrived: four privacy requests
 and four A/B/C/D responses. His initial missing-mail report was resolved with
@@ -159,7 +181,7 @@ private worker resource/deployment, four migrations, all six invites and one
 of four worker processing invocations. API configuration restarts: one of four.
 Auth DELETE attempts: zero of twelve. One new Auth user/no new profile; two OTP
 requests, eight support messages, one OTP delivery/verification reserved. Live
-Places/AI remain zero. Session one is active under the deadline above. All other ceilings in the
+Places/AI remain zero. Session one is stopped at the current checkpoint above. All other ceilings in the
 prepared campaign apply, including $15 providers, $5 hosting, $0.25 AI, three
 logical/nine underlying AI attempts, eleven OTP requests/ten deliveries/twenty
 verification submissions, fourteen support messages, twelve refresh/revoke calls

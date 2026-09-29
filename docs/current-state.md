@@ -5,17 +5,25 @@ passing hosted CI. The four staging migrations, one API rollout, one web Preview
 and private worker startup passed. Both staging aliases use the new Preview;
 production and native artifacts are unchanged. The same API image resumed under
 configuration restart one of four, with queue-only deletion enabled; worker remains
-stopped/unscheduled. Brian authorized splitting the rehearsal: session one is active;
+stopped/unscheduled. Session one stopped early at 04:08:34 UTC September 29 after
+Brian could not locate the prepared external tab. Future API deletion admission
+is disabled, and both current deployments are verified stopped with no schedule.
+Brian authorized splitting the rehearsal;
 only session two waits until September 29 at 9:48:55 p.m. Central for natural expiry.
 Eight synthetic support messages reached the four aliases/privacy route, confirmed
-by Brian. Hook/wrong-recipient/revoked-invite denial checks passed. A's code awaits
-manual verification; one new Auth user/no new profile and no live Places/AI call.
+by Brian. Hook/wrong-recipient/revoked-invite denial checks passed. A's manual
+verification never completed before its 20-minute invite reservation expired.
+The last database checkpoint had one new Auth user/no new profile and no live Places/AI call.
 Both sessions share
 the original 60-minute and attempt/spend limits;
 [execution evidence](evidence/e5e7d13/execution.md) records the remaining gates and
 consumed allowances. Brian chose to operate the mailbox and enter codes in TableUs;
-separate staging origins preserve legacy sessions. Session one runs from 03:28:22
-to at most 04:13:22 UTC September 29, with a local cutoff armed. Fresh hosted
+separate staging origins preserve legacy sessions. Session one used 40 minutes
+11.955 seconds; 19 minutes 48.045 seconds remain across the approved campaign.
+A's form is now filled in the visible in-app links-origin tab without sending a
+new code. The old external form must not be submitted. Reconcile recovery and
+the remaining acceptance scope before any additional OTP or restart; no allowance
+was reset. The cutoff is disarmed by the recorded session end. Fresh hosted
 source/alias/grant/count checks passed. Priority 3 acceptance remains open.
 
 ## Source baseline

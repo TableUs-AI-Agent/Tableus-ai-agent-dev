@@ -556,3 +556,20 @@ receipt. Session one's clock started with its first email. A local one-shot cuto
 removes scheduling and stops staging services before the fixed deadline without
 another deployment. No-invitation, wrong-recipient and revoked-invite checks passed
 before normal browser enrollment; all private codes remain outside chat/Git.
+
+### Visible handoff correction — 2026-09-29
+
+External browser use is an implementation choice for account isolation, not a
+TableUs requirement. Brian could not see the tool-created rehearsal group; the
+agent could not foreground it reliably. A's 20-minute reservation expired before
+manual verification. The live session was contained early, with future admission
+disabled without deploying and both existing API/worker images verified stopped.
+No extra configuration restart or OTP was used. Forty minutes 11.955 seconds are
+consumed, leaving 19 minutes 48.045 seconds of the original campaign.
+
+Prepare owner-operated signup in a visible in-app tab first and verify that Brian
+can see it before resuming any timer or requesting another code. The signed-out
+links origin can hold A while preserving the legacy staging-origin session.
+The form is filled but unsubmitted. No old reservation or session token is copied
+between browsers. Reconcile the unfinished acceptance cases and expired grant
+before further live actions; neither a fresh clock nor extra allowance is implied.

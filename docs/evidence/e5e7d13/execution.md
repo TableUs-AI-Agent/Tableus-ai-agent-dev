@@ -406,3 +406,31 @@ remove worker cron, disable future API admission without deploying, stop latest
 API/worker images and write private `session-one-cutoff.json`. Normal closeout's
 `ended_at` disarms it. Check the receipt before later continuation; do not reset
 the clock or allowances. The next action is A's manual code verification.
+
+## Inaccessible handoff and early containment, September 29 at 04:08 UTC
+
+Brian could not see the external rehearsal browser group. Browser metadata still
+listed the prepared A OTP form, but native browser controls could not foreground
+it reliably. No manual verification was reported or observed; its 20-minute
+invitation reservation expired during the handoff delay. This is not signup
+acceptance. No retry, resend or direct identity repair was performed.
+
+Future API deletion admission was set false with `--skip-deploys`, worker cron
+removed, and the current API deployment stopped. The immediate post-stop read
+still reported running; a later read verified `deploymentStopped=true` for API
+`76028185-7799-46ff-a361-e8571cb00867` and worker
+`18a8f3f8-886e-4dac-ba7e-9804bb584f75`, with null cron and next run for each.
+Conservative session end `2026-09-29T04:08:34Z` records 2,411.955 seconds used and
+1,188.045 seconds remaining. No extra configuration restart/source deployment
+was consumed. Private `handoff-stop.json` holds the receipt; the ledger's session
+end disarms the earlier cutoff. All cumulative counters remain unchanged.
+
+The existing signed-out in-app links tab now shows Join TableUs with A's original
+invitation, display name and email filled, without requesting another OTP. Direct
+navigation to the join route was needed after the sign-in screen's toggle did not
+respond; on the loaded join page, filling inputs enabled the send button. The
+legacy staging-origin session remains untouched. External browser use is not a
+product requirement. Confirm owner visibility before any further live action,
+then reconcile expired-grant recovery and incomplete cases against the remaining
+time, attempt, restart and spending bounds. A/B group, B/C/D enrollment, deletion
+and the eventual natural-expiry acceptance remain untested.

@@ -80,14 +80,19 @@ API/web rollout and an empty private-worker startup passed. The first same-image
 API restart enables queue-only deletion; worker scheduling remains absent.
 Brian requested two rehearsal
 sessions sharing the original 60-minute and all attempt/spend ceilings. Session one
-is active; session two covers natural expiry after
+stopped early because the prepared external signup tab was inaccessible to Brian;
+session two was intended to cover natural expiry after
 September 29 at 9:48:55 p.m. Central and B's final deletion. The API and worker stay
 stopped between sessions; the same four configuration restarts cover both. All six
 invites, one worker invocation and one API configuration restart are consumed.
 Eight support messages reached the four aliases/privacy route. Two OTP requests
-include the expected hook denial and A's signup; A's manual verification is pending.
-No live Places/AI ran. Session one started 03:28:22 UTC September 29 and ends by
-04:13:22 UTC, with a local cutoff armed. This is not pilot acceptance. Brian operates
+include the expected hook denial and A's signup; its invite reservation expired
+before manual verification. No live Places/AI ran. Session one ran 03:28:22–04:08:34
+UTC September 29, consuming 40 minutes 11.955 seconds and leaving 19 minutes
+48.045 seconds. Both deployments are stopped; admission for future starts is off
+and no worker schedule exists. A's form is prepared in the visible in-app links
+tab without another OTP. Reconcile recovery and unfinished scope within the
+remaining cumulative bounds before another live action. This is not pilot acceptance. Brian operates
 the mailbox and enters codes directly; no credentials are requested in chat.
 
 Effort is a rough planning range in focused engineering days, excluding approval,
