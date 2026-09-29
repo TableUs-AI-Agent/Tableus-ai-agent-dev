@@ -3,16 +3,19 @@
 Updated 2026-09-28 (September 29 UTC). Priority 3 merged as `2eefdc5` after
 passing hosted CI. The four staging migrations, one API rollout, one web Preview
 and private worker startup passed. Both staging aliases use the new Preview;
-production and native artifacts are unchanged. API and worker are now stopped,
-with deletion admission off and no worker schedule. Brian authorized splitting
-the rehearsal: session one can start once mailbox/browser readiness is confirmed;
+production and native artifacts are unchanged. The same API image resumed under
+configuration restart one of four, with queue-only deletion enabled; worker remains
+stopped/unscheduled. Brian authorized splitting the rehearsal: session one is active;
 only session two waits until September 29 at 9:48:55 p.m. Central for natural expiry.
-No new account, OTP email or live provider call has been made. Both sessions share
+Eight synthetic support messages reached the four aliases/privacy route, confirmed
+by Brian. Hook/wrong-recipient/revoked-invite denial checks passed. A's code awaits
+manual verification; one new Auth user/no new profile and no live Places/AI call.
+Both sessions share
 the original 60-minute and attempt/spend limits;
 [execution evidence](evidence/e5e7d13/execution.md) records the remaining gates and
 consumed allowances. Brian chose to operate the mailbox and enter codes in TableUs;
-two separate staging origins are verified signed out in Chrome. Alias-delivery
-confirmation remains pending, so no live session/restart has started. Fresh hosted
+separate staging origins preserve legacy sessions. Session one runs from 03:28:22
+to at most 04:13:22 UTC September 29, with a local cutoff armed. Fresh hosted
 source/alias/grant/count checks passed. Priority 3 acceptance remains open.
 
 ## Source baseline
@@ -58,7 +61,7 @@ environments are disabled. The approved manual rollout below consumed the API/we
 
 | Component | Source | Notes |
 | --- | --- | --- |
-| API (Railway `tableus-staging`) | `2eefdc5` | Deployment `217e257f-9fbe-40fb-adec-ce231ff54c28` passed readiness; now stopped pending session-one mailbox/browser readiness. Supabase auth; live providers configured but unused; deletion admission and inline attempts off. |
+| API (Railway `tableus-staging`) | `2eefdc5` | Same-image restart `76028185-7799-46ff-a361-e8571cb00867` passed readiness; queue-only deletion enabled, inline attempts off. Places ceiling 690; live providers unused. |
 | Web aliases `tableus-staging.vercel.app`, `links.table-us.com` | `2eefdc5` | READY Preview `dpl_7j4HwYgzPw4139i3W535V5iUFqrv`; public deletion/privacy/terms checked. |
 | Private deletion worker | `2eefdc5` | One empty startup completed and exited; no public domain/healthcheck, restart NEVER, schedule absent. One of four processing invocations consumed. |
 | Accepted native artifacts | `f94a1d9` | Isolated-staging acceptance with an owner-accepted simulator AppHang risk ([closeout](evidence/ios27-staging-f94a1d9/closeout.md)) |
@@ -70,7 +73,9 @@ private app schema and invoker Auth hook were verified. Six legacy profiles,
 seven Auth users, sixteen plans and eleven runs remain intact; sixteen plan
 credits were backfilled. Legacy unused unbound invites are rejected for new
 signups. One new recipient-bound expiry fixture is stored privately; it must
-expire naturally before its session-two rejection check. No legacy invite was reissued.
+expire naturally before its session-two rejection check. Five more synthetic invites
+are now issued (including revoked D), and A is the sole new Auth user, unverified
+at the 03:44 UTC checkpoint. No legacy invite was reissued.
 
 ## Product
 

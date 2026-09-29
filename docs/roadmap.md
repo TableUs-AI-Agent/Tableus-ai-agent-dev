@@ -76,17 +76,19 @@ Priority 3 is authorized in a fresh chat. Independent local preparation is
 complete on `codex/pilot-staging-readiness`. Brian approved the bounded external
 campaign for `e5e7d1`; preflight, hosted CI/review and [PR #9](https://github.com/TableUs-AI-Agent/Tableus-ai-agent-dev/pull/9)
 merge are complete (`2eefdc5`, tree identical to tested `d2ccc7e`). The four migrations,
-API/web rollout and an empty private-worker startup passed. API and worker are
-held stopped, deletion admission off, schedule absent. Brian requested two rehearsal
+API/web rollout and an empty private-worker startup passed. The first same-image
+API restart enables queue-only deletion; worker scheduling remains absent.
+Brian requested two rehearsal
 sessions sharing the original 60-minute and all attempt/spend ceilings. Session one
-can start after mailbox/browser readiness; session two covers natural expiry after
+is active; session two covers natural expiry after
 September 29 at 9:48:55 p.m. Central and B's final deletion. The API and worker stay
-stopped between sessions; the same four configuration restarts cover both. One of
-six invites and one of four worker invocations are
-consumed; account/email/provider allowances are unused. This is not pilot acceptance.
-Brian will operate the mailbox and enter codes directly. Browser isolation and
-fresh hosted preflight passed; confirmation of tagged-alias delivery remains before
-the first signup attempt. The supervised live clock has not started.
+stopped between sessions; the same four configuration restarts cover both. All six
+invites, one worker invocation and one API configuration restart are consumed.
+Eight support messages reached the four aliases/privacy route. Two OTP requests
+include the expected hook denial and A's signup; A's manual verification is pending.
+No live Places/AI ran. Session one started 03:28:22 UTC September 29 and ends by
+04:13:22 UTC, with a local cutoff armed. This is not pilot acceptance. Brian operates
+the mailbox and enters codes directly; no credentials are requested in chat.
 
 Effort is a rough planning range in focused engineering days, excluding approval,
 hosted CI, device/signing and external-access waits; these are not delivery promises.

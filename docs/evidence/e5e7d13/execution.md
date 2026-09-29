@@ -357,3 +357,52 @@ Railway's delayed workspace usage is $3.567051228426481, $0.0133275511356165 abo
 the pre-rollout baseline across the workspace. It is not exact campaign attribution.
 No hosted configuration or service state changed. The first restart remains unused;
 finish alias-delivery readiness before starting the live clock.
+
+## Live session one, September 29 at 03:28–03:44 UTC
+
+Resend's existing verified `table-us.com` domain has sending enabled and open/click
+tracking off. Four marked synthetic requests from the controlled aliases went to
+privacy, followed by four responses from the confirmed support address to D/A/C/B.
+These cover intake/ack, wrong-case refusal, unbound lost-session and hypothetical
+email-access loss, asserting no actual account action/status. All eight provider
+records report delivered. Brian initially reported missing mail, then confirmed
+“none are missing”; no resend occurred. Alias delivery and privacy forwarding pass.
+The private D case remains unverified/unbound until later authenticated identity
+and fresh mailbox challenge; these messages alone do not prove an account identity.
+
+The first message started the session at `2026-09-29T03:28:22.044973Z`, with deadline
+`2026-09-29T04:13:22.044973Z`. Eight of fourteen support messages (four inbound/four
+outbound) and eight conservative mail status reads are recorded. Six messages remain
+for challenge/reply, duplicate/ack and completion/receipt. Public DNS routes through
+Google. No DNS, mailbox, forwarding or SMTP setting changed.
+
+API restart one of four is SUCCESS: `76028185-7799-46ff-a361-e8571cb00867`, same image
+`sha256:4fc94ba63d5ee76f5e9e25868a0a347db252b12d4defacfcfa30078598d4c5b8`, exact source
+`2eefdc51345aeaa7951ffb343954c1669f9280c5`. Explicit previous-image reuse is verified;
+readiness passes, queue-only deletion is enabled and Places ceiling is tightened to
+690 (fresh 270 baseline + original 420). Worker remains stopped/unscheduled. No
+source build, new resource or provider call occurred.
+
+D's single no-reservation public Auth request returned 403 with the expected invite
+validation message; Auth/profile counts stayed seven/six. The unchanged private CLI
+issued the remaining five one-use, recipient-bound 24-hour invites via restricted
+runtime DB and verified TLS; the additional D fixture was revoked normally.
+Wrong-recipient A-code/B-email and revoked-D API validation returned 404 before OTP.
+The natural-expiry fixture was not edited or validated; all six invites are spent.
+
+A's normal browser signup now shows code entry. Brian was asked to enter the newest
+code and click Verify and continue once, without sharing it in chat. At 03:44 UTC,
+totals are eight Auth users (one new A), six profiles, fourteen invites, one active
+reservation, empty deletion queue and zero new provider usage. Verification and
+redemption are pending. Ledger conservatively reserves one signup account, one
+delivery and one verification; two OTP requests include the expected hook denial.
+No B/C/D signup, group journey or deletion has run. C's in-app links origin is signed
+out; a fourth browser-profile tab lookup failed before account action, so C/D will
+reuse C's origin sequentially through supported synthetic sign-out. Legacy sessions
+were not used or cleared.
+
+A local cutoff is armed (exec session 59186) for 30 seconds before the deadline:
+remove worker cron, disable future API admission without deploying, stop latest
+API/worker images and write private `session-one-cutoff.json`. Normal closeout's
+`ended_at` disarms it. Check the receipt before later continuation; do not reset
+the clock or allowances. The next action is A's manual code verification.

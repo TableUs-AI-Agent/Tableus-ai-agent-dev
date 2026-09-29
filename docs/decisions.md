@@ -548,3 +548,11 @@ never into chat. Prepare signed-out sessions on separate staging origins without
 clearing legacy sessions. Verify tagged-alias delivery before signup, using the
 already-scoped support exchanges if prior delivery is unconfirmed; no additional
 mail allowance is created.
+
+Eight marked support messages verified all four aliases and privacy forwarding;
+Brian confirmed none missing after an initial uncertainty. Preserve the six
+remaining messages for verified D challenge/reply, duplicate/ack and completion/
+receipt. Session one's clock started with its first email. A local one-shot cutoff
+removes scheduling and stops staging services before the fixed deadline without
+another deployment. No-invitation, wrong-recipient and revoked-invite checks passed
+before normal browser enrollment; all private codes remain outside chat/Git.

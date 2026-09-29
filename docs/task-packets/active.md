@@ -20,7 +20,38 @@ tests, 326 JavaScript tests and five browser journeys, zero skips, plus lint/typ
 migrations, deterministic evaluation, contracts, builds and smoke. Local readiness,
 restricted PostgreSQL and browser evidence remain applicable to unchanged inputs.
 
-## Current checkpoint, September 28 Central / September 29 UTC
+## Live checkpoint, September 29 at 03:44 UTC
+
+Brian confirmed all eight marked support messages arrived: four privacy requests
+and four A/B/C/D responses. His initial missing-mail report was resolved with
+“none are missing”; no resend occurred. All four aliases/privacy forwarding pass.
+Session one began `2026-09-29T03:28:22.044973Z`; its hard deadline is
+`2026-09-29T04:13:22.044973Z` (September 28, 11:13:22 p.m. Central).
+
+API configuration restart **1/4** is SUCCESS: deployment
+`76028185-7799-46ff-a361-e8571cb00867` reuses the exact approved image/source,
+passes readiness, enables queue-only deletion and tightens Places to 690 (fresh
+baseline 270 + original 420 allowance). Worker remains stopped/unscheduled.
+Expected no-reservation D signup returned hook 403, and wrong-recipient/revoked
+validation returned 404 before OTP. All six invites are issued; natural expiry
+is untouched. Eight support messages, two OTP requests, one new Auth account and
+one worker invocation are spent. One OTP delivery/verification is conservatively
+reserved. No new profile, group/provider action or deletion has occurred.
+
+**Next: Brian enters A's newest emailed code in the prepared staging tab and
+clicks Verify and continue once.** Do not ask for the code in chat or send B/C/D
+codes until A succeeds. At 03:44 UTC totals are eight Auth users/six profiles,
+fourteen invites, one reservation, empty queue and zero new provider usage.
+Keep separate A/B browser origins; C/D may use the isolated in-app links origin
+sequentially via supported synthetic sign-out. Preserve all legacy sessions.
+
+A one-shot local cutoff is armed in `/private/tmp/tableus-p3-session-one-cutoff.py`
+(exec session 59186). Thirty seconds before the deadline it removes worker cron,
+disables future API admission without deploying, and stops latest API/worker
+images. Check its private `session-one-cutoff.json` receipt before continuing.
+Normal closeout sets session-one `ended_at` to disarm it. No clock/allowance reset.
+
+## Rollout checkpoint, September 28 Central / September 29 UTC
 
 Preflight is complete: actual Supabase Auth/SMTP/hook/schema/backup settings and
 TableUs Sentry/PostHog plan/retention. Private logical backup/restore limitations
@@ -85,8 +116,8 @@ source deployment or overnight running service is needed.
 1. Brian chose to operate the mailbox and enter codes directly in TableUs.
    Two Chrome sessions on the separate staging origins are verified signed out;
    the legacy in-app staging session is untouched. Confirmation that the four
-   tagged aliases deliver is pending; use the approved support exchanges first if
-   they have not been tested. No signup email has been sent. Only session two
+   tagged aliases and privacy forwarding is complete. A's requested code awaits
+   manual verification as recorded above. Only session two
    waits for expiry. Do not sleep a day inside a tool. No follow-up was scheduled.
    Fresh read-only preflight passed: expected source/images and all four aliases,
    API/worker stopped, empty queue/reservations, restricted grants, legacy counts
@@ -124,10 +155,11 @@ need actual evidence; never request credentials in chat.
 ## Remaining bounds
 
 Consumed: one API rollout, one web Preview/two staging alias assignments, one
-private worker resource/deployment, four migrations, one of six invites and one
-of four worker processing invocations. API configuration restarts: zero of four.
-Auth DELETE attempts: zero of twelve. Accounts/OTP/verification/support/live
-providers: zero. No 60-minute live window has started. All other ceilings in the
+private worker resource/deployment, four migrations, all six invites and one
+of four worker processing invocations. API configuration restarts: one of four.
+Auth DELETE attempts: zero of twelve. One new Auth user/no new profile; two OTP
+requests, eight support messages, one OTP delivery/verification reserved. Live
+Places/AI remain zero. Session one is active under the deadline above. All other ceilings in the
 prepared campaign apply, including $15 providers, $5 hosting, $0.25 AI, three
 logical/nine underlying AI attempts, eleven OTP requests/ten deliveries/twenty
 verification submissions, fourteen support messages, twelve refresh/revoke calls
