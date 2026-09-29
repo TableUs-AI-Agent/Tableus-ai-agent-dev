@@ -162,18 +162,153 @@ scan or hosted acceptance.
 Local verification remains as recorded in the prepared campaign: readiness stages,
 206 Python passes (36 PostgreSQL-only skips), 326 JavaScript passes, forty selected
 restricted-PostgreSQL passes, two browser journeys and final focused checks. No
-application bytes changed after those checks. Hosted CI has not run for this candidate.
+application bytes changed after those checks. Hosted CI subsequently passed as recorded below.
+
+## Integration and rollout, September 29 UTC
+
+The branch was published with deployment exclusions verified. Draft PR #9 was
+reviewed and [CI run 36512407578](https://github.com/TableUs-AI-Agent/Tableus-ai-agent-dev/actions/runs/36512407578)
+passed on `d2ccc7e32015b8982b64035382d7a3ab03b64acf`: **242 Python, 326 JavaScript
+and five browser tests, zero skips**, plus restricted-role migrations, lint/types,
+seven deterministic evaluation cases, contracts, web/Expo-web builds and smoke.
+No blocking change-review finding remained. [PR #9](https://github.com/TableUs-AI-Agent/Tableus-ai-agent-dev/pull/9)
+merged at `2026-09-29T02:33:07Z` as
+`2eefdc51345aeaa7951ffb343954c1669f9280c5`. Both head and merge have tree
+`35798fe4ae9e5f2b7f12f054f50b0068d52783a6`. Application inputs remain the approved
+`e5e7d1`; intervening commits contain documentation only.
+
+### Quiescence, backup and migrations
+
+The installed Railway scale command rejected its documented project flags before
+any mutation. The supported `deploymentStop` operation then stopped all old API
+instances; Railway reported `deploymentStopped=true`, readiness returned 502 and
+there were no active runtime database statements. The service/configuration was
+preserved. A fresh owner-only backup was saved outside Git at
+`/Users/brianchei/Library/Application Support/TableUs/Backups/2026-09-28-p3-quiesced`.
+Roles/schema hashes match the September 27 export; fresh data is 128,616 bytes,
+SHA-256 `697a402cbf870f87bec773abaa5159aadcd03080e67cc27cae20dac3126bb69c`.
+The prior local restore verification remains the recovery exercise; the fresh
+Auth-inclusive export is not a full managed-project restore test.
+
+The normal linked CLI supplied its temporary database login in memory. It has
+existing postgres-role membership; explicitly selecting that role and committing
+the connection setup lets unchanged Alembic retain the migration role. This did
+not create a role, grant access, decode a Keychain credential or enable JIT access.
+TLS certificate and hostname verification used the public Supabase root CA.
+The first two read-only connection checks diagnosed certificate/role setup; no
+migration was attempted until `alembic current` passed at the expected old head.
+
+The four unchanged migrations then passed once, in their approved order, ending
+at `9a1f2e7c4b80`. Post-migration checks confirmed:
+
+- Six profiles, seven Auth users, sixteen plans, eleven runs and eight legacy
+  invites preserved; empty queue and sixteen creation credits backfilled.
+- All legacy plans/runs remain `legacy_unknown`; no attribution was invented.
+- Runtime queue DML, counter SELECT/INSERT/UPDATE and contributor SELECT/INSERT/DELETE.
+  Runtime has no schema CREATE, superuser, create-role/database or bypass-RLS.
+- Browser roles have no app USAGE or new-table grants. The app schema remains
+  excluded from Data API. Auth hook is invoker with empty search path; Auth admin
+  has invite/reservation SELECT and EXECUTE, browser EXECUTE false.
+
+### Exact-source API, web and worker
+
+Both services and Vercel received a fresh `git archive` of merge `2eefdc5` (1,016
+tracked files); no local secret/fixture file was included. Railway's uploaded
+archive has no provider Git-source attestation; the archive command, observed
+build inputs, release stamps and image metadata bind this deployment. No claim
+of an independently recomputed remote source-tree hash is made.
+
+| Target | Deployment and result |
+| --- | --- |
+| API | `217e257f-9fbe-40fb-adec-ce231ff54c28`, SUCCESS, readiness reports full `2eefdc5` SHA; image `sha256:4fc94ba63d5ee76f5e9e25868a0a347db252b12d4defacfcfa30078598d4c5b8`. One us-west2 process. |
+| Vercel Preview | `dpl_7j4HwYgzPw4139i3W535V5iUFqrv`, READY, target Preview, node 22.x; source metadata full `2eefdc5`. URL `https://tableus-staging-mvbl5qxnl-briancheis-projects.vercel.app`. |
+| Private worker | Service `cac758a2-077c-4011-bff5-12b52db2d05a`, deployment `18a8f3f8-886e-4dac-ba7e-9804bb584f75`, SUCCESS and exited; image `sha256:292ac97e9120612919399186ce53dbb68e650851f293c8d0a69421b2cae27797`. |
+
+API deletion admission and inline attempts are false; telemetry E2E is false,
+actor quotas 40 Places/3 AI/20 lifetime plans, global AI $0.26 and Places 726.
+The fresh baseline at configuration was 306; no new call allowance was created.
+CORS is restricted to the two staging aliases; the normal preflight passed.
+Existing server-only Auth-removal credential was passed privately via stdin to
+API/worker with automatic deploys suppressed, then verified in memory. No key
+creation/rotation. Neither runtime has a migration credential. Worker has only
+restricted runtime credentials, deterministic providers and telemetry off, with
+no Maps/Gemini keys or telemetry credentials.
+
+Vercel public origins and absence of runtime DB/removal credentials were verified
+through supported environment pull. Sensitive values are not returned by that
+CLI, so blank pulled fields are not absence evidence. Source stamps, staging
+telemetry, E2E=false and query-link emission were explicit deployment overrides.
+Sentry build upload stayed disabled, matching the previous accepted staging
+Preview; no new symbol-upload operation or credential change was introduced.
+
+Only `tableus-staging.vercel.app` and `links.table-us.com` moved to the new Preview.
+Both `table-us.com` and `www.table-us.com` still point to
+`dpl_7csJvHoJH9qgFZDijbwu3w36r2sK`, including the existing apex redirect.
+Deletion/privacy/terms pages return 200 and contain the approved privacy/support
+addresses and retention explanations. Fifteen public script assets were checked; two contain the exact merged release
+stamp. Browser review confirmed the public layout;
+proof: `/private/tmp/tableus-p3-public-deletion.png`. The ordinary staging origin
+restored a pre-existing legacy browser session during public-page review; no
+account action was taken and that tab was closed. Future synthetic acceptance
+must use isolated sessions. Auth audit readback since 02:40 UTC had no events.
+
+Railway's connector rejected selecting the prepared TOML for the new worker;
+[the provider now prohibits new-service Config as Code](https://docs.railway.com/infrastructure-as-code).
+The normal service controls accepted identical Dockerfile, watchdog/start command,
+one replica and NEVER restart settings. Deployment metadata confirms no file
+manifest, no healthcheck, no public domain and no cron. The approved five-minute
+schedule remains held until supervised draining; scheduled delivery is not yet
+proven. This configuration adaptation did not change application source.
+
+Worker invocation **1 of 4** started at 02:47:36Z, logged `processed=0`, then
+`worker_available=true`, pending/attention/leases all zero, and exited after about
+seven seconds. This proves the watchdog command/image/start path and empty
+runtime access, not real Auth deletion. No Auth DELETE attempt occurred.
+
+### Day-ahead expiry fixture and holding state
+
+The supported invite CLI, with the restricted runtime login, created one one-use
+D fixture for `brian+tableus-p3-d@table-us.com`. Its actual expiry is
+`2026-09-30T02:48:54.780853Z`, **September 29 at 9:48:55 p.m. Central**.
+No timestamp was edited; it has not been validated or sent. Code and ID are in an
+owner-only 0600 record outside Git:
+`/Users/brianchei/Library/Application Support/TableUs/Rehearsals/2026-09-28-p3/d-expired-invite.json`.
+The post-issuance inventory has nine invites and one active recipient fixture,
+with all other legacy counts unchanged and queue empty.
+
+The new API was stopped again after readiness/CORS/public-page checks so no
+application writes or provider calls can run during the expiry wait. Railway
+confirmed both API and worker stopped, with no worker cron/next run. No API
+configuration restart has been consumed. Its first approved admission restart
+must resume this same image, after fresh source, queue, mailbox and budget checks.
+Read-only Railway schema discovery exposes `deploymentRedeploy(id,
+usePreviousImageTag: true)` for explicit previous-image reuse. Do not use an
+unqualified source redeploy; verify the resulting image digest and applied
+variables before any live request. That path is discovered, not yet exercised.
+At 02:50 UTC, older Places usage had aged down to 272, with last provider activity
+still September 17. Tighten the rolling ceiling on resume; retain the independent
+420-attempt campaign ledger regardless of aging.
+
+Railway workspace usage immediately before rollout was $3.5537236772908645;
+post-rollout read was $3.5582677543201853, a $0.0045440770293208 difference across
+all workspace services. This is delayed aggregate billing, not exact attributed
+campaign spend or final billing. Keep the $5 incremental hosting backstop and
+reconcile at resume/closeout. No paid plan upgrade occurred.
 
 ## Allowances and next action
 
-One routine staging configuration change is complete: the signup email wording
-correction above. All other campaign mutation counters remain **zero**: no
-publication/PR/merge, hosted migration, resource/secret change, runtime configuration
-change, deployment, invite, synthetic account, email, provider operation or worker
-invocation. Campaign incremental spend is zero; existing services continue their
-ordinary billing.
+Consumed: one approved merge, four migrations, one API rollout, one Vercel
+Preview/two staging alias assignments, one private worker resource/deployment,
+one of six invitation fixtures and one of four processing invocations. The two
+existing-credential assignments and approved runtime configuration are complete.
+API configuration restarts: **0/4**. Auth DELETE attempts: **0/12**. New accounts,
+OTP sends/verification, support messages and live provider requests: **zero**.
+No 60-minute live window has started. Local/read-only tool setup errors above
+consumed no hosted deployment, worker processing or provider allowance.
 
-Publish the approved candidate, run CI/review and follow the
-migration/rollout/rehearsal order. Do not start paid or Auth traffic, substitute
-credentials, or skip source, role, quiescence and allowance checks. Preserve
-production, existing identities/data, native artifacts and all closed allowances.
+Next: after the real fixture expiry and Brian's mailbox availability, resume the
+same API image under the first allowed admission restart; run the exact synthetic
+flow with fresh isolated identities and only the remaining invitations/invocations.
+Do not add a rollout, reset budgets, reuse legacy identity/session data or activate
+real intake. End with deletion admission and scheduling off. Native builds,
+production, broader retention policy and real pilot invitations remain deferred.

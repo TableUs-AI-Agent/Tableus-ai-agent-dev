@@ -111,6 +111,13 @@ a stop/reconciliation signal, not permission to refresh repeatedly or reset data
 
 ## Worker and non-secret configuration
 
+Execution note, September 28: the new Railway service cannot select a TOML file
+under the provider's current [configuration transition](https://docs.railway.com/infrastructure-as-code).
+The identical reviewed Dockerfile/start command/replica/restart settings were
+applied through service controls. Its recurring schedule is held absent; one
+empty deployment-time invocation passed. No app source changed. The execution
+record owns current deployed IDs, pause state and remaining invocations.
+
 [railway.deletion-worker.toml](../railway.deletion-worker.toml) uses the same
 candidate/Dockerfile, no HTTP listener or healthcheck, one replica, no restart
 loop, cron `*/5 * * * *`, limit three. The application deadline is 55 seconds,

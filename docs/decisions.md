@@ -497,3 +497,27 @@ and rollout. Supabase Auth/schema/recovery readback is complete; TableUs Sentry 
 PostHog plan/retention readback completed September 28. Those event-access windows
 do not approve a retained-data purge policy. The routine signup template wording correction
 preserves the configured OTP length and all delivery/security settings.
+
+
+## Priority 3 rollout checkpoint — 2026-09-28
+
+PR #9 merged as `2eefdc51345aeaa7951ffb343954c1669f9280c5`, preserving the
+approved application's bytes and the full passing CI tree. All four migrations
+and the bounded API/web/private-worker rollout completed. The existing server-only
+removal key was provisioned privately to the restricted API/worker runtimes; no
+key was created or rotated. Production and native releases are unchanged.
+
+Railway now rejects TOML configuration for newly created services. The reviewed
+worker command, Dockerfile, one replica and NEVER restart policy were applied
+through normal service controls; the prepared TOML remains a reference, not the
+new service's active configuration. No application source or provider was changed.
+The schedule remains absent until supervised draining; startup processed zero
+rows and counts as invocation one of four. See [Railway's transition](https://docs.railway.com/infrastructure-as-code).
+
+The API is stopped again, with deletion admission off, while the private D fixture
+expires naturally at `2026-09-30T02:48:54.780853Z` (September 29, 9:48:55 p.m.
+Central). Resume under the existing scope only after expiry, mailbox access and
+fresh source/role/queue/budget checks. Reconcile aged-out usage and tighten the
+global ceiling during the first already-budgeted admission restart; never reset
+the independent 420-attempt allowance. Native acceptance and real invitations
+remain later gated work.

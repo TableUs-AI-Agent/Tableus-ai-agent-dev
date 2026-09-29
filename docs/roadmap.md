@@ -1,6 +1,6 @@
 # Roadmap
 
-Updated 2026-09-27. Brian confirmed the reconciled direction and targets below;
+Updated 2026-09-28. Brian confirmed the reconciled direction and targets below;
 [decisions](decisions.md#pilot-realignment--adopted-2026-09-26) records the scope.
 
 ## Direction
@@ -74,8 +74,13 @@ was not merged. Priority 2 is complete: Brian approved review and merge, and
 head `1270206`; no deployment occurred ([integration evidence](evidence/f621cf5/integration.md)).
 Priority 3 is authorized in a fresh chat. Independent local preparation is
 complete on `codex/pilot-staging-readiness`. Brian approved the bounded external
-campaign for `e5e7d1`; normal dashboard preflight is complete. Publication/CI/review
-is next, followed by quiesced migration, rollout and synthetic acceptance.
+campaign for `e5e7d1`; preflight, hosted CI/review and [PR #9](https://github.com/TableUs-AI-Agent/Tableus-ai-agent-dev/pull/9)
+merge are complete (`2eefdc5`, tree identical to tested `d2ccc7e`). The four migrations,
+API/web rollout and an empty private-worker startup passed. API and worker are
+held stopped, deletion admission off, schedule absent. Next is the supervised
+four-account rehearsal after the one expiry fixture matures on September 29 at
+9:48:55 p.m. Central. One of six invites and one of four worker invocations are
+consumed; account/email/provider allowances are unused. This is not pilot acceptance.
 
 Effort is a rough planning range in focused engineering days, excluding approval,
 hosted CI, device/signing and external-access waits; these are not delivery promises.
