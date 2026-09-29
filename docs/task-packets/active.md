@@ -20,7 +20,40 @@ tests, 326 JavaScript tests and five browser journeys, zero skips, plus lint/typ
 migrations, deterministic evaluation, contracts, builds and smoke. Local readiness,
 restricted PostgreSQL and browser evidence remain applicable to unchanged inputs.
 
-## Current checkpoint, September 29 at 04:08 UTC
+## Current recovery checkpoint, September 29 at 04:42 UTC
+
+Brian approved the [recovery packet](../p3-rehearsal-recovery.md). Its limits are
+now **105 cumulative live minutes and five same-image API configuration restarts**;
+all other original limits and consumed counters remain unchanged. Restart **2/5**
+is SUCCESS: deployment `b134094c-b6be-4f04-b8e9-87bbbd3e986a`, exact approved image
+`sha256:4fc94ba63d5ee76f5e9e25868a0a347db252b12d4defacfcfa30078598d4c5b8` and source
+`2eefdc51345aeaa7951ffb343954c1669f9280c5`. Readiness and A/B exact-origin CORS
+preflights passed. Deletion is enabled, inline false; worker remains stopped and
+unscheduled. Places ceiling stays 690 (fresh baseline 270 + unused 420).
+
+The recovery live segment started `2026-09-29T04:39:03.227627Z`; hard deadline
+`2026-09-29T05:28:51.272600Z` (12:28:51 a.m. Central). One-shot cutoff
+`/private/tmp/tableus-p3-recovery-cutoff.py`, exec session **73801**, watches ledger
+segment index 1 and stops services 30 seconds before the deadline. Check private
+`recovery-cutoff.json`; a recorded `ended_at` disarms it. The earlier 40 minutes
+11.955 seconds remain consumed; reserve at least 15 minutes for post-expiry work.
+
+A's single recovery resend succeeded at `04:41:40.659236Z`, using the same Auth
+identity. Its new reservation expires `05:01:39.315729Z`. Counts remain eight Auth
+users/six profiles, with one active reservation, no other synthetic Auth accounts
+and no live provider usage. Three OTP requests and two delivered-email allowances
+are consumed/reserved; two verification submissions are conservatively reserved.
+No replacement account or invitation was created.
+
+**Next: Brian enters A's newest code in the visible in-app links tab and selects
+Verify and continue once; verify Plans/profile creation before requesting B.**
+Never request the code in chat. A is in-app tab 6; B's filled, unsubmitted form is
+in-app tab 7 at the existing Preview's distinct origin. Preserve both tabs and
+the legacy staging-origin session. Pointer activation did not trigger a request;
+DB readback proved no send, then keyboard Enter triggered the single resend.
+Use supported keyboard activation when in-app button clicks have no effect.
+
+## Historical containment checkpoint, September 29 at 04:08 UTC
 
 The owner could not find the external tool-created rehearsal window. A's signup
 was not manually verified before its 20-minute invite reservation expired. Do not
@@ -40,10 +73,12 @@ cutoff disarms on the recorded session end; check the private receipt.
 Brian has now confirmed visibility of the filled in-app A form. B's filled form
 is prepared on the existing Preview's distinct origin in a second in-app tab,
 without OTP or a new deployment. The [recovery proposal](../p3-rehearsal-recovery.md)
-requests 45 additional live minutes, one additional same-image configuration
-restart and temporary permission for that exact Preview origin in staging CORS.
-**These changes are not approved. Next: obtain Brian's decision on the concrete
-recovery proposal before any additional OTP or API restart.** The original two-session sequence is incomplete;
+was explicitly approved by Brian September 29: 45 additional live minutes, one
+additional same-image configuration restart and temporary permission for that
+exact Preview origin in staging CORS. The private ledger now retains elapsed and
+attempt usage under ceilings of 105 minutes/five restarts; all other bounds stay
+unchanged. **Next: perform the approved recovery preflight, resume the same API
+image under restart two and recover A through the visible form.** The original two-session sequence is incomplete;
 do not claim signup, group or deletion acceptance. Keep all cumulative allowances.
 
 ## Historical live checkpoint, September 29 at 03:44 UTC
@@ -137,55 +172,50 @@ session-one enable and pause, session-two re-enable and final disable. The
 session-two re-enable also resumes the stopped API using the same image. No extra
 source deployment or overnight running service is needed.
 
-## Execute in order
+## Execute from the current recovery checkpoint
 
-1. Brian chose to operate the mailbox and enter codes directly in TableUs.
-   Two Chrome sessions on the separate staging origins are verified signed out;
-   the legacy in-app staging session is untouched. Confirmation that the four
-   tagged aliases and privacy forwarding is complete. A's requested code awaits
-   manual verification as recorded above. Only session two
-   waits for expiry. Do not sleep a day inside a tool. No follow-up was scheduled.
-   Fresh read-only preflight passed: expected source/images and all four aliases,
-   API/worker stopped, empty queue/reservations, restricted grants, legacy counts
-   unchanged and zero new provider rows. Places baseline is now 270; re-read and
-   tighten its ceiling at the first restart. Billing/evidence are in execution.md.
-2. Re-read this record and the private fixture/allowance ledger; verify exact source,
-   aliases, role, queue, grant state and no unexpected activity. Use fresh isolated
-   synthetic browser sessions: the ordinary staging browser has a pre-existing
-   legacy session and must not be used as a test identity or cleared as cleanup.
-3. Reconcile fresh rolling provider usage. API currently has Places ceiling 726
-   (306 at configuration time + 420); old activity is aging out. During the first
-   already-budgeted admission restart, tighten to fresh baseline + remaining
-   campaign allowance. Independent campaign limit stays 420; no reset/increase.
-4. Resume the **same API image**, enable queue-only deletion under the first of
-   four approved configuration restarts, and verify worker/client readiness.
-   Railway exposes `deploymentRedeploy(id, usePreviousImageTag: true)`; verify its
-   resulting image digest and effective variables before any live request. No
-   further API/web source build is authorized. Keep worker schedule held until
-   actual A/C/D pending requests and private support binding have been verified.
-5. Run the two sessions in the order above within the shared 60-minute limit,
-   retaining the four-account/six-invite and two-person/two-round scope.
-   Schedule only the remaining bounded worker invocations, then remove scheduling
-   before a fifth total invocation. Verify individual completion, not just totals.
-6. At both session boundaries leave admission and scheduling off and the API
-   stopped. Preserve tombstones, counters, invitation history and legacy data.
-   Record evidence and remaining gaps; session one alone cannot close acceptance.
+1. Wait for A's owner-entered code and verify actual Plans/profile creation before
+   requesting B. The pending async question asks for result only, never the code.
+   A's current reservation expires 05:01:39 UTC; no blind resend or duplicate click.
+2. Preserve the legacy staging-origin session. A uses in-app links tab 6, B the
+   existing Preview tab 7. C/D may reuse A's links origin after A's pending-deletion
+   evidence and supported synthetic sign-out. Do not reset identity or counters.
+3. Fresh source/alias/role/count/budget checks and recovery restart 2/5 are complete.
+   API Places ceiling 690 equals baseline 270 + unused 420, deletion enabled and
+   inline false. Worker is stopped/no cron. The exact three-origin CORS list passed
+   A/B preflights; remove the temporary Preview origin at final disable.
+4. Perform remaining original Auth, two-round group, blockers, A/C/D pending/status
+   and verified D support-binding cases. Replay/contention need a supported
+   authenticated execution path and actual hosted evidence; do not extract hidden
+   browser tokens or infer a pass. Verify all queue subjects are the named synthetic
+   fixtures before each of the three remaining worker invocations, limit three.
+5. Restart 3/5 pauses API deletion admission for B's refusal check, then drain only
+   verified A/C/D rows and verify individual completion. Complete B's shared-data
+   cleanup/repair and sole-plan removal. Stop API and worker between phases.
+6. After the unchanged expiry fixture reaches 2026-09-30T02:48:54.780853Z, restart
+   4/5 re-enables/resumes the same image, checks expired-invite rejection without
+   OTP/account creation, and performs B's planned returning sign-in and final
+   supported deletion/drain. Restart 5/5 disables admission and removes the added
+   Preview origin. Remove scheduling, stop services, preserve all durable history.
+7. Respect the current segment's cutoff and all unchanged cumulative attempt/spend
+   ceilings. Record actual end times. No extra allowance follows a failure or a
+   continuation; preserve state and report exact acceptance gaps at any stop.
 
 Private fixture record:
 `/Users/brianchei/Library/Application Support/TableUs/Rehearsals/2026-09-28-p3/d-expired-invite.json`.
 Brian's four test addresses are `brian+tableus-p3-{a,b,c,d}@table-us.com`.
 General support: `brian@table-us.com`; privacy/deletion: `privacy@table-us.com`,
-which forwards to Brian. Alias delivery and the controlled support exchange still
-need actual evidence; never request credentials in chat.
+which forwards to Brian. Alias delivery/privacy forwarding are confirmed; six support messages remain for
+the verified D challenge, duplicate and completion cases. Never request credentials in chat.
 
 ## Remaining bounds
 
 Consumed: one API rollout, one web Preview/two staging alias assignments, one
 private worker resource/deployment, four migrations, all six invites and one
-of four worker processing invocations. API configuration restarts: one of four.
-Auth DELETE attempts: zero of twelve. One new Auth user/no new profile; two OTP
-requests, eight support messages, one OTP delivery/verification reserved. Live
-Places/AI remain zero. Session one is stopped at the current checkpoint above. All other ceilings in the
+of four worker processing invocations. API configuration restarts: two of five.
+Auth DELETE attempts: zero of twelve. One new Auth user/no new profile; three OTP
+requests, eight support messages, two OTP deliveries/verifications reserved. Live
+Places/AI remain zero. The recovery segment is active at the current checkpoint above. All other ceilings in the
 prepared campaign apply, including $15 providers, $5 hosting, $0.25 AI, three
 logical/nine underlying AI attempts, eleven OTP requests/ten deliveries/twenty
 verification submissions, fourteen support messages, twelve refresh/revoke calls

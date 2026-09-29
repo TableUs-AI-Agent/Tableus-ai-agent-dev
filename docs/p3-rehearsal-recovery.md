@@ -1,7 +1,7 @@
 # Priority 3 rehearsal recovery proposal
 
-Prepared September 29, 2026, after the inaccessible browser handoff. **Pending
-Brian's explicit approval; this document grants no additional allowance.** The
+Prepared September 29, 2026, after the inaccessible browser handoff. **Brian
+explicitly approved this complete recovery proposal on September 29.** The
 approved deployed application remains
 `2eefdc51345aeaa7951ffb343954c1669f9280c5`, with no application changes or new build.
 
@@ -28,7 +28,7 @@ connector returned 404, so no connector mutation was attempted. The page is publ
 and its inputs enable the send button. No new Preview, alias or resource is needed.
 The legacy in-app staging-origin session remains untouched.
 
-## Requested changes
+## Approved changes
 
 1. Add **45 supervised live minutes** to the campaign ceiling: 60 → **105 total**.
    With 40 minutes 11.955 seconds consumed, at most 64 minutes 48.045 seconds remain.

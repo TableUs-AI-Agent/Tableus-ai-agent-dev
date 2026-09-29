@@ -434,3 +434,34 @@ product requirement. Confirm owner visibility before any further live action,
 then reconcile expired-grant recovery and incomplete cases against the remaining
 time, attempt, restart and spending bounds. A/B group, B/C/D enrollment, deletion
 and the eventual natural-expiry acceptance remain untested.
+
+## Approved recovery resume, September 29 at 04:39–04:42 UTC
+
+Brian approved recovery packet commit `513fcb1ef025d2450f155b2863b0965506f1717b`:
+105 cumulative live minutes, five same-image API restarts and the existing Preview's
+exact temporary CORS origin. Prior counters remain consumed; other ceilings stay
+unchanged. Fresh checks found the expected migrations/grants/aliases/source,
+six profiles/eight Auth users (A alone, unverified), fourteen invites, no active
+reservation or deletion queue, zero new provider rows and Places baseline 270.
+Railway's delayed workspace billing reads $3.590014644234074, $0.03629096694320966
+above the pre-rollout aggregate; this is not exact campaign attribution.
+
+Restart 2/5 produced SUCCESS deployment `b134094c-b6be-4f04-b8e9-87bbbd3e986a` with
+image `sha256:4fc94ba63d5ee76f5e9e25868a0a347db252b12d4defacfcfa30078598d4c5b8`.
+Readiness reports full source `2eefdc51345aeaa7951ffb343954c1669f9280c5`, Supabase
+Auth, configured providers and telemetry test hooks false. Only the exact existing
+Preview origin was added to the original two origins; A/B OPTIONS preflights passed.
+Places remains 690, API deletion enabled/inline false, worker stopped/no schedule.
+The recovery segment began `04:39:03.227627Z`, deadline `05:28:51.272600Z`; local
+cutoff exec session 73801 is armed, using the existing stop containment procedure.
+
+A's initial pointer click did not produce a request: readback still showed no
+active reservation and last email `03:40:16.570688Z`. Keyboard Enter on the enabled
+button then produced the code-entry state and one observed send at
+`04:41:40.659236Z`, with reservation expiry `05:01:39.315729Z`. Private before/after
+subject comparison confirmed the same A identity, counts eight Auth users/six
+profiles and one live reservation. Three OTP requests, two delivered-email
+allowances and two verification submissions are conservatively accounted for;
+manual verification remains pending. No B/C/D signup or provider/deletion action.
+The visible in-app A/B forms are retained; private codes and identities are excluded
+from repository evidence. No additional source deployment occurred.

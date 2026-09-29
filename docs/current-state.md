@@ -1,33 +1,25 @@
 # Current state
 
-Updated 2026-09-28 (September 29 UTC). Priority 3 merged as `2eefdc5` after
-passing hosted CI. The four staging migrations, one API rollout, one web Preview
-and private worker startup passed. Both staging aliases use the new Preview;
-production and native artifacts are unchanged. The same API image resumed under
-configuration restart one of four, with queue-only deletion enabled; worker remains
-stopped/unscheduled. Session one stopped early at 04:08:34 UTC September 29 after
-Brian could not locate the prepared external tab. Future API deletion admission
-is disabled, and both current deployments are verified stopped with no schedule.
-Brian authorized splitting the rehearsal;
-only session two waits until September 29 at 9:48:55 p.m. Central for natural expiry.
-Eight synthetic support messages reached the four aliases/privacy route, confirmed
-by Brian. Hook/wrong-recipient/revoked-invite denial checks passed. A's manual
-verification never completed before its 20-minute invite reservation expired.
-The last database checkpoint had one new Auth user/no new profile and no live Places/AI call.
-Both sessions share
-the original 60-minute and attempt/spend limits;
-[execution evidence](evidence/e5e7d13/execution.md) records the remaining gates and
-consumed allowances. Brian chose to operate the mailbox and enter codes in TableUs;
-separate staging origins preserve legacy sessions. Session one used 40 minutes
-11.955 seconds; 19 minutes 48.045 seconds remain across the approved campaign.
-A's form is now filled in the visible in-app links-origin tab without sending a
-new code. The old external form must not be submitted. Reconcile recovery and
-the remaining acceptance scope before any additional OTP or restart; no allowance
-was reset. Brian confirmed A's visible form; B is also prepared on the existing
-Preview's distinct origin in an in-app tab. The [recovery proposal](p3-rehearsal-recovery.md)
-is pending approval and does not change the current ceilings or runtime settings.
-The cutoff is disarmed by the recorded session end. Fresh hosted
-source/alias/grant/count checks passed. Priority 3 acceptance remains open.
+Recovery resumed September 29 at 04:39:03 UTC after Brian's approval. API
+configuration restart 2/5 (`b134094c-b6be-4f04-b8e9-87bbbd3e986a`) reuses the exact
+approved image/source, passes readiness and A/B CORS checks, and enables queue-only
+deletion; the worker is stopped/unscheduled. The recovery segment ends by 05:28:51
+UTC with a cutoff armed. A's fresh code was requested at 04:41:40 through the visible
+in-app links tab, with the same Auth identity; eight Auth users/six profiles and
+one reservation remain. Manual verification is pending; reservation expiry is
+05:01:39 UTC. B's separate in-app Preview form is prepared but unsubmitted.
+Three OTP requests/two deliveries and two conservative verification reservations
+are accounted for. No live Places/AI or deletion has run. The approved ceiling is
+105 cumulative live minutes/five same-image restarts; all other limits are unchanged.
+
+Brian confirmed all eight synthetic support messages reached the four aliases and
+privacy route. Hook/wrong-recipient/revoked-invite checks passed. The original live
+segment stopped after an inaccessible external-browser handoff and consumed
+40 minutes 11.955 seconds; that elapsed time and all prior attempts remain charged.
+The legacy staging browser session is preserved, and both operator forms are now
+in the visible in-app browser. The [approved recovery packet](p3-rehearsal-recovery.md)
+and [execution evidence](evidence/e5e7d13/execution.md) retain the sequence and exact
+bounds. Priority 3 acceptance remains open; no real-pilot activation is implied.
 
 ## Source baseline
 
@@ -72,7 +64,7 @@ environments are disabled. The approved manual rollout below consumed the API/we
 
 | Component | Source | Notes |
 | --- | --- | --- |
-| API (Railway `tableus-staging`) | `2eefdc5` | Same-image restart `76028185-7799-46ff-a361-e8571cb00867` passed readiness; queue-only deletion enabled, inline attempts off. Places ceiling 690; live providers unused. |
+| API (Railway `tableus-staging`) | `2eefdc5` | Same-image restart `b134094c-b6be-4f04-b8e9-87bbbd3e986a` (2/5) passed readiness and A/B CORS checks; queue-only deletion enabled, inline attempts off. Places ceiling 690; live providers unused. |
 | Web aliases `tableus-staging.vercel.app`, `links.table-us.com` | `2eefdc5` | READY Preview `dpl_7j4HwYgzPw4139i3W535V5iUFqrv`; public deletion/privacy/terms checked. |
 | Private deletion worker | `2eefdc5` | One empty startup completed and exited; no public domain/healthcheck, restart NEVER, schedule absent. One of four processing invocations consumed. |
 | Accepted native artifacts | `f94a1d9` | Isolated-staging acceptance with an owner-accepted simulator AppHang risk ([closeout](evidence/ios27-staging-f94a1d9/closeout.md)) |

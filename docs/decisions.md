@@ -578,5 +578,18 @@ Brian subsequently confirmed the visible A form. The existing Preview's unique
 origin provides a second in-app browser identity for B without clearing the legacy
 session or creating another deployment. Adding that exact origin to API CORS,
 45 more supervised live minutes and one additional same-image restart are proposed
-in the [recovery packet](p3-rehearsal-recovery.md), **not yet approved or applied**.
-All other cumulative bounds and stop conditions are retained.
+in the [recovery packet](p3-rehearsal-recovery.md). Brian explicitly approved the
+complete packet on September 29. The live-time ceiling is now 105 minutes and
+configuration-restart ceiling five; prior usage is retained. All other cumulative
+bounds and stop conditions remain unchanged. Apply the temporary exact-origin
+CORS addition only at recovery resume and remove it during final disable.
+
+Recovery restart 2/5 reused the exact approved image and passed source/readiness
+and exact-origin CORS checks. The new segment receives the remaining 49 minutes
+48.045 seconds of phase-one allocation, with its own cutoff; no prior elapsed
+time is refunded. A's normal join flow revalidated the existing invitation and
+sent one fresh code to the existing unverified Auth identity. No new account was
+created. Keep the successful in-app handoff and require observable enrollment
+before moving on to B. Browser pointer activation produced no request; after
+readback established that fact, keyboard activation succeeded without a duplicate
+email. This is an operator interaction observation, not proof of an app defect.

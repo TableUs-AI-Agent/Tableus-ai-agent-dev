@@ -76,26 +76,23 @@ Priority 3 is authorized in a fresh chat. Independent local preparation is
 complete on `codex/pilot-staging-readiness`. Brian approved the bounded external
 campaign for `e5e7d1`; preflight, hosted CI/review and [PR #9](https://github.com/TableUs-AI-Agent/Tableus-ai-agent-dev/pull/9)
 merge are complete (`2eefdc5`, tree identical to tested `d2ccc7e`). The four migrations,
-API/web rollout and an empty private-worker startup passed. The first same-image
-API restart enables queue-only deletion; worker scheduling remains absent.
-Brian requested two rehearsal
-sessions sharing the original 60-minute and all attempt/spend ceilings. Session one
-stopped early because the prepared external signup tab was inaccessible to Brian;
-session two was intended to cover natural expiry after
-September 29 at 9:48:55 p.m. Central and B's final deletion. The API and worker stay
-stopped between sessions; the same four configuration restarts cover both. All six
-invites, one worker invocation and one API configuration restart are consumed.
-Eight support messages reached the four aliases/privacy route. Two OTP requests
-include the expected hook denial and A's signup; its invite reservation expired
-before manual verification. No live Places/AI ran. Session one ran 03:28:22–04:08:34
-UTC September 29, consuming 40 minutes 11.955 seconds and leaving 19 minutes
-48.045 seconds. Both deployments are stopped; admission for future starts is off
-and no worker schedule exists. A's form is prepared in the visible in-app links
-tab without another OTP. Reconcile recovery and unfinished scope within the
-remaining cumulative bounds before another live action. A/B in-app forms are now
-prepared, and A visibility is owner-confirmed; the bounded [recovery proposal](p3-rehearsal-recovery.md)
-awaits approval. This is not pilot acceptance. Brian operates
-the mailbox and enters codes directly; no credentials are requested in chat.
+API/web rollout and an empty private-worker startup passed. Brian requested a split
+rehearsal and subsequently approved [recovery](p3-rehearsal-recovery.md) after the
+external browser handoff failed: 105 cumulative live minutes, five same-image API
+configuration restarts, and the exact existing Preview origin temporarily allowed
+for B. All other original limits and used counters remain unchanged.
+
+Recovery restart 2/5 passed same-image/readiness/CORS checks; the current segment
+runs 04:39:03–05:28:51 UTC September 29, with a cutoff armed. A's fresh code was
+requested at 04:41:40 using the same unverified identity; manual verification is
+pending and its reservation expires 05:01:39 UTC. B's in-app form is prepared without
+send. Three OTP requests, two deliveries and two conservative verification
+reservations are accounted for. All six invites, eight support messages and one
+worker invocation are consumed; no live Places/AI or deletion has run. The earlier
+40 minutes 11.955 seconds are retained, with at least 15 minutes reserved for the
+natural-expiry/final phase after September 29 at 9:48:55 p.m. Central. The API and
+worker must be stopped between phases. This is not pilot acceptance. Brian enters
+codes directly into the visible TableUs forms; no credentials are requested in chat.
 
 Effort is a rough planning range in focused engineering days, excluding approval,
 hosted CI, device/signing and external-access waits; these are not delivery promises.
