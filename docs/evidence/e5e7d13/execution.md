@@ -18,7 +18,9 @@ attempts, three logical/nine underlying AI attempts, $0.25 incremental AI,
 $15 total providers, $5 hosting, eleven OTP requests/ten emails/twenty verification
 submissions, fourteen support messages, twelve refresh/revoke calls, thirty status
 reads and four worker invocations/twelve total Auth DELETE attempts. The live
-window is sixty minutes after the day-ahead expired-invite setup. Narrower limits
+window was originally sixty minutes after the day-ahead expired-invite setup;
+Brian's September 28 split request now shares those sixty supervised live minutes
+across two sessions, with a stopped interval. Narrower limits
 and all stop rules in the campaign apply; no allowance has been replenished.
 
 ## Preflight observed September 27, approximately 07:53–07:57 UTC
@@ -306,9 +308,28 @@ OTP sends/verification, support messages and live provider requests: **zero**.
 No 60-minute live window has started. Local/read-only tool setup errors above
 consumed no hosted deployment, worker processing or provider allowance.
 
-Next: after the real fixture expiry and Brian's mailbox availability, resume the
-same API image under the first allowed admission restart; run the exact synthetic
-flow with fresh isolated identities and only the remaining invitations/invocations.
+Next: after Brian's mailbox/browser readiness, resume the same API image under the
+first allowed admission restart for session one. Only session two waits for real
+expiry. Use fresh isolated identities and only remaining invitations/invocations.
 Do not add a rollout, reset budgets, reuse legacy identity/session data or activate
 real intake. End with deletion admission and scheduling off. Native builds,
 production, broader retention policy and real pilot invitations remain deferred.
+
+## Split authorization, September 28 Central / September 29 UTC
+
+Brian requested “split the rehearsal.” No live test had started when this change
+was recorded. Session one receives at most 45 supervised live minutes; session two
+uses the remaining original allowance, at least 15 minutes reserved. Stopped wait
+time is excluded. No account, invite, OTP, support, provider, worker, restart or
+spending allowance is replenished. No additional deployment is authorized.
+
+The [active packet](../../task-packets/active.md#split-rehearsal-authorized-september-28-central)
+defines the revised order. Session one includes Auth/group/blocker/pending/support,
+API pause/B refusal, bounded A/C/D drain and B's content repair/sole-plan removal.
+Defer B's already-budgeted returning sign-in to session two, together with real
+expiry rejection and B's final deletion. Source inspection confirms public invite
+validation checks the invite's expiry before creating a reservation, independently
+of an Auth identity; the later D rejection needs no replacement account or OTP.
+The API stays stopped and worker schedule absent between sessions. Session-two
+re-enable doubles as same-image resume, retaining exactly four configuration
+restarts. Mailbox operation remains a prerequisite; no test mail was sent here.

@@ -77,9 +77,12 @@ complete on `codex/pilot-staging-readiness`. Brian approved the bounded external
 campaign for `e5e7d1`; preflight, hosted CI/review and [PR #9](https://github.com/TableUs-AI-Agent/Tableus-ai-agent-dev/pull/9)
 merge are complete (`2eefdc5`, tree identical to tested `d2ccc7e`). The four migrations,
 API/web rollout and an empty private-worker startup passed. API and worker are
-held stopped, deletion admission off, schedule absent. Next is the supervised
-four-account rehearsal after the one expiry fixture matures on September 29 at
-9:48:55 p.m. Central. One of six invites and one of four worker invocations are
+held stopped, deletion admission off, schedule absent. Brian requested two rehearsal
+sessions sharing the original 60-minute and all attempt/spend ceilings. Session one
+can start after mailbox/browser readiness; session two covers natural expiry after
+September 29 at 9:48:55 p.m. Central and B's final deletion. The API and worker stay
+stopped between sessions; the same four configuration restarts cover both. One of
+six invites and one of four worker invocations are
 consumed; account/email/provider allowances are unused. This is not pilot acceptance.
 
 Effort is a rough planning range in focused engineering days, excluding approval,

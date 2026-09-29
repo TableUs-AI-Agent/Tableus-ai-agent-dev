@@ -516,8 +516,29 @@ rows and counts as invocation one of four. See [Railway's transition](https://do
 
 The API is stopped again, with deletion admission off, while the private D fixture
 expires naturally at `2026-09-30T02:48:54.780853Z` (September 29, 9:48:55 p.m.
-Central). Resume under the existing scope only after expiry, mailbox access and
-fresh source/role/queue/budget checks. Reconcile aged-out usage and tighten the
+Central). This initial single-session hold was superseded by Brian's split request
+below. Resume after mailbox access and fresh source/role/queue/budget checks.
+Reconcile aged-out usage and tighten the
 global ceiling during the first already-budgeted admission restart; never reset
 the independent 420-attempt allowance. Native acceptance and real invitations
 remain later gated work.
+
+## Split synthetic rehearsal — 2026-09-28
+
+Brian requested “split the rehearsal.” Run session one before expiry once mailbox
+and isolated browser operation are ready; defer natural-expiry rejection, B's
+already-budgeted returning sign-in and B's final deletion to session two. Allocate
+45 of the original 60 supervised live minutes to session one, retaining at least
+15 for session two; stopped waiting time is excluded. All other limits, fixtures,
+stop conditions and the exact deployed source remain unchanged. The private ledger
+must retain cumulative usage across both sessions.
+
+Session one pauses API deletion admission and drains only verified A/C/D jobs,
+then verifies B's cleanup/repair and removes its sole plan. Stop the API, remove
+worker scheduling and close only synthetic sessions during the interval. Session
+two re-enables/resumes the same image, checks real expiry without OTP/account
+creation, completes B's returning sign-in and deletion, then disables admission
+and scheduling and stops the API. This retains the four approved configuration
+restarts and four total worker invocations; splitting adds no source deployment,
+account, OTP, provider or spending allowance. Acceptance remains open until both
+sessions and final evidence pass.

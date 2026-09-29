@@ -4,9 +4,11 @@ Updated 2026-09-28 (September 29 UTC). Priority 3 merged as `2eefdc5` after
 passing hosted CI. The four staging migrations, one API rollout, one web Preview
 and private worker startup passed. Both staging aliases use the new Preview;
 production and native artifacts are unchanged. API and worker are now stopped,
-with deletion admission off and no worker schedule, awaiting the naturally expired
-invitation fixture. No new account, OTP email or live provider call has been made.
-The supervised rehearsal can start after September 29 at 9:48:55 p.m. Central;
+with deletion admission off and no worker schedule. Brian authorized splitting
+the rehearsal: session one can start once mailbox/browser readiness is confirmed;
+only session two waits until September 29 at 9:48:55 p.m. Central for natural expiry.
+No new account, OTP email or live provider call has been made. Both sessions share
+the original 60-minute and attempt/spend limits;
 [execution evidence](evidence/e5e7d13/execution.md) records the remaining gates and
 consumed allowances. Priority 3 acceptance remains open.
 
@@ -53,7 +55,7 @@ environments are disabled. The approved manual rollout below consumed the API/we
 
 | Component | Source | Notes |
 | --- | --- | --- |
-| API (Railway `tableus-staging`) | `2eefdc5` | Deployment `217e257f-9fbe-40fb-adec-ce231ff54c28` passed readiness; now stopped for the expiry wait. Supabase auth; live providers configured but unused; deletion admission and inline attempts off. |
+| API (Railway `tableus-staging`) | `2eefdc5` | Deployment `217e257f-9fbe-40fb-adec-ce231ff54c28` passed readiness; now stopped pending session-one mailbox/browser readiness. Supabase auth; live providers configured but unused; deletion admission and inline attempts off. |
 | Web aliases `tableus-staging.vercel.app`, `links.table-us.com` | `2eefdc5` | READY Preview `dpl_7j4HwYgzPw4139i3W535V5iUFqrv`; public deletion/privacy/terms checked. |
 | Private deletion worker | `2eefdc5` | One empty startup completed and exited; no public domain/healthcheck, restart NEVER, schedule absent. One of four processing invocations consumed. |
 | Accepted native artifacts | `f94a1d9` | Isolated-staging acceptance with an owner-accepted simulator AppHang risk ([closeout](evidence/ios27-staging-f94a1d9/closeout.md)) |
@@ -65,7 +67,7 @@ private app schema and invoker Auth hook were verified. Six legacy profiles,
 seven Auth users, sixteen plans and eleven runs remain intact; sixteen plan
 credits were backfilled. Legacy unused unbound invites are rejected for new
 signups. One new recipient-bound expiry fixture is stored privately; it must
-expire naturally before the rehearsal. No legacy invite was reissued.
+expire naturally before its session-two rejection check. No legacy invite was reissued.
 
 ## Product
 

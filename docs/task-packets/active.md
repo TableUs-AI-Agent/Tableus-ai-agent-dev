@@ -36,7 +36,7 @@ were backfilled. Legacy unknown provenance was preserved.
 
 - API deployment `217e257f-9fbe-40fb-adec-ce231ff54c28` passed readiness with exact
   merged source, one process, deletion admission/inline attempts off and telemetry
-  test hooks off. It is **stopped again for the natural-expiry wait**.
+  test hooks off. It is **stopped pending session-one mailbox/browser readiness**.
 - Web Preview `dpl_7j4HwYgzPw4139i3W535V5iUFqrv` is READY from the same Git archive.
   Only `tableus-staging.vercel.app` and `links.table-us.com` moved to it. Public
   deletion/privacy/terms content passed checks. Both production aliases retain
@@ -54,10 +54,37 @@ were backfilled. Legacy unknown provenance was preserved.
   **September 29 at 9:48:55 p.m. America/Chicago**. No timestamp editing or early
   validation. No OTP email, new Auth account or live provider request was made.
 
-## Resume in order
+## Split rehearsal, authorized September 28 Central
 
-1. Wait until the fixture actually expires and Brian can operate the controlled
-   mailbox. Do not sleep a day inside a tool. No automatic follow-up was scheduled.
+Brian requested “split the rehearsal.” Natural expiry no longer blocks session
+one. Keep **60 supervised live minutes total across both sessions**: allocate at
+most 45 minutes to session one and reserve at least 15 for session two. The stopped
+overnight interval is excluded; neither session receives a fresh allowance.
+Record actual starts, ends and remaining minutes in the private ledger. Mailbox
+operation and isolated browser identities must be ready before the first test.
+
+Session one performs all four enrollments, A's returning sign-in, recipient/revoked
+and replay/contention checks, the two-round A/B group journey, blockers, A/C/D
+pending requests and support binding, API pause/B refusal, bounded A/C/D drain,
+then B's shared-content/metadata repair and sole-plan removal. Defer the already
+budgeted **B returning sign-in** to session two. Sign out/close only synthetic
+sessions before the interval, count revocations, disable worker scheduling and
+stop the API; retain B's account and all durable evidence.
+
+Session two begins after the real fixture expiry below. Verify expired-invite
+rejection without requesting an OTP or creating a replacement D account; this
+public validation route checks the invite independently of D's deleted identity.
+Complete B's one returning sign-in, supported self-service deletion and bounded
+worker drain, then final containment. Four configuration restarts remain exactly:
+session-one enable and pause, session-two re-enable and final disable. The
+session-two re-enable also resumes the stopped API using the same image. No extra
+source deployment or overnight running service is needed.
+
+## Execute in order
+
+1. Confirm Brian's controlled mailbox operation and isolated synthetic browser
+   sessions for session one; the mailbox question is pending. Only session two
+   waits for expiry. Do not sleep a day inside a tool. No follow-up was scheduled.
 2. Re-read this record and the private fixture/allowance ledger; verify exact source,
    aliases, role, queue, grant state and no unexpected activity. Use fresh isolated
    synthetic browser sessions: the ordinary staging browser has a pre-existing
@@ -72,12 +99,13 @@ were backfilled. Legacy unknown provenance was preserved.
    resulting image digest and effective variables before any live request. No
    further API/web source build is authorized. Keep worker schedule held until
    actual A/C/D pending requests and private support binding have been verified.
-5. Run the approved 60-minute four-account/six-invite Auth, two-person/two-round
-   journey, blocker, pending/retry, support, pause/drain and final-B deletion cases.
+5. Run the two sessions in the order above within the shared 60-minute limit,
+   retaining the four-account/six-invite and two-person/two-round scope.
    Schedule only the remaining bounded worker invocations, then remove scheduling
    before a fifth total invocation. Verify individual completion, not just totals.
-6. End with API deletion admission and worker schedule off; preserve all tombstones,
-   counters, invitation history and legacy data. Record evidence and remaining gaps.
+6. At both session boundaries leave admission and scheduling off and the API
+   stopped. Preserve tombstones, counters, invitation history and legacy data.
+   Record evidence and remaining gaps; session one alone cannot close acceptance.
 
 Private fixture record:
 `/Users/brianchei/Library/Application Support/TableUs/Rehearsals/2026-09-28-p3/d-expired-invite.json`.
