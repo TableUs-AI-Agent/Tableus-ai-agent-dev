@@ -619,3 +619,13 @@ all-mail search, then exact Message-ID trace if absent. Do not resend or change
 SMTP/DNS/suppression settings based only on provider status or that hypothesis.
 The prior support-mail receipt confirmation remains valid for those eight messages,
 and does not prove receipt of the separate Auth emails.
+
+### Auth email receipt resolved — 2026-09-30
+
+Brian confirmed that the Auth code was received and that he had checked the wrong
+inbox. Record owner-visible receipt as passed and close the missing-email diagnosis.
+The self-to-alias hypothesis was not established; no SMTP/DNS/suppression change is
+justified by this incident. Receipt alone does not establish verification or enrollment.
+The old OTP and all four normal invitations have expired. Preserve the spent six-invite
+allowance and 90/105 live minutes; prepare a revised signup scope before replacements
+or a restart. The owner's correction does not expand campaign approval.

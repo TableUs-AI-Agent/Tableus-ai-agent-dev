@@ -90,11 +90,14 @@ allocation is charged: 90/105 live minutes used, 15 reserved for the post-expiry
 phase. A's September 28 11:41 p.m. Central code and reservation have expired.
 Three OTP requests, two deliveries and two conservative verification reservations
 remain accounted for. All six invites, eight support messages and one worker
-invocation are consumed. First-phase acceptance remains incomplete. Brian reports no Auth email receipt;
-provider metadata shows both code messages delivered, with no alias suppression.
-Mailbox placement/receipt remains unresolved, so diagnose through an all-mail or
-recipient-side log search before another resend, and reconcile scope before restart. Natural-expiry checking is still not before
-September 29 at 9:48:55 p.m. Central. No pilot acceptance is implied.
+invocation are consumed. First-phase acceptance remains incomplete. On September 30
+Brian confirmed receipt of the Auth code after checking the correct inbox; email
+receipt is passed and its investigation is resolved. OTP verification remains
+incomplete. All four normal invitations expired September 30 around 03:38 UTC;
+replacement invitations require a revised allowance proposal because the six-invite
+cap is consumed. Reconcile signup scope and time before restarting. The separate
+natural-expiry fixture elapsed September 29 at 9:48:55 p.m. Central, but its HTTP
+rejection is still untested. No pilot acceptance is implied.
 
 Effort is a rough planning range in focused engineering days, excluding approval,
 hosted CI, device/signing and external-access waits; these are not delivery promises.

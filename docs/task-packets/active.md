@@ -20,9 +20,10 @@ tests, 326 JavaScript tests and five browser journeys, zero skips, plus lint/typ
 migrations, deterministic evaluation, contracts, builds and smoke. Local readiness,
 restricted PostgreSQL and browser evidence remain applicable to unchanged inputs.
 
-## Current cutoff checkpoint, September 29 at 22:58 UTC
+## Current checkpoint, September 30: email receipt confirmed
 
-Both existing API and worker deployments are verified stopped, with null cron and
+At the September 29 22:58 UTC provider check, both API and worker deployments were
+verified stopped, with null cron and
 next run and future API deletion admission false. The cutoff requested API stop at
 05:28:21 UTC, deployment metadata updated 05:28:27, and the immediate receipt still
 showed stopping. The later provider read verifies stopped; exact instance stop time
@@ -33,24 +34,23 @@ an exact timestamp. Cumulative allocation consumed is 90/105 minutes, leaving th
 
 A remains unverified. Its last code send was 04:41:40 UTC (September 28 11:41 p.m.
 Central); the reservation expired 05:01:39 UTC and the code itself is also expired.
-Fresh readback: eight Auth users/six profiles, zero active reservations/deletion
+September 29 readback: eight Auth users/six profiles, zero active reservations/deletion
 rows/new provider rows. No B/C/D enrollment, group journey or deletion acceptance.
-No new OTP was sent on this turn. User asks where the code is; direct them to the
-Brian inbox receiving the A alias, including Spam, and confirm actual receipt.
 
-Brian subsequently reports the code was not received. Resend lists both A Auth
-emails as delivered and the exact alias suppression lookup returns not found. The
-latest sender is `Brian <brian@table-us.com>` with subject `Your TableUs verification
-code`. No code/body was displayed or saved in evidence. Provider acceptance is not
-inbox receipt; self-to-alias Gmail handling is a hypothesis, not a proved cause.
+On September 30 Brian corrected the missing-email report: the Auth code was
+received, and he had checked the wrong inbox. Owner-visible receipt is passed;
+OTP verification and enrollment remain incomplete. Close the missing-email
+investigation without an SMTP/DNS/suppression change. The earlier self-to-alias
+hypothesis was not established. No code/body was displayed or saved in evidence.
+Three prior diagnostic status reads remain counted; aggregate status-read use is
+15/30. No additional email or provider call accompanied this correction.
 
-**Next: Brian searches the mailbox receiving the A alias using
-`in:anywhere subject:"Your TableUs verification code" to:brian+tableus-p3-a@table-us.com`
-and reports found/no results, without sharing the code. If absent, inspect the
-recipient-side email logs using the exact message ID stored privately. Reconcile
-the incomplete phase/time reserve before any resend/restart.** No SMTP change,
-suppression removal, DNS edit or additional send is authorized by a guessed cause.
-Three diagnostic status reads are counted; known aggregate status-read use is 15/30.
+Private fixture records confirm all four normal invitations expired September 30
+at 03:38:16–03:38:21 UTC. All six issued invitations are charged against the limit
+of six. The separate natural-expiry fixture has elapsed; its HTTP rejection remains
+untested. **Next: prepare a revised signup scope and allowance proposal, accounting
+for replacement invitations and the incomplete first phase, before another live
+window.** The receipt correction does not extend existing caps or authorize a resend.
 
 The earlier pending verification instructions are stale. Do not submit the old
 code, reset the clock or automatically extend the approved recovery. Preserve the

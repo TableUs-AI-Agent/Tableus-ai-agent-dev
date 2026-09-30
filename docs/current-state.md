@@ -9,21 +9,27 @@ time was not captured. The full recovery allocation is charged conservatively:
 phase. Two of five same-image configuration restarts are consumed.
 
 A's last code was sent September 28 at 11:41:40 p.m. Central and is expired. The
-associated reservation expired September 29 at 12:01:39 a.m. Central. Fresh database
-readback finds A unverified, eight Auth users/six profiles, zero active reservations,
-zero deletion rows and zero new provider usage. No new code was sent today. Three
+associated reservation expired September 29 at 12:01:39 a.m. Central. The September 29
+database readback found A unverified, eight Auth users/six profiles, zero active
+reservations, zero deletion rows and zero new provider usage. Three
 OTP requests/two deliveries and two conservative verification reservations remain
 accounted for. First-phase acceptance is incomplete; reconcile the missing cases
 and remaining phase allocation before any restart/resend. The temporary exact
 Preview CORS origin remains configured on the stopped API pending final removal.
 
-Brian reports the Auth code email was not received. Resend metadata reports both
-A code messages delivered; the exact alias has no suppression entry. The latest
-message's sender was `Brian <brian@table-us.com>`, subject `Your TableUs verification
-code`. These provider results do not establish inbox placement or owner receipt.
-A focused all-mail search is pending; self-to-alias Gmail handling is only a possible
-explanation. Three read-only delivery diagnostic calls were charged, with no new
-email, SMTP change or service restart. Do not mark the OTP handoff passed.
+On September 30 Brian confirmed the Auth code was received: he had checked the
+wrong inbox. Owner-visible email receipt is passed; the missing-email investigation
+is resolved. The earlier self-to-alias hypothesis was not established. No email
+configuration repair is indicated, and receipt does not establish OTP verification
+or enrollment. The three prior diagnostic reads remain charged; no new email,
+provider call, SMTP change or service restart accompanied this correction.
+
+The four normal A/B/C/D invitations expired September 30 at approximately 03:38 UTC
+(September 29 at 10:38 p.m. Central), as confirmed from their private fixture
+records. All six issued invitations remain charged against the six-invitation
+limit. The separate natural-expiry fixture has also elapsed, but its HTTP rejection
+check remains untested. Prepare a revised signup scope and allowance proposal before
+issuing replacement invitations or restarting the incomplete phase.
 
 Brian confirmed all eight synthetic support messages reached the four aliases and
 privacy route. Hook/wrong-recipient/revoked-invite checks passed. The original live

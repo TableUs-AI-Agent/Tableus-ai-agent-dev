@@ -507,3 +507,22 @@ private Message-ID is the next diagnostic. No email, provider action, restart, S
 change, suppression removal or DNS edit was performed. Three delivery-status tool
 calls were charged, bringing known status reads to 15/30. All other counters and
 the stopped-service state remain unchanged.
+
+## Owner-confirmed Auth email receipt, September 30
+
+Brian corrected the missing-email report: the code was received, and he had been
+checking the wrong inbox. This passes owner-visible Auth email receipt and closes
+the delivery investigation. It does not prove OTP verification or enrollment, and
+the earlier self-to-alias hypothesis was not established. No resend, email-body read,
+provider call, configuration edit or service restart accompanied this correction.
+The three prior diagnostic calls remain charged; known status reads stay 15/30.
+
+Private invitation records were read at the September 30 checkpoint without
+displaying codes. Normal invitation expiries are A `2026-09-30T03:38:16.078285Z`,
+B `2026-09-30T03:38:18.171780Z`, C `2026-09-30T03:38:19.683414Z` and
+D `2026-09-30T03:38:21.380862Z`; all have elapsed. The separate D natural-expiry
+fixture also elapsed at `2026-09-30T02:48:54.780853Z`, but its HTTP rejection remains
+untested. No timestamp was changed. All six invitations and 90/105 live minutes
+remain charged. Replacement signup scope and allowances must be prepared before
+another live window. Last provider verification of stopped services remains the
+September 29 22:58 UTC check; this receipt update does not claim a fresh runtime read.
