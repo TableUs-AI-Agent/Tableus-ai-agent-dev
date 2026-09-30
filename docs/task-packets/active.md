@@ -48,14 +48,17 @@ Three prior diagnostic status reads remain counted; aggregate status-read use is
 Private fixture records confirm all four normal invitations expired September 30
 at 03:38:16–03:38:21 UTC. All six issued invitations are charged against the limit
 of six. The separate natural-expiry fixture has elapsed; its HTTP rejection remains
-untested. **Next: prepare a revised signup scope and allowance proposal, accounting
-for replacement invitations and the incomplete first phase, before another live
-window.** The receipt correction does not extend existing caps or authorize a resend.
+untested. The [next-attempt proposal](../p3-rehearsal-next-attempt.md) is prepared:
+ten total invitations, 150 live minutes, seven same-image restarts and 45 status
+reads, with unchanged financial and other attempt caps. **Next: obtain approval
+of that extension, then complete stopped-state preflight/cutoff setup before A's
+fresh invitation and code.** No ledger ceiling or usage changed during preparation.
 
 The earlier pending verification instructions are stale. Do not submit the old
 code, reset the clock or automatically extend the approved recovery. Preserve the
-unverified A identity and all legacy data. B's old tab visibility is unconfirmed;
-current user ambient UI lists only the links tab. The temporary Preview CORS origin
+unverified A identity and all legacy data. A is now prepared in in-app tab 1 (links)
+and B in in-app tab 2 (existing unique Preview); both invitation fields are empty
+and no send was submitted. The temporary Preview CORS origin
 remains configured on the stopped API and must be removed at final containment.
 
 ## Historical recovery checkpoint, September 29 at 04:42 UTC
@@ -210,34 +213,26 @@ session-one enable and pause, session-two re-enable and final disable. The
 session-two re-enable also resumes the stopped API using the same image. No extra
 source deployment or overnight running service is needed.
 
-## Planned sequence after scope reconciliation (not authorization to restart)
+## Proposed next sequence (awaiting extension approval)
 
-1. Wait for A's owner-entered code and verify actual Plans/profile creation before
-   requesting B. The pending async question asks for result only, never the code.
-   A's current reservation expires 05:01:39 UTC; no blind resend or duplicate click.
-2. Preserve the legacy staging-origin session. A uses in-app links tab 6, B the
-   existing Preview tab 7. C/D may reuse A's links origin after A's pending-deletion
-   evidence and supported synthetic sign-out. Do not reset identity or counters.
-3. Fresh source/alias/role/count/budget checks and recovery restart 2/5 are complete.
-   API Places ceiling 690 equals baseline 270 + unused 420, deletion enabled and
-   inline false. Worker is stopped/no cron. The exact three-origin CORS list passed
-   A/B preflights; remove the temporary Preview origin at final disable.
-4. Perform remaining original Auth, two-round group, blockers, A/C/D pending/status
-   and verified D support-binding cases. Replay/contention need a supported
-   authenticated execution path and actual hosted evidence; do not extract hidden
-   browser tokens or infer a pass. Verify all queue subjects are the named synthetic
-   fixtures before each of the three remaining worker invocations, limit three.
-5. Restart 3/5 pauses API deletion admission for B's refusal check, then drain only
-   verified A/C/D rows and verify individual completion. Complete B's shared-data
-   cleanup/repair and sole-plan removal. Stop API and worker between phases.
-6. After the unchanged expiry fixture reaches 2026-09-30T02:48:54.780853Z, restart
-   4/5 re-enables/resumes the same image, checks expired-invite rejection without
-   OTP/account creation, and performs B's planned returning sign-in and final
-   supported deletion/drain. Restart 5/5 disables admission and removes the added
-   Preview origin. Remove scheduling, stop services, preserve all durable history.
-7. Respect the current segment's cutoff and all unchanged cumulative attempt/spend
-   ceilings. Record actual end times. No extra allowance follows a failure or a
-   continuation; preserve state and report exact acceptance gaps at any stop.
+Follow the [fresh invitation proposal](../p3-rehearsal-next-attempt.md), which
+supersedes the stale pending-code sequence. It preserves the original cases and
+splits 60 proposed remaining minutes into 45 for the unfinished phase and 15 for
+the final phase. The natural-expiry threshold is already elapsed. Issue each new
+invitation only when ready for its signup. A/B stay in their visible in-app origins;
+Brian enters OTPs directly. One interrupted handoff recovery is proposed, with
+containment after five minutes without verified enrollment.
+
+The old `/private/tmp` operator scripts no longer exist. A replacement
+`next-attempt-cutoff.py` is now saved in the durable private rehearsal directory,
+with eight local checks and syntax compilation passed; its hash is in the proposal
+and private ledger. It is not armed. Record approval and verify its armed receipt
+before live execution; never assume an old process is running. The durable private
+ledger and earlier stop receipts remain available. Hosted same-account
+replay/contention still need a supported
+authenticated test path; normal UI sends once and cannot establish contention.
+Do not claim those criteria passed or silently waive them. No current limit changes
+until Brian explicitly approves the extension.
 
 Private fixture record:
 `/Users/brianchei/Library/Application Support/TableUs/Rehearsals/2026-09-28-p3/d-expired-invite.json`.

@@ -629,3 +629,17 @@ justified by this incident. Receipt alone does not establish verification or enr
 The old OTP and all four normal invitations have expired. Preserve the spent six-invite
 allowance and 90/105 live minutes; prepare a revised signup scope before replacements
 or a restart. The owner's correction does not expand campaign approval.
+
+### Fresh invitation proposal — 2026-09-30, awaiting approval
+
+Prepare four just-in-time replacement invitations for the same A/B/C/D recipients;
+retain old fixture history and A's existing Auth identity. The proposed cumulative
+ceilings are ten invitations, 150 live minutes, seven same-image restarts and
+45 status reads, with unchanged spending/other attempt limits. The spare restart
+supports one interrupted manual OTP handoff; a five-minute handoff stall triggers
+containment so another long unattended interval is not consumed. Brian continues
+entering codes directly in visible in-app forms. No stored browser token extraction
+or automated mailbox reading is introduced. The
+[complete proposal](p3-rehearsal-next-attempt.md) remains unapproved. Hosted
+replay/contention evidence stays open rather than claiming repeated UI clicks prove
+it; neither criterion is waived by this proposal.

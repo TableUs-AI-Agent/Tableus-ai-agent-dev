@@ -28,8 +28,14 @@ The four normal A/B/C/D invitations expired September 30 at approximately 03:38 
 (September 29 at 10:38 p.m. Central), as confirmed from their private fixture
 records. All six issued invitations remain charged against the six-invitation
 limit. The separate natural-expiry fixture has also elapsed, but its HTTP rejection
-check remains untested. Prepare a revised signup scope and allowance proposal before
-issuing replacement invitations or restarting the incomplete phase.
+check remains untested. The [fresh invitation proposal](p3-rehearsal-next-attempt.md)
+is prepared and awaiting approval: totals of ten invitations, 150 live minutes,
+seven same-image restarts and 45 status reads; spending and all other caps unchanged.
+A/B in-app forms are prepared without invitation codes or submission. No approved
+ledger limit changed. The prior temporary helpers are no longer present; a durable
+replacement cutoff passed eight local checks and remains unarmed pending approval
+and stopped-state preflight. Hosted replay/contention
+remain open; the normal form alone does not supply reliable evidence for them.
 
 Brian confirmed all eight synthetic support messages reached the four aliases and
 privacy route. Hook/wrong-recipient/revoked-invite checks passed. The original live
