@@ -94,21 +94,15 @@ to B after the UI organizer-deletion blocker was observed. Reopen reused the
 same candidates; no second recommendation run or server deletion refusal occurred.
 Natural-expiry invitation rejection passed (404, no OTP).
 
-API/worker are verified stopped/unscheduled, future admission false, no live clock.
-**18m14.050s remain**, including the 15-minute final reserve. Live provider use is
-72 Places attempts and one logical AI call ($0.0005715 estimated AI). No C/D
-account or deletion queue exists. A/B and their shared synthetic plan remain.
-The [routing/remaining-case scope](p3-mail-routing-and-remaining-cases.md) records
-an approved, completed MX diagnostic: removing Resend's `send` MX cleared the MX
-warning but left Squarespace forwarding disabled, with its Workspace notice.
-The original MX was restored and verified through all four authoritative servers,
-two public resolvers and Resend status. The owner subsequently completed ImprovMX
-signup and Squarespace reauthentication. Free is Active, three exact aliases
-persisted including A's tagged address, and the approved MX/SPF changes are live.
-All six DNS sources agree, 72 retained-record comparisons passed, and Resend
-sending remains verified. No catch-all remains. Next: approve the separate
-[three-message delivery test](p3-mail-route-delivery-test.md) and establish owner
-receipt; rehearsal extensions remain unapproved.
+API/worker remain stopped/unscheduled; the completed mail test did not resume them.
+The approved ImprovMX setup is Active; all six DNS sources agree, 72 retained-record
+comparisons passed, and Resend sending remains verified. Three exact aliases are
+configured with no catch-all. The [delivery test](p3-mail-route-delivery-test.md)
+reported provider delivered for all three, but owner receipt remains unresolved.
+Cumulative supervised use is 141m45.950286s of 160 minutes; 18m14.049714s
+remain, including the 15-minute final reserve. Mail use is 11/17 and operator reads
+22/45; the broader 195-minute and extra-restart scope remains unapproved.
+
 Scope C/D, returning sign-in, replay/contention,
 deletions/support/drain and cleanup against the remaining time; another first-phase
 recovery is not already allocated. Resolve original support/privacy mailbox access

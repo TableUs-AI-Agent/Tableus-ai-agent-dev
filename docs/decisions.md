@@ -838,3 +838,22 @@ supervised minutes 150 to 160, only for one probe/receipt window up to ten minut
 It preserves the final 15-minute reserve and all other limits. The broader 195-minute
 and extra-restart rehearsal draft stays unapproved. Receipt must be confirmed by
 the owner; provider DNS or accepted/delivered status alone is insufficient.
+
+
+### Approved mail probes, bounded accounting — 2026-10-01
+
+The owner approved the exact three-message delivery test at
+`1c42ca9a1ce5ed4875c413fe12b839868e591add`. SUPPORT, PRIVACY and A were each sent
+once; all three Resend metadata checks reported **delivered**. Owner inbox receipt
+is not confirmed for all three labels.
+Hold the rehearsal; provider delivery alone does not prove owner receipt.
+
+The supervised window ran from `2026-10-01T07:20:44.036274+00:00` to its
+`2026-10-01T07:30:44.036274+00:00` deadline, charging 600 seconds. Ledger closeout
+was recorded at `07:30:57.419244Z`; no provider action occurred after the deadline.
+Cumulative use is **141m45.950286s of 160 minutes**, leaving
+**18m14.049714s**, including the unchanged 15-minute final reserve.
+Mail use is **11/17**, leaving six reserved rehearsal-case messages. Operator
+status reads are **22/45**. The API/worker stayed stopped; no OTP, invitation,
+restart, account, deletion or AI/Places operation occurred. All other limits and
+counters are unchanged. The broader 195-minute/restart-10 scope remains unapproved.

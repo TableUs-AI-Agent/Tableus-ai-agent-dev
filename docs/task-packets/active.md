@@ -20,19 +20,32 @@ tests, 326 JavaScript tests and five browser journeys, zero skips, plus lint/typ
 migrations, deterministic evaluation, contracts, builds and smoke. Local readiness,
 restricted PostgreSQL and browser evidence remain applicable to unchanged inputs.
 
-## ImprovMX routing active; delivery tests pending, October 1
+## ImprovMX routing active; owner receipt unresolved, October 1
 
-**Current mail setup:** ImprovMX Free is **Active**. The owner completed signup
-and Squarespace reauthentication; the three exact aliases (`brian`, `privacy`,
-`brian+tableus-p3-a`) persisted to the approved private inbox, with no catch-all.
-Both apex MX records and the single merged SPF were saved within the approved
-scope. All four authoritative servers and Cloudflare/Google resolvers returned
-the exact values; 72 retained-record comparisons passed, including sending DNS,
-website records, DKIM, DMARC and nameservers. Authoritative TTLs are preserved.
-Resend still reports verified sending and all three sending records verified.
-This establishes configuration readiness; no delivery probe was sent.
-Next: approve the separate [three-message delivery test](../p3-mail-route-delivery-test.md), then verify
-owner receipt by label before preparing any rehearsal resume.
+ImprovMX Free is Active with three exact aliases and no catch-all. The approved
+MX/SPF changes pass all six DNS sources, 72 retained-record comparisons and
+verified Resend sending. Public support/privacy addresses and A's identity remain.
+
+The owner approved the exact three-message delivery test at
+`1c42ca9a1ce5ed4875c413fe12b839868e591add`. SUPPORT, PRIVACY and A were each sent
+once; all three Resend metadata checks reported **delivered**. Owner inbox receipt
+is not confirmed for all three labels.
+Hold the rehearsal; provider delivery alone does not prove owner receipt.
+
+The supervised window ran from `2026-10-01T07:20:44.036274+00:00` to its
+`2026-10-01T07:30:44.036274+00:00` deadline, charging 600 seconds. Ledger closeout
+was recorded at `07:30:57.419244Z`; no provider action occurred after the deadline.
+Cumulative use is **141m45.950286s of 160 minutes**, leaving
+**18m14.049714s**, including the unchanged 15-minute final reserve.
+Mail use is **11/17**, leaving six reserved rehearsal-case messages. Operator
+status reads are **22/45**. The API/worker stayed stopped; no OTP, invitation,
+restart, account, deletion or AI/Places operation occurred. All other limits and
+counters are unchanged. The broader 195-minute/restart-10 scope remains unapproved.
+
+See [the delivery-test evidence](../p3-mail-route-delivery-test.md).
+
+Next: obtain the missing receipt labels or prepare a bounded diagnosis. Do not
+resend or resume the rehearsal under this test approval.
 
 The owner approved the brief remove/inspect/restore test and completed required
 Google reauthentication. Removing only the Resend `send` MX cleared Squarespace's
@@ -51,11 +64,8 @@ reported the domain and all three sending DNS records verified, sending enabled.
 This is configuration verification, not a test email or global absence measurement.
 
 During the diagnostic no forward, destination submission, provider account,
-subscription, SMTP or other DNS change occurred. Subsequent ImprovMX alias setup
-and DNS activation are recorded above. Delivery to A's original address and
-support/privacy receipt remain unproven. Staging stayed stopped, with the same
-18m14.050s remaining and no rehearsal counter changes. The proposed time/restart/
-probe extensions remain unapproved.
+subscription, SMTP or other DNS change occurred. Subsequent ImprovMX setup,
+DNS activation, delivery-test results and revised accounting are recorded above. The diagnostic itself did not resume staging or change rehearsal counters.
 
 The exact ImprovMX setup was approved at `ba5ec9546a1d668e0c2b91b52aa7af72e7f6be06`,
 then held while investigating Squarespace. The owner has now explicitly resumed

@@ -9,9 +9,9 @@ recommendation. The owner completed signup; Free is active. All three exact
 aliases persisted after reload, including A's tagged address, and no catch-all
 remains. After renewed Squarespace verification, the approved MX pair and merged
 SPF were saved. ImprovMX shows Active; all six DNS sources agree, retained records
-match, and Resend sending stays verified. Delivery remains untested. The separate
-[three-message test](p3-mail-route-delivery-test.md) and broader rehearsal allowance
-extensions remain unapproved.
+match, and Resend sending stays verified. The owner approved and completed the
+separate [three-message test](p3-mail-route-delivery-test.md). Provider reports delivered for all three; owner receipt remains unresolved.
+The broader rehearsal allowance extension remains unapproved.
 
 ## Approved Squarespace diagnostic: completed, original record restored
 
@@ -49,7 +49,8 @@ Seventy-two before/after comparisons confirm retained DNS values, including
 website records, Google/Resend DKIM, Resend `send` MX/TXT, DMARC and nameservers;
 authoritative retained TTLs also match. ImprovMX shows **Active** with all three
 required record checks passing. Resend reports domain/DKIM/SPF MX/SPF TXT verified,
-sending enabled and receiving disabled. No live delivery was tested.
+sending enabled and receiving disabled. The subsequent delivery-test outcome is
+recorded above; configuration verification alone was not used as receipt proof.
 
 The [public DNS baseline](evidence/mail-routing-2026-10-01/dns-baseline.json) records
 the original absent apex MX and Google-only SPF. The
@@ -120,8 +121,9 @@ change must be prepared and reviewed before applying it.
 The owner handled account terms and reauthentication normally, without passwords
 or codes in chat. All three recipients were configured before DNS activation,
 with no mandatory catch-all or paid feature. The exact delta and retained DNS
-were verified, and both provider statuses pass. Test the three routes only after
-the separate probe allowance is approved.
+were verified, and both provider statuses pass. The three separately approved probes
+were then sent once; each reports delivered, while owner receipt is pending.
+The probe window has ended. Do not resend under its completed allowance.
 Setup passed without rollback. The already-approved bounded rollback would remove
 only the two newly added apex MX records and restore the original single SPF
 value. That returns to the pre-change baseline with no inbound MX; it does not
@@ -130,32 +132,29 @@ restore a Workspace mailbox or authorize deletion of prior records.
 A Workspace restoration is an alternative owner choice with its own subscription
 and receiving-DNS requirements; no renewal, price or successful recovery is implied.
 
-Prepare up to three clearly marked, non-sensitive delivery probes: public support,
-public privacy, and A's exact existing tagged address if supported. Use the
-already-verified sender and an origin other than the destination Gmail inbox.
-Record provider outcome and owner receipt by label only. Wait for provider/DNS
-readiness before sending; charge the supervised probe/receipt interval against
-the proposed cumulative time (ten-minute maximum, then stop). Passive DNS
-propagation while services are stopped is excluded. The [concrete delivery-test gate](p3-mail-route-delivery-test.md) proposes
-three additional messages and ten additional supervised minutes. They are not
-permission to spend the six remaining support-case messages. Each probe is sent once; no automatic resend. No live API is needed.
+The [completed delivery-test scope](p3-mail-route-delivery-test.md) used one labeled,
+non-sensitive probe per route from the existing verified sender, each sent once.
+All three provider statuses are delivered. The owner has not yet confirmed the
+labels, so inbox receipt remains unproven. The ten-minute supervised window ended;
+no API was started and no resend occurred. The six support-case messages remain
+reserved. A later receipt report can complete this evidence without another send.
 
 ## Conditional remaining-case budget
 
 Mail routing, the exact A recipient route and owner readiness must pass before
-arming an API window. Current use is 131m45.950286s of 150m, leaving 18m14.049714s;
+arming an API window. Current use is 141m45.950286s of 160m, leaving 18m14.049714s;
 15m are reserved for the final phase. Counters are cumulative and never reset.
 
 The following draft gives the unfinished manual cases a bounded first phase. It
-is not yet execution-ready: DNS is active, but live route proof and owner readiness
-are pending. The narrower delivery-test gate proposes 150 to 160 minutes only;
-it does not approve the broader 195-minute ceiling or any API restart.
+remains unapproved. The delivery-test gate raised the ceiling to 160 minutes,
+and did not approve the broader 195-minute ceiling or any API restart. Owner
+receipt must be resolved before any rehearsal resume.
 
 | Allowance | Current ceiling | Used | Draft ceiling | Reason |
 | --- | ---: | ---: | ---: | --- |
-| Live minutes | 150 | 131m45.950s | 195 | Add 45m; API first phase at most 45m, final 15m |
+| Live minutes | 160 | 141m45.950286s | 195 | Add 35m; API first phase at most 45m, final 15m |
 | Same-image API restarts | 9 | 6 | 10 | Add one first-phase resume; retain pause/final re-enable/final disable |
-| Support/test mail messages | 14 | 8 | 17 | Three routing probes in addition to six remaining case messages |
+| Support/test mail messages | 17 | 11 | 17 | No increase; six remaining case messages |
 
 After any route-probe interval, compute the API first phase as the smaller of
 45 minutes and remaining cumulative time minus the 15-minute final reserve.
@@ -164,7 +163,7 @@ cumulative headroom is not a spare restart.
 
 Keep every other allowance: invitations 10 (8 used), accounts 4 (2 used), OTP
 requests 11 (7 used), OTP deliveries 10 (6 reserved), verification submissions
-20 (6 reserved), refresh/revoke 12, status reads 45 (19 operator reads recorded),
+20 (6 reserved), refresh/revoke 12, status reads 45 (22 operator reads recorded),
 worker invocations 4 (1 used), Auth DELETE attempts 12 (0 used), Places 420
 (72 observed), logical AI 3 (1 used), underlying AI 9 (3 conservatively reserved).
 Keep $5 hosting, $15 providers, $20 combined and $0.25 AI ceilings. No new image,
@@ -216,7 +215,6 @@ manual sequence alone does not grant full P3 acceptance, production or real inta
 
 ## Immediate next step
 
-Approve the separate [three-message delivery test](p3-mail-route-delivery-test.md).
-All approved account, alias and DNS work is complete and configuration checks
-pass. Owner receipt remains unproven. The application stays stopped, and no mail
-probe or rehearsal extension has been spent or approved.
+Obtain the missing receipt labels or prepare a bounded diagnosis; do not resend
+or resume the rehearsal.
+The application stays stopped; the wider restart/time extension is unapproved.

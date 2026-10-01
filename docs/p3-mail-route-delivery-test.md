@@ -1,12 +1,27 @@
-# P3 mail-route delivery test: approval required
+# P3 mail-route delivery test: receipt unresolved
 
-Prepared October 1, 2026, after the approved ImprovMX setup passed DNS/provider
-configuration verification. No message has been sent under this proposal.
+The owner approved the exact three-message delivery test at
+`1c42ca9a1ce5ed4875c413fe12b839868e591add`. SUPPORT, PRIVACY and A were each sent
+once; all three Resend metadata checks reported **delivered**. Owner inbox receipt
+is not confirmed for all three labels.
+Hold the rehearsal; provider delivery alone does not prove owner receipt.
 
-## Exact proposed messages
+The supervised window ran from `2026-10-01T07:20:44.036274+00:00` to its
+`2026-10-01T07:30:44.036274+00:00` deadline, charging 600 seconds. Ledger closeout
+was recorded at `07:30:57.419244Z`; no provider action occurred after the deadline.
+Cumulative use is **141m45.950286s of 160 minutes**, leaving
+**18m14.049714s**, including the unchanged 15-minute final reserve.
+Mail use is **11/17**, leaving six reserved rehearsal-case messages. Operator
+status reads are **22/45**. The API/worker stayed stopped; no OTP, invitation,
+restart, account, deletion or AI/Places operation occurred. All other limits and
+counters are unchanged. The broader 195-minute/restart-10 scope remains unapproved.
+
+[Structured test evidence](evidence/mail-routing-2026-10-01/delivery-test.json).
+
+## Approved messages
 
 Use the existing verified Resend sender `Brian <brian@table-us.com>` and plain
-text only. Confirm this sender with the owner as part of this approval. No CC,
+text only. The owner confirmed this sender with the scope approval. No CC,
 BCC, attachment, reply-to override, tracking change, secret or OTP is included.
 All three routes forward to the already-approved private base Gmail; keep that
 destination outside Git. This is a routing test, not an Auth request.
@@ -28,23 +43,23 @@ in the private ledger. No resend or replacement message is authorized by this
 scope. Stop on an unexpected send failure; an ambiguous response is not proof
 that a message failed to send.
 
-## Proposed allowance changes
+## Approved allowance changes
 
-| Allowance | Current ceiling | Proposed ceiling | Added scope |
+| Allowance | Previous ceiling | Approved ceiling | Added scope |
 | --- | ---: | ---: | --- |
 | Support/test mail messages | 14 | 17 | One probe for each of three routes |
 | Cumulative supervised minutes | 150 | 160 | One probe/receipt window, at most 10 minutes |
 
-Eight support messages and 131m45.950286s have already been used. Following this
-approval, headroom would be 28m14.049714s, including the unchanged 15-minute final
-reserve. Reserve three messages before sending; account for actual supervised
-time without resetting prior use. The six remaining support-case messages stay
+Before this test, eight support messages and 131m45.950286s had been used.
+The three messages were reserved before sending; actual supervised time was
+charged without resetting prior use. The six remaining support-case messages stay
 reserved for the rehearsal. No API/worker start, restart, resource, deployment,
 Auth request, account deletion or other provider evaluation is included.
 
 Keep the $5 hosting, $15 provider and $20 combined caps, as well as all other
 allowances. At most one metadata status lookup per message (three total) is
-allowed within the existing 45-read limit; 19 operator reads are already recorded.
+allowed within the existing 45-read limit; this test increased recorded operator
+reads from 19 to 22.
 Configuration DNS/provider verification is separately recorded, not relabeled as
 rehearsal progress. No account inbox, email body or authentication code is read.
 

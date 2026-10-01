@@ -1,0 +1,34 @@
+{
+  "recorded_at": "2026-10-01T07:30:57.550495+00:00",
+  "approval_commit": "1c42ca9a1ce5ed4875c413fe12b839868e591add",
+  "labels": [
+    "SUPPORT",
+    "PRIVACY",
+    "A"
+  ],
+  "sender": "Brian <brian@table-us.com>",
+  "sent_once_per_label": true,
+  "provider_status": {
+    "SUPPORT": "delivered",
+    "PRIVACY": "delivered",
+    "A": "delivered"
+  },
+  "owner_receipt": null,
+  "outcome": "receipt_unconfirmed_at_window_end",
+  "started_at": "2026-10-01T07:20:44.036274+00:00",
+  "supervised_seconds": 600,
+  "cumulative_supervised_seconds": 8505.950286,
+  "remaining_supervised_seconds": 1094.0497140000007,
+  "message_use": 11,
+  "message_ceiling": 17,
+  "operator_status_reads": 22,
+  "status_read_ceiling": 45,
+  "supervised_minutes_ceiling": 160,
+  "api_restarts": 6,
+  "api_restart_ceiling": 9,
+  "services_resumed": false,
+  "broader_rehearsal_extension_approved": false,
+  "private_provider_identifiers": "Stored only in the private ledger",
+  "window_ended_at": "2026-10-01T07:30:44.036274+00:00",
+  "closeout_recorded_at": "2026-10-01T07:30:57.419244+00:00"
+}
