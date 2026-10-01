@@ -83,3 +83,28 @@ verify readiness/CORS, then refresh A's preserved links-origin session and requi
 actual Plans access before issuing B. Live signup, group/deletion/support binding,
 hosted replay/contention and final cleanup acceptance remain open. This deployment
 does not accept the pilot or authorize native builds/activation.
+
+
+## Live handoff checkpoint, October 1 04:56 UTC
+
+Approved restart **5/8** is SUCCESS on the unchanged API image: deployment
+`721c710a-999a-4324-9b38-2b3dc1f79589`, source `2eefdc5`, deletion enabled/inline
+false, exact links/new-Preview CORS passed. Worker remains stopped/unscheduled.
+Window `7dd980e3-6ce5-42e1-ab7e-464d3bea6de7` began `04:51:16.923843Z`, maximum
+deadline `05:21:09.251671Z`, preserving 900 final-phase seconds. Durable cutoff
+process **78403** is armed; it begins deadline containment two minutes early.
+
+A's preserved session now visibly opens **Dinner plans** on web source `9593fba`;
+no new A OTP was needed. Screenshot `/private/tmp/tableus-p3-a-plans-fixed-live.png`.
+B received a fresh recipient-bound invitation and one normal signup-code request
+using the private approved replacement map. Its form shows code entry, no error.
+Readback: nine Auth users/seven profiles; B Auth created but unconfirmed, no B
+profile; one reservation expires `05:14:47.518242Z`, queue/new provider rows zero.
+Counters: invites 8/10, accounts 2/4, OTP requests 6/11, delivery/verification
+reservations 5/10 and 5/20, known status reads 18/45; other counters unchanged.
+
+**Next: Brian enters B's newest code in in-app tab 3 and selects Verify and
+continue. Verify actual Dinner plans plus B profile/redemption, then clear the
+handoff deadline `04:59:13.762141Z` before advancing.** The deadline was reserved
+before submission and was not extended. A's fresh sign-in and original support/
+privacy mail acceptance remain unresolved. No C/D invitation or OTP was issued.

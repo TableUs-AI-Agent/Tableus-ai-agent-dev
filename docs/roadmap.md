@@ -173,3 +173,10 @@ The four-result requirement may block some real searches. Structured cuisines
 are intersected only when supplied; current plan forms send free-text notes and
 empty cuisine arrays. Neither issue justifies speculative ranking changes before
 pilot evidence. The previous roadmap remains in Git at `4a2f9ec`.
+
+
+Latest P3 checkpoint: approved resume 5/8 is ready; A's preserved session now
+passes live Plans on the fixed web deployment. B's replacement-inbox signup code
+is pending under the five-minute cutoff (04:59:13.762141Z); B Auth exists but
+profile/enrollment is unconfirmed. See the active packet for the armed live window.
+No group/deletion or full pilot acceptance is implied.

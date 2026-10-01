@@ -717,3 +717,10 @@ allowances do not expand. Resume the already-approved scope with these recipient
 preserving A's identity/session and recording its fresh-sign-in and original
 support/privacy delivery gaps separately. No public contact-address change, admin
 identity edit or authentication bypass is authorized.
+
+
+The replacement-recipient resume reused the existing API image (restart 5/8).
+A's preserved session passed the live Plans check without another OTP. Proceed
+with B's newly bound invitation through normal signup, preserving the unchanged
+five-minute handoff/remaining-clock rules. A session success does not resolve
+fresh A sign-in or original mailbox support/privacy acceptance.
