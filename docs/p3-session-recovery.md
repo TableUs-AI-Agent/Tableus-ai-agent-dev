@@ -3,9 +3,9 @@
 Prepared October 1, 2026 from local base
 `341f0410260b33ca855ba7df0b7936409a4b262a`. **Not yet approved.** This replaces the
 completed first phase approved at `fa282f2`; it retains all its consumed allowances.
-The candidate is the commit containing this proposal and the accompanying
-`auth-card` / `auth-completion` fix. Record its exact SHA in the handoff and bind
-any merge/Preview to the same application tree after hosted CI and review pass.
+Application candidate: `8861eece0e77574bcd693550d9b2628f362dccf3`. Bind any
+merge/Preview to its unchanged application tree after hosted CI and review pass.
+Later documentation-only handoff commits do not alter this application identity.
 
 ## Cause and prepared repair
 
@@ -37,9 +37,17 @@ Local screenshots: `/private/tmp/tableus-auth-recovery-retry.png` and
 
 ## Exact approval requested
 
-Approve review/merge of the candidate after passing CI, one staging web Preview
-from that tested application tree, assignment of the two existing staging aliases,
-and the bounded remaining rehearsal below. Production remains excluded.
+Approve publishing the candidate and committed rehearsal documentation to
+`https://github.com/TableUs-AI-Agent/Tableus-ai-agent-dev` on existing branch
+`codex/pilot-staging-readiness`, creating a review PR and running deterministic CI.
+After CI/review pass, approve its merge, one staging web Preview from the identical
+tested application tree, assignment of the two existing staging aliases, and the
+bounded remaining rehearsal below. Production remains excluded. The push was
+blocked by automatic approval review because authorization to export this source
+and operational documentation to that remote was not established. Nothing was
+pushed or deployed; hosted candidate CI remains pending. This request explicitly
+names that destination and includes the export. No private ledger, inbox
+destination, token, Auth subject, deletion binding or credential is in the change.
 
 | Allowance | Used | Approved ceiling | Proposed ceiling | Purpose |
 | --- | ---: | ---: | ---: | --- |

@@ -22,8 +22,10 @@ skips, lint/types, contract generation, web/Expo-web builds and deterministic sm
 The in-app browser, using fake localhost Auth/API only, recovered from failed
 redemption plus expired validation, and again after reopening the page. Counters
 remained one OTP request and one verification throughout. Mismatched email refusal
-and explicit start-over also passed. Two CI browser regressions cover retry/reload;
-new candidate hosted CI is required before merge. Production/staging are unchanged.
+and explicit start-over also passed. Two CI browser regressions cover retry/reload. Application candidate
+`8861eece0e77574bcd693550d9b2628f362dccf3` is committed locally; publishing
+was blocked by automatic approval review pending explicit GitHub destination
+authorization. No push or hosted candidate CI occurred; CI is required before merge. Production/staging are unchanged.
 
 Charged live use is 10687.415236 seconds (178m7.415236s) out of 195 minutes.
 Only 1012.584764 seconds remain, including the final 900-second reserve. The other
