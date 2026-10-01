@@ -1,41 +1,47 @@
 # Current state
 
-## Web signup recovery prepared; staging stopped, October 1
+## Web signup recovery deployed; C signup passed, October 1
 
-C's email verification succeeded at 21:00:40Z, after automatic containment had
-stopped API/worker at 20:53:37.369456Z. C has one Auth account, no application
-profile and no invitation redemption. Its validation expired at 21:09:34Z.
-A's profile is removed and its exact Auth-deletion job remains pending, with zero
-processing attempts. B's preserved session owns the shared plan. Keep both C/B
-browser sessions and the private A job binding; do not resend C's consumed code.
+[PR #11](https://github.com/TableUs-AI-Agent/Tableus-ai-agent-dev/pull/11) merged as
+`bffa2845f268ea8b1906b8de155aa130f199856e`, with the same full tree as passing CI
+head `7b137ed93ddeb30fc02173b6e4a7982aa06d3545`. Hosted CI passed 242 Python,
+334 JavaScript and 13 browser checks, zero skips, plus migrations, lint/types,
+contracts, deterministic evaluation, builds and smoke. The new recovery was also
+verified locally with fake Auth/API and one OTP request/verification across retries.
 
-The local web fix preserves signup progress after successful OTP verification:
-confirm the same email/subject with Supabase `getUser`, retry normal API completion,
-and refresh an expired validation only after checking whether signup already
-committed. The UI offers **Retry and continue**, hides the consumed code field,
-and provides explicit local sign-out/start-over. No token extraction, manual
-profile insertion or invitation bypass is used. The existing backend still owns
-recipient binding, capacity, revocation and tombstone checks.
+Preview `dpl_8tmFppeucwSv23uuj71qYF7mpthW` is READY on both staging aliases,
+`links.table-us.com` and `tableus-staging.vercel.app`. Source metadata matches the
+merge. Both production aliases remain on `dpl_7csJvHoJH9qgFZDijbwu3w36r2sK`.
+The old immutable Preview continues to hold B's session and its existing CORS
+allowance; do not move or sign out B prematurely.
 
-Local readiness passes: 334 JavaScript tests, 206 Python tests with 36 PostgreSQL-only
-skips, lint/types, contract generation, web/Expo-web builds and deterministic smoke.
-The in-app browser, using fake localhost Auth/API only, recovered from failed
-redemption plus expired validation, and again after reopening the page. Counters
-remained one OTP request and one verification throughout. Mismatched email refusal
-and explicit start-over also passed. Two CI browser regressions cover retry/reload. Application candidate
-`8861eece0e77574bcd693550d9b2628f362dccf3` is committed locally; the owner explicitly approved publishing to the named GitHub repository,
-CI, merge after checks, staging deployment and the bounded recovery. The branch
-push succeeded; CI is required before merge. Production/staging are unchanged.
+Approved recovery restart 9/12 uses unchanged API source `2eefdc5` and the approved
+image. API deployment `a72eeed7-5765-46f8-b0a3-943af20d0673` passed readiness/source
+and C/B exact-origin CORS at 21:53:49Z. Deletion admission is on, inline attempts
+off; the worker remains stopped and unscheduled. The 45-minute first phase began
+21:51:40.636523Z and ends 22:36:40.636523Z. Durable containment starts two minutes
+earlier, **22:34:40Z (5:34 p.m. Chicago)**. Do not extend this deadline. Preserve
+the final 900-second reserve. Prior closed usage remains 178m7.415236s; this active
+window is additional and must be charged at verified stop, within 240 minutes.
 
-Charged live use is 10687.415236 seconds (178m7.415236s) out of 195 minutes.
-Only 1012.584764 seconds remain, including the final 900-second reserve. The other
-112.584764 seconds cannot form a usable recovery phase. No new first phase is
-currently authorized. The [complete recovery proposal](p3-session-recovery.md) requests one new
-web Preview, one extra same-image API restart and 45 additional cumulative live
-minutes, retaining all monetary and message limits. The owner approved this exact scope against handoff `b08cee4`; preserve all prior use.
+C recovered through its preserved Auth session with no extra OTP. Trusted readback
+confirms one profile and one redemption; Auth creation (20:49:35Z) and last sign-in
+(21:00:40Z) are unchanged. C created one sole-participant plan. The Account page
+correctly blocks account deletion until it is removed; the owner must type DELETE in each relevant field and perform the final
+plan/account confirmations. Neither confirmation
+has been observed yet. A's exact deletion job remains pending with zero attempts;
+B owns the shared plan, D has not been created.
 
-Next: finish candidate CI/review, merge and deploy the approved web fix, then arm
-the approved recovery. Keep API/worker stopped and unscheduled during preparation.
+Preflight inspected the complete queue: exactly A's expected pending job, no
+unknown pending subject, lease or attention flag. Latest conservative hosting
+upper bound is $1.1247938732362335; monetary ceilings are unchanged. Preserve
+C/B sessions and A's private binding. The [approved execution scope](p3-session-recovery.md) and
+private ledger govern all remaining operations; stale consumed helpers grant no
+new attempt. No native/production/real-user work or extra resend is authorized.
+
+Next: owner removes C's sole test plan and confirms C deletion in its prepared
+account tab; verify the exact pending job before signing out C and beginning D.
+Full P3 acceptance remains open, including support/drain and hosted gaps.
 
 ## Verified rehearsal and mail results
 
@@ -58,8 +64,8 @@ workflow. See [routing and case scope](p3-mail-routing-and-remaining-cases.md).
 | Item | Value |
 | --- | --- |
 | Integrated source baseline | Priority 1 merge `8ae3c94`, Priority 2 merge `462a7dd`, and Priority 3 merge `2eefdc5` (approved app candidate `e5e7d1`) |
-| Refreshed `origin/main` | `9593fba0202e830746523f29cee16532539e80a2`, approved membership-context fix in PR #10 |
-| Integration status | Priorities 1 and 2 complete. Priority 3 merge tree matches passing CI head `d2ccc7e`; the later web fix is deployed as `9593fba`. The new signup-recovery fix above is local only. Initial rollout is complete; synthetic acceptance remains open. The separate native diagnostic branch remains excluded. |
+| Refreshed `origin/main` | `bffa2845f268ea8b1906b8de155aa130f199856e`, approved signup-completion recovery in PR #11 |
+| Integration status | Priorities 1 and 2 complete. Priority 3 merge tree matches passing CI head `d2ccc7e`; the signup recovery above is deployed as `bffa284`. Initial rollout is complete; synthetic acceptance remains open. The separate native diagnostic branch remains excluded. |
 | Root checkout | Stale at `codex/privacy-safe-observability` (`8e9625e`). Use the baseline, not the root checkout. |
 
 Priority 1 local readiness at its earlier application source passed 214
@@ -96,8 +102,8 @@ environments are disabled. The approved manual rollout below consumed the API/we
 
 | Component | Source | Notes |
 | --- | --- | --- |
-| API (Railway `tableus-staging`) | `2eefdc5` | Same-image restart 8/11, deployment `5f5dad51-01a6-4690-bd0f-294aebb5f247`, stopped/unscheduled at 20:53:37Z. Future admission and inline attempts off. |
-| Web aliases `tableus-staging.vercel.app`, `links.table-us.com` | `9593fba` | READY Preview `dpl_99cFtsd56wHCam5dN1EwW5XmTred`; new local recovery is not deployed. |
+| API (Railway `tableus-staging`) | `2eefdc5` | Same-image restart 9/12, deployment `a72eeed7-5765-46f8-b0a3-943af20d0673`, live under cutoff. Admission on, inline attempts off. |
+| Web aliases `tableus-staging.vercel.app`, `links.table-us.com` | `bffa284` | READY Preview `dpl_8tmFppeucwSv23uuj71qYF7mpthW`; C signup recovery verified. |
 | Private deletion worker | `2eefdc5` | Deployment `18a8f3f8-886e-4dac-ba7e-9804bb584f75` stopped/unscheduled. One empty processing invocation consumed; A's pending job has no Auth DELETE attempts. |
 | Accepted native artifacts | `f94a1d9` | Earlier isolated-staging acceptance with owner-accepted simulator AppHang risk; not pilot acceptance of current source. |
 | Production-facing `table-us.com` | `e1184ec` | Not a pilot target; unchanged. |
@@ -136,7 +142,7 @@ unknown history/deletion coverage. This does not add a quorum or change ranking.
 
 | Capability | Default after deployment | Contract |
 | --- | --- | --- |
-| Full account deletion with recoverable Auth removal | Off today/default (`TABLEUS_ACCOUNT_DELETION_ENABLED=false`); pilot requires approved activation and rehearsal in Priority 3 | [account lifecycle](account-lifecycle.md), [operations](account-lifecycle-operations.md) |
+| Full account deletion with recoverable Auth removal | Default off; API currently enabled only under the supervised P3 cutoff, with inline attempts off | [account lifecycle](account-lifecycle.md), [operations](account-lifecycle-operations.md) |
 | Plan transfer, sole-plan removal and legacy application-only deletion | Available subject to authorization/blockers; not disabled by the full-deletion flag | [account lifecycle](account-lifecycle.md) |
 | Shared-content removal and organizer repair on deletion | Applies to legacy and full deletion; not gated by the full-deletion flag | [design](deletion-content-design.md) |
 | Durable per-account quotas and operator-only usage reports | Staging configured to 3 AI/40 Places per day and 20 lifetime plans; code defaults remain 5/20/20. | [cohort controls](cohort-controls.md) |
@@ -159,7 +165,7 @@ unknown history/deletion coverage. This does not add a quorum or change ranking.
   owner-reviewed roster. Whole-plan deletion still removes events, and historical
   finalizations may have no voter count. Report unknown outcomes and these accepted
   coverage gaps; the retained-plan rate is not complete cohort conversion.
-- Full deletion is deployed but admission remains off. The worker passed empty
+- Full deletion is deployed and admission is enabled only for the supervised rehearsal. The worker passed empty
   startup; actual Auth removal and the bounded manual drain still need acceptance.
   Priority 3 has prepared queue-only API admission, a separate five-minute Railway
   worker and four-account rehearsal; external execution must prove the normal

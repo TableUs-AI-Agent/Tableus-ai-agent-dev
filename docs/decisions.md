@@ -122,8 +122,8 @@ or replenish closed native/live-provider allowances.
   resuming; do not replay an already-consumed OTP. On an expired redemption grant,
   reconcile membership before normal revalidation of the original bound invite.
   Other failures remain explicit; account mismatch requires local sign-out.
-  Server invitation, quota and deletion checks remain authoritative. This is a
-  local implementation decision, not deployment or allowance approval.
+  Server invitation, quota and deletion checks remain authoritative. The owner separately approved its PR #11 staging deployment and exact recovery
+  allowances; this behavior does not authorize unbounded retries or resends.
 - Trusted invite issuance designates one normalized recipient email and one use.
   Only its hash is retained. Hosted validation, signup hook and first redemption
   reject legacy unbound or multi-use codes; migration retains all existing rows

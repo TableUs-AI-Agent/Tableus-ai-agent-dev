@@ -1,4 +1,4 @@
-# P3 web signup recovery: proposed merge, deployment and rehearsal
+# P3 web signup recovery: approved merge, deployment and rehearsal
 
 Prepared October 1, 2026 from local base
 `341f0410260b33ca855ba7df0b7936409a4b262a`. **Approved by the owner in chat against handoff `b08cee4e7b8dfd952fc75fa7823d38494d78d4e2`.** This replaces the
@@ -44,8 +44,9 @@ After CI/review pass, approve its merge, one staging web Preview from the identi
 tested application tree, assignment of the two existing staging aliases, and the
 bounded remaining rehearsal below. Production remains excluded. The push was
 blocked by automatic approval review because authorization to export this source
-and operational documentation to that remote was not established. The owner subsequently explicitly approved that destination and scope; the
-branch push succeeded. Hosted candidate CI and deployment remain pending. No private ledger, inbox
+and operational documentation to that remote was not established. The owner subsequently explicitly approved that destination and scope. Publishing,
+CI (242 Python/334 JavaScript/13 browser checks), PR #11 merge `bffa284` and the
+single approved Preview are complete. See the active packet for live execution. No private ledger, inbox
 destination, token, Auth subject, deletion binding or credential is in the change.
 
 | Allowance | Used | Approved ceiling | Proposed ceiling | Purpose |

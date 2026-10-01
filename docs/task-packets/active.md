@@ -6,50 +6,56 @@ Use `/Users/brianchei/repos/Tableus-ai-agent-dev/.worktrees/pilot-realignment` o
 `codex/pilot-staging-readiness`; the root checkout is stale. Local-fix base is
 `341f0410260b33ca855ba7df0b7936409a4b262a`. API/worker remain on approved source
 `2eefdc51345aeaa7951ffb343954c1669f9280c5`; deployed web is
-`9593fba0202e830746523f29cee16532539e80a2` (PR #10). The new fix is approved for publishing/CI and conditional merge/deployment; it
-remains unmerged and undeployed until those checks pass.
+`bffa2845f268ea8b1906b8de155aa130f199856e` (PR #11). CI/review, approved merge
+and the single additional staging Preview are complete.
 
 Original campaign approval at `e5e7d1` and subsequent bounded extensions remain
 historical authority for their exact scope. The latest approved recovery is
 `fa282f2e2d242a4a02eaafa832d06d611753339f`; its first phase has ended. The owner separately approved the new Preview/recovery restart/time increase
 against handoff `b08cee4`. Prior usage is retained.
 
-## Web signup recovery prepared; staging stopped, October 1
+## Web signup recovery deployed; C signup passed, October 1
 
-C's email verification succeeded at 21:00:40Z, after automatic containment had
-stopped API/worker at 20:53:37.369456Z. C has one Auth account, no application
-profile and no invitation redemption. Its validation expired at 21:09:34Z.
-A's profile is removed and its exact Auth-deletion job remains pending, with zero
-processing attempts. B's preserved session owns the shared plan. Keep both C/B
-browser sessions and the private A job binding; do not resend C's consumed code.
+[PR #11](https://github.com/TableUs-AI-Agent/Tableus-ai-agent-dev/pull/11) merged as
+`bffa2845f268ea8b1906b8de155aa130f199856e`, with the same full tree as passing CI
+head `7b137ed93ddeb30fc02173b6e4a7982aa06d3545`. Hosted CI passed 242 Python,
+334 JavaScript and 13 browser checks, zero skips, plus migrations, lint/types,
+contracts, deterministic evaluation, builds and smoke. The new recovery was also
+verified locally with fake Auth/API and one OTP request/verification across retries.
 
-The local web fix preserves signup progress after successful OTP verification:
-confirm the same email/subject with Supabase `getUser`, retry normal API completion,
-and refresh an expired validation only after checking whether signup already
-committed. The UI offers **Retry and continue**, hides the consumed code field,
-and provides explicit local sign-out/start-over. No token extraction, manual
-profile insertion or invitation bypass is used. The existing backend still owns
-recipient binding, capacity, revocation and tombstone checks.
+Preview `dpl_8tmFppeucwSv23uuj71qYF7mpthW` is READY on both staging aliases,
+`links.table-us.com` and `tableus-staging.vercel.app`. Source metadata matches the
+merge. Both production aliases remain on `dpl_7csJvHoJH9qgFZDijbwu3w36r2sK`.
+The old immutable Preview continues to hold B's session and its existing CORS
+allowance; do not move or sign out B prematurely.
 
-Local readiness passes: 334 JavaScript tests, 206 Python tests with 36 PostgreSQL-only
-skips, lint/types, contract generation, web/Expo-web builds and deterministic smoke.
-The in-app browser, using fake localhost Auth/API only, recovered from failed
-redemption plus expired validation, and again after reopening the page. Counters
-remained one OTP request and one verification throughout. Mismatched email refusal
-and explicit start-over also passed. Two CI browser regressions cover retry/reload. Application candidate
-`8861eece0e77574bcd693550d9b2628f362dccf3` is committed locally; the owner explicitly approved publishing to the named GitHub repository,
-CI, merge after checks, staging deployment and the bounded recovery. The branch
-push succeeded; CI is required before merge. Production/staging are unchanged.
+Approved recovery restart 9/12 uses unchanged API source `2eefdc5` and the approved
+image. API deployment `a72eeed7-5765-46f8-b0a3-943af20d0673` passed readiness/source
+and C/B exact-origin CORS at 21:53:49Z. Deletion admission is on, inline attempts
+off; the worker remains stopped and unscheduled. The 45-minute first phase began
+21:51:40.636523Z and ends 22:36:40.636523Z. Durable containment starts two minutes
+earlier, **22:34:40Z (5:34 p.m. Chicago)**. Do not extend this deadline. Preserve
+the final 900-second reserve. Prior closed usage remains 178m7.415236s; this active
+window is additional and must be charged at verified stop, within 240 minutes.
 
-Charged live use is 10687.415236 seconds (178m7.415236s) out of 195 minutes.
-Only 1012.584764 seconds remain, including the final 900-second reserve. The other
-112.584764 seconds cannot form a usable recovery phase. No new first phase is
-currently authorized. The [complete recovery proposal](../p3-session-recovery.md) requests one new
-web Preview, one extra same-image API restart and 45 additional cumulative live
-minutes, retaining all monetary and message limits. The owner approved this exact scope against handoff `b08cee4`; preserve all prior use.
+C recovered through its preserved Auth session with no extra OTP. Trusted readback
+confirms one profile and one redemption; Auth creation (20:49:35Z) and last sign-in
+(21:00:40Z) are unchanged. C created one sole-participant plan. The Account page
+correctly blocks account deletion until it is removed; the owner must type DELETE in each relevant field and perform the final
+plan/account confirmations. Neither confirmation
+has been observed yet. A's exact deletion job remains pending with zero attempts;
+B owns the shared plan, D has not been created.
 
-Next: finish candidate CI/review, merge and deploy the approved web fix, then arm
-the approved recovery. Keep API/worker stopped and unscheduled during preparation.
+Preflight inspected the complete queue: exactly A's expected pending job, no
+unknown pending subject, lease or attention flag. Latest conservative hosting
+upper bound is $1.1247938732362335; monetary ceilings are unchanged. Preserve
+C/B sessions and A's private binding. The [approved execution scope](../p3-session-recovery.md) and
+private ledger govern all remaining operations; stale consumed helpers grant no
+new attempt. No native/production/real-user work or extra resend is authorized.
+
+Next: owner removes C's sole test plan and confirms C deletion in its prepared
+account tab; verify the exact pending job before signing out C and beginning D.
+Full P3 acceptance remains open, including support/drain and hosted gaps.
 
 ## Current cumulative allowances
 
@@ -57,22 +63,22 @@ the approved recovery. Keep API/worker stopped and unscheduled during preparatio
 | --- | ---: | ---: |
 | Live minutes | 178m7.415236s | 240m, first phase at most 45m and final 15m |
 | API source rollouts | 1 | 1 |
-| Same-image API configuration restarts | 8 | 12; recovery/pause/final resume/final disable |
-| Web Previews | 2 | 3 |
+| Same-image API configuration restarts | 9 | 12; remaining pause/final resume/final disable |
+| Web Previews | 3 | 3 |
 | Worker resources / processing invocations | 1 / 1 | 1 / 4 |
 | Invitations / new Auth accounts | 9 / 3 | 10 / 4 |
 | OTP requests / delivery reservations | 10 / 9 | 12 / 11; remaining two reserved for D and B |
 | Verification submissions / refresh-revoke | 9 / 2 | 20 / 12 |
 | Support/test messages | 11 | 17; six D-case messages remain |
-| Operator status reads | 27 | 45 |
+| Operator status reads | 30 | 45 |
 | Auth DELETE attempts | 0 | 12 |
-| Places HTTP attempts | 72 | 420 |
+| Places HTTP attempts | 78 reserved (72 prior + 6 C fixture) | 420 |
 | Logical AI / underlying reservations | 1 / 3 | 3 / 9 |
-| Provider cost / AI cost | $1.4615715 / $0.0005715 | $15 / $0.25 |
+| Provider cost / AI cost | $1.6085715 reserved / $0.0005715 | $15 / $0.25 |
 
 Keep $5 hosting and $20 combined caps. Last workspace usage delta is a conservative
-$1.10244608760889 above the original baseline, not exact campaign billing; recheck
-headroom before a live start. Account-deletion status reads are 3, included in
+$1.1247938732362335 above the original baseline, not exact campaign billing; recheck
+headroom before a live start. Account-deletion status reads are 5, included in
 operator accounting; worker status reads are 1. Private ledger is authoritative
 for immutable receipts and identity bindings. Never print tokens, codes, exact
 Auth subjects, deletion hashes or private inbox destinations into Git/chat.
@@ -82,7 +88,7 @@ Auth subjects, deletion hashes or private inbox destinations into Git/chat.
 Prepared local recovery covers verified-session retries, expired validation,
 committed signup reconciliation and subject mismatch; [the rollout proposal](../p3-session-recovery.md)
 owns targets, requested deltas, sequencing and stop conditions. After approval,
-C should complete through its preserved session with no fresh OTP; only D and B
+C completed through its preserved session with no fresh OTP; only D and B
 have remaining OTP slots. If C's session/invite is lost, contain and report the gap.
 
 The remaining manual sequence is C sole-plan removal/deletion, D verified support

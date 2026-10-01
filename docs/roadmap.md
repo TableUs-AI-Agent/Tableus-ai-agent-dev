@@ -101,21 +101,22 @@ verified pending. The cutoff stopped API/worker at 20:53:37Z. C's OTP succeeded
 after that stop, leaving Auth verified but no app profile/redemption. B's shared
 plan/session is preserved. C's short-lived validation has expired.
 
-A local web recovery fix now reuses only the same server-verified identity and
-retries normal completion without replaying the OTP, including expired-grant and
-already-committed signup cases. Local readiness and fake-provider browser checks
-pass; hosted candidate CI/merge/deployment remain gates. The
-[complete recovery proposal](p3-session-recovery.md) requests one Preview, one
-extra same-image restart and 45 additional live minutes, preserving financial and
-message limits. The owner approved it against handoff `b08cee4`. Charged use stays
-178m7.415236s; the approved ceiling is now 240m, with first phase at most 45m and
-final phase at most 15m. Keep services stopped while CI/deployment prepare.
+The web recovery fix now reuses the same server-verified identity and completes
+signup without replaying the OTP. PR #11 merged as `bffa284`; hosted CI passed
+242 Python/334 JavaScript/13 browser checks with zero skips, and the approved
+third Preview is deployed to the two staging aliases. Production is unchanged.
+The owner approved restart ceiling 12 and live ceiling 240m, with unchanged
+financial/message limits. Restart 9/12 passed on the original API image.
+The current first-phase cutoff begins 22:34:40Z October 1; final 15m stays reserved.
 
-C/D deletion/support, worker removal, B cleanup and final returning/deletion checks
-remain incomplete. Hosted redemption replay/contention and server-side deletion
-refusal remain untested. Mail receipt is complete; it is not support-case acceptance.
-The active packet owns current counters and next actions. No P3 acceptance,
-Priority 4/native work or real-pilot intake is implied.
+C recovered successfully with its original Auth session, one profile/redemption
+and no new OTP. Its sole plan is created; the owner's final plan/account removal confirmations remain pending. A remains Auth-deletion-pending; B's session is
+preserved and D has not been created. C/D deletion/support, worker removal, B
+cleanup and final returning/deletion checks remain incomplete. Hosted redemption
+replay/contention and server-side deletion refusal remain untested. Mail receipt
+is complete; support-case acceptance remains separate. The active packet owns
+current counters and next actions. No P3 acceptance, Priority 4/native work or
+real-pilot intake is implied.
 
 Effort is a rough planning range in focused engineering days, excluding approval,
 hosted CI, device/signing and external-access waits; these are not delivery promises.
