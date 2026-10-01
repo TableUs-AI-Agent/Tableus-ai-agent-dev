@@ -5,10 +5,11 @@ Prepared October 1, 2026, from `8fecf04b8cfa57808692e959a27447fd418fb906`.
 `ba5ec9546a1d668e0c2b91b52aa7af72e7f6be06`, including bounded rollback.**
 They then requested the bounded Squarespace diagnostic below. It completed with
 exact restoration, and the owner then requested continuation of the ImprovMX
-recommendation. Its signup form is prepared with the approved private Gmail.
-No password was entered, account submitted or forwarding rule created. Owner
-password choice, terms acceptance and any email verification are pending. Revised
-rehearsal and route-probe allowances remain unapproved.
+recommendation. The owner completed signup; Free is active. All three exact
+aliases persisted after reload, including A's tagged address, and no catch-all
+remains. Squarespace requires renewed Google verification before saving DNS;
+no ImprovMX DNS delta has been submitted. Revised rehearsal and route-probe
+allowances remain unapproved.
 
 ## Approved Squarespace diagnostic: completed, original record restored
 
@@ -49,8 +50,9 @@ support/privacy receipt.
 The [public DNS baseline](evidence/mail-routing-2026-10-01/dns-baseline.json) records
 website, mail and authentication answers before any edit. The existing Resend
 `send` MX/TXT, `resend._domainkey` TXT and DMARC answers are present. The only DNS
-mutation was the completed temporary MX diagnostic, restored exactly. Forwarding,
-sender, SMTP, public contact and subscription settings were not changed.
+mutation remains the completed temporary MX diagnostic, restored exactly. The
+approved ImprovMX aliases are now saved; sender, SMTP, public contact and
+subscription settings were not changed.
 The owner signed in and authenticated Email/DNS settings were inspected. Email
 shows Add Rule disabled with an existing-MX warning, and a Google Workspace
 management notice. DNS Settings contains no apex MX and just one MX at `send`,
@@ -71,18 +73,19 @@ that a base-address forward restores its OTP route. The destination must be a
 working inbox, and forwarding tests must originate elsewhere. Activation may take
 24–48 hours after destination verification; keep application services stopped.
 
-## Approved alternative, resumed at owner signup: ImprovMX Free
+## Approved alternative, aliases configured: ImprovMX Free
 
 Squarespace's built-in candidate is blocked. The proposed alternative is
 [ImprovMX Free](https://improvmx.com/pricing/): one domain, 25 aliases, 500 forwards
 per day and seven days of email logs at $0. It supplies incoming forwarding only
 on the free tier, not a mailbox or outgoing SMTP. The owner explicitly resumed
-this route after the diagnostic. The approved owner email has been entered in
-its normal signup form; no account has been submitted or password entered. The
-owner completes password choice, displayed terms acceptance and any verification
-before configuration proceeds. Personal contact details stay outside Git.
+this route after the diagnostic and completed normal signup. Billing shows Free
+ACTIVE. The agent did not enter a password or submit account terms. The three
+approved aliases were configured and persisted after reload. Personal contact
+details stay outside Git. The initial automatic catch-all was renamed to `brian`
+before DNS activation; no catch-all remains.
 
-Proposed exact recipients are `brian@table-us.com`, `privacy@table-us.com` and A's
+Configured exact recipients are `brian@table-us.com`, `privacy@table-us.com` and A's
 existing `brian+tableus-p3-a@table-us.com`, all to the owner's base Gmail already
 supplied privately. Keep the destination outside Git. This grants the forwarding
 provider processing access to incoming mail, and sends the selected correspondence
@@ -90,16 +93,16 @@ to that inbox; the owner approved this specific scope. Public addresses remain u
 
 The [alias guide](https://improvmx.com/guides/aliases/) describes explicit aliases,
 but the reviewed official documentation does not confirm plus-address behavior.
-Before DNS activation, the provider must accept the exact tagged recipient on its
-free tier without a catch-all, wildcard or paid rule. If it cannot, stop with the
-DNS unchanged and return a concrete alternative; do not repoint A's identity.
+The authenticated Free dashboard accepted the exact tagged recipient, which
+persisted after reload alongside the two public aliases. No catch-all, wildcard
+or paid rule remains, and A's identity was not changed.
 Configuration acceptance alone is not delivery proof. Forwarding does not restore
 old Workspace messages or a complete Workspace mailbox.
 
 The [Squarespace DNS guide](https://improvmx.com/guides/squarespace/) and
 [SPF combination guide](https://improvmx.com/guides/combining-spf-records/) support
-this bounded DNS proposal, subject to matching the provider's authenticated
-configuration before saving:
+this bounded DNS delta. The authenticated provider requirements match it;
+Squarespace reauthentication is pending before saving:
 
 | Action | Host | Type | Priority | TTL | Value |
 | --- | --- | --- | --- | --- | --- |
@@ -121,7 +124,8 @@ inbox verification normally, without passwords or codes in chat. Keep DNS
 unchanged if the provider creates a mandatory catch-all or cannot configure all
 three recipients without broadening scope. Once configured, compare the live
 zone with the baseline, apply only the approved three changes, verify authoritative
-DNS/provider status and retained Resend sending status, then test the three routes.
+DNS/provider status and retained Resend sending status. Test the three routes
+only after the separate probe allowance is approved.
 If setup fails after a partial DNS change, the prepared rollback is to remove
 only the two newly added apex MX records and restore the original single SPF
 value; this restores the currently broken inbound baseline rather than mailbox
@@ -147,7 +151,7 @@ arming an API window. Current use is 131m45.950286s of 150m, leaving 18m14.04971
 15m are reserved for the final phase. Counters are cumulative and never reset.
 
 The following draft gives the unfinished manual cases a bounded first phase. It
-is not yet presented as execution-ready because the provider choice is being reconsidered and A's exact route is unproven.
+is not yet execution-ready: the receiving DNS edit and live route proof are pending.
 
 | Allowance | Current ceiling | Used | Draft ceiling | Reason |
 | --- | ---: | ---: | ---: | --- |
@@ -214,9 +218,8 @@ manual sequence alone does not grant full P3 acceptance, production or real inta
 
 ## Immediate next step
 
-The owner completes the prepared ImprovMX signup (password choice, displayed
-terms and any email verification). Then configure only the three approved exact
-aliases to the private destination, check that A's tagged address is accepted
-on the free tier, and apply the approved DNS delta if all prerequisites pass.
-The restored Resend record remains intact; no forwarding rule or new DNS change
-has occurred. Staging and the rehearsal/probe limits remain unchanged.
+The owner completes normal Google verification in the open Squarespace DNS tab.
+The Free account and three exact aliases are configured. Apply only the approved
+DNS delta, then verify authoritative/public DNS, ImprovMX readiness and preserved
+Resend sending. No ImprovMX DNS change has been submitted yet. Staging and the
+rehearsal/probe limits remain unchanged; no test email has been sent.

@@ -811,3 +811,13 @@ approved private contact, but password creation and displayed terms acceptance
 are left to the owner. Do not ask again for the previously approved provider,
 exact aliases or DNS scope. Confirm the tagged alias on the free tier before
 activation; the separate mail-probe/rehearsal extensions remain unapproved.
+
+
+The owner completed signup and signed in. ImprovMX Free is active, and the three
+approved exact aliases persisted after reload, including A's tagged address.
+The initial automatic catch-all was renamed before any DNS activation; none
+remains. The provider's authenticated MX/SPF requirements match the approved
+scope. Squarespace requested renewed owner Google verification before saving
+any DNS edit. Do not broaden aliases or reset mail/rehearsal counters; after
+verification, apply the approved DNS delta and verify configuration separately
+from live delivery.

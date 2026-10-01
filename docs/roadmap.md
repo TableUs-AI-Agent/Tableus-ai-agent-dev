@@ -102,11 +102,12 @@ The [routing/remaining-case scope](p3-mail-routing-and-remaining-cases.md) recor
 an approved, completed MX diagnostic: removing Resend's `send` MX cleared the MX
 warning but left Squarespace forwarding disabled, with its Workspace notice.
 The original MX was restored and verified through all four authoritative servers,
-two public resolvers and Resend status. No forwarding was created. The owner
-resumed the approved ImprovMX route; its signup form is ready with the approved
-private contact. Next: owner completes password/terms/verification, then configure
-and verify exact aliases before the approved DNS edit. Rehearsal extensions remain
-unapproved.
+two public resolvers and Resend status. The owner subsequently completed ImprovMX
+signup. Free is active and three exact aliases persisted, including A's tagged
+address, with no catch-all. Squarespace requires renewed Google verification
+before the approved DNS edit; no ImprovMX DNS change has been submitted. Next:
+verify in the DNS tab, apply the approved delta and check provider/DNS status.
+Delivery tests and rehearsal extensions remain unapproved.
 Scope C/D, returning sign-in, replay/contention,
 deletions/support/drain and cleanup against the remaining time; another first-phase
 recovery is not already allocated. Resolve original support/privacy mailbox access
