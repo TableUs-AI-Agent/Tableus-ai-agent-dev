@@ -18,7 +18,9 @@ attempts, three logical/nine underlying AI attempts, $0.25 incremental AI,
 $15 total providers, $5 hosting, eleven OTP requests/ten emails/twenty verification
 submissions, fourteen support messages, twelve refresh/revoke calls, thirty status
 reads and four worker invocations/twelve total Auth DELETE attempts. The live
-window is sixty minutes after the day-ahead expired-invite setup. Narrower limits
+window was originally sixty minutes after the day-ahead expired-invite setup;
+Brian's September 28 split request now shares those sixty supervised live minutes
+across two sessions, with a stopped interval. Narrower limits
 and all stop rules in the campaign apply; no allowance has been replenished.
 
 ## Preflight observed September 27, approximately 07:53–07:57 UTC
@@ -162,18 +164,485 @@ scan or hosted acceptance.
 Local verification remains as recorded in the prepared campaign: readiness stages,
 206 Python passes (36 PostgreSQL-only skips), 326 JavaScript passes, forty selected
 restricted-PostgreSQL passes, two browser journeys and final focused checks. No
-application bytes changed after those checks. Hosted CI has not run for this candidate.
+application bytes changed after those checks. Hosted CI subsequently passed as recorded below.
+
+## Integration and rollout, September 29 UTC
+
+The branch was published with deployment exclusions verified. Draft PR #9 was
+reviewed and [CI run 36512407578](https://github.com/TableUs-AI-Agent/Tableus-ai-agent-dev/actions/runs/36512407578)
+passed on `d2ccc7e32015b8982b64035382d7a3ab03b64acf`: **242 Python, 326 JavaScript
+and five browser tests, zero skips**, plus restricted-role migrations, lint/types,
+seven deterministic evaluation cases, contracts, web/Expo-web builds and smoke.
+No blocking change-review finding remained. [PR #9](https://github.com/TableUs-AI-Agent/Tableus-ai-agent-dev/pull/9)
+merged at `2026-09-29T02:33:07Z` as
+`2eefdc51345aeaa7951ffb343954c1669f9280c5`. Both head and merge have tree
+`35798fe4ae9e5f2b7f12f054f50b0068d52783a6`. Application inputs remain the approved
+`e5e7d1`; intervening commits contain documentation only.
+
+### Quiescence, backup and migrations
+
+The installed Railway scale command rejected its documented project flags before
+any mutation. The supported `deploymentStop` operation then stopped all old API
+instances; Railway reported `deploymentStopped=true`, readiness returned 502 and
+there were no active runtime database statements. The service/configuration was
+preserved. A fresh owner-only backup was saved outside Git at
+`/Users/brianchei/Library/Application Support/TableUs/Backups/2026-09-28-p3-quiesced`.
+Roles/schema hashes match the September 27 export; fresh data is 128,616 bytes,
+SHA-256 `697a402cbf870f87bec773abaa5159aadcd03080e67cc27cae20dac3126bb69c`.
+The prior local restore verification remains the recovery exercise; the fresh
+Auth-inclusive export is not a full managed-project restore test.
+
+The normal linked CLI supplied its temporary database login in memory. It has
+existing postgres-role membership; explicitly selecting that role and committing
+the connection setup lets unchanged Alembic retain the migration role. This did
+not create a role, grant access, decode a Keychain credential or enable JIT access.
+TLS certificate and hostname verification used the public Supabase root CA.
+The first two read-only connection checks diagnosed certificate/role setup; no
+migration was attempted until `alembic current` passed at the expected old head.
+
+The four unchanged migrations then passed once, in their approved order, ending
+at `9a1f2e7c4b80`. Post-migration checks confirmed:
+
+- Six profiles, seven Auth users, sixteen plans, eleven runs and eight legacy
+  invites preserved; empty queue and sixteen creation credits backfilled.
+- All legacy plans/runs remain `legacy_unknown`; no attribution was invented.
+- Runtime queue DML, counter SELECT/INSERT/UPDATE and contributor SELECT/INSERT/DELETE.
+  Runtime has no schema CREATE, superuser, create-role/database or bypass-RLS.
+- Browser roles have no app USAGE or new-table grants. The app schema remains
+  excluded from Data API. Auth hook is invoker with empty search path; Auth admin
+  has invite/reservation SELECT and EXECUTE, browser EXECUTE false.
+
+### Exact-source API, web and worker
+
+Both services and Vercel received a fresh `git archive` of merge `2eefdc5` (1,016
+tracked files); no local secret/fixture file was included. Railway's uploaded
+archive has no provider Git-source attestation; the archive command, observed
+build inputs, release stamps and image metadata bind this deployment. No claim
+of an independently recomputed remote source-tree hash is made.
+
+| Target | Deployment and result |
+| --- | --- |
+| API | `217e257f-9fbe-40fb-adec-ce231ff54c28`, SUCCESS, readiness reports full `2eefdc5` SHA; image `sha256:4fc94ba63d5ee76f5e9e25868a0a347db252b12d4defacfcfa30078598d4c5b8`. One us-west2 process. |
+| Vercel Preview | `dpl_7j4HwYgzPw4139i3W535V5iUFqrv`, READY, target Preview, node 22.x; source metadata full `2eefdc5`. URL `https://tableus-staging-mvbl5qxnl-briancheis-projects.vercel.app`. |
+| Private worker | Service `cac758a2-077c-4011-bff5-12b52db2d05a`, deployment `18a8f3f8-886e-4dac-ba7e-9804bb584f75`, SUCCESS and exited; image `sha256:292ac97e9120612919399186ce53dbb68e650851f293c8d0a69421b2cae27797`. |
+
+API deletion admission and inline attempts are false; telemetry E2E is false,
+actor quotas 40 Places/3 AI/20 lifetime plans, global AI $0.26 and Places 726.
+The fresh baseline at configuration was 306; no new call allowance was created.
+CORS is restricted to the two staging aliases; the normal preflight passed.
+Existing server-only Auth-removal credential was passed privately via stdin to
+API/worker with automatic deploys suppressed, then verified in memory. No key
+creation/rotation. Neither runtime has a migration credential. Worker has only
+restricted runtime credentials, deterministic providers and telemetry off, with
+no Maps/Gemini keys or telemetry credentials.
+
+Vercel public origins and absence of runtime DB/removal credentials were verified
+through supported environment pull. Sensitive values are not returned by that
+CLI, so blank pulled fields are not absence evidence. Source stamps, staging
+telemetry, E2E=false and query-link emission were explicit deployment overrides.
+Sentry build upload stayed disabled, matching the previous accepted staging
+Preview; no new symbol-upload operation or credential change was introduced.
+
+Only `tableus-staging.vercel.app` and `links.table-us.com` moved to the new Preview.
+Both `table-us.com` and `www.table-us.com` still point to
+`dpl_7csJvHoJH9qgFZDijbwu3w36r2sK`, including the existing apex redirect.
+Deletion/privacy/terms pages return 200 and contain the approved privacy/support
+addresses and retention explanations. Fifteen public script assets were checked; two contain the exact merged release
+stamp. Browser review confirmed the public layout;
+proof: `/private/tmp/tableus-p3-public-deletion.png`. The ordinary staging origin
+restored a pre-existing legacy browser session during public-page review; no
+account action was taken and that tab was closed. Future synthetic acceptance
+must use isolated sessions. Auth audit readback since 02:40 UTC had no events.
+
+Railway's connector rejected selecting the prepared TOML for the new worker;
+[the provider now prohibits new-service Config as Code](https://docs.railway.com/infrastructure-as-code).
+The normal service controls accepted identical Dockerfile, watchdog/start command,
+one replica and NEVER restart settings. Deployment metadata confirms no file
+manifest, no healthcheck, no public domain and no cron. The approved five-minute
+schedule remains held until supervised draining; scheduled delivery is not yet
+proven. This configuration adaptation did not change application source.
+
+Worker invocation **1 of 4** started at 02:47:36Z, logged `processed=0`, then
+`worker_available=true`, pending/attention/leases all zero, and exited after about
+seven seconds. This proves the watchdog command/image/start path and empty
+runtime access, not real Auth deletion. No Auth DELETE attempt occurred.
+
+### Day-ahead expiry fixture and holding state
+
+The supported invite CLI, with the restricted runtime login, created one one-use
+D fixture for `brian+tableus-p3-d@table-us.com`. Its actual expiry is
+`2026-09-30T02:48:54.780853Z`, **September 29 at 9:48:55 p.m. Central**.
+No timestamp was edited; it has not been validated or sent. Code and ID are in an
+owner-only 0600 record outside Git:
+`/Users/brianchei/Library/Application Support/TableUs/Rehearsals/2026-09-28-p3/d-expired-invite.json`.
+The post-issuance inventory has nine invites and one active recipient fixture,
+with all other legacy counts unchanged and queue empty.
+
+The new API was stopped again after readiness/CORS/public-page checks so no
+application writes or provider calls can run during the expiry wait. Railway
+confirmed both API and worker stopped, with no worker cron/next run. No API
+configuration restart has been consumed. Its first approved admission restart
+must resume this same image, after fresh source, queue, mailbox and budget checks.
+Read-only Railway schema discovery exposes `deploymentRedeploy(id,
+usePreviousImageTag: true)` for explicit previous-image reuse. Do not use an
+unqualified source redeploy; verify the resulting image digest and applied
+variables before any live request. That path is discovered, not yet exercised.
+At 02:50 UTC, older Places usage had aged down to 272, with last provider activity
+still September 17. Tighten the rolling ceiling on resume; retain the independent
+420-attempt campaign ledger regardless of aging.
+
+Railway workspace usage immediately before rollout was $3.5537236772908645;
+post-rollout read was $3.5582677543201853, a $0.0045440770293208 difference across
+all workspace services. This is delayed aggregate billing, not exact attributed
+campaign spend or final billing. Keep the $5 incremental hosting backstop and
+reconcile at resume/closeout. No paid plan upgrade occurred.
 
 ## Allowances and next action
 
-One routine staging configuration change is complete: the signup email wording
-correction above. All other campaign mutation counters remain **zero**: no
-publication/PR/merge, hosted migration, resource/secret change, runtime configuration
-change, deployment, invite, synthetic account, email, provider operation or worker
-invocation. Campaign incremental spend is zero; existing services continue their
-ordinary billing.
+Consumed: one approved merge, four migrations, one API rollout, one Vercel
+Preview/two staging alias assignments, one private worker resource/deployment,
+one of six invitation fixtures and one of four processing invocations. The two
+existing-credential assignments and approved runtime configuration are complete.
+API configuration restarts: **0/4**. Auth DELETE attempts: **0/12**. New accounts,
+OTP sends/verification, support messages and live provider requests: **zero**.
+No 60-minute live window has started. Local/read-only tool setup errors above
+consumed no hosted deployment, worker processing or provider allowance.
 
-Publish the approved candidate, run CI/review and follow the
-migration/rollout/rehearsal order. Do not start paid or Auth traffic, substitute
-credentials, or skip source, role, quiescence and allowance checks. Preserve
-production, existing identities/data, native artifacts and all closed allowances.
+Next: after Brian's mailbox/browser readiness, resume the same API image under the
+first allowed admission restart for session one. Only session two waits for real
+expiry. Use fresh isolated identities and only remaining invitations/invocations.
+Do not add a rollout, reset budgets, reuse legacy identity/session data or activate
+real intake. End with deletion admission and scheduling off. Native builds,
+production, broader retention policy and real pilot invitations remain deferred.
+
+## Split authorization, September 28 Central / September 29 UTC
+
+Brian requested “split the rehearsal.” No live test had started when this change
+was recorded. Session one receives at most 45 supervised live minutes; session two
+uses the remaining original allowance, at least 15 minutes reserved. Stopped wait
+time is excluded. No account, invite, OTP, support, provider, worker, restart or
+spending allowance is replenished. No additional deployment is authorized.
+
+The [active packet](../../task-packets/active.md#split-rehearsal-authorized-september-28-central)
+defines the revised order. Session one includes Auth/group/blocker/pending/support,
+API pause/B refusal, bounded A/C/D drain and B's content repair/sole-plan removal.
+Defer B's already-budgeted returning sign-in to session two, together with real
+expiry rejection and B's final deletion. Source inspection confirms public invite
+validation checks the invite's expiry before creating a reservation, independently
+of an Auth identity; the later D rejection needs no replacement account or OTP.
+The API stays stopped and worker schedule absent between sessions. Session-two
+re-enable doubles as same-image resume, retaining exactly four configuration
+restarts. Mailbox operation remains a prerequisite; no test mail was sent here.
+
+## Session-one preflight, September 29 UTC
+
+Brian selected option 1: he operates the mailbox and enters codes directly in
+TableUs. The four tagged aliases' delivery is not yet confirmed. No signup/code,
+support message, new invitation, API restart or live session started in this pass.
+Chrome's staging and links origins both show the explicit signed-out Account
+state; the old in-app staging identity was neither used nor cleared. The first
+signup form is prepared with an empty invite field and its send button disabled.
+
+Read-only checks confirm the same stopped API/worker image digests, no worker
+schedule, expected source/runtime role/credentials configuration, both new staging
+alias targets and both unchanged production targets. The migration head and legacy
+six profiles/seven Auth users/sixteen plans/eleven runs match; queue and active
+reservations remain empty, with nine invites/one active expiry fixture. Browser
+schema denial, restricted runtime, invoker hook and Auth-admin execute pass.
+Provider rows since rollout remain zero. The fresh rolling Places baseline is
+270, requiring a fresh baseline plus remaining allowance at admission (currently
+690, down from configured 726), never an allowance reset.
+
+Railway's delayed workspace usage is $3.567051228426481, $0.0133275511356165 above
+the pre-rollout baseline across the workspace. It is not exact campaign attribution.
+No hosted configuration or service state changed. The first restart remains unused;
+finish alias-delivery readiness before starting the live clock.
+
+## Live session one, September 29 at 03:28–03:44 UTC
+
+Resend's existing verified `table-us.com` domain has sending enabled and open/click
+tracking off. Four marked synthetic requests from the controlled aliases went to
+privacy, followed by four responses from the confirmed support address to D/A/C/B.
+These cover intake/ack, wrong-case refusal, unbound lost-session and hypothetical
+email-access loss, asserting no actual account action/status. All eight provider
+records report delivered. Brian initially reported missing mail, then confirmed
+“none are missing”; no resend occurred. Alias delivery and privacy forwarding pass.
+The private D case remains unverified/unbound until later authenticated identity
+and fresh mailbox challenge; these messages alone do not prove an account identity.
+
+The first message started the session at `2026-09-29T03:28:22.044973Z`, with deadline
+`2026-09-29T04:13:22.044973Z`. Eight of fourteen support messages (four inbound/four
+outbound) and eight conservative mail status reads are recorded. Six messages remain
+for challenge/reply, duplicate/ack and completion/receipt. Public DNS routes through
+Google. No DNS, mailbox, forwarding or SMTP setting changed.
+
+API restart one of four is SUCCESS: `76028185-7799-46ff-a361-e8571cb00867`, same image
+`sha256:4fc94ba63d5ee76f5e9e25868a0a347db252b12d4defacfcfa30078598d4c5b8`, exact source
+`2eefdc51345aeaa7951ffb343954c1669f9280c5`. Explicit previous-image reuse is verified;
+readiness passes, queue-only deletion is enabled and Places ceiling is tightened to
+690 (fresh 270 baseline + original 420). Worker remains stopped/unscheduled. No
+source build, new resource or provider call occurred.
+
+D's single no-reservation public Auth request returned 403 with the expected invite
+validation message; Auth/profile counts stayed seven/six. The unchanged private CLI
+issued the remaining five one-use, recipient-bound 24-hour invites via restricted
+runtime DB and verified TLS; the additional D fixture was revoked normally.
+Wrong-recipient A-code/B-email and revoked-D API validation returned 404 before OTP.
+The natural-expiry fixture was not edited or validated; all six invites are spent.
+
+A's normal browser signup now shows code entry. Brian was asked to enter the newest
+code and click Verify and continue once, without sharing it in chat. At 03:44 UTC,
+totals are eight Auth users (one new A), six profiles, fourteen invites, one active
+reservation, empty deletion queue and zero new provider usage. Verification and
+redemption are pending. Ledger conservatively reserves one signup account, one
+delivery and one verification; two OTP requests include the expected hook denial.
+No B/C/D signup, group journey or deletion has run. C's in-app links origin is signed
+out; a fourth browser-profile tab lookup failed before account action, so C/D will
+reuse C's origin sequentially through supported synthetic sign-out. Legacy sessions
+were not used or cleared.
+
+A local cutoff is armed (exec session 59186) for 30 seconds before the deadline:
+remove worker cron, disable future API admission without deploying, stop latest
+API/worker images and write private `session-one-cutoff.json`. Normal closeout's
+`ended_at` disarms it. Check the receipt before later continuation; do not reset
+the clock or allowances. The next action is A's manual code verification.
+
+## Inaccessible handoff and early containment, September 29 at 04:08 UTC
+
+Brian could not see the external rehearsal browser group. Browser metadata still
+listed the prepared A OTP form, but native browser controls could not foreground
+it reliably. No manual verification was reported or observed; its 20-minute
+invitation reservation expired during the handoff delay. This is not signup
+acceptance. No retry, resend or direct identity repair was performed.
+
+Future API deletion admission was set false with `--skip-deploys`, worker cron
+removed, and the current API deployment stopped. The immediate post-stop read
+still reported running; a later read verified `deploymentStopped=true` for API
+`76028185-7799-46ff-a361-e8571cb00867` and worker
+`18a8f3f8-886e-4dac-ba7e-9804bb584f75`, with null cron and next run for each.
+Conservative session end `2026-09-29T04:08:34Z` records 2,411.955 seconds used and
+1,188.045 seconds remaining. No extra configuration restart/source deployment
+was consumed. Private `handoff-stop.json` holds the receipt; the ledger's session
+end disarms the earlier cutoff. All cumulative counters remain unchanged.
+
+The existing signed-out in-app links tab now shows Join TableUs with A's original
+invitation, display name and email filled, without requesting another OTP. Direct
+navigation to the join route was needed after the sign-in screen's toggle did not
+respond; on the loaded join page, filling inputs enabled the send button. The
+legacy staging-origin session remains untouched. External browser use is not a
+product requirement. Confirm owner visibility before any further live action,
+then reconcile expired-grant recovery and incomplete cases against the remaining
+time, attempt, restart and spending bounds. A/B group, B/C/D enrollment, deletion
+and the eventual natural-expiry acceptance remain untested.
+
+## Approved recovery resume, September 29 at 04:39–04:42 UTC
+
+Brian approved recovery packet commit `513fcb1ef025d2450f155b2863b0965506f1717b`:
+105 cumulative live minutes, five same-image API restarts and the existing Preview's
+exact temporary CORS origin. Prior counters remain consumed; other ceilings stay
+unchanged. Fresh checks found the expected migrations/grants/aliases/source,
+six profiles/eight Auth users (A alone, unverified), fourteen invites, no active
+reservation or deletion queue, zero new provider rows and Places baseline 270.
+Railway's delayed workspace billing reads $3.590014644234074, $0.03629096694320966
+above the pre-rollout aggregate; this is not exact campaign attribution.
+
+Restart 2/5 produced SUCCESS deployment `b134094c-b6be-4f04-b8e9-87bbbd3e986a` with
+image `sha256:4fc94ba63d5ee76f5e9e25868a0a347db252b12d4defacfcfa30078598d4c5b8`.
+Readiness reports full source `2eefdc51345aeaa7951ffb343954c1669f9280c5`, Supabase
+Auth, configured providers and telemetry test hooks false. Only the exact existing
+Preview origin was added to the original two origins; A/B OPTIONS preflights passed.
+Places remains 690, API deletion enabled/inline false, worker stopped/no schedule.
+The recovery segment began `04:39:03.227627Z`, deadline `05:28:51.272600Z`; local
+cutoff exec session 73801 is armed, using the existing stop containment procedure.
+
+A's initial pointer click did not produce a request: readback still showed no
+active reservation and last email `03:40:16.570688Z`. Keyboard Enter on the enabled
+button then produced the code-entry state and one observed send at
+`04:41:40.659236Z`, with reservation expiry `05:01:39.315729Z`. Private before/after
+subject comparison confirmed the same A identity, counts eight Auth users/six
+profiles and one live reservation. Three OTP requests, two delivered-email
+allowances and two verification submissions are conservatively accounted for;
+manual verification remains pending. No B/C/D signup or provider/deletion action.
+The visible in-app A/B forms are retained; private codes and identities are excluded
+from repository evidence. No additional source deployment occurred.
+
+
+## Cutoff reconciliation, September 29 at 22:58 UTC
+
+The local recovery cutoff receipt began 05:28:21.276577 UTC and completed its
+commands 05:28:30.445656 UTC: worker cron removed, future API admission false, API
+stop requested. Its immediate API read still had `deploymentStopped=false`; worker
+was stopped. Fresh readback at this checkpoint verifies both current deployments
+stopped, each with null cron/next run, and admission/inline false. API deployment
+metadata updated at 05:28:27.607 UTC; exact instance stop time was not captured.
+Charge the entire 49m48.045s allocation conservatively rather than fabricate a
+measured end: 90/105 cumulative minutes charged and 15 minutes reserved. Private
+ledger records the closed cutoff state, verification time and accounting basis.
+
+A remains unverified; fresh totals are eight Auth users/six profiles, zero active
+reservations, deletion rows and new provider usage. Its last code was sent at
+04:41:40.659236 UTC (September 28 11:41 p.m. Central), reservation expired
+05:01:39.315729 UTC, and the OTP is now expired too. No new code, account, restart,
+provider request or deletion was performed in response to the owner's question
+about where to find the code. Current ambient UI lists only the links signup tab;
+B visibility is unconfirmed. First-phase acceptance is incomplete. The temporary
+Preview CORS origin remains on the stopped API until final removal.
+
+
+## Missing Auth email diagnosis, September 29
+
+Brian reports the last Auth email was not received. Read-only Resend metadata lists
+both A Auth messages as `delivered`: sent 03:40:17.259 UTC and 04:41:41.090 UTC.
+The exact alias suppression lookup returns `Suppression not found`. Latest-message
+details identify sender `Brian <brian@table-us.com>`, recipient A's tagged alias, and
+subject `Your TableUs verification code`. Provider email IDs and Message-ID are
+saved in the private allowance ledger; no OTP/body is recorded or displayed.
+These results do not establish Inbox placement or owner receipt.
+
+[Google's self-to-alias guidance](https://knowledge.workspace.google.com/admin/support/troubleshooting/messages-sent-to-email-alias-or-group-arent-in-my-inbox?hl=en)
+provides a possible explanation, not a confirmed diagnosis. A focused Gmail search
+using `in:anywhere` includes mail outside Inbox; the owner was asked to report only
+found/no results. If no message appears, recipient-side Email Log Search using the
+private Message-ID is the next diagnostic. No email, provider action, restart, SMTP
+change, suppression removal or DNS edit was performed. Three delivery-status tool
+calls were charged, bringing known status reads to 15/30. All other counters and
+the stopped-service state remain unchanged.
+
+## Owner-confirmed Auth email receipt, September 30
+
+Brian corrected the missing-email report: the code was received, and he had been
+checking the wrong inbox. This passes owner-visible Auth email receipt and closes
+the delivery investigation. It does not prove OTP verification or enrollment, and
+the earlier self-to-alias hypothesis was not established. No resend, email-body read,
+provider call, configuration edit or service restart accompanied this correction.
+The three prior diagnostic calls remain charged; known status reads stay 15/30.
+
+Private invitation records were read at the September 30 checkpoint without
+displaying codes. Normal invitation expiries are A `2026-09-30T03:38:16.078285Z`,
+B `2026-09-30T03:38:18.171780Z`, C `2026-09-30T03:38:19.683414Z` and
+D `2026-09-30T03:38:21.380862Z`; all have elapsed. The separate D natural-expiry
+fixture also elapsed at `2026-09-30T02:48:54.780853Z`, but its HTTP rejection remains
+untested. No timestamp was changed. All six invitations and 90/105 live minutes
+remain charged. Replacement signup scope and allowances must be prepared before
+another live window. Last provider verification of stopped services remains the
+September 29 22:58 UTC check; this receipt update does not claim a fresh runtime read.
+
+## Approved fresh-invitation attempt, October 1 UTC / September 30 Central
+
+Brian approved the complete extension at `a5f3de877f46673382b02ba69979eae12b295eb3`.
+Only the four approved ceilings changed: invitations 10, live minutes 150, same-image
+restarts 7, status reads 45. Prior consumption remains charged. Fresh preflight
+verified both services stopped/unscheduled, source/image/staging and production
+aliases unchanged, restricted runtime/browser grants and invoker hook, A unverified,
+eight Auth users/six profiles, 14 invites, no queue/reservations/campaign provider
+rows. Rolling Places baseline is 270; AI estimate $0.00224625. Workspace usage
+$4.306241701734939 is $0.7525180244440745 above the original aggregate baseline;
+it is delayed workspace data, not exact campaign spend.
+
+Temporary CA/helpers from prior sessions were gone. The local certificate check
+initially rejected the untrusted chain. Restoring the public CA from the URL in
+[Supabase's official dashboard configuration](https://github.com/supabase/supabase/blob/master/apps/studio/hooks/custom-content/custom-content.json)
+allowed a fully verified TLS/hostname connection as `tableus_runtime`. No server
+SSL setting, credential or application source changed. The existing invitation CLI
+then issued only A's replacement, with private output and full TLS verification.
+Its expiry is `2026-10-02T00:03:28.477022Z`; invitation count is 7/10.
+
+The first-phase clock began `2026-10-01T00:03:03.236948Z`, deadline `00:48:03.236948Z`.
+Durable cutoff process 28701 armed before issuance/restart. Restart 3/7 is deployment
+`dd2c6643-3463-4923-9400-87ba93c50226`, source `2eefdc51345aeaa7951ffb343954c1669f9280c5`,
+image `sha256:4fc94ba63d5ee76f5e9e25868a0a347db252b12d4defacfcfa30078598d4c5b8`.
+Readiness and exact links/Preview CORS passed. API deletion enabled/inline false;
+worker remains stopped and unscheduled. One readiness read brings status use 16/45.
+
+One keyboard activation in A's visible form requested a fresh code; its transient
+busy state settled into the verification form without retry. Supabase records send
+`00:05:27.467806Z`, reservation expiry `00:25:25.923418Z`, the same A Auth identity,
+eight Auth users/six profiles, A still unverified, empty queue and zero campaign
+provider rows. No body/code was read or recorded. Owner verification is pending;
+handoff cutoff is `00:10:27.467806Z`. Counts are four OTP requests and three delivered
+email/verification allowances reserved. No B/C/D replacement or new account yet.
+
+The owner had not completed verification when the five-minute handoff expired.
+The cutoff began `00:10:29.460276Z`, successfully stopped API/worker, removed both
+schedules and disabled future API admission, then verified both deployments stopped
+at `00:10:42.962902Z`. Process 28701 exited zero. Receipt is saved privately as
+`next-attempt-cutoff.json`. The accounting endpoint is verified stop, not a claimed
+exact instance stop time: 459.725954 seconds charged, total 5859.725954 seconds used,
+3140.274046 seconds remaining (2240.274046 first-phase plus 900 final-phase).
+
+Cutoff database readback finds A unverified and without a profile, eight Auth
+users/six profiles, one active reservation, empty deletion queue and zero new
+provider rows. Ledger window is closed and both stop flags true. The single approved
+recovery resume remains unused; wait for owner readiness and reconcile the absolute
+reservation expiry before reusing or resending. No additional send, invitation,
+worker invocation, Auth deletion or provider evaluation occurred during containment.
+
+## Owner-ready recovery, October 1 00:24 UTC
+
+Brian replied ready. Fresh readback found A's Auth email confirmed but no profile;
+the form displayed a network-unavailable error. API and worker were still stopped,
+same approved image, no cron, eight Auth users/six profiles and empty queue/new
+provider rows. The consumed OTP was not retried. The existing form's supported
+recovery button reset the code field while retaining the A invitation and alias.
+
+The approved single recovery window began `00:22:05.094507Z`, with the remaining
+2240.274046 first-phase seconds and deadline `00:59:25.368553Z`. Cutoff process 64575
+armed before restart. The previous cutoff receipt is preserved privately as
+`next-attempt-handoff-stop.json`. Recovery restart 4/7 is deployment
+`e26c892c-04d7-47ad-a71f-89b0b22dabf3`, same source/image; readiness and both exact
+A/B origin preflights passed. Worker remains stopped/no cron; inline deletion false.
+
+One normal-form revalidation/send requested A's newest OTP at
+`00:24:24.255314Z` (`recovery_sent_at` because Auth is already confirmed). The normal
+API refreshed the same-recipient reservation to `00:44:23.168219Z`; no manual
+timestamp edit, new invitation or replacement identity. Auth roster remains eight,
+profiles six, queue empty. Code-entry form has no visible error; membership still
+pending. OTP requests 5/11, delivery/verification reservations 4/10 and 4/20;
+readiness brings known status reads to 17/45. Handoff cutoff `00:29:24.255314Z`.
+
+## Enrollment succeeded; Plans context failed, October 1 00:29 UTC
+
+Brian reported Plans. At `00:29:01Z` the recovery window was still armed, with
+handoff deadline `00:29:24.255314Z`. Visible inspection found `/plans` showing
+`Plans unavailable` and `Sign in to view your TableUs plans.` Database readback
+confirmed A Auth verified, one A application profile and one invitation redemption:
+eight Auth users/seven profiles, empty deletion queue, zero active reservations.
+Enrollment passed; the Plans journey failed. B was not started.
+
+The existing cutoff fired during verification. Its receipt began
+`00:29:27.454267Z`, verified API/worker stopped and unscheduled at
+`00:29:33.040725Z`, and disabled future API deletion admission with inline false.
+All containment steps succeeded; process 64575 exited zero. Reconciled window
+`b9e18f7d-cbd8-4312-820a-e15b04a5cf42` is closed. Charge **447.946218 seconds**
+through verified stop as a conservative endpoint, not an exact instance stop time.
+Cumulative use is **6307.672172 seconds (105m7.672s)**; **2692.327828 seconds
+(44m52.328s)** remain, including the reserved final 900 seconds. The sole handoff
+recovery is consumed; restart use stays 4/7. All other counters are unchanged.
+No new provider call, email, invitation, Auth removal or deployment followed this
+failure. A and legacy records remain intact.
+
+The local regression drives the real web OTP/redeem flow against mocked localhost
+Auth/API routes; all non-local requests are blocked. Before the fix it failed to
+show Dinner plans after successful redemption. The code exposes the ordering:
+`SIGNED_IN` starts `/me`/connections reads before membership is created; a 403 and
+subsequent missing-deletion result can leave context signed out indefinitely.
+Explicit subject-bound membership refresh after redemption fixes that ordering,
+while request versions reject late pre-redemption denials. Both early and delayed
+denial tests now pass, alongside four deletion/session-isolation browser checks.
+The six-test suite is added to hosted CI; its hosted run is still pending.
+
+Local diagnostics are retained in `/private/tmp/tableus-signup-before-fix.log`,
+`tableus-signup-after-fix.log`, `tableus-signup-unit.log` and
+`tableus-signup-make-ready.log`. Screenshots are
+`/private/tmp/tableus-p3-plans-unavailable.png` (actual hosted failure) and
+`/private/tmp/tableus-signup-before-redemption.png` (successful deterministic local
+flow). No code, token or email body is in these screenshots. The new web change is
+not deployed; existing hosted observations remain bound to `2eefdc5`.
+
+Local readiness completed on Node 22.23.1 / Python 3.12.2: `make ready` exited zero;
+326 JavaScript tests, 206 Python passes with 36 PostgreSQL-only skips, lint/types,
+contracts with no generated drift, web/Expo-web builds, deterministic smoke and
+report-only bundle size (2,775,483 bytes). Six separate local browser checks and
+23 focused web unit tests passed. The initial sandbox browser run could not bind
+localhost; the permitted local run reproduced the failure, then all six passed
+with the fix. No new restricted-PostgreSQL or hosted CI result is claimed.

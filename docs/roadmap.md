@@ -1,6 +1,6 @@
 # Roadmap
 
-Updated 2026-09-27. Brian confirmed the reconciled direction and targets below;
+Updated 2026-09-28. Brian confirmed the reconciled direction and targets below;
 [decisions](decisions.md#pilot-realignment--adopted-2026-09-26) records the scope.
 
 ## Direction
@@ -74,8 +74,32 @@ was not merged. Priority 2 is complete: Brian approved review and merge, and
 head `1270206`; no deployment occurred ([integration evidence](evidence/f621cf5/integration.md)).
 Priority 3 is authorized in a fresh chat. Independent local preparation is
 complete on `codex/pilot-staging-readiness`. Brian approved the bounded external
-campaign for `e5e7d1`; normal dashboard preflight is complete. Publication/CI/review
-is next, followed by quiesced migration, rollout and synthetic acceptance.
+campaign for `e5e7d1`; preflight, hosted CI/review and [PR #9](https://github.com/TableUs-AI-Agent/Tableus-ai-agent-dev/pull/9)
+merge are complete (`2eefdc5`, tree identical to tested `d2ccc7e`). The four migrations,
+API/web rollout and an empty private-worker startup passed. Brian requested a split
+rehearsal and subsequently approved [recovery](p3-rehearsal-recovery.md) after the
+external browser handoff failed: 105 cumulative live minutes, five same-image API
+configuration restarts, and the exact existing Preview origin temporarily allowed
+for B. All other original limits and used counters remain unchanged.
+
+The subsequent [invitation extension](p3-rehearsal-next-attempt.md) was approved:
+ten invitations, 150 live minutes, seven same-image restarts and 45 status reads,
+with unchanged financial/other attempt limits. Brian confirmed receipt of Auth
+email after checking the correct inbox; no email-delivery repair was needed.
+Restart 4/7 used the single handoff recovery. A now has confirmed Auth and one
+profile/redemption, but the Plans screen incorrectly says to sign in. Both services
+were verified stopped/unscheduled at October 1 `00:29:33.040725Z`; admission is off.
+**44m52.328s remain**, including the 15-minute final-phase reserve. No B signup or
+additional recovery occurred. The local web fix reloads membership after redemption
+and passes six deterministic browser checks plus `make ready`. Brian approved
+the [web fix rollout](p3-signup-fix-rollout.md): one additional Preview and one
+same-image resume, cumulative ceilings two/eight with unchanged time/spending.
+Hosted CI/review, merge, deployment and live verification remain outstanding.
+
+Group/deletion and hosted replay/contention acceptance remain open. The separate
+natural-expiry fixture elapsed September 29 at 9:48:55 p.m. Central, but its HTTP
+rejection is still untested. Local fixes and successful enrollment do not accept
+the pilot or authorize Priority 4.
 
 Effort is a rough planning range in focused engineering days, excluding approval,
 hosted CI, device/signing and external-access waits; these are not delivery promises.

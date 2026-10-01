@@ -4,6 +4,12 @@ Prepared September 27, 2026. Brian subsequently **approved the combined campaign
 in chat for candidate `e5e7d13478aaea6f526f2de9e6978824a30c79c3`. This records that
 approval; it does not waive prerequisites or expand any limit below. Follow the
 [execution record](evidence/e5e7d13/execution.md) for current progress.
+Brian subsequently requested splitting the rehearsal on September 28: session one
+may precede natural expiry; session two checks expiry and finishes B's deletion.
+The original 60 supervised live minutes are shared (45/15 allocation), with the
+API and worker stopped during the interval. B's existing returning-sign-in case
+moves to session two. All attempt/spend limits and four API configuration restarts
+are unchanged; the [active packet](task-packets/active.md) records the exact order.
 The [active packet](task-packets/active.md) owns this objective. Brian owns
 approval, support and stop/rollback decisions. Preparation starts at
 `810d410d32e7dd4ab29dc98a83ae733a304c10b3` on `codex/pilot-staging-readiness`.
@@ -110,6 +116,13 @@ per account/minute, 60 globally, five AI/account/minute and 30 globally. A 429 i
 a stop/reconciliation signal, not permission to refresh repeatedly or reset data.
 
 ## Worker and non-secret configuration
+
+Execution note, September 28: the new Railway service cannot select a TOML file
+under the provider's current [configuration transition](https://docs.railway.com/infrastructure-as-code).
+The identical reviewed Dockerfile/start command/replica/restart settings were
+applied through service controls. Its recurring schedule is held absent; one
+empty deployment-time invocation passed. No app source changed. The execution
+record owns current deployed IDs, pause state and remaining invocations.
 
 [railway.deletion-worker.toml](../railway.deletion-worker.toml) uses the same
 candidate/Dockerfile, no HTTP listener or healthcheck, one replica, no restart
@@ -258,7 +271,8 @@ Request approval only against the final prepared commit and reviewed diff:
    separately. No changed-source rebuild/retry after a failed deployment.
 5. Provision the existing server-only Auth-removal credential privately to those
    two runtimes; no new/rotated secret. Run the fixture/call/invocation scope above
-   within a supervised **60-minute live window** after the expired-invite setup.
+   within **60 supervised live minutes total** across the two sessions authorized
+   September 28; only the expiry check/final session waits for natural expiry.
    Cap incremental hosting at **$5** and providers at **$15** (combined $20), no
    paid tier upgrade. Stop scheduling at the budget/time/invocation boundary.
 6. Approve the described four-account deletion, six invites, controlled mail and

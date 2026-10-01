@@ -43,6 +43,11 @@ server authorization. Platform state also ignores stale prior-account results.
 
 ## Client behavior
 
+On web, successful OTP verification alone does not establish application
+membership. After invitation redemption (or the returning-member approval check),
+reload user context for the verified subject before navigation/private-join
+continuation. Ignore stale responses from pre-redemption or prior-account reads.
+
 Web/mobile show organized plans, an explicit recipient confirmation for shared
 plan transfer, and exact DELETE confirmation for sole-plan/account deletion.
 Full deletion is disabled when the server omits or denies availability; export

@@ -1,19 +1,124 @@
 # Current state
 
-Updated 2026-09-28. Priority 3 read-only inventory freshly confirmed API/web
-source, API readiness, migration head, grants, admission counts and deployment
-triggers; see [staging preparation](pilot-staging-preparation.md). Brian approved
-the bounded campaign. Supabase preflight and a private local restore check passed;
-signup email wording was corrected. TableUs telemetry-retention readback is complete. No deployment,
-hosted migration, Auth user, email or provider operation changed.
+October 1 00:29 UTC / September 30 Central: A successfully verified Auth and
+redeemed its invitation. Database readback confirms one A profile/redemption,
+eight Auth users/seven profiles, an empty deletion queue and zero active invite
+reservations. The browser reached `/plans` but displayed **Plans unavailable —
+Sign in to view your TableUs plans.** Enrollment passed; the Plans journey did not.
+
+The second five-minute cutoff began `00:29:27.454267Z`; API and worker were
+verified stopped/unscheduled at `00:29:33.040725Z`, future deletion admission false
+and inline processing false. Process 64575 exited zero. This window is charged
+447.946218 seconds through verified stop, a conservative endpoint rather than an
+exact instance-stop timestamp. Total use is **105m7.672s**, leaving **44m52.328s**:
+29m52.328s first-phase time plus the reserved 15 final-phase minutes. The single
+handoff recovery is exhausted; no fifth restart or B signup has occurred.
+
+The local regression reproduced an early `SIGNED_IN` membership check returning
+403 before invitation redemption creates the profile; its deletion lookup then
+returns 404 and leaves client context signed out. The web fix explicitly reloads
+membership after redemption/sign-in, bound to the verified subject, before route
+navigation or the private-join callback. Existing version/subject guards discard
+late pre-redemption responses. Six local browser checks pass, including both
+response orderings and four deletion/session-isolation checks; the suite is now
+included in CI. `make ready` passed: 326 JavaScript and 206 Python tests, 36
+PostgreSQL-only skips, lint/types, contract generation without drift, web/Expo-web
+builds, deterministic smoke and report-only performance. Hosted CI is pending.
+The fix is local only. Hosted web/API/worker source remains
+`2eefdc51345aeaa7951ffb343954c1669f9280c5`; a changed-source web deployment needs
+the newly granted approval. Local fix commit is `a5a1f44913b9956e9c0aa54e30492a58367f97f9`.
+Brian approved the [web rollout/resume](p3-signup-fix-rollout.md) at `9e9e939`;
+ledger ceilings are now two Previews/eight same-image restarts. Next: publish,
+pass hosted CI/review, merge and deploy one Preview while API/worker stay stopped.
+
+Counters remain invitations 7/10, accounts 1/4, OTP requests 5/11, delivery and
+verification reservations 4/10 and 4/20, support messages 8/14, worker processing
+1/4, configuration restarts 4/8 and known status reads 17/45. No live Places/AI
+or Auth-removal attempt occurred in this window. A and all legacy data remain.
+
+## Historical stopped checkpoints
+
+At October 1 00:10:42 UTC (September 30 evening Central), API and worker are
+verified stopped after the five-minute A handoff cutoff. Approved restart **3/7**
+had passed: deployment `dd2c6643-3463-4923-9400-87ba93c50226`, unchanged source
+`2eefdc51345aeaa7951ffb343954c1669f9280c5` and approved image digest. Readiness and
+both A/B exact-origin CORS preflights passed. Both schedules are null and future
+API deletion admission is false. No recovery resume has been used.
+The approved extension records ten invitations, 150 live minutes, seven restarts
+and 45 status reads; financial/other attempt caps are unchanged.
+
+A's replacement invitation is issued (7/10 consumed). One fresh code was requested
+at `2026-10-01T00:05:27.467806Z` through the visible in-app links form. Database
+readback verifies the same existing Auth identity, still unverified, eight total
+Auth users/six profiles, empty deletion queue and no campaign provider rows. Its
+reservation expires `00:25:25.923418Z`. Cutoff readback still finds A unverified
+without a profile, one active reservation and no queue/provider rows. Do not claim
+enrollment. OTP counters are four requests, three deliveries and three verification
+submissions conservatively reserved. Known status reads are 16/45.
+
+The first-phase window began `00:03:03.236948Z`; containment began `00:10:29.460276Z`
+and stopped readback completed `00:10:42.962902Z`. Cutoff process 28701 exited
+successfully. Charge 459.725954 seconds through verified stop as a conservative
+accounting endpoint, not an exact instance-stop timestamp. Cumulative use is
+97m39.726s; **52m20.274s remain**, including the 15-minute final-phase reserve.
+Next: Brian confirms readiness with the correct inbox and form open, then use the
+already-approved single recovery resume after checking reservation validity and
+arming a new cutoff. Hold verification until the API is ready; no automatic resend.
+Full acceptance, including hosted replay/contention,
+remains open. The following paragraphs preserve the preceding stopped checkpoint.
+
+At the September 29 22:58 UTC check, API and worker deployments are both stopped,
+with no cron or next run and future API deletion admission false. The recovery
+cutoff requested shutdown at 05:28:21 UTC; its immediate read preceded complete
+shutdown, and the later provider read confirms both stopped. Exact instance stop
+time was not captured. The full recovery allocation is charged conservatively:
+90 of 105 approved live minutes are used; 15 remain reserved for the post-expiry
+phase. Two of five same-image configuration restarts are consumed.
+
+A's last code was sent September 28 at 11:41:40 p.m. Central and is expired. The
+associated reservation expired September 29 at 12:01:39 a.m. Central. The September 29
+database readback found A unverified, eight Auth users/six profiles, zero active
+reservations, zero deletion rows and zero new provider usage. Three
+OTP requests/two deliveries and two conservative verification reservations remain
+accounted for. First-phase acceptance is incomplete; reconcile the missing cases
+and remaining phase allocation before any restart/resend. The temporary exact
+Preview CORS origin remains configured on the stopped API pending final removal.
+
+On September 30 Brian confirmed the Auth code was received: he had checked the
+wrong inbox. Owner-visible email receipt is passed; the missing-email investigation
+is resolved. The earlier self-to-alias hypothesis was not established. No email
+configuration repair is indicated, and receipt does not establish OTP verification
+or enrollment. The three prior diagnostic reads remain charged; no new email,
+provider call, SMTP change or service restart accompanied this correction.
+
+The four normal A/B/C/D invitations expired September 30 at approximately 03:38 UTC
+(September 29 at 10:38 p.m. Central), as confirmed from their private fixture
+records. All six issued invitations remain charged against the six-invitation
+limit. The separate natural-expiry fixture has also elapsed, but its HTTP rejection
+check remains untested. The [fresh invitation proposal](p3-rehearsal-next-attempt.md)
+was subsequently approved: totals of ten invitations, 150 live minutes,
+seven same-image restarts and 45 status reads; spending and all other caps unchanged.
+A/B in-app forms were prepared without invitation codes or submission. Approval
+changed only those four ceilings. The prior temporary helpers are no longer present;
+the durable replacement cutoff passed eight local checks and successfully contained
+the window above. Hosted replay/contention
+remain open; the normal form alone does not supply reliable evidence for them.
+
+Brian confirmed all eight synthetic support messages reached the four aliases and
+privacy route. Hook/wrong-recipient/revoked-invite checks passed. The original live
+segment stopped after an inaccessible external-browser handoff and consumed
+40 minutes 11.955 seconds; that elapsed time and all prior attempts remain charged.
+The legacy staging browser session is preserved, and A was handed off in the visible in-app browser. The [approved recovery packet](p3-rehearsal-recovery.md)
+and [execution evidence](evidence/e5e7d13/execution.md) retain the sequence and exact
+bounds. Priority 3 acceptance remains open; no real-pilot activation is implied.
 
 ## Source baseline
 
 | Item | Value |
 | --- | --- |
-| Integrated source baseline | Priority 1 merge `8ae3c94` plus Priority 2 application candidate `f621cf5` and communication/review documentation through `1270206` |
-| Refreshed `origin/main` | `462a7dd6b3428d21a8fbccfe20a0003361904761`, approved merge of [PR #8](https://github.com/TableUs-AI-Agent/Tableus-ai-agent-dev/pull/8) on September 27 |
-| Integration status | Priorities 1 and 2 complete. The merge tree exactly matches passing CI head `1270206`. No deployment. The separate native diagnostic branch was not merged; do not merge it wholesale. See the [integration evidence](evidence/f621cf5/integration.md). Priority 3 is approved on `codex/pilot-staging-readiness`, preserving local closeout `810d410`; remaining preflight still gates publication and rollout. |
+| Integrated source baseline | Priority 1 merge `8ae3c94`, Priority 2 merge `462a7dd`, and Priority 3 merge `2eefdc5` (approved app candidate `e5e7d1`) |
+| Refreshed `origin/main` | `2eefdc51345aeaa7951ffb343954c1669f9280c5`, approved merge of [PR #9](https://github.com/TableUs-AI-Agent/Tableus-ai-agent-dev/pull/9) on September 28 Central |
+| Integration status | Priorities 1 and 2 complete. Priority 3 merge tree matches passing CI head `d2ccc7e`; app inputs remain the approved `e5e7d1` candidate. Rollout is complete; synthetic acceptance remains open. The separate native diagnostic branch remains excluded. |
 | Root checkout | Stale at `codex/privacy-safe-observability` (`8e9625e`). Use the baseline, not the root checkout. |
 
 Priority 1 local readiness at its earlier application source passed 214
@@ -44,23 +149,27 @@ excludes `codex/pilot-realignment`, `codex/pilot-experience-measurement`,
 `codex/pilot-staging-readiness` and `main`
 ([Vercel Git configuration](https://vercel.com/docs/project-configuration/git-configuration)). Other branches still need trigger
 review before pushing. Railway currently has no deployment triggers and PR
-environments are disabled. No hosting setting or running deployment was changed.
+environments are disabled. The approved manual rollout below consumed the API/web allowances without an automatic deployment.
 
 ## Deployed staging
 
 | Component | Source | Notes |
 | --- | --- | --- |
-| API (Railway `tableus-staging`) | `f94a1d9` | Supabase auth, live Places, live Gemini through Agent Platform, anonymous telemetry |
-| Web aliases `tableus-staging.vercel.app`, `links.table-us.com` | `ed8330a` | Dependency-patched web; API remains `f94a1d9` |
+| API (Railway `tableus-staging`) | `2eefdc5` | Same-image restart `b134094c-b6be-4f04-b8e9-87bbbd3e986a` (2/5) passed readiness/CORS, then cutoff stopped it. Future deletion admission/inline attempts off. Places ceiling 690; live providers unused. |
+| Web aliases `tableus-staging.vercel.app`, `links.table-us.com` | `2eefdc5` | READY Preview `dpl_7j4HwYgzPw4139i3W535V5iUFqrv`; public deletion/privacy/terms checked. |
+| Private deletion worker | `2eefdc5` | One empty startup completed and exited; no public domain/healthcheck, restart NEVER, schedule absent. One of four processing invocations consumed. |
 | Accepted native artifacts | `f94a1d9` | Isolated-staging acceptance with an owner-accepted simulator AppHang risk ([closeout](evidence/ios27-staging-f94a1d9/closeout.md)) |
 | Production-facing `table-us.com` | `e1184ec` | Not a pilot target |
 
-The later features below are not deployed. Fresh hosted Alembic head is
-`8b1d4a6c2e90`; exactly four migrations are pending, in order: deletion queue
-`6d7e3b91a2c4`, cohort counters `ab72e4f39d10`, recipient-bound invites
-`d48f6c2ab913`, shared-content provenance `9a1f2e7c4b80`. After that last
-migration, any unused legacy unbound invite code in staging is rejected for new
-signups and must be reissued to a named recipient.
+Hosted Alembic head is `9a1f2e7c4b80`. All four missing migrations passed in
+order with the API stopped and a separate migration login. Restricted grants,
+private app schema and invoker Auth hook were verified. Six legacy profiles,
+seven Auth users, sixteen plans and eleven runs remain intact; sixteen plan
+credits were backfilled. Legacy unused unbound invites are rejected for new
+signups. One new recipient-bound expiry fixture is stored privately; it must
+expire naturally before its session-two rejection check. Five more synthetic invites
+are now issued (including revoked D), and A is the sole new Auth user, unverified
+at the 03:44 UTC checkpoint. No legacy invite was reissued.
 
 ## Product
 
@@ -78,7 +187,7 @@ web and mobile. Deferred Discover, Friends/People, Review, Taste/Profile and pho
 entry routes lead to Plans; their implementations, API endpoints and export fields
 remain. Mobile Account has an independent tab plus its existing deletion-recovery
 route, privacy, terms and deletion-help links. Auth, invite and private Join behavior
-is preserved. These client changes are not deployed.
+is preserved. These changes are deployed to staging web; new native builds remain deferred.
 
 New `plan.finalized` events record the active run's `distinct_voter_count` (0–8).
 Deletion cleanup retains only the validated integer, independent of candidate/run
@@ -86,25 +195,25 @@ survival. The bounded read-only [measurement report](pilot-measurement.md) uses
 retained join/finalization events, counts each eligible plan once and discloses
 unknown history/deletion coverage. This does not add a quorum or change ranking.
 
-## Implemented in the baseline, not deployed
+## Implemented and deployed to staging API/web
 
 | Capability | Default after deployment | Contract |
 | --- | --- | --- |
 | Full account deletion with recoverable Auth removal | Off today/default (`TABLEUS_ACCOUNT_DELETION_ENABLED=false`); pilot requires approved activation and rehearsal in Priority 3 | [account lifecycle](account-lifecycle.md), [operations](account-lifecycle-operations.md) |
 | Plan transfer, sole-plan removal and legacy application-only deletion | Available subject to authorization/blockers; not disabled by the full-deletion flag | [account lifecycle](account-lifecycle.md) |
 | Shared-content removal and organizer repair on deletion | Applies to legacy and full deletion; not gated by the full-deletion flag | [design](deletion-content-design.md) |
-| Durable per-account quotas: 5 AI and 20 Places operations per UTC day, 20 plan creations per lifetime; operator-only usage reports | On, configurable | [cohort controls](cohort-controls.md) |
+| Durable per-account quotas and operator-only usage reports | Staging configured to 3 AI/40 Places per day and 20 lifetime plans; code defaults remain 5/20/20. | [cohort controls](cohort-controls.md) |
 | Recipient-bound, one-use invitations | On after migration | [recipient invites](recipient-invites.md) |
 | Private-link capture into bounded client memory; fragment link emission | Capture on; emission off (`*_JOIN_LINK_FORMAT`) | [private links](private-link-handling.md) |
-| Public account-deletion help and support procedure | Page present; not published operationally | [procedure](deletion-support-procedure.md) |
+| Public account-deletion help and support procedure | Staging page published; controlled support-mail rehearsal remains pending. | [procedure](deletion-support-procedure.md) |
 
 ## Known gaps and risks for the pilot
 
 - Reads of plans with candidates hydrate Places; empty/summary/revision reads do
   not do that hydration. Deterministic two-round journey sizing now measures 18/22/30 organizer
-  operations for 2/4/8 diners (90/226/690 nominal group HTTP attempts). Prepared
-  staging settings propose 40/day with explicit spend/attempt limits; neither
-  the default 20/day nor that proposal is approved live capacity.
+  operations for 2/4/8 diners (90/226/690 nominal group HTTP attempts).
+  Staging is configured to 40/day for the approved synthetic exercise only;
+  real-pilot capacity still needs its own scope and budget.
 - Structured cuisines are intersected only when supplied. Current web/mobile
   plan forms send free-text notes and empty cuisine arrays. The four-result
   requirement can still produce no result; its effect on real groups is unmeasured.
@@ -113,7 +222,8 @@ unknown history/deletion coverage. This does not add a quorum or change ranking.
   owner-reviewed roster. Whole-plan deletion still removes events, and historical
   finalizations may have no voter count. Report unknown outcomes and these accepted
   coverage gaps; the retained-plan rate is not complete cohort conversion.
-- Full deletion is implemented but has no hosted activation/worker acceptance.
+- Full deletion is deployed but admission remains off. The worker passed empty
+  startup; actual Auth removal and the scheduled drain still need acceptance.
   Priority 3 has prepared queue-only API admission, a separate five-minute Railway
   worker and four-account rehearsal; external execution must prove the normal
   self-service path, organizer-blocker resolution,
@@ -127,11 +237,11 @@ unknown history/deletion coverage. This does not add a quorum or change ranking.
 - Ad hoc iOS builds install only on devices included in the provisioning profile;
   collect all pilot iPhone device IDs before building. Production mobile builds
   are deliberately disabled until production origins and update policy exist.
-- Integration CI is green on the tree merged as `462a7dd`; later staging/native
+- Integration CI is green on the tree merged as `2eefdc5`; synthetic staging/native
   acceptance remains separate. A local plan-refresh component-test timeout
   did not recur in focused/full rechecks or either subsequent hosted run; its
   cause is unestablished.
-- The old frozen dependency graph (`f94a1d9` native artifacts and API image) is
+- The old frozen dependency graph in `f94a1d9` native artifacts is
   not covered beyond September 30; a new candidate from the baseline uses the
   remediated graph ([disposition](evidence/dependency-toolchain-2026-09-21/README.md)).
 
@@ -148,7 +258,7 @@ Shared privacy/help copy now explains pending Auth removal, authored-content
 cleanup, retained pseudonymous records without automatic purge, and the accepted
 email-access-loss limitation. Brian confirmed `brian@table-us.com` for support,
 with `privacy@table-us.com` forwarding to him, plus four controlled test aliases.
-No mailbox delivery or publication has occurred. Brian approved the
+Staging copy is published; mailbox delivery remains unverified. Brian approved the
 [prepared scope](pilot-staging-preparation.md) against `e5e7d1`: six invites, four
 accounts, worker/Auth/email limits, $15 provider/$5 hosting ceilings, rollback
 compatibility and required Auth/retention readback. Supabase dashboard checks now
@@ -159,17 +269,17 @@ backup and isolated local app/public restore/migration check passed; the
 TableUs Sentry Developer and PostHog Free plan/retention readback is complete;
 event windows are not universal erasure deadlines. The hosted signup email template now says
 “verification code” instead of “six-digit code,” matching the configured eight-digit
-OTP without changing security settings. No email, deployment or migration occurred.
+OTP without changing security settings. The approved migration and rollout then completed; no OTP email has been sent.
 The global Places configuration maximum is now 1,000; default 150 is unchanged.
-That validation ceiling grants no spending. API/web/native staging identities above
-remain unchanged; no new migration is introduced by this preparation.
+That validation ceiling grants no spending. The API/web/worker now use the merged source; native identity is unchanged.
+No additional migration was introduced by this preparation.
 
 Local preparation is complete. Readiness finished in stages after a sandbox
 loopback denial: 206 Python passes with 36 PostgreSQL-only skips, 326 JavaScript
 passes, lint/types, contracts, web/Expo-web builds, smoke and report-only performance.
 An additional restricted-PostgreSQL pass covered 40 selected tests with zero skips;
-two production-build deletion-help browser journeys passed. Current-candidate
-hosted CI, merge and staging acceptance remain unperformed. See the
+two production-build deletion-help browser journeys passed. Hosted CI passed 242 Python tests, 326 JavaScript tests and five browser journeys
+with zero skips; merge and rollout are complete. Synthetic staging acceptance remains open. See the
 [verification and next gate](pilot-staging-preparation.md#local-verification-and-handoff).
 
 ## Native validation

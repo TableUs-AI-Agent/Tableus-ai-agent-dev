@@ -497,3 +497,190 @@ and rollout. Supabase Auth/schema/recovery readback is complete; TableUs Sentry 
 PostHog plan/retention readback completed September 28. Those event-access windows
 do not approve a retained-data purge policy. The routine signup template wording correction
 preserves the configured OTP length and all delivery/security settings.
+
+
+## Priority 3 rollout checkpoint — 2026-09-28
+
+PR #9 merged as `2eefdc51345aeaa7951ffb343954c1669f9280c5`, preserving the
+approved application's bytes and the full passing CI tree. All four migrations
+and the bounded API/web/private-worker rollout completed. The existing server-only
+removal key was provisioned privately to the restricted API/worker runtimes; no
+key was created or rotated. Production and native releases are unchanged.
+
+Railway now rejects TOML configuration for newly created services. The reviewed
+worker command, Dockerfile, one replica and NEVER restart policy were applied
+through normal service controls; the prepared TOML remains a reference, not the
+new service's active configuration. No application source or provider was changed.
+The schedule remains absent until supervised draining; startup processed zero
+rows and counts as invocation one of four. See [Railway's transition](https://docs.railway.com/infrastructure-as-code).
+
+The API is stopped again, with deletion admission off, while the private D fixture
+expires naturally at `2026-09-30T02:48:54.780853Z` (September 29, 9:48:55 p.m.
+Central). This initial single-session hold was superseded by Brian's split request
+below. Resume after mailbox access and fresh source/role/queue/budget checks.
+Reconcile aged-out usage and tighten the
+global ceiling during the first already-budgeted admission restart; never reset
+the independent 420-attempt allowance. Native acceptance and real invitations
+remain later gated work.
+
+## Split synthetic rehearsal — 2026-09-28
+
+Brian requested “split the rehearsal.” Run session one before expiry once mailbox
+and isolated browser operation are ready; defer natural-expiry rejection, B's
+already-budgeted returning sign-in and B's final deletion to session two. Allocate
+45 of the original 60 supervised live minutes to session one, retaining at least
+15 for session two; stopped waiting time is excluded. All other limits, fixtures,
+stop conditions and the exact deployed source remain unchanged. The private ledger
+must retain cumulative usage across both sessions.
+
+Session one pauses API deletion admission and drains only verified A/C/D jobs,
+then verifies B's cleanup/repair and removes its sole plan. Stop the API, remove
+worker scheduling and close only synthetic sessions during the interval. Session
+two re-enables/resumes the same image, checks real expiry without OTP/account
+creation, completes B's returning sign-in and deletion, then disables admission
+and scheduling and stops the API. This retains the four approved configuration
+restarts and four total worker invocations; splitting adds no source deployment,
+account, OTP, provider or spending allowance. Acceptance remains open until both
+sessions and final evidence pass.
+
+Brian selected manual mailbox operation: he enters codes directly into TableUs,
+never into chat. Prepare signed-out sessions on separate staging origins without
+clearing legacy sessions. Verify tagged-alias delivery before signup, using the
+already-scoped support exchanges if prior delivery is unconfirmed; no additional
+mail allowance is created.
+
+Eight marked support messages verified all four aliases and privacy forwarding;
+Brian confirmed none missing after an initial uncertainty. Preserve the six
+remaining messages for verified D challenge/reply, duplicate/ack and completion/
+receipt. Session one's clock started with its first email. A local one-shot cutoff
+removes scheduling and stops staging services before the fixed deadline without
+another deployment. No-invitation, wrong-recipient and revoked-invite checks passed
+before normal browser enrollment; all private codes remain outside chat/Git.
+
+### Visible handoff correction — 2026-09-29
+
+External browser use is an implementation choice for account isolation, not a
+TableUs requirement. Brian could not see the tool-created rehearsal group; the
+agent could not foreground it reliably. A's 20-minute reservation expired before
+manual verification. The live session was contained early, with future admission
+disabled without deploying and both existing API/worker images verified stopped.
+No extra configuration restart or OTP was used. Forty minutes 11.955 seconds are
+consumed, leaving 19 minutes 48.045 seconds of the original campaign.
+
+Prepare owner-operated signup in a visible in-app tab first and verify that Brian
+can see it before resuming any timer or requesting another code. The signed-out
+links origin can hold A while preserving the legacy staging-origin session.
+The form is filled but unsubmitted. No old reservation or session token is copied
+between browsers. Reconcile the unfinished acceptance cases and expired grant
+before further live actions; neither a fresh clock nor extra allowance is implied.
+
+Brian subsequently confirmed the visible A form. The existing Preview's unique
+origin provides a second in-app browser identity for B without clearing the legacy
+session or creating another deployment. Adding that exact origin to API CORS,
+45 more supervised live minutes and one additional same-image restart are proposed
+in the [recovery packet](p3-rehearsal-recovery.md). Brian explicitly approved the
+complete packet on September 29. The live-time ceiling is now 105 minutes and
+configuration-restart ceiling five; prior usage is retained. All other cumulative
+bounds and stop conditions remain unchanged. Apply the temporary exact-origin
+CORS addition only at recovery resume and remove it during final disable.
+
+Recovery restart 2/5 reused the exact approved image and passed source/readiness
+and exact-origin CORS checks. The new segment receives the remaining 49 minutes
+48.045 seconds of phase-one allocation, with its own cutoff; no prior elapsed
+time is refunded. A's normal join flow revalidated the existing invitation and
+sent one fresh code to the existing unverified Auth identity. No new account was
+created. Keep the successful in-app handoff and require observable enrollment
+before moving on to B. Browser pointer activation produced no request; after
+readback established that fact, keyboard activation succeeded without a duplicate
+email. This is an operator interaction observation, not proof of an app defect.
+
+
+### Recovery cutoff reconciliation — 2026-09-29
+
+The recovery cutoff ran while awaiting A's manual code entry. Later readback
+verified API/worker stopped, no scheduling and admission off; A remains unverified.
+The exact instance stop timestamp was not captured, so charge the entire allocated
+recovery interval without claiming an exact measured stop time. Ninety of 105
+approved live minutes are consumed; the remaining 15 are reserved for post-expiry
+work. Do not reuse the expired code or automatically spend that reserve on the
+incomplete first phase. Establish mailbox readiness and reconcile remaining scope
+before any further OTP/restart. No additional allowance is inferred from a status
+question, the existing approval, or elapsed stopped time.
+
+
+### Auth email receipt diagnosis — 2026-09-29
+
+Treat provider delivery status and owner-visible receipt separately. Brian reports
+no OTP email; Resend reports both A messages delivered, with no recipient suppression
+entry. The latest sender matches Brian's address and targets its tagged alias.
+Google documents that self-to-alias mail may bypass Inbox, but that remains a
+hypothesis until mailbox or recipient-side log evidence confirms it. Use a focused
+all-mail search, then exact Message-ID trace if absent. Do not resend or change
+SMTP/DNS/suppression settings based only on provider status or that hypothesis.
+The prior support-mail receipt confirmation remains valid for those eight messages,
+and does not prove receipt of the separate Auth emails.
+
+### Auth email receipt resolved — 2026-09-30
+
+Brian confirmed that the Auth code was received and that he had checked the wrong
+inbox. Record owner-visible receipt as passed and close the missing-email diagnosis.
+The self-to-alias hypothesis was not established; no SMTP/DNS/suppression change is
+justified by this incident. Receipt alone does not establish verification or enrollment.
+The old OTP and all four normal invitations have expired. Preserve the spent six-invite
+allowance and 90/105 live minutes; prepare a revised signup scope before replacements
+or a restart. The owner's correction does not expand campaign approval.
+
+### Fresh invitation extension — 2026-09-30, approved
+
+Prepare four just-in-time replacement invitations for the same A/B/C/D recipients;
+retain old fixture history and A's existing Auth identity. The proposed cumulative
+ceilings are ten invitations, 150 live minutes, seven same-image restarts and
+45 status reads, with unchanged spending/other attempt limits. The spare restart
+supports one interrupted manual OTP handoff; a five-minute handoff stall triggers
+containment so another long unattended interval is not consumed. Brian continues
+entering codes directly in visible in-app forms. No stored browser token extraction
+or automated mailbox reading is introduced. The
+[complete proposal](p3-rehearsal-next-attempt.md) was explicitly approved at commit
+`a5f3de877f46673382b02ba69979eae12b295eb3`; only its four ceilings changed in the
+ledger. Restart 3/7 reused the approved image, and A received a replacement invite
+plus one requested code using the same unverified Auth identity. The five-minute
+handoff cutoff subsequently stopped both services before verification. Charge time
+through verified stop, retain the unused recovery resume, and wait for owner
+readiness before spending it. Do not resend automatically or extend a reservation.
+Hosted
+replay/contention evidence stays open rather than claiming repeated UI clicks prove
+it; neither criterion is waived by this proposal.
+
+Brian subsequently confirmed readiness. A's Auth verification had succeeded while
+the API was stopped, leaving no application membership and a visible network error.
+Use the approved single recovery resume and one remaining resend through the normal
+form. Its normal validation refreshes the reservation; no timestamp is manually
+edited. Do not resubmit the consumed OTP or replace A. Restart 4/7 passed unchanged
+image/readiness/CORS; the new code handoff remains subject to the second five-minute
+cutoff, after which this attempt must stop for a new scope decision.
+
+
+### Refresh web membership after signup redemption — 2026-10-01
+
+Auth verification emits `SIGNED_IN` before the invitation redemption request
+creates application membership. That early read can deny access legitimately;
+a later successful redemption must explicitly refresh user context before
+navigation or the private-join continuation. Bind both approval requests and the
+refresh to the verified subject, and reuse version/subject guards so late results
+cannot overwrite current approval. Do not infer membership from Auth alone.
+Deterministic browser tests cover early and late denials and remain in CI.
+
+A's hosted enrollment succeeded but its Plans screen failed. The second handoff
+cutoff verified both services stopped, with admission/schedules off. The recovery
+slot is exhausted and 44m52.328s remain, including 15 final-phase minutes. Prepare
+the [changed-source web rollout and one resume](p3-signup-fix-rollout.md) for owner
+approval; keep all
+spent attempts/time charged and leave hosted acceptance open until retested.
+
+
+Brian approved the complete [signup-fix rollout](p3-signup-fix-rollout.md) at
+`9e9e939ed7000f9e19923dcbf112d2aaea2e37cc`: CI/review/merge, one additional
+exact-source web Preview/staging-alias assignment and one same-image API resume.
+Only Preview/restart ceilings rise to two/eight; time, spending and other attempt
+limits remain. Keep services stopped during publication/build preparation, and
+verify owner availability plus armed containment before starting the live clock.

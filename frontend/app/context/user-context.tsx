@@ -17,6 +17,7 @@ type UserContextValue = {
   currentUser: AppUser | null;
   userState: UserState;
   userError: string;
+  refreshUser: (subject: string) => Promise<void>;
   deletionStatus: AccountDeletionStatus | null;
   deletionSubject: string | null;
   deletionRequestKey: string | null;
@@ -35,6 +36,7 @@ const UserContext = createContext<UserContextValue>({
   currentUser: null,
   userState: "loading",
   userError: "",
+  refreshUser: async () => {},
   deletionStatus: null,
   deletionSubject: null,
   deletionRequestKey: null,
@@ -65,6 +67,13 @@ export function UserProvider({ children }: { children: ReactNode }) {
   const sessionSubject = useRef<string | null>(null);
   const knownDeletion = useRef<{ subject: string; status: AccountDeletionStatus | null; key: string | null } | null>(null);
   const requestVersion = useRef(0);
+  const loadUser = useRef<((subject: string) => Promise<void>) | null>(null);
+
+  const refreshUser = useCallback(async (subject: string) => {
+    if (!loadUser.current || sessionSubject.current !== subject) throw new Error("Session changed during sign-in. Please try again.");
+    await loadUser.current(subject);
+    if (sessionSubject.current !== subject) throw new Error("Session changed during sign-in. Please try again.");
+  }, []);
 
   const recordDeletion = useCallback((subject: string, status: AccountDeletionStatus | null, key?: string, inFlight = false) => {
     if (isSupabaseConfigured && sessionSubject.current !== subject
@@ -163,6 +172,10 @@ export function UserProvider({ children }: { children: ReactNode }) {
         }
       };
 
+      // Invitation redemption can finish after the SIGNED_IN membership read.
+      // Reuse its version/subject guards when auth explicitly reloads approval.
+      loadUser.current = loadAuthenticatedUser;
+
       const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
         // The bounded startup read owns INITIAL_SESSION and its failure state.
         if (cancelled || event === "INITIAL_SESSION") return;
@@ -212,6 +225,7 @@ export function UserProvider({ children }: { children: ReactNode }) {
       });
       return () => {
         cancelled = true;
+        loadUser.current = null;
         subscription.unsubscribe();
       };
     }
@@ -274,7 +288,7 @@ export function UserProvider({ children }: { children: ReactNode }) {
   };
 
   return (
-    <UserContext.Provider value={{ currentUser, userState, userError, deletionStatus, deletionSubject, deletionRequestKey, deletionRequestInFlight, deletionSessionAvailable, recordDeletion, refreshDeletion, allUsers, friends, canSwitchUser: !isSupabaseConfigured, switchUser, refreshFriends }}>
+    <UserContext.Provider value={{ currentUser, userState, userError, refreshUser, deletionStatus, deletionSubject, deletionRequestKey, deletionRequestInFlight, deletionSessionAvailable, recordDeletion, refreshDeletion, allUsers, friends, canSwitchUser: !isSupabaseConfigured, switchUser, refreshFriends }}>
       {children}
     </UserContext.Provider>
   );
