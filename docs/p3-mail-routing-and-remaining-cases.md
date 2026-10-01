@@ -15,7 +15,9 @@ all three received, completing SUPPORT, PRIVACY and unchanged A-address route pr
 The owner subsequently approved the exact remaining rehearsal at `32ab7cd`;
 its first phase later stopped automatically when A code entry timed out. The owner
 requested one replacement code; the normal prompt is ready with services still
-stopped. See the active packet for current accounting and recovery constraints.
+stopped. A subsequently authenticated successfully; its application check is
+blocked by the paused API. See the [bounded recovery proposal](p3-session-recovery.md)
+and active packet for current accounting and the exact pending approval.
 
 ## Approved Squarespace diagnostic: completed, original record restored
 

@@ -903,3 +903,17 @@ a ceiling. Preserve owner code entry and all legacy sessions. Current use is
 164m29.996196s, OTP requests 9/11 and restarts 7/10. Before further rehearsal work,
 reconcile the resulting shortage of one planned OTP slot and one recovery restart;
 the resend request does not authorize those future changes or full P3 acceptance.
+
+
+### Preserve verified Auth session during bounded API recovery — 2026-10-01
+
+A's replacement code created exactly one session at 20:26:14Z while the existing
+profile/redemption stayed singular. Treat the following network error as an API
+availability failure, not a reason to spend another OTP. Preserve the session and
+complete the normal membership check after source-identical API recovery. Prepare
+one combined approval delta: restart ceiling 10 to 11, OTP requests 11 to 12 and
+delivery reservations 10 to 11. Keep all elapsed usage, 195-minute/time and money
+caps, and final 900 seconds. The remaining 930.003804-second first phase passes
+the existing cutoff check; expiration leaves incomplete work rather than creating
+a new allowance. See [the exact proposal](p3-session-recovery.md). No deployment or
+ceiling change occurs before approval.

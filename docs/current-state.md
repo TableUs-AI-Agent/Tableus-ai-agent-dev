@@ -1,6 +1,33 @@
 # Current state
 
 
+## A authenticated successfully; API recovery prepared, October 1
+
+After the owner reported the expected network error, read-only Auth evidence
+confirmed A's successful sign-in at **20:26:14Z**: one new session, one existing
+profile and one existing invitation redemption. No extra account was created.
+The API remains stopped, which blocks the subsequent application membership check.
+The consumed code field was cleared without reading it or signing out; preserve
+the authenticated tab and do not request A another code. Screenshot:
+`/private/tmp/tableus-a-authenticated-api-paused.png`.
+
+Fresh provider checks confirm the same stopped/unscheduled API and worker images,
+the approved READY web deployment, expected staging configuration, empty deletion
+queue, no active validations, no C/D accounts and no new provider activity. Delayed
+hosting workspace delta is $1.10244608760889 against the unchanged $5 ceiling.
+
+The [prepared recovery proposal](p3-session-recovery.md) requests exactly one extra
+same-image restart (10 to 11), OTP request (11 to 12) and delivery reservation
+(10 to 11). All time and money ceilings stay unchanged. First-phase allocation is
+930.003804 seconds, with final 900 seconds preserved; both pass the existing cutoff
+allocation check. Limits remain **unchanged pending approval** and no timer or
+service was started. Authentication is proven; full application sign-in remains
+pending API readiness and normal identity/membership verification.
+
+Next: obtain owner approval of the prepared recovery, then arm cutoff, resume the
+same image and reuse A's session. Continue only within the documented remaining
+scope and stop conditions. No further code entry by A is needed at this stage.
+
 ## A code replaced after automatic cutoff; services stopped, October 1
 
 The owner approved the remaining rehearsal at `32ab7cd` with cumulative ceilings
@@ -17,7 +44,7 @@ expired code. At approximately `20:24Z`, one replacement request succeeded throu
 the normal returning sign-in form at `https://links.table-us.com/invite`, using A's
 unchanged approved address and `shouldCreateUser: false`. The code-entry prompt
 is visible; no code was read, stored or entered by the agent. Inbox receipt and
-verification remain unconfirmed. Screenshot: `/private/tmp/tableus-a-replacement-code.png`.
+verification were unconfirmed at that handoff. Subsequent verification is recorded above. Screenshot: `/private/tmp/tableus-a-replacement-code.png`.
 The in-app browser is visible and this tab is retained for owner entry. B's prior
 Preview tab was absent from the fresh tab inventory; its session was not inspected,
 revoked or assumed lost. Recover its context normally before further B work.
@@ -38,7 +65,7 @@ invitations **8/10**, accounts **2/4**, worker processing **1/4**, Auth DELETE *
 No other counter or limit changes. Reservation counts are not confirmed deliveries
 or completed verification submissions.
 
-Next: owner enters the newest code in the retained tab and reports the result.
+This handoff has since completed Auth verification; see the current recovery state above.
 Before restarting or continuing the complete rehearsal, reconcile a bounded recovery
 scope: only two OTP requests/deliveries remain for three planned C/D/B logins, and
 the three remaining restart slots are already allocated to pause/final resume/final
