@@ -1,6 +1,6 @@
 # Current state
 
-## Web signup recovery deployed; C signup passed, October 1
+## C deletion verified pending; D signup handed off, October 1
 
 [PR #11](https://github.com/TableUs-AI-Agent/Tableus-ai-agent-dev/pull/11) merged as
 `bffa2845f268ea8b1906b8de155aa130f199856e`, with the same full tree as passing CI
@@ -24,23 +24,28 @@ earlier, **22:34:40Z (5:34 p.m. Chicago)**. Do not extend this deadline. Preserv
 the final 900-second reserve. Prior closed usage remains 178m7.415236s; this active
 window is additional and must be charged at verified stop, within 240 minutes.
 
-C recovered through its preserved Auth session with no extra OTP. Trusted readback
-confirms one profile and one redemption; Auth creation (20:49:35Z) and last sign-in
-(21:00:40Z) are unchanged. C created one sole-participant plan. The Account page
-correctly blocks account deletion until it is removed; the owner must type DELETE in each relevant field and perform the final
-plan/account confirmations. Neither confirmation
-has been observed yet. A's exact deletion job remains pending with zero attempts;
-B owns the shared plan, D has not been created.
+C recovered through its preserved Auth session with no extra OTP, then the owner
+removed its sole plan and confirmed account deletion. Trusted readback at 22:09:26Z
+confirms no C plan, profile or redemption, and its exact pending deletion job was
+accepted at 22:04:53.905565Z. A and C are the only pending jobs, with zero Auth
+attempts, leases or attention flags. Their private identity bindings are preserved.
+C signed out normally; sign-in account removal is still pending. Its fixture used
+two Places attempts ($0.049 on the approved cost basis), no AI call.
+
+D's final recipient-bound invitation was issued and one signup code requested.
+The code-entry UI is ready for the owner; D's profile/redemption are not yet
+verified. Handoff deadline is **22:21:09Z (5:21 p.m. Chicago)**, earlier than the
+phase cutoff. No resend is allocated. B's old-origin session remains preserved.
 
 Preflight inspected the complete queue: exactly A's expected pending job, no
 unknown pending subject, lease or attention flag. Latest conservative hosting
 upper bound is $1.1247938732362335; monetary ceilings are unchanged. Preserve
-C/B sessions and A's private binding. The [approved execution scope](p3-session-recovery.md) and
+D/B tabs and A/C private bindings. The [approved execution scope](p3-session-recovery.md) and
 private ledger govern all remaining operations; stale consumed helpers grant no
 new attempt. No native/production/real-user work or extra resend is authorized.
 
-Next: owner removes C's sole test plan and confirms C deletion in its prepared
-account tab; verify the exact pending job before signing out C and beginning D.
+Next: owner completes D's code entry; verify its profile/redemption and establish
+the support binding before continuing D's deletion/support case.
 Full P3 acceptance remains open, including support/drain and hosted gaps.
 
 ## Verified rehearsal and mail results
@@ -49,7 +54,7 @@ A/B completed one four-option recommendation and two voting/finalization rounds.
 B refreshed both results and took ownership after the organizer-deletion blocker
 was observed. Reopen reused the same candidates. Natural invitation expiry
 rejected signup without an OTP. A returning application sign-in subsequently
-passed, and its owner-confirmed deletion is now pending Auth removal. C/D cases,
+passed, and its owner-confirmed deletion is now pending Auth removal. D signup/support,
 worker removal, support handling and final B cleanup remain incomplete.
 
 ImprovMX Free is Active with three exact aliases, no catch-all and verified
@@ -104,7 +109,7 @@ environments are disabled. The approved manual rollout below consumed the API/we
 | --- | --- | --- |
 | API (Railway `tableus-staging`) | `2eefdc5` | Same-image restart 9/12, deployment `a72eeed7-5765-46f8-b0a3-943af20d0673`, live under cutoff. Admission on, inline attempts off. |
 | Web aliases `tableus-staging.vercel.app`, `links.table-us.com` | `bffa284` | READY Preview `dpl_8tmFppeucwSv23uuj71qYF7mpthW`; C signup recovery verified. |
-| Private deletion worker | `2eefdc5` | Deployment `18a8f3f8-886e-4dac-ba7e-9804bb584f75` stopped/unscheduled. One empty processing invocation consumed; A's pending job has no Auth DELETE attempts. |
+| Private deletion worker | `2eefdc5` | Deployment `18a8f3f8-886e-4dac-ba7e-9804bb584f75` stopped/unscheduled. One empty processing invocation consumed; A/C pending jobs have no Auth DELETE attempts. |
 | Accepted native artifacts | `f94a1d9` | Earlier isolated-staging acceptance with owner-accepted simulator AppHang risk; not pilot acceptance of current source. |
 | Production-facing `table-us.com` | `e1184ec` | Not a pilot target; unchanged. |
 

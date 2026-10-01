@@ -59,13 +59,20 @@ rendered, and trusted aggregate readback confirmed one profile/redemption with
 unchanged Auth creation 20:49:35Z and last sign-in 21:00:40Z. No new OTP was sent
 or entered; cumulative requests remain 10/12. Screenshot:
 `/private/tmp/tableus-c-recovered-plans.png`. C's sole test plan was then created
-through normal location resolution and create UI. Worst-case reservation: six
-Places HTTP attempts/$0.147, within existing ceilings, no AI operation. The Account
-page correctly blocks deletion while that one plan exists; the plan/account controls are ready for the owner's irreversible final confirmations
-(type DELETE in each relevant field). Screenshot:
-`/private/tmp/tableus-c-delete-confirmations.png`.
+through normal location resolution and create UI. The initial six-attempt/$0.147
+reservation reconciled to one location.resolve and one location.details request,
+two attempts/$0.049 on the approved cost basis, no AI operation. The owner removed
+the sole plan and confirmed account deletion. Trusted readback at 22:09:26Z confirms
+the plan/profile/redemption absent and exact job pending since 22:04:53.905565Z.
+Complete queue: A/C pending, zero attempts, leases, attention or unrelated jobs.
+Private exact bindings are retained. Screenshot:
+`/private/tmp/tableus-c-deletion-pending.png`. Normal Sign out here then showed
+session ended; no claim of Auth removal is made.
 
-Next: observe and verify C's plan removal and pending deletion before sign-out/D.
+D's last recipient-bound invitation and one signup code are now issued. Code-entry
+UI is ready, with owner handoff deadline 22:21:09Z; no D profile/redemption proof
+yet. OTP requests are 11/12, invitation allowance 10/10, provider attempts 74/420.
+Next: owner completes D's code entry, then verify signup and support binding.
 A's Auth removal, D support flow, bounded worker drain and final B cleanup remain
 incomplete. Hosted redemption replay/contention and server-side deletion refusal
 remain untested. Staging progress is not P3/native/pilot acceptance. See the active

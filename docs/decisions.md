@@ -949,3 +949,15 @@ Issue C's one recipient-bound invite and single signup code only after A's local
 session ends. C owner entry ends at the existing 20:53:29Z containment threshold;
 no resend or deadline extension is implied. Keep the worker and all legacy
 identities untouched until the bounded verified queue step.
+
+
+### Verify C pending deletion and reserve D's last signup code — 2026-10-01
+
+After the owner performed C's normal sole-plan/account confirmations, verify both
+application removal and the exact pending job through its trusted Auth identity.
+Preserve the private binding before normal local sign-out. A/C are the only pending
+jobs; zero Auth attempts is evidence of pending work, not completion. Reconcile C's
+six-attempt Places reservation to the two recorded calls before reusing headroom.
+D receives the final invitation and exactly one allocated signup code, with owner
+entry by 22:21:09Z and no resend. Keep the existing phase/final reserves and B's
+separate browser origin. Bind D's support case before losing its session.
