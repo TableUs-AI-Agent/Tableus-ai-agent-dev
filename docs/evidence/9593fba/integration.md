@@ -115,8 +115,10 @@ verification reservations **5/10** and **5/20**, web Previews **2/2**, known sta
 reads **18/45**. Other counters/spending limits are unchanged. No C/D invitation
 or OTP was issued during this resume.
 
-**Next: review the [proposed B recovery scope](../../p3-b-signup-recovery.md). It is not yet approved.** There is
-no spare recovery resume under the existing approval, so keep services stopped.
-Do not reuse consumed OTPs, change identities, extract session tokens, or reset
-allowances. A's fresh sign-in, original support/privacy mail binding, group/deletion
+**Next: execute the [approved B recovery](../../p3-b-signup-recovery.md).** Brian approved one extra
+same-image resume (ceiling **9**) and ten-minute handoffs at proposal `eaa32ae`.
+All spent time/counters stay charged. Services remain stopped during preparation.
+Prepare and verify durable containment before the resume; hand off immediately
+after one normal B resend. Do not reuse consumed OTPs or extract session tokens.
+A's fresh sign-in, original support/privacy mail binding, group/deletion
 and hosted replay/contention acceptance remain incomplete. No pilot activation.

@@ -1,6 +1,7 @@
 # P3: recover B signup after the handoff cutoff
 
-Prepared October 1, 2026. **Proposed; not approved.** This supplements the
+Prepared October 1, 2026. **Brian approved this complete scope at proposal commit
+`eaa32aecbec22172781bef3b6139de3053053454`.** This supplements the
 [consumed signup-fix scope](p3-signup-fix-rollout.md), without resetting allowances.
 
 B's OTP was accepted at `05:02:14.784399Z`, after API stop was verified at
@@ -9,9 +10,9 @@ The UI verifies the OTP before redeeming the invitation, so its network error
 reflects the stopped API. Pressing Verify again would retry the consumed OTP.
 A's preserved session already passed live Plans on the deployed web fix.
 
-## Requested change
+## Approved change
 
-Approve **one additional same-image API resume**, raising the cumulative restart
+Approved: **one additional same-image API resume**, raising the cumulative restart
 ceiling from **8 to 9**, and **ten minutes for each unresolved code-entry handoff**
 instead of five. Five restarts are used; the other three remain reserved for
 admission pause, final-phase re-enable, and final disable/CORS removal. No spare
@@ -23,7 +24,7 @@ phase. Startup and containment count. Keep $5 incremental hosting, $15 provider
 and $20 combined caps, plus every invitation/account/OTP/provider allowance.
 No new budget is requested. Partial acceptance remains possible within this time.
 
-## Execution after approval
+## Execution
 
 1. Confirm current owner availability, stopped services, approved source/images,
    empty or understood synthetic queue, billing/provider headroom and remaining
@@ -50,8 +51,8 @@ No new budget is requested. Partial acceptance remains possible within this time
    Perform final containment under the existing scope. If time is insufficient,
    record incomplete cases rather than expanding the budget or claiming acceptance.
 
-The original five-minute limit still governs until this proposal is approved.
-Services remain stopped while awaiting the decision. B's OTP remains recorded
+The approved ten-minute handoff now replaces the prior five-minute limit.
+Services stay stopped until the guarded clock and cutoff are armed. B's OTP remains recorded
 as consumed; A's identity/session and legacy data are preserved. A fresh sign-in and original
 support/privacy delivery/binding remain incomplete during the mailbox outage;
 replacement recipients do not authorize a public contact change or pilot launch.
