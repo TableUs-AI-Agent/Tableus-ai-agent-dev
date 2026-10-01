@@ -888,3 +888,18 @@ Wait for owner normal verification; no replacement code, C/D enrollment, deletio
 or extra recovery follows an unresolved handoff. The exact live state is in the
 active packet and private ledger; verify automatic containment before reconciling
 an expired window.
+
+
+### Explicit replacement code after expired A handoff — 2026-10-01
+
+Reconcile the automatic cutoff using its verified-stop timestamp before acting on
+the owner's explicit replacement-code request. The expired first window costs
+764.045910 seconds; do not charge the stopped overnight interval or erase the old
+OTP reservation. Request exactly one replacement through the normal returning flow
+at A's unchanged address. Keep API/worker stopped; authentication alone does not
+complete the application's returning-login check. Conservatively reserve and charge
+one ten-minute Auth-only handoff without extending any armed deadline or increasing
+a ceiling. Preserve owner code entry and all legacy sessions. Current use is
+164m29.996196s, OTP requests 9/11 and restarts 7/10. Before further rehearsal work,
+reconcile the resulting shortage of one planned OTP slot and one recovery restart;
+the resend request does not authorize those future changes or full P3 acceptance.

@@ -94,15 +94,17 @@ to B after the UI organizer-deletion blocker was observed. Reopen reused the
 same candidates; no second recommendation run or server deletion refusal occurred.
 Natural-expiry invitation rejection passed (404, no OTP).
 
-All three ImprovMX routes passed by owner receipt. The owner then approved the
-remaining 195-minute/restart-10 scope at `32ab7cd`. Stopped preflight passed and
-same-image restart 7/10 is ready. The first phase is live from 07:48:29Z, deadline
-08:26:43Z, with two-minute early containment and the final 15-minute reserve.
-A requested its one returning-sign-in code; owner entry is pending until 08:00:56Z.
-Worker stays stopped/unscheduled. The active packet and private cutoff receipt
-own live execution; do not repeat a resume or resend while this handoff is open.
-Mail recovery is complete; remaining deletion/support and hosted gaps still gate
-full P3 acceptance.
+All three ImprovMX routes passed by owner receipt. The remaining 195-minute /
+ten-restart scope was approved at `32ab7cd`. Same-image resume 7/10 passed readiness,
+but A's unresolved code handoff triggered automatic containment; both services were
+verified stopped/unscheduled at 08:01:13Z. The owner explicitly requested one
+replacement code at about 20:24Z. Its normal returning code prompt is visible;
+verification remains unconfirmed and services stay stopped. Total use, including
+one conservatively charged ten-minute Auth-only handoff, is 164m29.996196s, leaving
+30m30.003804s including final 15m. OTP requests are 9/11; the two remaining slots
+cannot cover all three planned C/D/B logins. Reconcile a bounded recovery scope
+before resuming. The active packet records exact counters and limits. Mail recovery
+is complete; remaining deletion/support and hosted gaps still gate P3 acceptance.
 
 Scope C/D, returning sign-in, replay/contention,
 deletions/support/drain and cleanup against the remaining time; another first-phase

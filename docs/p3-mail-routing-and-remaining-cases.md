@@ -13,7 +13,9 @@ match, and Resend sending stays verified. The owner approved and completed the
 separate [three-message test](p3-mail-route-delivery-test.md). The owner confirmed
 all three received, completing SUPPORT, PRIVACY and unchanged A-address route proof.
 The owner subsequently approved the exact remaining rehearsal at `32ab7cd`;
-its first phase is now live with A code-entry pending. See the active packet.
+its first phase later stopped automatically when A code entry timed out. The owner
+requested one replacement code; the normal prompt is ready with services still
+stopped. See the active packet for current accounting and recovery constraints.
 
 ## Approved Squarespace diagnostic: completed, original record restored
 
@@ -141,7 +143,14 @@ the ten-minute window closed, completing inbox receipt evidence without another
 send or live window. No API was started or resend performed. The six support-case
 messages remain reserved.
 
-## Approved remaining manual rehearsal: first phase live
+## Approved remaining manual rehearsal: original allocation, now stopped
+
+Current execution note: the original window below closed at verified stop
+08:01:13Z. The separately owner-requested replacement code consumes one remaining
+request/delivery slot without increasing ceilings or resuming services. See the
+active packet: 30m30.003804s remain after conservative handoff accounting, including
+final 15m; two OTP slots remain for three planned logins. The original first-phase
+allocation and counters below are historical approval inputs, not fresh allowances.
 
 Mail routing and the exact A recipient route pass. The owner approved this exact
 scope at `32ab7cddffa04715b5df5bbd65a8509608d1573d`. Before arming, prior use was
