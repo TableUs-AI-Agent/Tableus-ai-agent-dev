@@ -4,8 +4,10 @@ Prepared October 1, 2026, from `8fecf04b8cfa57808692e959a27447fd418fb906`.
 **The owner approved the exact ImprovMX account/aliases/DNS setup at
 `ba5ec9546a1d668e0c2b91b52aa7af72e7f6be06`, including bounded rollback.**
 They then requested the bounded Squarespace diagnostic below. It completed with
-exact restoration; ImprovMX remains held for the provider choice. No provider
-account, destination submission or forwarding rule has been created. Revised
+exact restoration, and the owner then requested continuation of the ImprovMX
+recommendation. Its signup form is prepared with the approved private Gmail.
+No password was entered, account submitted or forwarding rule created. Owner
+password choice, terms acceptance and any email verification are pending. Revised
 rehearsal and route-probe allowances remain unapproved.
 
 ## Approved Squarespace diagnostic: completed, original record restored
@@ -69,13 +71,16 @@ that a base-address forward restores its OTP route. The destination must be a
 working inbox, and forwarding tests must originate elsewhere. Activation may take
 24–48 hours after destination verification; keep application services stopped.
 
-## Approved alternative, held for route clarification: ImprovMX Free
+## Approved alternative, resumed at owner signup: ImprovMX Free
 
 Squarespace's built-in candidate is blocked. The proposed alternative is
 [ImprovMX Free](https://improvmx.com/pricing/): one domain, 25 aliases, 500 forwards
 per day and seven days of email logs at $0. It supplies incoming forwarding only
-on the free tier, not a mailbox or outgoing SMTP. No account or cloud resource
-has been created and no owner address has been transmitted to this provider.
+on the free tier, not a mailbox or outgoing SMTP. The owner explicitly resumed
+this route after the diagnostic. The approved owner email has been entered in
+its normal signup form; no account has been submitted or password entered. The
+owner completes password choice, displayed terms acceptance and any verification
+before configuration proceeds. Personal contact details stay outside Git.
 
 Proposed exact recipients are `brian@table-us.com`, `privacy@table-us.com` and A's
 existing `brian+tableus-p3-a@table-us.com`, all to the owner's base Gmail already
@@ -209,9 +214,9 @@ manual sequence alone does not grant full P3 acceptance, production or real inta
 
 ## Immediate next step
 
-The limited diagnostic is complete and the original DNS is verified restored.
-The owner can continue the already-approved ImprovMX route or ask Squarespace to
-resolve the remaining forwarding eligibility restriction. No further MX removal
-is needed. Account terms and the exact tagged alias still need verification on
-the alternative path. Staging, counters and all rehearsal/probe limits remain as
-before; provider setup approval is not rehearsal-extension approval.
+The owner completes the prepared ImprovMX signup (password choice, displayed
+terms and any email verification). Then configure only the three approved exact
+aliases to the private destination, check that A's tagged address is accepted
+on the free tier, and apply the approved DNS delta if all prerequisites pass.
+The restored Resend record remains intact; no forwarding rule or new DNS change
+has occurred. Staging and the rehearsal/probe limits remain unchanged.

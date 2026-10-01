@@ -22,6 +22,13 @@ restricted PostgreSQL and browser evidence remain applicable to unchanged inputs
 
 ## Squarespace MX diagnostic completed and restored, October 1
 
+**Current mail setup:** the owner selected continuation of the approved ImprovMX
+recommendation. Its signup form is open with the approved private Gmail entered;
+no password was entered or account submitted. The owner must choose the password,
+accept the displayed terms and complete any verification. Next: after normal
+signup, configure the three exact aliases and validate A's tagged alias before
+applying the already-approved DNS changes. Current DNS remains restored.
+
 The owner approved the brief remove/inspect/restore test and completed required
 Google reauthentication. Removing only the Resend `send` MX cleared Squarespace's
 existing-MX warning, but **Add Rule remained disabled** and the Google Workspace
@@ -38,16 +45,15 @@ baseline website, SPF, Resend DKIM and DMARC answers were unchanged. Resend stil
 reported the domain and all three sending DNS records verified, sending enabled.
 This is configuration verification, not a test email or global absence measurement.
 
-No forward, destination submission, provider account, subscription, SMTP or other
-DNS change occurred. The apex still has no inbound MX. A's original inbox and
+During the diagnostic no forward, destination submission, provider account,
+subscription, SMTP or other DNS change occurred. The apex still has no inbound MX. A's original inbox and
 support/privacy receipt remain unresolved. Staging stayed stopped, with the same
 18m14.050s remaining and no rehearsal counter changes. The proposed time/restart/
 probe extensions remain unapproved.
 
 The exact ImprovMX setup was approved at `ba5ec9546a1d668e0c2b91b52aa7af72e7f6be06`,
-then held while investigating Squarespace. Next: continue that approved alternative
-if the owner selects it, or have Squarespace explain the remaining eligibility
-restriction. No further record removal is needed to repeat this completed test.
+then held while investigating Squarespace. The owner has now explicitly resumed
+that alternative; next is completion of its prepared account signup. No further record removal is needed to repeat this completed test.
 See [the routing/remaining-case scope](../p3-mail-routing-and-remaining-cases.md) and
 [the diagnostic evidence](../evidence/mail-routing-2026-10-01/squarespace-mx-test.json).
 

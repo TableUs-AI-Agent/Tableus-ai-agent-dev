@@ -803,3 +803,11 @@ servers, two public resolvers and verified Resend sending status. Removing that
 record alone is not a solution. Do not repeat the diagnostic or infer approval
 to cancel Workspace. The exact additional eligibility condition remains unknown;
 retain the existing sender configuration while choosing the receiving route.
+
+
+After the diagnostic result, the owner explicitly selected continuation of the
+approved ImprovMX recommendation. Its normal signup form was prepared with the
+approved private contact, but password creation and displayed terms acceptance
+are left to the owner. Do not ask again for the previously approved provider,
+exact aliases or DNS scope. Confirm the tagged alias on the free tier before
+activation; the separate mail-probe/rehearsal extensions remain unapproved.
