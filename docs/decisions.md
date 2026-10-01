@@ -731,6 +731,17 @@ hand off promptly. Record the OTP as consumed; preserve identity and allowance h
 use the normal form resend/revalidation after any approval. A session success
 does not resolve fresh A sign-in or original mailbox support/privacy acceptance.
 
-The approved B recovery used resume 6/9 on the unchanged API image. Readiness
-and exact-origin CORS passed before email send. Preserve the final-phase reserve
-and record the ten-minute handoff immediately before sending; hand back promptly.
+The approved B recovery used resume 6/9, completed normal signup, and verified
+one profile/redemption plus Plans before clearing its handoff timer. The A/B
+shared-plan exercise passed one recommendation and two voting rounds with a
+changed winner. Reopen reused existing options, so do not claim a second live
+recommendation call. Organizer deletion was disabled in the UI; no server-side
+refusal or deletion request was exercised. Ownership transfer to B and natural
+expiry rejection passed. Preserve these distinctions in acceptance evidence.
+
+Stop at a useful checkpoint rather than issuing C/D codes with less than one full
+handoff window outside the final reserve. Services are verified stopped at
+`05:35:40.174199Z`; 18m14.050s remain including the 15-minute final reserve.
+Preserve A/B sessions and the synthetic plan. No remaining counter is reset and
+no extra recovery is inferred. A further first-phase resume needs a revised scope;
+original mailbox support/privacy acceptance remains unresolved. No pilot launch.

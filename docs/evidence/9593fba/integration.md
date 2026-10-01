@@ -85,7 +85,7 @@ hosted replay/contention and final cleanup acceptance remain open. This deployme
 does not accept the pilot or authorize native builds/activation.
 
 
-## Stopped checkpoint, October 1 05:03 UTC
+## Historical stopped checkpoint, October 1 05:03 UTC
 
 B's email verification succeeded at `05:02:14.784399Z`, after the five-minute
 handoff cutoff had stopped the API. The visible form says **Network unavailable.
@@ -123,29 +123,72 @@ after one normal B resend. Do not reuse consumed OTPs or extract session tokens.
 A's fresh sign-in, original support/privacy mail binding, group/deletion
 and hosted replay/contention acceptance remain incomplete. No pilot activation.
 
-## B recovery running, October 1 05:20 UTC
+## B signup and group checks passed; stopped October 1 05:35 UTC
 
-Approved resume **6/9** is ready: API deployment
-`f52a6861-b1f0-4b46-b9db-7576f60bfe45`, unchanged `2eefdc5` image. Readiness and
-exact links/new-Preview CORS passed; worker remains stopped/unscheduled. Window
-`2b8c71ec-e92f-4a3a-9af4-dcd682d14ca7` started `05:17:07.245972Z`, hard deadline
-`05:38:54.223913Z` (containment begins two minutes early). Cutoff process **85219**
-is armed. The 15-minute final reserve is preserved. Known status reads are 19/45.
+B completed the normal fresh-code signup in the existing Preview tab. Readback
+confirmed one B profile and one redemption, and the browser showed **Dinner plans**.
+Its ten-minute handoff was cleared only after those checks. A's preserved session
+also works; neither result proves a fresh returning sign-in.
 
-B is prepared for one normal resend, using its existing verified Auth identity,
-valid recipient-bound invitation and approved private Gmail alias. Its previous
-reservation expired; normal Join revalidation creates a new reservation. Next:
-reserve one request/delivery/verification and a ten-minute handoff immediately
-before sending; hand the in-app form back without further routine documentation.
-The private ledger records the exact send/deadline and observed code-entry result.
-B still has no profile/redemption; require both plus actual Plans before advancing.
-No new invitation/account allowance is consumed by this resend. Earlier stopped
-checkpoint below records cumulative use before this active window; do not treat
-it as the current service state. API stop/resend outcome must be reconciled later.
+The synthetic A/B plan passed the following live checks on web `9593fba` and API
+`2eefdc5`: location lookup and creation, B private-link confirmation/join, two
+separate saved constraints, one recommendation returning four Google-grounded
+options, two separate votes, organizer finalization, B refresh, reopen, changed
+votes and a second finalization visible to B. First winner: Quartino Ristorante;
+second winner: The Dearborn. Reopen reused the same four candidates: **one
+recommendation run, two voting rounds**, not two recommendation runs. Database
+events confirm four vote updates, two finalizations and one reopen.
 
-Fresh preflight: nine Auth users/seven profiles, B confirmed/no profile, queue and
-active reservations zero, campaign provider rows zero, 270 Places units and
-$0.00224625 prior AI usage. Delayed Railway workspace usage $4.398358327784568 is
-$0.8446346504937039 above the original baseline, within the unchanged hosting cap;
-it is not exact campaign attribution. All eight cutoff self-tests passed. No app
-code/build was changed. Original mailbox acceptance gaps remain unresolved.
+A's account showed one organized shared plan and a disabled deletion action.
+The normal confirmed transfer moved ownership to B; A then showed no organized
+plans, and B showed the two-person plan. This proves the **UI eligibility blocker
+and ownership transfer**, not a server-side rejected deletion request. No deletion
+request, Auth removal, legacy edit or support message was performed.
+The naturally expired D fixture returned HTTP 404 from normal invitation validation,
+without an OTP, new reservation or account. Its timestamp was not edited.
+
+The API and worker were deliberately stopped and unscheduled at
+**`2026-10-01T05:35:40.174199Z`**, with future deletion admission false. Private
+receipt `b-recovery-completion-stop.json` verifies both stopped/null next runs.
+Cutoff process 85219 exited after verified closure. The window started
+`05:17:07.245972Z`; charge **1112.928227 seconds** through stop verification.
+Cumulative use is **7905.950286 seconds (131m45.950s)**; **1094.049714 seconds
+(18m14.050s)** remain, including **900 final-phase seconds**. No live clock runs.
+API deployment `f52a6861-b1f0-4b46-b9db-7576f60bfe45` remains the approved image.
+Both in-app sessions are preserved on account pages; avoid paid-plan refreshes
+against a stopped API. No additional recovery resume is authorized.
+
+Final readback: nine Auth users/eight profiles, no C/D Auth accounts, zero deletion
+rows and active reservations. A and B and their shared synthetic plan remain.
+Restarts **6/9**, Previews **2/2**, invitations **8/10**, new accounts **2/4**,
+OTP requests **7/11**, delivery/verification reservations **6/10** and **6/20**,
+known operator status reads **19/45**, worker processing **1/4**, support **8/14**.
+Remaining restarts were allocated to admission pause/final re-enable/final disable;
+they are not an unallocated first-phase recovery allowance.
+
+Observed campaign provider use: **72 Places HTTP attempts** (resolve 1, location
+details 2, search 1, restaurant details 68), **one logical AI call**, and
+**$0.0005715 estimated AI**. Conservatively retain three underlying AI attempts.
+At the campaign's approved first-tier pricing, Places costs at most $1.461 before
+credits; the combined provider estimate is $1.4615715. Places ledger cost zero
+is not evidence of free billing. Final delayed Railway workspace usage
+$4.405555630631419 is $0.8518319533405543 above the original baseline, not exact
+campaign attribution. All $5 hosting/$15 provider/$20 combined caps remain.
+
+**Next: prepare the remaining-case scope and resolve the support/privacy mailbox
+route before another first-phase resume.** Only 3m14.050s remain outside the final
+reserve, insufficient for two full ten-minute signup handoffs. C/D enrollment,
+fresh A/B returning sign-in, hosted redemption replay/contention, server deletion
+refusal, pending/support binding, drain/pause and final cleanup remain incomplete.
+A cannot receive a fresh OTP at its original inbox; public support/privacy receipt
+remains unresolved while Workspace is offline. Public contacts and A's identity
+are unchanged. Full Priority 3 acceptance, real invitations and Priority 4 are not
+approved by these partial successes.
+
+Evidence screenshots are under `/private/tmp`: `tableus-p3-b-plans-live.png`,
+`tableus-p3-group-four-options.png`, `tableus-p3-group-round-one-b.png`,
+`tableus-p3-group-round-two-b.png`, `tableus-p3-a-organizer-blocker.png` and
+`tableus-p3-b-ownership.png`. These contain no OTP or private invitation/share code.
+Checks: eight cutoff self-tests, source/image/readiness/CORS, visible normal flows,
+read-only database/provider checks and documentation consistency. No application
+code changed; prior source-bound CI remains applicable and was not rerun.

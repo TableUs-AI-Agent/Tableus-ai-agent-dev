@@ -57,9 +57,17 @@ as consumed; A's identity/session and legacy data are preserved. A fresh sign-in
 support/privacy delivery/binding remain incomplete during the mailbox outage;
 replacement recipients do not authorize a public contact change or pilot launch.
 
-## Execution checkpoint
+## Execution checkpoint (recovery consumed)
 
-Resume 6/9 is ready on unchanged API source/image; cutoff process 85219 is armed
-for window `2b8c71ec-e92f-4a3a-9af4-dcd682d14ca7`, deadline `05:38:54.223913Z`.
-Readiness and exact-origin CORS passed. B normal resend is next; the private ledger
-will record its actual ten-minute deadline before submission. No extra recovery.
+Resume 6/9 completed B's signup and the A/B group/ownership checks. One
+recommendation supplied four candidates; two voting/finalization rounds passed
+with different winners. Natural-expiry rejection also passed without email.
+The API/worker were verified stopped at `05:35:40.174199Z`, schedules absent,
+future admission false. The durable cutoff disarmed after verified closure.
+
+Cumulative remaining time is **18m14.049714s**, including the 15-minute final
+reserve. No C/D identity or deletion request exists. Exact counters, source-bound
+results, billing limits and acceptance gaps are in [current state](current-state.md).
+This scope's extra recovery is consumed; no additional first-phase resume follows
+from the three remaining purpose-bound configuration restarts. Prepare a scoped
+continuation and resolve original support/privacy mailbox access before resuming.

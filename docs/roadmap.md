@@ -86,24 +86,23 @@ The subsequent [invitation extension](p3-rehearsal-next-attempt.md) was approved
 ten invitations, 150 live minutes, seven same-image restarts and 45 status reads,
 with unchanged financial/other attempt limits. Brian confirmed receipt of Auth
 email after checking the correct inbox; no email-delivery repair was needed.
-Restart 4/7 completed A's Auth/profile/redemption but exposed a stale web membership
-context. Brian approved the web fix and one resume; PR #10 merged as `9593fba`
-after hosted CI passed 242 Python/326 JavaScript/11 browser checks. The fixed
-Preview is READY on both staging aliases; production is unchanged. Restart 5/8
-then verified A's preserved session on Dinner plans. B used an approved replacement
-inbox but verified its OTP after the automatic handoff cutoff stopped the API.
-B has confirmed Auth but no profile/redemption. API/worker are stopped and
-unscheduled; future admission is false. **36m46.978s remain**, including the
-15-minute final-phase reserve. Brian approved [one B recovery](p3-b-signup-recovery.md): restart ceiling nine
-and ten-minute handoffs, with unchanged cumulative clock and spending.
-Resume 6/9 is now ready under the armed cutoff; next is B normal resend/code entry. A fresh sign-in and
-original support/privacy mailbox checks remain unresolved during the inbox outage.
-Working support/privacy contact is required before real pilot invitations.
+The membership-context fix is merged/deployed as `9593fba`; hosted CI passed
+242 Python/326 JavaScript/11 browser checks. The approved recovery used resume
+6/9 and B completed signup. A/B then passed one four-option recommendation and
+two voting/finalization rounds, B refreshed both results, and ownership moved
+to B after the UI organizer-deletion blocker was observed. Reopen reused the
+same candidates; no second recommendation run or server deletion refusal occurred.
+Natural-expiry invitation rejection passed (404, no OTP).
 
-Group/deletion and hosted replay/contention acceptance remain open. The separate
-natural-expiry fixture elapsed September 29 at 9:48:55 p.m. Central, but its HTTP
-rejection is still untested. Local fixes and successful enrollment do not accept
-the pilot or authorize Priority 4.
+API/worker are verified stopped/unscheduled, future admission false, no live clock.
+**18m14.050s remain**, including the 15-minute final reserve. Live provider use is
+72 Places attempts and one logical AI call ($0.0005715 estimated AI). No C/D
+account or deletion queue exists. A/B and their shared synthetic plan remain.
+Next: scope the remaining C/D enrollment, returning sign-in, replay/contention,
+deletions/support/drain and cleanup against the remaining time; another first-phase
+recovery is not already allocated. Resolve original support/privacy mailbox access
+before claiming that acceptance or inviting real users. See the active packet for
+exact counters/evidence. No pilot acceptance or Priority 4 is implied.
 
 Effort is a rough planning range in focused engineering days, excluding approval,
 hosted CI, device/signing and external-access waits; these are not delivery promises.
