@@ -875,3 +875,16 @@ cutoff before owner approval, without provider calls or arming a window. Retain
 all other caps, six support-case messages and four exact remaining OTP requests;
 no spare resend/recovery is added. The receipt confirmation does not approve
 this rehearsal extension or final P3 acceptance.
+
+
+### Owner approves and starts remaining manual rehearsal — 2026-10-01
+
+The owner approved the complete remaining-case scope at `32ab7cd`; apply only the
+195-minute and ten-restart ceilings, preserving all cumulative use and the final
+900 seconds. Stopped preflight passed. Arm the durable cutoff before same-image
+resume; restart 7/10 is verified ready. A's returning code was requested once under
+a ten-minute handoff ending 08:00:56Z, within the immutable 08:26:43Z phase end.
+Wait for owner normal verification; no replacement code, C/D enrollment, deletion
+or extra recovery follows an unresolved handoff. The exact live state is in the
+active packet and private ledger; verify automatic containment before reconciling
+an expired window.

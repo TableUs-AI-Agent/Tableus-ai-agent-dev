@@ -20,6 +20,51 @@ tests, 326 JavaScript tests and five browser journeys, zero skips, plus lint/typ
 migrations, deterministic evaluation, contracts, builds and smoke. Local readiness,
 restricted PostgreSQL and browser evidence remain applicable to unchanged inputs.
 
+## Remaining rehearsal approved and live; A code-entry handoff, October 1
+
+The owner approved the exact remaining-case scope at
+`32ab7cddffa04715b5df5bbd65a8509608d1573d`. Only the cumulative time ceiling
+(160 to **195 minutes**) and API restart ceiling (9 to **10**) increased.
+All prior use remains charged. First-phase allocation is **2294.049714 seconds**,
+with **900 seconds** preserved for final cleanup.
+
+Fresh stopped preflight confirmed API/worker images and no schedules, the existing
+READY Preview and both staging aliases, nine Auth users/eight profiles, one A and
+one B profile, no C/D Auth, no deletion jobs or active reservations, and no new
+provider activity since the earlier stop. Campaign Places remains 72 HTTP attempts
+(record `input_units`, not usage-row count) and AI remains one logical call.
+Delayed Railway workspace usage was $4.442940670735, $0.8892169934441356 above the
+original baseline; this is a conservative workspace delta, not exact campaign cost.
+The Vercel connector could not resolve the deployment; existing CLI inspection
+verified all three staging URLs against the same immutable READY deployment.
+
+The first phase started **`2026-10-01T07:48:29.335107Z`** and has immutable deadline
+**`2026-10-01T08:26:43.384821Z`**. Cutoff session **77040** is armed and starts phase
+containment two minutes early. Approved same-image resume **7/10** is deployment
+`db65606d-45eb-43b4-89df-3b8b9790369a`; image/source, ready endpoint and both browser
+origins passed. API admission is enabled, inline Auth deletion attempts are false,
+and worker remains stopped/unscheduled. No new source, image or web deployment.
+
+A's preserved account was confirmed as P3 Test A, then signed out locally once.
+The normal returning flow requested one code at the unchanged approved address,
+and its code-entry prompt is visible at `https://links.table-us.com/invite`.
+The owner enters the newest code directly and reports Plans; no code is read or
+stored by the agent. **Handoff deadline: `2026-10-01T08:00:56.302072Z`**
+(3:00:56 a.m. Chicago). The durable cutoff contains services if unresolved.
+Do not issue C/D invitations, resend an OTP or proceed to deletion while unresolved.
+Preserve B's separate Preview context and all legacy identities/sessions.
+
+Counters: restarts **7/10**, OTP requests **8/11**, delivery/verification reservations
+**7/10** and **7/20**, local refresh/revoke **1/12**, operator status reads **23/45**,
+mail **11/17**, invitations **8/10**, accounts **2/4**, worker processing **1/4**,
+Auth DELETE **0/12**. The current running window has not yet been charged into
+8505.950286 prior seconds; update cumulative time only from verified stop evidence.
+
+Next: verify A's normal returning sign-in and unchanged identity, clear only its
+handoff deadline, then continue the approved sequence. On cutoff, inspect its
+receipt and reconcile actual elapsed time before any further action. No spare
+recovery resume or OTP resend is approved. This handoff is not final P3 acceptance.
+
 ## ImprovMX routing active; all three delivery routes passed, October 1
 
 ImprovMX Free is Active with three exact aliases and no catch-all. The approved

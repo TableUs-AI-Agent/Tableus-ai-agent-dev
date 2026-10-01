@@ -12,7 +12,8 @@ SPF were saved. ImprovMX shows Active; all six DNS sources agree, retained recor
 match, and Resend sending stays verified. The owner approved and completed the
 separate [three-message test](p3-mail-route-delivery-test.md). The owner confirmed
 all three received, completing SUPPORT, PRIVACY and unchanged A-address route proof.
-The broader rehearsal allowance extension remains unapproved.
+The owner subsequently approved the exact remaining rehearsal at `32ab7cd`;
+its first phase is now live with A code-entry pending. See the active packet.
 
 ## Approved Squarespace diagnostic: completed, original record restored
 
@@ -140,23 +141,23 @@ the ten-minute window closed, completing inbox receipt evidence without another
 send or live window. No API was started or resend performed. The six support-case
 messages remain reserved.
 
-## Prepared remaining manual rehearsal: owner approval required
+## Approved remaining manual rehearsal: first phase live
 
-Mail routing and the exact A recipient route now pass. Owner availability and
-approval of this exact scope are required before arming a window. Current use is
-141m45.950286s of 160m, leaving 18m14.049714s; 15m are reserved for the final phase. Counters are cumulative and never reset.
+Mail routing and the exact A recipient route pass. The owner approved this exact
+scope at `32ab7cddffa04715b5df5bbd65a8509608d1573d`. Before arming, prior use was
+141m45.950286s; the revised 195-minute ceiling left 53m14.049714s. The first phase
+started 07:48:29Z; its elapsed time is additional and is reconciled at verified stop.
 
-This prepared scope gives the unfinished manual cases a bounded first phase. It
-remains unapproved. Only two ceilings change below; the completed delivery test
-and receipt confirmation did not approve this extension or any API restart.
+The owner separately approved these two ceiling changes. This approval, rather
+than the earlier mail-test approval, authorizes the bounded remaining sequence.
 
-| Allowance | Current ceiling | Used | Proposed ceiling | Reason |
+| Allowance | Previous ceiling | Used at approval | Approved ceiling | Reason |
 | --- | ---: | ---: | ---: | --- |
 | Live minutes | 160 | 141m45.950286s | 195 | Add 35m; first phase 38m14.049714s, final 15m |
 | Same-image API restarts | 9 | 6 | 10 | Add one first-phase resume; retain pause/final re-enable/final disable |
 | Support/test mail messages | 17 | 11 | 17 | No increase; six remaining case messages |
 
-After approval, remaining cumulative time would be **53m14.049714s**. Allocate
+At approval, remaining cumulative time was **53m14.049714s**. Allocate
 **38m14.049714s (2294.049714 seconds)** to the first phase and **15 minutes** to
 the final phase. Both include startup, verification and containment. The existing
 cutoff accepts these exact durations and triggers containment two minutes before
@@ -252,8 +253,9 @@ manual sequence alone does not grant full P3 acceptance, production or real inta
 
 ## Immediate next step
 
-The owner approves the two ceiling changes and is available for the two bounded
-phases, normal OTP entry and synthetic account confirmations. Before any resume,
-record that exact approval and complete the stopped-service preflight above.
-Mail recovery is complete. No service was resumed while preparing this scope,
-and full P3 acceptance remains open for the explicitly untested hosted cases.
+A enters its newest code in the prepared returning-sign-in form and reports Plans.
+The handoff deadline is 08:00:56Z; the phase deadline is 08:26:43Z with two-minute
+early containment. Verify UI plus trusted identity evidence, clear only the handoff
+deadline, and continue the already-approved sequence. Do not request this approval
+again or infer permission for a spare resume/resend. If cutoff fires, first verify
+stopped/unscheduled services and reconcile actual elapsed time.

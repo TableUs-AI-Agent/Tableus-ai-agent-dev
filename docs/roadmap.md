@@ -94,15 +94,15 @@ to B after the UI organizer-deletion blocker was observed. Reopen reused the
 same candidates; no second recommendation run or server deletion refusal occurred.
 Natural-expiry invitation rejection passed (404, no OTP).
 
-API/worker remain stopped/unscheduled; the completed mail test did not resume them.
-The approved ImprovMX setup is Active; all six DNS sources agree, 72 retained-record
-comparisons passed, and Resend sending remains verified. Three exact aliases are
-configured with no catch-all. The [delivery test](p3-mail-route-delivery-test.md)
-passed SUPPORT, PRIVACY and A by owner-confirmed inbox receipt after all three
-provider statuses reported delivered. This late confirmation adds no live time.
-Cumulative supervised use is 141m45.950286s of 160 minutes; 18m14.049714s
-remain, including the 15-minute final reserve. Mail use is 11/17 and operator reads
-22/45; the broader 195-minute and extra-restart scope remains unapproved.
+All three ImprovMX routes passed by owner receipt. The owner then approved the
+remaining 195-minute/restart-10 scope at `32ab7cd`. Stopped preflight passed and
+same-image restart 7/10 is ready. The first phase is live from 07:48:29Z, deadline
+08:26:43Z, with two-minute early containment and the final 15-minute reserve.
+A requested its one returning-sign-in code; owner entry is pending until 08:00:56Z.
+Worker stays stopped/unscheduled. The active packet and private cutoff receipt
+own live execution; do not repeat a resume or resend while this handoff is open.
+Mail recovery is complete; remaining deletion/support and hosted gaps still gate
+full P3 acceptance.
 
 Scope C/D, returning sign-in, replay/contention,
 deletions/support/drain and cleanup against the remaining time; another first-phase
