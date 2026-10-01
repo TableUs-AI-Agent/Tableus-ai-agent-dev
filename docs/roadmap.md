@@ -107,9 +107,10 @@ signup without replaying the OTP. PR #11 merged as `bffa284`; hosted CI passed
 third Preview is deployed to the two staging aliases. Production is unchanged.
 The owner approved restart ceiling 12 and live ceiling 240m, with unchanged
 financial/message limits. Restart 9/12 passed on the original API image.
-The first phase stopped early at 22:27:42Z October 1 after D support mail hit a
-self-forwarding loop. Cumulative live time is 214m9.085174s/240m; final 15m remains
-reserved. API/worker are stopped and unscheduled; future admission is off.
+The previous phase stopped at 22:27:42Z after D support mail hit a self-forwarding
+loop. The owner approved the revised closeout at `f518c1b`. Restart 10/12 is ready
+under a new 650.914826-second window ending 23:54:07.815547Z; prior closed usage is
+214m9.085174s/240m and the final 900 seconds remains reserved. Worker stays stopped.
 
 C recovered successfully with its original Auth session, one profile/redemption
 and no new OTP. The owner removed its sole plan and confirmed deletion; trusted
@@ -118,10 +119,11 @@ zero attempts. A also remains pending. C signed out; D completed signup with one
 profile/redemption and no plans. Its trusted account binding is preserved privately,
 with the fresh support challenge sent and owner-reported reply sent; receipt
 through privacy remains unseen even after Spam inspection. The exact ImprovMX log
-confirms Gmail SMTP acceptance at 22:24:27Z; user-visible receipt remains unverified. D's profile is still intact with no deletion job; hold its
-final confirmation while API is stopped. B's session is preserved. A bounded
-[account-flow closeout](p3-post-mail-closeout.md) is prepared with unchanged ceilings
-and four deferred support messages; revised execution still requires approval.
+confirms Gmail SMTP acceptance at 22:24:27Z; user-visible receipt remains unverified.
+D recovered normally without a new OTP and its final account-deletion click is now
+prepared for the owner. B's original session is preserved. The approved
+[account-flow closeout](p3-post-mail-closeout.md) keeps all ceilings unchanged and
+defers four support messages.
 D deletion/support, worker removal, B
 cleanup and final returning/deletion checks remain incomplete. Hosted redemption
 replay/contention and server-side deletion refusal remain untested. The three

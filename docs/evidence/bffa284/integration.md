@@ -120,3 +120,15 @@ correspondence stays deferred and unaccepted. Eight unchanged cutoff self-tests
 pass, and offline dry checks accept a 650.914826-second first window and 900-second
 final window with the 120-second containment margins. This is preparation only;
 no approval flag, live window or allowance was changed by those checks.
+
+
+Owner approved the post-mail closeout at `f518c1b`. Stopped roster/queue preflight
+passed at 23:35:29Z and original image/config/worker-command/budget preflight passed
+at 23:42:29Z. Cutoff window `fb428981-5783-41d5-9b15-32fde9267a33` was armed before
+restart 10; immutable deadline 23:54:07.815547Z. Same-image API deployment
+`aae2e714-81b4-4aea-896d-58187ec6517f` passed readiness/CORS at 23:44:10Z. D's normal
+existing session recovered and its exact final deletion screen is prepared for the
+owner. No new OTP, worker invocation or Auth DELETE occurred at this handoff.
+Screenshot outside Git: `/private/tmp/tableus-d-closeout-delete-ready.png`.
+Operator reads are 37/45; refresh/revoke reservations 4/12. All other costs/counts
+retain their prior values until the bounded window is charged at verified stop.

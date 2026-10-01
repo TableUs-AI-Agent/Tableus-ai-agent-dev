@@ -997,3 +997,13 @@ restart reassignment fits the existing three slots by stopping processes before
 final disable/CORS cleanup, with readback and no final live redeploy. It preserves
 all ceilings, final time reserve and release gaps, and remains subject to owner
 approval of the changed sequence; preparation does not authorize a resume.
+
+
+### Approve the bounded account-flow closeout — 2026-10-01
+
+The owner approved `f518c1bcc5eadf7f676c014dc22ffde8f9d1fefc`: use starts 10/11/12
+for D resume, admission pause/drain and final B resume. Stop both processes before
+final skip-deploy admission/CORS cleanup. No ceiling increases, support mail sends,
+new accounts, invitations or web deployments are included. Exact trusted fixture
+bindings and whole-queue checks precede each worker batch. Preserve support receipt
+as unverified and retain every broader P3 acceptance gap.

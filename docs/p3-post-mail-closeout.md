@@ -1,9 +1,9 @@
 # P3 account-flow closeout after the self-forwarding stop
 
 Prepared October 1, 2026 from `130af2e747d2fa4104f5b8931a278642ae5e01b1`.
-**Prepared only; execution and the revised restart order require owner approval.**
-No running service, deployment, new email, OTP or allowance change is part of this
-preparation. The [active packet](task-packets/active.md) remains authoritative.
+**Owner approved execution and revised restart order at `f518c1bcc5eadf7f676c014dc22ffde8f9d1fefc`.**
+The first bounded window and restart 10 are active; D's final UI confirmation is
+prepared, not yet observed complete. The [active packet](task-packets/active.md) remains authoritative.
 
 ## Mail result and scope boundary
 
@@ -24,7 +24,7 @@ account flow: its own session and trusted account lookup establish that route.
 Preserve a separate private identity-to-job mapping for exact worker verification;
 this does not mark support correspondence verified. Full P3 acceptance stays open.
 
-## Exact approval requested
+## Approved scope (counts at approval)
 
 Approve resuming the unchanged existing staging API/worker for the remaining
 synthetic **account-flow** checks, with the three unused API restart slots assigned
