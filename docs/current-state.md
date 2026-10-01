@@ -26,12 +26,14 @@ PostgreSQL-only skips, lint/types, contract generation without drift, web/Expo-w
 builds, deterministic smoke and report-only performance. Hosted CI is pending.
 The fix is local only. Hosted web/API/worker source remains
 `2eefdc51345aeaa7951ffb343954c1669f9280c5`; a changed-source web deployment needs
-approval. Local fix commit is `a5a1f44913b9956e9c0aa54e30492a58367f97f9`.
-Next: obtain approval for the [prepared web rollout/resume](p3-signup-fix-rollout.md).
+the newly granted approval. Local fix commit is `a5a1f44913b9956e9c0aa54e30492a58367f97f9`.
+Brian approved the [web rollout/resume](p3-signup-fix-rollout.md) at `9e9e939`;
+ledger ceilings are now two Previews/eight same-image restarts. Next: publish,
+pass hosted CI/review, merge and deploy one Preview while API/worker stay stopped.
 
 Counters remain invitations 7/10, accounts 1/4, OTP requests 5/11, delivery and
 verification reservations 4/10 and 4/20, support messages 8/14, worker processing
-1/4, configuration restarts 4/7 and known status reads 17/45. No live Places/AI
+1/4, configuration restarts 4/8 and known status reads 17/45. No live Places/AI
 or Auth-removal attempt occurred in this window. A and all legacy data remain.
 
 ## Historical stopped checkpoints

@@ -91,9 +91,10 @@ profile/redemption, but the Plans screen incorrectly says to sign in. Both servi
 were verified stopped/unscheduled at October 1 `00:29:33.040725Z`; admission is off.
 **44m52.328s remain**, including the 15-minute final-phase reserve. No B signup or
 additional recovery occurred. The local web fix reloads membership after redemption
-and passes six deterministic browser checks plus `make ready`. Obtain approval
-for the [web fix rollout](p3-signup-fix-rollout.md) before resuming the rehearsal; hosted
-CI and live verification of the fix remain outstanding.
+and passes six deterministic browser checks plus `make ready`. Brian approved
+the [web fix rollout](p3-signup-fix-rollout.md): one additional Preview and one
+same-image resume, cumulative ceilings two/eight with unchanged time/spending.
+Hosted CI/review, merge, deployment and live verification remain outstanding.
 
 Group/deletion and hosted replay/contention acceptance remain open. The separate
 natural-expiry fixture elapsed September 29 at 9:48:55 p.m. Central, but its HTTP

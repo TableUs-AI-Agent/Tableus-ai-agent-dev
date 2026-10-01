@@ -1,6 +1,9 @@
 # Priority 3: signup context fix and bounded staging resume
 
-Prepared October 1, 2026 (September 30 Central). **Proposed, not approved.**
+Prepared October 1, 2026 (September 30 Central). **Brian explicitly approved this
+complete scope at `9e9e939ed7000f9e19923dcbf112d2aaea2e37cc`.** The private ledger
+now records ceilings of two web Previews and eight same-image API restarts; all
+spent attempts and cumulative time remain charged.
 Reviewed local fix candidate: **`a5a1f44913b9956e9c0aa54e30492a58367f97f9`**, based
 on `ca9bcc35bf5147d8a3b11e58f59c6ac26de9e973`. Subsequent scope-document edits do
 not change application inputs. Local `make ready` and six browser checks passed;

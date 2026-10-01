@@ -20,7 +20,7 @@ tests, 326 JavaScript tests and five browser journeys, zero skips, plus lint/typ
 migrations, deterministic evaluation, contracts, builds and smoke. Local readiness,
 restricted PostgreSQL and browser evidence remain applicable to unchanged inputs.
 
-## Current objective: local repair after successful signup / unavailable Plans
+## Current objective: approved signup-fix web rollout and bounded resume
 
 Brian reported Plans at 00:29 UTC. Hosted database readback confirms A Auth approved,
 one application profile and one invitation redemption (eight Auth users/seven
@@ -32,11 +32,13 @@ signed out. The local fix reloads membership after redemption/sign-in and retain
 subject/version guards. Six local browser checks pass; the suite now runs in CI.
 `make ready` passed with 326 JavaScript tests, 206 Python passes/36 PostgreSQL-only
 skips, lint/types, contracts without drift, web/Expo-web builds, smoke and report-only
-performance. Hosted CI remains pending. Next: obtain approval for the prepared
+performance. Hosted CI remains pending. Brian approved the complete
 [rollout/resume request](../p3-signup-fix-rollout.md) for local fix
-`a5a1f44913b9956e9c0aa54e30492a58367f97f9`; no new cloud action is authorized by
-local completion. The proposal adds one web Preview and one same-image resume,
-with unchanged time/spending caps and no spare handoff recovery.
+`a5a1f44913b9956e9c0aa54e30492a58367f97f9` at scope commit `9e9e939`.
+The ledger ceilings are two web Previews/eight same-image restarts, with unchanged
+time/spending and no spare handoff recovery. Next: publish under verified Git
+deployment exclusions, run hosted CI/review, merge, then build/alias one Preview.
+Keep services stopped until owner availability and the durable cutoff are ready.
 
 The five-minute cutoff fired while the owner's completion report was being
 verified: began `00:29:27.454267Z`, both services stopped/unscheduled verified
@@ -44,7 +46,7 @@ verified: began `00:29:27.454267Z`, both services stopped/unscheduled verified
 447.946218 seconds through verified stop, total 6307.672172 seconds used and
 2692.327828 seconds (44m52.328s) remaining, including 15 final-phase minutes.
 The recovery slot is exhausted. Ledger is reconciled; A and all legacy data remain.
-No fresh cloud action is authorized by the local repair work.
+Only the newly approved rollout/resume scope authorizes further cloud work.
 
 ## Historical recovery checkpoint, October 1 00:24 UTC / September 30 Central
 

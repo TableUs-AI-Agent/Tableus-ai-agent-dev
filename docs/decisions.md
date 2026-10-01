@@ -676,3 +676,11 @@ slot is exhausted and 44m52.328s remain, including 15 final-phase minutes. Prepa
 the [changed-source web rollout and one resume](p3-signup-fix-rollout.md) for owner
 approval; keep all
 spent attempts/time charged and leave hosted acceptance open until retested.
+
+
+Brian approved the complete [signup-fix rollout](p3-signup-fix-rollout.md) at
+`9e9e939ed7000f9e19923dcbf112d2aaea2e37cc`: CI/review/merge, one additional
+exact-source web Preview/staging-alias assignment and one same-image API resume.
+Only Preview/restart ceilings rise to two/eight; time, spending and other attempt
+limits remain. Keep services stopped during publication/build preparation, and
+verify owner availability plus armed containment before starting the live clock.
