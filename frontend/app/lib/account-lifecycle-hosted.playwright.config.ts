@@ -4,7 +4,7 @@ export default defineConfig({
   testDir: ".",
   testMatch: "account-lifecycle-hosted.spec.ts",
   timeout: 35_000,
-  use: { baseURL: "http://127.0.0.1:3401", channel: "chrome", headless: true },
+  use: { baseURL: "http://127.0.0.1:3401", channel: process.env.CI ? undefined : "chrome", headless: true },
   webServer: {
     command: "npm run dev -- --hostname 127.0.0.1 --port 3401",
     cwd: "../../",

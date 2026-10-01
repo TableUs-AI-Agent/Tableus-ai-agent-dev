@@ -599,3 +599,50 @@ timestamp edit, new invitation or replacement identity. Auth roster remains eigh
 profiles six, queue empty. Code-entry form has no visible error; membership still
 pending. OTP requests 5/11, delivery/verification reservations 4/10 and 4/20;
 readiness brings known status reads to 17/45. Handoff cutoff `00:29:24.255314Z`.
+
+## Enrollment succeeded; Plans context failed, October 1 00:29 UTC
+
+Brian reported Plans. At `00:29:01Z` the recovery window was still armed, with
+handoff deadline `00:29:24.255314Z`. Visible inspection found `/plans` showing
+`Plans unavailable` and `Sign in to view your TableUs plans.` Database readback
+confirmed A Auth verified, one A application profile and one invitation redemption:
+eight Auth users/seven profiles, empty deletion queue, zero active reservations.
+Enrollment passed; the Plans journey failed. B was not started.
+
+The existing cutoff fired during verification. Its receipt began
+`00:29:27.454267Z`, verified API/worker stopped and unscheduled at
+`00:29:33.040725Z`, and disabled future API deletion admission with inline false.
+All containment steps succeeded; process 64575 exited zero. Reconciled window
+`b9e18f7d-cbd8-4312-820a-e15b04a5cf42` is closed. Charge **447.946218 seconds**
+through verified stop as a conservative endpoint, not an exact instance stop time.
+Cumulative use is **6307.672172 seconds (105m7.672s)**; **2692.327828 seconds
+(44m52.328s)** remain, including the reserved final 900 seconds. The sole handoff
+recovery is consumed; restart use stays 4/7. All other counters are unchanged.
+No new provider call, email, invitation, Auth removal or deployment followed this
+failure. A and legacy records remain intact.
+
+The local regression drives the real web OTP/redeem flow against mocked localhost
+Auth/API routes; all non-local requests are blocked. Before the fix it failed to
+show Dinner plans after successful redemption. The code exposes the ordering:
+`SIGNED_IN` starts `/me`/connections reads before membership is created; a 403 and
+subsequent missing-deletion result can leave context signed out indefinitely.
+Explicit subject-bound membership refresh after redemption fixes that ordering,
+while request versions reject late pre-redemption denials. Both early and delayed
+denial tests now pass, alongside four deletion/session-isolation browser checks.
+The six-test suite is added to hosted CI; its hosted run is still pending.
+
+Local diagnostics are retained in `/private/tmp/tableus-signup-before-fix.log`,
+`tableus-signup-after-fix.log`, `tableus-signup-unit.log` and
+`tableus-signup-make-ready.log`. Screenshots are
+`/private/tmp/tableus-p3-plans-unavailable.png` (actual hosted failure) and
+`/private/tmp/tableus-signup-before-redemption.png` (successful deterministic local
+flow). No code, token or email body is in these screenshots. The new web change is
+not deployed; existing hosted observations remain bound to `2eefdc5`.
+
+Local readiness completed on Node 22.23.1 / Python 3.12.2: `make ready` exited zero;
+326 JavaScript tests, 206 Python passes with 36 PostgreSQL-only skips, lint/types,
+contracts with no generated drift, web/Expo-web builds, deterministic smoke and
+report-only bundle size (2,775,483 bytes). Six separate local browser checks and
+23 focused web unit tests passed. The initial sandbox browser run could not bind
+localhost; the permitted local run reproduced the failure, then all six passed
+with the fix. No new restricted-PostgreSQL or hosted CI result is claimed.

@@ -1,25 +1,39 @@
 # Current state
 
-Recovery checkpoint, October 1 00:24 UTC / September 30 Central: Brian confirmed
-readiness. A had successfully verified Auth while the API was stopped but still
-had no application profile; the form showed a network-unavailable error. Approved
-recovery restart **4/7** is ready on the unchanged image/source, deployment
-`e26c892c-04d7-47ad-a71f-89b0b22dabf3`. Both exact-origin CORS checks passed; worker
-remains stopped/unscheduled. The single handoff recovery slot is now consumed.
+October 1 00:29 UTC / September 30 Central: A successfully verified Auth and
+redeemed its invitation. Database readback confirms one A profile/redemption,
+eight Auth users/seven profiles, an empty deletion queue and zero active invite
+reservations. The browser reached `/plans` but displayed **Plans unavailable —
+Sign in to view your TableUs plans.** Enrollment passed; the Plans journey did not.
 
-The normal form revalidated the same A invitation and requested one fresh code at
-`00:24:24.255314Z`; reservation expiry `00:44:23.168219Z`. Eight Auth users/six
-profiles remain, A Auth confirmed but membership incomplete. Counts: five OTP
-requests, four delivery/verification allowances reserved, status reads 17/45.
-No replacement identity or invitation was created. Current window began
-`00:22:05.094507Z`, maximum deadline `00:59:25.368553Z`; cutoff process 64575 is
-armed with handoff deadline `00:29:24.255314Z`. The preceding 97m39.726s remain
-charged; this window can use the remaining 37m20.274s first-phase allocation,
-preserving 15 final-phase minutes. Next: Brian submits only the newest code in the
-visible form; verify Plans/profile creation and clear the handoff deadline before
-advancing. A second handoff timeout ends this attempt for a new scope decision.
+The second five-minute cutoff began `00:29:27.454267Z`; API and worker were
+verified stopped/unscheduled at `00:29:33.040725Z`, future deletion admission false
+and inline processing false. Process 64575 exited zero. This window is charged
+447.946218 seconds through verified stop, a conservative endpoint rather than an
+exact instance-stop timestamp. Total use is **105m7.672s**, leaving **44m52.328s**:
+29m52.328s first-phase time plus the reserved 15 final-phase minutes. The single
+handoff recovery is exhausted; no fifth restart or B signup has occurred.
 
-## Preceding stopped checkpoint
+The local regression reproduced an early `SIGNED_IN` membership check returning
+403 before invitation redemption creates the profile; its deletion lookup then
+returns 404 and leaves client context signed out. The web fix explicitly reloads
+membership after redemption/sign-in, bound to the verified subject, before route
+navigation or the private-join callback. Existing version/subject guards discard
+late pre-redemption responses. Six local browser checks pass, including both
+response orderings and four deletion/session-isolation checks; the suite is now
+included in CI. `make ready` passed: 326 JavaScript and 206 Python tests, 36
+PostgreSQL-only skips, lint/types, contract generation without drift, web/Expo-web
+builds, deterministic smoke and report-only performance. Hosted CI is pending.
+The fix is local only. Hosted web/API/worker source remains
+`2eefdc51345aeaa7951ffb343954c1669f9280c5`; a changed-source web deployment needs
+approval. Next: obtain approval for the prepared web rollout/resume scope.
+
+Counters remain invitations 7/10, accounts 1/4, OTP requests 5/11, delivery and
+verification reservations 4/10 and 4/20, support messages 8/14, worker processing
+1/4, configuration restarts 4/7 and known status reads 17/45. No live Places/AI
+or Auth-removal attempt occurred in this window. A and all legacy data remain.
+
+## Historical stopped checkpoints
 
 At October 1 00:10:42 UTC (September 30 evening Central), API and worker are
 verified stopped after the five-minute A handoff cutoff. Approved restart **3/7**

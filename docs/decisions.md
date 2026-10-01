@@ -658,3 +658,20 @@ form. Its normal validation refreshes the reservation; no timestamp is manually
 edited. Do not resubmit the consumed OTP or replace A. Restart 4/7 passed unchanged
 image/readiness/CORS; the new code handoff remains subject to the second five-minute
 cutoff, after which this attempt must stop for a new scope decision.
+
+
+### Refresh web membership after signup redemption — 2026-10-01
+
+Auth verification emits `SIGNED_IN` before the invitation redemption request
+creates application membership. That early read can deny access legitimately;
+a later successful redemption must explicitly refresh user context before
+navigation or the private-join continuation. Bind both approval requests and the
+refresh to the verified subject, and reuse version/subject guards so late results
+cannot overwrite current approval. Do not infer membership from Auth alone.
+Deterministic browser tests cover early and late denials and remain in CI.
+
+A's hosted enrollment succeeded but its Plans screen failed. The second handoff
+cutoff verified both services stopped, with admission/schedules off. The recovery
+slot is exhausted and 44m52.328s remain, including 15 final-phase minutes. Prepare
+a concrete changed-source web rollout and one resume for owner approval; keep all
+spent attempts/time charged and leave hosted acceptance open until retested.

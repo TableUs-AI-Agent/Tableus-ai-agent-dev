@@ -56,6 +56,61 @@ async function localOnly(page: Page) {
   });
 }
 
+for (const denialTiming of ["before redemption", "after profile refresh"] as const) {
+  test(`signup opens Plans when the early membership denial arrives ${denialTiming}`, async ({ page }) => {
+    await localOnly(page);
+    await page.route("http://127.0.0.1:8401/auth/v1/otp", (route) => route.fulfill({ json: {} }));
+    await page.route("http://127.0.0.1:8401/auth/v1/verify", (route) => route.fulfill({ json: sessionData(owner) }));
+    let approved = false;
+    let releaseRedemption!: () => void;
+    const redemption = new Promise<void>((resolve) => { releaseRedemption = resolve; });
+    let releaseDenial!: () => void;
+    const denial = new Promise<void>((resolve) => { releaseDenial = resolve; });
+    let markDenialStarted!: () => void;
+    const denialStarted = new Promise<void>((resolve) => { markDenialStarted = resolve; });
+    await page.route("**/api/v1/**", async (route) => {
+      const path = new URL(route.request().url()).pathname;
+      if (path === "/api/v1/access/validate") return route.fulfill({ json: envelope({ redemption_token: "local-redemption" }) });
+      if (path === "/api/v1/access/redeem") {
+        await redemption;
+        approved = true;
+        return route.fulfill({ json: envelope({ id: owner }) });
+      }
+      if (path === "/api/v1/me/deletion") {
+        markDenialStarted();
+        await denial;
+        return route.fulfill(failure(404));
+      }
+      if (!approved) return route.fulfill(failure(403));
+      if (path === "/api/v1/me") return route.fulfill({ json: envelope({ id: owner, display_name: "New member" }) });
+      if (path === "/api/v1/connections" || path === "/api/v1/plans") return route.fulfill({ json: envelope([]) });
+      return route.fulfill(failure(404));
+    });
+    await page.goto("/invite?mode=join");
+    await page.getByLabel("Invite code", { exact: true }).fill("local-invite");
+    await page.getByLabel("Display name").fill("New member");
+    await page.getByLabel("Email address").fill("local-test@example.test");
+    await page.getByRole("button", { name: "Email me a code" }).click();
+    await page.getByLabel("Email verification code").fill("12345678");
+    await page.getByRole("button", { name: "Verify and continue" }).click();
+    await denialStarted;
+    const finishDenial = async () => {
+      const response = page.waitForResponse((candidate) => candidate.url().endsWith("/api/v1/me/deletion"));
+      releaseDenial();
+      await (await response).finished();
+      await page.evaluate(() => new Promise<void>((resolve) => requestAnimationFrame(() => requestAnimationFrame(() => resolve()))));
+    };
+    if (denialTiming === "before redemption") await finishDenial();
+    releaseRedemption();
+    await expect(page).toHaveURL(/\/plans$/);
+    await expect(page.getByRole("heading", { name: "Dinner plans", exact: true })).toBeVisible();
+    if (denialTiming === "after profile refresh") await finishDenial();
+    await expect(page.getByRole("heading", { name: "Dinner plans", exact: true })).toBeVisible();
+    await expect(page.getByRole("heading", { name: "Plans unavailable" })).toHaveCount(0);
+    await page.screenshot({ path: `/private/tmp/tableus-signup-${denialTiming.replaceAll(" ", "-")}.png`, fullPage: true });
+  });
+}
+
 test("cold missing profile restores pending deletion status", async ({ page, context }) => {
   await sessionCookie(context, owner);
   await localOnly(page);

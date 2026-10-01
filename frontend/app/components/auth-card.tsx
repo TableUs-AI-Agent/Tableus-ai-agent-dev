@@ -5,6 +5,7 @@ import type { AuthLinkMode } from "@tableus/domain";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
+import { useUser } from "../context/user-context";
 import { isSupabaseConfigured, supabase } from "../lib/supabase-browser";
 import { captureTelemetry } from "../lib/telemetry";
 import { v1Api } from "../lib/v1-api";
@@ -16,6 +17,7 @@ type AuthCardProps = {
 
 export function AuthCard({ initialMode = "join", onApproved }: AuthCardProps) {
   const router = useRouter();
+  const { refreshUser } = useUser();
   const [mode, setMode] = useState<AuthLinkMode>(initialMode);
   const [invite, setInvite] = useState(isSupabaseConfigured ? "" : "tableus-beta");
   const [name, setName] = useState("");
@@ -69,13 +71,16 @@ export function AuthCard({ initialMode = "join", onApproved }: AuthCardProps) {
     setBusy(true);
     setError("");
     try {
-      const { error: verifyError } = await supabase.auth.verifyOtp({ email: sentEmail, token: otp.trim(), type: "email" });
+      const { data, error: verifyError } = await supabase.auth.verifyOtp({ email: sentEmail, token: otp.trim(), type: "email" });
       if (verifyError) throw verifyError;
+      const subject = data.user?.id;
+      if (!subject) throw new Error("Unable to confirm your session. Please try again.");
       if (mode === "join") {
-        await v1Api.post("/api/v1/access/redeem", { redemption_token: redemption, display_name: name });
+        await v1Api.post("/api/v1/access/redeem", { redemption_token: redemption, display_name: name }, { expectedSubject: subject });
       } else {
-        await v1Api.get("/api/v1/me");
+        await v1Api.get("/api/v1/me", { expectedSubject: subject });
       }
+      await refreshUser(subject);
       captureTelemetry("auth_approved", { mode: mode === "join" ? "signup" : "sign_in" });
       await finish();
     } catch (caught) {

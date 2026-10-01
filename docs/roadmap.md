@@ -82,32 +82,23 @@ external browser handoff failed: 105 cumulative live minutes, five same-image AP
 configuration restarts, and the exact existing Preview origin temporarily allowed
 for B. All other original limits and used counters remain unchanged.
 
-Recovery restart 2/5 passed same-image/readiness/CORS checks, but A did not complete
-verification before the cutoff. The September 29 22:58 UTC check verifies API and
-worker stopped, admission off, no schedules, A unverified, eight Auth users/six
-profiles and no active reservations/deletion/provider rows. The full recovery
-allocation is charged: 90/105 live minutes used, 15 reserved for the post-expiry
-phase. A's September 28 11:41 p.m. Central code and reservation have expired.
-Three OTP requests, two deliveries and two conservative verification reservations
-remain accounted for. All six invites, eight support messages and one worker
-invocation are consumed. First-phase acceptance remains incomplete. On September 30
-Brian confirmed receipt of the Auth code after checking the correct inbox; email
-receipt is passed and its investigation is resolved. OTP verification remains
-incomplete. All four normal invitations expired September 30 around 03:38 UTC;
-Brian subsequently approved the [next-attempt extension](p3-rehearsal-next-attempt.md):
+The subsequent [invitation extension](p3-rehearsal-next-attempt.md) was approved:
 ten invitations, 150 live minutes, seven same-image restarts and 45 status reads,
-with unchanged spending caps. Restart 3/7 passed on the same image; A's replacement
-invite and one fresh OTP are issued, same existing Auth identity confirmed. The
-five-minute handoff cutoff then verified services stopped with A still unverified.
-52m20.274s remain, including 15 final-phase minutes; one approved recovery resume
-was available. Brian then confirmed readiness; restart 4/7 passed on the same
-image and the single recovery slot is consumed. A had verified Auth while the API
-was stopped but membership remained incomplete; one normal-flow fresh code was
-requested using the same identity/invitation, with owner entry pending under the
-second five-minute cutoff. No group/deletion or
-hosted replay/contention acceptance has passed. The separate
+with unchanged financial/other attempt limits. Brian confirmed receipt of Auth
+email after checking the correct inbox; no email-delivery repair was needed.
+Restart 4/7 used the single handoff recovery. A now has confirmed Auth and one
+profile/redemption, but the Plans screen incorrectly says to sign in. Both services
+were verified stopped/unscheduled at October 1 `00:29:33.040725Z`; admission is off.
+**44m52.328s remain**, including the 15-minute final-phase reserve. No B signup or
+additional recovery occurred. The local web fix reloads membership after redemption
+and passes six deterministic browser checks plus `make ready`. Obtain approval
+for changed-source web deployment before resuming the hosted rehearsal; hosted
+CI and live verification of the fix remain outstanding.
+
+Group/deletion and hosted replay/contention acceptance remain open. The separate
 natural-expiry fixture elapsed September 29 at 9:48:55 p.m. Central, but its HTTP
-rejection is still untested. No pilot acceptance is implied.
+rejection is still untested. Local fixes and successful enrollment do not accept
+the pilot or authorize Priority 4.
 
 Effort is a rough planning range in focused engineering days, excluding approval,
 hosted CI, device/signing and external-access waits; these are not delivery promises.

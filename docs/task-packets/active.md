@@ -20,7 +20,30 @@ tests, 326 JavaScript tests and five browser journeys, zero skips, plus lint/typ
 migrations, deterministic evaluation, contracts, builds and smoke. Local readiness,
 restricted PostgreSQL and browser evidence remain applicable to unchanged inputs.
 
-## Current recovery checkpoint, October 1 00:24 UTC / September 30 Central
+## Current objective: local repair after successful signup / unavailable Plans
+
+Brian reported Plans at 00:29 UTC. Hosted database readback confirms A Auth approved,
+one application profile and one invitation redemption (eight Auth users/seven
+profiles, empty queue, zero active reservations). The visible page instead shows
+`Plans unavailable` / `Sign in to view your TableUs plans.` Do not start B or claim
+the Plans journey passed. The deterministic regression reproduced the race:
+`SIGNED_IN` reads membership before redemption, then its denial leaves context
+signed out. The local fix reloads membership after redemption/sign-in and retains
+subject/version guards. Six local browser checks pass; the suite now runs in CI.
+`make ready` passed with 326 JavaScript tests, 206 Python passes/36 PostgreSQL-only
+skips, lint/types, contracts without drift, web/Expo-web builds, smoke and report-only
+performance. Hosted CI remains pending. Next: obtain approval for the prepared
+rollout/resume request; no new cloud action is authorized by local completion.
+
+The five-minute cutoff fired while the owner's completion report was being
+verified: began `00:29:27.454267Z`, both services stopped/unscheduled verified
+`00:29:33.040725Z`, future admission false; process 64575 exited zero. Charge
+447.946218 seconds through verified stop, total 6307.672172 seconds used and
+2692.327828 seconds (44m52.328s) remaining, including 15 final-phase minutes.
+The recovery slot is exhausted. Ledger is reconciled; A and all legacy data remain.
+No fresh cloud action is authorized by the local repair work.
+
+## Historical recovery checkpoint, October 1 00:24 UTC / September 30 Central
 
 Brian replied ready. Fresh readback found A Auth confirmed, no profile, same
 eight-user/six-profile roster and empty queue/provider activity. The visible form
