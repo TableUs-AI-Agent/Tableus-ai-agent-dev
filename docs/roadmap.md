@@ -97,8 +97,10 @@ same-image resume, cumulative ceilings two/eight with unchanged time/spending.
 PR #10 is merged as `9593fba`, with CI passing 242 Python/326 JavaScript/11 browser
 checks. The fixed Preview is READY on both staging aliases; production is unchanged.
 API/worker remain stopped and the clock is unarmed. Brian now reports temporary
-loss of `@table-us.com` mailbox access. Next: select an accessible test inbox or
-restore the original route and reconcile A sign-in/support cases before resuming.
+loss of `@table-us.com` mailbox access and then approved a replacement controlled
+inbox with three aliases for B/C/D. Exact recipients are private. Next: resume
+within existing bounds and verify A's session/Plans before the remaining signups;
+A returning sign-in and original support/privacy mail checks remain unresolved.
 Live verification remains outstanding; working support/privacy contact is required
 before real pilot invitations.
 

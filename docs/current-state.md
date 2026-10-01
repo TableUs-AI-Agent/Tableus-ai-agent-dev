@@ -20,11 +20,15 @@ admission and inline processing remain false. No new live window is armed, no
 invitation/code was sent, and no provider/deletion attempt occurred in this rollout.
 The prepared B form is in in-app tab 3 at the new Preview's distinct origin; A's
 existing links-origin session/tab 1 is preserved without refreshing against the
-stopped API. **Mailbox hold:** Brian reports temporary loss of all `@table-us.com` inbox
-access because Google Workspace was not renewed. Do not interpret a generic ready
-reply as restored email access. Next: choose an accessible controlled inbox or
-restore the existing mailboxes, then reconcile the recipient/support test scope
-before arming restart 5/8. No alternative recipient or identity change is recorded.
+stopped API. Brian reported temporary loss of `@table-us.com` inboxes, then supplied an
+accessible replacement inbox and approved three tagged aliases for B/C/D. Exact
+addresses are stored privately; B's prepared form is updated without sending.
+**Next: arm containment, resume the approved API image (restart 5/8), verify
+readiness/CORS and A's Plans, then issue B's recipient-bound invitation/code.**
+A's identity and public support/privacy contacts are unchanged. Fresh A sign-in
+and original support/privacy delivery/binding remain unresolved; alternative
+recipients do not close those acceptance gaps or authorize auth bypass.
+
 
 A's Auth verification and invitation redemption already succeeded: one A profile
 and redemption, eight Auth users/seven profiles, no B/C/D Auth identities, empty

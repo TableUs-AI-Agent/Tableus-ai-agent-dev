@@ -707,3 +707,13 @@ and cannot prove fresh sign-in. Support/privacy routing and challenge/receipt
 acceptance remain unresolved while the original mailboxes are inaccessible.
 No new recipient, provider, public contact address or authentication change has
 been selected or authorized by the question about feasibility.
+
+
+Brian subsequently supplied an accessible replacement inbox and authorized three
+tagged aliases for the uncreated B/C/D accounts. Store personal addresses only in
+the private operator record. New one-use invitations must bind those exact approved
+recipients; old expired invitations are not repointed. Account/invite/OTP/time/spend
+allowances do not expand. Resume the already-approved scope with these recipients,
+preserving A's identity/session and recording its fresh-sign-in and original
+support/privacy delivery gaps separately. No public contact-address change, admin
+identity edit or authentication bypass is authorized.

@@ -20,7 +20,7 @@ tests, 326 JavaScript tests and five browser journeys, zero skips, plus lint/typ
 migrations, deterministic evaluation, contracts, builds and smoke. Local readiness,
 restricted PostgreSQL and browser evidence remain applicable to unchanged inputs.
 
-## Current objective: web deployed; mailbox access hold before resume
+## Current objective: approved replacement recipients; resume bounded rehearsal
 
 Brian approved [the signup-fix rollout](../p3-signup-fix-rollout.md) at `9e9e939`.
 PR #10 merged as `9593fba0202e830746523f29cee16532539e80a2`, identical tree to
@@ -36,14 +36,15 @@ Web allowance is 2/2. API/worker remain verified stopped, no schedules/next run,
 future API admission false, unchanged `2eefdc5` images. Restarts remain 4/8.
 No live clock is armed. Private ledger `signup_fix_web.state=ready_aliased`.
 
-Brian reports temporary loss of all `@table-us.com` inbox access because Google
-Workspace was not renewed. The earlier owner-availability prompt is superseded.
-Keep the API/worker stopped and clock unarmed. Next: identify an accessible
-controlled inbox or restore the original mailboxes, then reconcile exact recipients
-and affected acceptance cases before any resume/send. B/C/D have no Auth identities
-and three fresh invitations remain, so alternative recipients are technically
-possible without extra account/invite allowances. Existing helper `issue` operations
-still hardcode the old aliases; do not run them for replacement addresses.
+Brian supplied an accessible replacement inbox and explicitly authorized three
+tagged aliases for B/C/D. Exact personal addresses are private in
+`replacement_recipient_approval.recipients`; do not commit them. No B/C/D identity
+or replacement invitation exists yet. Three fresh invitations remain, with the
+original four-account cap and all counters unchanged. The prepared helper now
+requires that approved map and no longer issues to the old domain aliases.
+B's visible form has the new approved recipient; invitation remains empty.
+Next: verify stopped-state, arm the cutoff and use approved resume 5/8; verify
+A's existing Plans access before B. No additional rollout approval is needed.
 
 A stays bound to its original address; preserve its session without assuming it
 is still valid. A's returning sign-in cannot pass without receipt of a fresh OTP.

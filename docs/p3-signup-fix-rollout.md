@@ -115,3 +115,10 @@ aliases; production targets are unchanged. Web deployments 2/2, restarts 4/8,
 44m52.328s remain. API/worker stay stopped. Brian subsequently reported loss of `@table-us.com`
 mailbox access; the recipient/support plan must be reconciled before resume.
 See [integration evidence](evidence/9593fba/integration.md). Steps 3–5 remain open.
+
+
+Brian then supplied a replacement controlled inbox and approved three tagged
+aliases for B/C/D. Exact personal addresses are stored privately; new invitations
+will bind those recipients. Existing limits and the approved resume remain valid.
+A keeps its original identity; fresh A sign-in and original support/privacy mailbox
+checks remain incomplete. No additional account, public contact change or bypass.
