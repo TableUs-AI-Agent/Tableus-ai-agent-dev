@@ -86,20 +86,36 @@ The subsequent [invitation extension](p3-rehearsal-next-attempt.md) was approved
 ten invitations, 150 live minutes, seven same-image restarts and 45 status reads,
 with unchanged financial/other attempt limits. Brian confirmed receipt of Auth
 email after checking the correct inbox; no email-delivery repair was needed.
-Restart 4/7 used the single handoff recovery. A now has confirmed Auth and one
-profile/redemption, but the Plans screen incorrectly says to sign in. Both services
-were verified stopped/unscheduled at October 1 `00:29:33.040725Z`; admission is off.
-**44m52.328s remain**, including the 15-minute final-phase reserve. No B signup or
-additional recovery occurred. The local web fix reloads membership after redemption
-and passes six deterministic browser checks plus `make ready`. Brian approved
-the [web fix rollout](p3-signup-fix-rollout.md): one additional Preview and one
-same-image resume, cumulative ceilings two/eight with unchanged time/spending.
-Hosted CI/review, merge, deployment and live verification remain outstanding.
+The membership-context fix is merged/deployed as `9593fba`; hosted CI passed
+242 Python/326 JavaScript/11 browser checks. The approved recovery used resume
+6/9 and B completed signup. A/B then passed one four-option recommendation and
+two voting/finalization rounds, B refreshed both results, and ownership moved
+to B after the UI organizer-deletion blocker was observed. Reopen reused the
+same candidates; no second recommendation run or server deletion refusal occurred.
+Natural-expiry invitation rejection passed (404, no OTP).
 
-Group/deletion and hosted replay/contention acceptance remain open. The separate
-natural-expiry fixture elapsed September 29 at 9:48:55 p.m. Central, but its HTTP
-rejection is still untested. Local fixes and successful enrollment do not accept
-the pilot or authorize Priority 4.
+All three ImprovMX routes passed by owner receipt. The `32ab7cd` first phase stopped
+automatically during A's code handoff; the later recovery approved at `fa282f2`
+used restart 8/11 and passed A returning application sign-in. A's deletion is
+verified pending. The cutoff stopped API/worker at 20:53:37Z. C's OTP succeeded
+after that stop, leaving Auth verified but no app profile/redemption. B's shared
+plan/session is preserved. C's short-lived validation has expired.
+
+A local web recovery fix now reuses only the same server-verified identity and
+retries normal completion without replaying the OTP, including expired-grant and
+already-committed signup cases. Local readiness and fake-provider browser checks
+pass; hosted candidate CI/merge/deployment remain gates. The
+[complete recovery proposal](p3-session-recovery.md) requests one Preview, one
+extra same-image restart and 45 additional live minutes, preserving financial and
+message limits. The owner approved it against handoff `b08cee4`. Charged use stays
+178m7.415236s; the approved ceiling is now 240m, with first phase at most 45m and
+final phase at most 15m. Keep services stopped while CI/deployment prepare.
+
+C/D deletion/support, worker removal, B cleanup and final returning/deletion checks
+remain incomplete. Hosted redemption replay/contention and server-side deletion
+refusal remain untested. Mail receipt is complete; it is not support-case acceptance.
+The active packet owns current counters and next actions. No P3 acceptance,
+Priority 4/native work or real-pilot intake is implied.
 
 Effort is a rough planning range in focused engineering days, excluding approval,
 hosted CI, device/signing and external-access waits; these are not delivery promises.

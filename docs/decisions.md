@@ -117,6 +117,13 @@ or replenish closed native/live-provider allowances.
 - Email-bound invite validation precedes first OTP sign-in; returning users need
   an existing approved application profile and consume no new invite. The API
   profile, not the Supabase session alone, authorizes product navigation.
+- Web signup recovery treats verified Auth and application enrollment as separate
+  steps. Confirm the same email/subject with server-side Auth user lookup before
+  resuming; do not replay an already-consumed OTP. On an expired redemption grant,
+  reconcile membership before normal revalidation of the original bound invite.
+  Other failures remain explicit; account mismatch requires local sign-out.
+  Server invitation, quota and deletion checks remain authoritative. This is a
+  local implementation decision, not deployment or allowance approval.
 - Trusted invite issuance designates one normalized recipient email and one use.
   Only its hash is retained. Hosted validation, signup hook and first redemption
   reject legacy unbound or multi-use codes; migration retains all existing rows
@@ -684,3 +691,261 @@ exact-source web Preview/staging-alias assignment and one same-image API resume.
 Only Preview/restart ceilings rise to two/eight; time, spending and other attempt
 limits remain. Keep services stopped during publication/build preparation, and
 verify owner availability plus armed containment before starting the live clock.
+
+
+The approved web rollout completed as merge `9593fba0202e830746523f29cee16532539e80a2`
+and Preview `dpl_99cFtsd56wHCam5dN1EwW5XmTred`. CI passed including the new mocked
+Auth regressions; production aliases and API/worker images are unchanged. Deployment
+preparation consumes no supervised live time while those services stay stopped.
+Wait for the requested owner-availability response before arming the next window;
+no additional approval is needed for the already-scoped resume. Keep live signup,
+group and deletion acceptance separate from the passing local/CI tests.
+
+
+### Temporary rehearsal mailbox access loss — 2026-10-01
+
+Brian reports that `@table-us.com` inboxes are temporarily inaccessible after not
+renewing Google Workspace. Keep services stopped and remaining time/attempts intact
+while the mailbox plan is resolved. The application imposes no recipient-domain
+allowlist; fresh B/C/D invitations can bind other controlled addresses once Brian
+supplies the intended replacements. Do not reuse old recipient-bound invitations
+for a different email or replace A's identity. A's existing session is unverified
+and cannot prove fresh sign-in. Support/privacy routing and challenge/receipt
+acceptance remain unresolved while the original mailboxes are inaccessible.
+No new recipient, provider, public contact address or authentication change has
+been selected or authorized by the question about feasibility.
+
+
+Brian subsequently supplied an accessible replacement inbox and authorized three
+tagged aliases for the uncreated B/C/D accounts. Store personal addresses only in
+the private operator record. New one-use invitations must bind those exact approved
+recipients; old expired invitations are not repointed. Account/invite/OTP/time/spend
+allowances do not expand. Resume the already-approved scope with these recipients,
+preserving A's identity/session and recording its fresh-sign-in and original
+support/privacy delivery gaps separately. No public contact-address change, admin
+identity edit or authentication bypass is authorized.
+
+
+The replacement-recipient resume reused the existing API image (restart 5/8).
+A's preserved session passed Plans without another OTP. The five-minute handoff
+cutoff then stopped the API before B verified its code: Auth succeeded but app
+redemption could not run. B has no profile. Charge elapsed time through verified
+stop and keep services stopped; no extra recovery was previously authorized.
+Brian approved the [B recovery scope](p3-b-signup-recovery.md) at `eaa32ae`: one
+extra same-image resume (ceiling nine) and ten-minute handoffs within unchanged
+cumulative time/spending. Prepare all checks before sending the code and
+hand off promptly. Record the OTP as consumed; preserve identity and allowance history;
+use the normal form resend/revalidation after any approval. A session success
+does not resolve fresh A sign-in or original mailbox support/privacy acceptance.
+
+The approved B recovery used resume 6/9, completed normal signup, and verified
+one profile/redemption plus Plans before clearing its handoff timer. The A/B
+shared-plan exercise passed one recommendation and two voting rounds with a
+changed winner. Reopen reused existing options, so do not claim a second live
+recommendation call. Organizer deletion was disabled in the UI; no server-side
+refusal or deletion request was exercised. Ownership transfer to B and natural
+expiry rejection passed. Preserve these distinctions in acceptance evidence.
+
+Stop at a useful checkpoint rather than issuing C/D codes with less than one full
+handoff window outside the final reserve. Services are verified stopped at
+`05:35:40.174199Z`; 18m14.050s remain including the 15-minute final reserve.
+Preserve A/B sessions and the synthetic plan. No remaining counter is reset and
+no extra recovery is inferred. A further first-phase resume needs a revised scope;
+original mailbox support/privacy acceptance remains unresolved. No pilot launch.
+
+### Inspect inbound routing before changing contacts — 2026-10-01
+
+Current authoritative/public DNS returns no apex MX; Resend sending remains
+verified. Keep the public support/privacy addresses and capture the DNS baseline.
+Investigate Squarespace forwarding to the owner's privately supplied base inbox,
+but prepare exact rules/DNS before approval. Existing Workspace eligibility and
+unsupported plus-addressing may block the candidate, especially A's tagged route.
+No catch-all, identity substitution, nameserver migration, paid subscription or
+new provider is inferred from the request to continue. The remaining-test budget
+is a draft only; services and the current cumulative clock remain stopped.
+
+
+### Preserve sending DNS when restoring inbound mail — 2026-10-01
+
+Authenticated Squarespace Email blocks forwarding because it detects existing MX,
+while DNS Settings shows only the Resend `send` MX and no apex MX. Its Google
+Workspace management notice is also present; the UI does not establish that
+removing the MX would resolve every eligibility issue. Do not delete the sending
+record as a diagnostic workaround. Keep all existing website and sender records.
+
+Prepare ImprovMX Free as a separately approved alternative: explicit support and
+privacy aliases to the owner's private base inbox, plus A's exact tagged alias
+only if supported, two apex MX additions and one merged SPF edit. Do not activate
+DNS until all three exact recipients are configured without a catch-all or paid
+feature. Public documentation does not establish the tagged alias's behavior;
+verify configuration and then delivery before claiming restoration. Introducing
+a mail processor requires an explicit owner choice; no account was created,
+private destination transmitted, DNS changed or probe sent during preparation.
+The rehearsal extension remains a separate unapproved draft.
+
+
+The owner approved the exact ImprovMX proposal at `ba5ec9546a1d668e0c2b91b52aa7af72e7f6be06`,
+then asked if Squarespace itself could provide forwarding. Hold setup for that
+choice without treating the question as approval to remove Resend DNS or change
+A's identity. The ImprovMX landing page was opened but no private form submission,
+account creation or DNS edit occurred. Existing rehearsal/probe limits remain.
+
+
+### Bound the explicitly approved Squarespace MX diagnostic — 2026-10-01
+
+The owner approved the proposed temporary removal and immediate restoration of
+only the existing `send` MX. Check the restoration form and save the exact DNS
+backup before deleting anything. Observe the Email control once, then restore
+immediately (five-minute operational ceiling); on any unexpected flow, prioritize
+restoration. Do not infer approval to create Squarespace forwarding, transmit a
+new destination or run mail/OTP probes. The Add Record preflight triggered normal
+Google reauthentication, so no deletion occurred. Continue after the owner passes
+that check, with no repeated request for the already-approved diagnostic.
+
+
+The approved diagnostic completed: removing the `send` MX cleared the existing-MX
+warning but Add Rule remained disabled with the Workspace notice. Restore was
+visibly verified 59.385 seconds after Delete, followed by all four authoritative
+servers, two public resolvers and verified Resend sending status. Removing that
+record alone is not a solution. Do not repeat the diagnostic or infer approval
+to cancel Workspace. The exact additional eligibility condition remains unknown;
+retain the existing sender configuration while choosing the receiving route.
+
+
+After the diagnostic result, the owner explicitly selected continuation of the
+approved ImprovMX recommendation. Its normal signup form was prepared with the
+approved private contact, but password creation and displayed terms acceptance
+are left to the owner. Do not ask again for the previously approved provider,
+exact aliases or DNS scope. Confirm the tagged alias on the free tier before
+activation; the separate mail-probe/rehearsal extensions remain unapproved.
+
+
+The owner completed signup and signed in. ImprovMX Free is active, and the three
+approved exact aliases persisted after reload, including A's tagged address.
+The initial automatic catch-all was renamed before any DNS activation; none
+remains. The provider's authenticated MX/SPF requirements match the approved
+scope. Squarespace requested renewed owner Google verification before saving
+any DNS edit. Do not broaden aliases or reset mail/rehearsal counters; after
+verification, apply the approved DNS delta and verify configuration separately
+from live delivery.
+
+
+### Activate the approved ImprovMX route; keep delivery proof separate — 2026-10-01
+
+After owner reauthentication, save only the approved apex MX pair (10/20, four-hour
+TTL) and merge ImprovMX with Google in the existing single SPF (one-hour TTL).
+All six DNS sources returned the exact values, 72 preserved-record comparisons
+passed, ImprovMX shows Active and Resend sending remains verified. No catch-all,
+SMTP credential, paid upgrade, Workspace change, service resume or probe occurred.
+
+Prepare a separate three-message delivery gate: support, privacy and A's unchanged
+exact address, one non-sensitive labeled message each from the existing verified
+sender. The proposed gate raises support/test messages 14 to 17 and cumulative
+supervised minutes 150 to 160, only for one probe/receipt window up to ten minutes.
+It preserves the final 15-minute reserve and all other limits. The broader 195-minute
+and extra-restart rehearsal draft stays unapproved. Receipt must be confirmed by
+the owner; provider DNS or accepted/delivered status alone is insufficient.
+
+
+### Approved mail probes, bounded accounting — 2026-10-01
+
+The owner approved the exact three-message delivery test at
+`1c42ca9a1ce5ed4875c413fe12b839868e591add`. SUPPORT, PRIVACY and A were each sent
+once; all three Resend metadata checks reported **delivered**. Owner inbox receipt
+is not confirmed for all three labels.
+Hold the rehearsal; provider delivery alone does not prove owner receipt.
+
+The supervised window ran from `2026-10-01T07:20:44.036274+00:00` to its
+`2026-10-01T07:30:44.036274+00:00` deadline, charging 600 seconds. Ledger closeout
+was recorded at `07:30:57.419244Z`; no provider action occurred after the deadline.
+Cumulative use is **141m45.950286s of 160 minutes**, leaving
+**18m14.049714s**, including the unchanged 15-minute final reserve.
+Mail use is **11/17**, leaving six reserved rehearsal-case messages. Operator
+status reads are **22/45**. The API/worker stayed stopped; no OTP, invitation,
+restart, account, deletion or AI/Places operation occurred. All other limits and
+counters are unchanged. The broader 195-minute/restart-10 scope remains unapproved.
+
+
+### Owner confirms all three recovered mail routes — 2026-10-01
+
+The owner replied “all three received” after the bounded probe window closed.
+This completes SUPPORT, PRIVACY and unchanged A-address receipt evidence; preserve
+the earlier unconfirmed-at-deadline observation as history. No resend, status read,
+window or counter reset accompanies the confirmation. Forwarding does not restore
+Google Workspace subscription or historical mailbox contents.
+
+Prepare the remaining manual scope at 195 cumulative supervised minutes and ten
+same-image API restarts, increasing current ceilings by 35 minutes and one restart.
+With 141m45.950286s already used, the first phase is at most **38m14.049714s**, plus
+**15 minutes** for the final phase. Validate both durations against the existing
+cutoff before owner approval, without provider calls or arming a window. Retain
+all other caps, six support-case messages and four exact remaining OTP requests;
+no spare resend/recovery is added. The receipt confirmation does not approve
+this rehearsal extension or final P3 acceptance.
+
+
+### Owner approves and starts remaining manual rehearsal — 2026-10-01
+
+The owner approved the complete remaining-case scope at `32ab7cd`; apply only the
+195-minute and ten-restart ceilings, preserving all cumulative use and the final
+900 seconds. Stopped preflight passed. Arm the durable cutoff before same-image
+resume; restart 7/10 is verified ready. A's returning code was requested once under
+a ten-minute handoff ending 08:00:56Z, within the immutable 08:26:43Z phase end.
+Wait for owner normal verification; no replacement code, C/D enrollment, deletion
+or extra recovery follows an unresolved handoff. The exact live state is in the
+active packet and private ledger; verify automatic containment before reconciling
+an expired window.
+
+
+### Explicit replacement code after expired A handoff — 2026-10-01
+
+Reconcile the automatic cutoff using its verified-stop timestamp before acting on
+the owner's explicit replacement-code request. The expired first window costs
+764.045910 seconds; do not charge the stopped overnight interval or erase the old
+OTP reservation. Request exactly one replacement through the normal returning flow
+at A's unchanged address. Keep API/worker stopped; authentication alone does not
+complete the application's returning-login check. Conservatively reserve and charge
+one ten-minute Auth-only handoff without extending any armed deadline or increasing
+a ceiling. Preserve owner code entry and all legacy sessions. Current use is
+164m29.996196s, OTP requests 9/11 and restarts 7/10. Before further rehearsal work,
+reconcile the resulting shortage of one planned OTP slot and one recovery restart;
+the resend request does not authorize those future changes or full P3 acceptance.
+
+
+### Preserve verified Auth session during bounded API recovery — 2026-10-01
+
+A's replacement code created exactly one session at 20:26:14Z while the existing
+profile/redemption stayed singular. Treat the following network error as an API
+availability failure, not a reason to spend another OTP. Preserve the session and
+complete the normal membership check after source-identical API recovery. Prepare
+one combined approval delta: restart ceiling 10 to 11, OTP requests 11 to 12 and
+delivery reservations 10 to 11. Keep all elapsed usage, 195-minute/time and money
+caps, and final 900 seconds. The remaining 930.003804-second first phase passes
+the existing cutoff check; expiration leaves incomplete work rather than creating
+a new allowance. See [the exact proposal](p3-session-recovery.md). No deployment or
+ceiling change occurs before approval.
+
+
+### Approved recovery resumes the verified session — 2026-10-01
+
+The owner approved the exact recovery at `fa282f2`; raise only the specified
+restart/request/delivery ceilings to 11/12/11. Arm cutoff before same-image restart
+8/11. Readiness and both browser origins pass; A reaches Dinner plans and its
+existing profile without another code. B's reopened context preserves its profile
+and shared plan. Keep the final 900 seconds and immutable first-phase deadline
+20:55:29Z, with containment at 20:53:29Z. Prepare A's confirmation but leave the
+permanent account-deletion button to the owner, as the approved runbook requires.
+Verify the exact durable outcome before claiming deletion or changing identities.
+
+
+### Verify A pending deletion before moving to C — 2026-10-01
+
+The owner initiated A deletion in the normal account UI. Bind its exact durable
+pending row through the trusted Auth identity while the raw subject remains, then
+preserve that mapping privately before local sign-out. Confirm profile removal,
+zero worker attempts and no attention flag; do not call Auth removal complete.
+Charge both status lookups, including the first locally unparseable response.
+Issue C's one recipient-bound invite and single signup code only after A's local
+session ends. C owner entry ends at the existing 20:53:29Z containment threshold;
+no resend or deadline extension is implied. Keep the worker and all legacy
+identities untouched until the bounded verified queue step.

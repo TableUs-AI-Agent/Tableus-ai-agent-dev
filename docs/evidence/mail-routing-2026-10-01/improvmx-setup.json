@@ -1,0 +1,2024 @@
+{
+  "recorded_at": "2026-10-01T07:17:10.309115+00:00",
+  "approval_commit": "ba5ec9546a1d668e0c2b91b52aa7af72e7f6be06",
+  "account_created_by_owner": true,
+  "plan": "Free ACTIVE",
+  "domain": "table-us.com",
+  "exact_aliases": [
+    "brian",
+    "brian+tableus-p3-a",
+    "privacy"
+  ],
+  "destination": "owner-approved private base Gmail; excluded from Git",
+  "aliases_persisted_after_reload": true,
+  "default_catch_all_renamed_before_dns_activation": true,
+  "catch_all_present": false,
+  "tagged_alias_accepted": true,
+  "dns_requirements_match_approval": true,
+  "dns_delta_submitted": true,
+  "pending": "Separate delivery-test allowance approval and owner receipt",
+  "delivery_tested": false,
+  "probe_or_rehearsal_extensions_approved": false,
+  "dns_before": {
+    "observed_at": "2026-10-01T07:09:27.118440+00:00",
+    "records": [
+      {
+        "server": "nse1.squarespacedns.com",
+        "name": "table-us.com",
+        "type": "NS",
+        "answers": [
+          "table-us.com.\t\t21600\tIN\tNS\tnse1.squarespacedns.com.",
+          "table-us.com.\t\t21600\tIN\tNS\tnse2.squarespacedns.com.",
+          "table-us.com.\t\t21600\tIN\tNS\tnse4.squarespacedns.com.",
+          "table-us.com.\t\t21600\tIN\tNS\tnse3.squarespacedns.com."
+        ],
+        "values": [
+          "nse1.squarespacedns.com.",
+          "nse2.squarespacedns.com.",
+          "nse3.squarespacedns.com.",
+          "nse4.squarespacedns.com."
+        ]
+      },
+      {
+        "server": "nse1.squarespacedns.com",
+        "name": "table-us.com",
+        "type": "MX",
+        "answers": [],
+        "values": []
+      },
+      {
+        "server": "nse1.squarespacedns.com",
+        "name": "table-us.com",
+        "type": "A",
+        "answers": [
+          "table-us.com.\t\t14400\tIN\tA\t216.198.79.1"
+        ],
+        "values": [
+          "216.198.79.1"
+        ]
+      },
+      {
+        "server": "nse1.squarespacedns.com",
+        "name": "table-us.com",
+        "type": "AAAA",
+        "answers": [],
+        "values": []
+      },
+      {
+        "server": "nse1.squarespacedns.com",
+        "name": "table-us.com",
+        "type": "TXT",
+        "answers": [
+          "table-us.com.\t\t3600\tIN\tTXT\t\"v=spf1 include:_spf.google.com ~all\""
+        ],
+        "values": [
+          "\"v=spf1 include:_spf.google.com ~all\""
+        ]
+      },
+      {
+        "server": "nse1.squarespacedns.com",
+        "name": "www.table-us.com",
+        "type": "CNAME",
+        "answers": [
+          "www.table-us.com.\t14400\tIN\tCNAME\te2a17b54c5ad228e.vercel-dns-017.com."
+        ],
+        "values": [
+          "e2a17b54c5ad228e.vercel-dns-017.com."
+        ]
+      },
+      {
+        "server": "nse1.squarespacedns.com",
+        "name": "links.table-us.com",
+        "type": "CNAME",
+        "answers": [],
+        "values": []
+      },
+      {
+        "server": "nse1.squarespacedns.com",
+        "name": "send.table-us.com",
+        "type": "MX",
+        "answers": [
+          "send.table-us.com.\t14400\tIN\tMX\t10 feedback-smtp.us-east-1.amazonses.com."
+        ],
+        "values": [
+          "10 feedback-smtp.us-east-1.amazonses.com."
+        ]
+      },
+      {
+        "server": "nse1.squarespacedns.com",
+        "name": "send.table-us.com",
+        "type": "TXT",
+        "answers": [
+          "send.table-us.com.\t14400\tIN\tTXT\t\"v=spf1 include:amazonses.com ~all\""
+        ],
+        "values": [
+          "\"v=spf1 include:amazonses.com ~all\""
+        ]
+      },
+      {
+        "server": "nse1.squarespacedns.com",
+        "name": "resend._domainkey.table-us.com",
+        "type": "TXT",
+        "answers": [
+          "resend._domainkey.table-us.com.\t14400 IN TXT\t\"p=MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDR7ZKnW4aBL0WjErHiXK88TYs0JPdanStlurhEaKDOOelKYaWYBXOGZrZ6NgNoAtNIVqlnJ0U2cGkGzUgOwKwtfrn25GEvUS+u/M6xydz1E/IbNKSZnly4svZj8EGjH5VWpLHQVqNlwMjhZ/TuP8L0fmWJVMno4eaoDyM+Lfg50wIDAQAB\""
+        ],
+        "values": [
+          "\"p=MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDR7ZKnW4aBL0WjErHiXK88TYs0JPdanStlurhEaKDOOelKYaWYBXOGZrZ6NgNoAtNIVqlnJ0U2cGkGzUgOwKwtfrn25GEvUS+u/M6xydz1E/IbNKSZnly4svZj8EGjH5VWpLHQVqNlwMjhZ/TuP8L0fmWJVMno4eaoDyM+Lfg50wIDAQAB\""
+        ]
+      },
+      {
+        "server": "nse1.squarespacedns.com",
+        "name": "_dmarc.table-us.com",
+        "type": "TXT",
+        "answers": [
+          "_dmarc.table-us.com.\t14400\tIN\tTXT\t\"v=DMARC1; p=none;\""
+        ],
+        "values": [
+          "\"v=DMARC1; p=none;\""
+        ]
+      },
+      {
+        "server": "nse1.squarespacedns.com",
+        "name": "links.table-us.com",
+        "type": "A",
+        "answers": [
+          "links.table-us.com.\t14400\tIN\tA\t76.76.21.21"
+        ],
+        "values": [
+          "76.76.21.21"
+        ]
+      },
+      {
+        "server": "nse1.squarespacedns.com",
+        "name": "google._domainkey.table-us.com",
+        "type": "TXT",
+        "answers": [
+          "google._domainkey.table-us.com.\t3600 IN\tTXT\t\"v=DKIM1; k=rsa; p=MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEApl/qBB5vF4FYM4qeLYKSChikwWGSeMSz3yc0zFqS2TI4inNBDwfXWeD1lNpBzIdCU+RqtyJCHrWmCL4/5AxBsEuarmv6G81RhD7pxdaYniIbcWTQ88+R3U5T3fmobyF/ElnHkH7Uuo2R8x44lMR8OgpvwCcng0eGixjNlqXGSXj0RBUvV5/ctJznmnPwEe+fm\" \"dEdjeTX2bIa5NvAauWXstdJ1kjZerKnxEIDkrzhwdiX6nX9PoSg4Kc94Y+ETXDdDfGhP9Gfk3OH2+3gglPMDUETfIIe8l8VS8yJfYVuGpo3S0cOBnSqaPN1mb2IfHEJ0tfhBdSrcjkMa8+JeQBl1wIDAQAB\""
+        ],
+        "values": [
+          "\"v=DKIM1; k=rsa; p=MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEApl/qBB5vF4FYM4qeLYKSChikwWGSeMSz3yc0zFqS2TI4inNBDwfXWeD1lNpBzIdCU+RqtyJCHrWmCL4/5AxBsEuarmv6G81RhD7pxdaYniIbcWTQ88+R3U5T3fmobyF/ElnHkH7Uuo2R8x44lMR8OgpvwCcng0eGixjNlqXGSXj0RBUvV5/ctJznmnPwEe+fm\" \"dEdjeTX2bIa5NvAauWXstdJ1kjZerKnxEIDkrzhwdiX6nX9PoSg4Kc94Y+ETXDdDfGhP9Gfk3OH2+3gglPMDUETfIIe8l8VS8yJfYVuGpo3S0cOBnSqaPN1mb2IfHEJ0tfhBdSrcjkMa8+JeQBl1wIDAQAB\""
+        ]
+      },
+      {
+        "server": "nse1.squarespacedns.com",
+        "name": "_domainconnect.table-us.com",
+        "type": "CNAME",
+        "answers": [
+          "_domainconnect.table-us.com. 3600 IN\tCNAME\t_domainconnect.domains.squarespace.com."
+        ],
+        "values": [
+          "_domainconnect.domains.squarespace.com."
+        ]
+      },
+      {
+        "server": "nse2.squarespacedns.com",
+        "name": "table-us.com",
+        "type": "NS",
+        "answers": [
+          "table-us.com.\t\t21600\tIN\tNS\tnse2.squarespacedns.com.",
+          "table-us.com.\t\t21600\tIN\tNS\tnse3.squarespacedns.com.",
+          "table-us.com.\t\t21600\tIN\tNS\tnse4.squarespacedns.com.",
+          "table-us.com.\t\t21600\tIN\tNS\tnse1.squarespacedns.com."
+        ],
+        "values": [
+          "nse1.squarespacedns.com.",
+          "nse2.squarespacedns.com.",
+          "nse3.squarespacedns.com.",
+          "nse4.squarespacedns.com."
+        ]
+      },
+      {
+        "server": "nse2.squarespacedns.com",
+        "name": "table-us.com",
+        "type": "MX",
+        "answers": [],
+        "values": []
+      },
+      {
+        "server": "nse2.squarespacedns.com",
+        "name": "table-us.com",
+        "type": "A",
+        "answers": [
+          "table-us.com.\t\t14400\tIN\tA\t216.198.79.1"
+        ],
+        "values": [
+          "216.198.79.1"
+        ]
+      },
+      {
+        "server": "nse2.squarespacedns.com",
+        "name": "table-us.com",
+        "type": "AAAA",
+        "answers": [],
+        "values": []
+      },
+      {
+        "server": "nse2.squarespacedns.com",
+        "name": "table-us.com",
+        "type": "TXT",
+        "answers": [
+          "table-us.com.\t\t3600\tIN\tTXT\t\"v=spf1 include:_spf.google.com ~all\""
+        ],
+        "values": [
+          "\"v=spf1 include:_spf.google.com ~all\""
+        ]
+      },
+      {
+        "server": "nse2.squarespacedns.com",
+        "name": "www.table-us.com",
+        "type": "CNAME",
+        "answers": [
+          "www.table-us.com.\t14400\tIN\tCNAME\te2a17b54c5ad228e.vercel-dns-017.com."
+        ],
+        "values": [
+          "e2a17b54c5ad228e.vercel-dns-017.com."
+        ]
+      },
+      {
+        "server": "nse2.squarespacedns.com",
+        "name": "links.table-us.com",
+        "type": "CNAME",
+        "answers": [],
+        "values": []
+      },
+      {
+        "server": "nse2.squarespacedns.com",
+        "name": "send.table-us.com",
+        "type": "MX",
+        "answers": [
+          "send.table-us.com.\t14400\tIN\tMX\t10 feedback-smtp.us-east-1.amazonses.com."
+        ],
+        "values": [
+          "10 feedback-smtp.us-east-1.amazonses.com."
+        ]
+      },
+      {
+        "server": "nse2.squarespacedns.com",
+        "name": "send.table-us.com",
+        "type": "TXT",
+        "answers": [
+          "send.table-us.com.\t14400\tIN\tTXT\t\"v=spf1 include:amazonses.com ~all\""
+        ],
+        "values": [
+          "\"v=spf1 include:amazonses.com ~all\""
+        ]
+      },
+      {
+        "server": "nse2.squarespacedns.com",
+        "name": "resend._domainkey.table-us.com",
+        "type": "TXT",
+        "answers": [
+          "resend._domainkey.table-us.com.\t14400 IN TXT\t\"p=MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDR7ZKnW4aBL0WjErHiXK88TYs0JPdanStlurhEaKDOOelKYaWYBXOGZrZ6NgNoAtNIVqlnJ0U2cGkGzUgOwKwtfrn25GEvUS+u/M6xydz1E/IbNKSZnly4svZj8EGjH5VWpLHQVqNlwMjhZ/TuP8L0fmWJVMno4eaoDyM+Lfg50wIDAQAB\""
+        ],
+        "values": [
+          "\"p=MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDR7ZKnW4aBL0WjErHiXK88TYs0JPdanStlurhEaKDOOelKYaWYBXOGZrZ6NgNoAtNIVqlnJ0U2cGkGzUgOwKwtfrn25GEvUS+u/M6xydz1E/IbNKSZnly4svZj8EGjH5VWpLHQVqNlwMjhZ/TuP8L0fmWJVMno4eaoDyM+Lfg50wIDAQAB\""
+        ]
+      },
+      {
+        "server": "nse2.squarespacedns.com",
+        "name": "_dmarc.table-us.com",
+        "type": "TXT",
+        "answers": [
+          "_dmarc.table-us.com.\t14400\tIN\tTXT\t\"v=DMARC1; p=none;\""
+        ],
+        "values": [
+          "\"v=DMARC1; p=none;\""
+        ]
+      },
+      {
+        "server": "nse2.squarespacedns.com",
+        "name": "links.table-us.com",
+        "type": "A",
+        "answers": [
+          "links.table-us.com.\t14400\tIN\tA\t76.76.21.21"
+        ],
+        "values": [
+          "76.76.21.21"
+        ]
+      },
+      {
+        "server": "nse2.squarespacedns.com",
+        "name": "google._domainkey.table-us.com",
+        "type": "TXT",
+        "answers": [
+          "google._domainkey.table-us.com.\t3600 IN\tTXT\t\"v=DKIM1; k=rsa; p=MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEApl/qBB5vF4FYM4qeLYKSChikwWGSeMSz3yc0zFqS2TI4inNBDwfXWeD1lNpBzIdCU+RqtyJCHrWmCL4/5AxBsEuarmv6G81RhD7pxdaYniIbcWTQ88+R3U5T3fmobyF/ElnHkH7Uuo2R8x44lMR8OgpvwCcng0eGixjNlqXGSXj0RBUvV5/ctJznmnPwEe+fm\" \"dEdjeTX2bIa5NvAauWXstdJ1kjZerKnxEIDkrzhwdiX6nX9PoSg4Kc94Y+ETXDdDfGhP9Gfk3OH2+3gglPMDUETfIIe8l8VS8yJfYVuGpo3S0cOBnSqaPN1mb2IfHEJ0tfhBdSrcjkMa8+JeQBl1wIDAQAB\""
+        ],
+        "values": [
+          "\"v=DKIM1; k=rsa; p=MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEApl/qBB5vF4FYM4qeLYKSChikwWGSeMSz3yc0zFqS2TI4inNBDwfXWeD1lNpBzIdCU+RqtyJCHrWmCL4/5AxBsEuarmv6G81RhD7pxdaYniIbcWTQ88+R3U5T3fmobyF/ElnHkH7Uuo2R8x44lMR8OgpvwCcng0eGixjNlqXGSXj0RBUvV5/ctJznmnPwEe+fm\" \"dEdjeTX2bIa5NvAauWXstdJ1kjZerKnxEIDkrzhwdiX6nX9PoSg4Kc94Y+ETXDdDfGhP9Gfk3OH2+3gglPMDUETfIIe8l8VS8yJfYVuGpo3S0cOBnSqaPN1mb2IfHEJ0tfhBdSrcjkMa8+JeQBl1wIDAQAB\""
+        ]
+      },
+      {
+        "server": "nse2.squarespacedns.com",
+        "name": "_domainconnect.table-us.com",
+        "type": "CNAME",
+        "answers": [
+          "_domainconnect.table-us.com. 3600 IN\tCNAME\t_domainconnect.domains.squarespace.com."
+        ],
+        "values": [
+          "_domainconnect.domains.squarespace.com."
+        ]
+      },
+      {
+        "server": "nse3.squarespacedns.com",
+        "name": "table-us.com",
+        "type": "NS",
+        "answers": [
+          "table-us.com.\t\t21600\tIN\tNS\tnse3.squarespacedns.com.",
+          "table-us.com.\t\t21600\tIN\tNS\tnse2.squarespacedns.com.",
+          "table-us.com.\t\t21600\tIN\tNS\tnse4.squarespacedns.com.",
+          "table-us.com.\t\t21600\tIN\tNS\tnse1.squarespacedns.com."
+        ],
+        "values": [
+          "nse1.squarespacedns.com.",
+          "nse2.squarespacedns.com.",
+          "nse3.squarespacedns.com.",
+          "nse4.squarespacedns.com."
+        ]
+      },
+      {
+        "server": "nse3.squarespacedns.com",
+        "name": "table-us.com",
+        "type": "MX",
+        "answers": [],
+        "values": []
+      },
+      {
+        "server": "nse3.squarespacedns.com",
+        "name": "table-us.com",
+        "type": "A",
+        "answers": [
+          "table-us.com.\t\t14400\tIN\tA\t216.198.79.1"
+        ],
+        "values": [
+          "216.198.79.1"
+        ]
+      },
+      {
+        "server": "nse3.squarespacedns.com",
+        "name": "table-us.com",
+        "type": "AAAA",
+        "answers": [],
+        "values": []
+      },
+      {
+        "server": "nse3.squarespacedns.com",
+        "name": "table-us.com",
+        "type": "TXT",
+        "answers": [
+          "table-us.com.\t\t3600\tIN\tTXT\t\"v=spf1 include:_spf.google.com ~all\""
+        ],
+        "values": [
+          "\"v=spf1 include:_spf.google.com ~all\""
+        ]
+      },
+      {
+        "server": "nse3.squarespacedns.com",
+        "name": "www.table-us.com",
+        "type": "CNAME",
+        "answers": [
+          "www.table-us.com.\t14400\tIN\tCNAME\te2a17b54c5ad228e.vercel-dns-017.com."
+        ],
+        "values": [
+          "e2a17b54c5ad228e.vercel-dns-017.com."
+        ]
+      },
+      {
+        "server": "nse3.squarespacedns.com",
+        "name": "links.table-us.com",
+        "type": "CNAME",
+        "answers": [],
+        "values": []
+      },
+      {
+        "server": "nse3.squarespacedns.com",
+        "name": "send.table-us.com",
+        "type": "MX",
+        "answers": [
+          "send.table-us.com.\t14400\tIN\tMX\t10 feedback-smtp.us-east-1.amazonses.com."
+        ],
+        "values": [
+          "10 feedback-smtp.us-east-1.amazonses.com."
+        ]
+      },
+      {
+        "server": "nse3.squarespacedns.com",
+        "name": "send.table-us.com",
+        "type": "TXT",
+        "answers": [
+          "send.table-us.com.\t14400\tIN\tTXT\t\"v=spf1 include:amazonses.com ~all\""
+        ],
+        "values": [
+          "\"v=spf1 include:amazonses.com ~all\""
+        ]
+      },
+      {
+        "server": "nse3.squarespacedns.com",
+        "name": "resend._domainkey.table-us.com",
+        "type": "TXT",
+        "answers": [
+          "resend._domainkey.table-us.com.\t14400 IN TXT\t\"p=MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDR7ZKnW4aBL0WjErHiXK88TYs0JPdanStlurhEaKDOOelKYaWYBXOGZrZ6NgNoAtNIVqlnJ0U2cGkGzUgOwKwtfrn25GEvUS+u/M6xydz1E/IbNKSZnly4svZj8EGjH5VWpLHQVqNlwMjhZ/TuP8L0fmWJVMno4eaoDyM+Lfg50wIDAQAB\""
+        ],
+        "values": [
+          "\"p=MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDR7ZKnW4aBL0WjErHiXK88TYs0JPdanStlurhEaKDOOelKYaWYBXOGZrZ6NgNoAtNIVqlnJ0U2cGkGzUgOwKwtfrn25GEvUS+u/M6xydz1E/IbNKSZnly4svZj8EGjH5VWpLHQVqNlwMjhZ/TuP8L0fmWJVMno4eaoDyM+Lfg50wIDAQAB\""
+        ]
+      },
+      {
+        "server": "nse3.squarespacedns.com",
+        "name": "_dmarc.table-us.com",
+        "type": "TXT",
+        "answers": [
+          "_dmarc.table-us.com.\t14400\tIN\tTXT\t\"v=DMARC1; p=none;\""
+        ],
+        "values": [
+          "\"v=DMARC1; p=none;\""
+        ]
+      },
+      {
+        "server": "nse3.squarespacedns.com",
+        "name": "links.table-us.com",
+        "type": "A",
+        "answers": [
+          "links.table-us.com.\t14400\tIN\tA\t76.76.21.21"
+        ],
+        "values": [
+          "76.76.21.21"
+        ]
+      },
+      {
+        "server": "nse3.squarespacedns.com",
+        "name": "google._domainkey.table-us.com",
+        "type": "TXT",
+        "answers": [
+          "google._domainkey.table-us.com.\t3600 IN\tTXT\t\"v=DKIM1; k=rsa; p=MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEApl/qBB5vF4FYM4qeLYKSChikwWGSeMSz3yc0zFqS2TI4inNBDwfXWeD1lNpBzIdCU+RqtyJCHrWmCL4/5AxBsEuarmv6G81RhD7pxdaYniIbcWTQ88+R3U5T3fmobyF/ElnHkH7Uuo2R8x44lMR8OgpvwCcng0eGixjNlqXGSXj0RBUvV5/ctJznmnPwEe+fm\" \"dEdjeTX2bIa5NvAauWXstdJ1kjZerKnxEIDkrzhwdiX6nX9PoSg4Kc94Y+ETXDdDfGhP9Gfk3OH2+3gglPMDUETfIIe8l8VS8yJfYVuGpo3S0cOBnSqaPN1mb2IfHEJ0tfhBdSrcjkMa8+JeQBl1wIDAQAB\""
+        ],
+        "values": [
+          "\"v=DKIM1; k=rsa; p=MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEApl/qBB5vF4FYM4qeLYKSChikwWGSeMSz3yc0zFqS2TI4inNBDwfXWeD1lNpBzIdCU+RqtyJCHrWmCL4/5AxBsEuarmv6G81RhD7pxdaYniIbcWTQ88+R3U5T3fmobyF/ElnHkH7Uuo2R8x44lMR8OgpvwCcng0eGixjNlqXGSXj0RBUvV5/ctJznmnPwEe+fm\" \"dEdjeTX2bIa5NvAauWXstdJ1kjZerKnxEIDkrzhwdiX6nX9PoSg4Kc94Y+ETXDdDfGhP9Gfk3OH2+3gglPMDUETfIIe8l8VS8yJfYVuGpo3S0cOBnSqaPN1mb2IfHEJ0tfhBdSrcjkMa8+JeQBl1wIDAQAB\""
+        ]
+      },
+      {
+        "server": "nse3.squarespacedns.com",
+        "name": "_domainconnect.table-us.com",
+        "type": "CNAME",
+        "answers": [
+          "_domainconnect.table-us.com. 3600 IN\tCNAME\t_domainconnect.domains.squarespace.com."
+        ],
+        "values": [
+          "_domainconnect.domains.squarespace.com."
+        ]
+      },
+      {
+        "server": "nse4.squarespacedns.com",
+        "name": "table-us.com",
+        "type": "NS",
+        "answers": [
+          "table-us.com.\t\t21600\tIN\tNS\tnse2.squarespacedns.com.",
+          "table-us.com.\t\t21600\tIN\tNS\tnse4.squarespacedns.com.",
+          "table-us.com.\t\t21600\tIN\tNS\tnse3.squarespacedns.com.",
+          "table-us.com.\t\t21600\tIN\tNS\tnse1.squarespacedns.com."
+        ],
+        "values": [
+          "nse1.squarespacedns.com.",
+          "nse2.squarespacedns.com.",
+          "nse3.squarespacedns.com.",
+          "nse4.squarespacedns.com."
+        ]
+      },
+      {
+        "server": "nse4.squarespacedns.com",
+        "name": "table-us.com",
+        "type": "MX",
+        "answers": [],
+        "values": []
+      },
+      {
+        "server": "nse4.squarespacedns.com",
+        "name": "table-us.com",
+        "type": "A",
+        "answers": [
+          "table-us.com.\t\t14400\tIN\tA\t216.198.79.1"
+        ],
+        "values": [
+          "216.198.79.1"
+        ]
+      },
+      {
+        "server": "nse4.squarespacedns.com",
+        "name": "table-us.com",
+        "type": "AAAA",
+        "answers": [],
+        "values": []
+      },
+      {
+        "server": "nse4.squarespacedns.com",
+        "name": "table-us.com",
+        "type": "TXT",
+        "answers": [
+          "table-us.com.\t\t3600\tIN\tTXT\t\"v=spf1 include:_spf.google.com ~all\""
+        ],
+        "values": [
+          "\"v=spf1 include:_spf.google.com ~all\""
+        ]
+      },
+      {
+        "server": "nse4.squarespacedns.com",
+        "name": "www.table-us.com",
+        "type": "CNAME",
+        "answers": [
+          "www.table-us.com.\t14400\tIN\tCNAME\te2a17b54c5ad228e.vercel-dns-017.com."
+        ],
+        "values": [
+          "e2a17b54c5ad228e.vercel-dns-017.com."
+        ]
+      },
+      {
+        "server": "nse4.squarespacedns.com",
+        "name": "links.table-us.com",
+        "type": "CNAME",
+        "answers": [],
+        "values": []
+      },
+      {
+        "server": "nse4.squarespacedns.com",
+        "name": "send.table-us.com",
+        "type": "MX",
+        "answers": [
+          "send.table-us.com.\t14400\tIN\tMX\t10 feedback-smtp.us-east-1.amazonses.com."
+        ],
+        "values": [
+          "10 feedback-smtp.us-east-1.amazonses.com."
+        ]
+      },
+      {
+        "server": "nse4.squarespacedns.com",
+        "name": "send.table-us.com",
+        "type": "TXT",
+        "answers": [
+          "send.table-us.com.\t14400\tIN\tTXT\t\"v=spf1 include:amazonses.com ~all\""
+        ],
+        "values": [
+          "\"v=spf1 include:amazonses.com ~all\""
+        ]
+      },
+      {
+        "server": "nse4.squarespacedns.com",
+        "name": "resend._domainkey.table-us.com",
+        "type": "TXT",
+        "answers": [
+          "resend._domainkey.table-us.com.\t14400 IN TXT\t\"p=MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDR7ZKnW4aBL0WjErHiXK88TYs0JPdanStlurhEaKDOOelKYaWYBXOGZrZ6NgNoAtNIVqlnJ0U2cGkGzUgOwKwtfrn25GEvUS+u/M6xydz1E/IbNKSZnly4svZj8EGjH5VWpLHQVqNlwMjhZ/TuP8L0fmWJVMno4eaoDyM+Lfg50wIDAQAB\""
+        ],
+        "values": [
+          "\"p=MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDR7ZKnW4aBL0WjErHiXK88TYs0JPdanStlurhEaKDOOelKYaWYBXOGZrZ6NgNoAtNIVqlnJ0U2cGkGzUgOwKwtfrn25GEvUS+u/M6xydz1E/IbNKSZnly4svZj8EGjH5VWpLHQVqNlwMjhZ/TuP8L0fmWJVMno4eaoDyM+Lfg50wIDAQAB\""
+        ]
+      },
+      {
+        "server": "nse4.squarespacedns.com",
+        "name": "_dmarc.table-us.com",
+        "type": "TXT",
+        "answers": [
+          "_dmarc.table-us.com.\t14400\tIN\tTXT\t\"v=DMARC1; p=none;\""
+        ],
+        "values": [
+          "\"v=DMARC1; p=none;\""
+        ]
+      },
+      {
+        "server": "nse4.squarespacedns.com",
+        "name": "links.table-us.com",
+        "type": "A",
+        "answers": [
+          "links.table-us.com.\t14400\tIN\tA\t76.76.21.21"
+        ],
+        "values": [
+          "76.76.21.21"
+        ]
+      },
+      {
+        "server": "nse4.squarespacedns.com",
+        "name": "google._domainkey.table-us.com",
+        "type": "TXT",
+        "answers": [
+          "google._domainkey.table-us.com.\t3600 IN\tTXT\t\"v=DKIM1; k=rsa; p=MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEApl/qBB5vF4FYM4qeLYKSChikwWGSeMSz3yc0zFqS2TI4inNBDwfXWeD1lNpBzIdCU+RqtyJCHrWmCL4/5AxBsEuarmv6G81RhD7pxdaYniIbcWTQ88+R3U5T3fmobyF/ElnHkH7Uuo2R8x44lMR8OgpvwCcng0eGixjNlqXGSXj0RBUvV5/ctJznmnPwEe+fm\" \"dEdjeTX2bIa5NvAauWXstdJ1kjZerKnxEIDkrzhwdiX6nX9PoSg4Kc94Y+ETXDdDfGhP9Gfk3OH2+3gglPMDUETfIIe8l8VS8yJfYVuGpo3S0cOBnSqaPN1mb2IfHEJ0tfhBdSrcjkMa8+JeQBl1wIDAQAB\""
+        ],
+        "values": [
+          "\"v=DKIM1; k=rsa; p=MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEApl/qBB5vF4FYM4qeLYKSChikwWGSeMSz3yc0zFqS2TI4inNBDwfXWeD1lNpBzIdCU+RqtyJCHrWmCL4/5AxBsEuarmv6G81RhD7pxdaYniIbcWTQ88+R3U5T3fmobyF/ElnHkH7Uuo2R8x44lMR8OgpvwCcng0eGixjNlqXGSXj0RBUvV5/ctJznmnPwEe+fm\" \"dEdjeTX2bIa5NvAauWXstdJ1kjZerKnxEIDkrzhwdiX6nX9PoSg4Kc94Y+ETXDdDfGhP9Gfk3OH2+3gglPMDUETfIIe8l8VS8yJfYVuGpo3S0cOBnSqaPN1mb2IfHEJ0tfhBdSrcjkMa8+JeQBl1wIDAQAB\""
+        ]
+      },
+      {
+        "server": "nse4.squarespacedns.com",
+        "name": "_domainconnect.table-us.com",
+        "type": "CNAME",
+        "answers": [
+          "_domainconnect.table-us.com. 3600 IN\tCNAME\t_domainconnect.domains.squarespace.com."
+        ],
+        "values": [
+          "_domainconnect.domains.squarespace.com."
+        ]
+      },
+      {
+        "server": "1.1.1.1",
+        "name": "table-us.com",
+        "type": "NS",
+        "answers": [
+          "table-us.com.\t\t21600\tIN\tNS\tnse1.squarespacedns.com.",
+          "table-us.com.\t\t21600\tIN\tNS\tnse2.squarespacedns.com.",
+          "table-us.com.\t\t21600\tIN\tNS\tnse3.squarespacedns.com.",
+          "table-us.com.\t\t21600\tIN\tNS\tnse4.squarespacedns.com."
+        ],
+        "values": [
+          "nse1.squarespacedns.com.",
+          "nse2.squarespacedns.com.",
+          "nse3.squarespacedns.com.",
+          "nse4.squarespacedns.com."
+        ]
+      },
+      {
+        "server": "1.1.1.1",
+        "name": "table-us.com",
+        "type": "MX",
+        "answers": [],
+        "values": []
+      },
+      {
+        "server": "1.1.1.1",
+        "name": "table-us.com",
+        "type": "A",
+        "answers": [
+          "table-us.com.\t\t14400\tIN\tA\t216.198.79.1"
+        ],
+        "values": [
+          "216.198.79.1"
+        ]
+      },
+      {
+        "server": "1.1.1.1",
+        "name": "table-us.com",
+        "type": "AAAA",
+        "answers": [],
+        "values": []
+      },
+      {
+        "server": "1.1.1.1",
+        "name": "table-us.com",
+        "type": "TXT",
+        "answers": [
+          "table-us.com.\t\t3600\tIN\tTXT\t\"v=spf1 include:_spf.google.com ~all\""
+        ],
+        "values": [
+          "\"v=spf1 include:_spf.google.com ~all\""
+        ]
+      },
+      {
+        "server": "1.1.1.1",
+        "name": "www.table-us.com",
+        "type": "CNAME",
+        "answers": [
+          "www.table-us.com.\t14400\tIN\tCNAME\te2a17b54c5ad228e.vercel-dns-017.com."
+        ],
+        "values": [
+          "e2a17b54c5ad228e.vercel-dns-017.com."
+        ]
+      },
+      {
+        "server": "1.1.1.1",
+        "name": "links.table-us.com",
+        "type": "CNAME",
+        "answers": [],
+        "values": []
+      },
+      {
+        "server": "1.1.1.1",
+        "name": "send.table-us.com",
+        "type": "MX",
+        "answers": [
+          "send.table-us.com.\t14400\tIN\tMX\t10 feedback-smtp.us-east-1.amazonses.com."
+        ],
+        "values": [
+          "10 feedback-smtp.us-east-1.amazonses.com."
+        ]
+      },
+      {
+        "server": "1.1.1.1",
+        "name": "send.table-us.com",
+        "type": "TXT",
+        "answers": [
+          "send.table-us.com.\t14400\tIN\tTXT\t\"v=spf1 include:amazonses.com ~all\""
+        ],
+        "values": [
+          "\"v=spf1 include:amazonses.com ~all\""
+        ]
+      },
+      {
+        "server": "1.1.1.1",
+        "name": "resend._domainkey.table-us.com",
+        "type": "TXT",
+        "answers": [
+          "resend._domainkey.table-us.com.\t14400 IN TXT\t\"p=MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDR7ZKnW4aBL0WjErHiXK88TYs0JPdanStlurhEaKDOOelKYaWYBXOGZrZ6NgNoAtNIVqlnJ0U2cGkGzUgOwKwtfrn25GEvUS+u/M6xydz1E/IbNKSZnly4svZj8EGjH5VWpLHQVqNlwMjhZ/TuP8L0fmWJVMno4eaoDyM+Lfg50wIDAQAB\""
+        ],
+        "values": [
+          "\"p=MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDR7ZKnW4aBL0WjErHiXK88TYs0JPdanStlurhEaKDOOelKYaWYBXOGZrZ6NgNoAtNIVqlnJ0U2cGkGzUgOwKwtfrn25GEvUS+u/M6xydz1E/IbNKSZnly4svZj8EGjH5VWpLHQVqNlwMjhZ/TuP8L0fmWJVMno4eaoDyM+Lfg50wIDAQAB\""
+        ]
+      },
+      {
+        "server": "1.1.1.1",
+        "name": "_dmarc.table-us.com",
+        "type": "TXT",
+        "answers": [
+          "_dmarc.table-us.com.\t14400\tIN\tTXT\t\"v=DMARC1; p=none;\""
+        ],
+        "values": [
+          "\"v=DMARC1; p=none;\""
+        ]
+      },
+      {
+        "server": "1.1.1.1",
+        "name": "links.table-us.com",
+        "type": "A",
+        "answers": [
+          "links.table-us.com.\t14400\tIN\tA\t76.76.21.21"
+        ],
+        "values": [
+          "76.76.21.21"
+        ]
+      },
+      {
+        "server": "1.1.1.1",
+        "name": "google._domainkey.table-us.com",
+        "type": "TXT",
+        "answers": [
+          "google._domainkey.table-us.com.\t3600 IN\tTXT\t\"v=DKIM1; k=rsa; p=MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEApl/qBB5vF4FYM4qeLYKSChikwWGSeMSz3yc0zFqS2TI4inNBDwfXWeD1lNpBzIdCU+RqtyJCHrWmCL4/5AxBsEuarmv6G81RhD7pxdaYniIbcWTQ88+R3U5T3fmobyF/ElnHkH7Uuo2R8x44lMR8OgpvwCcng0eGixjNlqXGSXj0RBUvV5/ctJznmnPwEe+fm\" \"dEdjeTX2bIa5NvAauWXstdJ1kjZerKnxEIDkrzhwdiX6nX9PoSg4Kc94Y+ETXDdDfGhP9Gfk3OH2+3gglPMDUETfIIe8l8VS8yJfYVuGpo3S0cOBnSqaPN1mb2IfHEJ0tfhBdSrcjkMa8+JeQBl1wIDAQAB\""
+        ],
+        "values": [
+          "\"v=DKIM1; k=rsa; p=MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEApl/qBB5vF4FYM4qeLYKSChikwWGSeMSz3yc0zFqS2TI4inNBDwfXWeD1lNpBzIdCU+RqtyJCHrWmCL4/5AxBsEuarmv6G81RhD7pxdaYniIbcWTQ88+R3U5T3fmobyF/ElnHkH7Uuo2R8x44lMR8OgpvwCcng0eGixjNlqXGSXj0RBUvV5/ctJznmnPwEe+fm\" \"dEdjeTX2bIa5NvAauWXstdJ1kjZerKnxEIDkrzhwdiX6nX9PoSg4Kc94Y+ETXDdDfGhP9Gfk3OH2+3gglPMDUETfIIe8l8VS8yJfYVuGpo3S0cOBnSqaPN1mb2IfHEJ0tfhBdSrcjkMa8+JeQBl1wIDAQAB\""
+        ]
+      },
+      {
+        "server": "1.1.1.1",
+        "name": "_domainconnect.table-us.com",
+        "type": "CNAME",
+        "answers": [
+          "_domainconnect.table-us.com. 3600 IN\tCNAME\t_domainconnect.domains.squarespace.com."
+        ],
+        "values": [
+          "_domainconnect.domains.squarespace.com."
+        ]
+      },
+      {
+        "server": "8.8.8.8",
+        "name": "table-us.com",
+        "type": "NS",
+        "answers": [
+          "table-us.com.\t\t21600\tIN\tNS\tnse2.squarespacedns.com.",
+          "table-us.com.\t\t21600\tIN\tNS\tnse3.squarespacedns.com.",
+          "table-us.com.\t\t21600\tIN\tNS\tnse1.squarespacedns.com.",
+          "table-us.com.\t\t21600\tIN\tNS\tnse4.squarespacedns.com."
+        ],
+        "values": [
+          "nse1.squarespacedns.com.",
+          "nse2.squarespacedns.com.",
+          "nse3.squarespacedns.com.",
+          "nse4.squarespacedns.com."
+        ]
+      },
+      {
+        "server": "8.8.8.8",
+        "name": "table-us.com",
+        "type": "MX",
+        "answers": [],
+        "values": []
+      },
+      {
+        "server": "8.8.8.8",
+        "name": "table-us.com",
+        "type": "A",
+        "answers": [
+          "table-us.com.\t\t14400\tIN\tA\t216.198.79.1"
+        ],
+        "values": [
+          "216.198.79.1"
+        ]
+      },
+      {
+        "server": "8.8.8.8",
+        "name": "table-us.com",
+        "type": "AAAA",
+        "answers": [],
+        "values": []
+      },
+      {
+        "server": "8.8.8.8",
+        "name": "table-us.com",
+        "type": "TXT",
+        "answers": [
+          "table-us.com.\t\t3600\tIN\tTXT\t\"v=spf1 include:_spf.google.com ~all\""
+        ],
+        "values": [
+          "\"v=spf1 include:_spf.google.com ~all\""
+        ]
+      },
+      {
+        "server": "8.8.8.8",
+        "name": "www.table-us.com",
+        "type": "CNAME",
+        "answers": [
+          "www.table-us.com.\t14400\tIN\tCNAME\te2a17b54c5ad228e.vercel-dns-017.com."
+        ],
+        "values": [
+          "e2a17b54c5ad228e.vercel-dns-017.com."
+        ]
+      },
+      {
+        "server": "8.8.8.8",
+        "name": "links.table-us.com",
+        "type": "CNAME",
+        "answers": [],
+        "values": []
+      },
+      {
+        "server": "8.8.8.8",
+        "name": "send.table-us.com",
+        "type": "MX",
+        "answers": [
+          "send.table-us.com.\t14400\tIN\tMX\t10 feedback-smtp.us-east-1.amazonses.com."
+        ],
+        "values": [
+          "10 feedback-smtp.us-east-1.amazonses.com."
+        ]
+      },
+      {
+        "server": "8.8.8.8",
+        "name": "send.table-us.com",
+        "type": "TXT",
+        "answers": [
+          "send.table-us.com.\t14400\tIN\tTXT\t\"v=spf1 include:amazonses.com ~all\""
+        ],
+        "values": [
+          "\"v=spf1 include:amazonses.com ~all\""
+        ]
+      },
+      {
+        "server": "8.8.8.8",
+        "name": "resend._domainkey.table-us.com",
+        "type": "TXT",
+        "answers": [
+          "resend._domainkey.table-us.com.\t14400 IN TXT\t\"p=MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDR7ZKnW4aBL0WjErHiXK88TYs0JPdanStlurhEaKDOOelKYaWYBXOGZrZ6NgNoAtNIVqlnJ0U2cGkGzUgOwKwtfrn25GEvUS+u/M6xydz1E/IbNKSZnly4svZj8EGjH5VWpLHQVqNlwMjhZ/TuP8L0fmWJVMno4eaoDyM+Lfg50wIDAQAB\""
+        ],
+        "values": [
+          "\"p=MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDR7ZKnW4aBL0WjErHiXK88TYs0JPdanStlurhEaKDOOelKYaWYBXOGZrZ6NgNoAtNIVqlnJ0U2cGkGzUgOwKwtfrn25GEvUS+u/M6xydz1E/IbNKSZnly4svZj8EGjH5VWpLHQVqNlwMjhZ/TuP8L0fmWJVMno4eaoDyM+Lfg50wIDAQAB\""
+        ]
+      },
+      {
+        "server": "8.8.8.8",
+        "name": "_dmarc.table-us.com",
+        "type": "TXT",
+        "answers": [
+          "_dmarc.table-us.com.\t14400\tIN\tTXT\t\"v=DMARC1; p=none;\""
+        ],
+        "values": [
+          "\"v=DMARC1; p=none;\""
+        ]
+      },
+      {
+        "server": "8.8.8.8",
+        "name": "links.table-us.com",
+        "type": "A",
+        "answers": [
+          "links.table-us.com.\t14400\tIN\tA\t76.76.21.21"
+        ],
+        "values": [
+          "76.76.21.21"
+        ]
+      },
+      {
+        "server": "8.8.8.8",
+        "name": "google._domainkey.table-us.com",
+        "type": "TXT",
+        "answers": [
+          "google._domainkey.table-us.com.\t3600 IN\tTXT\t\"v=DKIM1; k=rsa; p=MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEApl/qBB5vF4FYM4qeLYKSChikwWGSeMSz3yc0zFqS2TI4inNBDwfXWeD1lNpBzIdCU+RqtyJCHrWmCL4/5AxBsEuarmv6G81RhD7pxdaYniIbcWTQ88+R3U5T3fmobyF/ElnHkH7Uuo2R8x44lMR8OgpvwCcng0eGixjNlqXGSXj0RBUvV5/ctJznmnPwEe+fm\" \"dEdjeTX2bIa5NvAauWXstdJ1kjZerKnxEIDkrzhwdiX6nX9PoSg4Kc94Y+ETXDdDfGhP9Gfk3OH2+3gglPMDUETfIIe8l8VS8yJfYVuGpo3S0cOBnSqaPN1mb2IfHEJ0tfhBdSrcjkMa8+JeQBl1wIDAQAB\""
+        ],
+        "values": [
+          "\"v=DKIM1; k=rsa; p=MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEApl/qBB5vF4FYM4qeLYKSChikwWGSeMSz3yc0zFqS2TI4inNBDwfXWeD1lNpBzIdCU+RqtyJCHrWmCL4/5AxBsEuarmv6G81RhD7pxdaYniIbcWTQ88+R3U5T3fmobyF/ElnHkH7Uuo2R8x44lMR8OgpvwCcng0eGixjNlqXGSXj0RBUvV5/ctJznmnPwEe+fm\" \"dEdjeTX2bIa5NvAauWXstdJ1kjZerKnxEIDkrzhwdiX6nX9PoSg4Kc94Y+ETXDdDfGhP9Gfk3OH2+3gglPMDUETfIIe8l8VS8yJfYVuGpo3S0cOBnSqaPN1mb2IfHEJ0tfhBdSrcjkMa8+JeQBl1wIDAQAB\""
+        ]
+      },
+      {
+        "server": "8.8.8.8",
+        "name": "_domainconnect.table-us.com",
+        "type": "CNAME",
+        "answers": [
+          "_domainconnect.table-us.com. 3600 IN\tCNAME\t_domainconnect.domains.squarespace.com."
+        ],
+        "values": [
+          "_domainconnect.domains.squarespace.com."
+        ]
+      }
+    ]
+  },
+  "dns_actions": [
+    {
+      "action": "add apex MX 10 mx1.improvmx.com TTL 14400",
+      "submitted_at": "2026-10-01T07:12:22.200Z",
+      "ui_verified_at": "2026-10-01T07:12:30.143Z"
+    },
+    {
+      "action": "add apex MX 20 mx2.improvmx.com TTL 14400",
+      "submitted_at": "2026-10-01T07:12:52.126Z",
+      "ui_verified_at": "2026-10-01T07:13:01.733Z"
+    },
+    {
+      "action": "edit single apex SPF retaining Google include and TTL 3600",
+      "value": "v=spf1 include:spf.improvmx.com include:_spf.google.com ~all",
+      "submitted_at": "2026-10-01T07:13:24.721Z",
+      "ui_verified_at": "2026-10-01T07:13:38.720Z"
+    }
+  ],
+  "dns_after": {
+    "observed_at": "2026-10-01T07:13:59.895209+00:00",
+    "records": [
+      {
+        "server": "nse1.squarespacedns.com",
+        "name": "table-us.com",
+        "type": "NS",
+        "answers": [
+          "table-us.com.\t\t21600\tIN\tNS\tnse3.squarespacedns.com.",
+          "table-us.com.\t\t21600\tIN\tNS\tnse2.squarespacedns.com.",
+          "table-us.com.\t\t21600\tIN\tNS\tnse4.squarespacedns.com.",
+          "table-us.com.\t\t21600\tIN\tNS\tnse1.squarespacedns.com."
+        ],
+        "values": [
+          "nse1.squarespacedns.com.",
+          "nse2.squarespacedns.com.",
+          "nse3.squarespacedns.com.",
+          "nse4.squarespacedns.com."
+        ]
+      },
+      {
+        "server": "nse1.squarespacedns.com",
+        "name": "table-us.com",
+        "type": "MX",
+        "answers": [
+          "table-us.com.\t\t14400\tIN\tMX\t20 mx2.improvmx.com.",
+          "table-us.com.\t\t14400\tIN\tMX\t10 mx1.improvmx.com."
+        ],
+        "values": [
+          "10 mx1.improvmx.com.",
+          "20 mx2.improvmx.com."
+        ]
+      },
+      {
+        "server": "nse1.squarespacedns.com",
+        "name": "table-us.com",
+        "type": "A",
+        "answers": [
+          "table-us.com.\t\t14400\tIN\tA\t216.198.79.1"
+        ],
+        "values": [
+          "216.198.79.1"
+        ]
+      },
+      {
+        "server": "nse1.squarespacedns.com",
+        "name": "table-us.com",
+        "type": "AAAA",
+        "answers": [],
+        "values": []
+      },
+      {
+        "server": "nse1.squarespacedns.com",
+        "name": "table-us.com",
+        "type": "TXT",
+        "answers": [
+          "table-us.com.\t\t3600\tIN\tTXT\t\"v=spf1 include:spf.improvmx.com include:_spf.google.com ~all\""
+        ],
+        "values": [
+          "\"v=spf1 include:spf.improvmx.com include:_spf.google.com ~all\""
+        ]
+      },
+      {
+        "server": "nse1.squarespacedns.com",
+        "name": "www.table-us.com",
+        "type": "CNAME",
+        "answers": [
+          "www.table-us.com.\t14400\tIN\tCNAME\te2a17b54c5ad228e.vercel-dns-017.com."
+        ],
+        "values": [
+          "e2a17b54c5ad228e.vercel-dns-017.com."
+        ]
+      },
+      {
+        "server": "nse1.squarespacedns.com",
+        "name": "links.table-us.com",
+        "type": "CNAME",
+        "answers": [],
+        "values": []
+      },
+      {
+        "server": "nse1.squarespacedns.com",
+        "name": "send.table-us.com",
+        "type": "MX",
+        "answers": [
+          "send.table-us.com.\t14400\tIN\tMX\t10 feedback-smtp.us-east-1.amazonses.com."
+        ],
+        "values": [
+          "10 feedback-smtp.us-east-1.amazonses.com."
+        ]
+      },
+      {
+        "server": "nse1.squarespacedns.com",
+        "name": "send.table-us.com",
+        "type": "TXT",
+        "answers": [
+          "send.table-us.com.\t14400\tIN\tTXT\t\"v=spf1 include:amazonses.com ~all\""
+        ],
+        "values": [
+          "\"v=spf1 include:amazonses.com ~all\""
+        ]
+      },
+      {
+        "server": "nse1.squarespacedns.com",
+        "name": "resend._domainkey.table-us.com",
+        "type": "TXT",
+        "answers": [
+          "resend._domainkey.table-us.com.\t14400 IN TXT\t\"p=MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDR7ZKnW4aBL0WjErHiXK88TYs0JPdanStlurhEaKDOOelKYaWYBXOGZrZ6NgNoAtNIVqlnJ0U2cGkGzUgOwKwtfrn25GEvUS+u/M6xydz1E/IbNKSZnly4svZj8EGjH5VWpLHQVqNlwMjhZ/TuP8L0fmWJVMno4eaoDyM+Lfg50wIDAQAB\""
+        ],
+        "values": [
+          "\"p=MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDR7ZKnW4aBL0WjErHiXK88TYs0JPdanStlurhEaKDOOelKYaWYBXOGZrZ6NgNoAtNIVqlnJ0U2cGkGzUgOwKwtfrn25GEvUS+u/M6xydz1E/IbNKSZnly4svZj8EGjH5VWpLHQVqNlwMjhZ/TuP8L0fmWJVMno4eaoDyM+Lfg50wIDAQAB\""
+        ]
+      },
+      {
+        "server": "nse1.squarespacedns.com",
+        "name": "_dmarc.table-us.com",
+        "type": "TXT",
+        "answers": [
+          "_dmarc.table-us.com.\t14400\tIN\tTXT\t\"v=DMARC1; p=none;\""
+        ],
+        "values": [
+          "\"v=DMARC1; p=none;\""
+        ]
+      },
+      {
+        "server": "nse1.squarespacedns.com",
+        "name": "links.table-us.com",
+        "type": "A",
+        "answers": [
+          "links.table-us.com.\t14400\tIN\tA\t76.76.21.21"
+        ],
+        "values": [
+          "76.76.21.21"
+        ]
+      },
+      {
+        "server": "nse1.squarespacedns.com",
+        "name": "google._domainkey.table-us.com",
+        "type": "TXT",
+        "answers": [
+          "google._domainkey.table-us.com.\t3600 IN\tTXT\t\"v=DKIM1; k=rsa; p=MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEApl/qBB5vF4FYM4qeLYKSChikwWGSeMSz3yc0zFqS2TI4inNBDwfXWeD1lNpBzIdCU+RqtyJCHrWmCL4/5AxBsEuarmv6G81RhD7pxdaYniIbcWTQ88+R3U5T3fmobyF/ElnHkH7Uuo2R8x44lMR8OgpvwCcng0eGixjNlqXGSXj0RBUvV5/ctJznmnPwEe+fm\" \"dEdjeTX2bIa5NvAauWXstdJ1kjZerKnxEIDkrzhwdiX6nX9PoSg4Kc94Y+ETXDdDfGhP9Gfk3OH2+3gglPMDUETfIIe8l8VS8yJfYVuGpo3S0cOBnSqaPN1mb2IfHEJ0tfhBdSrcjkMa8+JeQBl1wIDAQAB\""
+        ],
+        "values": [
+          "\"v=DKIM1; k=rsa; p=MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEApl/qBB5vF4FYM4qeLYKSChikwWGSeMSz3yc0zFqS2TI4inNBDwfXWeD1lNpBzIdCU+RqtyJCHrWmCL4/5AxBsEuarmv6G81RhD7pxdaYniIbcWTQ88+R3U5T3fmobyF/ElnHkH7Uuo2R8x44lMR8OgpvwCcng0eGixjNlqXGSXj0RBUvV5/ctJznmnPwEe+fm\" \"dEdjeTX2bIa5NvAauWXstdJ1kjZerKnxEIDkrzhwdiX6nX9PoSg4Kc94Y+ETXDdDfGhP9Gfk3OH2+3gglPMDUETfIIe8l8VS8yJfYVuGpo3S0cOBnSqaPN1mb2IfHEJ0tfhBdSrcjkMa8+JeQBl1wIDAQAB\""
+        ]
+      },
+      {
+        "server": "nse1.squarespacedns.com",
+        "name": "_domainconnect.table-us.com",
+        "type": "CNAME",
+        "answers": [
+          "_domainconnect.table-us.com. 3600 IN\tCNAME\t_domainconnect.domains.squarespace.com."
+        ],
+        "values": [
+          "_domainconnect.domains.squarespace.com."
+        ]
+      },
+      {
+        "server": "nse2.squarespacedns.com",
+        "name": "table-us.com",
+        "type": "NS",
+        "answers": [
+          "table-us.com.\t\t21600\tIN\tNS\tnse3.squarespacedns.com.",
+          "table-us.com.\t\t21600\tIN\tNS\tnse2.squarespacedns.com.",
+          "table-us.com.\t\t21600\tIN\tNS\tnse4.squarespacedns.com.",
+          "table-us.com.\t\t21600\tIN\tNS\tnse1.squarespacedns.com."
+        ],
+        "values": [
+          "nse1.squarespacedns.com.",
+          "nse2.squarespacedns.com.",
+          "nse3.squarespacedns.com.",
+          "nse4.squarespacedns.com."
+        ]
+      },
+      {
+        "server": "nse2.squarespacedns.com",
+        "name": "table-us.com",
+        "type": "MX",
+        "answers": [
+          "table-us.com.\t\t14400\tIN\tMX\t20 mx2.improvmx.com.",
+          "table-us.com.\t\t14400\tIN\tMX\t10 mx1.improvmx.com."
+        ],
+        "values": [
+          "10 mx1.improvmx.com.",
+          "20 mx2.improvmx.com."
+        ]
+      },
+      {
+        "server": "nse2.squarespacedns.com",
+        "name": "table-us.com",
+        "type": "A",
+        "answers": [
+          "table-us.com.\t\t14400\tIN\tA\t216.198.79.1"
+        ],
+        "values": [
+          "216.198.79.1"
+        ]
+      },
+      {
+        "server": "nse2.squarespacedns.com",
+        "name": "table-us.com",
+        "type": "AAAA",
+        "answers": [],
+        "values": []
+      },
+      {
+        "server": "nse2.squarespacedns.com",
+        "name": "table-us.com",
+        "type": "TXT",
+        "answers": [
+          "table-us.com.\t\t3600\tIN\tTXT\t\"v=spf1 include:spf.improvmx.com include:_spf.google.com ~all\""
+        ],
+        "values": [
+          "\"v=spf1 include:spf.improvmx.com include:_spf.google.com ~all\""
+        ]
+      },
+      {
+        "server": "nse2.squarespacedns.com",
+        "name": "www.table-us.com",
+        "type": "CNAME",
+        "answers": [
+          "www.table-us.com.\t14400\tIN\tCNAME\te2a17b54c5ad228e.vercel-dns-017.com."
+        ],
+        "values": [
+          "e2a17b54c5ad228e.vercel-dns-017.com."
+        ]
+      },
+      {
+        "server": "nse2.squarespacedns.com",
+        "name": "links.table-us.com",
+        "type": "CNAME",
+        "answers": [],
+        "values": []
+      },
+      {
+        "server": "nse2.squarespacedns.com",
+        "name": "send.table-us.com",
+        "type": "MX",
+        "answers": [
+          "send.table-us.com.\t14400\tIN\tMX\t10 feedback-smtp.us-east-1.amazonses.com."
+        ],
+        "values": [
+          "10 feedback-smtp.us-east-1.amazonses.com."
+        ]
+      },
+      {
+        "server": "nse2.squarespacedns.com",
+        "name": "send.table-us.com",
+        "type": "TXT",
+        "answers": [
+          "send.table-us.com.\t14400\tIN\tTXT\t\"v=spf1 include:amazonses.com ~all\""
+        ],
+        "values": [
+          "\"v=spf1 include:amazonses.com ~all\""
+        ]
+      },
+      {
+        "server": "nse2.squarespacedns.com",
+        "name": "resend._domainkey.table-us.com",
+        "type": "TXT",
+        "answers": [
+          "resend._domainkey.table-us.com.\t14400 IN TXT\t\"p=MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDR7ZKnW4aBL0WjErHiXK88TYs0JPdanStlurhEaKDOOelKYaWYBXOGZrZ6NgNoAtNIVqlnJ0U2cGkGzUgOwKwtfrn25GEvUS+u/M6xydz1E/IbNKSZnly4svZj8EGjH5VWpLHQVqNlwMjhZ/TuP8L0fmWJVMno4eaoDyM+Lfg50wIDAQAB\""
+        ],
+        "values": [
+          "\"p=MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDR7ZKnW4aBL0WjErHiXK88TYs0JPdanStlurhEaKDOOelKYaWYBXOGZrZ6NgNoAtNIVqlnJ0U2cGkGzUgOwKwtfrn25GEvUS+u/M6xydz1E/IbNKSZnly4svZj8EGjH5VWpLHQVqNlwMjhZ/TuP8L0fmWJVMno4eaoDyM+Lfg50wIDAQAB\""
+        ]
+      },
+      {
+        "server": "nse2.squarespacedns.com",
+        "name": "_dmarc.table-us.com",
+        "type": "TXT",
+        "answers": [
+          "_dmarc.table-us.com.\t14400\tIN\tTXT\t\"v=DMARC1; p=none;\""
+        ],
+        "values": [
+          "\"v=DMARC1; p=none;\""
+        ]
+      },
+      {
+        "server": "nse2.squarespacedns.com",
+        "name": "links.table-us.com",
+        "type": "A",
+        "answers": [
+          "links.table-us.com.\t14400\tIN\tA\t76.76.21.21"
+        ],
+        "values": [
+          "76.76.21.21"
+        ]
+      },
+      {
+        "server": "nse2.squarespacedns.com",
+        "name": "google._domainkey.table-us.com",
+        "type": "TXT",
+        "answers": [
+          "google._domainkey.table-us.com.\t3600 IN\tTXT\t\"v=DKIM1; k=rsa; p=MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEApl/qBB5vF4FYM4qeLYKSChikwWGSeMSz3yc0zFqS2TI4inNBDwfXWeD1lNpBzIdCU+RqtyJCHrWmCL4/5AxBsEuarmv6G81RhD7pxdaYniIbcWTQ88+R3U5T3fmobyF/ElnHkH7Uuo2R8x44lMR8OgpvwCcng0eGixjNlqXGSXj0RBUvV5/ctJznmnPwEe+fm\" \"dEdjeTX2bIa5NvAauWXstdJ1kjZerKnxEIDkrzhwdiX6nX9PoSg4Kc94Y+ETXDdDfGhP9Gfk3OH2+3gglPMDUETfIIe8l8VS8yJfYVuGpo3S0cOBnSqaPN1mb2IfHEJ0tfhBdSrcjkMa8+JeQBl1wIDAQAB\""
+        ],
+        "values": [
+          "\"v=DKIM1; k=rsa; p=MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEApl/qBB5vF4FYM4qeLYKSChikwWGSeMSz3yc0zFqS2TI4inNBDwfXWeD1lNpBzIdCU+RqtyJCHrWmCL4/5AxBsEuarmv6G81RhD7pxdaYniIbcWTQ88+R3U5T3fmobyF/ElnHkH7Uuo2R8x44lMR8OgpvwCcng0eGixjNlqXGSXj0RBUvV5/ctJznmnPwEe+fm\" \"dEdjeTX2bIa5NvAauWXstdJ1kjZerKnxEIDkrzhwdiX6nX9PoSg4Kc94Y+ETXDdDfGhP9Gfk3OH2+3gglPMDUETfIIe8l8VS8yJfYVuGpo3S0cOBnSqaPN1mb2IfHEJ0tfhBdSrcjkMa8+JeQBl1wIDAQAB\""
+        ]
+      },
+      {
+        "server": "nse2.squarespacedns.com",
+        "name": "_domainconnect.table-us.com",
+        "type": "CNAME",
+        "answers": [
+          "_domainconnect.table-us.com. 3600 IN\tCNAME\t_domainconnect.domains.squarespace.com."
+        ],
+        "values": [
+          "_domainconnect.domains.squarespace.com."
+        ]
+      },
+      {
+        "server": "nse3.squarespacedns.com",
+        "name": "table-us.com",
+        "type": "NS",
+        "answers": [
+          "table-us.com.\t\t21600\tIN\tNS\tnse4.squarespacedns.com.",
+          "table-us.com.\t\t21600\tIN\tNS\tnse1.squarespacedns.com.",
+          "table-us.com.\t\t21600\tIN\tNS\tnse2.squarespacedns.com.",
+          "table-us.com.\t\t21600\tIN\tNS\tnse3.squarespacedns.com."
+        ],
+        "values": [
+          "nse1.squarespacedns.com.",
+          "nse2.squarespacedns.com.",
+          "nse3.squarespacedns.com.",
+          "nse4.squarespacedns.com."
+        ]
+      },
+      {
+        "server": "nse3.squarespacedns.com",
+        "name": "table-us.com",
+        "type": "MX",
+        "answers": [
+          "table-us.com.\t\t14400\tIN\tMX\t10 mx1.improvmx.com.",
+          "table-us.com.\t\t14400\tIN\tMX\t20 mx2.improvmx.com."
+        ],
+        "values": [
+          "10 mx1.improvmx.com.",
+          "20 mx2.improvmx.com."
+        ]
+      },
+      {
+        "server": "nse3.squarespacedns.com",
+        "name": "table-us.com",
+        "type": "A",
+        "answers": [
+          "table-us.com.\t\t14400\tIN\tA\t216.198.79.1"
+        ],
+        "values": [
+          "216.198.79.1"
+        ]
+      },
+      {
+        "server": "nse3.squarespacedns.com",
+        "name": "table-us.com",
+        "type": "AAAA",
+        "answers": [],
+        "values": []
+      },
+      {
+        "server": "nse3.squarespacedns.com",
+        "name": "table-us.com",
+        "type": "TXT",
+        "answers": [
+          "table-us.com.\t\t3600\tIN\tTXT\t\"v=spf1 include:spf.improvmx.com include:_spf.google.com ~all\""
+        ],
+        "values": [
+          "\"v=spf1 include:spf.improvmx.com include:_spf.google.com ~all\""
+        ]
+      },
+      {
+        "server": "nse3.squarespacedns.com",
+        "name": "www.table-us.com",
+        "type": "CNAME",
+        "answers": [
+          "www.table-us.com.\t14400\tIN\tCNAME\te2a17b54c5ad228e.vercel-dns-017.com."
+        ],
+        "values": [
+          "e2a17b54c5ad228e.vercel-dns-017.com."
+        ]
+      },
+      {
+        "server": "nse3.squarespacedns.com",
+        "name": "links.table-us.com",
+        "type": "CNAME",
+        "answers": [],
+        "values": []
+      },
+      {
+        "server": "nse3.squarespacedns.com",
+        "name": "send.table-us.com",
+        "type": "MX",
+        "answers": [
+          "send.table-us.com.\t14400\tIN\tMX\t10 feedback-smtp.us-east-1.amazonses.com."
+        ],
+        "values": [
+          "10 feedback-smtp.us-east-1.amazonses.com."
+        ]
+      },
+      {
+        "server": "nse3.squarespacedns.com",
+        "name": "send.table-us.com",
+        "type": "TXT",
+        "answers": [
+          "send.table-us.com.\t14400\tIN\tTXT\t\"v=spf1 include:amazonses.com ~all\""
+        ],
+        "values": [
+          "\"v=spf1 include:amazonses.com ~all\""
+        ]
+      },
+      {
+        "server": "nse3.squarespacedns.com",
+        "name": "resend._domainkey.table-us.com",
+        "type": "TXT",
+        "answers": [
+          "resend._domainkey.table-us.com.\t14400 IN TXT\t\"p=MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDR7ZKnW4aBL0WjErHiXK88TYs0JPdanStlurhEaKDOOelKYaWYBXOGZrZ6NgNoAtNIVqlnJ0U2cGkGzUgOwKwtfrn25GEvUS+u/M6xydz1E/IbNKSZnly4svZj8EGjH5VWpLHQVqNlwMjhZ/TuP8L0fmWJVMno4eaoDyM+Lfg50wIDAQAB\""
+        ],
+        "values": [
+          "\"p=MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDR7ZKnW4aBL0WjErHiXK88TYs0JPdanStlurhEaKDOOelKYaWYBXOGZrZ6NgNoAtNIVqlnJ0U2cGkGzUgOwKwtfrn25GEvUS+u/M6xydz1E/IbNKSZnly4svZj8EGjH5VWpLHQVqNlwMjhZ/TuP8L0fmWJVMno4eaoDyM+Lfg50wIDAQAB\""
+        ]
+      },
+      {
+        "server": "nse3.squarespacedns.com",
+        "name": "_dmarc.table-us.com",
+        "type": "TXT",
+        "answers": [
+          "_dmarc.table-us.com.\t14400\tIN\tTXT\t\"v=DMARC1; p=none;\""
+        ],
+        "values": [
+          "\"v=DMARC1; p=none;\""
+        ]
+      },
+      {
+        "server": "nse3.squarespacedns.com",
+        "name": "links.table-us.com",
+        "type": "A",
+        "answers": [
+          "links.table-us.com.\t14400\tIN\tA\t76.76.21.21"
+        ],
+        "values": [
+          "76.76.21.21"
+        ]
+      },
+      {
+        "server": "nse3.squarespacedns.com",
+        "name": "google._domainkey.table-us.com",
+        "type": "TXT",
+        "answers": [
+          "google._domainkey.table-us.com.\t3600 IN\tTXT\t\"v=DKIM1; k=rsa; p=MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEApl/qBB5vF4FYM4qeLYKSChikwWGSeMSz3yc0zFqS2TI4inNBDwfXWeD1lNpBzIdCU+RqtyJCHrWmCL4/5AxBsEuarmv6G81RhD7pxdaYniIbcWTQ88+R3U5T3fmobyF/ElnHkH7Uuo2R8x44lMR8OgpvwCcng0eGixjNlqXGSXj0RBUvV5/ctJznmnPwEe+fm\" \"dEdjeTX2bIa5NvAauWXstdJ1kjZerKnxEIDkrzhwdiX6nX9PoSg4Kc94Y+ETXDdDfGhP9Gfk3OH2+3gglPMDUETfIIe8l8VS8yJfYVuGpo3S0cOBnSqaPN1mb2IfHEJ0tfhBdSrcjkMa8+JeQBl1wIDAQAB\""
+        ],
+        "values": [
+          "\"v=DKIM1; k=rsa; p=MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEApl/qBB5vF4FYM4qeLYKSChikwWGSeMSz3yc0zFqS2TI4inNBDwfXWeD1lNpBzIdCU+RqtyJCHrWmCL4/5AxBsEuarmv6G81RhD7pxdaYniIbcWTQ88+R3U5T3fmobyF/ElnHkH7Uuo2R8x44lMR8OgpvwCcng0eGixjNlqXGSXj0RBUvV5/ctJznmnPwEe+fm\" \"dEdjeTX2bIa5NvAauWXstdJ1kjZerKnxEIDkrzhwdiX6nX9PoSg4Kc94Y+ETXDdDfGhP9Gfk3OH2+3gglPMDUETfIIe8l8VS8yJfYVuGpo3S0cOBnSqaPN1mb2IfHEJ0tfhBdSrcjkMa8+JeQBl1wIDAQAB\""
+        ]
+      },
+      {
+        "server": "nse3.squarespacedns.com",
+        "name": "_domainconnect.table-us.com",
+        "type": "CNAME",
+        "answers": [
+          "_domainconnect.table-us.com. 3600 IN\tCNAME\t_domainconnect.domains.squarespace.com."
+        ],
+        "values": [
+          "_domainconnect.domains.squarespace.com."
+        ]
+      },
+      {
+        "server": "nse4.squarespacedns.com",
+        "name": "table-us.com",
+        "type": "NS",
+        "answers": [
+          "table-us.com.\t\t21600\tIN\tNS\tnse3.squarespacedns.com.",
+          "table-us.com.\t\t21600\tIN\tNS\tnse2.squarespacedns.com.",
+          "table-us.com.\t\t21600\tIN\tNS\tnse4.squarespacedns.com.",
+          "table-us.com.\t\t21600\tIN\tNS\tnse1.squarespacedns.com."
+        ],
+        "values": [
+          "nse1.squarespacedns.com.",
+          "nse2.squarespacedns.com.",
+          "nse3.squarespacedns.com.",
+          "nse4.squarespacedns.com."
+        ]
+      },
+      {
+        "server": "nse4.squarespacedns.com",
+        "name": "table-us.com",
+        "type": "MX",
+        "answers": [
+          "table-us.com.\t\t14400\tIN\tMX\t10 mx1.improvmx.com.",
+          "table-us.com.\t\t14400\tIN\tMX\t20 mx2.improvmx.com."
+        ],
+        "values": [
+          "10 mx1.improvmx.com.",
+          "20 mx2.improvmx.com."
+        ]
+      },
+      {
+        "server": "nse4.squarespacedns.com",
+        "name": "table-us.com",
+        "type": "A",
+        "answers": [
+          "table-us.com.\t\t14400\tIN\tA\t216.198.79.1"
+        ],
+        "values": [
+          "216.198.79.1"
+        ]
+      },
+      {
+        "server": "nse4.squarespacedns.com",
+        "name": "table-us.com",
+        "type": "AAAA",
+        "answers": [],
+        "values": []
+      },
+      {
+        "server": "nse4.squarespacedns.com",
+        "name": "table-us.com",
+        "type": "TXT",
+        "answers": [
+          "table-us.com.\t\t3600\tIN\tTXT\t\"v=spf1 include:spf.improvmx.com include:_spf.google.com ~all\""
+        ],
+        "values": [
+          "\"v=spf1 include:spf.improvmx.com include:_spf.google.com ~all\""
+        ]
+      },
+      {
+        "server": "nse4.squarespacedns.com",
+        "name": "www.table-us.com",
+        "type": "CNAME",
+        "answers": [
+          "www.table-us.com.\t14400\tIN\tCNAME\te2a17b54c5ad228e.vercel-dns-017.com."
+        ],
+        "values": [
+          "e2a17b54c5ad228e.vercel-dns-017.com."
+        ]
+      },
+      {
+        "server": "nse4.squarespacedns.com",
+        "name": "links.table-us.com",
+        "type": "CNAME",
+        "answers": [],
+        "values": []
+      },
+      {
+        "server": "nse4.squarespacedns.com",
+        "name": "send.table-us.com",
+        "type": "MX",
+        "answers": [
+          "send.table-us.com.\t14400\tIN\tMX\t10 feedback-smtp.us-east-1.amazonses.com."
+        ],
+        "values": [
+          "10 feedback-smtp.us-east-1.amazonses.com."
+        ]
+      },
+      {
+        "server": "nse4.squarespacedns.com",
+        "name": "send.table-us.com",
+        "type": "TXT",
+        "answers": [
+          "send.table-us.com.\t14400\tIN\tTXT\t\"v=spf1 include:amazonses.com ~all\""
+        ],
+        "values": [
+          "\"v=spf1 include:amazonses.com ~all\""
+        ]
+      },
+      {
+        "server": "nse4.squarespacedns.com",
+        "name": "resend._domainkey.table-us.com",
+        "type": "TXT",
+        "answers": [
+          "resend._domainkey.table-us.com.\t14400 IN TXT\t\"p=MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDR7ZKnW4aBL0WjErHiXK88TYs0JPdanStlurhEaKDOOelKYaWYBXOGZrZ6NgNoAtNIVqlnJ0U2cGkGzUgOwKwtfrn25GEvUS+u/M6xydz1E/IbNKSZnly4svZj8EGjH5VWpLHQVqNlwMjhZ/TuP8L0fmWJVMno4eaoDyM+Lfg50wIDAQAB\""
+        ],
+        "values": [
+          "\"p=MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDR7ZKnW4aBL0WjErHiXK88TYs0JPdanStlurhEaKDOOelKYaWYBXOGZrZ6NgNoAtNIVqlnJ0U2cGkGzUgOwKwtfrn25GEvUS+u/M6xydz1E/IbNKSZnly4svZj8EGjH5VWpLHQVqNlwMjhZ/TuP8L0fmWJVMno4eaoDyM+Lfg50wIDAQAB\""
+        ]
+      },
+      {
+        "server": "nse4.squarespacedns.com",
+        "name": "_dmarc.table-us.com",
+        "type": "TXT",
+        "answers": [
+          "_dmarc.table-us.com.\t14400\tIN\tTXT\t\"v=DMARC1; p=none;\""
+        ],
+        "values": [
+          "\"v=DMARC1; p=none;\""
+        ]
+      },
+      {
+        "server": "nse4.squarespacedns.com",
+        "name": "links.table-us.com",
+        "type": "A",
+        "answers": [
+          "links.table-us.com.\t14400\tIN\tA\t76.76.21.21"
+        ],
+        "values": [
+          "76.76.21.21"
+        ]
+      },
+      {
+        "server": "nse4.squarespacedns.com",
+        "name": "google._domainkey.table-us.com",
+        "type": "TXT",
+        "answers": [
+          "google._domainkey.table-us.com.\t3600 IN\tTXT\t\"v=DKIM1; k=rsa; p=MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEApl/qBB5vF4FYM4qeLYKSChikwWGSeMSz3yc0zFqS2TI4inNBDwfXWeD1lNpBzIdCU+RqtyJCHrWmCL4/5AxBsEuarmv6G81RhD7pxdaYniIbcWTQ88+R3U5T3fmobyF/ElnHkH7Uuo2R8x44lMR8OgpvwCcng0eGixjNlqXGSXj0RBUvV5/ctJznmnPwEe+fm\" \"dEdjeTX2bIa5NvAauWXstdJ1kjZerKnxEIDkrzhwdiX6nX9PoSg4Kc94Y+ETXDdDfGhP9Gfk3OH2+3gglPMDUETfIIe8l8VS8yJfYVuGpo3S0cOBnSqaPN1mb2IfHEJ0tfhBdSrcjkMa8+JeQBl1wIDAQAB\""
+        ],
+        "values": [
+          "\"v=DKIM1; k=rsa; p=MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEApl/qBB5vF4FYM4qeLYKSChikwWGSeMSz3yc0zFqS2TI4inNBDwfXWeD1lNpBzIdCU+RqtyJCHrWmCL4/5AxBsEuarmv6G81RhD7pxdaYniIbcWTQ88+R3U5T3fmobyF/ElnHkH7Uuo2R8x44lMR8OgpvwCcng0eGixjNlqXGSXj0RBUvV5/ctJznmnPwEe+fm\" \"dEdjeTX2bIa5NvAauWXstdJ1kjZerKnxEIDkrzhwdiX6nX9PoSg4Kc94Y+ETXDdDfGhP9Gfk3OH2+3gglPMDUETfIIe8l8VS8yJfYVuGpo3S0cOBnSqaPN1mb2IfHEJ0tfhBdSrcjkMa8+JeQBl1wIDAQAB\""
+        ]
+      },
+      {
+        "server": "nse4.squarespacedns.com",
+        "name": "_domainconnect.table-us.com",
+        "type": "CNAME",
+        "answers": [
+          "_domainconnect.table-us.com. 3600 IN\tCNAME\t_domainconnect.domains.squarespace.com."
+        ],
+        "values": [
+          "_domainconnect.domains.squarespace.com."
+        ]
+      },
+      {
+        "server": "1.1.1.1",
+        "name": "table-us.com",
+        "type": "NS",
+        "answers": [
+          "table-us.com.\t\t21600\tIN\tNS\tnse1.squarespacedns.com.",
+          "table-us.com.\t\t21600\tIN\tNS\tnse2.squarespacedns.com.",
+          "table-us.com.\t\t21600\tIN\tNS\tnse3.squarespacedns.com.",
+          "table-us.com.\t\t21600\tIN\tNS\tnse4.squarespacedns.com."
+        ],
+        "values": [
+          "nse1.squarespacedns.com.",
+          "nse2.squarespacedns.com.",
+          "nse3.squarespacedns.com.",
+          "nse4.squarespacedns.com."
+        ]
+      },
+      {
+        "server": "1.1.1.1",
+        "name": "table-us.com",
+        "type": "MX",
+        "answers": [
+          "table-us.com.\t\t14400\tIN\tMX\t10 mx1.improvmx.com.",
+          "table-us.com.\t\t14400\tIN\tMX\t20 mx2.improvmx.com."
+        ],
+        "values": [
+          "10 mx1.improvmx.com.",
+          "20 mx2.improvmx.com."
+        ]
+      },
+      {
+        "server": "1.1.1.1",
+        "name": "table-us.com",
+        "type": "A",
+        "answers": [
+          "table-us.com.\t\t14400\tIN\tA\t216.198.79.1"
+        ],
+        "values": [
+          "216.198.79.1"
+        ]
+      },
+      {
+        "server": "1.1.1.1",
+        "name": "table-us.com",
+        "type": "AAAA",
+        "answers": [],
+        "values": []
+      },
+      {
+        "server": "1.1.1.1",
+        "name": "table-us.com",
+        "type": "TXT",
+        "answers": [
+          "table-us.com.\t\t3600\tIN\tTXT\t\"v=spf1 include:spf.improvmx.com include:_spf.google.com ~all\""
+        ],
+        "values": [
+          "\"v=spf1 include:spf.improvmx.com include:_spf.google.com ~all\""
+        ]
+      },
+      {
+        "server": "1.1.1.1",
+        "name": "www.table-us.com",
+        "type": "CNAME",
+        "answers": [
+          "www.table-us.com.\t14400\tIN\tCNAME\te2a17b54c5ad228e.vercel-dns-017.com."
+        ],
+        "values": [
+          "e2a17b54c5ad228e.vercel-dns-017.com."
+        ]
+      },
+      {
+        "server": "1.1.1.1",
+        "name": "links.table-us.com",
+        "type": "CNAME",
+        "answers": [],
+        "values": []
+      },
+      {
+        "server": "1.1.1.1",
+        "name": "send.table-us.com",
+        "type": "MX",
+        "answers": [
+          "send.table-us.com.\t14400\tIN\tMX\t10 feedback-smtp.us-east-1.amazonses.com."
+        ],
+        "values": [
+          "10 feedback-smtp.us-east-1.amazonses.com."
+        ]
+      },
+      {
+        "server": "1.1.1.1",
+        "name": "send.table-us.com",
+        "type": "TXT",
+        "answers": [
+          "send.table-us.com.\t14400\tIN\tTXT\t\"v=spf1 include:amazonses.com ~all\""
+        ],
+        "values": [
+          "\"v=spf1 include:amazonses.com ~all\""
+        ]
+      },
+      {
+        "server": "1.1.1.1",
+        "name": "resend._domainkey.table-us.com",
+        "type": "TXT",
+        "answers": [
+          "resend._domainkey.table-us.com.\t14400 IN TXT\t\"p=MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDR7ZKnW4aBL0WjErHiXK88TYs0JPdanStlurhEaKDOOelKYaWYBXOGZrZ6NgNoAtNIVqlnJ0U2cGkGzUgOwKwtfrn25GEvUS+u/M6xydz1E/IbNKSZnly4svZj8EGjH5VWpLHQVqNlwMjhZ/TuP8L0fmWJVMno4eaoDyM+Lfg50wIDAQAB\""
+        ],
+        "values": [
+          "\"p=MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDR7ZKnW4aBL0WjErHiXK88TYs0JPdanStlurhEaKDOOelKYaWYBXOGZrZ6NgNoAtNIVqlnJ0U2cGkGzUgOwKwtfrn25GEvUS+u/M6xydz1E/IbNKSZnly4svZj8EGjH5VWpLHQVqNlwMjhZ/TuP8L0fmWJVMno4eaoDyM+Lfg50wIDAQAB\""
+        ]
+      },
+      {
+        "server": "1.1.1.1",
+        "name": "_dmarc.table-us.com",
+        "type": "TXT",
+        "answers": [
+          "_dmarc.table-us.com.\t14400\tIN\tTXT\t\"v=DMARC1; p=none;\""
+        ],
+        "values": [
+          "\"v=DMARC1; p=none;\""
+        ]
+      },
+      {
+        "server": "1.1.1.1",
+        "name": "links.table-us.com",
+        "type": "A",
+        "answers": [
+          "links.table-us.com.\t14400\tIN\tA\t76.76.21.21"
+        ],
+        "values": [
+          "76.76.21.21"
+        ]
+      },
+      {
+        "server": "1.1.1.1",
+        "name": "google._domainkey.table-us.com",
+        "type": "TXT",
+        "answers": [
+          "google._domainkey.table-us.com.\t3600 IN\tTXT\t\"v=DKIM1; k=rsa; p=MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEApl/qBB5vF4FYM4qeLYKSChikwWGSeMSz3yc0zFqS2TI4inNBDwfXWeD1lNpBzIdCU+RqtyJCHrWmCL4/5AxBsEuarmv6G81RhD7pxdaYniIbcWTQ88+R3U5T3fmobyF/ElnHkH7Uuo2R8x44lMR8OgpvwCcng0eGixjNlqXGSXj0RBUvV5/ctJznmnPwEe+fm\" \"dEdjeTX2bIa5NvAauWXstdJ1kjZerKnxEIDkrzhwdiX6nX9PoSg4Kc94Y+ETXDdDfGhP9Gfk3OH2+3gglPMDUETfIIe8l8VS8yJfYVuGpo3S0cOBnSqaPN1mb2IfHEJ0tfhBdSrcjkMa8+JeQBl1wIDAQAB\""
+        ],
+        "values": [
+          "\"v=DKIM1; k=rsa; p=MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEApl/qBB5vF4FYM4qeLYKSChikwWGSeMSz3yc0zFqS2TI4inNBDwfXWeD1lNpBzIdCU+RqtyJCHrWmCL4/5AxBsEuarmv6G81RhD7pxdaYniIbcWTQ88+R3U5T3fmobyF/ElnHkH7Uuo2R8x44lMR8OgpvwCcng0eGixjNlqXGSXj0RBUvV5/ctJznmnPwEe+fm\" \"dEdjeTX2bIa5NvAauWXstdJ1kjZerKnxEIDkrzhwdiX6nX9PoSg4Kc94Y+ETXDdDfGhP9Gfk3OH2+3gglPMDUETfIIe8l8VS8yJfYVuGpo3S0cOBnSqaPN1mb2IfHEJ0tfhBdSrcjkMa8+JeQBl1wIDAQAB\""
+        ]
+      },
+      {
+        "server": "1.1.1.1",
+        "name": "_domainconnect.table-us.com",
+        "type": "CNAME",
+        "answers": [
+          "_domainconnect.table-us.com. 3600 IN\tCNAME\t_domainconnect.domains.squarespace.com."
+        ],
+        "values": [
+          "_domainconnect.domains.squarespace.com."
+        ]
+      },
+      {
+        "server": "8.8.8.8",
+        "name": "table-us.com",
+        "type": "NS",
+        "answers": [
+          "table-us.com.\t\t21327\tIN\tNS\tnse3.squarespacedns.com.",
+          "table-us.com.\t\t21327\tIN\tNS\tnse2.squarespacedns.com.",
+          "table-us.com.\t\t21327\tIN\tNS\tnse4.squarespacedns.com.",
+          "table-us.com.\t\t21327\tIN\tNS\tnse1.squarespacedns.com."
+        ],
+        "values": [
+          "nse1.squarespacedns.com.",
+          "nse2.squarespacedns.com.",
+          "nse3.squarespacedns.com.",
+          "nse4.squarespacedns.com."
+        ]
+      },
+      {
+        "server": "8.8.8.8",
+        "name": "table-us.com",
+        "type": "MX",
+        "answers": [
+          "table-us.com.\t\t14400\tIN\tMX\t20 mx2.improvmx.com.",
+          "table-us.com.\t\t14400\tIN\tMX\t10 mx1.improvmx.com."
+        ],
+        "values": [
+          "10 mx1.improvmx.com.",
+          "20 mx2.improvmx.com."
+        ]
+      },
+      {
+        "server": "8.8.8.8",
+        "name": "table-us.com",
+        "type": "A",
+        "answers": [
+          "table-us.com.\t\t14400\tIN\tA\t216.198.79.1"
+        ],
+        "values": [
+          "216.198.79.1"
+        ]
+      },
+      {
+        "server": "8.8.8.8",
+        "name": "table-us.com",
+        "type": "AAAA",
+        "answers": [],
+        "values": []
+      },
+      {
+        "server": "8.8.8.8",
+        "name": "table-us.com",
+        "type": "TXT",
+        "answers": [
+          "table-us.com.\t\t3600\tIN\tTXT\t\"v=spf1 include:spf.improvmx.com include:_spf.google.com ~all\""
+        ],
+        "values": [
+          "\"v=spf1 include:spf.improvmx.com include:_spf.google.com ~all\""
+        ]
+      },
+      {
+        "server": "8.8.8.8",
+        "name": "www.table-us.com",
+        "type": "CNAME",
+        "answers": [
+          "www.table-us.com.\t14400\tIN\tCNAME\te2a17b54c5ad228e.vercel-dns-017.com."
+        ],
+        "values": [
+          "e2a17b54c5ad228e.vercel-dns-017.com."
+        ]
+      },
+      {
+        "server": "8.8.8.8",
+        "name": "links.table-us.com",
+        "type": "CNAME",
+        "answers": [],
+        "values": []
+      },
+      {
+        "server": "8.8.8.8",
+        "name": "send.table-us.com",
+        "type": "MX",
+        "answers": [
+          "send.table-us.com.\t14400\tIN\tMX\t10 feedback-smtp.us-east-1.amazonses.com."
+        ],
+        "values": [
+          "10 feedback-smtp.us-east-1.amazonses.com."
+        ]
+      },
+      {
+        "server": "8.8.8.8",
+        "name": "send.table-us.com",
+        "type": "TXT",
+        "answers": [
+          "send.table-us.com.\t14400\tIN\tTXT\t\"v=spf1 include:amazonses.com ~all\""
+        ],
+        "values": [
+          "\"v=spf1 include:amazonses.com ~all\""
+        ]
+      },
+      {
+        "server": "8.8.8.8",
+        "name": "resend._domainkey.table-us.com",
+        "type": "TXT",
+        "answers": [
+          "resend._domainkey.table-us.com.\t14400 IN TXT\t\"p=MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDR7ZKnW4aBL0WjErHiXK88TYs0JPdanStlurhEaKDOOelKYaWYBXOGZrZ6NgNoAtNIVqlnJ0U2cGkGzUgOwKwtfrn25GEvUS+u/M6xydz1E/IbNKSZnly4svZj8EGjH5VWpLHQVqNlwMjhZ/TuP8L0fmWJVMno4eaoDyM+Lfg50wIDAQAB\""
+        ],
+        "values": [
+          "\"p=MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDR7ZKnW4aBL0WjErHiXK88TYs0JPdanStlurhEaKDOOelKYaWYBXOGZrZ6NgNoAtNIVqlnJ0U2cGkGzUgOwKwtfrn25GEvUS+u/M6xydz1E/IbNKSZnly4svZj8EGjH5VWpLHQVqNlwMjhZ/TuP8L0fmWJVMno4eaoDyM+Lfg50wIDAQAB\""
+        ]
+      },
+      {
+        "server": "8.8.8.8",
+        "name": "_dmarc.table-us.com",
+        "type": "TXT",
+        "answers": [
+          "_dmarc.table-us.com.\t14400\tIN\tTXT\t\"v=DMARC1; p=none;\""
+        ],
+        "values": [
+          "\"v=DMARC1; p=none;\""
+        ]
+      },
+      {
+        "server": "8.8.8.8",
+        "name": "links.table-us.com",
+        "type": "A",
+        "answers": [
+          "links.table-us.com.\t14400\tIN\tA\t76.76.21.21"
+        ],
+        "values": [
+          "76.76.21.21"
+        ]
+      },
+      {
+        "server": "8.8.8.8",
+        "name": "google._domainkey.table-us.com",
+        "type": "TXT",
+        "answers": [
+          "google._domainkey.table-us.com.\t3600 IN\tTXT\t\"v=DKIM1; k=rsa; p=MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEApl/qBB5vF4FYM4qeLYKSChikwWGSeMSz3yc0zFqS2TI4inNBDwfXWeD1lNpBzIdCU+RqtyJCHrWmCL4/5AxBsEuarmv6G81RhD7pxdaYniIbcWTQ88+R3U5T3fmobyF/ElnHkH7Uuo2R8x44lMR8OgpvwCcng0eGixjNlqXGSXj0RBUvV5/ctJznmnPwEe+fm\" \"dEdjeTX2bIa5NvAauWXstdJ1kjZerKnxEIDkrzhwdiX6nX9PoSg4Kc94Y+ETXDdDfGhP9Gfk3OH2+3gglPMDUETfIIe8l8VS8yJfYVuGpo3S0cOBnSqaPN1mb2IfHEJ0tfhBdSrcjkMa8+JeQBl1wIDAQAB\""
+        ],
+        "values": [
+          "\"v=DKIM1; k=rsa; p=MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEApl/qBB5vF4FYM4qeLYKSChikwWGSeMSz3yc0zFqS2TI4inNBDwfXWeD1lNpBzIdCU+RqtyJCHrWmCL4/5AxBsEuarmv6G81RhD7pxdaYniIbcWTQ88+R3U5T3fmobyF/ElnHkH7Uuo2R8x44lMR8OgpvwCcng0eGixjNlqXGSXj0RBUvV5/ctJznmnPwEe+fm\" \"dEdjeTX2bIa5NvAauWXstdJ1kjZerKnxEIDkrzhwdiX6nX9PoSg4Kc94Y+ETXDdDfGhP9Gfk3OH2+3gglPMDUETfIIe8l8VS8yJfYVuGpo3S0cOBnSqaPN1mb2IfHEJ0tfhBdSrcjkMa8+JeQBl1wIDAQAB\""
+        ]
+      },
+      {
+        "server": "8.8.8.8",
+        "name": "_domainconnect.table-us.com",
+        "type": "CNAME",
+        "answers": [
+          "_domainconnect.table-us.com. 3600 IN\tCNAME\t_domainconnect.domains.squarespace.com."
+        ],
+        "values": [
+          "_domainconnect.domains.squarespace.com."
+        ]
+      }
+    ]
+  },
+  "dns_comparison": {
+    "verified_at": "2026-10-01T07:13:59.895209+00:00",
+    "authoritative_servers": 4,
+    "public_resolvers": 2,
+    "approved_changes_verified": [
+      {
+        "server": "nse1.squarespacedns.com",
+        "name": "table-us.com",
+        "type": "MX",
+        "before": [],
+        "after": [
+          "10 mx1.improvmx.com.",
+          "20 mx2.improvmx.com."
+        ]
+      },
+      {
+        "server": "nse1.squarespacedns.com",
+        "name": "table-us.com",
+        "type": "TXT",
+        "before": [
+          "\"v=spf1 include:_spf.google.com ~all\""
+        ],
+        "after": [
+          "\"v=spf1 include:spf.improvmx.com include:_spf.google.com ~all\""
+        ]
+      },
+      {
+        "server": "nse2.squarespacedns.com",
+        "name": "table-us.com",
+        "type": "MX",
+        "before": [],
+        "after": [
+          "10 mx1.improvmx.com.",
+          "20 mx2.improvmx.com."
+        ]
+      },
+      {
+        "server": "nse2.squarespacedns.com",
+        "name": "table-us.com",
+        "type": "TXT",
+        "before": [
+          "\"v=spf1 include:_spf.google.com ~all\""
+        ],
+        "after": [
+          "\"v=spf1 include:spf.improvmx.com include:_spf.google.com ~all\""
+        ]
+      },
+      {
+        "server": "nse3.squarespacedns.com",
+        "name": "table-us.com",
+        "type": "MX",
+        "before": [],
+        "after": [
+          "10 mx1.improvmx.com.",
+          "20 mx2.improvmx.com."
+        ]
+      },
+      {
+        "server": "nse3.squarespacedns.com",
+        "name": "table-us.com",
+        "type": "TXT",
+        "before": [
+          "\"v=spf1 include:_spf.google.com ~all\""
+        ],
+        "after": [
+          "\"v=spf1 include:spf.improvmx.com include:_spf.google.com ~all\""
+        ]
+      },
+      {
+        "server": "nse4.squarespacedns.com",
+        "name": "table-us.com",
+        "type": "MX",
+        "before": [],
+        "after": [
+          "10 mx1.improvmx.com.",
+          "20 mx2.improvmx.com."
+        ]
+      },
+      {
+        "server": "nse4.squarespacedns.com",
+        "name": "table-us.com",
+        "type": "TXT",
+        "before": [
+          "\"v=spf1 include:_spf.google.com ~all\""
+        ],
+        "after": [
+          "\"v=spf1 include:spf.improvmx.com include:_spf.google.com ~all\""
+        ]
+      },
+      {
+        "server": "1.1.1.1",
+        "name": "table-us.com",
+        "type": "MX",
+        "before": [],
+        "after": [
+          "10 mx1.improvmx.com.",
+          "20 mx2.improvmx.com."
+        ]
+      },
+      {
+        "server": "1.1.1.1",
+        "name": "table-us.com",
+        "type": "TXT",
+        "before": [
+          "\"v=spf1 include:_spf.google.com ~all\""
+        ],
+        "after": [
+          "\"v=spf1 include:spf.improvmx.com include:_spf.google.com ~all\""
+        ]
+      },
+      {
+        "server": "8.8.8.8",
+        "name": "table-us.com",
+        "type": "MX",
+        "before": [],
+        "after": [
+          "10 mx1.improvmx.com.",
+          "20 mx2.improvmx.com."
+        ]
+      },
+      {
+        "server": "8.8.8.8",
+        "name": "table-us.com",
+        "type": "TXT",
+        "before": [
+          "\"v=spf1 include:_spf.google.com ~all\""
+        ],
+        "after": [
+          "\"v=spf1 include:spf.improvmx.com include:_spf.google.com ~all\""
+        ]
+      }
+    ],
+    "preserved_comparisons": 72,
+    "authoritative_ttls_preserved": true,
+    "apex_spf_count_per_server": 1
+  },
+  "improvmx_status": {
+    "observed_at": "2026-10-01T07:14:26.363Z",
+    "status": "Active",
+    "mx_10_verified": true,
+    "mx_20_verified": true,
+    "merged_spf_verified": true,
+    "delivery_tested": false
+  },
+  "resend_readback": {
+    "domain_status": "verified",
+    "sending": "enabled",
+    "receiving": "disabled",
+    "dkim_txt_status": "verified",
+    "send_mx_status": "verified",
+    "send_txt_status": "verified",
+    "recorded_at": "2026-10-01T07:14:35.266Z"
+  },
+  "screenshots": [
+    "/private/tmp/tableus-improvmx-active.png",
+    "/private/tmp/tableus-improvmx-dns-saved.png"
+  ],
+  "subsequent_delivery_result": {
+    "path": "delivery-test.json",
+    "outcome": "all_three_received",
+    "owner_receipt_reported_at": "2026-10-01T07:35:45.981075+00:00"
+  }
+}

@@ -103,3 +103,23 @@ stop/unschedule services and preserve evidence; drain only when Auth/configurati
 is healthy and the original synthetic bounds permit it. Do not extend the clock.
 Do not roll aliases back to an incompatible version while API intake remains open.
 Any additional recovery or changed-source deployment needs a new scoped decision.
+
+
+## Execution checkpoint (scope consumed)
+
+PR #10 merged as `9593fba0202e830746523f29cee16532539e80a2`, identical tree to
+passing hosted CI head `4c9392261b0ba8e4154fd8db9e621674579ae1b4`. Preview
+`dpl_99cFtsd56wHCam5dN1EwW5XmTred` is READY on the two staging aliases;
+production is unchanged. Brian approved replacement inbox aliases for B/C/D,
+recorded privately, without changing A or public support/privacy contacts.
+
+Approved resume 5/8 verified A's preserved session on Dinner plans. The five-minute
+B handoff cutoff stopped API/worker, verified at October 1 `04:59:22.273730Z`.
+B confirmed Auth at `05:02:14.784399Z`, after cutoff, but has no app profile or
+redemption. Its visible network error follows API containment. The OTP is consumed.
+Cumulative remaining time is **36m46.978s**, with 15 final-phase minutes reserved.
+Web deployments are 2/2, restarts 5/8; no recovery resume remains authorized.
+
+See [integration evidence](evidence/9593fba/integration.md) and the separately
+[proposed B recovery](p3-b-signup-recovery.md). Later proposals do not amend this
+approval until Brian explicitly agrees. Full rehearsal acceptance remains open.

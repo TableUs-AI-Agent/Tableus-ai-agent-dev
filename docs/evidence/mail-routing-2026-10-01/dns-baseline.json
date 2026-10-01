@@ -1,0 +1,61 @@
+{
+  "at": "2026-10-01T05:44:07.653932+00:00",
+  "source": "authoritative nse1.squarespacedns.com public DNS",
+  "records": [
+    {
+      "name": "table-us.com",
+      "type": "NS",
+      "answer": "table-us.com.\t\t21600\tIN\tNS\tnse4.squarespacedns.com.\ntable-us.com.\t\t21600\tIN\tNS\tnse3.squarespacedns.com.\ntable-us.com.\t\t21600\tIN\tNS\tnse2.squarespacedns.com.\ntable-us.com.\t\t21600\tIN\tNS\tnse1.squarespacedns.com."
+    },
+    {
+      "name": "table-us.com",
+      "type": "MX",
+      "answer": ""
+    },
+    {
+      "name": "table-us.com",
+      "type": "A",
+      "answer": "table-us.com.\t\t14400\tIN\tA\t216.198.79.1"
+    },
+    {
+      "name": "table-us.com",
+      "type": "AAAA",
+      "answer": ""
+    },
+    {
+      "name": "table-us.com",
+      "type": "TXT",
+      "answer": "table-us.com.\t\t3600\tIN\tTXT\t\"v=spf1 include:_spf.google.com ~all\""
+    },
+    {
+      "name": "www.table-us.com",
+      "type": "CNAME",
+      "answer": "www.table-us.com.\t14400\tIN\tCNAME\te2a17b54c5ad228e.vercel-dns-017.com."
+    },
+    {
+      "name": "links.table-us.com",
+      "type": "CNAME",
+      "answer": ""
+    },
+    {
+      "name": "send.table-us.com",
+      "type": "MX",
+      "answer": "send.table-us.com.\t14400\tIN\tMX\t10 feedback-smtp.us-east-1.amazonses.com."
+    },
+    {
+      "name": "send.table-us.com",
+      "type": "TXT",
+      "answer": "send.table-us.com.\t14400\tIN\tTXT\t\"v=spf1 include:amazonses.com ~all\""
+    },
+    {
+      "name": "resend._domainkey.table-us.com",
+      "type": "TXT",
+      "answer": "resend._domainkey.table-us.com.\t14400 IN TXT\t\"p=MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDR7ZKnW4aBL0WjErHiXK88TYs0JPdanStlurhEaKDOOelKYaWYBXOGZrZ6NgNoAtNIVqlnJ0U2cGkGzUgOwKwtfrn25GEvUS+u/M6xydz1E/IbNKSZnly4svZj8EGjH5VWpLHQVqNlwMjhZ/TuP8L0fmWJVMno4eaoDyM+Lfg50wIDAQAB\""
+    },
+    {
+      "name": "_dmarc.table-us.com",
+      "type": "TXT",
+      "answer": "_dmarc.table-us.com.\t14400\tIN\tTXT\t\"v=DMARC1; p=none;\""
+    }
+  ]
+}
