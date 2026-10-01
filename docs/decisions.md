@@ -745,3 +745,14 @@ handoff window outside the final reserve. Services are verified stopped at
 Preserve A/B sessions and the synthetic plan. No remaining counter is reset and
 no extra recovery is inferred. A further first-phase resume needs a revised scope;
 original mailbox support/privacy acceptance remains unresolved. No pilot launch.
+
+### Inspect inbound routing before changing contacts — 2026-10-01
+
+Current authoritative/public DNS returns no apex MX; Resend sending remains
+verified. Keep the public support/privacy addresses and capture the DNS baseline.
+Investigate Squarespace forwarding to the owner's privately supplied base inbox,
+but prepare exact rules/DNS before approval. Existing Workspace eligibility and
+unsupported plus-addressing may block the candidate, especially A's tagged route.
+No catch-all, identity substitution, nameserver migration, paid subscription or
+new provider is inferred from the request to continue. The remaining-test budget
+is a draft only; services and the current cumulative clock remain stopped.

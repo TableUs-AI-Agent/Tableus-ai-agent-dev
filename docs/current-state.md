@@ -1,6 +1,26 @@
 # Current state
 
 
+## Mail-route preparation, October 1
+
+The owner asked to continue. Read-only checks now find **no apex MX records** at
+Squarespace authoritative DNS and two public resolvers. Resend still reports the
+existing domain verified for sending, with receiving disabled. Outbound Gmail OTP
+success therefore does not restore public support/privacy receipt. Website and
+outbound-authentication DNS were captured before any change.
+
+The in-app Squarespace Domains tab requires normal owner sign-in. Its Email
+settings/forwarding eligibility have not been inspected. Built-in forwarding is a
+candidate; documented plus-addressing limits mean A's original tagged route cannot
+be assumed to work. No route, recipient, DNS, public contact or subscription changed.
+
+Next: inspect authenticated Email settings and finish the exact forwarding proposal.
+The remaining manual-case draft proposes 45 added live minutes, one first-phase
+resume and three route-probe emails, while preserving financial/other attempt caps.
+**None of those extensions or forwarding rules is approved.** Existing services
+stay stopped and 18m14.050s remain under the current approval. The full preparation
+and separate hosted-evidence gaps are in [the routing/remaining-case draft](p3-mail-routing-and-remaining-cases.md).
+
 ## B signup and group checks passed; stopped October 1 05:35 UTC
 
 B completed the normal fresh-code signup in the existing Preview tab. Readback

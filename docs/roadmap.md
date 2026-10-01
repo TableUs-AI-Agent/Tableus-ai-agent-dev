@@ -98,7 +98,9 @@ API/worker are verified stopped/unscheduled, future admission false, no live clo
 **18m14.050s remain**, including the 15-minute final reserve. Live provider use is
 72 Places attempts and one logical AI call ($0.0005715 estimated AI). No C/D
 account or deletion queue exists. A/B and their shared synthetic plan remain.
-Next: scope the remaining C/D enrollment, returning sign-in, replay/contention,
+The [routing/remaining-case draft](p3-mail-routing-and-remaining-cases.md) now
+records absent inbound MX and pending Squarespace sign-in; no change/extension
+is approved. Next: finish mail eligibility and scope C/D, returning sign-in, replay/contention,
 deletions/support/drain and cleanup against the remaining time; another first-phase
 recovery is not already allocated. Resolve original support/privacy mailbox access
 before claiming that acceptance or inviting real users. See the active packet for
