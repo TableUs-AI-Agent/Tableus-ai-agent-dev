@@ -95,7 +95,8 @@ inbox but verified its OTP after the automatic handoff cutoff stopped the API.
 B has confirmed Auth but no profile/redemption. API/worker are stopped and
 unscheduled; future admission is false. **36m46.978s remain**, including the
 15-minute final-phase reserve. Brian approved [one B recovery](p3-b-signup-recovery.md): restart ceiling nine
-and ten-minute handoffs, with unchanged cumulative clock and spending. A fresh sign-in and
+and ten-minute handoffs, with unchanged cumulative clock and spending.
+Resume 6/9 is now ready under the armed cutoff; next is B normal resend/code entry. A fresh sign-in and
 original support/privacy mailbox checks remain unresolved during the inbox outage.
 Working support/privacy contact is required before real pilot invitations.
 

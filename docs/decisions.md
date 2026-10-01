@@ -730,3 +730,7 @@ cumulative time/spending. Prepare all checks before sending the code and
 hand off promptly. Record the OTP as consumed; preserve identity and allowance history;
 use the normal form resend/revalidation after any approval. A session success
 does not resolve fresh A sign-in or original mailbox support/privacy acceptance.
+
+The approved B recovery used resume 6/9 on the unchanged API image. Readiness
+and exact-origin CORS passed before email send. Preserve the final-phase reserve
+and record the ten-minute handoff immediately before sending; hand back promptly.

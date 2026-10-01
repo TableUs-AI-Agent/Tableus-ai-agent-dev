@@ -56,3 +56,10 @@ Services stay stopped until the guarded clock and cutoff are armed. B's OTP rema
 as consumed; A's identity/session and legacy data are preserved. A fresh sign-in and original
 support/privacy delivery/binding remain incomplete during the mailbox outage;
 replacement recipients do not authorize a public contact change or pilot launch.
+
+## Execution checkpoint
+
+Resume 6/9 is ready on unchanged API source/image; cutoff process 85219 is armed
+for window `2b8c71ec-e92f-4a3a-9af4-dcd682d14ca7`, deadline `05:38:54.223913Z`.
+Readiness and exact-origin CORS passed. B normal resend is next; the private ledger
+will record its actual ten-minute deadline before submission. No extra recovery.

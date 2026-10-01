@@ -122,3 +122,30 @@ Prepare and verify durable containment before the resume; hand off immediately
 after one normal B resend. Do not reuse consumed OTPs or extract session tokens.
 A's fresh sign-in, original support/privacy mail binding, group/deletion
 and hosted replay/contention acceptance remain incomplete. No pilot activation.
+
+## B recovery running, October 1 05:20 UTC
+
+Approved resume **6/9** is ready: API deployment
+`f52a6861-b1f0-4b46-b9db-7576f60bfe45`, unchanged `2eefdc5` image. Readiness and
+exact links/new-Preview CORS passed; worker remains stopped/unscheduled. Window
+`2b8c71ec-e92f-4a3a-9af4-dcd682d14ca7` started `05:17:07.245972Z`, hard deadline
+`05:38:54.223913Z` (containment begins two minutes early). Cutoff process **85219**
+is armed. The 15-minute final reserve is preserved. Known status reads are 19/45.
+
+B is prepared for one normal resend, using its existing verified Auth identity,
+valid recipient-bound invitation and approved private Gmail alias. Its previous
+reservation expired; normal Join revalidation creates a new reservation. Next:
+reserve one request/delivery/verification and a ten-minute handoff immediately
+before sending; hand the in-app form back without further routine documentation.
+The private ledger records the exact send/deadline and observed code-entry result.
+B still has no profile/redemption; require both plus actual Plans before advancing.
+No new invitation/account allowance is consumed by this resend. Earlier stopped
+checkpoint below records cumulative use before this active window; do not treat
+it as the current service state. API stop/resend outcome must be reconciled later.
+
+Fresh preflight: nine Auth users/seven profiles, B confirmed/no profile, queue and
+active reservations zero, campaign provider rows zero, 270 Places units and
+$0.00224625 prior AI usage. Delayed Railway workspace usage $4.398358327784568 is
+$0.8446346504937039 above the original baseline, within the unchanged hosting cap;
+it is not exact campaign attribution. All eight cutoff self-tests passed. No app
+code/build was changed. Original mailbox acceptance gaps remain unresolved.
