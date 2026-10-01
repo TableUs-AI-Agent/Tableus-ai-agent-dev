@@ -821,3 +821,20 @@ scope. Squarespace requested renewed owner Google verification before saving
 any DNS edit. Do not broaden aliases or reset mail/rehearsal counters; after
 verification, apply the approved DNS delta and verify configuration separately
 from live delivery.
+
+
+### Activate the approved ImprovMX route; keep delivery proof separate — 2026-10-01
+
+After owner reauthentication, save only the approved apex MX pair (10/20, four-hour
+TTL) and merge ImprovMX with Google in the existing single SPF (one-hour TTL).
+All six DNS sources returned the exact values, 72 preserved-record comparisons
+passed, ImprovMX shows Active and Resend sending remains verified. No catch-all,
+SMTP credential, paid upgrade, Workspace change, service resume or probe occurred.
+
+Prepare a separate three-message delivery gate: support, privacy and A's unchanged
+exact address, one non-sensitive labeled message each from the existing verified
+sender. The proposed gate raises support/test messages 14 to 17 and cumulative
+supervised minutes 150 to 160, only for one probe/receipt window up to ten minutes.
+It preserves the final 15-minute reserve and all other limits. The broader 195-minute
+and extra-restart rehearsal draft stays unapproved. Receipt must be confirmed by
+the owner; provider DNS or accepted/delivered status alone is insufficient.

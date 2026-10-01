@@ -103,11 +103,12 @@ an approved, completed MX diagnostic: removing Resend's `send` MX cleared the MX
 warning but left Squarespace forwarding disabled, with its Workspace notice.
 The original MX was restored and verified through all four authoritative servers,
 two public resolvers and Resend status. The owner subsequently completed ImprovMX
-signup. Free is active and three exact aliases persisted, including A's tagged
-address, with no catch-all. Squarespace requires renewed Google verification
-before the approved DNS edit; no ImprovMX DNS change has been submitted. Next:
-verify in the DNS tab, apply the approved delta and check provider/DNS status.
-Delivery tests and rehearsal extensions remain unapproved.
+signup and Squarespace reauthentication. Free is Active, three exact aliases
+persisted including A's tagged address, and the approved MX/SPF changes are live.
+All six DNS sources agree, 72 retained-record comparisons passed, and Resend
+sending remains verified. No catch-all remains. Next: approve the separate
+[three-message delivery test](p3-mail-route-delivery-test.md) and establish owner
+receipt; rehearsal extensions remain unapproved.
 Scope C/D, returning sign-in, replay/contention,
 deletions/support/drain and cleanup against the remaining time; another first-phase
 recovery is not already allocated. Resolve original support/privacy mailbox access

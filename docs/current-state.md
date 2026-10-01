@@ -1,17 +1,19 @@
 # Current state
 
 
-## Squarespace MX diagnostic completed and restored, October 1
+## ImprovMX routing active; delivery tests pending, October 1
 
-**Current mail setup:** the owner completed normal ImprovMX signup. Its Free plan
-is active, and all three exact aliases (`brian`, `privacy`, `brian+tableus-p3-a`)
-to the approved private inbox persisted after reload. The provider's automatic
-catch-all was renamed to `brian` before DNS activation; no catch-all remains.
-The exact tagged alias was accepted without a paid feature. The authenticated
-DNS requirements match the approved two MX additions and merged single SPF edit.
-Squarespace requires renewed Google verification before saving; no ImprovMX DNS
-change has been submitted. Next: owner verifies in the DNS tab, then apply and
-verify the already-approved DNS delta. Delivery remains untested.
+**Current mail setup:** ImprovMX Free is **Active**. The owner completed signup
+and Squarespace reauthentication; the three exact aliases (`brian`, `privacy`,
+`brian+tableus-p3-a`) persisted to the approved private inbox, with no catch-all.
+Both apex MX records and the single merged SPF were saved within the approved
+scope. All four authoritative servers and Cloudflare/Google resolvers returned
+the exact values; 72 retained-record comparisons passed, including sending DNS,
+website records, DKIM, DMARC and nameservers. Authoritative TTLs are preserved.
+Resend still reports verified sending and all three sending records verified.
+This establishes configuration readiness; no delivery probe was sent.
+Next: approve the separate [three-message delivery test](p3-mail-route-delivery-test.md), then verify
+owner receipt by label before preparing any rehearsal resume.
 
 The owner approved the brief remove/inspect/restore test and completed required
 Google reauthentication. Removing only the Resend `send` MX cleared Squarespace's
@@ -31,15 +33,15 @@ This is configuration verification, not a test email or global absence measureme
 
 During the diagnostic no forward, destination submission, provider account,
 subscription, SMTP or other DNS change occurred. Subsequent ImprovMX alias setup
-is recorded above. The apex still has no inbound MX; delivery to A's original
-address and support/privacy receipt remain unproven. Staging stayed stopped, with the same
+and DNS activation are recorded above. Delivery to A's original address and
+support/privacy receipt remain unproven. Staging stayed stopped, with the same
 18m14.050s remaining and no rehearsal counter changes. The proposed time/restart/
 probe extensions remain unapproved.
 
 The exact ImprovMX setup was approved at `ba5ec9546a1d668e0c2b91b52aa7af72e7f6be06`,
 then held while investigating Squarespace. The owner has now explicitly resumed
-that alternative; its exact aliases are now saved, awaiting Squarespace
-reauthentication and the approved DNS edit. Do not repeat this completed test.
+that alternative; its exact aliases and approved DNS are now active. Do not
+repeat this completed test.
 See [the routing/remaining-case scope](p3-mail-routing-and-remaining-cases.md) and
 [the diagnostic evidence](evidence/mail-routing-2026-10-01/squarespace-mx-test.json).
 
