@@ -561,3 +561,18 @@ eight Auth users/six profiles, A still unverified, empty queue and zero campaign
 provider rows. No body/code was read or recorded. Owner verification is pending;
 handoff cutoff is `00:10:27.467806Z`. Counts are four OTP requests and three delivered
 email/verification allowances reserved. No B/C/D replacement or new account yet.
+
+The owner had not completed verification when the five-minute handoff expired.
+The cutoff began `00:10:29.460276Z`, successfully stopped API/worker, removed both
+schedules and disabled future API admission, then verified both deployments stopped
+at `00:10:42.962902Z`. Process 28701 exited zero. Receipt is saved privately as
+`next-attempt-cutoff.json`. The accounting endpoint is verified stop, not a claimed
+exact instance stop time: 459.725954 seconds charged, total 5859.725954 seconds used,
+3140.274046 seconds remaining (2240.274046 first-phase plus 900 final-phase).
+
+Cutoff database readback finds A unverified and without a profile, eight Auth
+users/six profiles, one active reservation, empty deletion queue and zero new
+provider rows. Ledger window is closed and both stop flags true. The single approved
+recovery resume remains unused; wait for owner readiness and reconcile the absolute
+reservation expiry before reusing or resending. No additional send, invitation,
+worker invocation, Auth deletion or provider evaluation occurred during containment.

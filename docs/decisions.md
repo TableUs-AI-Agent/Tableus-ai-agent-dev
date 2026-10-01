@@ -644,6 +644,9 @@ or automated mailbox reading is introduced. The
 `a5f3de877f46673382b02ba69979eae12b295eb3`; only its four ceilings changed in the
 ledger. Restart 3/7 reused the approved image, and A received a replacement invite
 plus one requested code using the same unverified Auth identity. The five-minute
-handoff cutoff remains binding while awaiting owner verification. Hosted
+handoff cutoff subsequently stopped both services before verification. Charge time
+through verified stop, retain the unused recovery resume, and wait for owner
+readiness before spending it. Do not resend automatically or extend a reservation.
+Hosted
 replay/contention evidence stays open rather than claiming repeated UI clicks prove
 it; neither criterion is waived by this proposal.

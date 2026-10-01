@@ -1,9 +1,11 @@
 # Current state
 
-At October 1 00:05 UTC (September 30 evening Central), approved restart **3/7**
-is live: deployment `dd2c6643-3463-4923-9400-87ba93c50226`, unchanged source
+At October 1 00:10:42 UTC (September 30 evening Central), API and worker are
+verified stopped after the five-minute A handoff cutoff. Approved restart **3/7**
+had passed: deployment `dd2c6643-3463-4923-9400-87ba93c50226`, unchanged source
 `2eefdc51345aeaa7951ffb343954c1669f9280c5` and approved image digest. Readiness and
-both A/B exact-origin CORS preflights passed. Worker remains stopped/unscheduled.
+both A/B exact-origin CORS preflights passed. Both schedules are null and future
+API deletion admission is false. No recovery resume has been used.
 The approved extension records ten invitations, 150 live minutes, seven restarts
 and 45 status reads; financial/other attempt caps are unchanged.
 
@@ -11,17 +13,20 @@ A's replacement invitation is issued (7/10 consumed). One fresh code was request
 at `2026-10-01T00:05:27.467806Z` through the visible in-app links form. Database
 readback verifies the same existing Auth identity, still unverified, eight total
 Auth users/six profiles, empty deletion queue and no campaign provider rows. Its
-reservation expires `00:25:25.923418Z`. Owner code entry is pending; do not claim
+reservation expires `00:25:25.923418Z`. Cutoff readback still finds A unverified
+without a profile, one active reservation and no queue/provider rows. Do not claim
 enrollment. OTP counters are four requests, three deliveries and three verification
 submissions conservatively reserved. Known status reads are 16/45.
 
-The first-phase window began `00:03:03.236948Z`, deadline `00:48:03.236948Z`.
-The durable cutoff is armed (local process session 28701); it stops early at
-`00:10:27.467806Z` if the manual A handoff remains unresolved. Ninety prior minutes
-remain charged; the current window runs against 60 approved remaining minutes,
-with 15 reserved for the final phase. Next: Brian verifies the newest code directly
-in the prepared TableUs tab; confirm Plans/profile creation and clear the handoff
-deadline before advancing to B. Full acceptance, including hosted replay/contention,
+The first-phase window began `00:03:03.236948Z`; containment began `00:10:29.460276Z`
+and stopped readback completed `00:10:42.962902Z`. Cutoff process 28701 exited
+successfully. Charge 459.725954 seconds through verified stop as a conservative
+accounting endpoint, not an exact instance-stop timestamp. Cumulative use is
+97m39.726s; **52m20.274s remain**, including the 15-minute final-phase reserve.
+Next: Brian confirms readiness with the correct inbox and form open, then use the
+already-approved single recovery resume after checking reservation validity and
+arming a new cutoff. Hold verification until the API is ready; no automatic resend.
+Full acceptance, including hosted replay/contention,
 remains open. The following paragraphs preserve the preceding stopped checkpoint.
 
 At the September 29 22:58 UTC check, API and worker deployments are both stopped,
@@ -57,8 +62,8 @@ was subsequently approved: totals of ten invitations, 150 live minutes,
 seven same-image restarts and 45 status reads; spending and all other caps unchanged.
 A/B in-app forms were prepared without invitation codes or submission. Approval
 changed only those four ceilings. The prior temporary helpers are no longer present;
-the durable replacement cutoff passed eight local checks and is now armed for the
-current window above. Hosted replay/contention
+the durable replacement cutoff passed eight local checks and successfully contained
+the window above. Hosted replay/contention
 remain open; the normal form alone does not supply reliable evidence for them.
 
 Brian confirmed all eight synthetic support messages reached the four aliases and

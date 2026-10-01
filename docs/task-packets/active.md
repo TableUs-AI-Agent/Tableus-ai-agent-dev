@@ -20,7 +20,7 @@ tests, 326 JavaScript tests and five browser journeys, zero skips, plus lint/typ
 migrations, deterministic evaluation, contracts, builds and smoke. Local readiness,
 restricted PostgreSQL and browser evidence remain applicable to unchanged inputs.
 
-## Current live checkpoint, October 1 00:05 UTC / September 30 Central
+## Current stopped checkpoint, October 1 00:10 UTC / September 30 Central
 
 Brian explicitly approved [the extension](../p3-rehearsal-next-attempt.md) at
 `a5f3de877f46673382b02ba69979eae12b295eb3`. Ledger ceilings are now ten invitations,
@@ -33,28 +33,36 @@ $0.7525180 above the original baseline; this delayed aggregate is not exact spen
 Restart **3/7** is SUCCESS and same-image verified: deployment
 `dd2c6643-3463-4923-9400-87ba93c50226`, source `2eefdc51345aeaa7951ffb343954c1669f9280c5`,
 image `sha256:4fc94ba63d5ee76f5e9e25868a0a347db252b12d4defacfcfa30078598d4c5b8`.
-Readiness and A/B CORS passed. Deletion enabled/inline false; worker stopped/no cron.
+Readiness and A/B CORS passed before the cutoff. API and worker are now verified
+stopped/no cron; future API deletion admission false, inline false.
 A replacement invite is saved privately as `a-next-invite.json`, expiring October 2
 at `00:03:28.477022Z`; invitations used 7/10. No B/C/D replacement issued yet.
 
 One A code was requested at `2026-10-01T00:05:27.467806Z`. The same existing Auth
 identity was verified before/after; eight Auth users/six profiles, A unverified,
-empty queue and zero campaign provider rows. Reservation expiry `00:25:25.923418Z`.
+empty queue and zero campaign provider rows. Cutoff readback confirms A remains
+unverified without a profile, with one active reservation. Reservation expiry
+`00:25:25.923418Z`.
 Counts: four OTP requests, three delivered-email/verification allowances reserved;
 one readiness read brings known status reads to 16/45. No new account was created.
 
-The window started `00:03:03.236948Z` and ends `00:48:03.236948Z`. Durable cutoff
-process **28701** is armed for window `dc025282-572b-48d7-99ba-43bf60e65af1` and will
-contain early at the A handoff deadline `00:10:27.467806Z` (7:10:27 p.m. Central) if
-unresolved. Do not clear that deadline until successful verification is observed.
-The 90 prior charged minutes remain; current elapsed time is additional and the
-15-minute final-phase reserve is retained.
+The window started `00:03:03.236948Z`, with maximum deadline `00:48:03.236948Z`.
+Durable cutoff process **28701** contained window `dc025282-572b-48d7-99ba-43bf60e65af1`
+for the unresolved A handoff: began `00:10:29.460276Z`, verified both stopped at
+`00:10:42.962902Z`, then exited zero. The receipt is `next-attempt-cutoff.json`.
+Charge **459.725954 seconds** through the verified-stop timestamp as a conservative
+accounting endpoint; exact instance stop time is unknown. Ledger window/session
+is closed. Total consumed **97m39.726s**, remaining **52m20.274s**, of which
+**37m20.274s** is available for the incomplete first phase and 15 minutes reserved.
+The single approved handoff recovery resume remains unused. Restarts used 3/7.
 
-**Next: Brian enters the newest code in in-app tab 1, selects Verify and continue,
-and reports Plans/error without sharing the code. Verify actual profile creation
-and clear the handoff deadline before B.** Tab 2 is B's separate existing Preview
-origin. If the cutoff has fired, reconcile before any action; do not submit/restart
-blindly. No full acceptance or hosted replay/contention pass is implied.
+**Next: wait for Brian's readiness with the correct inbox and form open, then use
+the already-approved recovery resume.** Check whether A's reservation is still
+valid before choosing reuse versus a charged resend; no new invitation is needed
+while A's replacement remains valid. Arm a new cutoff and verify API ready before
+asking Brian to submit. Preserve the in-app form and private invitation. Clear the
+handoff deadline only after actual profile creation. Tab 2 is B's separate existing
+Preview origin. No full acceptance or hosted replay/contention pass is implied.
 
 ## Historical checkpoint, September 30: email receipt confirmed
 
@@ -263,7 +271,8 @@ containment after five minutes without verified enrollment.
 The old `/private/tmp` operator scripts no longer exist. A replacement
 `next-attempt-cutoff.py` is now saved in the durable private rehearsal directory,
 with eight local checks and syntax compilation passed; its hash is in the proposal
-and private ledger. It is now armed as recorded above. Verify its receipt and state
+and private ledger. It successfully stopped the window above and is no longer
+running. Arm a new window before the approved recovery. Verify its receipt and state
 before additional actions; never assume an old process is running. The durable private
 ledger and earlier stop receipts remain available. Hosted same-account
 replay/contention still need a supported
