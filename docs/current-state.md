@@ -1,5 +1,26 @@
 # Current state
 
+Recovery checkpoint, October 1 00:24 UTC / September 30 Central: Brian confirmed
+readiness. A had successfully verified Auth while the API was stopped but still
+had no application profile; the form showed a network-unavailable error. Approved
+recovery restart **4/7** is ready on the unchanged image/source, deployment
+`e26c892c-04d7-47ad-a71f-89b0b22dabf3`. Both exact-origin CORS checks passed; worker
+remains stopped/unscheduled. The single handoff recovery slot is now consumed.
+
+The normal form revalidated the same A invitation and requested one fresh code at
+`00:24:24.255314Z`; reservation expiry `00:44:23.168219Z`. Eight Auth users/six
+profiles remain, A Auth confirmed but membership incomplete. Counts: five OTP
+requests, four delivery/verification allowances reserved, status reads 17/45.
+No replacement identity or invitation was created. Current window began
+`00:22:05.094507Z`, maximum deadline `00:59:25.368553Z`; cutoff process 64575 is
+armed with handoff deadline `00:29:24.255314Z`. The preceding 97m39.726s remain
+charged; this window can use the remaining 37m20.274s first-phase allocation,
+preserving 15 final-phase minutes. Next: Brian submits only the newest code in the
+visible form; verify Plans/profile creation and clear the handoff deadline before
+advancing. A second handoff timeout ends this attempt for a new scope decision.
+
+## Preceding stopped checkpoint
+
 At October 1 00:10:42 UTC (September 30 evening Central), API and worker are
 verified stopped after the five-minute A handoff cutoff. Approved restart **3/7**
 had passed: deployment `dd2c6643-3463-4923-9400-87ba93c50226`, unchanged source

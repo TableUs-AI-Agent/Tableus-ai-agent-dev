@@ -100,7 +100,11 @@ with unchanged spending caps. Restart 3/7 passed on the same image; A's replacem
 invite and one fresh OTP are issued, same existing Auth identity confirmed. The
 five-minute handoff cutoff then verified services stopped with A still unverified.
 52m20.274s remain, including 15 final-phase minutes; one approved recovery resume
-is unused and awaits owner readiness. No group/deletion or
+was available. Brian then confirmed readiness; restart 4/7 passed on the same
+image and the single recovery slot is consumed. A had verified Auth while the API
+was stopped but membership remained incomplete; one normal-flow fresh code was
+requested using the same identity/invitation, with owner entry pending under the
+second five-minute cutoff. No group/deletion or
 hosted replay/contention acceptance has passed. The separate
 natural-expiry fixture elapsed September 29 at 9:48:55 p.m. Central, but its HTTP
 rejection is still untested. No pilot acceptance is implied.

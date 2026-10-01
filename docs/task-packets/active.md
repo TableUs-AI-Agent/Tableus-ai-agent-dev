@@ -20,7 +20,33 @@ tests, 326 JavaScript tests and five browser journeys, zero skips, plus lint/typ
 migrations, deterministic evaluation, contracts, builds and smoke. Local readiness,
 restricted PostgreSQL and browser evidence remain applicable to unchanged inputs.
 
-## Current stopped checkpoint, October 1 00:10 UTC / September 30 Central
+## Current recovery checkpoint, October 1 00:24 UTC / September 30 Central
+
+Brian replied ready. Fresh readback found A Auth confirmed, no profile, same
+eight-user/six-profile roster and empty queue/provider activity. The visible form
+showed `Network unavailable. Reconnect and try again.` while API/worker remained
+stopped. The earlier OTP was consumed; do not retry it. The approved normal-flow
+resend reuses the same invitation and A identity.
+
+Restart **4/7** is SUCCESS/ready, same approved source/image: deployment
+`e26c892c-04d7-47ad-a71f-89b0b22dabf3`. A/B CORS passed. Worker stopped/no cron,
+API deletion enabled/inline false. The single handoff recovery resume is consumed.
+Window `b9e18f7d-cbd8-4312-820a-e15b04a5cf42` began `00:22:05.094507Z`, maximum
+deadline `00:59:25.368553Z`. Durable cutoff process **64575** is armed; old cutoff
+receipt was preserved as `next-attempt-handoff-stop.json` before rearming.
+
+A fresh code was requested at `00:24:24.255314Z`, reservation expiry
+`00:44:23.168219Z`. Auth confirmed/profile absent; eight Auth users/six profiles,
+empty queue. Counters: five OTP requests, four delivery/verification reservations,
+17/45 status reads. Invitations remain 7/10 and new Auth accounts 1/4.
+The form displays code entry without an error. **Next: Brian enters the newest
+code and selects Verify and continue; verify Plans/profile creation, then clear
+the handoff deadline `00:29:24.255314Z`.** Do not advance to B without enrollment.
+The hard first-phase budget is 37m20.274s from this window's start, preserving
+15 final-phase minutes. If this second handoff stalls, contain and report gaps;
+no further recovery resume is approved. B tab visibility is currently unconfirmed.
+
+## Historical stopped checkpoint, October 1 00:10 UTC / September 30 Central
 
 Brian explicitly approved [the extension](../p3-rehearsal-next-attempt.md) at
 `a5f3de877f46673382b02ba69979eae12b295eb3`. Ledger ceilings are now ten invitations,

@@ -650,3 +650,11 @@ readiness before spending it. Do not resend automatically or extend a reservatio
 Hosted
 replay/contention evidence stays open rather than claiming repeated UI clicks prove
 it; neither criterion is waived by this proposal.
+
+Brian subsequently confirmed readiness. A's Auth verification had succeeded while
+the API was stopped, leaving no application membership and a visible network error.
+Use the approved single recovery resume and one remaining resend through the normal
+form. Its normal validation refreshes the reservation; no timestamp is manually
+edited. Do not resubmit the consumed OTP or replace A. Restart 4/7 passed unchanged
+image/readiness/CORS; the new code handoff remains subject to the second five-minute
+cutoff, after which this attempt must stop for a new scope decision.

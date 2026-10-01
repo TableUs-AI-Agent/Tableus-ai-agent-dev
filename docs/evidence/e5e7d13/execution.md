@@ -576,3 +576,26 @@ provider rows. Ledger window is closed and both stop flags true. The single appr
 recovery resume remains unused; wait for owner readiness and reconcile the absolute
 reservation expiry before reusing or resending. No additional send, invitation,
 worker invocation, Auth deletion or provider evaluation occurred during containment.
+
+## Owner-ready recovery, October 1 00:24 UTC
+
+Brian replied ready. Fresh readback found A's Auth email confirmed but no profile;
+the form displayed a network-unavailable error. API and worker were still stopped,
+same approved image, no cron, eight Auth users/six profiles and empty queue/new
+provider rows. The consumed OTP was not retried. The existing form's supported
+recovery button reset the code field while retaining the A invitation and alias.
+
+The approved single recovery window began `00:22:05.094507Z`, with the remaining
+2240.274046 first-phase seconds and deadline `00:59:25.368553Z`. Cutoff process 64575
+armed before restart. The previous cutoff receipt is preserved privately as
+`next-attempt-handoff-stop.json`. Recovery restart 4/7 is deployment
+`e26c892c-04d7-47ad-a71f-89b0b22dabf3`, same source/image; readiness and both exact
+A/B origin preflights passed. Worker remains stopped/no cron; inline deletion false.
+
+One normal-form revalidation/send requested A's newest OTP at
+`00:24:24.255314Z` (`recovery_sent_at` because Auth is already confirmed). The normal
+API refreshed the same-recipient reservation to `00:44:23.168219Z`; no manual
+timestamp edit, new invitation or replacement identity. Auth roster remains eight,
+profiles six, queue empty. Code-entry form has no visible error; membership still
+pending. OTP requests 5/11, delivery/verification reservations 4/10 and 4/20;
+readiness brings known status reads to 17/45. Handoff cutoff `00:29:24.255314Z`.
