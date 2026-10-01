@@ -20,8 +20,16 @@ The [public DNS baseline](evidence/mail-routing-2026-10-01/dns-baseline.json) re
 website, mail and authentication answers before any edit. The existing Resend
 `send` MX/TXT, `resend._domainkey` TXT and DMARC answers are present. No DNS,
 forwarding, sender, SMTP, public contact or subscription change has occurred.
-The in-app Squarespace Domains tab is open at sign-in; authenticated Email settings
-and actual forwarding eligibility are still unavailable.
+The owner signed in and authenticated Email/DNS settings were inspected. Email
+shows Add Rule disabled with an existing-MX warning, and a Google Workspace
+management notice. DNS Settings contains no apex MX and just one MX at `send`,
+priority 10 to `feedback-smtp.us-east-1.amazonses.com`, TTL four hours. Removing
+that existing Resend record is not a safe way to unlock built-in forwarding. The
+UI does not establish whether the Workspace association is an additional blocker.
+The dashboard also confirms `links` A `76.76.21.21`, the existing apex/www records,
+Google and Resend DKIM, Google apex SPF, `send` SPF and DMARC. All are unchanged.
+Evidence: `/private/tmp/tableus-mail-forwarding-blocked.png` and
+`/private/tmp/tableus-mail-dns-baseline.png`.
 
 [Squarespace forwarding documentation](https://support.squarespace.com/hc/en-us/articles/19000909092237-Email-forwarding-with-a-Squarespace-domain)
 describes free forwarding for eligible managed domains and automatic mail DNS
@@ -31,28 +39,61 @@ that a base-address forward restores its OTP route. The destination must be a
 working inbox, and forwarding tests must originate elsewhere. Activation may take
 24–48 hours after destination verification; keep application services stopped.
 
-## Prepare a concrete mail change after dashboard access
+## Prepared alternative for owner review: ImprovMX Free
 
-Inspect the domain's Email and DNS settings, including any Workspace association
-and existing rules, without changing them. Prepare exact additions and any
-conflicts for owner review. The preferred bounded candidate is two explicit
-aliases—`brian@table-us.com` and `privacy@table-us.com`—to the owner's base Gmail
-inbox already supplied privately. Personal destination addresses remain outside
-Git. This is a candidate, not authorization to forward private correspondence.
+Squarespace's built-in candidate is blocked. The proposed alternative is
+[ImprovMX Free](https://improvmx.com/pricing/): one domain, 25 aliases, 500 forwards
+per day and seven days of email logs at $0. It supplies incoming forwarding only
+on the free tier, not a mailbox or outgoing SMTP. No account or cloud resource
+has been created and no owner address has been transmitted to this provider.
 
-Before saving, obtain approval for those exact recipients/destination and the
-provider-generated DNS changes. Preserve website routing and Resend sending
-records. Do not introduce a catch-all, change nameservers, remove authentication
-records, cancel Workspace or buy a service to work around eligibility. If these
-become necessary, return a separately prepared choice. Keep public contact
-addresses unchanged.
+Proposed exact recipients are `brian@table-us.com`, `privacy@table-us.com` and A's
+existing `brian+tableus-p3-a@table-us.com`, all to the owner's base Gmail already
+supplied privately. Keep the destination outside Git. This grants the forwarding
+provider processing access to incoming mail, and sends the selected correspondence
+to that inbox; it needs specific owner approval. Public addresses remain unchanged.
 
-A's original tagged identity requires a proven exact-address receiving route.
-Inspect whether a narrowly scoped supported rule is possible; if it is not,
-record A's returning sign-in as blocked rather than repointing its identity or
-using another address. Forwarding does not restore old Workspace message history.
-After approval, the owner handles provider reauthentication/destination verification
-normally; no password or OTP is requested in chat.
+The [alias guide](https://improvmx.com/guides/aliases/) describes explicit aliases,
+but the reviewed official documentation does not confirm plus-address behavior.
+Before DNS activation, the provider must accept the exact tagged recipient on its
+free tier without a catch-all, wildcard or paid rule. If it cannot, stop with the
+DNS unchanged and return a concrete alternative; do not repoint A's identity.
+Configuration acceptance alone is not delivery proof. Forwarding does not restore
+old Workspace messages or a complete Workspace mailbox.
+
+The [Squarespace DNS guide](https://improvmx.com/guides/squarespace/) and
+[SPF combination guide](https://improvmx.com/guides/combining-spf-records/) support
+this bounded DNS proposal, subject to matching the provider's authenticated
+configuration before saving:
+
+| Action | Host | Type | Priority | TTL | Value |
+| --- | --- | --- | --- | --- | --- |
+| Add | `@` | MX | 10 | 4 hours | `mx1.improvmx.com` |
+| Add | `@` | MX | 20 | 4 hours | `mx2.improvmx.com` |
+| Edit existing single record | `@` | TXT | — | retain 1 hour | `v=spf1 include:spf.improvmx.com include:_spf.google.com ~all` |
+
+The last row replaces `v=spf1 include:_spf.google.com ~all`; do not create a
+second SPF record. Read-only DNS validation found two SPF lookup terms on October 1, below the
+ten-lookup limit; recheck before activation if the provider values change.
+Preserve `send` MX/TXT, both DKIM records, DMARC, domain-connect, all website
+records and nameservers. Do not follow a generic guide's broad instruction to
+delete default DNS records. No catch-all, SMTP credentials, paid upgrade, domain
+transfer or Workspace cancellation is proposed. Any different provider-required
+change must be prepared and reviewed before applying it.
+
+After exact approval, the owner handles account terms, reauthentication and
+inbox verification normally, without passwords or codes in chat. Keep DNS
+unchanged if the provider creates a mandatory catch-all or cannot configure all
+three recipients without broadening scope. Once configured, compare the live
+zone with the baseline, apply only the approved three changes, verify authoritative
+DNS/provider status and retained Resend sending status, then test the three routes.
+If setup fails after a partial DNS change, the prepared rollback is to remove
+only the two newly added apex MX records and restore the original single SPF
+value; this restores the currently broken inbound baseline rather than mailbox
+service. Approval must cover that bounded rollback, not deletion of prior records.
+
+A Workspace restoration is an alternative owner choice with its own subscription
+and receiving-DNS requirements; no renewal, price or successful recovery is implied.
 
 Prepare up to three clearly marked, non-sensitive delivery probes: public support,
 public privacy, and A's exact existing tagged address if supported. Use the
@@ -71,7 +112,7 @@ arming an API window. Current use is 131m45.950286s of 150m, leaving 18m14.04971
 15m are reserved for the final phase. Counters are cumulative and never reset.
 
 The following draft gives the unfinished manual cases a bounded first phase. It
-is not yet presented as execution-ready because mail eligibility is unknown.
+is not yet presented as execution-ready because the new provider is unapproved and A's exact route is unproven.
 
 | Allowance | Current ceiling | Used | Draft ceiling | Reason |
 | --- | ---: | ---: | ---: | --- |
@@ -138,7 +179,9 @@ manual sequence alone does not grant full P3 acceptance, production or real inta
 
 ## Immediate next step
 
-Brian signs into the already-open Squarespace tab. Inspect Email settings and
-finish the exact forwarding proposal before asking to save it. No DNS changes,
-mail probes, account operations or API restart occurred during this preparation;
-the stopped clock and all current allowances are unchanged.
+The owner chooses whether to approve the exact free ImprovMX account/aliases/DNS
+proposal (including bounded rollback) or restore Workspace. Provider setup and
+terms may require owner action. No DNS changes, mail probes, account operations
+or API restart occurred during inspection; all current allowances and the stopped
+clock remain unchanged. The separate remaining-case time/restart/probe extension
+is still a draft and cannot be inferred from mail-provider approval.

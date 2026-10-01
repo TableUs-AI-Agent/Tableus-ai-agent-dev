@@ -99,8 +99,11 @@ API/worker are verified stopped/unscheduled, future admission false, no live clo
 72 Places attempts and one logical AI call ($0.0005715 estimated AI). No C/D
 account or deletion queue exists. A/B and their shared synthetic plan remain.
 The [routing/remaining-case draft](p3-mail-routing-and-remaining-cases.md) now
-records absent inbound MX and pending Squarespace sign-in; no change/extension
-is approved. Next: finish mail eligibility and scope C/D, returning sign-in, replay/contention,
+records absent inbound MX and signed-in inspection: Squarespace forwarding is
+disabled, and the sole MX belongs to Resend's `send` subdomain. A free ImprovMX
+alternative has an exact DNS/alias draft, with A's tagged route still unproven;
+no provider, DNS or allowance change is approved. Next: owner chooses a receiving
+route and scopes C/D, returning sign-in, replay/contention,
 deletions/support/drain and cleanup against the remaining time; another first-phase
 recovery is not already allocated. Resolve original support/privacy mailbox access
 before claiming that acceptance or inviting real users. See the active packet for

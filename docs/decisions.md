@@ -756,3 +756,22 @@ unsupported plus-addressing may block the candidate, especially A's tagged route
 No catch-all, identity substitution, nameserver migration, paid subscription or
 new provider is inferred from the request to continue. The remaining-test budget
 is a draft only; services and the current cumulative clock remain stopped.
+
+
+### Preserve sending DNS when restoring inbound mail — 2026-10-01
+
+Authenticated Squarespace Email blocks forwarding because it detects existing MX,
+while DNS Settings shows only the Resend `send` MX and no apex MX. Its Google
+Workspace management notice is also present; the UI does not establish that
+removing the MX would resolve every eligibility issue. Do not delete the sending
+record as a diagnostic workaround. Keep all existing website and sender records.
+
+Prepare ImprovMX Free as a separately approved alternative: explicit support and
+privacy aliases to the owner's private base inbox, plus A's exact tagged alias
+only if supported, two apex MX additions and one merged SPF edit. Do not activate
+DNS until all three exact recipients are configured without a catch-all or paid
+feature. Public documentation does not establish the tagged alias's behavior;
+verify configuration and then delivery before claiming restoration. Introducing
+a mail processor requires an explicit owner choice; no account was created,
+private destination transmitted, DNS changed or probe sent during preparation.
+The rehearsal extension remains a separate unapproved draft.

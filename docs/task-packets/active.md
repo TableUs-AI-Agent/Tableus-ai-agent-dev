@@ -28,12 +28,20 @@ existing domain verified for sending, with receiving disabled. Outbound Gmail OT
 success therefore does not restore public support/privacy receipt. Website and
 outbound-authentication DNS were captured before any change.
 
-The in-app Squarespace Domains tab requires normal owner sign-in. Its Email
-settings/forwarding eligibility have not been inspected. Built-in forwarding is a
-candidate; documented plus-addressing limits mean A's original tagged route cannot
-be assumed to work. No route, recipient, DNS, public contact or subscription changed.
+The owner signed in. Squarespace Email disables Add Rule with an existing-MX
+warning and identifies the domain as managed by Google Workspace. DNS Settings
+shows just one MX: `send` priority 10 to `feedback-smtp.us-east-1.amazonses.com`,
+part of the existing Resend setup. There is no apex MX. Do not remove this sending
+record merely to unlock forwarding. The UI does not isolate whether the Workspace
+association is another blocker. Documented plus-addressing limits also prevent
+assuming that built-in forwarding could restore A's original tagged address.
+No route, recipient, DNS, public contact or subscription changed.
 
-Next: inspect authenticated Email settings and finish the exact forwarding proposal.
+Next: owner reviews the prepared free ImprovMX alternative or chooses Workspace
+restoration. The alternative adds two apex MX records, merges the existing SPF,
+and uses explicit aliases to the private owner inbox. A's exact tagged alias must
+be accepted before DNS activation and its delivery proven before any API resume.
+A new provider and its access to incoming mail are not yet authorized.
 The remaining manual-case draft proposes 45 added live minutes, one first-phase
 resume and three route-probe emails, while preserving financial/other attempt caps.
 **None of those extensions or forwarding rules is approved.** Existing services
