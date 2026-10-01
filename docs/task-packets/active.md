@@ -37,14 +37,18 @@ association is another blocker. Documented plus-addressing limits also prevent
 assuming that built-in forwarding could restore A's original tagged address.
 No route, recipient, DNS, public contact or subscription changed.
 
-Next: owner reviews the prepared free ImprovMX alternative or chooses Workspace
-restoration. The alternative adds two apex MX records, merges the existing SPF,
-and uses explicit aliases to the private owner inbox. A's exact tagged alias must
-be accepted before DNS activation and its delivery proven before any API resume.
-A new provider and its access to incoming mail are not yet authorized.
+The owner approved the exact free ImprovMX setup at `ba5ec9546a1d668e0c2b91b52aa7af72e7f6be06`,
+then asked whether Squarespace itself could handle forwarding. Only the ImprovMX
+landing page was opened; no account, alias, destination submission or DNS change
+occurred. Setup is held while that route choice is clarified. Squarespace's official
+eligibility guidance and no-plus-addressing limitation remain; no supported way
+to bypass the observed existing-MX restriction has been verified.
+Next: resolve whether to pursue Squarespace support or continue the approved
+ImprovMX setup. A's exact tagged alias must be accepted before DNS activation and
+its delivery proven before any API resume.
 The remaining manual-case draft proposes 45 added live minutes, one first-phase
 resume and three route-probe emails, while preserving financial/other attempt caps.
-**None of those extensions or forwarding rules is approved.** Existing services
+**The rehearsal extensions remain unapproved; only the exact mail setup was approved.** Existing services
 stay stopped and 18m14.050s remain under the current approval. The full preparation
 and separate hosted-evidence gaps are in [the routing/remaining-case draft](../p3-mail-routing-and-remaining-cases.md).
 

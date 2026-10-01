@@ -775,3 +775,10 @@ verify configuration and then delivery before claiming restoration. Introducing
 a mail processor requires an explicit owner choice; no account was created,
 private destination transmitted, DNS changed or probe sent during preparation.
 The rehearsal extension remains a separate unapproved draft.
+
+
+The owner approved the exact ImprovMX proposal at `ba5ec9546a1d668e0c2b91b52aa7af72e7f6be06`,
+then asked if Squarespace itself could provide forwarding. Hold setup for that
+choice without treating the question as approval to remove Resend DNS or change
+A's identity. The ImprovMX landing page was opened but no private form submission,
+account creation or DNS edit occurred. Existing rehearsal/probe limits remain.

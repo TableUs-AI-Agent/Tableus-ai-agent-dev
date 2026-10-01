@@ -102,8 +102,9 @@ The [routing/remaining-case draft](p3-mail-routing-and-remaining-cases.md) now
 records absent inbound MX and signed-in inspection: Squarespace forwarding is
 disabled, and the sole MX belongs to Resend's `send` subdomain. A free ImprovMX
 alternative has an exact DNS/alias draft, with A's tagged route still unproven;
-no provider, DNS or allowance change is approved. Next: owner chooses a receiving
-route and scopes C/D, returning sign-in, replay/contention,
+the owner approved that exact mail setup, then questioned whether Squarespace
+could handle it directly. No setup mutation occurred; clarify that choice before
+continuing. Rehearsal extensions remain unapproved. Scope C/D, returning sign-in, replay/contention,
 deletions/support/drain and cleanup against the remaining time; another first-phase
 recovery is not already allocated. Resolve original support/privacy mailbox access
 before claiming that acceptance or inviting real users. See the active packet for

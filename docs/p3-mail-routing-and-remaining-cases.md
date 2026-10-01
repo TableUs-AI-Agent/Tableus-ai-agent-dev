@@ -1,10 +1,12 @@
 # P3: mail-route recovery and remaining manual cases
 
 Prepared October 1, 2026, from `8fecf04b8cfa57808692e959a27447fd418fb906`.
-**Preparation only. Routing changes and revised rehearsal allowances are not
-approved.** The owner's instruction to continue authorizes investigation and
-preparation; do not infer permission to create a forward, migrate mail, renew a
-subscription or extend the stopped campaign.
+**The owner approved the exact ImprovMX account/aliases/DNS setup at
+`ba5ec9546a1d668e0c2b91b52aa7af72e7f6be06`, including bounded rollback.**
+They then asked whether Squarespace could handle forwarding directly. Setup is
+held for that route choice; only the ImprovMX landing page has been opened.
+No account, recipient submission, forwarding or DNS mutation occurred.
+Revised rehearsal and route-probe allowances remain unapproved.
 
 ## Verified routing state
 
@@ -39,7 +41,7 @@ that a base-address forward restores its OTP route. The destination must be a
 working inbox, and forwarding tests must originate elsewhere. Activation may take
 24–48 hours after destination verification; keep application services stopped.
 
-## Prepared alternative for owner review: ImprovMX Free
+## Approved alternative, held for route clarification: ImprovMX Free
 
 Squarespace's built-in candidate is blocked. The proposed alternative is
 [ImprovMX Free](https://improvmx.com/pricing/): one domain, 25 aliases, 500 forwards
@@ -51,7 +53,7 @@ Proposed exact recipients are `brian@table-us.com`, `privacy@table-us.com` and A
 existing `brian+tableus-p3-a@table-us.com`, all to the owner's base Gmail already
 supplied privately. Keep the destination outside Git. This grants the forwarding
 provider processing access to incoming mail, and sends the selected correspondence
-to that inbox; it needs specific owner approval. Public addresses remain unchanged.
+to that inbox; the owner approved this specific scope. Public addresses remain unchanged.
 
 The [alias guide](https://improvmx.com/guides/aliases/) describes explicit aliases,
 but the reviewed official documentation does not confirm plus-address behavior.
@@ -112,7 +114,7 @@ arming an API window. Current use is 131m45.950286s of 150m, leaving 18m14.04971
 15m are reserved for the final phase. Counters are cumulative and never reset.
 
 The following draft gives the unfinished manual cases a bounded first phase. It
-is not yet presented as execution-ready because the new provider is unapproved and A's exact route is unproven.
+is not yet presented as execution-ready because the provider choice is being reconsidered and A's exact route is unproven.
 
 | Allowance | Current ceiling | Used | Draft ceiling | Reason |
 | --- | ---: | ---: | ---: | --- |
@@ -179,9 +181,11 @@ manual sequence alone does not grant full P3 acceptance, production or real inta
 
 ## Immediate next step
 
-The owner chooses whether to approve the exact free ImprovMX account/aliases/DNS
-proposal (including bounded rollback) or restore Workspace. Provider setup and
-terms may require owner action. No DNS changes, mail probes, account operations
-or API restart occurred during inspection; all current allowances and the stopped
-clock remain unchanged. The separate remaining-case time/restart/probe extension
-is still a draft and cannot be inferred from mail-provider approval.
+Clarify whether the owner wants a Squarespace support check or continuation of
+the already-approved ImprovMX setup. Squarespace itself offers free forwarding,
+but its current UI blocks adding rules and its official documentation excludes
+plus addressing. No supported coexistence workaround has been established for the
+observed Resend subdomain MX restriction. Do not remove that record speculatively.
+No provider account, DNS change, test mail or API restart occurred. The stopped
+clock and all rehearsal counters remain unchanged; mail setup approval does not
+approve the separate remaining-case/probe budget.
