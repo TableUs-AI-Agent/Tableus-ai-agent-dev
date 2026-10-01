@@ -972,3 +972,16 @@ address, reserve the owner's reply, and retain verification_required until Brian
 confirms mailbox reply/receipt through the privacy route. Keep pending separate
 from accepted email and from completed deletion. Owner confirms D deletion in the
 normal Account screen; bind the exact queued row before discarding that session.
+
+
+### Treat D self-forwarding receipt as unverified and contain — 2026-10-01
+
+The owner replied from the destination Gmail inbox to the privacy alias forwarding
+back to that inbox. ImprovMX reported a self-loop, and the owner had not received
+the copy. This was a flaw in the rehearsal receipt setup, not evidence that normal
+incoming forwarding failed. Preserve the earlier external-route proofs; do not
+resend, change DNS, or claim verified support correspondence. Check Spam for the
+already-sent reply. Under the approved unexpected-provider stop condition, close
+the live window using verified service-stop time and preserve D/B sessions, A/C
+pending jobs and unused allowances. Review the bounded remaining sequence before
+any new API resume; do not silently repurpose a reserved restart.

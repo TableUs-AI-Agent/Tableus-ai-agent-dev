@@ -107,7 +107,9 @@ signup without replaying the OTP. PR #11 merged as `bffa284`; hosted CI passed
 third Preview is deployed to the two staging aliases. Production is unchanged.
 The owner approved restart ceiling 12 and live ceiling 240m, with unchanged
 financial/message limits. Restart 9/12 passed on the original API image.
-The current first-phase cutoff begins 22:34:40Z October 1; final 15m stays reserved.
+The first phase stopped early at 22:27:42Z October 1 after D support mail hit a
+self-forwarding loop. Cumulative live time is 214m9.085174s/240m; final 15m remains
+reserved. API/worker are stopped and unscheduled; future admission is off.
 
 C recovered successfully with its original Auth session, one profile/redemption
 and no new OTP. The owner removed its sole plan and confirmed deletion; trusted
@@ -115,12 +117,13 @@ readback verifies its profile/plan absent and exact Auth-deletion job pending, w
 zero attempts. A also remains pending. C signed out; D completed signup with one
 profile/redemption and no plans. Its trusted account binding is preserved privately,
 with the fresh support challenge sent and owner-reported reply sent; receipt
-through privacy remains unconfirmed. D's final account
-confirmation remains with the owner. B's session is preserved.
+through privacy remains unconfirmed. Check Spam for the existing reply, without
+a resend or DNS change. D's profile is still intact with no deletion job; hold its
+final confirmation while API is stopped. B's session is preserved.
 D deletion/support, worker removal, B
 cleanup and final returning/deletion checks remain incomplete. Hosted redemption
-replay/contention and server-side deletion refusal remain untested. Mail receipt
-is complete; support-case acceptance remains separate. The active packet owns
+replay/contention and server-side deletion refusal remain untested. The three
+external mail-route probes passed; support-case acceptance remains separate. The active packet owns
 current counters and next actions. No P3 acceptance, Priority 4/native work or
 real-pilot intake is implied.
 

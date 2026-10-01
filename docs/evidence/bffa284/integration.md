@@ -78,10 +78,28 @@ for support correspondence. One fresh challenge was accepted by Resend; the owne
 reply was reported sent at 22:25Z, not claimed received through privacy (13/17
 messages). Fresh Account UI still showed no deletion submitted. The prepared D Account
 confirmation is `/private/tmp/tableus-d-delete-ready.png`; no deletion claim yet.
-Next: owner verifies mailbox reply/receipt and confirms D deletion; bind the exact
-job before sign-out and the bounded queue drain.
+The prepared next step was mailbox reply verification followed by owner-confirmed
+D deletion; that step is now held by the containment below.
 A's Auth removal, D support flow, bounded worker drain and final B cleanup remain
 incomplete. Hosted redemption replay/contention and server-side deletion refusal
 remain untested. Staging progress is not P3/native/pilot acceptance. See the active
-packet/private ledger for the live deadline and latest consumption; charge the
-window at verified stop and preserve final 900 seconds.
+packet/private ledger for the closed window and latest consumption. The final
+900 seconds remain reserved.
+
+
+The owner reported the reply sent, then reported it missing and supplied an
+ImprovMX self-loop notice. [Official guidance](https://improvmx.com/guides/testing-forwarding-same-gmail-account/)
+confirms same-inbox Gmail forwarding can be deduplicated or land in Spam after
+Message-ID rewriting/re-signing. This setup issue is specific to the self-reply
+receipt test; earlier externally sent route probes remain passing evidence.
+No resend, DNS change or mailbox-authentication claim followed. Support receipt
+remains unconfirmed; the owner was asked to check Spam for the existing reply.
+
+The approved stop condition triggered containment. Durable receipt verifies API
+and worker stopped/unscheduled at 22:27:42.306461Z and future admission off. Charge
+2161.669938 seconds; cumulative 12849.085174 seconds, remaining 1550.914826,
+including final 900 seconds. Counters: restarts 9/12, worker invocations 1/4,
+Auth attempts 0/12, operator reads 34/45. Final trusted readback at 22:29:21Z:
+D profile/redemption 1/1, D jobs 0; A/C pending 2, completed 0, no attempt/lease/
+attention. Preserve D/B tabs. Further live sequencing needs review before resume;
+no spare recovery or resend was created by this early stop.

@@ -14,7 +14,7 @@ historical authority for their exact scope. The latest approved recovery is
 `fa282f2e2d242a4a02eaafa832d06d611753339f`; its first phase has ended. The owner separately approved the new Preview/recovery restart/time increase
 against handoff `b08cee4`. Prior usage is retained.
 
-## D signup verified; support reply and deletion prepared, October 1
+## Rehearsal stopped after D support reply self-loop, October 1
 
 [PR #11](https://github.com/TableUs-AI-Agent/Tableus-ai-agent-dev/pull/11) merged as
 `bffa2845f268ea8b1906b8de155aa130f199856e`, with the same full tree as passing CI
@@ -29,14 +29,15 @@ merge. Both production aliases remain on `dpl_7csJvHoJH9qgFZDijbwu3w36r2sK`.
 The old immutable Preview continues to hold B's session and its existing CORS
 allowance; do not move or sign out B prematurely.
 
-Approved recovery restart 9/12 uses unchanged API source `2eefdc5` and the approved
-image. API deployment `a72eeed7-5765-46f8-b0a3-943af20d0673` passed readiness/source
-and C/B exact-origin CORS at 21:53:49Z. Deletion admission is on, inline attempts
-off; the worker remains stopped and unscheduled. The 45-minute first phase began
-21:51:40.636523Z and ends 22:36:40.636523Z. Durable containment starts two minutes
-earlier, **22:34:40Z (5:34 p.m. Chicago)**. Do not extend this deadline. Preserve
-the final 900-second reserve. Prior closed usage remains 178m7.415236s; this active
-window is additional and must be charged at verified stop, within 240 minutes.
+Approved recovery restart 9/12 used unchanged API source `2eefdc5`. API deployment
+`a72eeed7-5765-46f8-b0a3-943af20d0673` and the existing worker were verified stopped
+and unscheduled at **22:27:42.306461Z**, with future API admission disabled and
+inline attempts false. No additional restart or worker invocation was consumed.
+The first phase closed early after an unexpected self-forwarding notice in D's
+support-reply test; its immutable deadline was retained. Exact charge:
+2161.669938 seconds, cumulative **214m9.085174s / 240m**. Remaining:
+1550.914826 seconds, including the untouched final 900-second reserve. No automatic
+recovery restart is allocated by this stop; reconcile the sequence before resuming.
 
 C recovered through its preserved Auth session with no extra OTP, then the owner
 removed its sole plan and confirmed account deletion. Trusted readback at 22:09:26Z
@@ -46,16 +47,19 @@ attempts, leases or attention flags. Their private identity bindings are preserv
 C signed out normally; sign-in account removal is still pending. Its fixture used
 two Places attempts ($0.049 on the approved cost basis), no AI call.
 
-D completed normal signup at 22:17:06Z. Trusted readback at 22:18:14Z confirms
-one profile/redemption, the expected fixture name and no owned plans. The OTP
-handoff is cleared; the phase cutoff remains 22:34:40Z. Its trusted account/address
-binding is saved privately, but mailbox correspondence verification is still
-pending. One approved fresh challenge was sent to that address; the owner reports
-the reserved reply sent (13/17 total messages). Receipt through privacy is still
-unconfirmed. The owner must confirm the reply returns through
-the privacy route before treating that correspondence as verified. D's Account
-page is prepared for the owner's irreversible deletion confirmation; no D deletion
-has been observed yet. Preserve B's old-origin session.
+D completed normal signup at 22:17:06Z. Trusted readback confirms one
+profile/redemption, expected fixture name and no owned plans. Its trusted
+account/address binding is saved privately. The fresh support challenge was sent;
+the owner replied but has not received the forwarded copy. ImprovMX's self-loop
+notice explains the same Gmail inbox sending through an alias back to itself.
+This does not invalidate the earlier three externally sent route probes. The
+support case remains verification_required; no incoming receipt is claimed.
+Check Spam for the already-sent reply without a resend or DNS change.
+
+Final readback at 22:29:21Z confirms D still has one profile/redemption and no
+deletion job. A/C are the only two pending jobs, with zero attempts, attention or
+leases. Preserve D and B tabs and all private bindings; do not click D deletion
+while the API is stopped. D deletion, worker drain and final B cases remain open.
 
 Preflight inspected the complete queue: exactly A's expected pending job, no
 unknown pending subject, lease or attention flag. Latest conservative hosting
@@ -64,15 +68,15 @@ D/B tabs and A/C private bindings. The [approved execution scope](../p3-session-
 private ledger govern all remaining operations; stale consumed helpers grant no
 new attempt. No native/production/real-user work or extra resend is authorized.
 
-Next: owner completes D's support email reply/receipt and final account confirmation.
-Verify its exact queued job before sign-out, admission pause and bounded drain.
+Next: owner checks Spam for the existing support reply. Record its actual receipt
+or unresolved outcome, then prepare a bounded revised sequence before any resume.
 Full P3 acceptance remains open, including support/drain and hosted gaps.
 
 ## Current cumulative allowances
 
 | Item | Used/reserved | Approved ceiling |
 | --- | ---: | ---: |
-| Live minutes | 178m7.415236s | 240m, first phase at most 45m and final 15m |
+| Live minutes | 214m9.085174s | 240m, first phase at most 45m and final 15m |
 | API source rollouts | 1 | 1 |
 | Same-image API configuration restarts | 9 | 12; remaining pause/final resume/final disable |
 | Web Previews | 3 | 3 |
@@ -81,7 +85,7 @@ Full P3 acceptance remains open, including support/drain and hosted gaps.
 | OTP requests / delivery reservations | 11 / 10 | 12 / 11; only B returning remains |
 | Verification submissions / refresh-revoke | 10 / 3 | 20 / 12 |
 | Support/test messages | 13 reserved | 17; D duplicate/ack and completion/receipt remain |
-| Operator status reads | 33 | 45 |
+| Operator status reads | 34 | 45 |
 | Auth DELETE attempts | 0 | 12 |
 | Places HTTP attempts | 74 (72 prior + 2 C fixture actual) | 420 |
 | Logical AI / underlying reservations | 1 / 3 | 3 / 9 |
@@ -89,7 +93,7 @@ Full P3 acceptance remains open, including support/drain and hosted gaps.
 
 Keep $5 hosting and $20 combined caps. Last workspace usage delta is a conservative
 $1.1247938732362335 above the original baseline, not exact campaign billing; recheck
-headroom before a live start. Account-deletion status reads are 8, included in
+headroom before a live start. Account-deletion status reads are 9, included in
 operator accounting; worker status reads are 1. Private ledger is authoritative
 for immutable receipts and identity bindings. Never print tokens, codes, exact
 Auth subjects, deletion hashes or private inbox destinations into Git/chat.
