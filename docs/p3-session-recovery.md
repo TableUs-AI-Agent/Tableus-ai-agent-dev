@@ -1,99 +1,134 @@
-# P3 authenticated-session recovery proposal
+# P3 web signup recovery: proposed merge, deployment and rehearsal
 
-Prepared October 1, 2026 from `9d691d127c6080c5fa7dd3e406196884965bea8b`.
-**Approved by the owner at `fa282f2e2d242a4a02eaafa832d06d611753339f`.**
-Recovery restart 8/11 passed readiness and A returning application sign-in. The
-active packet records the live deadline, A's verified pending deletion and C's
-owner code-entry handoff.
+Prepared October 1, 2026 from local base
+`341f0410260b33ca855ba7df0b7936409a4b262a`. **Not yet approved.** This replaces the
+completed first phase approved at `fa282f2`; it retains all its consumed allowances.
+The candidate is the commit containing this proposal and the accompanying
+`auth-card` / `auth-completion` fix. Record its exact SHA in the handoff and bind
+any merge/Preview to the same application tree after hosted CI and review pass.
 
-## Confirmed cause
+## Cause and prepared repair
 
-A's replacement code succeeded at `2026-10-01T20:26:14.298559Z` (3:26 p.m.
-Chicago). A read-only aggregate returned one matching Auth user, one new session,
-one existing profile and one existing invitation redemption. The browser reports
-“Network unavailable. Reconnect and try again.” The returning flow verifies the
-code before calling `/api/v1/me`; the API is stopped. Authentication passed, while
-application membership/sign-in completion remains unverified. The consumed code
-field was cleared without signing out or reading/storing the code. Preserve this
-session and do not send A another code.
+C's OTP verification succeeded at 21:00:40Z, after the durable cutoff verified
+API/worker stopped at 20:53:37.369456Z. One trusted Auth record exists, but C has
+no app profile/redemption. Its short-lived validation expired at 21:09:34Z.
+The old page retries the consumed OTP before completing the application request.
 
-At 20:29:56Z, Railway confirmed API deployment
-`db65606d-45eb-43b4-89df-3b8b9790369a` and worker deployment
-`18a8f3f8-886e-4dac-ba7e-9804bb584f75` both stopped and unscheduled. The images match
-the approved API/worker source `2eefdc51345aeaa7951ffb343954c1669f9280c5`:
+The new page confirms the existing Auth user server-side and requires the same
+confirmed email/subject. It retries normal `/api/v1` signup completion without
+another code. An invalid/expired grant first checks membership for a previously
+committed signup; only missing membership permits normal validation of the
+original recipient-bound invitation and redemption. Network errors and other
+refusals do not trigger revalidation. Mismatched identity requires explicit local
+sign-out. No auth setting, database schema, API code, secret or provider changes.
 
-- API: `sha256:4fc94ba63d5ee76f5e9e25868a0a347db252b12d4defacfcfa30078598d4c5b8`.
-- Worker: `sha256:292ac97e9120612919399186ce53dbb68e650851f293c8d0a69421b2cae27797`.
+Local `make ready` passes 334 JavaScript and 206 Python tests (36 PostgreSQL-only
+skips), lint/types, contracts, web/Expo-web builds and deterministic smoke. Eight
+new semantic tests cover retry, identity binding, grant expiry, committed response
+loss and refusals. Local in-app-browser verification used only fake localhost
+Auth/API: first redemption failed, old grant expired, retry reached Dinner plans;
+reopening with the verified session also completed. Both used exactly one OTP
+request and one verification. Wrong-email refusal and explicit start-over passed.
+Two CI browser cases reproduce retry/reload; hosted CI with PostgreSQL/browser
+checks must pass on the candidate before an approved merge/deployment.
+Local screenshots: `/private/tmp/tableus-auth-recovery-retry.png` and
+`/private/tmp/tableus-auth-recovery-plans.png`. Readiness log:
+`/private/tmp/tableus-auth-recovery-ready.log`.
 
-Saved configuration matches the stopped state: deletion admission and inline
-attempts false, existing three CORS origins retained, Places ceiling unchanged.
-Vercel CLI resolves `links.table-us.com` to approved READY deployment
-`dpl_99cFtsd56wHCam5dN1EwW5XmTred`, web source
-`9593fba0202e830746523f29cee16532539e80a2`. No new build is needed.
+## Exact approval requested
 
-Read-only database preflight returns nine Auth users, eight profiles, one B profile,
-no C/D Auth users, no deletion jobs, no active invite validations and no provider
-usage rows since verified stop. Delayed Railway workspace usage is
-$4.656169764899754, or $1.10244608760889 above the original baseline. This is a
-conservative workspace delta, not exact campaign cost, and stays below $5.
+Approve review/merge of the candidate after passing CI, one staging web Preview
+from that tested application tree, assignment of the two existing staging aliases,
+and the bounded remaining rehearsal below. Production remains excluded.
 
-## Exact requested delta
-
-| Allowance | Used/reserved | Current ceiling | Proposed ceiling | Purpose |
+| Allowance | Used | Approved ceiling | Proposed ceiling | Purpose |
 | --- | ---: | ---: | ---: | --- |
-| Same-image API restarts | 7 | 10 | 11 | One recovery resume; preserve pause/final resume/final disable |
-| OTP requests | 9 | 11 | 12 | Restore the three remaining C/D/B requests after A replacement |
-| OTP delivery reservations | 8 | 10 | 11 | Corresponding C/D/B email delivery reservations |
+| Web Previews | 2 | 2 | 3 | Deploy the signup-recovery fix once |
+| Same-image API restarts | 8 | 11 | 12 | One recovery resume; preserve pause/final resume/final disable |
+| Cumulative supervised live minutes | 178m7.415236s | 195m | 240m | Add 45m; allocate first phase at most 45m and final phase at most 15m |
 
-No other limit changes. Keep 195 cumulative supervised minutes, $5 hosting,
-$15 providers, $20 combined and $0.25 AI. Preserve invitations 10 (8 used), accounts
-4 (2 used), verification submissions 20 (8 reserved), refresh/revoke 12 (1 used),
-status reads 45 (23 used), support mail 17 (11 used), worker invocations 4 (1 used),
-Auth DELETE attempts 12 (0 used), Places HTTP attempts 420 (72 observed), logical
-AI 3 (1 used) and underlying AI attempts 9 (3 conservatively reserved).
+No other allowance increase. OTP requests stay 12 (10 used), deliveries 11
+(9 reserved), verification submissions 20 (9 reserved), refresh/revoke 12 (2 used),
+invitations 10 (9 used), accounts 4 (3 used), support messages 17 (11 used), status
+reads 45 (27 used), worker invocations 4 (1 used), Auth DELETE attempts 12 (0 used),
+Places 420 (72 used), logical AI 3 (1 used) and underlying AI 9 (3 reserved).
+Keep $5 hosting, $15 providers, $20 combined and $0.25 AI ceilings. No additional
+recommendation run is needed for recovery. Existing remaining C/D/B cases retain
+their original permissions and specific limits; approval is not a counter reset.
 
-Cumulative charged time is 9869.996196 seconds, including the full prepaid
-ten-minute replacement-code handoff. Keep that conservative charge. Remaining
-1830.003804 seconds split into **930.003804 seconds (15m30.003804s) for the first
-phase** and **900 seconds for the final phase**. The existing cutoff accepts both
-allocations in a local, provider-free check. No window was armed. The two-minute
-containment margin applies inside each allocation; do not extend a running deadline.
-If time runs out, contain services and report incomplete cases without spending
-another recovery or OTP allowance.
+At the proposed ceiling, remaining time is 3712.584764 seconds (61m52.584764s).
+Allocate at most 2700 seconds to phase one and preserve 900 for the final phase;
+112.584764 seconds remains unallocated. Startup, owner code entry, verification
+and containment count inside each phase. Trigger containment two minutes before
+each immutable deadline. Each unresolved OTP handoff is at most ten minutes or
+the earlier containment threshold. Stopped preparation/breaks do not consume live
+time; never extend an armed window. No spare recovery or resend is included.
+
+## Targets and preflight
+
+- Web: existing Vercel project `tableus-staging` (`prj_lPu3pWZiJ5ZRUIab6wiXrJIW930G`),
+  team `team_0Pu6vuMiug12C8K2HQqbgOQG`. Create one Preview and, after READY/source
+  verification, assign `links.table-us.com` and `tableus-staging.vercel.app`.
+  Preserve production deployment `dpl_7csJvHoJH9qgFZDijbwu3w36r2sK` and old
+  Preview `dpl_99cFtsd56wHCam5dN1EwW5XmTred`; no cleanup or production alias changes.
+- API/worker: existing Railway staging project/environment, source
+  `2eefdc51345aeaa7951ffb343954c1669f9280c5`. API image
+  `sha256:4fc94ba63d5ee76f5e9e25868a0a347db252b12d4defacfcfa30078598d4c5b8`;
+  worker image `sha256:292ac97e9120612919399186ce53dbb68e650851f293c8d0a69421b2cae27797`.
+  API `5f5dad51-01a6-4690-bd0f-294aebb5f247` and worker
+  `18a8f3f8-886e-4dac-ba7e-9804bb584f75` were last verified stopped/unscheduled.
+- Keep the current three CORS origins, including B's existing unique Preview
+  origin; C uses the stable links origin, so a new Preview-origin allowlist entry
+  is unnecessary. Do not move B or sign it out early. Inline Auth DELETE remains
+  false; worker is unscheduled and held until a verified synthetic batch.
+- Before starting, reconcile source/images, aliases, complete pending queue,
+  trusted A/B/C/D roster, costs and remaining counts with the private ledger.
+  A's existing pending job is expected; it is not a reason to require an empty
+  queue. No unknown or legacy subject may enter a worker batch. Verify the cutoff
+  is armed and receipt durable before API resume. Old consumed helpers cannot
+  authorize this new proposal or silently change limits.
 
 ## Execution after approval
 
-1. Record approval of this exact proposal and only the three ceiling changes.
-   Preserve all prior usage, receipts and the final 900-second reserve. Recheck
-   source/image, stopped services, queue and remaining headroom before arming.
-2. Arm a fresh first-phase window and verify the durable cutoff receipt before
-   consuming recovery restart 8/11. Resume the existing API image, enable deletion
-   admission, retain inline attempts false and the approved temporary Preview
-   origin. Keep the worker stopped and unscheduled. Verify readiness/source/CORS.
-3. Reuse A's authenticated browser context. Navigate normally to Plans/Account;
-   verify A's unchanged identity and membership without resubmitting the code.
-   Preserve the original expired handoff and replacement evidence. Recover B's
-   missing Preview tab normally; its stored session has not been inspected or
-   assumed lost. Stop on unexpected identity/auth errors.
-4. Continue only the already-approved remaining manual cases in
-   [the existing scope](p3-mail-routing-and-remaining-cases.md#manual-sequence-after-complete-approval-and-prerequisites):
-   A pending deletion; C fresh signup/sole-plan cleanup/deletion; D fresh signup,
-   verified support binding and six case messages; admission pause/refusal,
-   bounded synthetic worker drain and B cleanup. Owner performs final destructive
-   confirmations in the visible UI. C/D invitations stay recipient-bound. Use
-   only supported application operations; inspect the whole queue before any
-   worker batch. No manual queue insertion or direct Auth-admin deletion.
-5. Retain restart 9/11 for admission pause, 10/11 for final resume and 11/11 for
-   final disable/removal of only temporary Preview CORS. Final phase remains
-   capped at 15 minutes for B returning/deletion/drain and containment. Both
-   services finish stopped and unscheduled. No spare resend or recovery exists.
+1. Bind approval to the exact candidate. Finish CI/review, merge only the tested
+   application tree, create the single Preview and verify source/READY before
+   moving the staging aliases. Record all identifiers; a deployment failure
+   stops the rollout. Keep API/worker stopped during web preparation.
+2. Record only the three ceiling changes above, arm the first phase (at most
+   45 minutes), then consume restart 9/12 to resume the existing API image with
+   deletion admission true and inline attempts false. Verify readiness and C/B
+   exact-origin CORS. A remains queued; worker stays stopped.
+3. Reload C's stable-origin tab to load the fix, refill the original invite/name/
+   email from private fixtures, and continue with its preserved session. Verify
+   its exact profile/redemption before proceeding. Do not resend or re-enter C's
+   consumed code. If session/invitation recovery fails, contain; no fallback OTP
+   is allocated to C. Create/remove C's sole plan and complete its supported
+   pending deletion, then sign out only C.
+4. Use the same origin for D's last recipient-bound invite and one normal signup
+   OTP. Owner enters the code directly. Establish the trusted support binding
+   before losing D's session. Exercise the six remaining challenge/reply,
+   duplicate/acknowledgment and completion/receipt messages through the existing
+   support procedure. Complete D's pending deletion using supported operations;
+   owner performs irreversible final UI confirmations.
+5. Consume restart 10/12 for admission pause, exercise the supported refusal/
+   status path and inspect the whole queue. Invoke only the existing worker with
+   bounded batches (`--limit 3`), within four cumulative processing invocations
+   and twelve Auth DELETE attempts. Confirm exact jobs completed and subjects
+   cleared; counts alone are insufficient. No manual queue insertion/direct
+   admin deletion. Verify B's content cleanup and sole-plan removal, then stop
+   both services between phases and close the first-phase receipt.
+6. Arm final phase (at most 15 minutes); restart 11/12 re-enables the same API.
+   Use B's remaining returning OTP, self-service deletion and bounded drain.
+   Restart 12/12 disables admission and removes only the temporary B Preview
+   CORS origin. Preserve the other approved origins and finish API/worker stopped,
+   unscheduled, with exact final job/accounting receipts.
 
-The short remaining window may leave cases incomplete; approval is not acceptance.
-No new source/image, web deployment, schema, secret, resource, production work,
-native distribution or real-user invitation is included. Hosted replay/contention
-and server-side deletion refusal remain unproven until exercised through an approved
-supported path. A fresh Auth session alone does not close those gaps.
-
-Next: owner verifies C's single code before 20:53:29Z. A's application deletion
-and exact pending job are verified; Auth removal remains queued. Preserve all
-counters and continue the already-approved sequence only before the cutoff.
+Stop on first unexpected core/provider/auth/identity error, insufficient remaining
+time/headroom, unrelated queue entry or hard ceiling. Contain and report incomplete
+work; do not invent another recovery or resend. Preserve all earlier failed/
+expired evidence, additive migrations, tombstones, invitation history and legacy
+records. No cloud resources, secrets, migrations, native distribution, real-user
+invitations, new paid AI evaluation, production change or destructive infrastructure
+cleanup is included. Hosted replay/contention and server-side deletion refusal
+remain untested until separately exercised by a supported approved path. Completing
+these manual cases is not full P3 acceptance or permission for the pilot.

@@ -94,30 +94,28 @@ to B after the UI organizer-deletion blocker was observed. Reopen reused the
 same candidates; no second recommendation run or server deletion refusal occurred.
 Natural-expiry invitation rejection passed (404, no OTP).
 
-All three ImprovMX routes passed by owner receipt. The remaining 195-minute /
-ten-restart scope was approved at `32ab7cd`. Same-image resume 7/10 passed readiness,
-but A's unresolved code handoff triggered automatic containment; both services were
-verified stopped/unscheduled at 08:01:13Z. The owner explicitly requested one
-replacement code at about 20:24Z. Its normal returning code prompt is visible;
-Auth verification subsequently passed at 20:26:14Z; application sign-in remains
-blocked by the stopped API. The [recovery proposal](p3-session-recovery.md) is ready
-and was approved at `fa282f2`. Restart 8/11 passed readiness; A returning app
-sign-in now passes and B's context is restored. A's owner-confirmed deletion is verified pending, with its profile removed and
-exact private job binding saved. A is locally signed out; C's single signup code
-is ready for owner entry. Containment begins at 20:53:29Z; the final 15 minutes
-stay reserved. Total use, including
-one conservatively charged ten-minute Auth-only handoff, is 164m29.996196s, leaving
-30m30.003804s including final 15m. OTP requests are 9/11; the two remaining slots
-cannot cover all three planned C/D/B logins. Reconcile a bounded recovery scope
-before resuming. The active packet records exact counters and limits. Mail recovery
-is complete; remaining deletion/support and hosted gaps still gate P3 acceptance.
+All three ImprovMX routes passed by owner receipt. The `32ab7cd` first phase stopped
+automatically during A's code handoff; the later recovery approved at `fa282f2`
+used restart 8/11 and passed A returning application sign-in. A's deletion is
+verified pending. The cutoff stopped API/worker at 20:53:37Z. C's OTP succeeded
+after that stop, leaving Auth verified but no app profile/redemption. B's shared
+plan/session is preserved. C's short-lived validation has expired.
 
-Scope C/D, returning sign-in, replay/contention,
-deletions/support/drain and cleanup against the remaining time; another first-phase
-recovery is not already allocated. Complete the support-case handling rehearsal
-before claiming support-case acceptance or inviting real users. Incoming delivery
-is now proven; the pending/support/drain cases remain. See the active packet for
-exact counters/evidence. No pilot acceptance or Priority 4 is implied.
+A local web recovery fix now reuses only the same server-verified identity and
+retries normal completion without replaying the OTP, including expired-grant and
+already-committed signup cases. Local readiness and fake-provider browser checks
+pass; hosted candidate CI/merge/deployment remain gates. The
+[complete recovery proposal](p3-session-recovery.md) requests one Preview, one
+extra same-image restart and 45 additional live minutes, preserving financial and
+message limits. It is not yet approved. Current charged time is 178m7.415236s of
+195m; only 1m52.584764s is available outside the final 15m reserve. Keep services
+stopped while preparing the gated rollout.
+
+C/D deletion/support, worker removal, B cleanup and final returning/deletion checks
+remain incomplete. Hosted redemption replay/contention and server-side deletion
+refusal remain untested. Mail receipt is complete; it is not support-case acceptance.
+The active packet owns current counters and next actions. No P3 acceptance,
+Priority 4/native work or real-pilot intake is implied.
 
 Effort is a rough planning range in focused engineering days, excluding approval,
 hosted CI, device/signing and external-access waits; these are not delivery promises.

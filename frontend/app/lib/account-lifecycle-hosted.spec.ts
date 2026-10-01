@@ -26,6 +26,7 @@ function sessionData(subject: string) {
       aud: "authenticated",
       role: "authenticated",
       email: "local-test@example.test",
+      email_confirmed_at: "2026-09-24T12:00:00Z",
       app_metadata: { provider: "email", providers: ["email"] },
       user_metadata: {},
       created_at: "2026-09-24T12:00:00Z",
@@ -52,7 +53,7 @@ async function localOnly(page: Page) {
   });
   await page.route("http://127.0.0.1:8401/**", (route) => {
     const path = new URL(route.request().url()).pathname;
-    if (path === "/auth/v1/user") return route.fulfill({ json: { id: owner, aud: "authenticated" } });
+    if (path === "/auth/v1/user") return route.fulfill({ json: sessionData(owner).user });
     if (path === "/auth/v1/token") return route.fulfill({ status: 400, json: { error: "invalid_grant" } });
     return route.fulfill({ status: 404, json: { error: "not_found" } });
   });
@@ -92,7 +93,7 @@ for (const denialTiming of ["before redemption", "after profile refresh"] as con
     await page.getByLabel("Invite code", { exact: true }).fill("local-invite");
     await page.getByLabel("Display name").fill("New member");
     await page.getByLabel("Email address").fill("local-test@example.test");
-    await page.getByRole("button", { name: "Email me a code" }).click();
+    await page.getByRole("button", { name: "Continue", exact: true }).click();
     await page.getByLabel("Email verification code").fill("12345678");
     await page.getByRole("button", { name: "Verify and continue" }).click();
     await denialStarted;
@@ -110,6 +111,69 @@ for (const denialTiming of ["before redemption", "after profile refresh"] as con
     await expect(page.getByRole("heading", { name: "Dinner plans", exact: true })).toBeVisible();
     await expect(page.getByRole("heading", { name: "Plans unavailable" })).toHaveCount(0);
     await page.screenshot({ path: join(tmpdir(), `tableus-signup-${denialTiming.replaceAll(" ", "-")}.png`), fullPage: true });
+  });
+}
+
+for (const recovery of ["retry", "reload"] as const) {
+  test(`signup ${recovery} finishes after an outage without another OTP`, async ({ page }) => {
+    await localOnly(page);
+    let otpRequests = 0;
+    let verifications = 0;
+    let validations = 0;
+    let redemptions = 0;
+    let approved = false;
+    await page.route("http://127.0.0.1:8401/auth/v1/otp", (route) => {
+      otpRequests++;
+      return route.fulfill({ json: {} });
+    });
+    await page.route("http://127.0.0.1:8401/auth/v1/verify", (route) => {
+      verifications++;
+      return route.fulfill({ json: sessionData(owner) });
+    });
+    await page.route("**/api/v1/**", (route) => {
+      const path = new URL(route.request().url()).pathname;
+      if (path === "/api/v1/access/validate") {
+        validations++;
+        expect(route.request().postDataJSON()).toEqual({ code: "local-invite", email: "local-test@example.test" });
+        return route.fulfill({ json: envelope({ redemption_token: `grant-${validations}` }) });
+      }
+      if (path === "/api/v1/access/redeem") {
+        redemptions++;
+        if (redemptions === 1) return route.fulfill(failure(503));
+        if (route.request().postDataJSON().redemption_token === "grant-1") return route.fulfill(failure(400));
+        approved = true;
+        return route.fulfill({ json: envelope({ id: owner }) });
+      }
+      if (path === "/api/v1/me/deletion") return route.fulfill(failure(404));
+      if (!approved) return route.fulfill(failure(403));
+      if (path === "/api/v1/me") return route.fulfill({ json: envelope({ id: owner, display_name: "Recovery test" }) });
+      if (path === "/api/v1/connections" || path === "/api/v1/plans") return route.fulfill({ json: envelope([]) });
+      return route.fulfill(failure(404));
+    });
+    const begin = async () => {
+      await page.getByLabel("Invite code", { exact: true }).fill("local-invite");
+      await page.getByLabel("Display name").fill("Recovery test");
+      await page.getByLabel("Email address").fill("local-test@example.test");
+      await page.getByRole("button", { name: "Continue", exact: true }).click();
+    };
+    await page.goto("/invite?mode=join");
+    await begin();
+    await page.getByLabel("Email verification code").fill("12345678");
+    await page.getByRole("button", { name: "Verify and continue" }).click();
+    await expect(page.getByRole("button", { name: "Retry and continue" })).toBeEnabled();
+    await expect(page.getByLabel("Email verification code")).toHaveCount(0);
+    await expect(page.getByLabel("Email address")).toBeDisabled();
+    if (recovery === "reload") {
+      await page.reload();
+      await begin();
+    } else {
+      await page.getByRole("button", { name: "Retry and continue" }).click();
+    }
+    await expect(page.getByRole("heading", { name: "Dinner plans", exact: true })).toBeVisible();
+    expect(otpRequests).toBe(1);
+    expect(verifications).toBe(1);
+    expect(validations).toBe(2);
+    expect(redemptions).toBe(recovery === "retry" ? 3 : 2);
   });
 }
 

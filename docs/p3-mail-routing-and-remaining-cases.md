@@ -12,12 +12,11 @@ SPF were saved. ImprovMX shows Active; all six DNS sources agree, retained recor
 match, and Resend sending stays verified. The owner approved and completed the
 separate [three-message test](p3-mail-route-delivery-test.md). The owner confirmed
 all three received, completing SUPPORT, PRIVACY and unchanged A-address route proof.
-The owner subsequently approved the exact remaining rehearsal at `32ab7cd`;
-its first phase later stopped automatically when A code entry timed out. The owner
-requested one replacement code; the normal prompt is ready with services still
-stopped. A subsequently authenticated successfully; its application check is
-blocked by the paused API. See the [bounded recovery proposal](p3-session-recovery.md)
-and active packet for current accounting and the exact pending approval.
+The owner subsequently approved remaining rehearsal and an A recovery; A returning
+sign-in and its pending deletion passed. The latest first phase is now stopped.
+C authenticated after the cutoff and has no app profile yet. The new
+[web recovery and bounded rollout proposal](p3-session-recovery.md) owns current
+source, accounting, requested deltas and exact next sequence; it is not approved.
 
 ## Approved Squarespace diagnostic: completed, original record restored
 
@@ -147,12 +146,12 @@ messages remain reserved.
 
 ## Approved remaining manual rehearsal: original allocation, now stopped
 
-Current execution note: the original window below closed at verified stop
-08:01:13Z. The separately owner-requested replacement code consumes one remaining
-request/delivery slot without increasing ceilings or resuming services. See the
-active packet: 30m30.003804s remain after conservative handoff accounting, including
-final 15m; two OTP slots remain for three planned logins. The original first-phase
-allocation and counters below are historical approval inputs, not fresh allowances.
+Current execution note: this section retains the original approval inputs. Its
+window is closed and its counters are not available for reuse. A later approved
+recovery also ended at 20:53:37Z. Current time is 178m7.415236s used out of 195m,
+including an untouched final 15m reserve; requests are 10/12 with D/B reserved.
+The [current proposal](p3-session-recovery.md) supersedes the stale A/C code-entry
+sequence. A is deletion-pending, C is Auth-verified/app-unredeemed, B is preserved.
 
 Mail routing and the exact A recipient route pass. The owner approved this exact
 scope at `32ab7cddffa04715b5df5bbd65a8509608d1573d`. Before arming, prior use was
@@ -212,63 +211,14 @@ web deployment, schema, secret, resource or source build is part of the rehearsa
 extension. The exact mail-forwarding setup approval was granted and has been completed.
 No spare recovery resume or OTP resend is available in this scope.
 
-## Manual sequence after complete approval and prerequisites
+## Current remaining sequence and immediate next step
 
-1. Reconcile source/image/aliases, exact synthetic roster and empty queue; verify
-   remaining billing/provider headroom. Prepare forms, messages and accounting
-   before starting the first-phase clock. Arm the durable cutoff and resume the
-   existing API image with the approved staging configuration and worker held.
-2. Complete A's fresh returning sign-in using its unchanged identity. B owns the
-   shared plan. Confirm A's supported pending deletion and exact private evidence
-   before signing out only A's synthetic session. Preserve B's Preview session
-   and all legacy sessions. Do not use the staging alias if it holds a legacy
-   identity merely to obtain a third browser context.
-3. Reuse A's links-origin tab for C after supported sign-out. Issue one fresh
-   recipient-bound invite, complete normal signup, create/remove C's sole plan,
-   then complete its pending deletion and evidence. Sign out only C afterward.
-4. Reuse that tab for D. Issue its one remaining invite, complete normal signup,
-   and establish the verified private support-case binding before losing D's
-   session. Exercise the remaining challenge/reply, duplicate/ack and completion/
-   receipt correspondence within the six reserved case messages. Complete D's
-   supported pending deletion/status checks. The owner performs irreversible
-   final confirmations in the visible account form where required. Six support
-   messages cover three pairs: challenge/reply, duplicate/acknowledgment and
-   completion/receipt. Bind D before losing its session, using the existing
-   verified account address from the trusted private roster. No identity inference
-   from forwarded mail or hidden token extraction is allowed.
-5. Keep each unresolved OTP handoff to ten minutes or the earlier phase containment
-   threshold, with no extension and no next signup while unresolved. A returning,
-   C signup, D signup and B final returning
-   consume all four remaining requests/deliveries. Stop on the first unexpected
-   core/provider/auth/identity error rather than spending an unapproved resend.
-6. Pause API admission, verify the supported refusal/status behavior, and drain
-   only the verified synthetic queue through the existing worker. Check every
-   row's exact completion, cleared subject and support binding. Four total worker
-   invocations and 12 total Auth DELETE attempts remain hard limits; no manual
-   queue insertion or admin deletion shortcut. Inspect the entire queue first.
-   Keep the worker unscheduled and invoke only
-   bounded batches (`--limit 3`) against the approved existing jobs. Preserve
-   exact completion evidence rather than treating processed counts as completion.
-7. Verify B's shared-content cleanup, metadata repair and sole-plan removal, then
-   stop between phases. In the final 15m, re-enable and complete B's normal
-   returning sign-in, self-service deletion and bounded drain. Disable intake,
-   remove temporary Preview CORS and verify stopped/unscheduled services. Preserve
-   tombstones, counters, invite-use history and all legacy records.
+Use the [web recovery proposal](p3-session-recovery.md#execution-after-approval)
+for the complete current sequence: C session recovery and sole-plan/deletion, D
+verified support cases and six messages, bounded synthetic drain, B cleanup and
+final returning/deletion. A's verified pending deletion is not repeated. Earlier
+remaining-code and empty-queue instructions are superseded by this current scope.
 
-The normal UI does not provide a reliable hosted redemption replay/contention
-harness, or a way to submit a server-side deletion refusal when its control is
-disabled. Those hosted criteria remain untested; local/CI coverage is not relabeled
-as hosted proof. Preparing a supported test path is separate work, without hidden
-session-token extraction or an unapproved deployed test client. Completing the
-manual sequence alone does not grant full P3 acceptance, production or real intake.
-
-## Immediate next step
-
-The owner approved the [authenticated-session recovery](p3-session-recovery.md) at
-`fa282f2`. Same-image restart 8/11 and A returning application sign-in pass; B's
-context is restored. A's owner-confirmed deletion is verified pending and its exact
-private job binding is saved. C's one signup code is ready for owner entry. Verify
-C's profile/redemption, then continue the approved sequence within the immutable
-phase deadline 20:55:29Z and containment threshold 20:53:29Z. Preserve the final
-15 minutes. The active packet has current counters; the earlier allocations in
-this document remain historical approval inputs. No spare recovery/resend exists.
+Hosted replay/contention and server-side deletion refusal remain untested and are
+not implied by local tests or normal manual completion. Next: obtain approval of
+the exact tested web candidate and bounded rollout; keep services stopped meanwhile.

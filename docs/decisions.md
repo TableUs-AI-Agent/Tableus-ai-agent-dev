@@ -117,6 +117,13 @@ or replenish closed native/live-provider allowances.
 - Email-bound invite validation precedes first OTP sign-in; returning users need
   an existing approved application profile and consume no new invite. The API
   profile, not the Supabase session alone, authorizes product navigation.
+- Web signup recovery treats verified Auth and application enrollment as separate
+  steps. Confirm the same email/subject with server-side Auth user lookup before
+  resuming; do not replay an already-consumed OTP. On an expired redemption grant,
+  reconcile membership before normal revalidation of the original bound invite.
+  Other failures remain explicit; account mismatch requires local sign-out.
+  Server invitation, quota and deletion checks remain authoritative. This is a
+  local implementation decision, not deployment or allowance approval.
 - Trusted invite issuance designates one normalized recipient email and one use.
   Only its hash is retained. Hosted validation, signup hook and first redemption
   reject legacy unbound or multi-use codes; migration retains all existing rows

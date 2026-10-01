@@ -28,5 +28,5 @@ test("OTP verification uses the normalized address that requested the code", () 
   assert.match(authCard, /const normalizedEmail = email\.trim\(\)\.toLowerCase\(\)/);
   assert.match(authCard, /setSentEmail\(normalizedEmail\)/);
   assert.match(authCard, /verifyOtp\(\{ email: sentEmail/);
-  assert.match(authCard, /disabled=\{sent\}/);
+  assert.match(authCard, /disabled=\{sent \|\| busy\}/);
 });
