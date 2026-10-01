@@ -985,3 +985,15 @@ already-sent reply. Under the approved unexpected-provider stop condition, close
 the live window using verified service-stop time and preserve D/B sessions, A/C
 pending jobs and unused allowances. Review the bounded remaining sequence before
 any new API resume; do not silently repurpose a reserved restart.
+
+
+### Separate transport acceptance from visible support receipt — 2026-10-01
+
+ImprovMX's exact D reply log shows successful forwarding and Gmail SMTP acceptance;
+the owner still found no copy in Inbox or Spam. Preserve both observations without
+calling the support case verified or sending more self-loop tests. Prepare account
+flow closure separately from the four uncompleted support messages. The proposed
+restart reassignment fits the existing three slots by stopping processes before
+final disable/CORS cleanup, with readback and no final live redeploy. It preserves
+all ceilings, final time reserve and release gaps, and remains subject to owner
+approval of the changed sequence; preparation does not authorize a resume.

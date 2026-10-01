@@ -103,3 +103,20 @@ Auth attempts 0/12, operator reads 34/45. Final trusted readback at 22:29:21Z:
 D profile/redemption 1/1, D jobs 0; A/C pending 2, completed 0, no attempt/lease/
 attention. Preserve D/B tabs. Further live sequencing needs review before resume;
 no spare recovery or resend was created by this early stop.
+
+
+After the owner found no copy in Spam, one email diagnostic read (35/45 operator
+reads total) inspected the exact reply entry in ImprovMX. Subject, sender and
+privacy recipient matched the private case. Queued 22:24:23Z; forwarded copy
+accepted by Gmail at 22:24:27Z, SMTP 2.0.0 OK. This is transport evidence, not proof
+of visible inbox receipt, authenticated sender headers or complete support
+verification. Screenshot outside Git: `/private/tmp/tableus-d-reply-gmail-accepted.png`.
+No DNS/account configuration, email resend or live restart occurred.
+
+The prepared [post-mail closeout](../../p3-post-mail-closeout.md) proposes using
+only the remaining three API starts and existing 1550.914826 seconds. Final disable
+would be verified after service stop instead of a fourth live restart; support
+correspondence stays deferred and unaccepted. Eight unchanged cutoff self-tests
+pass, and offline dry checks accept a 650.914826-second first window and 900-second
+final window with the 120-second containment margins. This is preparation only;
+no approval flag, live window or allowance was changed by those checks.

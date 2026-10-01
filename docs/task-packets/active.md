@@ -53,8 +53,10 @@ account/address binding is saved privately. The fresh support challenge was sent
 the owner replied but has not received the forwarded copy. ImprovMX's self-loop
 notice explains the same Gmail inbox sending through an alias back to itself.
 This does not invalidate the earlier three externally sent route probes. The
-support case remains verification_required; no incoming receipt is claimed.
-Check Spam for the already-sent reply without a resend or DNS change.
+owner subsequently found no copy in Spam. The exact ImprovMX log entry matches
+the reply and reports Gmail SMTP acceptance at 22:24:27Z (5:24:27 p.m. Chicago).
+Transport is verified; user-visible receipt and the support correspondence remain
+unconfirmed. Keep the case verification_required; no resend or DNS change.
 
 Final readback at 22:29:21Z confirms D still has one profile/redemption and no
 deletion job. A/C are the only two pending jobs, with zero attempts, attention or
@@ -68,8 +70,10 @@ D/B tabs and A/C private bindings. The [approved execution scope](../p3-session-
 private ledger govern all remaining operations; stale consumed helpers grant no
 new attempt. No native/production/real-user work or extra resend is authorized.
 
-Next: owner checks Spam for the existing support reply. Record its actual receipt
-or unresolved outcome, then prepare a bounded revised sequence before any resume.
+Next: review the prepared [account-flow closeout](../p3-post-mail-closeout.md). It keeps
+all ceilings unchanged, reassigns the three remaining API starts, disables final
+configuration after verified stop, and defers the four support messages. Execution
+is not approved yet; API/worker remain stopped.
 Full P3 acceptance remains open, including support/drain and hosted gaps.
 
 ## Current cumulative allowances
@@ -85,7 +89,7 @@ Full P3 acceptance remains open, including support/drain and hosted gaps.
 | OTP requests / delivery reservations | 11 / 10 | 12 / 11; only B returning remains |
 | Verification submissions / refresh-revoke | 10 / 3 | 20 / 12 |
 | Support/test messages | 13 reserved | 17; D duplicate/ack and completion/receipt remain |
-| Operator status reads | 34 | 45 |
+| Operator status reads | 35 | 45 |
 | Auth DELETE attempts | 0 | 12 |
 | Places HTTP attempts | 74 (72 prior + 2 C fixture actual) | 420 |
 | Logical AI / underlying reservations | 1 / 3 | 3 / 9 |
@@ -95,7 +99,8 @@ Keep $5 hosting and $20 combined caps. Last workspace usage delta is a conservat
 $1.1247938732362335 above the original baseline, not exact campaign billing; recheck
 headroom before a live start. Account-deletion status reads are 9, included in
 operator accounting; worker status reads are 1. Private ledger is authoritative
-for immutable receipts and identity bindings. Never print tokens, codes, exact
+for immutable receipts and identity bindings. The latest email diagnostic used
+one read to verify the exact privacy-route delivery log. Never print tokens, codes, exact
 Auth subjects, deletion hashes or private inbox destinations into Git/chat.
 
 ## Completion and boundaries
@@ -106,9 +111,10 @@ owns targets, requested deltas, sequencing and stop conditions. After approval,
 C completed through its preserved session with no fresh OTP; D's single signup
 code has been requested and only B's returning code remains unspent.
 
-The remaining manual sequence is D deletion and verified support
-case, remaining messages, admission pause/refusal, bounded synthetic worker drain,
-B shared-content cleanup/sole-plan removal and its final returning/deletion/drain.
+The prior remaining sequence included support correspondence. The prepared
+closeout proposes D deletion, admission pause and bounded synthetic worker drain,
+then B cleanup/returning/deletion/drain. Four support messages and their acceptance
+checks would remain deferred; that scope adjustment still needs approval.
 A's already accepted deletion is not repeated. Owner performs irreversible final
 confirmations in the visible UI. Inspect the entire queue before each worker batch;
 use supported operations and no direct Auth-admin or SQL deletion shortcut.

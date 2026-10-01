@@ -117,9 +117,11 @@ readback verifies its profile/plan absent and exact Auth-deletion job pending, w
 zero attempts. A also remains pending. C signed out; D completed signup with one
 profile/redemption and no plans. Its trusted account binding is preserved privately,
 with the fresh support challenge sent and owner-reported reply sent; receipt
-through privacy remains unconfirmed. Check Spam for the existing reply, without
-a resend or DNS change. D's profile is still intact with no deletion job; hold its
-final confirmation while API is stopped. B's session is preserved.
+through privacy remains unseen even after Spam inspection. The exact ImprovMX log
+confirms Gmail SMTP acceptance at 22:24:27Z; user-visible receipt remains unverified. D's profile is still intact with no deletion job; hold its
+final confirmation while API is stopped. B's session is preserved. A bounded
+[account-flow closeout](p3-post-mail-closeout.md) is prepared with unchanged ceilings
+and four deferred support messages; revised execution still requires approval.
 D deletion/support, worker removal, B
 cleanup and final returning/deletion checks remain incomplete. Hosted redemption
 replay/contention and server-side deletion refusal remain untested. The three

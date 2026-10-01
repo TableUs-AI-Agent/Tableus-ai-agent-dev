@@ -39,8 +39,10 @@ account/address binding is saved privately. The fresh support challenge was sent
 the owner replied but has not received the forwarded copy. ImprovMX's self-loop
 notice explains the same Gmail inbox sending through an alias back to itself.
 This does not invalidate the earlier three externally sent route probes. The
-support case remains verification_required; no incoming receipt is claimed.
-Check Spam for the already-sent reply without a resend or DNS change.
+owner subsequently found no copy in Spam. The exact ImprovMX log entry matches
+the reply and reports Gmail SMTP acceptance at 22:24:27Z (5:24:27 p.m. Chicago).
+Transport is verified; user-visible receipt and the support correspondence remain
+unconfirmed. Keep the case verification_required; no resend or DNS change.
 
 Final readback at 22:29:21Z confirms D still has one profile/redemption and no
 deletion job. A/C are the only two pending jobs, with zero attempts, attention or
@@ -54,8 +56,10 @@ D/B tabs and A/C private bindings. The [approved execution scope](p3-session-rec
 private ledger govern all remaining operations; stale consumed helpers grant no
 new attempt. No native/production/real-user work or extra resend is authorized.
 
-Next: owner checks Spam for the existing support reply. Record its actual receipt
-or unresolved outcome, then prepare a bounded revised sequence before any resume.
+Next: review the prepared [account-flow closeout](p3-post-mail-closeout.md). It keeps
+all ceilings unchanged, reassigns the three remaining API starts, disables final
+configuration after verified stop, and defers the four support messages. Execution
+is not approved yet; API/worker remain stopped.
 Full P3 acceptance remains open, including support/drain and hosted gaps.
 
 ## Verified rehearsal and mail results
