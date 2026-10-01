@@ -20,33 +20,44 @@ tests, 326 JavaScript tests and five browser journeys, zero skips, plus lint/typ
 migrations, deterministic evaluation, contracts, builds and smoke. Local readiness,
 restricted PostgreSQL and browser evidence remain applicable to unchanged inputs.
 
-## Current objective: approved signup-fix web rollout and bounded resume
+## Current objective: web deployed; await owner availability before resume
 
-Brian reported Plans at 00:29 UTC. Hosted database readback confirms A Auth approved,
-one application profile and one invitation redemption (eight Auth users/seven
-profiles, empty queue, zero active reservations). The visible page instead shows
-`Plans unavailable` / `Sign in to view your TableUs plans.` Do not start B or claim
-the Plans journey passed. The deterministic regression reproduced the race:
-`SIGNED_IN` reads membership before redemption, then its denial leaves context
-signed out. The local fix reloads membership after redemption/sign-in and retains
-subject/version guards. Six local browser checks pass; the suite now runs in CI.
-`make ready` passed with 326 JavaScript tests, 206 Python passes/36 PostgreSQL-only
-skips, lint/types, contracts without drift, web/Expo-web builds, smoke and report-only
-performance. Hosted CI remains pending. Brian approved the complete
-[rollout/resume request](../p3-signup-fix-rollout.md) for local fix
-`a5a1f44913b9956e9c0aa54e30492a58367f97f9` at scope commit `9e9e939`.
-The ledger ceilings are two web Previews/eight same-image restarts, with unchanged
-time/spending and no spare handoff recovery. Next: publish under verified Git
-deployment exclusions, run hosted CI/review, merge, then build/alias one Preview.
-Keep services stopped until owner availability and the durable cutoff are ready.
+Brian approved [the signup-fix rollout](../p3-signup-fix-rollout.md) at `9e9e939`.
+PR #10 merged as `9593fba0202e830746523f29cee16532539e80a2`, identical tree to
+passing hosted CI head `4c9392261b0ba8e4154fd8db9e621674579ae1b4`: 242 Python,
+326 JavaScript, 11 browser checks, zero skips, plus the full readiness pipeline.
+The small follow-up changes only CI artifact paths to use the platform temp folder.
+Source review found no further issues; application inputs match the approved fix.
 
-The five-minute cutoff fired while the owner's completion report was being
-verified: began `00:29:27.454267Z`, both services stopped/unscheduled verified
-`00:29:33.040725Z`, future admission false; process 64575 exited zero. Charge
-447.946218 seconds through verified stop, total 6307.672172 seconds used and
-2692.327828 seconds (44m52.328s) remaining, including 15 final-phase minutes.
-The recovery slot is exhausted. Ledger is reconciled; A and all legacy data remain.
-Only the newly approved rollout/resume scope authorizes further cloud work.
+One approved Preview is deployed: `dpl_99cFtsd56wHCam5dN1EwW5XmTred`, READY,
+source `9593fba`; both staging aliases moved and production stayed unchanged.
+[Integration evidence](../evidence/9593fba/integration.md) records source/preflight.
+Web allowance is 2/2. API/worker remain verified stopped, no schedules/next run,
+future API admission false, unchanged `2eefdc5` images. Restarts remain 4/8.
+No live clock is armed. Private ledger `signup_fix_web.state=ready_aliased`.
+
+The owner-availability question is pending. Next: once Brian is ready with the
+inbox, record readiness and arm the first-phase cutoff before approved restart 5.
+The prepared helper `/private/tmp/tableus-p3-signup-fix-actions.py` reserves web,
+arms the first phase, resumes the existing image and issues B/C/D invitations with
+counter guards. Do not rerun `reserve-web`; it is already consumed. The durable
+private `next-attempt-cutoff.py` is unchanged and its eight self-tests pass. If the
+temporary helper is missing, reconstruct from the approved scope; never reset the
+ledger. The old recovery helpers have obsolete counter assumptions.
+
+After source/readiness/CORS verification, refresh A's preserved in-app tab 1 and
+require actual Plans access. B is prepared in in-app tab 3 on the new Preview
+origin (invitation empty, send disabled, no code requested). Issue only B when
+ready; use keyboard activation if native pointer actions do not trigger a request.
+Preserve A/legacy sessions; no stored token extraction. Respect the five-minute
+handoff cutoff and unchanged cumulative attempt/spending caps.
+
+Fresh stopped-state readback confirms A Auth approved, one profile/redemption,
+eight Auth users/seven profiles, no B/C/D identities, empty queue and no active
+reservations. Live use remains 6307.672172 seconds; 2692.327828 seconds remain,
+including 900 final-phase seconds. No spare recovery. Signup/Plans live retest,
+group/deletion/support binding and hosted replay/contention acceptance remain open.
+No pilot activation or Priority 4 follows merely from this web deployment.
 
 ## Historical recovery checkpoint, October 1 00:24 UTC / September 30 Central
 

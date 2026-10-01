@@ -684,3 +684,12 @@ exact-source web Preview/staging-alias assignment and one same-image API resume.
 Only Preview/restart ceilings rise to two/eight; time, spending and other attempt
 limits remain. Keep services stopped during publication/build preparation, and
 verify owner availability plus armed containment before starting the live clock.
+
+
+The approved web rollout completed as merge `9593fba0202e830746523f29cee16532539e80a2`
+and Preview `dpl_99cFtsd56wHCam5dN1EwW5XmTred`. CI passed including the new mocked
+Auth regressions; production aliases and API/worker images are unchanged. Deployment
+preparation consumes no supervised live time while those services stay stopped.
+Wait for the requested owner-availability response before arming the next window;
+no additional approval is needed for the already-scoped resume. Keep live signup,
+group and deletion acceptance separate from the passing local/CI tests.

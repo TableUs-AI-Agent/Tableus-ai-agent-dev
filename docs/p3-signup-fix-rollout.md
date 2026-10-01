@@ -103,3 +103,14 @@ stop/unschedule services and preserve evidence; drain only when Auth/configurati
 is healthy and the original synthetic bounds permit it. Do not extend the clock.
 Do not roll aliases back to an incompatible version while API intake remains open.
 Any additional recovery or changed-source deployment needs a new scoped decision.
+
+
+## Execution checkpoint
+
+PR #10 merged as `9593fba0202e830746523f29cee16532539e80a2`, identical tree to
+passing CI head `4c9392261b0ba8e4154fd8db9e621674579ae1b4`. A test-only portability
+fix uses the runner's temp directory; application inputs remain the approved fix.
+Preview `dpl_99cFtsd56wHCam5dN1EwW5XmTred` is READY and assigned to both staging
+aliases; production targets are unchanged. Web deployments 2/2, restarts 4/8,
+44m52.328s remain. API/worker stay stopped while owner availability is pending.
+See [integration evidence](evidence/9593fba/integration.md). Steps 3–5 remain open.

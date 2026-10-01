@@ -1,40 +1,45 @@
 # Current state
 
-October 1 00:29 UTC / September 30 Central: A successfully verified Auth and
-redeemed its invitation. Database readback confirms one A profile/redemption,
-eight Auth users/seven profiles, an empty deletion queue and zero active invite
-reservations. The browser reached `/plans` but displayed **Plans unavailable —
-Sign in to view your TableUs plans.** Enrollment passed; the Plans journey did not.
+October 1, 2026 / September 30 Central: the signup context fix is deployed to
+both staging web aliases. [PR #10](https://github.com/TableUs-AI-Agent/Tableus-ai-agent-dev/pull/10)
+merged as **`9593fba0202e830746523f29cee16532539e80a2`**, with an identical tree to
+hosted CI head `4c9392261b0ba8e4154fd8db9e621674579ae1b4`. CI passed 242 Python,
+326 JavaScript and 11 browser checks with zero skips, plus lint/types, migrations,
+contracts, deterministic evaluation, builds and smoke. A test-output path was made
+portable for the newly added CI suite; the approved application fix is unchanged.
 
-The second five-minute cutoff began `00:29:27.454267Z`; API and worker were
-verified stopped/unscheduled at `00:29:33.040725Z`, future deletion admission false
-and inline processing false. Process 64575 exited zero. This window is charged
-447.946218 seconds through verified stop, a conservative endpoint rather than an
-exact instance-stop timestamp. Total use is **105m7.672s**, leaving **44m52.328s**:
-29m52.328s first-phase time plus the reserved 15 final-phase minutes. The single
-handoff recovery is exhausted; no fifth restart or B signup has occurred.
+Vercel Preview **`dpl_99cFtsd56wHCam5dN1EwW5XmTred`** is READY, source metadata
+matches the merge, and `links.table-us.com` / `tableus-staging.vercel.app` point to
+it. Production aliases remain on `dpl_7csJvHoJH9qgFZDijbwu3w36r2sK`.
+The [source-bound record](evidence/9593fba/integration.md) distinguishes deployment
+verification from the remaining live acceptance.
 
-The local regression reproduced an early `SIGNED_IN` membership check returning
-403 before invitation redemption creates the profile; its deletion lookup then
-returns 404 and leaves client context signed out. The web fix explicitly reloads
-membership after redemption/sign-in, bound to the verified subject, before route
-navigation or the private-join callback. Existing version/subject guards discard
-late pre-redemption responses. Six local browser checks pass, including both
-response orderings and four deletion/session-isolation checks; the suite is now
-included in CI. `make ready` passed: 326 JavaScript and 206 Python tests, 36
-PostgreSQL-only skips, lint/types, contract generation without drift, web/Expo-web
-builds, deterministic smoke and report-only performance. Hosted CI is pending.
-The fix is local only. Hosted web/API/worker source remains
-`2eefdc51345aeaa7951ffb343954c1669f9280c5`; a changed-source web deployment needs
-the newly granted approval. Local fix commit is `a5a1f44913b9956e9c0aa54e30492a58367f97f9`.
-Brian approved the [web rollout/resume](p3-signup-fix-rollout.md) at `9e9e939`;
-ledger ceilings are now two Previews/eight same-image restarts. Next: publish,
-pass hosted CI/review, merge and deploy one Preview while API/worker stay stopped.
+API and worker are verified stopped/unscheduled with null next runs; their source
+and images remain `2eefdc51345aeaa7951ffb343954c1669f9280c5`. Future API deletion
+admission and inline processing remain false. No new live window is armed, no
+invitation/code was sent, and no provider/deletion attempt occurred in this rollout.
+The prepared B form is in in-app tab 3 at the new Preview's distinct origin; A's
+existing links-origin session/tab 1 is preserved without refreshing against the
+stopped API. **Next: Brian confirms availability with the inbox open, then arm the
+cutoff, use approved restart 5/8, verify readiness/CORS, refresh A's Plans and
+continue B.** This is availability confirmation, not a new rollout approval.
 
-Counters remain invitations 7/10, accounts 1/4, OTP requests 5/11, delivery and
-verification reservations 4/10 and 4/20, support messages 8/14, worker processing
-1/4, configuration restarts 4/8 and known status reads 17/45. No live Places/AI
-or Auth-removal attempt occurred in this window. A and all legacy data remain.
+A's Auth verification and invitation redemption already succeeded: one A profile
+and redemption, eight Auth users/seven profiles, no B/C/D Auth identities, empty
+queue and zero active invite reservations. Its prior Plans screen was incorrectly
+signed out because the Auth-event membership read preceded redemption. The fix
+reloads membership for the verified subject before navigation/private-join
+continuation; version guards ignore late denials. Six deterministic browser checks
+cover both orderings and deletion/session isolation. Hosted retest after resume
+remains open; the newly deployed unsigned Join form alone does not accept signup.
+
+The prior cutoff verified both services stopped at `00:29:33.040725Z`; cumulative
+live use stays **105m7.672s**, leaving **44m52.328s** (29m52.328s first phase plus
+15 final-phase minutes). Web Previews are **2/2**, same-image restarts **4/8**;
+remaining counts stay invitations 7/10, accounts 1/4, OTP requests 5/11,
+delivery/verification reservations 4/10 and 4/20, support 8/14, worker processing
+1/4, known status reads 17/45. All spending caps remain unchanged. No spare handoff
+recovery is approved. A/legacy records and previous allowance history remain.
 
 ## Historical stopped checkpoints
 
