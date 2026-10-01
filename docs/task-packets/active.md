@@ -20,6 +20,40 @@ tests, 326 JavaScript tests and five browser journeys, zero skips, plus lint/typ
 migrations, deterministic evaluation, contracts, builds and smoke. Local readiness,
 restricted PostgreSQL and browser evidence remain applicable to unchanged inputs.
 
+## A deletion pending verified; C signup code ready, October 1
+
+The owner submitted A's final deletion confirmation. The normal page shows
+**Account deletion in progress**. A trusted exact-row lookup confirms request time
+**20:45:59.267953Z**, status `pending`, zero Auth removal attempts, no attention
+flag, A profile absent and exactly one queue row. The verified Auth-subject-to-job
+binding is preserved only in the restricted private ledger before sign-out.
+The first lookup's response parsing failed locally; a second reserved read captured
+the binding. Both reads are charged. No worker processing or Auth deletion occurred.
+Screenshot: `/private/tmp/tableus-a-deletion-pending.png`.
+
+A was signed out locally once; the page confirms its session ended. B's separate
+Preview context is retained. C's one remaining recipient-bound invitation was
+issued, expiring **October 2 at 20:48:23Z**. The normal signup requested exactly one
+code and the owner code-entry prompt is ready at `https://links.table-us.com/invite?mode=join`.
+No OTP is read or entered by the agent. C's account is reserved, not yet verified
+as a completed signup. Screenshot: `/private/tmp/tableus-c-code-ready.png` excludes
+the private invite code. Codes, personal destination, subject and digest stay out
+of Git.
+
+C's handoff deadline is **20:53:29.954220Z** (3:53:29 p.m. Chicago), the unchanged
+phase containment threshold. Phase end stays 20:55:29.954220Z, cutoff session 80797
+is armed, and final 900 seconds remain reserved. Do not extend or resend. Current
+use: restarts **8/11**, invitations **9/10**, account reservations **3/4**, OTP requests
+**10/12**, delivery reservations **9/11**, verification reservations **9/20**,
+refresh/revoke **2/12**, operator status reads **26/45**, mail **11/17**, worker
+invocations **1/4**, Auth DELETE **0/12**. Live elapsed time remains additional to
+9869.996196 charged seconds until verified stop accounting.
+
+Next: owner completes C's code verification in the page and reports Dinner plans.
+Verify C's exact profile/redemption before sole-plan cleanup and deletion. D,
+support correspondence, pause/drain and final B cleanup remain incomplete. A is
+application-deleted with Auth removal still pending, not fully deleted.
+
 ## Approved recovery live; A returning login passed, October 1
 
 The owner approved [the complete recovery](../p3-session-recovery.md) at

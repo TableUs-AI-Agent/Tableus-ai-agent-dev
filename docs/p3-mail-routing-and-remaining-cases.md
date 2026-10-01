@@ -266,8 +266,9 @@ manual sequence alone does not grant full P3 acceptance, production or real inta
 
 The owner approved the [authenticated-session recovery](p3-session-recovery.md) at
 `fa282f2`. Same-image restart 8/11 and A returning application sign-in pass; B's
-context is restored. A's permanent deletion confirmation is prepared for the owner.
-Verify its exact outcome, then continue the approved sequence within the immutable
+context is restored. A's owner-confirmed deletion is verified pending and its exact
+private job binding is saved. C's one signup code is ready for owner entry. Verify
+C's profile/redemption, then continue the approved sequence within the immutable
 phase deadline 20:55:29Z and containment threshold 20:53:29Z. Preserve the final
 15 minutes. The active packet has current counters; the earlier allocations in
 this document remain historical approval inputs. No spare recovery/resend exists.

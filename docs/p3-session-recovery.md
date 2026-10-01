@@ -3,7 +3,8 @@
 Prepared October 1, 2026 from `9d691d127c6080c5fa7dd3e406196884965bea8b`.
 **Approved by the owner at `fa282f2e2d242a4a02eaafa832d06d611753339f`.**
 Recovery restart 8/11 passed readiness and A returning application sign-in. The
-active packet records the live deadline and owner deletion handoff.
+active packet records the live deadline, A's verified pending deletion and C's
+owner code-entry handoff.
 
 ## Confirmed cause
 
@@ -93,6 +94,6 @@ native distribution or real-user invitation is included. Hosted replay/contentio
 and server-side deletion refusal remain unproven until exercised through an approved
 supported path. A fresh Auth session alone does not close those gaps.
 
-Next: owner completes the final A deletion button in the prepared account page;
-verify its result, then continue the already-approved manual sequence before the
-20:53:29Z containment threshold. No new recovery approval is needed within this scope.
+Next: owner verifies C's single code before 20:53:29Z. A's application deletion
+and exact pending job are verified; Auth removal remains queued. Preserve all
+counters and continue the already-approved sequence only before the cutoff.

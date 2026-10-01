@@ -929,3 +929,16 @@ and shared plan. Keep the final 900 seconds and immutable first-phase deadline
 20:55:29Z, with containment at 20:53:29Z. Prepare A's confirmation but leave the
 permanent account-deletion button to the owner, as the approved runbook requires.
 Verify the exact durable outcome before claiming deletion or changing identities.
+
+
+### Verify A pending deletion before moving to C — 2026-10-01
+
+The owner initiated A deletion in the normal account UI. Bind its exact durable
+pending row through the trusted Auth identity while the raw subject remains, then
+preserve that mapping privately before local sign-out. Confirm profile removal,
+zero worker attempts and no attention flag; do not call Auth removal complete.
+Charge both status lookups, including the first locally unparseable response.
+Issue C's one recipient-bound invite and single signup code only after A's local
+session ends. C owner entry ends at the existing 20:53:29Z containment threshold;
+no resend or deadline extension is implied. Keep the worker and all legacy
+identities untouched until the bounded verified queue step.
