@@ -10,7 +10,8 @@ aliases persisted after reload, including A's tagged address, and no catch-all
 remains. After renewed Squarespace verification, the approved MX pair and merged
 SPF were saved. ImprovMX shows Active; all six DNS sources agree, retained records
 match, and Resend sending stays verified. The owner approved and completed the
-separate [three-message test](p3-mail-route-delivery-test.md). Provider reports delivered for all three; owner receipt remains unresolved.
+separate [three-message test](p3-mail-route-delivery-test.md). The owner confirmed
+all three received, completing SUPPORT, PRIVACY and unchanged A-address route proof.
 The broader rehearsal allowance extension remains unapproved.
 
 ## Approved Squarespace diagnostic: completed, original record restored
@@ -122,7 +123,7 @@ The owner handled account terms and reauthentication normally, without passwords
 or codes in chat. All three recipients were configured before DNS activation,
 with no mandatory catch-all or paid feature. The exact delta and retained DNS
 were verified, and both provider statuses pass. The three separately approved probes
-were then sent once; each reports delivered, while owner receipt is pending.
+were then sent once; each reports delivered and the owner confirmed all received.
 The probe window has ended. Do not resend under its completed allowance.
 Setup passed without rollback. The already-approved bounded rollback would remove
 only the two newly added apex MX records and restore the original single SPF
@@ -134,32 +135,60 @@ and receiving-DNS requirements; no renewal, price or successful recovery is impl
 
 The [completed delivery-test scope](p3-mail-route-delivery-test.md) used one labeled,
 non-sensitive probe per route from the existing verified sender, each sent once.
-All three provider statuses are delivered. The owner has not yet confirmed the
-labels, so inbox receipt remains unproven. The ten-minute supervised window ended;
-no API was started and no resend occurred. The six support-case messages remain
-reserved. A later receipt report can complete this evidence without another send.
+All three provider statuses are delivered. The owner confirmed all labels after
+the ten-minute window closed, completing inbox receipt evidence without another
+send or live window. No API was started or resend performed. The six support-case
+messages remain reserved.
 
-## Conditional remaining-case budget
+## Prepared remaining manual rehearsal: owner approval required
 
-Mail routing, the exact A recipient route and owner readiness must pass before
-arming an API window. Current use is 141m45.950286s of 160m, leaving 18m14.049714s;
-15m are reserved for the final phase. Counters are cumulative and never reset.
+Mail routing and the exact A recipient route now pass. Owner availability and
+approval of this exact scope are required before arming a window. Current use is
+141m45.950286s of 160m, leaving 18m14.049714s; 15m are reserved for the final phase. Counters are cumulative and never reset.
 
-The following draft gives the unfinished manual cases a bounded first phase. It
-remains unapproved. The delivery-test gate raised the ceiling to 160 minutes,
-and did not approve the broader 195-minute ceiling or any API restart. Owner
-receipt must be resolved before any rehearsal resume.
+This prepared scope gives the unfinished manual cases a bounded first phase. It
+remains unapproved. Only two ceilings change below; the completed delivery test
+and receipt confirmation did not approve this extension or any API restart.
 
-| Allowance | Current ceiling | Used | Draft ceiling | Reason |
+| Allowance | Current ceiling | Used | Proposed ceiling | Reason |
 | --- | ---: | ---: | ---: | --- |
-| Live minutes | 160 | 141m45.950286s | 195 | Add 35m; API first phase at most 45m, final 15m |
+| Live minutes | 160 | 141m45.950286s | 195 | Add 35m; first phase 38m14.049714s, final 15m |
 | Same-image API restarts | 9 | 6 | 10 | Add one first-phase resume; retain pause/final re-enable/final disable |
 | Support/test mail messages | 17 | 11 | 17 | No increase; six remaining case messages |
 
-After any route-probe interval, compute the API first phase as the smaller of
-45 minutes and remaining cumulative time minus the 15-minute final reserve.
-The unchanged cutoff supports at most 45 minutes per first-phase window; extra
-cumulative headroom is not a spare restart.
+After approval, remaining cumulative time would be **53m14.049714s**. Allocate
+**38m14.049714s (2294.049714 seconds)** to the first phase and **15 minutes** to
+the final phase. Both include startup, verification and containment. The existing
+cutoff accepts these exact durations and triggers containment two minutes before
+each deadline; the local allocation check passed with zero provider calls or
+ledger changes. Never extend an armed deadline. Stopped preparation/breaks are
+excluded, while owner code handoffs inside a live window count. The original
+natural-expiry fixture already passed, so no overnight wait is needed.
+
+The four remaining restart slots after approval have specific purposes:
+
+1. Resume the existing API image with deletion admission enabled and inline
+   attempts disabled, retaining the already-approved temporary Preview CORS origin.
+2. Pause API deletion admission for the supported refusal/drain case.
+3. Resume/re-enable that same API image for B's final phase.
+4. Disable admission and remove only the temporary Preview CORS origin at final
+   containment. Keep the other approved origins. Stop/unschedule API and worker.
+
+No extra interruption recovery is reserved. Before starting, check the newly
+recorded `remaining_manual_case_proposal.approved` flag in addition to the older
+cutoff approval guard, arm a fresh uniquely identified window, and verify its
+armed receipt. Old consumed helpers and stale approval fields cannot authorize
+another resume. Preserve the final 900 seconds explicitly when arming phase one.
+
+Execution remains bound to API/worker source
+`2eefdc51345aeaa7951ffb343954c1669f9280c5` and web
+`9593fba0202e830746523f29cee16532539e80a2`. The preserved browser contexts are A at
+`links.table-us.com` and B at the existing unique staging Preview origin. Reuse
+A's context for C/D only after supported synthetic sign-out; preserve all legacy
+sessions and identities. Before arming, reconcile current deployment/image,
+no worker schedule, exact synthetic roster, empty queue and remaining provider/
+billing headroom against the private stop receipt. Any discrepancy requires
+reconciliation while services remain stopped, not a speculative resume.
 
 Keep every other allowance: invitations 10 (8 used), accounts 4 (2 used), OTP
 requests 11 (7 used), OTP deliveries 10 (6 reserved), verification submissions
@@ -169,7 +198,7 @@ worker invocations 4 (1 used), Auth DELETE attempts 12 (0 used), Places 420
 Keep $5 hosting, $15 providers, $20 combined and $0.25 AI ceilings. No new image,
 web deployment, schema, secret, resource or source build is part of the rehearsal
 extension. The exact mail-forwarding setup approval was granted and has been completed.
-No spare recovery resume or OTP resend is available in this draft.
+No spare recovery resume or OTP resend is available in this scope.
 
 ## Manual sequence after complete approval and prerequisites
 
@@ -190,9 +219,14 @@ No spare recovery resume or OTP resend is available in this draft.
    session. Exercise the remaining challenge/reply, duplicate/ack and completion/
    receipt correspondence within the six reserved case messages. Complete D's
    supported pending deletion/status checks. The owner performs irreversible
-   final confirmations in the visible account form where required.
-5. Keep each unresolved OTP handoff to ten minutes, with no extension and no next
-   signup while unresolved. A returning, C signup, D signup and B final returning
+   final confirmations in the visible account form where required. Six support
+   messages cover three pairs: challenge/reply, duplicate/acknowledgment and
+   completion/receipt. Bind D before losing its session, using the existing
+   verified account address from the trusted private roster. No identity inference
+   from forwarded mail or hidden token extraction is allowed.
+5. Keep each unresolved OTP handoff to ten minutes or the earlier phase containment
+   threshold, with no extension and no next signup while unresolved. A returning,
+   C signup, D signup and B final returning
    consume all four remaining requests/deliveries. Stop on the first unexpected
    core/provider/auth/identity error rather than spending an unapproved resend.
 6. Pause API admission, verify the supported refusal/status behavior, and drain
@@ -200,6 +234,9 @@ No spare recovery resume or OTP resend is available in this draft.
    row's exact completion, cleared subject and support binding. Four total worker
    invocations and 12 total Auth DELETE attempts remain hard limits; no manual
    queue insertion or admin deletion shortcut. Inspect the entire queue first.
+   Keep the worker unscheduled and invoke only
+   bounded batches (`--limit 3`) against the approved existing jobs. Preserve
+   exact completion evidence rather than treating processed counts as completion.
 7. Verify B's shared-content cleanup, metadata repair and sole-plan removal, then
    stop between phases. In the final 15m, re-enable and complete B's normal
    returning sign-in, self-service deletion and bounded drain. Disable intake,
@@ -215,6 +252,8 @@ manual sequence alone does not grant full P3 acceptance, production or real inta
 
 ## Immediate next step
 
-Obtain the missing receipt labels or prepare a bounded diagnosis; do not resend
-or resume the rehearsal.
-The application stays stopped; the wider restart/time extension is unapproved.
+The owner approves the two ceiling changes and is available for the two bounded
+phases, normal OTP entry and synthetic account confirmations. Before any resume,
+record that exact approval and complete the stopped-service preflight above.
+Mail recovery is complete. No service was resumed while preparing this scope,
+and full P3 acceptance remains open for the explicitly untested hosted cases.

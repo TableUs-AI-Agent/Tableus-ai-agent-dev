@@ -20,7 +20,7 @@ tests, 326 JavaScript tests and five browser journeys, zero skips, plus lint/typ
 migrations, deterministic evaluation, contracts, builds and smoke. Local readiness,
 restricted PostgreSQL and browser evidence remain applicable to unchanged inputs.
 
-## ImprovMX routing active; owner receipt unresolved, October 1
+## ImprovMX routing active; all three delivery routes passed, October 1
 
 ImprovMX Free is Active with three exact aliases and no catch-all. The approved
 MX/SPF changes pass all six DNS sources, 72 retained-record comparisons and
@@ -28,9 +28,10 @@ verified Resend sending. Public support/privacy addresses and A's identity remai
 
 The owner approved the exact three-message delivery test at
 `1c42ca9a1ce5ed4875c413fe12b839868e591add`. SUPPORT, PRIVACY and A were each sent
-once; all three Resend metadata checks reported **delivered**. Owner inbox receipt
-is not confirmed for all three labels.
-Hold the rehearsal; provider delivery alone does not prove owner receipt.
+once; all three Resend metadata checks reported **delivered**. The owner then
+confirmed “all three received.” SUPPORT, PRIVACY and A all pass by owner inbox
+receipt. The receipt report arrived after the window closed; it consumed no new
+message, status lookup, supervised window or restart.
 
 The supervised window ran from `2026-10-01T07:20:44.036274+00:00` to its
 `2026-10-01T07:30:44.036274+00:00` deadline, charging 600 seconds. Ledger closeout
@@ -44,8 +45,10 @@ counters are unchanged. The broader 195-minute/restart-10 scope remains unapprov
 
 See [the delivery-test evidence](../p3-mail-route-delivery-test.md).
 
-Next: obtain the missing receipt labels or prepare a bounded diagnosis. Do not
-resend or resume the rehearsal under this test approval.
+Next: approve the prepared remaining manual rehearsal and be available for code
+entry and account confirmations. Its proposed 195-minute/restart-10 ceilings are
+not yet applied; the first phase is capped at 38m14.049714s, followed by the
+reserved 15-minute final phase.
 
 The owner approved the brief remove/inspect/restore test and completed required
 Google reauthentication. Removing only the Resend `send` MX cleared Squarespace's
@@ -126,14 +129,15 @@ is not evidence of free billing. Final delayed Railway workspace usage
 $4.405555630631419 is $0.8518319533405543 above the original baseline, not exact
 campaign attribution. All $5 hosting/$15 provider/$20 combined caps remain.
 
-**Next: prepare the remaining-case scope and resolve the support/privacy mailbox
-route before another first-phase resume.** Only 3m14.050s remain outside the final
-reserve, insufficient for two full ten-minute signup handoffs. C/D enrollment,
+**At the B-stop checkpoint below, only 3m14.050s remained outside the final
+reserve.** Mail recovery and the prepared remaining-case scope now appear above;
+that historical allowance was insufficient for two full ten-minute signup handoffs. C/D enrollment,
 fresh A/B returning sign-in, hosted redemption replay/contention, server deletion
 refusal, pending/support binding, drain/pause and final cleanup remain incomplete.
-A cannot receive a fresh OTP at its original inbox; public support/privacy receipt
-remains unresolved while Workspace is offline. Public contacts and A's identity
-are unchanged. Full Priority 3 acceptance, real invitations and Priority 4 are not
+At that checkpoint Workspace was offline and A/support/privacy receipt was
+unresolved. The later ImprovMX probes now pass all three routes; public contacts
+and A's identity remain unchanged. A fresh Auth OTP after forwarding remains part
+of the pending returning-sign-in test. Full Priority 3 acceptance, real invitations and Priority 4 are not
 approved by these partial successes.
 
 Evidence screenshots are under `/private/tmp`: `tableus-p3-b-plans-live.png`,

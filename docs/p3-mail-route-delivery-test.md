@@ -1,10 +1,11 @@
-# P3 mail-route delivery test: receipt unresolved
+# P3 mail-route delivery test: passed
 
 The owner approved the exact three-message delivery test at
 `1c42ca9a1ce5ed4875c413fe12b839868e591add`. SUPPORT, PRIVACY and A were each sent
-once; all three Resend metadata checks reported **delivered**. Owner inbox receipt
-is not confirmed for all three labels.
-Hold the rehearsal; provider delivery alone does not prove owner receipt.
+once; all three Resend metadata checks reported **delivered**. The owner then
+confirmed “all three received.” SUPPORT, PRIVACY and A all pass by owner inbox
+receipt. The receipt report arrived after the window closed; it consumed no new
+message, status lookup, supervised window or restart.
 
 The supervised window ran from `2026-10-01T07:20:44.036274+00:00` to its
 `2026-10-01T07:30:44.036274+00:00` deadline, charging 600 seconds. Ledger closeout

@@ -98,15 +98,17 @@ API/worker remain stopped/unscheduled; the completed mail test did not resume th
 The approved ImprovMX setup is Active; all six DNS sources agree, 72 retained-record
 comparisons passed, and Resend sending remains verified. Three exact aliases are
 configured with no catch-all. The [delivery test](p3-mail-route-delivery-test.md)
-reported provider delivered for all three, but owner receipt remains unresolved.
+passed SUPPORT, PRIVACY and A by owner-confirmed inbox receipt after all three
+provider statuses reported delivered. This late confirmation adds no live time.
 Cumulative supervised use is 141m45.950286s of 160 minutes; 18m14.049714s
 remain, including the 15-minute final reserve. Mail use is 11/17 and operator reads
 22/45; the broader 195-minute and extra-restart scope remains unapproved.
 
 Scope C/D, returning sign-in, replay/contention,
 deletions/support/drain and cleanup against the remaining time; another first-phase
-recovery is not already allocated. Resolve original support/privacy mailbox access
-before claiming that acceptance or inviting real users. See the active packet for
+recovery is not already allocated. Complete the support-case handling rehearsal
+before claiming support-case acceptance or inviting real users. Incoming delivery
+is now proven; the pending/support/drain cases remain. See the active packet for
 exact counters/evidence. No pilot acceptance or Priority 4 is implied.
 
 Effort is a rough planning range in focused engineering days, excluding approval,

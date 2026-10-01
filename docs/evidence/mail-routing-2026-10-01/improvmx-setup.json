@@ -2015,5 +2015,10 @@
   "screenshots": [
     "/private/tmp/tableus-improvmx-active.png",
     "/private/tmp/tableus-improvmx-dns-saved.png"
-  ]
+  ],
+  "subsequent_delivery_result": {
+    "path": "delivery-test.json",
+    "outcome": "all_three_received",
+    "owner_receipt_reported_at": "2026-10-01T07:35:45.981075+00:00"
+  }
 }

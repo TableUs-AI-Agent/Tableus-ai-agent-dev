@@ -857,3 +857,21 @@ Mail use is **11/17**, leaving six reserved rehearsal-case messages. Operator
 status reads are **22/45**. The API/worker stayed stopped; no OTP, invitation,
 restart, account, deletion or AI/Places operation occurred. All other limits and
 counters are unchanged. The broader 195-minute/restart-10 scope remains unapproved.
+
+
+### Owner confirms all three recovered mail routes — 2026-10-01
+
+The owner replied “all three received” after the bounded probe window closed.
+This completes SUPPORT, PRIVACY and unchanged A-address receipt evidence; preserve
+the earlier unconfirmed-at-deadline observation as history. No resend, status read,
+window or counter reset accompanies the confirmation. Forwarding does not restore
+Google Workspace subscription or historical mailbox contents.
+
+Prepare the remaining manual scope at 195 cumulative supervised minutes and ten
+same-image API restarts, increasing current ceilings by 35 minutes and one restart.
+With 141m45.950286s already used, the first phase is at most **38m14.049714s**, plus
+**15 minutes** for the final phase. Validate both durations against the existing
+cutoff before owner approval, without provider calls or arming a window. Retain
+all other caps, six support-case messages and four exact remaining OTP requests;
+no spare resend/recovery is added. The receipt confirmation does not approve
+this rehearsal extension or final P3 acceptance.

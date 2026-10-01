@@ -13,8 +13,12 @@
     "PRIVACY": "delivered",
     "A": "delivered"
   },
-  "owner_receipt": null,
-  "outcome": "receipt_unconfirmed_at_window_end",
+  "owner_receipt": {
+    "SUPPORT": true,
+    "PRIVACY": true,
+    "A": true
+  },
+  "outcome": "all_three_received",
   "started_at": "2026-10-01T07:20:44.036274+00:00",
   "supervised_seconds": 600,
   "cumulative_supervised_seconds": 8505.950286,
@@ -30,5 +34,10 @@
   "broader_rehearsal_extension_approved": false,
   "private_provider_identifiers": "Stored only in the private ledger",
   "window_ended_at": "2026-10-01T07:30:44.036274+00:00",
-  "closeout_recorded_at": "2026-10-01T07:30:57.419244+00:00"
+  "closeout_recorded_at": "2026-10-01T07:30:57.419244+00:00",
+  "outcome_at_window_end": "receipt_unconfirmed_at_window_end",
+  "owner_receipt_reported_at": "2026-10-01T07:35:45.981075+00:00",
+  "owner_report": "all three received",
+  "receipt_report_after_window": true,
+  "additional_messages_or_live_seconds_for_receipt_confirmation": 0
 }
