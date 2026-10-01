@@ -86,23 +86,18 @@ The subsequent [invitation extension](p3-rehearsal-next-attempt.md) was approved
 ten invitations, 150 live minutes, seven same-image restarts and 45 status reads,
 with unchanged financial/other attempt limits. Brian confirmed receipt of Auth
 email after checking the correct inbox; no email-delivery repair was needed.
-Restart 4/7 used the single handoff recovery. A now has confirmed Auth and one
-profile/redemption, but the Plans screen incorrectly says to sign in. Both services
-were verified stopped/unscheduled at October 1 `00:29:33.040725Z`; admission is off.
-**44m52.328s remain**, including the 15-minute final-phase reserve. No B signup or
-additional recovery occurred. The local web fix reloads membership after redemption
-and passes six deterministic browser checks plus `make ready`. Brian approved
-the [web fix rollout](p3-signup-fix-rollout.md): one additional Preview and one
-same-image resume, cumulative ceilings two/eight with unchanged time/spending.
-PR #10 is merged as `9593fba`, with CI passing 242 Python/326 JavaScript/11 browser
-checks. The fixed Preview is READY on both staging aliases; production is unchanged.
-API/worker remain stopped and the clock is unarmed. Brian now reports temporary
-loss of `@table-us.com` mailbox access and then approved a replacement controlled
-inbox with three aliases for B/C/D. Exact recipients are private. Next: resume
-within existing bounds and verify A's session/Plans before the remaining signups;
-A returning sign-in and original support/privacy mail checks remain unresolved.
-Live verification remains outstanding; working support/privacy contact is required
-before real pilot invitations.
+Restart 4/7 completed A's Auth/profile/redemption but exposed a stale web membership
+context. Brian approved the web fix and one resume; PR #10 merged as `9593fba`
+after hosted CI passed 242 Python/326 JavaScript/11 browser checks. The fixed
+Preview is READY on both staging aliases; production is unchanged. Restart 5/8
+then verified A's preserved session on Dinner plans. B used an approved replacement
+inbox but verified its OTP after the automatic handoff cutoff stopped the API.
+B has confirmed Auth but no profile/redemption. API/worker are stopped and
+unscheduled; future admission is false. **36m46.978s remain**, including the
+15-minute final-phase reserve. The [proposed recovery](p3-b-signup-recovery.md)
+needs approval; no spare recovery is currently authorized. A fresh sign-in and
+original support/privacy mailbox checks remain unresolved during the inbox outage.
+Working support/privacy contact is required before real pilot invitations.
 
 Group/deletion and hosted replay/contention acceptance remain open. The separate
 natural-expiry fixture elapsed September 29 at 9:48:55 p.m. Central, but its HTTP
@@ -173,10 +168,3 @@ The four-result requirement may block some real searches. Structured cuisines
 are intersected only when supplied; current plan forms send free-text notes and
 empty cuisine arrays. Neither issue justifies speculative ranking changes before
 pilot evidence. The previous roadmap remains in Git at `4a2f9ec`.
-
-
-Latest P3 checkpoint: approved resume 5/8 is ready; A's preserved session now
-passes live Plans on the fixed web deployment. B's replacement-inbox signup code
-is pending under the five-minute cutoff (04:59:13.762141Z); B Auth exists but
-profile/enrollment is unconfirmed. See the active packet for the armed live window.
-No group/deletion or full pilot acceptance is implied.

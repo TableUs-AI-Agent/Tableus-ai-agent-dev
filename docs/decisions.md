@@ -720,7 +720,13 @@ identity edit or authentication bypass is authorized.
 
 
 The replacement-recipient resume reused the existing API image (restart 5/8).
-A's preserved session passed the live Plans check without another OTP. Proceed
-with B's newly bound invitation through normal signup, preserving the unchanged
-five-minute handoff/remaining-clock rules. A session success does not resolve
-fresh A sign-in or original mailbox support/privacy acceptance.
+A's preserved session passed Plans without another OTP. The five-minute handoff
+cutoff then stopped the API before B verified its code: Auth succeeded but app
+redemption could not run. B has no profile. Charge elapsed time through verified
+stop and keep services stopped; no extra recovery was previously authorized.
+The [B recovery proposal](p3-b-signup-recovery.md) requests one extra same-image
+resume and a ten-minute handoff within unchanged cumulative time/spending. This
+is a proposal, not authorization. Prepare all checks before sending the code and
+hand off promptly. Record the OTP as consumed; preserve identity and allowance history;
+use the normal form resend/revalidation after any approval. A session success
+does not resolve fresh A sign-in or original mailbox support/privacy acceptance.

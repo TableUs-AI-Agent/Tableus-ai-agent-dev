@@ -1,76 +1,64 @@
 # Current state
 
 
-## Live handoff checkpoint, October 1 04:56 UTC
+## Stopped checkpoint, October 1 05:03 UTC
 
-Approved restart **5/8** is SUCCESS on the unchanged API image: deployment
-`721c710a-999a-4324-9b38-2b3dc1f79589`, source `2eefdc5`, deletion enabled/inline
-false, exact links/new-Preview CORS passed. Worker remains stopped/unscheduled.
-Window `7dd980e3-6ce5-42e1-ab7e-464d3bea6de7` began `04:51:16.923843Z`, maximum
-deadline `05:21:09.251671Z`, preserving 900 final-phase seconds. Durable cutoff
-process **78403** is armed; it begins deadline containment two minutes early.
+B's email verification succeeded at `05:02:14.784399Z`, after the five-minute
+handoff cutoff had stopped the API. The visible form says **Network unavailable.
+Reconnect and try again.** The OTP is consumed; do not retry it. B has no
+application profile/redemption and has not reached Plans. This is a cutoff-related
+signup interruption, not evidence that the owner's internet failed.
 
-A's preserved session now visibly opens **Dinner plans** on web source `9593fba`;
-no new A OTP was needed. Screenshot `/private/tmp/tableus-p3-a-plans-fixed-live.png`.
-B received a fresh recipient-bound invitation and one normal signup-code request
-using the private approved replacement map. Its form shows code entry, no error.
-Readback: nine Auth users/seven profiles; B Auth created but unconfirmed, no B
-profile; one reservation expires `05:14:47.518242Z`, queue/new provider rows zero.
-Counters: invites 8/10, accounts 2/4, OTP requests 6/11, delivery/verification
-reservations 5/10 and 5/20, known status reads 18/45; other counters unchanged.
+Cutoff receipt `next-attempt-cutoff.json` verifies API/worker stopped and
+unscheduled at `04:59:22.273730Z`, future deletion admission false. Window
+`7dd980e3-6ce5-42e1-ab7e-464d3bea6de7` is closed. Its 485.349887 seconds are
+charged through verified stop; exact instance-stop time was not captured.
+Cumulative use is **6793.022059 seconds (113m13.022s)**; **2206.977941 seconds
+(36m46.978s)** remain, including the 900-second final-phase reserve.
 
-**Next: Brian enters B's newest code in in-app tab 3 and selects Verify and
-continue. Verify actual Dinner plans plus B profile/redemption, then clear the
-handoff deadline `04:59:13.762141Z` before advancing.** The deadline was reserved
-before submission and was not extended. A's fresh sign-in and original support/
-privacy mail acceptance remain unresolved. No C/D invitation or OTP was issued.
+Restart **5/8** used unchanged API source `2eefdc5`, deployment
+`721c710a-999a-4324-9b38-2b3dc1f79589`; readiness and exact links/new-Preview
+CORS passed before cutoff. Worker stayed stopped. A's preserved session visibly
+passed **Dinner plans** on web source `9593fba`, without another OTP; screenshot
+`/private/tmp/tableus-p3-a-plans-fixed-live.png`. Preserve both in-app tabs.
 
-October 1, 2026 / September 30 Central: the signup context fix is deployed to
-both staging web aliases. [PR #10](https://github.com/TableUs-AI-Agent/Tableus-ai-agent-dev/pull/10)
-merged as **`9593fba0202e830746523f29cee16532539e80a2`**, with an identical tree to
-hosted CI head `4c9392261b0ba8e4154fd8db9e621674579ae1b4`. CI passed 242 Python,
-326 JavaScript and 11 browser checks with zero skips, plus lint/types, migrations,
-contracts, deterministic evaluation, builds and smoke. A test-output path was made
-portable for the newly added CI suite; the approved application fix is unchanged.
+Readback: nine Auth users/seven profiles; B Auth confirmed, B profiles/redemptions
+zero, deletion queue/campaign provider rows zero. B's validation reservation was
+active at readback and expires `05:14:47.518242Z`; its invitation expires October 2
+`04:53:41.656074Z`. Revalidate through the normal form on any approved recovery.
+Counters stay invites **8/10**, accounts **2/4**, OTP requests **6/11**, delivery/
+verification reservations **5/10** and **5/20**, web Previews **2/2**, known status
+reads **18/45**. Other counters/spending limits are unchanged. No C/D invitation
+or OTP was issued during this resume.
 
-Vercel Preview **`dpl_99cFtsd56wHCam5dN1EwW5XmTred`** is READY, source metadata
-matches the merge, and `links.table-us.com` / `tableus-staging.vercel.app` point to
-it. Production aliases remain on `dpl_7csJvHoJH9qgFZDijbwu3w36r2sK`.
-The [source-bound record](evidence/9593fba/integration.md) distinguishes deployment
-verification from the remaining live acceptance.
+**Next: review the [proposed B recovery scope](p3-b-signup-recovery.md). It is not yet approved.** There is
+no spare recovery resume under the existing approval, so keep services stopped.
+Do not reuse consumed OTPs, change identities, extract session tokens, or reset
+allowances. A's fresh sign-in, original support/privacy mail binding, group/deletion
+and hosted replay/contention acceptance remain incomplete. No pilot activation.
 
-API and worker are verified stopped/unscheduled with null next runs; their source
-and images remain `2eefdc51345aeaa7951ffb343954c1669f9280c5`. Future API deletion
-admission and inline processing remain false. No new live window is armed, no
-invitation/code was sent, and no provider/deletion attempt occurred in this rollout.
-The prepared B form is in in-app tab 3 at the new Preview's distinct origin; A's
-existing links-origin session/tab 1 is preserved without refreshing against the
-stopped API. Brian reported temporary loss of `@table-us.com` inboxes, then supplied an
-accessible replacement inbox and approved three tagged aliases for B/C/D. Exact
-addresses are stored privately; B's prepared form is updated without sending.
-**Next: arm containment, resume the approved API image (restart 5/8), verify
-readiness/CORS and A's Plans, then issue B's recipient-bound invitation/code.**
-A's identity and public support/privacy contacts are unchanged. Fresh A sign-in
-and original support/privacy delivery/binding remain unresolved; alternative
-recipients do not close those acceptance gaps or authorize auth bypass.
+## Deployed source and prior authorization
 
+Brian approved the signup-fix rollout at `9e9e939ed7000f9e19923dcbf112d2aaea2e37cc`.
+PR #10 merged as **`9593fba0202e830746523f29cee16532539e80a2`**, identical full tree
+to hosted CI head `4c9392261b0ba8e4154fd8db9e621674579ae1b4`. Hosted CI passed
+242 Python, 326 JavaScript and 11 browser checks with zero skips, plus lint/types,
+migrations, contracts, deterministic evaluation, builds and smoke. The fix refreshes
+membership for the verified subject after redemption and guards against late denial.
 
-A's Auth verification and invitation redemption already succeeded: one A profile
-and redemption, eight Auth users/seven profiles, no B/C/D Auth identities, empty
-queue and zero active invite reservations. Its prior Plans screen was incorrectly
-signed out because the Auth-event membership read preceded redemption. The fix
-reloads membership for the verified subject before navigation/private-join
-continuation; version guards ignore late denials. Six deterministic browser checks
-cover both orderings and deletion/session isolation. Hosted retest after resume
-remains open; the newly deployed unsigned Join form alone does not accept signup.
+Preview `dpl_99cFtsd56wHCam5dN1EwW5XmTred` is READY on both staging aliases;
+production stays on `dpl_7csJvHoJH9qgFZDijbwu3w36r2sK`. API/worker source remains
+`2eefdc51345aeaa7951ffb343954c1669f9280c5`. The approved extra Preview and resume
+are consumed. The durable cutoff's eight self-tests passed. Existing temporary
+helpers have consumed counter assumptions; do not rerun their reserve/arm/resume
+commands. No code, deployment, email send or provider call changed in this incident
+reconciliation; no application suite was rerun for documentation-only edits.
 
-The prior cutoff verified both services stopped at `00:29:33.040725Z`; cumulative
-live use stays **105m7.672s**, leaving **44m52.328s** (29m52.328s first phase plus
-15 final-phase minutes). Web Previews are **2/2**, same-image restarts **4/8**;
-remaining counts stay invitations 7/10, accounts 1/4, OTP requests 5/11,
-delivery/verification reservations 4/10 and 4/20, support 8/14, worker processing
-1/4, known status reads 17/45. All spending caps remain unchanged. No spare handoff
-recovery is approved. A/legacy records and previous allowance history remain.
+Brian approved replacement inbox aliases for B/C/D; exact personal addresses are
+stored only in the private ledger. A's original identity and public support/privacy
+contacts stay unchanged. The original inbox outage leaves fresh A sign-in and
+support/privacy acceptance unresolved. Preserve earlier receipts as historical
+proof rather than claiming current mailbox availability.
 
 ## Historical stopped checkpoints
 

@@ -105,20 +105,21 @@ Do not roll aliases back to an incompatible version while API intake remains ope
 Any additional recovery or changed-source deployment needs a new scoped decision.
 
 
-## Execution checkpoint
+## Execution checkpoint (scope consumed)
 
 PR #10 merged as `9593fba0202e830746523f29cee16532539e80a2`, identical tree to
-passing CI head `4c9392261b0ba8e4154fd8db9e621674579ae1b4`. A test-only portability
-fix uses the runner's temp directory; application inputs remain the approved fix.
-Preview `dpl_99cFtsd56wHCam5dN1EwW5XmTred` is READY and assigned to both staging
-aliases; production targets are unchanged. Web deployments 2/2, restarts 4/8,
-44m52.328s remain. API/worker stay stopped. Brian subsequently reported loss of `@table-us.com`
-mailbox access; the recipient/support plan must be reconciled before resume.
-See [integration evidence](evidence/9593fba/integration.md). Steps 3–5 remain open.
+passing hosted CI head `4c9392261b0ba8e4154fd8db9e621674579ae1b4`. Preview
+`dpl_99cFtsd56wHCam5dN1EwW5XmTred` is READY on the two staging aliases;
+production is unchanged. Brian approved replacement inbox aliases for B/C/D,
+recorded privately, without changing A or public support/privacy contacts.
 
+Approved resume 5/8 verified A's preserved session on Dinner plans. The five-minute
+B handoff cutoff stopped API/worker, verified at October 1 `04:59:22.273730Z`.
+B confirmed Auth at `05:02:14.784399Z`, after cutoff, but has no app profile or
+redemption. Its visible network error follows API containment. The OTP is consumed.
+Cumulative remaining time is **36m46.978s**, with 15 final-phase minutes reserved.
+Web deployments are 2/2, restarts 5/8; no recovery resume remains authorized.
 
-Brian then supplied a replacement controlled inbox and approved three tagged
-aliases for B/C/D. Exact personal addresses are stored privately; new invitations
-will bind those recipients. Existing limits and the approved resume remain valid.
-A keeps its original identity; fresh A sign-in and original support/privacy mailbox
-checks remain incomplete. No additional account, public contact change or bypass.
+See [integration evidence](evidence/9593fba/integration.md) and the separately
+[proposed B recovery](p3-b-signup-recovery.md). Later proposals do not amend this
+approval until Brian explicitly agrees. Full rehearsal acceptance remains open.

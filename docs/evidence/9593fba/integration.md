@@ -85,26 +85,38 @@ hosted replay/contention and final cleanup acceptance remain open. This deployme
 does not accept the pilot or authorize native builds/activation.
 
 
-## Live handoff checkpoint, October 1 04:56 UTC
+## Stopped checkpoint, October 1 05:03 UTC
 
-Approved restart **5/8** is SUCCESS on the unchanged API image: deployment
-`721c710a-999a-4324-9b38-2b3dc1f79589`, source `2eefdc5`, deletion enabled/inline
-false, exact links/new-Preview CORS passed. Worker remains stopped/unscheduled.
-Window `7dd980e3-6ce5-42e1-ab7e-464d3bea6de7` began `04:51:16.923843Z`, maximum
-deadline `05:21:09.251671Z`, preserving 900 final-phase seconds. Durable cutoff
-process **78403** is armed; it begins deadline containment two minutes early.
+B's email verification succeeded at `05:02:14.784399Z`, after the five-minute
+handoff cutoff had stopped the API. The visible form says **Network unavailable.
+Reconnect and try again.** The OTP is consumed; do not retry it. B has no
+application profile/redemption and has not reached Plans. This is a cutoff-related
+signup interruption, not evidence that the owner's internet failed.
 
-A's preserved session now visibly opens **Dinner plans** on web source `9593fba`;
-no new A OTP was needed. Screenshot `/private/tmp/tableus-p3-a-plans-fixed-live.png`.
-B received a fresh recipient-bound invitation and one normal signup-code request
-using the private approved replacement map. Its form shows code entry, no error.
-Readback: nine Auth users/seven profiles; B Auth created but unconfirmed, no B
-profile; one reservation expires `05:14:47.518242Z`, queue/new provider rows zero.
-Counters: invites 8/10, accounts 2/4, OTP requests 6/11, delivery/verification
-reservations 5/10 and 5/20, known status reads 18/45; other counters unchanged.
+Cutoff receipt `next-attempt-cutoff.json` verifies API/worker stopped and
+unscheduled at `04:59:22.273730Z`, future deletion admission false. Window
+`7dd980e3-6ce5-42e1-ab7e-464d3bea6de7` is closed. Its 485.349887 seconds are
+charged through verified stop; exact instance-stop time was not captured.
+Cumulative use is **6793.022059 seconds (113m13.022s)**; **2206.977941 seconds
+(36m46.978s)** remain, including the 900-second final-phase reserve.
 
-**Next: Brian enters B's newest code in in-app tab 3 and selects Verify and
-continue. Verify actual Dinner plans plus B profile/redemption, then clear the
-handoff deadline `04:59:13.762141Z` before advancing.** The deadline was reserved
-before submission and was not extended. A's fresh sign-in and original support/
-privacy mail acceptance remain unresolved. No C/D invitation or OTP was issued.
+Restart **5/8** used unchanged API source `2eefdc5`, deployment
+`721c710a-999a-4324-9b38-2b3dc1f79589`; readiness and exact links/new-Preview
+CORS passed before cutoff. Worker stayed stopped. A's preserved session visibly
+passed **Dinner plans** on web source `9593fba`, without another OTP; screenshot
+`/private/tmp/tableus-p3-a-plans-fixed-live.png`. Preserve both in-app tabs.
+
+Readback: nine Auth users/seven profiles; B Auth confirmed, B profiles/redemptions
+zero, deletion queue/campaign provider rows zero. B's validation reservation was
+active at readback and expires `05:14:47.518242Z`; its invitation expires October 2
+`04:53:41.656074Z`. Revalidate through the normal form on any approved recovery.
+Counters stay invites **8/10**, accounts **2/4**, OTP requests **6/11**, delivery/
+verification reservations **5/10** and **5/20**, web Previews **2/2**, known status
+reads **18/45**. Other counters/spending limits are unchanged. No C/D invitation
+or OTP was issued during this resume.
+
+**Next: review the [proposed B recovery scope](../../p3-b-signup-recovery.md). It is not yet approved.** There is
+no spare recovery resume under the existing approval, so keep services stopped.
+Do not reuse consumed OTPs, change identities, extract session tokens, or reset
+allowances. A's fresh sign-in, original support/privacy mail binding, group/deletion
+and hosted replay/contention acceptance remain incomplete. No pilot activation.
