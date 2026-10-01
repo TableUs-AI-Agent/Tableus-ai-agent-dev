@@ -50,8 +50,9 @@ D completed normal signup at 22:17:06Z. Trusted readback at 22:18:14Z confirms
 one profile/redemption, the expected fixture name and no owned plans. The OTP
 handoff is cleared; the phase cutoff remains 22:34:40Z. Its trusted account/address
 binding is saved privately, but mailbox correspondence verification is still
-pending. One approved fresh challenge was sent to that address and its owner reply
-reserved (13/17 total messages). The owner must confirm the reply returns through
+pending. One approved fresh challenge was sent to that address; the owner reports
+the reserved reply sent (13/17 total messages). Receipt through privacy is still
+unconfirmed. The owner must confirm the reply returns through
 the privacy route before treating that correspondence as verified. D's Account
 page is prepared for the owner's irreversible deletion confirmation; no D deletion
 has been observed yet. Preserve B's old-origin session.

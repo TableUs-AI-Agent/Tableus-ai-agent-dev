@@ -75,7 +75,8 @@ profile/redemption, expected name, confirmed email and zero owned plans. Screens
 send. OTP requests are 11/12, invitations 10/10, provider attempts 74/420. Its trusted
 account/address binding is saved in the restricted case, still verification_required
 for support correspondence. One fresh challenge was accepted by Resend; the owner
-reply is reserved, not claimed received (13/17 messages). The prepared D Account
+reply was reported sent at 22:25Z, not claimed received through privacy (13/17
+messages). Fresh Account UI still showed no deletion submitted. The prepared D Account
 confirmation is `/private/tmp/tableus-d-delete-ready.png`; no deletion claim yet.
 Next: owner verifies mailbox reply/receipt and confirms D deletion; bind the exact
 job before sign-out and the bounded queue drain.

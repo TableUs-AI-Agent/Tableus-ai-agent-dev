@@ -114,7 +114,8 @@ and no new OTP. The owner removed its sole plan and confirmed deletion; trusted
 readback verifies its profile/plan absent and exact Auth-deletion job pending, with
 zero attempts. A also remains pending. C signed out; D completed signup with one
 profile/redemption and no plans. Its trusted account binding is preserved privately,
-with the fresh support challenge sent and owner reply reserved. D's final account
+with the fresh support challenge sent and owner-reported reply sent; receipt
+through privacy remains unconfirmed. D's final account
 confirmation remains with the owner. B's session is preserved.
 D deletion/support, worker removal, B
 cleanup and final returning/deletion checks remain incomplete. Hosted redemption
