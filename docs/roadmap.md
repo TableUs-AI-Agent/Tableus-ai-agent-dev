@@ -92,7 +92,7 @@ were verified stopped/unscheduled at October 1 `00:29:33.040725Z`; admission is 
 **44m52.328s remain**, including the 15-minute final-phase reserve. No B signup or
 additional recovery occurred. The local web fix reloads membership after redemption
 and passes six deterministic browser checks plus `make ready`. Obtain approval
-for changed-source web deployment before resuming the hosted rehearsal; hosted
+for the [web fix rollout](p3-signup-fix-rollout.md) before resuming the rehearsal; hosted
 CI and live verification of the fix remain outstanding.
 
 Group/deletion and hosted replay/contention acceptance remain open. The separate

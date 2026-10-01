@@ -33,7 +33,10 @@ subject/version guards. Six local browser checks pass; the suite now runs in CI.
 `make ready` passed with 326 JavaScript tests, 206 Python passes/36 PostgreSQL-only
 skips, lint/types, contracts without drift, web/Expo-web builds, smoke and report-only
 performance. Hosted CI remains pending. Next: obtain approval for the prepared
-rollout/resume request; no new cloud action is authorized by local completion.
+[rollout/resume request](../p3-signup-fix-rollout.md) for local fix
+`a5a1f44913b9956e9c0aa54e30492a58367f97f9`; no new cloud action is authorized by
+local completion. The proposal adds one web Preview and one same-image resume,
+with unchanged time/spending caps and no spare handoff recovery.
 
 The five-minute cutoff fired while the owner's completion report was being
 verified: began `00:29:27.454267Z`, both services stopped/unscheduled verified

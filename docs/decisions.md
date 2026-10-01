@@ -673,5 +673,6 @@ Deterministic browser tests cover early and late denials and remain in CI.
 A's hosted enrollment succeeded but its Plans screen failed. The second handoff
 cutoff verified both services stopped, with admission/schedules off. The recovery
 slot is exhausted and 44m52.328s remain, including 15 final-phase minutes. Prepare
-a concrete changed-source web rollout and one resume for owner approval; keep all
+the [changed-source web rollout and one resume](p3-signup-fix-rollout.md) for owner
+approval; keep all
 spent attempts/time charged and leave hosted acceptance open until retested.

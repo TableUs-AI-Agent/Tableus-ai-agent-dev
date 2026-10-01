@@ -26,7 +26,8 @@ PostgreSQL-only skips, lint/types, contract generation without drift, web/Expo-w
 builds, deterministic smoke and report-only performance. Hosted CI is pending.
 The fix is local only. Hosted web/API/worker source remains
 `2eefdc51345aeaa7951ffb343954c1669f9280c5`; a changed-source web deployment needs
-approval. Next: obtain approval for the prepared web rollout/resume scope.
+approval. Local fix commit is `a5a1f44913b9956e9c0aa54e30492a58367f97f9`.
+Next: obtain approval for the [prepared web rollout/resume](p3-signup-fix-rollout.md).
 
 Counters remain invitations 7/10, accounts 1/4, OTP requests 5/11, delivery and
 verification reservations 4/10 and 4/20, support messages 8/14, worker processing
