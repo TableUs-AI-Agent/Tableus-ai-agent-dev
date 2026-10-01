@@ -1,6 +1,6 @@
 # Current state
 
-## C deletion verified pending; D signup handed off, October 1
+## D signup verified; support reply and deletion prepared, October 1
 
 [PR #11](https://github.com/TableUs-AI-Agent/Tableus-ai-agent-dev/pull/11) merged as
 `bffa2845f268ea8b1906b8de155aa130f199856e`, with the same full tree as passing CI
@@ -32,10 +32,15 @@ attempts, leases or attention flags. Their private identity bindings are preserv
 C signed out normally; sign-in account removal is still pending. Its fixture used
 two Places attempts ($0.049 on the approved cost basis), no AI call.
 
-D's final recipient-bound invitation was issued and one signup code requested.
-The code-entry UI is ready for the owner; D's profile/redemption are not yet
-verified. Handoff deadline is **22:21:09Z (5:21 p.m. Chicago)**, earlier than the
-phase cutoff. No resend is allocated. B's old-origin session remains preserved.
+D completed normal signup at 22:17:06Z. Trusted readback at 22:18:14Z confirms
+one profile/redemption, the expected fixture name and no owned plans. The OTP
+handoff is cleared; the phase cutoff remains 22:34:40Z. Its trusted account/address
+binding is saved privately, but mailbox correspondence verification is still
+pending. One approved fresh challenge was sent to that address and its owner reply
+reserved (13/17 total messages). The owner must confirm the reply returns through
+the privacy route before treating that correspondence as verified. D's Account
+page is prepared for the owner's irreversible deletion confirmation; no D deletion
+has been observed yet. Preserve B's old-origin session.
 
 Preflight inspected the complete queue: exactly A's expected pending job, no
 unknown pending subject, lease or attention flag. Latest conservative hosting
@@ -44,8 +49,8 @@ D/B tabs and A/C private bindings. The [approved execution scope](p3-session-rec
 private ledger govern all remaining operations; stale consumed helpers grant no
 new attempt. No native/production/real-user work or extra resend is authorized.
 
-Next: owner completes D's code entry; verify its profile/redemption and establish
-the support binding before continuing D's deletion/support case.
+Next: owner completes D's support email reply/receipt and final account confirmation.
+Verify its exact queued job before sign-out, admission pause and bounded drain.
 Full P3 acceptance remains open, including support/drain and hosted gaps.
 
 ## Verified rehearsal and mail results

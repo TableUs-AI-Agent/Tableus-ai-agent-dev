@@ -112,9 +112,11 @@ The current first-phase cutoff begins 22:34:40Z October 1; final 15m stays reser
 C recovered successfully with its original Auth session, one profile/redemption
 and no new OTP. The owner removed its sole plan and confirmed deletion; trusted
 readback verifies its profile/plan absent and exact Auth-deletion job pending, with
-zero attempts. A also remains pending. C signed out; D's last invitation and one
-signup code are issued, awaiting owner entry by 22:21:09Z. B's session is preserved.
-D signup/deletion/support, worker removal, B
+zero attempts. A also remains pending. C signed out; D completed signup with one
+profile/redemption and no plans. Its trusted account binding is preserved privately,
+with the fresh support challenge sent and owner reply reserved. D's final account
+confirmation remains with the owner. B's session is preserved.
+D deletion/support, worker removal, B
 cleanup and final returning/deletion checks remain incomplete. Hosted redemption
 replay/contention and server-side deletion refusal remain untested. Mail receipt
 is complete; support-case acceptance remains separate. The active packet owns

@@ -69,10 +69,16 @@ Private exact bindings are retained. Screenshot:
 `/private/tmp/tableus-c-deletion-pending.png`. Normal Sign out here then showed
 session ended; no claim of Auth removal is made.
 
-D's last recipient-bound invitation and one signup code are now issued. Code-entry
-UI is ready, with owner handoff deadline 22:21:09Z; no D profile/redemption proof
-yet. OTP requests are 11/12, invitation allowance 10/10, provider attempts 74/420.
-Next: owner completes D's code entry, then verify signup and support binding.
+D completed signup at 22:17:06Z; trusted readback at 22:18:14Z confirms one
+profile/redemption, expected name, confirmed email and zero owned plans. Screenshot:
+`/private/tmp/tableus-d-signup-plans.png`. The OTP handoff cleared without another
+send. OTP requests are 11/12, invitations 10/10, provider attempts 74/420. Its trusted
+account/address binding is saved in the restricted case, still verification_required
+for support correspondence. One fresh challenge was accepted by Resend; the owner
+reply is reserved, not claimed received (13/17 messages). The prepared D Account
+confirmation is `/private/tmp/tableus-d-delete-ready.png`; no deletion claim yet.
+Next: owner verifies mailbox reply/receipt and confirms D deletion; bind the exact
+job before sign-out and the bounded queue drain.
 A's Auth removal, D support flow, bounded worker drain and final B cleanup remain
 incomplete. Hosted redemption replay/contention and server-side deletion refusal
 remain untested. Staging progress is not P3/native/pilot acceptance. See the active

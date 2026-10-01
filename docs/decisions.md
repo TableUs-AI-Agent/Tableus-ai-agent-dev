@@ -961,3 +961,14 @@ six-attempt Places reservation to the two recorded calls before reusing headroom
 D receives the final invitation and exactly one allocated signup code, with owner
 entry by 22:21:09Z and no resend. Keep the existing phase/final reserves and B's
 separate browser origin. Bind D's support case before losing its session.
+
+
+### Separate D account proof from support correspondence proof — 2026-10-01
+
+D's successful normal signup and trusted confirmed-address lookup permit its own
+account flow and preserve a private identity binding. They do not by themselves
+verify incoming support email. Send the approved fresh challenge to that existing
+address, reserve the owner's reply, and retain verification_required until Brian
+confirms mailbox reply/receipt through the privacy route. Keep pending separate
+from accepted email and from completed deletion. Owner confirms D deletion in the
+normal Account screen; bind the exact queued row before discarding that session.

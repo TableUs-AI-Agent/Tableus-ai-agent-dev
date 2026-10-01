@@ -14,7 +14,7 @@ historical authority for their exact scope. The latest approved recovery is
 `fa282f2e2d242a4a02eaafa832d06d611753339f`; its first phase has ended. The owner separately approved the new Preview/recovery restart/time increase
 against handoff `b08cee4`. Prior usage is retained.
 
-## C deletion verified pending; D signup handed off, October 1
+## D signup verified; support reply and deletion prepared, October 1
 
 [PR #11](https://github.com/TableUs-AI-Agent/Tableus-ai-agent-dev/pull/11) merged as
 `bffa2845f268ea8b1906b8de155aa130f199856e`, with the same full tree as passing CI
@@ -46,10 +46,15 @@ attempts, leases or attention flags. Their private identity bindings are preserv
 C signed out normally; sign-in account removal is still pending. Its fixture used
 two Places attempts ($0.049 on the approved cost basis), no AI call.
 
-D's final recipient-bound invitation was issued and one signup code requested.
-The code-entry UI is ready for the owner; D's profile/redemption are not yet
-verified. Handoff deadline is **22:21:09Z (5:21 p.m. Chicago)**, earlier than the
-phase cutoff. No resend is allocated. B's old-origin session remains preserved.
+D completed normal signup at 22:17:06Z. Trusted readback at 22:18:14Z confirms
+one profile/redemption, the expected fixture name and no owned plans. The OTP
+handoff is cleared; the phase cutoff remains 22:34:40Z. Its trusted account/address
+binding is saved privately, but mailbox correspondence verification is still
+pending. One approved fresh challenge was sent to that address and its owner reply
+reserved (13/17 total messages). The owner must confirm the reply returns through
+the privacy route before treating that correspondence as verified. D's Account
+page is prepared for the owner's irreversible deletion confirmation; no D deletion
+has been observed yet. Preserve B's old-origin session.
 
 Preflight inspected the complete queue: exactly A's expected pending job, no
 unknown pending subject, lease or attention flag. Latest conservative hosting
@@ -58,8 +63,8 @@ D/B tabs and A/C private bindings. The [approved execution scope](../p3-session-
 private ledger govern all remaining operations; stale consumed helpers grant no
 new attempt. No native/production/real-user work or extra resend is authorized.
 
-Next: owner completes D's code entry; verify its profile/redemption and establish
-the support binding before continuing D's deletion/support case.
+Next: owner completes D's support email reply/receipt and final account confirmation.
+Verify its exact queued job before sign-out, admission pause and bounded drain.
 Full P3 acceptance remains open, including support/drain and hosted gaps.
 
 ## Current cumulative allowances
@@ -71,11 +76,11 @@ Full P3 acceptance remains open, including support/drain and hosted gaps.
 | Same-image API configuration restarts | 9 | 12; remaining pause/final resume/final disable |
 | Web Previews | 3 | 3 |
 | Worker resources / processing invocations | 1 / 1 | 1 / 4 |
-| Invitations / new Auth accounts | 10 / 4 reserved | 10 / 4 |
+| Invitations / new Auth accounts | 10 / 4 | 10 / 4 |
 | OTP requests / delivery reservations | 11 / 10 | 12 / 11; only B returning remains |
 | Verification submissions / refresh-revoke | 10 / 3 | 20 / 12 |
-| Support/test messages | 11 | 17; six D-case messages remain |
-| Operator status reads | 32 | 45 |
+| Support/test messages | 13 reserved | 17; D duplicate/ack and completion/receipt remain |
+| Operator status reads | 33 | 45 |
 | Auth DELETE attempts | 0 | 12 |
 | Places HTTP attempts | 74 (72 prior + 2 C fixture actual) | 420 |
 | Logical AI / underlying reservations | 1 / 3 | 3 / 9 |
@@ -83,7 +88,7 @@ Full P3 acceptance remains open, including support/drain and hosted gaps.
 
 Keep $5 hosting and $20 combined caps. Last workspace usage delta is a conservative
 $1.1247938732362335 above the original baseline, not exact campaign billing; recheck
-headroom before a live start. Account-deletion status reads are 7, included in
+headroom before a live start. Account-deletion status reads are 8, included in
 operator accounting; worker status reads are 1. Private ledger is authoritative
 for immutable receipts and identity bindings. Never print tokens, codes, exact
 Auth subjects, deletion hashes or private inbox destinations into Git/chat.
@@ -96,8 +101,8 @@ owns targets, requested deltas, sequencing and stop conditions. After approval,
 C completed through its preserved session with no fresh OTP; D's single signup
 code has been requested and only B's returning code remains unspent.
 
-The remaining manual sequence is D signup and verified support
-case and six messages, admission pause/refusal, bounded synthetic worker drain,
+The remaining manual sequence is D deletion and verified support
+case, remaining messages, admission pause/refusal, bounded synthetic worker drain,
 B shared-content cleanup/sole-plan removal and its final returning/deletion/drain.
 A's already accepted deletion is not repeated. Owner performs irreversible final
 confirmations in the visible UI. Inspect the entire queue before each worker batch;
