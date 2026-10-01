@@ -3,32 +3,36 @@
 Prepared October 1, 2026, from `8fecf04b8cfa57808692e959a27447fd418fb906`.
 **The owner approved the exact ImprovMX account/aliases/DNS setup at
 `ba5ec9546a1d668e0c2b91b52aa7af72e7f6be06`, including bounded rollback.**
-They then asked whether Squarespace could handle forwarding directly. Setup is
-held for that route choice; only the ImprovMX landing page has been opened.
-No account, recipient submission, forwarding or DNS mutation occurred.
-Revised rehearsal and route-probe allowances remain unapproved.
+They then requested the bounded Squarespace diagnostic below. It completed with
+exact restoration; ImprovMX remains held for the provider choice. No provider
+account, destination submission or forwarding rule has been created. Revised
+rehearsal and route-probe allowances remain unapproved.
 
-## Approved Squarespace diagnostic, awaiting reauthentication
+## Approved Squarespace diagnostic: completed, original record restored
 
-The owner subsequently said “continue with that test,” approving only a brief
-remove/inspect/restore diagnostic of the existing Resend MX. Back up and restore
-exactly: host `send`, type MX, priority 10, TTL 14400, value
-`feedback-smtp.us-east-1.amazonses.com`. Inspect whether the Email Add Rule control
-unlocks; do not save any forward, enter a new destination, send mail, change A's
-identity or resume staging. Restore immediately after the observation, with an
-operational ceiling of five minutes absent from the control panel. If any
-unexpected flow appears after removal, restoration takes priority over inspection.
-Then verify the dashboard, authoritative DNS and existing Resend sending status.
-This cannot prove tagged-address delivery or persistent coexistence by itself.
+The owner authorized one brief remove/inspect/restore test and completed normal
+Google reauthentication. The original record was backed up at
+`2026-10-01T06:34:34.404584Z`: host `send`, type MX, priority 10, TTL 14400, value
+`feedback-smtp.us-east-1.amazonses.com`. Delete was confirmed at `06:43:32.535Z`.
+The DNS table then omitted it and a refreshed Email page cleared the existing-MX
+warning. **Add Rule stayed disabled**, with the Google Workspace management
+notice still visible. This proves removing the MX alone does not unlock forwarding;
+the UI does not expose the precise additional eligibility condition.
 
-At `2026-10-01T06:34:34.404584Z`, authoritative DNS still matched the original
-record. The before/restore backup is
-`/private/tmp/tableus-squarespace-mx-test-backup.json`. Opening Add Record to check
-the restoration path, before any deletion, triggered a Google reauthentication
-modal for the existing Squarespace account. No record has been removed or edited.
-The owner must complete that normal check in the DNS Settings tab. Evidence:
-`/private/tmp/tableus-squarespace-dns-reauth.png`. No password/code is requested in
-chat. The test remains incomplete until removal and restoration are both verified.
+The original record was resubmitted at `06:44:18.929Z` and its exact values and
+save confirmation were visible at `06:44:31.920Z`: 59.385 seconds after Delete,
+within the five-minute ceiling. At `06:45:03.261037Z`, all four authoritative
+nameservers and two public resolvers returned the original MX. Matching baseline
+website, SPF, Resend DKIM and DMARC records were unchanged. Resend readback still
+showed sending enabled and the domain/DKIM/SPF MX/SPF TXT all verified. This does
+not measure the global absence interval or prove live email delivery.
+
+[Structured diagnostic evidence](evidence/mail-routing-2026-10-01/squarespace-mx-test.json)
+contains the backup, timestamps, DNS answers and comparison results. Screenshots:
+`/private/tmp/tableus-squarespace-mx-removed-forwarding-disabled.png` and
+`/private/tmp/tableus-squarespace-mx-restored.png`. No forwarding, mail probe,
+Workspace cancellation, identity change or staging resume occurred. Do not repeat
+the record removal; the approved diagnostic is complete and DNS is restored.
 
 ## Verified routing state
 
@@ -42,14 +46,16 @@ support/privacy receipt.
 
 The [public DNS baseline](evidence/mail-routing-2026-10-01/dns-baseline.json) records
 website, mail and authentication answers before any edit. The existing Resend
-`send` MX/TXT, `resend._domainkey` TXT and DMARC answers are present. No DNS,
-forwarding, sender, SMTP, public contact or subscription change has occurred.
+`send` MX/TXT, `resend._domainkey` TXT and DMARC answers are present. The only DNS
+mutation was the completed temporary MX diagnostic, restored exactly. Forwarding,
+sender, SMTP, public contact and subscription settings were not changed.
 The owner signed in and authenticated Email/DNS settings were inspected. Email
 shows Add Rule disabled with an existing-MX warning, and a Google Workspace
 management notice. DNS Settings contains no apex MX and just one MX at `send`,
 priority 10 to `feedback-smtp.us-east-1.amazonses.com`, TTL four hours. Removing
-that existing Resend record is not a safe way to unlock built-in forwarding. The
-UI does not establish whether the Workspace association is an additional blocker.
+that existing Resend record did not unlock built-in forwarding in the approved
+diagnostic. The Workspace notice persisted; precise eligibility details remain
+unavailable.
 The dashboard also confirms `links` A `76.76.21.21`, the existing apex/www records,
 Google and Resend DKIM, Google apex SPF, `send` SPF and DMARC. All are unchanged.
 Evidence: `/private/tmp/tableus-mail-forwarding-blocked.png` and
@@ -203,8 +209,9 @@ manual sequence alone does not grant full P3 acceptance, production or real inta
 
 ## Immediate next step
 
-The owner completes Squarespace's required Google reauthentication in the prepared
-DNS Settings tab. Then perform the already-approved bounded diagnostic and verify
-restoration before any provider choice. No record removal or other mutation has
-occurred yet; the exact backup is saved. ImprovMX remains held, all rehearsal
-counters are unchanged and the staging clock remains stopped.
+The limited diagnostic is complete and the original DNS is verified restored.
+The owner can continue the already-approved ImprovMX route or ask Squarespace to
+resolve the remaining forwarding eligibility restriction. No further MX removal
+is needed. Account terms and the exact tagged alias still need verification on
+the alternative path. Staging, counters and all rehearsal/probe limits remain as
+before; provider setup approval is not rehearsal-extension approval.

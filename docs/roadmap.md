@@ -98,15 +98,14 @@ API/worker are verified stopped/unscheduled, future admission false, no live clo
 **18m14.050s remain**, including the 15-minute final reserve. Live provider use is
 72 Places attempts and one logical AI call ($0.0005715 estimated AI). No C/D
 account or deletion queue exists. A/B and their shared synthetic plan remain.
-The [routing/remaining-case draft](p3-mail-routing-and-remaining-cases.md) now
-records absent inbound MX and signed-in inspection: Squarespace forwarding is
-disabled, and the sole MX belongs to Resend's `send` subdomain. A free ImprovMX
-alternative has an exact DNS/alias draft, with A's tagged route still unproven;
-the owner approved that exact mail setup, then questioned whether Squarespace
-could handle it directly. The owner then approved a brief MX remove/inspect/restore
-diagnostic. Its exact backup is saved, but the restoration-form preflight requires
-Google reauthentication; no record has been removed. Next: complete that check,
-execute the diagnostic and verify restoration. Rehearsal extensions remain unapproved. Scope C/D, returning sign-in, replay/contention,
+The [routing/remaining-case scope](p3-mail-routing-and-remaining-cases.md) records
+an approved, completed MX diagnostic: removing Resend's `send` MX cleared the MX
+warning but left Squarespace forwarding disabled, with its Workspace notice.
+The original MX was restored and verified through all four authoritative servers,
+two public resolvers and Resend status. No forwarding was created. Next: select
+continuation of the already-approved ImprovMX route or resolve Squarespace's
+remaining eligibility restriction; rehearsal extensions remain unapproved.
+Scope C/D, returning sign-in, replay/contention,
 deletions/support/drain and cleanup against the remaining time; another first-phase
 recovery is not already allocated. Resolve original support/privacy mailbox access
 before claiming that acceptance or inviting real users. See the active packet for

@@ -794,3 +794,12 @@ restoration. Do not infer approval to create Squarespace forwarding, transmit a
 new destination or run mail/OTP probes. The Add Record preflight triggered normal
 Google reauthentication, so no deletion occurred. Continue after the owner passes
 that check, with no repeated request for the already-approved diagnostic.
+
+
+The approved diagnostic completed: removing the `send` MX cleared the existing-MX
+warning but Add Rule remained disabled with the Workspace notice. Restore was
+visibly verified 59.385 seconds after Delete, followed by all four authoritative
+servers, two public resolvers and verified Resend sending status. Removing that
+record alone is not a solution. Do not repeat the diagnostic or infer approval
+to cancel Workspace. The exact additional eligibility condition remains unknown;
+retain the existing sender configuration while choosing the receiving route.
