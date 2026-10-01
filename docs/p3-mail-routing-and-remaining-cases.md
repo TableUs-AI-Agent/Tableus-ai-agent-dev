@@ -16,7 +16,8 @@ The owner subsequently approved remaining rehearsal and an A recovery; A returni
 sign-in and its pending deletion passed. The latest first phase is now stopped.
 C authenticated after the cutoff and has no app profile yet. The new
 [web recovery and bounded rollout proposal](p3-session-recovery.md) owns current
-source, accounting, requested deltas and exact next sequence; it is not approved.
+source, accounting, approved deltas and exact next sequence; the owner approved
+it against handoff `b08cee4`.
 
 ## Approved Squarespace diagnostic: completed, original record restored
 
@@ -220,5 +221,5 @@ final returning/deletion. A's verified pending deletion is not repeated. Earlier
 remaining-code and empty-queue instructions are superseded by this current scope.
 
 Hosted replay/contention and server-side deletion refusal remain untested and are
-not implied by local tests or normal manual completion. Next: obtain approval of
-the exact tested web candidate and bounded rollout; keep services stopped meanwhile.
+not implied by local tests or normal manual completion. Next: finish CI/review and the approved web rollout; keep services stopped until
+the armed recovery window.

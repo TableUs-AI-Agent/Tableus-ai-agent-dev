@@ -23,19 +23,19 @@ The in-app browser, using fake localhost Auth/API only, recovered from failed
 redemption plus expired validation, and again after reopening the page. Counters
 remained one OTP request and one verification throughout. Mismatched email refusal
 and explicit start-over also passed. Two CI browser regressions cover retry/reload. Application candidate
-`8861eece0e77574bcd693550d9b2628f362dccf3` is committed locally; publishing
-was blocked by automatic approval review pending explicit GitHub destination
-authorization. No push or hosted candidate CI occurred; CI is required before merge. Production/staging are unchanged.
+`8861eece0e77574bcd693550d9b2628f362dccf3` is committed locally; the owner explicitly approved publishing to the named GitHub repository,
+CI, merge after checks, staging deployment and the bounded recovery. The branch
+push succeeded; CI is required before merge. Production/staging are unchanged.
 
 Charged live use is 10687.415236 seconds (178m7.415236s) out of 195 minutes.
 Only 1012.584764 seconds remain, including the final 900-second reserve. The other
 112.584764 seconds cannot form a usable recovery phase. No new first phase is
 currently authorized. The [complete recovery proposal](p3-session-recovery.md) requests one new
 web Preview, one extra same-image API restart and 45 additional cumulative live
-minutes, retaining all monetary and message limits. It is prepared, not approved.
+minutes, retaining all monetary and message limits. The owner approved this exact scope against handoff `b08cee4`; preserve all prior use.
 
-Next: review/approve the exact candidate merge, staging web deployment and bounded
-remaining rehearsal together. Until then keep API/worker stopped and unscheduled.
+Next: finish candidate CI/review, merge and deploy the approved web fix, then arm
+the approved recovery. Keep API/worker stopped and unscheduled during preparation.
 
 ## Verified rehearsal and mail results
 

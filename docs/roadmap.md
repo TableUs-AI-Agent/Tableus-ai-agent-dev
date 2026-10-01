@@ -107,9 +107,9 @@ already-committed signup cases. Local readiness and fake-provider browser checks
 pass; hosted candidate CI/merge/deployment remain gates. The
 [complete recovery proposal](p3-session-recovery.md) requests one Preview, one
 extra same-image restart and 45 additional live minutes, preserving financial and
-message limits. It is not yet approved. Current charged time is 178m7.415236s of
-195m; only 1m52.584764s is available outside the final 15m reserve. Keep services
-stopped while preparing the gated rollout.
+message limits. The owner approved it against handoff `b08cee4`. Charged use stays
+178m7.415236s; the approved ceiling is now 240m, with first phase at most 45m and
+final phase at most 15m. Keep services stopped while CI/deployment prepare.
 
 C/D deletion/support, worker removal, B cleanup and final returning/deletion checks
 remain incomplete. Hosted redemption replay/contention and server-side deletion

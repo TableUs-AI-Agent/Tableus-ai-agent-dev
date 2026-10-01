@@ -1,7 +1,7 @@
 # P3 web signup recovery: proposed merge, deployment and rehearsal
 
 Prepared October 1, 2026 from local base
-`341f0410260b33ca855ba7df0b7936409a4b262a`. **Not yet approved.** This replaces the
+`341f0410260b33ca855ba7df0b7936409a4b262a`. **Approved by the owner in chat against handoff `b08cee4e7b8dfd952fc75fa7823d38494d78d4e2`.** This replaces the
 completed first phase approved at `fa282f2`; it retains all its consumed allowances.
 Application candidate: `8861eece0e77574bcd693550d9b2628f362dccf3`. Bind any
 merge/Preview to its unchanged application tree after hosted CI and review pass.
@@ -44,9 +44,8 @@ After CI/review pass, approve its merge, one staging web Preview from the identi
 tested application tree, assignment of the two existing staging aliases, and the
 bounded remaining rehearsal below. Production remains excluded. The push was
 blocked by automatic approval review because authorization to export this source
-and operational documentation to that remote was not established. Nothing was
-pushed or deployed; hosted candidate CI remains pending. This request explicitly
-names that destination and includes the export. No private ledger, inbox
+and operational documentation to that remote was not established. The owner subsequently explicitly approved that destination and scope; the
+branch push succeeded. Hosted candidate CI and deployment remain pending. No private ledger, inbox
 destination, token, Auth subject, deletion binding or credential is in the change.
 
 | Allowance | Used | Approved ceiling | Proposed ceiling | Purpose |
