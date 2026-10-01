@@ -96,9 +96,11 @@ the [web fix rollout](p3-signup-fix-rollout.md): one additional Preview and one
 same-image resume, cumulative ceilings two/eight with unchanged time/spending.
 PR #10 is merged as `9593fba`, with CI passing 242 Python/326 JavaScript/11 browser
 checks. The fixed Preview is READY on both staging aliases; production is unchanged.
-API/worker remain stopped and the clock is unarmed. Next: confirm owner availability,
-arm containment, resume the same API image and verify A Plans before B signup.
-Live verification remains outstanding.
+API/worker remain stopped and the clock is unarmed. Brian now reports temporary
+loss of `@table-us.com` mailbox access. Next: select an accessible test inbox or
+restore the original route and reconcile A sign-in/support cases before resuming.
+Live verification remains outstanding; working support/privacy contact is required
+before real pilot invitations.
 
 Group/deletion and hosted replay/contention acceptance remain open. The separate
 natural-expiry fixture elapsed September 29 at 9:48:55 p.m. Central, but its HTTP

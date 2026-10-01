@@ -693,3 +693,17 @@ preparation consumes no supervised live time while those services stay stopped.
 Wait for the requested owner-availability response before arming the next window;
 no additional approval is needed for the already-scoped resume. Keep live signup,
 group and deletion acceptance separate from the passing local/CI tests.
+
+
+### Temporary rehearsal mailbox access loss — 2026-10-01
+
+Brian reports that `@table-us.com` inboxes are temporarily inaccessible after not
+renewing Google Workspace. Keep services stopped and remaining time/attempts intact
+while the mailbox plan is resolved. The application imposes no recipient-domain
+allowlist; fresh B/C/D invitations can bind other controlled addresses once Brian
+supplies the intended replacements. Do not reuse old recipient-bound invitations
+for a different email or replace A's identity. A's existing session is unverified
+and cannot prove fresh sign-in. Support/privacy routing and challenge/receipt
+acceptance remain unresolved while the original mailboxes are inaccessible.
+No new recipient, provider, public contact address or authentication change has
+been selected or authorized by the question about feasibility.

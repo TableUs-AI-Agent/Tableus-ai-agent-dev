@@ -20,7 +20,7 @@ tests, 326 JavaScript tests and five browser journeys, zero skips, plus lint/typ
 migrations, deterministic evaluation, contracts, builds and smoke. Local readiness,
 restricted PostgreSQL and browser evidence remain applicable to unchanged inputs.
 
-## Current objective: web deployed; await owner availability before resume
+## Current objective: web deployed; mailbox access hold before resume
 
 Brian approved [the signup-fix rollout](../p3-signup-fix-rollout.md) at `9e9e939`.
 PR #10 merged as `9593fba0202e830746523f29cee16532539e80a2`, identical tree to
@@ -36,8 +36,21 @@ Web allowance is 2/2. API/worker remain verified stopped, no schedules/next run,
 future API admission false, unchanged `2eefdc5` images. Restarts remain 4/8.
 No live clock is armed. Private ledger `signup_fix_web.state=ready_aliased`.
 
-The owner-availability question is pending. Next: once Brian is ready with the
-inbox, record readiness and arm the first-phase cutoff before approved restart 5.
+Brian reports temporary loss of all `@table-us.com` inbox access because Google
+Workspace was not renewed. The earlier owner-availability prompt is superseded.
+Keep the API/worker stopped and clock unarmed. Next: identify an accessible
+controlled inbox or restore the original mailboxes, then reconcile exact recipients
+and affected acceptance cases before any resume/send. B/C/D have no Auth identities
+and three fresh invitations remain, so alternative recipients are technically
+possible without extra account/invite allowances. Existing helper `issue` operations
+still hardcode the old aliases; do not run them for replacement addresses.
+
+A stays bound to its original address; preserve its session without assuming it
+is still valid. A's returning sign-in cannot pass without receipt of a fresh OTP.
+No app email-change flow exists, and no admin identity substitution/auth bypass
+is approved. Support/privacy receipt and verified binding also need a working
+mailbox route; prior receipts remain historical evidence. Do not claim complete
+rehearsal acceptance based on sessions alone.
 The prepared helper `/private/tmp/tableus-p3-signup-fix-actions.py` reserves web,
 arms the first phase, resumes the existing image and issues B/C/D invitations with
 counter guards. Do not rerun `reserve-web`; it is already consumed. The durable
