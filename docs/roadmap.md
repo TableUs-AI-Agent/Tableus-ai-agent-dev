@@ -101,8 +101,9 @@ verified stopped/unscheduled at 08:01:13Z. The owner explicitly requested one
 replacement code at about 20:24Z. Its normal returning code prompt is visible;
 Auth verification subsequently passed at 20:26:14Z; application sign-in remains
 blocked by the stopped API. The [recovery proposal](p3-session-recovery.md) is ready
-for approval, adding one restart/request/delivery allowance with unchanged time
-and financial caps. Services stay stopped. Total use, including
+and was approved at `fa282f2`. Restart 8/11 passed readiness; A returning app
+sign-in now passes and B's context is restored. A awaits the owner's final deletion
+button. Containment begins at 20:53:29Z; the final 15 minutes stay reserved. Total use, including
 one conservatively charged ten-minute Auth-only handoff, is 164m29.996196s, leaving
 30m30.003804s including final 15m. OTP requests are 9/11; the two remaining slots
 cannot cover all three planned C/D/B logins. Reconcile a bounded recovery scope

@@ -264,9 +264,10 @@ manual sequence alone does not grant full P3 acceptance, production or real inta
 
 ## Immediate next step
 
-A enters its newest code in the prepared returning-sign-in form and reports Plans.
-The handoff deadline is 08:00:56Z; the phase deadline is 08:26:43Z with two-minute
-early containment. Verify UI plus trusted identity evidence, clear only the handoff
-deadline, and continue the already-approved sequence. Do not request this approval
-again or infer permission for a spare resume/resend. If cutoff fires, first verify
-stopped/unscheduled services and reconcile actual elapsed time.
+The owner approved the [authenticated-session recovery](p3-session-recovery.md) at
+`fa282f2`. Same-image restart 8/11 and A returning application sign-in pass; B's
+context is restored. A's permanent deletion confirmation is prepared for the owner.
+Verify its exact outcome, then continue the approved sequence within the immutable
+phase deadline 20:55:29Z and containment threshold 20:53:29Z. Preserve the final
+15 minutes. The active packet has current counters; the earlier allocations in
+this document remain historical approval inputs. No spare recovery/resend exists.

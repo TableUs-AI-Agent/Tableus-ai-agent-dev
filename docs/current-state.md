@@ -1,6 +1,46 @@
 # Current state
 
 
+## Approved recovery live; A returning login passed, October 1
+
+The owner approved [the complete recovery](p3-session-recovery.md) at
+`fa282f2e2d242a4a02eaafa832d06d611753339f`. Apply only API restart ceiling **11**,
+OTP requests **12**, and OTP delivery reservations **11**; all cumulative usage,
+195 minutes and financial ceilings remain unchanged. Fresh stopped preflight
+confirmed the expected images/configuration, nine Auth users/eight profiles, empty
+queue, no active validations and no new provider usage. Workspace hosting delta
+remains $1.10244608760889 against the unchanged $5 cap.
+
+First phase started **20:39:59.950416Z**, with immutable deadline
+**20:55:29.954220Z** (3:55:29 p.m. Chicago). Cutoff session **80797** is armed for
+window `22f1704d-d177-4fed-9b4d-cbc2caeaec64`; containment begins two minutes early
+at **20:53:29Z**. The final **900 seconds** remain reserved. The current live
+window is additional to **9869.996196 seconds** previously charged; reconcile it
+only from verified stop evidence.
+
+Approved same-image restart **8/11** is deployment
+`5f5dad51-01a6-4690-bd0f-294aebb5f247`. Exact image/source, readiness and both browser
+CORS origins passed. Deletion admission is enabled and inline Auth deletion remains
+false; the worker stays stopped and unscheduled. No new build or web deployment.
+
+A's preserved session reached **Dinner plans**, then Account showed **P3 Test A**,
+no organized plans and deletion available. The normal Retry cleared its cached
+offline state. This completes A's returning application sign-in without another
+OTP. B's reopened Preview context likewise recovered normally, showing
+**TableUs P3 Test B** and the shared plan with both participants. Neither identity
+was replaced or signed out. A's consumed code was not resubmitted.
+
+A's DELETE confirmation is prepared. **The owner must press the final Delete my
+account button**; no deletion has been submitted by the agent. Keep both browser
+contexts. Screenshot: `/private/tmp/tableus-a-delete-ready.png`.
+Current use: restarts **8/11**, OTP requests **9/12**, delivery reservations **8/11**,
+verification reservations **8/20**, operator status reads **24/45**, mail **11/17**,
+invites **8/10**, accounts **2/4**, worker invocations **1/4**, Auth DELETE **0/12**.
+
+Next: verify the owner's A deletion result and exact private job binding before
+local sign-out and C signup. Continue the approved sequence only within this window.
+On timeout, verify cutoff and account elapsed time; do not extend or add a recovery.
+
 ## A authenticated successfully; API recovery prepared, October 1
 
 After the owner reported the expected network error, read-only Auth evidence

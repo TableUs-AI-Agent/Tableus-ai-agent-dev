@@ -917,3 +917,15 @@ caps, and final 900 seconds. The remaining 930.003804-second first phase passes
 the existing cutoff check; expiration leaves incomplete work rather than creating
 a new allowance. See [the exact proposal](p3-session-recovery.md). No deployment or
 ceiling change occurs before approval.
+
+
+### Approved recovery resumes the verified session — 2026-10-01
+
+The owner approved the exact recovery at `fa282f2`; raise only the specified
+restart/request/delivery ceilings to 11/12/11. Arm cutoff before same-image restart
+8/11. Readiness and both browser origins pass; A reaches Dinner plans and its
+existing profile without another code. B's reopened context preserves its profile
+and shared plan. Keep the final 900 seconds and immutable first-phase deadline
+20:55:29Z, with containment at 20:53:29Z. Prepare A's confirmation but leave the
+permanent account-deletion button to the owner, as the approved runbook requires.
+Verify the exact durable outcome before claiming deletion or changing identities.
