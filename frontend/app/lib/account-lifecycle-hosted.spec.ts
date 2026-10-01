@@ -1,4 +1,6 @@
 import { expect, test, type BrowserContext, type Page } from "@playwright/test";
+import { tmpdir } from "node:os";
+import { join } from "node:path";
 
 const owner = "38a5a097-2892-4f3a-9f5d-942e9825291b";
 const other = "7b66cb96-03dc-4ecf-97f1-3049865c0f9b";
@@ -107,7 +109,7 @@ for (const denialTiming of ["before redemption", "after profile refresh"] as con
     if (denialTiming === "after profile refresh") await finishDenial();
     await expect(page.getByRole("heading", { name: "Dinner plans", exact: true })).toBeVisible();
     await expect(page.getByRole("heading", { name: "Plans unavailable" })).toHaveCount(0);
-    await page.screenshot({ path: `/private/tmp/tableus-signup-${denialTiming.replaceAll(" ", "-")}.png`, fullPage: true });
+    await page.screenshot({ path: join(tmpdir(), `tableus-signup-${denialTiming.replaceAll(" ", "-")}.png`), fullPage: true });
   });
 }
 
@@ -128,7 +130,7 @@ test("cold missing profile restores pending deletion status", async ({ page, con
   await expect(page.getByText("Your TableUs profile has been removed.")).toBeVisible();
   expect(statusReads).toBeGreaterThan(0);
   await expect(page.getByRole("heading", { name: "Plans you organize" })).toHaveCount(0);
-  await page.screenshot({ path: "/private/tmp/tableus-hosted-pending.png", fullPage: true });
+  await page.screenshot({ path: join(tmpdir(), "tableus-hosted-pending.png"), fullPage: true });
 });
 
 test("ordinary unapproved profile does not become deletion recovery", async ({ page, context }) => {

@@ -1,4 +1,6 @@
 import { defineConfig } from "@playwright/test";
+import { tmpdir } from "node:os";
+import { join } from "node:path";
 
 export default defineConfig({
   testDir: ".",
@@ -17,5 +19,5 @@ export default defineConfig({
     reuseExistingServer: false,
     timeout: 120_000,
   },
-  outputDir: "/private/tmp/tableus-account-hosted-playwright",
+  outputDir: join(tmpdir(), "tableus-account-hosted-playwright"),
 });
