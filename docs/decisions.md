@@ -782,3 +782,15 @@ then asked if Squarespace itself could provide forwarding. Hold setup for that
 choice without treating the question as approval to remove Resend DNS or change
 A's identity. The ImprovMX landing page was opened but no private form submission,
 account creation or DNS edit occurred. Existing rehearsal/probe limits remain.
+
+
+### Bound the explicitly approved Squarespace MX diagnostic — 2026-10-01
+
+The owner approved the proposed temporary removal and immediate restoration of
+only the existing `send` MX. Check the restoration form and save the exact DNS
+backup before deleting anything. Observe the Email control once, then restore
+immediately (five-minute operational ceiling); on any unexpected flow, prioritize
+restoration. Do not infer approval to create Squarespace forwarding, transmit a
+new destination or run mail/OTP probes. The Add Record preflight triggered normal
+Google reauthentication, so no deletion occurred. Continue after the owner passes
+that check, with no repeated request for the already-approved diagnostic.

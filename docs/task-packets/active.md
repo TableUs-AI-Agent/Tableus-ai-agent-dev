@@ -22,6 +22,15 @@ restricted PostgreSQL and browser evidence remain applicable to unchanged inputs
 
 ## Mail-route preparation, October 1
 
+**Current checkpoint:** the owner explicitly approved the limited Squarespace
+MX remove-and-restore test. The exact `send` MX was backed up and still matches
+priority 10, TTL 14400 and `feedback-smtp.us-east-1.amazonses.com`. Before deletion,
+opening Add Record to confirm the restoration path triggered required Google
+reauthentication for the existing Squarespace account. No DNS mutation occurred.
+The DNS Settings tab is preserved at that prompt. Next: owner completes normal
+reauthentication, then perform the approved brief removal, inspect whether Email
+unlocks, and restore the record immediately. No forwarding rule save is included.
+
 The owner asked to continue. Read-only checks now find **no apex MX records** at
 Squarespace authoritative DNS and two public resolvers. Resend still reports the
 existing domain verified for sending, with receiving disabled. Outbound Gmail OTP
@@ -31,8 +40,8 @@ outbound-authentication DNS were captured before any change.
 The owner signed in. Squarespace Email disables Add Rule with an existing-MX
 warning and identifies the domain as managed by Google Workspace. DNS Settings
 shows just one MX: `send` priority 10 to `feedback-smtp.us-east-1.amazonses.com`,
-part of the existing Resend setup. There is no apex MX. Do not remove this sending
-record merely to unlock forwarding. The UI does not isolate whether the Workspace
+part of the existing Resend setup. There is no apex MX. Do not leave this sending
+record removed; only the later owner-approved brief diagnostic is authorized. The UI does not isolate whether the Workspace
 association is another blocker. Documented plus-addressing limits also prevent
 assuming that built-in forwarding could restore A's original tagged address.
 No route, recipient, DNS, public contact or subscription changed.
@@ -43,8 +52,8 @@ landing page was opened; no account, alias, destination submission or DNS change
 occurred. Setup is held while that route choice is clarified. Squarespace's official
 eligibility guidance and no-plus-addressing limitation remain; no supported way
 to bypass the observed existing-MX restriction has been verified.
-Next: resolve whether to pursue Squarespace support or continue the approved
-ImprovMX setup. A's exact tagged alias must be accepted before DNS activation and
+Next provider choice follows the approved Squarespace diagnostic; ImprovMX setup
+remains held. A's exact tagged alias must be accepted before DNS activation and
 its delivery proven before any API resume.
 The remaining manual-case draft proposes 45 added live minutes, one first-phase
 resume and three route-probe emails, while preserving financial/other attempt caps.

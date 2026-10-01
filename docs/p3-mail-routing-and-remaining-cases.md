@@ -8,6 +8,28 @@ held for that route choice; only the ImprovMX landing page has been opened.
 No account, recipient submission, forwarding or DNS mutation occurred.
 Revised rehearsal and route-probe allowances remain unapproved.
 
+## Approved Squarespace diagnostic, awaiting reauthentication
+
+The owner subsequently said “continue with that test,” approving only a brief
+remove/inspect/restore diagnostic of the existing Resend MX. Back up and restore
+exactly: host `send`, type MX, priority 10, TTL 14400, value
+`feedback-smtp.us-east-1.amazonses.com`. Inspect whether the Email Add Rule control
+unlocks; do not save any forward, enter a new destination, send mail, change A's
+identity or resume staging. Restore immediately after the observation, with an
+operational ceiling of five minutes absent from the control panel. If any
+unexpected flow appears after removal, restoration takes priority over inspection.
+Then verify the dashboard, authoritative DNS and existing Resend sending status.
+This cannot prove tagged-address delivery or persistent coexistence by itself.
+
+At `2026-10-01T06:34:34.404584Z`, authoritative DNS still matched the original
+record. The before/restore backup is
+`/private/tmp/tableus-squarespace-mx-test-backup.json`. Opening Add Record to check
+the restoration path, before any deletion, triggered a Google reauthentication
+modal for the existing Squarespace account. No record has been removed or edited.
+The owner must complete that normal check in the DNS Settings tab. Evidence:
+`/private/tmp/tableus-squarespace-dns-reauth.png`. No password/code is requested in
+chat. The test remains incomplete until removal and restoration are both verified.
+
 ## Verified routing state
 
 Public authoritative DNS uses `nse1`–`nse4.squarespacedns.com`. The apex has **no
@@ -181,11 +203,8 @@ manual sequence alone does not grant full P3 acceptance, production or real inta
 
 ## Immediate next step
 
-Clarify whether the owner wants a Squarespace support check or continuation of
-the already-approved ImprovMX setup. Squarespace itself offers free forwarding,
-but its current UI blocks adding rules and its official documentation excludes
-plus addressing. No supported coexistence workaround has been established for the
-observed Resend subdomain MX restriction. Do not remove that record speculatively.
-No provider account, DNS change, test mail or API restart occurred. The stopped
-clock and all rehearsal counters remain unchanged; mail setup approval does not
-approve the separate remaining-case/probe budget.
+The owner completes Squarespace's required Google reauthentication in the prepared
+DNS Settings tab. Then perform the already-approved bounded diagnostic and verify
+restoration before any provider choice. No record removal or other mutation has
+occurred yet; the exact backup is saved. ImprovMX remains held, all rehearsal
+counters are unchanged and the staging clock remains stopped.
