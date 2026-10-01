@@ -94,10 +94,12 @@ invocation are consumed. First-phase acceptance remains incomplete. On September
 Brian confirmed receipt of the Auth code after checking the correct inbox; email
 receipt is passed and its investigation is resolved. OTP verification remains
 incomplete. All four normal invitations expired September 30 around 03:38 UTC;
-replacement invitations require approval of the prepared
-[next-attempt proposal](p3-rehearsal-next-attempt.md) because the six-invite cap is
-consumed. Proposed totals are ten invitations, 150 live minutes, seven same-image
-restarts and 45 status reads, with unchanged spending caps. The separate
+Brian subsequently approved the [next-attempt extension](p3-rehearsal-next-attempt.md):
+ten invitations, 150 live minutes, seven same-image restarts and 45 status reads,
+with unchanged spending caps. Restart 3/7 passed on the same image; A's replacement
+invite and one fresh OTP are issued, same existing Auth identity confirmed. Owner
+verification is pending under a five-minute handoff cutoff. No group/deletion or
+hosted replay/contention acceptance has passed. The separate
 natural-expiry fixture elapsed September 29 at 9:48:55 p.m. Central, but its HTTP
 rejection is still untested. No pilot acceptance is implied.
 

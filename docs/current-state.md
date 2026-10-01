@@ -1,5 +1,29 @@
 # Current state
 
+At October 1 00:05 UTC (September 30 evening Central), approved restart **3/7**
+is live: deployment `dd2c6643-3463-4923-9400-87ba93c50226`, unchanged source
+`2eefdc51345aeaa7951ffb343954c1669f9280c5` and approved image digest. Readiness and
+both A/B exact-origin CORS preflights passed. Worker remains stopped/unscheduled.
+The approved extension records ten invitations, 150 live minutes, seven restarts
+and 45 status reads; financial/other attempt caps are unchanged.
+
+A's replacement invitation is issued (7/10 consumed). One fresh code was requested
+at `2026-10-01T00:05:27.467806Z` through the visible in-app links form. Database
+readback verifies the same existing Auth identity, still unverified, eight total
+Auth users/six profiles, empty deletion queue and no campaign provider rows. Its
+reservation expires `00:25:25.923418Z`. Owner code entry is pending; do not claim
+enrollment. OTP counters are four requests, three deliveries and three verification
+submissions conservatively reserved. Known status reads are 16/45.
+
+The first-phase window began `00:03:03.236948Z`, deadline `00:48:03.236948Z`.
+The durable cutoff is armed (local process session 28701); it stops early at
+`00:10:27.467806Z` if the manual A handoff remains unresolved. Ninety prior minutes
+remain charged; the current window runs against 60 approved remaining minutes,
+with 15 reserved for the final phase. Next: Brian verifies the newest code directly
+in the prepared TableUs tab; confirm Plans/profile creation and clear the handoff
+deadline before advancing to B. Full acceptance, including hosted replay/contention,
+remains open. The following paragraphs preserve the preceding stopped checkpoint.
+
 At the September 29 22:58 UTC check, API and worker deployments are both stopped,
 with no cron or next run and future API deletion admission false. The recovery
 cutoff requested shutdown at 05:28:21 UTC; its immediate read preceded complete
@@ -29,12 +53,12 @@ The four normal A/B/C/D invitations expired September 30 at approximately 03:38 
 records. All six issued invitations remain charged against the six-invitation
 limit. The separate natural-expiry fixture has also elapsed, but its HTTP rejection
 check remains untested. The [fresh invitation proposal](p3-rehearsal-next-attempt.md)
-is prepared and awaiting approval: totals of ten invitations, 150 live minutes,
+was subsequently approved: totals of ten invitations, 150 live minutes,
 seven same-image restarts and 45 status reads; spending and all other caps unchanged.
-A/B in-app forms are prepared without invitation codes or submission. No approved
-ledger limit changed. The prior temporary helpers are no longer present; a durable
-replacement cutoff passed eight local checks and remains unarmed pending approval
-and stopped-state preflight. Hosted replay/contention
+A/B in-app forms were prepared without invitation codes or submission. Approval
+changed only those four ceilings. The prior temporary helpers are no longer present;
+the durable replacement cutoff passed eight local checks and is now armed for the
+current window above. Hosted replay/contention
 remain open; the normal form alone does not supply reliable evidence for them.
 
 Brian confirmed all eight synthetic support messages reached the four aliases and

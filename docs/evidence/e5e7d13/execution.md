@@ -526,3 +526,38 @@ untested. No timestamp was changed. All six invitations and 90/105 live minutes
 remain charged. Replacement signup scope and allowances must be prepared before
 another live window. Last provider verification of stopped services remains the
 September 29 22:58 UTC check; this receipt update does not claim a fresh runtime read.
+
+## Approved fresh-invitation attempt, October 1 UTC / September 30 Central
+
+Brian approved the complete extension at `a5f3de877f46673382b02ba69979eae12b295eb3`.
+Only the four approved ceilings changed: invitations 10, live minutes 150, same-image
+restarts 7, status reads 45. Prior consumption remains charged. Fresh preflight
+verified both services stopped/unscheduled, source/image/staging and production
+aliases unchanged, restricted runtime/browser grants and invoker hook, A unverified,
+eight Auth users/six profiles, 14 invites, no queue/reservations/campaign provider
+rows. Rolling Places baseline is 270; AI estimate $0.00224625. Workspace usage
+$4.306241701734939 is $0.7525180244440745 above the original aggregate baseline;
+it is delayed workspace data, not exact campaign spend.
+
+Temporary CA/helpers from prior sessions were gone. The local certificate check
+initially rejected the untrusted chain. Restoring the public CA from the URL in
+[Supabase's official dashboard configuration](https://github.com/supabase/supabase/blob/master/apps/studio/hooks/custom-content/custom-content.json)
+allowed a fully verified TLS/hostname connection as `tableus_runtime`. No server
+SSL setting, credential or application source changed. The existing invitation CLI
+then issued only A's replacement, with private output and full TLS verification.
+Its expiry is `2026-10-02T00:03:28.477022Z`; invitation count is 7/10.
+
+The first-phase clock began `2026-10-01T00:03:03.236948Z`, deadline `00:48:03.236948Z`.
+Durable cutoff process 28701 armed before issuance/restart. Restart 3/7 is deployment
+`dd2c6643-3463-4923-9400-87ba93c50226`, source `2eefdc51345aeaa7951ffb343954c1669f9280c5`,
+image `sha256:4fc94ba63d5ee76f5e9e25868a0a347db252b12d4defacfcfa30078598d4c5b8`.
+Readiness and exact links/Preview CORS passed. API deletion enabled/inline false;
+worker remains stopped and unscheduled. One readiness read brings status use 16/45.
+
+One keyboard activation in A's visible form requested a fresh code; its transient
+busy state settled into the verification form without retry. Supabase records send
+`00:05:27.467806Z`, reservation expiry `00:25:25.923418Z`, the same A Auth identity,
+eight Auth users/six profiles, A still unverified, empty queue and zero campaign
+provider rows. No body/code was read or recorded. Owner verification is pending;
+handoff cutoff is `00:10:27.467806Z`. Counts are four OTP requests and three delivered
+email/verification allowances reserved. No B/C/D replacement or new account yet.

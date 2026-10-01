@@ -630,7 +630,7 @@ The old OTP and all four normal invitations have expired. Preserve the spent six
 allowance and 90/105 live minutes; prepare a revised signup scope before replacements
 or a restart. The owner's correction does not expand campaign approval.
 
-### Fresh invitation proposal — 2026-09-30, awaiting approval
+### Fresh invitation extension — 2026-09-30, approved
 
 Prepare four just-in-time replacement invitations for the same A/B/C/D recipients;
 retain old fixture history and A's existing Auth identity. The proposed cumulative
@@ -640,6 +640,10 @@ supports one interrupted manual OTP handoff; a five-minute handoff stall trigger
 containment so another long unattended interval is not consumed. Brian continues
 entering codes directly in visible in-app forms. No stored browser token extraction
 or automated mailbox reading is introduced. The
-[complete proposal](p3-rehearsal-next-attempt.md) remains unapproved. Hosted
+[complete proposal](p3-rehearsal-next-attempt.md) was explicitly approved at commit
+`a5f3de877f46673382b02ba69979eae12b295eb3`; only its four ceilings changed in the
+ledger. Restart 3/7 reused the approved image, and A received a replacement invite
+plus one requested code using the same unverified Auth identity. The five-minute
+handoff cutoff remains binding while awaiting owner verification. Hosted
 replay/contention evidence stays open rather than claiming repeated UI clicks prove
 it; neither criterion is waived by this proposal.

@@ -1,8 +1,9 @@
 # Priority 3: fresh invitation rehearsal proposal
 
 Prepared September 30, 2026, from documentation checkpoint
-`e64401a722a5cb3eb281cdad2809a60e1d4307e6`. **Proposed; not yet approved.**
-Brian's request to continue authorizes this preparation. The original campaign and
+`e64401a722a5cb3eb281cdad2809a60e1d4307e6`. **Brian explicitly approved the complete
+proposal at commit `a5f3de877f46673382b02ba69979eae12b295eb3` on September 30.**
+The private ledger now records the four approved ceiling changes. The original campaign and
 September 29 recovery remain approved; their exhausted limits are not reset.
 Deployed application source remains `2eefdc51345aeaa7951ffb343954c1669f9280c5`.
 
@@ -130,7 +131,8 @@ attempted clock extension, verified-close requirements, and continued containmen
 when one stop operation fails. Python syntax compilation passed. No test invoked
 Railway or armed a live timer. Script SHA-256:
 `672a1bbe52c21bc7d69fdc3824b0c1c1a1902a933fc07acdcc9bcfcbba91d5e2`.
-The private proposal record is explicitly unapproved; ledger limits/usage are
-unchanged. A/B forms were visibly checked, with invitation fields empty and send
+At preparation the private proposal record was explicitly unapproved and ledger
+limits/usage were unchanged; approval subsequently changed only the four ceilings.
+A/B forms were visibly checked, with invitation fields empty and send
 disabled. Application inputs are unchanged, so prior application CI remains
 applicable; none of these preparation checks establishes hosted acceptance.

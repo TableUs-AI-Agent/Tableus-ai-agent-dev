@@ -20,7 +20,43 @@ tests, 326 JavaScript tests and five browser journeys, zero skips, plus lint/typ
 migrations, deterministic evaluation, contracts, builds and smoke. Local readiness,
 restricted PostgreSQL and browser evidence remain applicable to unchanged inputs.
 
-## Current checkpoint, September 30: email receipt confirmed
+## Current live checkpoint, October 1 00:05 UTC / September 30 Central
+
+Brian explicitly approved [the extension](../p3-rehearsal-next-attempt.md) at
+`a5f3de877f46673382b02ba69979eae12b295eb3`. Ledger ceilings are now ten invitations,
+150 live minutes, seven same-image restarts and 45 status reads; all prior usage
+remains charged. Stopped-state preflight verified exact source/image/aliases,
+restricted roles, empty queue, A unverified and no campaign provider usage. Places
+baseline remains 270 and ceiling 690. Railway workspace aggregate is $4.3062417,
+$0.7525180 above the original baseline; this delayed aggregate is not exact spend.
+
+Restart **3/7** is SUCCESS and same-image verified: deployment
+`dd2c6643-3463-4923-9400-87ba93c50226`, source `2eefdc51345aeaa7951ffb343954c1669f9280c5`,
+image `sha256:4fc94ba63d5ee76f5e9e25868a0a347db252b12d4defacfcfa30078598d4c5b8`.
+Readiness and A/B CORS passed. Deletion enabled/inline false; worker stopped/no cron.
+A replacement invite is saved privately as `a-next-invite.json`, expiring October 2
+at `00:03:28.477022Z`; invitations used 7/10. No B/C/D replacement issued yet.
+
+One A code was requested at `2026-10-01T00:05:27.467806Z`. The same existing Auth
+identity was verified before/after; eight Auth users/six profiles, A unverified,
+empty queue and zero campaign provider rows. Reservation expiry `00:25:25.923418Z`.
+Counts: four OTP requests, three delivered-email/verification allowances reserved;
+one readiness read brings known status reads to 16/45. No new account was created.
+
+The window started `00:03:03.236948Z` and ends `00:48:03.236948Z`. Durable cutoff
+process **28701** is armed for window `dc025282-572b-48d7-99ba-43bf60e65af1` and will
+contain early at the A handoff deadline `00:10:27.467806Z` (7:10:27 p.m. Central) if
+unresolved. Do not clear that deadline until successful verification is observed.
+The 90 prior charged minutes remain; current elapsed time is additional and the
+15-minute final-phase reserve is retained.
+
+**Next: Brian enters the newest code in in-app tab 1, selects Verify and continue,
+and reports Plans/error without sharing the code. Verify actual profile creation
+and clear the handoff deadline before B.** Tab 2 is B's separate existing Preview
+origin. If the cutoff has fired, reconcile before any action; do not submit/restart
+blindly. No full acceptance or hosted replay/contention pass is implied.
+
+## Historical checkpoint, September 30: email receipt confirmed
 
 At the September 29 22:58 UTC provider check, both API and worker deployments were
 verified stopped, with null cron and
@@ -213,11 +249,12 @@ session-one enable and pause, session-two re-enable and final disable. The
 session-two re-enable also resumes the stopped API using the same image. No extra
 source deployment or overnight running service is needed.
 
-## Proposed next sequence (awaiting extension approval)
+## Approved next sequence
 
 Follow the [fresh invitation proposal](../p3-rehearsal-next-attempt.md), which
-supersedes the stale pending-code sequence. It preserves the original cases and
-splits 60 proposed remaining minutes into 45 for the unfinished phase and 15 for
+supersedes the stale pending-code sequence. Brian explicitly approved it; the live
+checkpoint above owns execution. It preserves the original cases and splits 60
+remaining minutes at approval into 45 for the unfinished phase and 15 for
 the final phase. The natural-expiry threshold is already elapsed. Issue each new
 invitation only when ready for its signup. A/B stay in their visible in-app origins;
 Brian enters OTPs directly. One interrupted handoff recovery is proposed, with
@@ -226,13 +263,13 @@ containment after five minutes without verified enrollment.
 The old `/private/tmp` operator scripts no longer exist. A replacement
 `next-attempt-cutoff.py` is now saved in the durable private rehearsal directory,
 with eight local checks and syntax compilation passed; its hash is in the proposal
-and private ledger. It is not armed. Record approval and verify its armed receipt
-before live execution; never assume an old process is running. The durable private
+and private ledger. It is now armed as recorded above. Verify its receipt and state
+before additional actions; never assume an old process is running. The durable private
 ledger and earlier stop receipts remain available. Hosted same-account
 replay/contention still need a supported
 authenticated test path; normal UI sends once and cannot establish contention.
 Do not claim those criteria passed or silently waive them. No current limit changes
-until Brian explicitly approves the extension.
+outside the explicitly approved extension.
 
 Private fixture record:
 `/Users/brianchei/Library/Application Support/TableUs/Rehearsals/2026-09-28-p3/d-expired-invite.json`.
