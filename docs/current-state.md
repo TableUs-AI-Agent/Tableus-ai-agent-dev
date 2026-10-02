@@ -12,11 +12,14 @@ attempts are disabled. No service was restarted to diagnose this loading report.
 The owner approved the account-flow closeout at
 `f518c1bcc5eadf7f676c014dc22ffde8f9d1fefc`. Restart 10/12 passed readiness and both
 D/B CORS checks at 23:44:10Z October 1; D's existing session recovered normally
-without a new OTP. Its final deletion screen was prepared for the owner, but the
-final click and a resulting pending job were not observed. Preserve that uncertainty;
+without a new OTP. On October 2 the owner confirmed the final deletion button
+was not clicked. D deletion remains to be performed and verified;
 last trusted roster/queue readback at 23:35:29Z had A/C pending with zero attempts
 and intact B/D profiles and Auth records. No new database read or worker invocation
-was performed for the loading diagnosis. B remains in its original Preview context.
+was performed for the loading diagnosis. B's prior tab had closed and D's old tab was unresponsive. Fresh responsive tabs
+were opened on their original origins; normal session recovery is still unverified.
+Two possible initialization refreshes are conservatively reserved, making 6/12
+refresh/revoke uses or reservations. No OTP was requested.
 
 First closeout window `fb428981-5783-41d5-9b15-32fde9267a33` ran from
 23:43:16.900721Z through verified containment at 23:52:18.364374Z. Its immutable
@@ -27,9 +30,9 @@ which cannot fit the prior first-phase work and containment margin. No automatic
 recovery start or extension is authorized by the stop. Restart slots 11/12 remain
 allocated to pause/drain and final B resume; do not repurpose them silently.
 
-Next: establish whether D's final deletion click occurred, then prepare a revised
-bounded sequence before any restart. Keep the services stopped while that is
-resolved. The previous sequence's active D handoff has expired; do not instruct the
+Next: approve the prepared [final account resume](p3-final-account-resume.md). It proposes two
+15-minute windows, cumulative time ceiling 255 minutes and status reads 50, with
+unchanged financial limits and API restart ceiling. Both services remain stopped. The previous sequence's active D handoff has expired; do not instruct the
 owner to delete or request a fresh code against a stopped API. The existing private
 ledger, trusted identity bindings and cutoff receipt remain authoritative.
 

@@ -110,8 +110,10 @@ financial/message limits. Restart 9/12 passed on the original API image.
 The owner-approved closeout at `f518c1b` used restart 10/12, then the automatic
 cutoff verified both services stopped at 23:52:18Z October 1. Cumulative usage is
 223m10.548827s/240m; 1009.451173 seconds remain including the final 900-second
-reserve. D final deletion was not observed, and no worker batch ran. The Account
-page needs the stopped API; a revised bounded sequence is needed before resuming.
+reserve. The owner confirmed D deletion was not clicked, and no worker batch ran. The Account
+page needs the stopped API. A prepared [final account resume](p3-final-account-resume.md)
+proposes two 15-minute windows, +15 cumulative minutes and +5 status reads, with
+unchanged monetary/restart caps. This revised execution is not approved yet.
 
 C recovered successfully with its original Auth session, one profile/redemption
 and no new OTP. The owner removed its sole plan and confirmed deletion; trusted

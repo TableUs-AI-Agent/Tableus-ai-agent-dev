@@ -1016,3 +1016,14 @@ Verify current stopped service/configuration and reconcile usage from the immuta
 stop receipt; do not treat a loading report as approval to extend the clock or
 repurpose the two remaining API starts. D deletion remains unobserved. Establish
 its status before preparing a revised sequence, while both services stay stopped.
+
+
+### Prepare stopped-API worker drains after the missed D confirmation — 2026-10-02
+
+The owner confirmed D deletion was not clicked. Prepare starts 11/12 for D/B
+recovery, stopping API and disabling future admission before each worker batch.
+This avoids another live pause/re-enable cycle while retaining exact queue checks.
+Propose two 15-minute windows, cumulative ceiling 255 minutes and status-read
+ceiling 50; monetary, account, mail, OTP, source and restart caps stay unchanged.
+These changed limits and sequencing require approval before execution. Browser
+tabs must respond and owner participation must be current before any new clock.

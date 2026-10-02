@@ -143,3 +143,13 @@ stored disabled configuration, and hosting usage upper bound $1.2498076379774683
 The owner reported the Account page not loading while its API is stopped. D's
 final click/deletion job has not been verified. No restart, new OTP, database read,
 worker processing or Auth DELETE occurred during this diagnosis.
+
+
+October 2 preparation: owner confirmed no D final deletion click. The original
+D tab did not respond to browser control and B's original tab was absent. Fresh
+responsive tabs were reopened at the same D/B origins; API data and existing-session
+recovery remain unverified while services are stopped. Reserve two possible SDK
+initialization refreshes conservatively (6/12 used/reserved), without requesting
+an OTP. The [final account resume](../../p3-final-account-resume.md) is prepared
+only. Nine offline helper-guard tests and eight unchanged cutoff self-tests pass;
+no cloud/provider operation was part of those tests and no live limit was changed.
