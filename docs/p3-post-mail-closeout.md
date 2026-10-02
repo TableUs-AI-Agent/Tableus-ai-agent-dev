@@ -2,8 +2,10 @@
 
 Prepared October 1, 2026 from `130af2e747d2fa4104f5b8931a278642ae5e01b1`.
 **Owner approved execution and revised restart order at `f518c1bcc5eadf7f676c014dc22ffde8f9d1fefc`.**
-The first bounded window and restart 10 are active; D's final UI confirmation is
-prepared, not yet observed complete. The [active packet](task-packets/active.md) remains authoritative.
+The first bounded window has closed: both services were verified stopped at
+23:52:18.364374Z October 1. Restart 10 was consumed; D's final UI confirmation
+remains unobserved. Remaining 1009.451173 seconds includes the reserved final 900;
+the prior first-phase sequence cannot resume within the 109.451173-second balance. The [active packet](task-packets/active.md) remains authoritative.
 
 ## Mail result and scope boundary
 

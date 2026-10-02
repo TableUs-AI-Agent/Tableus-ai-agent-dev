@@ -1007,3 +1007,12 @@ final skip-deploy admission/CORS cleanup. No ceiling increases, support mail sen
 new accounts, invitations or web deployments are included. Exact trusted fixture
 bindings and whole-queue checks precede each worker batch. Preserve support receipt
 as unverified and retain every broader P3 acceptance gap.
+
+
+### Preserve the cutoff after the D handoff expires — 2026-10-02
+
+The owner reported the Account page not loading after the automatic shutdown.
+Verify current stopped service/configuration and reconcile usage from the immutable
+stop receipt; do not treat a loading report as approval to extend the clock or
+repurpose the two remaining API starts. D deletion remains unobserved. Establish
+its status before preparing a revised sequence, while both services stay stopped.

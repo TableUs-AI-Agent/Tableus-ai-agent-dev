@@ -1,57 +1,52 @@
 # Current state
 
-## Approved account-flow closeout: D confirmation ready, October 1
+## Closeout window stopped; Account page unavailable, October 2
 
-The owner approved the revised sequence at
-`f518c1bcc5eadf7f676c014dc22ffde8f9d1fefc`. All ceilings remain unchanged;
-the four outstanding support messages are deferred. Full P3 acceptance remains open.
+The Account page cannot load its API-backed data while the staging API is stopped.
+The automatic cutoff verified API and worker stopped and unscheduled at
+**2026-10-01 23:52:18.364374Z** (6:52:18 p.m. Chicago). Current service/config
+readback at **2026-10-02 05:18:41Z** confirms both remain stopped and unscheduled,
+on the unchanged approved images. Future API deletion admission and inline Auth
+attempts are disabled. No service was restarted to diagnose this loading report.
 
-Stopped preflight at 23:35:29Z verified exactly A/C pending jobs, zero Auth deletion
-attempts, no lease or attention state, and intact B/D profiles and Auth records.
-Trusted pre-deletion identity bindings for all four fixtures are retained privately.
-B's sole shared fixture has one participant, no recommendation runs and scrubbed
-metadata (`Plan details need updating`, replacement required). No unrelated queue
-entry or new provider usage was found. Service preflight at 23:42:29Z verified both
-original images, stopped/unscheduled state, exact configuration and the worker's
-limit-3, 70-second command with NEVER restart policy. Hosting usage upper bound
-was $1.1575561938483339; all monetary ceilings retain headroom.
+The owner approved the account-flow closeout at
+`f518c1bcc5eadf7f676c014dc22ffde8f9d1fefc`. Restart 10/12 passed readiness and both
+D/B CORS checks at 23:44:10Z October 1; D's existing session recovered normally
+without a new OTP. Its final deletion screen was prepared for the owner, but the
+final click and a resulting pending job were not observed. Preserve that uncertainty;
+last trusted roster/queue readback at 23:35:29Z had A/C pending with zero attempts
+and intact B/D profiles and Auth records. No new database read or worker invocation
+was performed for the loading diagnosis. B remains in its original Preview context.
 
-First closeout window `fb428981-5783-41d5-9b15-32fde9267a33` began at
-**23:43:16.900721Z**, with immutable deadline **23:54:07.815547Z** and automatic
-containment beginning 120 seconds earlier. Its maximum allocation is 650.914826
-seconds; the final 900 seconds stays reserved. Previously closed usage remains
-214m9.085174s; charge this window through verified containment before reporting a
-new cumulative total. Do not extend or silently replace its deadline.
+First closeout window `fb428981-5783-41d5-9b15-32fde9267a33` ran from
+23:43:16.900721Z through verified containment at 23:52:18.364374Z. Its immutable
+23:54:07.815547Z deadline was preserved. Exact charge: **541.463653 seconds**;
+cumulative **223m10.548827s / 240m**; remaining **1009.451173 seconds**. The final
+900-second reserve remains untouched, leaving only 109.451173 seconds outside it,
+which cannot fit the prior first-phase work and containment margin. No automatic
+recovery start or extension is authorized by the stop. Restart slots 11/12 remain
+allocated to pause/drain and final B resume; do not repurpose them silently.
 
-Approved restart **10/12** resumed API deployment
-`aae2e714-81b4-4aea-896d-58187ec6517f` on original source `2eefdc5` and its exact
-approved image. Readiness and both D/B CORS origins passed at 23:44:10Z. Admission
-is enabled, inline Auth deletion remains disabled. The existing worker remains
-stopped and unscheduled; no processing invocation or Auth DELETE was added.
-
-D recovered normally through its existing session, with no OTP or invitation.
-Its Account page shows the exact synthetic identity and no owned plans. The final
-DELETE confirmation is prepared in the existing `links.table-us.com/account` tab;
-the owner has been asked to perform the final click. This handoff is not evidence
-that deletion occurred. Next, verify D's exact pending job and the complete A/C/D
-queue before restart 11 pauses admission and the bounded worker drains that queue.
-If the cutoff fires or remaining time is insufficient, stop and preserve the jobs;
-no unallocated recovery start or resend is authorized. The private cutoff receipt
-and ledger determine current runtime state, even if this handoff later becomes stale.
+Next: establish whether D's final deletion click occurred, then prepare a revised
+bounded sequence before any restart. Keep the services stopped while that is
+resolved. The previous sequence's active D handoff has expired; do not instruct the
+owner to delete or request a fresh code against a stopped API. The existing private
+ledger, trusted identity bindings and cutoff receipt remain authoritative.
 
 Web remains PR #11 merge `bffa2845f268ea8b1906b8de155aa130f199856e`, READY Preview
 `dpl_8tmFppeucwSv23uuj71qYF7mpthW` on the two staging aliases. Production aliases
-remain unchanged. B stays in its original immutable Preview tab. Hosted CI at the
-same merge tree passed 242 Python, 334 JavaScript and 13 browser checks, zero skips;
-no application source changed in this closeout.
+remain unchanged. Hosted CI at the same merge tree passed 242 Python, 334 JavaScript
+and 13 browser checks, zero skips. No application source or deployment changed
+for this diagnosis. Latest hosting usage upper bound is $1.2498076379774683;
+operator reads remain 37/45, support messages 13/17, Auth DELETE attempts 0/12.
 
 D's support case remains `verification_required`: the owner saw no forwarded copy
-in Inbox or Spam, although the exact ImprovMX log confirms Gmail SMTP acceptance
-at 22:24:27Z. Earlier three external route probes remain passing. No resend, DNS
-change or completion notice is authorized by this closeout. Final B cleanup,
-returning sign-in and deletion, worker completion, and hosted replay/contention
-and server-side refusal checks remain incomplete. See [account-flow closeout](p3-post-mail-closeout.md) for the approved
-sequence and retained limits.
+in Inbox or Spam despite Gmail SMTP acceptance in ImprovMX at 22:24:27Z October 1.
+The earlier three external route probes remain passing. The four remaining support
+messages and their acceptance checks remain deferred. Final B cleanup, returning
+sign-in/deletion, worker completion, hosted replay/contention and server-side
+refusal checks remain incomplete. Full P3 acceptance stays open. See [account-flow closeout](p3-post-mail-closeout.md)
+for the prior approved scope and unchanged limits.
 
 ## Verified rehearsal and mail results
 
@@ -112,7 +107,7 @@ environments are disabled. The approved manual rollout below consumed the API/we
 
 | Component | Source | Notes |
 | --- | --- | --- |
-| API (Railway `tableus-staging`) | `2eefdc5` | Same-image restart 10/12, deployment `aae2e714-81b4-4aea-896d-58187ec6517f`, ready at 23:44:10Z under the bounded cutoff. Admission on, inline attempts off. |
+| API (Railway `tableus-staging`) | `2eefdc5` | Same-image restart 10/12, deployment `aae2e714-81b4-4aea-896d-58187ec6517f`, verified stopped at 23:52:18Z October 1. Future admission off, inline attempts off. |
 | Web aliases `tableus-staging.vercel.app`, `links.table-us.com` | `bffa284` | READY Preview `dpl_8tmFppeucwSv23uuj71qYF7mpthW`; C signup recovery verified. |
 | Private deletion worker | `2eefdc5` | Deployment `18a8f3f8-886e-4dac-ba7e-9804bb584f75` stopped/unscheduled. One empty processing invocation consumed; A/C pending jobs have no Auth DELETE attempts. |
 | Accepted native artifacts | `f94a1d9` | Earlier isolated-staging acceptance with owner-accepted simulator AppHang risk; not pilot acceptance of current source. |

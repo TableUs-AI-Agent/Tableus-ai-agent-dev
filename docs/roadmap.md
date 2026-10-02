@@ -107,10 +107,11 @@ signup without replaying the OTP. PR #11 merged as `bffa284`; hosted CI passed
 third Preview is deployed to the two staging aliases. Production is unchanged.
 The owner approved restart ceiling 12 and live ceiling 240m, with unchanged
 financial/message limits. Restart 9/12 passed on the original API image.
-The previous phase stopped at 22:27:42Z after D support mail hit a self-forwarding
-loop. The owner approved the revised closeout at `f518c1b`. Restart 10/12 is ready
-under a new 650.914826-second window ending 23:54:07.815547Z; prior closed usage is
-214m9.085174s/240m and the final 900 seconds remains reserved. Worker stays stopped.
+The owner-approved closeout at `f518c1b` used restart 10/12, then the automatic
+cutoff verified both services stopped at 23:52:18Z October 1. Cumulative usage is
+223m10.548827s/240m; 1009.451173 seconds remain including the final 900-second
+reserve. D final deletion was not observed, and no worker batch ran. The Account
+page needs the stopped API; a revised bounded sequence is needed before resuming.
 
 C recovered successfully with its original Auth session, one profile/redemption
 and no new OTP. The owner removed its sole plan and confirmed deletion; trusted
@@ -120,8 +121,8 @@ profile/redemption and no plans. Its trusted account binding is preserved privat
 with the fresh support challenge sent and owner-reported reply sent; receipt
 through privacy remains unseen even after Spam inspection. The exact ImprovMX log
 confirms Gmail SMTP acceptance at 22:24:27Z; user-visible receipt remains unverified.
-D recovered normally without a new OTP and its final account-deletion click is now
-prepared for the owner. B's original session is preserved. The approved
+D recovered normally without a new OTP; its final account-deletion handoff expired
+without observed completion. B's original session is preserved. The approved
 [account-flow closeout](p3-post-mail-closeout.md) keeps all ceilings unchanged and
 defers four support messages.
 D deletion/support, worker removal, B

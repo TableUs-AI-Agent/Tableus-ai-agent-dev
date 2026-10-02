@@ -132,3 +132,14 @@ owner. No new OTP, worker invocation or Auth DELETE occurred at this handoff.
 Screenshot outside Git: `/private/tmp/tableus-d-closeout-delete-ready.png`.
 Operator reads are 37/45; refresh/revoke reservations 4/12. All other costs/counts
 retain their prior values until the bounded window is charged at verified stop.
+
+
+The D handoff window subsequently expired. The durable cutoff verified both
+services stopped/unscheduled at 2026-10-01 23:52:18.364374Z, within its immutable
+deadline, and disabled future API admission/inline attempts. Charged 541.463653
+seconds; cumulative 13390.548827 seconds, remaining 1009.451173. Current readback
+at 2026-10-02 05:18:41Z verifies unchanged images, stopped/unscheduled services,
+stored disabled configuration, and hosting usage upper bound $1.2498076379774683.
+The owner reported the Account page not loading while its API is stopped. D's
+final click/deletion job has not been verified. No restart, new OTP, database read,
+worker processing or Auth DELETE occurred during this diagnosis.
