@@ -1027,3 +1027,12 @@ Propose two 15-minute windows, cumulative ceiling 255 minutes and status-read
 ceiling 50; monetary, account, mail, OTP, source and restart caps stay unchanged.
 These changed limits and sequencing require approval before execution. Browser
 tabs must respond and owner participation must be current before any new clock.
+
+
+### Execute the approved final account resume — 2026-10-08
+
+Owner approved `e9785712a19c9f90a960b45bf7464309ca8bfc38`: 255-minute cumulative
+time and 50 operator reads; starts 11/12 for D/B; stop API before each worker.
+All other limits and deferred release checks remain. Preflight and D session
+recovery passed, with no new OTP. The final deletion click remains owner-controlled
+and bounded by the earlier handoff deadline; approval does not extend that deadline.

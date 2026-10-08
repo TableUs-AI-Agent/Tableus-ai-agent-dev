@@ -113,7 +113,10 @@ cutoff verified both services stopped at 23:52:18Z October 1. Cumulative usage i
 reserve. The owner confirmed D deletion was not clicked, and no worker batch ran. The Account
 page needs the stopped API. A prepared [final account resume](p3-final-account-resume.md)
 proposes two 15-minute windows, +15 cumulative minutes and +5 status reads, with
-unchanged monetary/restart caps. This revised execution is not approved yet.
+unchanged monetary/restart caps. The owner approved it October 8 at `e978571`. Restart 11 passed readiness/CORS;
+D recovered without an OTP and its final confirmation is ready. New first window
+ends 00:01:19Z October 9, with owner handoff ending earlier at 23:52:27Z October 8.
+No worker batch has run yet.
 
 C recovered successfully with its original Auth session, one profile/redemption
 and no new OTP. The owner removed its sole plan and confirmed deletion; trusted

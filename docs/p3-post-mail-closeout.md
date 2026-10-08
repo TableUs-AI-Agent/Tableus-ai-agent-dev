@@ -6,7 +6,7 @@ The first bounded window has closed: both services were verified stopped at
 23:52:18.364374Z October 1. Restart 10 was consumed; the owner confirmed D's final UI confirmation
 was not clicked. Remaining 1009.451173 seconds includes the reserved final 900;
 the prior first-phase sequence cannot resume within the 109.451173-second balance. The [prepared final resume](p3-final-account-resume.md) proposes the next sequence;
-it is not approved yet. The [active packet](task-packets/active.md) remains authoritative.
+it was approved October 8 at `e978571`; see the active packet for execution. The [active packet](task-packets/active.md) remains authoritative.
 
 ## Mail result and scope boundary
 

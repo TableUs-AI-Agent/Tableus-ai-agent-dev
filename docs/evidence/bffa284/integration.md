@@ -153,3 +153,16 @@ initialization refreshes conservatively (6/12 used/reserved), without requesting
 an OTP. The [final account resume](../../p3-final-account-resume.md) is prepared
 only. Nine offline helper-guard tests and eight unchanged cutoff self-tests pass;
 no cloud/provider operation was part of those tests and no live limit was changed.
+
+
+October 8 approved execution at `e978571`: stopped roster/queue preflight passed
+at 23:45:10Z with A/C pending attempts zero and B/D intact. Original service/image/
+config preflight passed at 23:44:52Z; hosting upper bound $3.9486821488679635.
+Cutoff window `3cc6507a-4ce5-4d21-90ac-7348af916ba6` armed at 23:46:19.844216Z,
+deadline 00:01:19.844216Z October 9. API restart 11, deployment
+`036ce1ee-9189-4c63-84dc-343f99c3c9ff`, passed readiness/CORS at 23:47:08Z on
+unchanged source/image. D normal session recovered without OTP; final DELETE UI
+prepared with owner deadline 23:52:27.889758Z. Screenshot outside Git:
+`/private/tmp/tableus-d-oct8-delete-ready.png`. No worker or Auth DELETE yet.
+Nine offline helper guards and eight cutoff tests pass after replacing expired
+temporary dependencies with a durable local runtime; app source unchanged.

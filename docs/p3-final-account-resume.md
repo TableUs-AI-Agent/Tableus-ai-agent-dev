@@ -1,8 +1,10 @@
 # P3 final account resume after the expired D handoff
 
 Prepared October 2, 2026 from `9918d6dbe3942db5d91e97f6ad9c1c6093deca4e`.
-**Prepared only. Revised sequencing and allowance changes need owner approval.**
-Both services remain stopped; no live window or restart is armed by preparation.
+**Owner approved on October 8 at `e9785712a19c9f90a960b45bf7464309ca8bfc38`.**
+Restart 11 is ready under a fresh first window; D existing-session recovery passed
+and its final deletion confirmation is handed to the owner. The active packet
+and private cutoff receipt hold the current bounded runtime state.
 This proposal supersedes the uncompleted steps of the approved
 [post-mail closeout](p3-post-mail-closeout.md), preserving all consumed usage.
 
