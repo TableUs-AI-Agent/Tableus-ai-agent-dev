@@ -64,14 +64,17 @@ intentionally deferred; the canceled campaigns stay closed.
 
 ## Reconciliation and publication preparation
 
-Brian requested the next step after implementation. Read-only reconciliation
-against P3 HEAD `00dbf4141c92e82c9c5d3cb5f00edfb2cfa931ba` and its latest completed
-chat turn is recorded in the [integration proposal](../mobile-signup-recovery-integration.md).
-P3 is clean and its changes since `bffa284` are documentation/evidence only.
-The newer chat reports B sole-plan removal/sign-out/returning-code request;
-its committed documents have not yet recorded those actions. No returning
-verification, deletion, current runtime or overall P3 acceptance is inferred.
-The P3 checkout, private ledger and external services were not modified.
+Brian requested the next step after implementation and again after publication.
+The refreshed read-only reconciliation is against clean P3 HEAD
+`a816c19417526e83d0caeb5430e94808c49c22df` and its latest completed chat turn,
+recorded in the [integration proposal](../mobile-signup-recovery-integration.md).
+P3 changes since `bffa284` are eleven documentation/evidence files only. All four
+synthetic account/Auth removals, completed jobs, stopped services and temporary
+origin removal are now confirmed by those sources. Account-flow closeout is
+complete; support receipt/correspondence, hosted replay/contention and server
+refusal remain open. The summary does not establish full P3 or mobile acceptance.
+P3's unpublished operating history, exact counters and packet remain in its
+checkout; neither it nor its private ledger/services were modified here.
 
 Application source remains `99a4f8fbebee91e8c127031427f30ac7f37623cd`; all original
 application checks are reused with unchanged inputs. Local preparation adds the
@@ -96,9 +99,21 @@ record for this SHA.
 No P3 state or approved runtime allowance was changed. The proposal records the
 connector-to-CLI fallback and the exact publication binding.
 
-Next: review draft PR #12 and refresh P3 reconciliation before requesting merge
-approval. Merge, deployment,
-signed builds/device acceptance and any P3 continuation remain separate owner
-gates; refresh P3 reconciliation again before merge. Further published source or
-CI attempts require their scope confirmed; local status documentation stays
-unpublished and preserves the existing candidate.
+## Review completion and next gate
+
+Functional review of the changed mobile implementation, tests, shared-client
+guards and contract found no blocking issue. Latest GitHub readback confirms
+the same open draft head/base and successful CI; no reviews are posted. All
+application/check/configuration inputs remain identical to `e834548`.
+The local publication-result commit `f99fa215449727ec00656632b38aac8f1be1414d`
+and review closeout change only current state, roadmap, decisions, this packet
+and the integration proposal. Links, diff/consistency and source/deployment-guard
+checks cover these edits; matching application evidence is reused.
+
+Next: request the proposal's single non-force documentation update, its initial
+deterministic PR CI, PR description/ready transition and conditional merge into
+unchanged `main`. Bind approval to the final local head; stop for source/base/tree,
+CI, review, trigger or P3-status mismatch. Record formal merge evidence locally
+after the gate, without a post-merge push. Nothing in the prior approval covers
+this second publication or merge. Deployment, signed builds/device acceptance,
+P3 continuation and publication of P3 operating records remain separate gates.

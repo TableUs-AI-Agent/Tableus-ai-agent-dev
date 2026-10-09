@@ -36,24 +36,23 @@ reports no deployment record for the candidate; no merge or release is authorize
 The **Prepare Priority 3 staging readiness** chat and its
 `codex/pilot-staging-readiness` checkout own current live state, private evidence,
 budgets and acceptance. Read-only context at operator HEAD
-`00dbf4141c92e82c9c5d3cb5f00edfb2cfa931ba` reports A/C/D Auth/profile removal
-complete and the approved visible-tab B-only resume preflight, support receipt
-unverified and hosted replay/contention/server-refusal cases untested. The later
-completed turn in that same chat records owner-confirmed B sole-plan removal,
-normal local sign-out and one returning-code request. Returning verification,
-B account/Auth deletion, final CORS cleanup and current containment are not
-confirmed by that turn. The committed P3 documents still show pre-resume state;
-keep these later chat observations distinct rather than infer a completed
-closeout or reset counters. These are operator observations, not mobile evidence.
-No P3 acceptance or Priority 4 authorization is implied. Reconcile evolving operator documents
-before integrating this local branch; this branch's packet governs local work.
+`a816c19417526e83d0caeb5430e94808c49c22df` and its completed chat turn confirm
+the four synthetic accounts' application/Auth removal, completed deletion jobs,
+stopped rehearsal services and removal of the temporary browser origin. This is
+account-flow closeout only: support receipt/correspondence, hosted redemption
+replay/contention and server-side deletion refusal remain open. These operator
+observations do not establish mobile/device acceptance or authorize Priority 4.
+The clean P3 checkout retains its unpublished operating records, exact counters
+and owner decisions; this branch carries only this scoped status summary.
+Reconcile evolving operator documents before integration; this branch's packet
+governs mobile work and does not replace P3's packet or replenish allowances.
 
 ## Source baseline
 
 | Item | Value |
 | --- | --- |
 | Integrated source baseline | Priority 1 merge `8ae3c94`, Priority 2 merge `462a7dd`, and Priority 3 merge `2eefdc5` (approved app candidate `e5e7d1`) |
-| Refreshed `origin/main` | `bffa2845f268ea8b1906b8de155aa130f199856e`, merged web signup recovery PR #11 (locally verified; no remote refresh in this pass) |
+| PR base `main` | `bffa2845f268ea8b1906b8de155aa130f199856e`, merged web signup recovery PR #11; GitHub readback unchanged during mobile review |
 | Integration status | Priorities 1 and 2 complete. Priority 3 merge tree matches passing CI head `d2ccc7e`; web recovery PR #11 is merged/deployed as `bffa284`. The mobile recovery above is published as draft PR #12 and remains unmerged/undeployed. Initial rollout is complete; synthetic acceptance remains open. The separate native diagnostic branch remains excluded. |
 | Root checkout | Stale at `codex/privacy-safe-observability` (`8e9625e`). Use the baseline, not the root checkout. |
 
@@ -95,9 +94,9 @@ remain separate gates.
 
 | Component | Source | Notes |
 | --- | --- | --- |
-| API (Railway `tableus-staging`) | `2eefdc5` | Original approved image; runtime/configuration/restart counts remain owned by the P3 chat. |
+| API (Railway `tableus-staging`) | `2eefdc5` | Original approved image; P3 reports stopped with deletion admission/inline attempts off. Exact runtime counters remain owned by that chat. |
 | Web aliases `tableus-staging.vercel.app`, `links.table-us.com` | `bffa284` | Approved web recovery deployed by P3; mobile changes here are published for CI but undeployed. |
-| Private deletion worker | `2eefdc5` | Original approved source; A/C/D completion reported by P3. Runtime and remaining batches belong to that chat. |
+| Private deletion worker | `2eefdc5` | Original approved source; P3 reports stopped/unscheduled with all four synthetic account removals complete. |
 | Accepted native artifacts | `f94a1d9` | Earlier isolated-staging acceptance with owner-accepted simulator AppHang risk; not pilot acceptance of current source. |
 | Production-facing `table-us.com` | `e1184ec` | Not a pilot target; unchanged. |
 
@@ -135,7 +134,7 @@ unknown history/deletion coverage. This does not add a quorum or change ranking.
 
 | Capability | Default after deployment | Contract |
 | --- | --- | --- |
-| Full account deletion with recoverable Auth removal | Off today/default (`TABLEUS_ACCOUNT_DELETION_ENABLED=false`); pilot requires approved activation and rehearsal in Priority 3 | [account lifecycle](account-lifecycle.md), [operations](account-lifecycle-operations.md) |
+| Full account deletion with recoverable Auth removal | API stopped; stored admission/inline attempts off after P3 account-flow closeout | [account lifecycle](account-lifecycle.md), [operations](account-lifecycle-operations.md) |
 | Plan transfer, sole-plan removal and legacy application-only deletion | Available subject to authorization/blockers; not disabled by the full-deletion flag | [account lifecycle](account-lifecycle.md) |
 | Shared-content removal and organizer repair on deletion | Applies to legacy and full deletion; not gated by the full-deletion flag | [design](deletion-content-design.md) |
 | Durable per-account quotas and operator-only usage reports | Staging configured to 3 AI/40 Places per day and 20 lifetime plans; code defaults remain 5/20/20. | [cohort controls](cohort-controls.md) |
@@ -158,12 +157,10 @@ unknown history/deletion coverage. This does not add a quorum or change ranking.
   owner-reviewed roster. Whole-plan deletion still removes events, and historical
   finalizations may have no voter count. Report unknown outcomes and these accepted
   coverage gaps; the retained-plan rate is not complete cohort conversion.
-- Full deletion and worker removal for A/C/D are reported exercised by P3.
-  Its B-only closeout and unresolved support/refusal cases remain separately owned;
-  P3 acceptance is still open. The campaign uses queue-only API admission and a
-  separately approved worker; external execution must prove the normal
-  self-service path, organizer-blocker resolution,
-  recovery and truthful retention/copy before invitations. Brian accepts that a
+- Full deletion and worker removal for all four synthetic accounts are reported
+  complete by P3, including returning access and organizer-blocker resolution.
+  Support receipt/correspondence, hosted replay/contention and server refusal
+  remain unverified; overall P3 acceptance is open before invitations. Brian accepts that a
   known pilot participant who loses sign-in email access may be unable to delete
   until secure recovery/assisted verification exists. A support contact/escalation
   route remains required; the [support procedure](deletion-support-procedure.md)

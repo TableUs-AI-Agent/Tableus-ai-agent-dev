@@ -96,12 +96,13 @@ Natural-expiry invitation rejection passed (404, no OTP).
 
 Web signup recovery PR #11 is merged/deployed as `bffa284`; its hosted CI passed
 242 Python, 334 JavaScript and 13 browser checks with zero skips. Read-only P3
-context on October 8 at operator HEAD `00dbf414` reports A/C/D deletion complete
-and the approved B-only visible-tab resume. A later completed chat turn records
-B sole-plan removal, local sign-out and its returning-code request; returning
-verification/deletion and current containment remain unconfirmed here. Support
-receipt, hosted replay/contention and server refusal remain unresolved; current runtime,
-allowances and closeout belong to that chat's active packet/private ledger.
+context on October 8 at clean operator HEAD `a816c194` and its completed chat
+confirms all four synthetic account/Auth removals, completed deletion jobs,
+stopped services and temporary-origin removal. Account-flow closeout is complete;
+support receipt/correspondence, hosted replay/contention and server refusal remain
+unresolved. Overall P3 acceptance is open. Its exact operating records, counters
+and decisions remain unpublished in that chat's checkout; this branch summarizes
+status without importing that history or authorizing another live action.
 
 A separately authorized local mobile recovery objective runs on
 `codex/mobile-signup-recovery` from the accepted `bffa284` source. It reproduces
@@ -134,8 +135,9 @@ hosted CI, device/signing and external-access waits; these are not delivery prom
 | 4 | Accept signed iOS/Android pilot builds using the existing `readiness-ios` and `readiness-android` profiles on physical devices. Establish that all three supported clients work. | 1–3 days if device checks pass | Collect every pilot iPhone's device ID before the iOS build and verify inclusion in its ad hoc profile; keep the roster private. Have physical iPhone/Android installation access. Pass physical checks plus one bounded candidate-source `mobile-offline-e2e` run on a separately identified local test artifact. Preserve/dispose of prior findings explicitly. One accepted signed pilot build per platform is the target, not permission for retries or extra test builds. |
 | 5 | Run the pilot and decide the next product priority from observed outcomes. | Three-week observation window | Approved roster/cap, representative web/iOS/Android use, budget, support, measurement and stop rules. Report the targets, unknowns and organizer feedback; no automatic expansion. |
 
-The [active packet](task-packets/active.md) now covers Priority 3. Its
-[prepared execution scope](pilot-staging-preparation.md) records fresh staging
+This checkout's [active packet](task-packets/active.md) covers mobile recovery;
+P3's separate checkout retains its operating packet. The historical
+[prepared execution scope](pilot-staging-preparation.md) records staging
 inventory, measured quota/attempt sizing, worker configuration, synthetic fixtures
 and one combined gated request. Local preparation does not close staging acceptance. The [pilot checklist](release-readiness-checklist.md) owns
 acceptance details; the [runbook](release-runbook.md) supplies relevant procedures.
