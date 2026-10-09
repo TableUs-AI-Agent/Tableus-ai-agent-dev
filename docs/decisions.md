@@ -1093,3 +1093,14 @@ agent turn. Enforce visibility headroom with the same immutable overall deadline
 The helper and cutoff must accept the same window in an integrated offline test,
 and a file lock must reject overlapping ledger writes. Preparation and the loading
 report do not approve another start or modify current limits.
+
+
+### Approve the visible-tab B resume — 2026-10-08
+
+Owner approved `3839021cb2a0cc367d6bef34e719b2ac66143706` after confirming the
+selected original B tab is visible. Apply only API ceiling 14, cumulative ceiling
+260 minutes and operator-read ceiling 52. Preserve all consumption and monetary/
+other caps. Fresh stopped image/configuration/billing and exact roster checks pass.
+Arm the matching 1200-second cutoff before the one start. Owner confirmation of
+the live Account screen precedes its plan-click timer; yield action instructions
+immediately. The immutable overall clock and visibility/headroom stops still apply.

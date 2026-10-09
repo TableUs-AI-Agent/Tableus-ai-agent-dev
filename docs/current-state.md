@@ -49,14 +49,21 @@ A/C/D remain completed. Operator reads are now **46/50**. The selected original 
 tab renders its public “Request account deletion” page while the API is stopped.
 The owner confirmed “Yes, I see it”; the selected-tab visibility check passed.
 
-Next: review the prepared
-[visible-tab resume](p3-b-visible-resume.md). It is **unapproved** and proposes one new 20-minute
-window, one API start (13 to 14), five cumulative minutes (255 to 260) and two
-operator reads (50 to 52), with unchanged financial/other attempt caps. The new
-sequence requires owner confirmation of the live Account screen before starting
-the removal timer and immediately yields each user action. Matching helper/cutoff
-checks and a ledger lock are prepared; 23 helper tests and 13 cutoff tests pass.
-No new start or window occurred during this stopped preparation.
+The owner approved the [visible-tab resume](p3-b-visible-resume.md) at
+`3839021cb2a0cc367d6bef34e719b2ac66143706`. Limits are now 14 API starts,
+260 cumulative minutes and 52 operator reads; all financial/other caps remain.
+Fresh stopped preflight at 00:26:17Z passed original-image/configuration/scheduler
+checks with hosting upper bound $3.960508604005185. Exact roster at 00:26:49Z again
+confirms B intact with one plan and A/C/D absent with their completed jobs.
+Operator reads are now **47/52**. Closed time remains 239m36.449390s, leaving
+1223.550610 seconds under the new ceiling before its single 1200-second window.
+
+Next: arm the matching cutoff, use start 14 and recover B in the already-selected
+original tab. Obtain explicit owner confirmation that the live Account screen has
+loaded before arming the plan-removal timer. Immediately yield each user action.
+23 helper and 13 cutoff tests passed, including the approval-to-arm integration and
+ledger lock. Runtime after arming is authoritative in the private immutable window
+and cutoff receipt; the stopped checks above are timestamped pre-start evidence.
 
 Seventeen B-only helper guard tests and 12 repaired cutoff tests pass. No application
 source changed; the previously passing 242 Python / 334 JavaScript / 13 browser

@@ -63,14 +63,21 @@ A/C/D remain completed. Operator reads are now **46/50**. The selected original 
 tab renders its public “Request account deletion” page while the API is stopped.
 The owner confirmed “Yes, I see it”; the selected-tab visibility check passed.
 
-Next: review the prepared
-[visible-tab resume](../p3-b-visible-resume.md). It is **unapproved** and proposes one new 20-minute
-window, one API start (13 to 14), five cumulative minutes (255 to 260) and two
-operator reads (50 to 52), with unchanged financial/other attempt caps. The new
-sequence requires owner confirmation of the live Account screen before starting
-the removal timer and immediately yields each user action. Matching helper/cutoff
-checks and a ledger lock are prepared; 23 helper tests and 13 cutoff tests pass.
-No new start or window occurred during this stopped preparation.
+The owner approved the [visible-tab resume](../p3-b-visible-resume.md) at
+`3839021cb2a0cc367d6bef34e719b2ac66143706`. Limits are now 14 API starts,
+260 cumulative minutes and 52 operator reads; all financial/other caps remain.
+Fresh stopped preflight at 00:26:17Z passed original-image/configuration/scheduler
+checks with hosting upper bound $3.960508604005185. Exact roster at 00:26:49Z again
+confirms B intact with one plan and A/C/D absent with their completed jobs.
+Operator reads are now **47/52**. Closed time remains 239m36.449390s, leaving
+1223.550610 seconds under the new ceiling before its single 1200-second window.
+
+Next: arm the matching cutoff, use start 14 and recover B in the already-selected
+original tab. Obtain explicit owner confirmation that the live Account screen has
+loaded before arming the plan-removal timer. Immediately yield each user action.
+23 helper and 13 cutoff tests passed, including the approval-to-arm integration and
+ledger lock. Runtime after arming is authoritative in the private immutable window
+and cutoff receipt; the stopped checks above are timestamped pre-start evidence.
 
 Seventeen B-only helper guard tests and 12 repaired cutoff tests pass. No application
 source changed; the previously passing 242 Python / 334 JavaScript / 13 browser
@@ -81,24 +88,24 @@ support correspondence, hosted replay/contention and server refusal remain open.
 
 | Item | Used/reserved | Approved ceiling |
 | --- | ---: | ---: |
-| Live minutes | 239m36.449390s closed | 255m; no active or remaining approved window |
+| Live minutes | 239m36.449390s closed before visible-tab resume | 260m; one max 1200s window approved |
 | API source rollouts | 1 | 1 |
-| Same-image API configuration restarts | 13 | 13; additional start unapproved |
+| Same-image API configuration restarts | 13 before visible-tab resume | 14; one approved start |
 | Web Previews | 3 | 3 |
 | Worker resources / processing invocations | 1 / 2 | 1 / 4 |
 | Invitations / new Auth accounts | 10 / 4 | 10 / 4 |
 | OTP requests / delivery reservations | 11 / 10 | 12 / 11; only B returning remains |
 | Verification submissions / refresh-revoke | 10 / 10 | 20 / 12 |
 | Support/test messages | 13 reserved | 17; four remaining messages deferred |
-| Operator status reads | 46 | 50 |
+| Operator status reads | 47 | 52 |
 | Auth DELETE attempts | 3 | 12 |
 | Places HTTP attempts | 80 (74 prior + 6 conservative repair reservation) | 420 |
 | Logical AI / underlying reservations | 1 / 3 | 3 / 9 |
 | Provider cost / AI cost | $1.6575715 reserved / $0.0005715 | $15 / $0.25 |
 
 Keep $5 hosting and $20 combined caps. Last workspace usage delta is a conservative
-$3.954492252683148 above the original baseline, not exact campaign billing; recheck
-headroom before a live start. Account-deletion status reads are 15, included in
+$3.960508604005185 above the original baseline, not exact campaign billing; recheck
+headroom before a live start. Account-deletion status reads are 16, included in
 operator accounting; worker status reads are 2. Private ledger is authoritative
 for immutable receipts and identity bindings. The latest email diagnostic used
 one read to verify the exact privacy-route delivery log. Never print tokens, codes, exact
@@ -124,8 +131,9 @@ a supported exercised path. Keep them untested; manual completion or local CI is
 not full P3 acceptance. Do not start Priority 4, native builds, production, real
 invitations, new AI evaluation, secret changes or resource creation.
 
-Preserve B's original immutable Preview tab and its temporary CORS origin. All
-services remain stopped. Both prior resume approvals are exhausted, including the
-[B-only closeout](../p3-b-account-closeout.md). No further start or automatic rearm
-is authorized. The owner confirmed the static page is visible. Review and approve the prepared
-[visible-tab resume](../p3-b-visible-resume.md). Preserve private cutoff/queue evidence and all cumulative counters.
+Preserve B's original immutable Preview tab and temporary CORS origin. The old
+resume approvals are exhausted; only the visible-tab scope at `3839021` is current.
+Use private `b-visible-resume.py` and `b-visible-cutoff.py`, preserve all historical
+receipts/counters, and serialize entire helper invocations. The single new window
+must not be extended or rearmed. Owner visibility confirmation precedes the plan
+handoff; no extra resend, provider operation or worker retry is authorized.

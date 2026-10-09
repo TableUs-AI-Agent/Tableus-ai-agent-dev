@@ -128,7 +128,8 @@ account/sole plan intact and A/C/D still complete. The original selected tab ren
 static help; the owner confirmed that he sees it. The prepared
 [visible-tab resume](p3-b-visible-resume.md) requests one start, a 20-minute window,
 +5 cumulative minutes and +2 operator reads, retaining financial/other attempt caps.
-It remains unapproved. The removal timer requires owner confirmation of the live
+The owner approved it at `3839021`; fresh stopped source/budget and exact roster
+checks passed. The removal timer requires owner confirmation of the live
 Account screen, and the agent immediately yields user-action handoffs. Sole-plan
 cleanup, returning sign-in, account/Auth removal and final CORS cleanup remain.
 

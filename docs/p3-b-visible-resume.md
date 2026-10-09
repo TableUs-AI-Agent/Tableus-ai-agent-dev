@@ -1,6 +1,8 @@
 # B resume with confirmed visible-tab handoff — prepared October 8, 2026
 
-**Unapproved. The owner confirmed the selected tab is visible.**
+**Owner approved at `3839021cb2a0cc367d6bef34e719b2ac66143706`.**
+Stopped source/budget and exact roster checks passed October 8 before the single
+new window; the active packet and private cutoff receipt hold subsequent runtime.
 The previous [B-only attempt](p3-b-account-closeout.md) is closed. A stopped exact
 read at 2026-10-09 00:19:20.166887Z confirms B's Auth/profile and sole plan still
 exist; only the three trusted A/C/D jobs exist, all completed after one attempt.
@@ -8,7 +10,7 @@ The earlier owner click did not remove B's plan. Metadata repair already passed.
 
 The original B tab is currently selected and its static “Request account deletion”
 page renders normally on the same immutable Preview origin. Brian confirmed “Yes, I see it” when asked about that exact heading, so the
-selected-tab visibility check passed. This does not approve another live attempt.
+selected-tab visibility check passed. The subsequent explicit approval above authorizes only the scope below.
 The API/worker remain stopped, so this visibility check has no live deadline.
 
 ## Exact approval requested
