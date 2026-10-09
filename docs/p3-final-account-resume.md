@@ -5,7 +5,7 @@ Prepared October 2, 2026 from `9918d6dbe3942db5d91e97f6ad9c1c6093deca4e`.
 Both approved windows are now closed. A/C/D completed with exact Auth-removal
 proofs. B recovered, but its phase stopped for insufficient guarded time before
 cleanup or OTP. All 12 API starts are consumed. Current state and counters are in
-the active packet; [the B-only follow-up](p3-b-account-closeout.md) is unapproved.
+the active packet; [the B-only follow-up](p3-b-account-closeout.md) was separately approved and is also exhausted.
 The scope below records the exhausted approval and must not be re-executed.
 This proposal supersedes the uncompleted steps of the approved
 [post-mail closeout](p3-post-mail-closeout.md), preserving all consumed usage.

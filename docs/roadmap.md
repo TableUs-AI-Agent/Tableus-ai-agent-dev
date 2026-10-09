@@ -115,12 +115,18 @@ were verified at 23:52:13Z. B recovered to its existing account and sole plan, b
 operator preparation left insufficient guarded time for plan cleanup. The attempt
 stopped without a B mutation, sign-out, location lookup or OTP request.
 
-Both services are stopped/unscheduled, with future admission and inline attempts
-disabled. Closed usage is 233m30.851991s/255m, leaving 1289.148009 seconds; starts
-are exhausted at 12/12. The prepared [B-only closeout](p3-b-account-closeout.md)
-requests one additional same-image start and one 20-minute window inside existing
-time/spend caps. It remains unapproved. B metadata/sole-plan cleanup, returning
-sign-in, account/Auth removal and final temporary-origin cleanup remain incomplete.
+The owner approved the [B-only closeout](p3-b-account-closeout.md) at `76d9d07`.
+Start 13 passed readiness/CORS, and B recovered normally. Its metadata repair
+passed using one bounded location pair; old A-authored details/recommendations
+were unavailable. The owner sole-plan click was not observed before the handoff
+cutoff, and both services stopped at 00:12:05Z October 9. The owner then reported
+loading trouble; the original and duplicate B tabs both needed the stopped API.
+
+Closed usage is 239m36.449390s/255m, leaving 923.550610 seconds; all 13 starts are
+used. B's returning code remains unused. Fix the visible-tab handoff before any
+new proposal, verify the unobserved plan outcome, and require a separately approved
+start/window. Sole-plan cleanup, returning sign-in, account/Auth removal and final
+temporary-origin cleanup remain incomplete. No new retry is authorized.
 
 D's fresh support challenge and owner reply remain separate: ImprovMX confirms
 Gmail SMTP acceptance, while the owner found no visible reply, including Spam.

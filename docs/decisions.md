@@ -1053,3 +1053,25 @@ or infer another restart from unused cumulative time. Prepare one separate B-onl
 20-minute window with a proposed restart ceiling of 13, retaining the 255-minute
 and all monetary/other attempt caps. This proposal is not approved. Preserve the
 prior execution, counters and A/C/D proofs; support and broader P3 gaps stay open.
+
+
+### Close B's missed sole-plan handoff and preserve the loading failure — 2026-10-08
+
+Owner approved `76d9d070bce121723276346b3f61c49fbde844c1`: one 20-minute B-only
+window and start ceiling 13, with all other caps unchanged. Repair the obsolete
+cutoff allocation check while services are stopped, bind it to this exact new
+approval/window and preserve the original deadline. Its 12 offline tests passed
+before start 13. B session recovery and normal plan metadata repair succeeded.
+
+The final sole-plan click was not observed. Enforce the earlier handoff deadline
+and close at verified stop time, retaining the unused B OTP and uncertain plan
+outcome. A queued open-in-app request and agent-visible screenshot did not prove
+that the owner could use the prepared tab. Before another proposed attempt,
+establish the exact tab is visible; during an approved resume, require owner
+confirmation that the Account screen has loaded before beginning its click timer.
+Do not treat the later loading report as permission for a new start or deadline.
+
+Serialize entire private helper operations that read/write the shared ledger,
+including their background provider wait. Restore the one read reservation
+lost to a stale preflight save from its exact query receipt; no duplicate query
+or budget reset accompanies accounting reconciliation.

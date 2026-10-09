@@ -1,6 +1,13 @@
 # B-only account closeout — prepared October 8, 2026
 
-**Unapproved.** Prepared after both windows approved at `e978571` closed.
+**Approved at `76d9d070bce121723276346b3f61c49fbde844c1`; now exhausted.**
+Start 13 and metadata repair passed. The owner sole-plan confirmation was not
+observed before its handoff deadline; cutoff verified both services stopped at
+00:12:05.030631Z October 9. The window charged 365.597399 seconds. B's code remains
+unused. Current counters and the failed visible-tab handoff are in the active packet.
+The scope below is historical authorization, not permission for another attempt.
+
+Prepared after both windows approved at `e978571` closed.
 A/C/D removal is verified. B remains signed in at its original immutable Preview,
 with one sole plan requiring metadata repair. Its returning code is still unused.
 Operator preparation exceeded the prior plan-handoff guard; that window stopped
@@ -88,7 +95,9 @@ records and requires this new approval before any cloud operation. Its SHA-256 i
 `e514e528c0cd8d3efbbb02e041503ea5f9c00d81ae10ae4bbd843ba2fc735a8d`. Seventeen offline guard tests pass, including old-approval
 rejection, a single 20-minute window, stale owner readiness, insufficient balance,
 owner deadlines, no second OTP, unrelated queue rejection and exact closeout time.
-The unchanged cutoff passes eight tests. No live provider call occurred in these
+The old cutoff passed eight tests but rejected the new 20-minute allocation before
+service start. A separate cutoff now requires this exact approval/window, keeps
+the immutable deadline and passes 12 tests. No live provider call occurred in these
 checks. Application source is unchanged; hosted 242 Python / 334 JavaScript /
 13 browser checks, zero skips, remain applicable.
 

@@ -14,75 +14,84 @@ historical authority for their exact scope. The latest approved recovery is
 `fa282f2e2d242a4a02eaafa832d06d611753339f`; its first phase has ended. The owner separately approved the new Preview/recovery restart/time increase
 against handoff `b08cee4`. The latest account-flow closeout at `f518c1b` is now approved; all prior usage is retained.
 
-## A/C/D complete; B stopped before cleanup, October 8
+## A/C/D complete; B metadata repaired, handoff stopped October 8
 
-The owner completed D's final confirmation under the approval at
-`e9785712a19c9f90a960b45bf7464309ca8bfc38`. API was stopped and future admission
-disabled before the exact whole-queue check. The existing worker processed A/C/D
-once. Readback at **23:52:13.533086Z** verifies all three Auth records, profiles,
-redemptions and owned plans absent; each trusted job is completed after one Auth
-attempt, with raw subject cleared and no lease, attention flag or error. Private
-identity-to-job bindings remain preserved. D's normal local sign-out was observed.
-The first window closed at **23:52:35.742684Z**, charging **375.898468 seconds**.
+The owner approved the [B-only closeout](../p3-b-account-closeout.md) at
+`76d9d070bce121723276346b3f61c49fbde844c1`: one 20-minute window and API start
+13, retaining the 255-minute and financial caps. The stopped readback at
+2026-10-09 00:05:18.656158Z reconfirmed exact A/C/D Auth/profile removal and their
+three completed jobs, with B's singular account and sole plan intact.
 
-B's final window started at **23:53:48.770722Z**, with immutable deadline
-00:08:48.770722Z October 9. Same-image restart **12/12**, deployment
-`e51699cc-fa46-4124-9f5d-b42301008676`, passed readiness and exact CORS at 23:55:21Z.
-B recovered normally at its original immutable Preview, showing its exact test
-identity and one sole plan requiring metadata repair. Operator preparation exceeded
-the three minutes available before the guarded plan handoff. Insufficient headroom
-triggered containment before any B metadata mutation, plan deletion, sign-out,
-location lookup or OTP request. This was a rehearsal timing failure; no B cleanup
-or returning-sign-in success is claimed.
+Window `8182534b-1efc-4f5c-ae8e-785d22dab286` began at 00:05:59.433232Z with an
+immutable 00:25:59.433232Z deadline. The old cutoff rejected its obsolete 15-minute
+phase limit before any service action. A separate B-only cutoff was repaired to
+require this exact approval/window and 20-minute limit; 12 offline tests passed.
+The original start/deadline were preserved and its receipt armed before start 13.
+API deployment `7ab24d89-33b5-4520-a4b2-87e2f8805fae`, on the original image/source,
+passed readiness/CORS at 00:07:52Z. B's exact identity recovered normally.
 
-Both services were verified **stopped and unscheduled at 23:57:53.175418Z**. Future
-API deletion admission and inline attempts are false; B's temporary origin is
-retained pending its unfinished flow. Worker deployment
-`85eb29e8-51ea-4111-9fa1-b50ee1aae514` remains on its original image, NEVER restart
-policy and bounded command. The B window charged **244.404696 seconds**. Total
-closed usage is **233m30.851991s / 255m**, leaving **1289.148009 seconds**; all
-12 approved API starts are consumed. No active window or automatic retry remains.
+The normal UI showed A's old plan details/recommendations unavailable and B as the
+only remaining participant. One reserved location resolve/details pair supported
+successful metadata repair to the synthetic title “TableUs P3 B cleanup.” No new
+AI run was requested. The sole-plan DELETE field was prepared, but the owner final
+click was **not observed**. Its two-minute handoff ended at 00:11:55.266352Z.
 
-Next: review the prepared [B-only closeout](../p3-b-account-closeout.md), which requests one additional
-same-image start and one 20-minute window inside the existing cumulative and
-financial caps. It is **unapproved**. Account-flow completion still would not
-accept all P3 checks or authorize a real pilot or native work.
+The cutoff verified **both services stopped and unscheduled at
+00:12:05.030631Z (7:12:05 p.m. Chicago on October 8)**, with future API admission
+and inline attempts false. B's temporary origin is retained. Owner subsequently
+reported the tab not loading; both the original and duplicate B tabs showed
+“Loading account settings” while the API was stopped. The attempted open-in-app
+handoff was queued and did not prove the prepared tab was visible. Do not infer
+whether loading began before shutdown or whether a final click reached the API.
+No B sign-out, returning OTP, account deletion or worker batch was performed.
 
-Operator reads are **43/50**, refresh/revoke uses/reservations **9/12**, processing
-invocations **2/4** and actual Auth DELETE attempts **3/12**. B's one returning OTP
-and one reserved location-pair allowance remain unspent. Support messages remain
-13/17, with four deferred. Last hosting upper bound was $3.9486821488679635;
-recheck before another approved start. Web deployment and production are unchanged.
+This window charged **365.597399 seconds**. Total closed use is
+**239m36.449390s / 255m**, leaving **923.550610 seconds**. Starts are **13/13**,
+operator reads **45/50**, refresh/revoke **10/12**, processing invocations **2/4**
+and actual Auth DELETE attempts **3/12**. One already-performed stopped read had
+been overwritten by a concurrent preflight save; its reservation was restored from
+the exact query receipt without another query. Serialize complete ledger-writing
+helper invocations, including waiting for a running command to finish.
 
-The worker log reader was repaired locally to handle Railway's promoted JSON
-fields as well as embedded JSON. Replaying the already captured log verified the
-report without another provider read. The prepared B-only helper passes 17 offline
-guard tests; the unchanged cutoff passes eight. No application source changed;
-242 Python / 334 JavaScript / 13 browser hosted checks remain applicable to the
-unchanged web merge `bffa2845f268ea8b1906b8de155aa130f199856e`.
+Places accounting conservatively retains the six-attempt / $0.147 repair
+reservation: **80/420 attempts**, provider reservations **$1.6575715**. B's one
+returning code remains unused. Last hosting upper bound was $3.954492252683148.
+Support messages remain 13/17 with four deferred. Web and production are unchanged.
+
+Next: establish that the original B tab is visibly accessible before proposing any
+further start. During any separately approved resume, obtain owner confirmation
+that the Account screen is loaded before starting an irreversible-click handoff.
+Do not reuse the consumed window, extend its deadline or treat this loading report
+as approval for another start. First verify the unobserved plan outcome through a
+bounded read in any revised proposal. No new proposal or retry is currently approved.
+
+Seventeen B-only helper guard tests and 12 repaired cutoff tests pass. No application
+source changed; the previously passing 242 Python / 334 JavaScript / 13 browser
+hosted checks still apply. A/C/D deletion remains complete; B returning/deletion,
+support correspondence, hosted replay/contention and server refusal remain open.
 
 ## Current cumulative allowances
 
 | Item | Used/reserved | Approved ceiling |
 | --- | ---: | ---: |
-| Live minutes | 233m30.851991s closed | 255m; no active or remaining approved window |
+| Live minutes | 239m36.449390s closed | 255m; no active or remaining approved window |
 | API source rollouts | 1 | 1 |
-| Same-image API configuration restarts | 12 | 12; additional start unapproved |
+| Same-image API configuration restarts | 13 | 13; additional start unapproved |
 | Web Previews | 3 | 3 |
 | Worker resources / processing invocations | 1 / 2 | 1 / 4 |
 | Invitations / new Auth accounts | 10 / 4 | 10 / 4 |
 | OTP requests / delivery reservations | 11 / 10 | 12 / 11; only B returning remains |
-| Verification submissions / refresh-revoke | 10 / 9 | 20 / 12 |
+| Verification submissions / refresh-revoke | 10 / 10 | 20 / 12 |
 | Support/test messages | 13 reserved | 17; four remaining messages deferred |
-| Operator status reads | 43 | 50 |
+| Operator status reads | 45 | 50 |
 | Auth DELETE attempts | 3 | 12 |
-| Places HTTP attempts | 74 (72 prior + 2 C fixture actual) | 420 |
+| Places HTTP attempts | 80 (74 prior + 6 conservative repair reservation) | 420 |
 | Logical AI / underlying reservations | 1 / 3 | 3 / 9 |
-| Provider cost / AI cost | $1.5105715 reserved / $0.0005715 | $15 / $0.25 |
+| Provider cost / AI cost | $1.6575715 reserved / $0.0005715 | $15 / $0.25 |
 
 Keep $5 hosting and $20 combined caps. Last workspace usage delta is a conservative
-$3.9486821488679635 above the original baseline, not exact campaign billing; recheck
-headroom before a live start. Account-deletion status reads are 13, included in
+$3.954492252683148 above the original baseline, not exact campaign billing; recheck
+headroom before a live start. Account-deletion status reads are 14, included in
 operator accounting; worker status reads are 2. Private ledger is authoritative
 for immutable receipts and identity bindings. The latest email diagnostic used
 one read to verify the exact privacy-route delivery log. Never print tokens, codes, exact
@@ -98,8 +107,8 @@ code has been requested and only B's returning code remains unspent.
 
 The owner-approved closeout separated account flow from support correspondence.
 A/C/D are now fully deleted with exact private proofs. B still has its account and
-one sole plan; metadata repair, sole-plan removal, returning sign-in and account
-removal remain. Four support messages stay deferred. Owner performs irreversible
+one sole plan at the last live observation. Metadata repair passed; sole-plan
+removal was not observed, and returning sign-in/account removal remain. Four support messages stay deferred. Owner performs irreversible
 final confirmations in the visible UI. Inspect the entire queue before each worker
 batch; use supported operations and no direct Auth-admin or SQL deletion shortcut.
 
@@ -108,11 +117,8 @@ a supported exercised path. Keep them untested; manual completion or local CI is
 not full P3 acceptance. Do not start Priority 4, native builds, production, real
 invitations, new AI evaluation, secret changes or resource creation.
 
-Preserve D at `links.table-us.com` and B at its existing immutable Preview origin.
-Do not navigate B to the new Preview origin and lose its session. A new recovery
-uses the same API image; temporary CORS continues to allow B's existing origin.
-The worker remains unscheduled. Stale consumed helper scripts cannot allocate a
-new attempt. The prior final resume is exhausted. Any new window needs a fresh receipt and
-explicit approval of [the prepared B-only closeout](../p3-b-account-closeout.md).
-Use the separate private `b-account-closeout.py` helper only after that approval;
-it preserves prior execution records and cannot reuse the old authorization.
+Preserve B's original immutable Preview tab and its temporary CORS origin. All
+services remain stopped. Both prior resume approvals are exhausted, including the
+[B-only closeout](../p3-b-account-closeout.md). No further start or automatic rearm
+is authorized. Resolve the visible-tab handoff before preparing another bounded
+proposal. Preserve private cutoff/queue evidence and all cumulative counters.
