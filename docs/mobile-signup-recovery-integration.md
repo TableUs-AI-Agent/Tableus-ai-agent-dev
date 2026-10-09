@@ -1,7 +1,8 @@
 # Mobile signup recovery: publication and integration proposal
 
-Prepared October 8, 2026. This is a local proposal, not an external-action
-approval. The active objective and boundaries are in the [local packet](task-packets/active.md).
+Prepared October 8, 2026. Brian subsequently approved publication and the initial
+CI run against `e8345489e7f560f89b408ffabf0464596de63efe`; the execution status
+below records that bounded approval. Merge and release remain unapproved. The active objective and boundaries are in the [local packet](task-packets/active.md).
 
 ## Source and verification
 
@@ -21,8 +22,8 @@ tests with 36 PostgreSQL-only skips, lint/types, generated contracts/drift,
 web/Expo-web exports, deterministic smoke and report-only performance. Focused
 checks passed 33 coordinator tests and 18 operation/storage tests. The packet
 retains the loopback/environment harness failures and successful staged checks.
-Physical-device/native and hosted PostgreSQL/browser acceptance are still absent
-for these bytes. No live Auth/provider or native build is included in preparation.
+Physical-device/native acceptance is still absent for these bytes. The approved
+hosted CI below now supplies PostgreSQL/browser verification. No live Auth/provider or native build is included in preparation.
 
 ## P3 reconciliation and ownership
 
@@ -90,6 +91,40 @@ exact CI head and results for review. No auto-merge, merge, branch deletion,
 deployment, signed build or device/distribution action is covered by this request.
 A later merge requires separate owner approval and refreshed P3 reconciliation;
 release/device gates stay with their separately approved objectives.
+
+## Approved publication execution
+
+The remote repository matched the named target. Remote `main` remained exactly
+`bffa2845f268ea8b1906b8de155aa130f199856e`, and the mobile branch did not exist.
+The reviewed branch exclusion had no overlapping deployment-enabled rules; the
+only checked-in GitHub workflow is deterministic CI, with no deployment step.
+One non-force push published exactly `e8345489e7f560f89b408ffabf0464596de63efe`.
+
+[Draft PR #12](https://github.com/TableUs-AI-Agent/Tableus-ai-agent-dev/pull/12)
+is attached to this chat and targets `main` at `bffa284`. The GitHub connector
+returned 403 when creating the PR; the authenticated GitHub CLI completed that
+same approved action. [Initial CI run 37873107070](https://github.com/TableUs-AI-Agent/Tableus-ai-agent-dev/actions/runs/37873107070)
+completed successfully for the exact published head, on the pull-request event.
+It passed 364 JavaScript tests, 242 Python tests with zero skips, 13 browser
+journeys (five main and eight hosted account/deletion checks), restricted-role
+migrations, lint/types, deterministic evaluation, generated contracts/drift,
+web/Expo-web exports and deterministic smoke.
+
+GitHub checked out synthetic PR merge commit
+`6bfdf2e647e20c73789f5dea74d24ae71f3cd082`, with parents `bffa284` and `e834548`.
+Its API-reported tree `406a621777b394054f28fc6584fc6b11ea8fd360` exactly matches
+the published head's local tree. This binds the passing checks to the proposed
+bytes; the synthetic merge is not an approved merge into `main`.
+Final readback confirms the PR remains open/draft on the same head/base and
+GitHub still reports no deployment record for that SHA.
+This observation is bounded to the repository record, not an independent hosted
+service/configuration audit. P3 services/accounts/tabs/ledger were not operated.
+
+No further branch push, CI rerun, merge or deployment is included in this
+execution. Later local publication-result documentation remains unpublished and
+does not replace the exact PR/CI source binding. Next: review draft PR #12 and
+refresh P3 reconciliation before requesting a separately approved merge. No
+application tests were rerun for the local documentation closeout.
 
 ## Draft PR content
 

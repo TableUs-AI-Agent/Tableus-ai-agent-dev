@@ -111,8 +111,13 @@ persisting invite/OTP material. This is preparatory development alongside P3.
 Its [local packet](task-packets/active.md) owns implementation/checks. The
 [integration proposal](mobile-signup-recovery-integration.md) reconciles the latest
 read-only P3 documents/chat while preserving their ownership and pending gates;
-refresh that reconciliation again before any later merge. Publishing, merge,
-deployment and Priority 4 signed-build/physical-device acceptance remain separate owner gates.
+refresh that reconciliation again before any later merge. Brian approved
+publication and initial deterministic CI for preparation head `e834548`;
+[draft PR #12](https://github.com/TableUs-AI-Agent/Tableus-ai-agent-dev/pull/12) is
+open with passing CI: 242 Python and 364 JavaScript tests, zero skips, and 13
+browser journeys. Its tested synthetic merge tree matches the published head.
+Merge, deployment and Priority 4 signed-build/physical-device
+acceptance remain separate owner gates.
 
 Effort is a rough planning range in focused engineering days, excluding approval,
 hosted CI, device/signing and external-access waits; these are not delivery promises.

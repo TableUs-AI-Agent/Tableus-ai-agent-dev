@@ -144,7 +144,8 @@ or replenish closed native/live-provider allowances.
   not publishing, release or Priority 4 authorization. Publication preparation
   excludes the mobile branch from Vercel Git deployment; the
   [integration proposal](mobile-signup-recovery-integration.md) preserves P3
-  document provenance and requires separate publishing/CI approval.
+  document provenance. Brian approved one publication/initial CI for `e834548`
+  as draft PR #12; this does not approve merge, deployment or native builds.
 - Sign-out explicitly uses local scope; clear local state on success and show a
   sanitized retry error on failure. Subject transitions clear private caches.
 - Queries stay in memory. Writes are not queued or automatically replayed;

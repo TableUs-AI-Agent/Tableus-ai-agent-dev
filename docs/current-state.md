@@ -22,8 +22,14 @@ Expo-web exports, deterministic smoke and report-only performance. The one
 four Python configuration assertions initially conflicted with forced split-mode
 environment variables and passed after those overrides were removed. No source
 repair or live provider call was needed for these harness failures. Focused
-coverage includes 33 coordinator tests and 18 operation/storage tests. The local
-candidate has no native/device or hosted acceptance.
+coverage includes 33 coordinator tests and 18 operation/storage tests. The application candidate has no native/device acceptance. Brian approved one
+publication and initial CI against preparation head `e834548`; [draft PR #12](https://github.com/TableUs-AI-Agent/Tableus-ai-agent-dev/pull/12)
+is now open with [passing hosted CI](https://github.com/TableUs-AI-Agent/Tableus-ai-agent-dev/actions/runs/37873107070):
+364 JavaScript tests, 242 Python tests with zero skips and 13 browser journeys,
+plus restricted migrations, lint/types, deterministic evaluation, contracts,
+web/Expo-web exports and smoke. The tested synthetic merge `6bfdf2e` has exactly
+the published `e834548` file tree; base remains `bffa284`. Final GitHub readback
+reports no deployment record for the candidate; no merge or release is authorized.
 
 ## Priority 3 context and ownership
 
@@ -48,7 +54,7 @@ before integrating this local branch; this branch's packet governs local work.
 | --- | --- |
 | Integrated source baseline | Priority 1 merge `8ae3c94`, Priority 2 merge `462a7dd`, and Priority 3 merge `2eefdc5` (approved app candidate `e5e7d1`) |
 | Refreshed `origin/main` | `bffa2845f268ea8b1906b8de155aa130f199856e`, merged web signup recovery PR #11 (locally verified; no remote refresh in this pass) |
-| Integration status | Priorities 1 and 2 complete. Priority 3 merge tree matches passing CI head `d2ccc7e`; web recovery PR #11 is merged/deployed as `bffa284`. The mobile recovery above is local only. Initial rollout is complete; synthetic acceptance remains open. The separate native diagnostic branch remains excluded. |
+| Integration status | Priorities 1 and 2 complete. Priority 3 merge tree matches passing CI head `d2ccc7e`; web recovery PR #11 is merged/deployed as `bffa284`. The mobile recovery above is published as draft PR #12 and remains unmerged/undeployed. Initial rollout is complete; synthetic acceptance remains open. The separate native diagnostic branch remains excluded. |
 | Root checkout | Stale at `codex/privacy-safe-observability` (`8e9625e`). Use the baseline, not the root checkout. |
 
 Priority 1 local readiness at its earlier application source passed 214
@@ -81,15 +87,16 @@ excludes `codex/pilot-realignment`, `codex/pilot-experience-measurement`,
 review before pushing. Railway has no deployment triggers and PR
 environments are disabled in the recorded P3 inventory. No hosted trigger
 inspection occurred in this local pass. The mobile branch guard is prepared
-locally; publication is still pending owner approval of the
-[integration proposal](mobile-signup-recovery-integration.md).
+in the approved published head. The [integration proposal](mobile-signup-recovery-integration.md)
+records publication/initial CI approval and the exact draft PR; merge and release
+remain separate gates.
 
 ## Deployed staging
 
 | Component | Source | Notes |
 | --- | --- | --- |
 | API (Railway `tableus-staging`) | `2eefdc5` | Original approved image; runtime/configuration/restart counts remain owned by the P3 chat. |
-| Web aliases `tableus-staging.vercel.app`, `links.table-us.com` | `bffa284` | Approved web recovery deployed by P3; mobile changes here are local only. |
+| Web aliases `tableus-staging.vercel.app`, `links.table-us.com` | `bffa284` | Approved web recovery deployed by P3; mobile changes here are published for CI but undeployed. |
 | Private deletion worker | `2eefdc5` | Original approved source; A/C/D completion reported by P3. Runtime and remaining batches belong to that chat. |
 | Accepted native artifacts | `f94a1d9` | Earlier isolated-staging acceptance with owner-accepted simulator AppHang risk; not pilot acceptance of current source. |
 | Production-facing `table-us.com` | `e1184ec` | Not a pilot target; unchanged. |

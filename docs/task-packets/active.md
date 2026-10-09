@@ -30,9 +30,11 @@ final source, results, residual risks and deferred physical-device acceptance.
 
 ## Boundaries and next gate
 
-Only local implementation and deterministic verification are authorized. No
-native builds, hosted operations, live providers, migrations, resource/secret
-changes, invitations, cleanup, merge, push or PR publication. Do not access the
+The original implementation scope authorized local work only. Brian separately
+approved one push of `e8345489e7f560f89b408ffabf0464596de63efe`, one draft PR and
+the initial existing deterministic CI. No native builds, live providers, staging
+migrations, resource/secret changes, invitations, cleanup, merge or deployment
+are authorized; CI uses its own disposable PostgreSQL migrations. Do not access the
 rehearsal ledger or operate its tabs/accounts/services. Do not resume canceled
 security or simulator campaigns. Use isolated test ports/resources.
 
@@ -56,8 +58,8 @@ readiness. Private local logs are `/private/tmp/tableus-mobile-recovery-*.log`.
 Dependencies were copied into this worktree from the matching-lock P3 checkout
 read-only after offline npm cache installation failed; no dependency files changed.
 
-Physical-device behavior and hosted PostgreSQL/CI remain unverified for these
-bytes. Priority 4 signed builds and the bounded device lost-response check are
+Physical-device behavior remains unverified for these bytes. The initial hosted
+PostgreSQL/browser CI below now verifies the published candidate. Priority 4 signed builds and the bounded device lost-response check are
 intentionally deferred; the canceled campaigns stay closed.
 
 ## Reconciliation and publication preparation
@@ -78,7 +80,25 @@ scoped documentation and drafts the PR body in the proposal. JSON/guard, local
 links, source boundaries and diff consistency checks pass; no new app tests or
 native builds are required by this preparation.
 
-Next: obtain approval for one branch push, one draft PR and the existing
-non-deploying deterministic CI. Publishing is not yet authorized. Merge,
-deployment, signed builds/device acceptance and any P3 continuation remain
-separate owner gates; refresh P3 reconciliation again before merge.
+## Approved publication status
+
+Brian approved the proposal against `e834548`. Preflight verified remote `main`
+unchanged at `bffa284`, no existing remote mobile branch and non-deploying
+repository/workflow configuration. One push completed; [draft PR #12](https://github.com/TableUs-AI-Agent/Tableus-ai-agent-dev/pull/12)
+is attached, with exact head `e8345489e7f560f89b408ffabf0464596de63efe`.
+[Initial CI](https://github.com/TableUs-AI-Agent/Tableus-ai-agent-dev/actions/runs/37873107070)
+passed: 364 JavaScript tests, 242 Python tests with zero skips and 13 browser
+journeys, plus migrations, lint/types, deterministic evaluation, contracts,
+web/Expo-web exports and smoke. The tested synthetic merge `6bfdf2e647e20c73789f5dea74d24ae71f3cd082`
+has exactly the published candidate tree `406a621777b394054f28fc6584fc6b11ea8fd360`.
+Final readback confirms the same draft PR head/base and no GitHub deployment
+record for this SHA.
+No P3 state or approved runtime allowance was changed. The proposal records the
+connector-to-CLI fallback and the exact publication binding.
+
+Next: review draft PR #12 and refresh P3 reconciliation before requesting merge
+approval. Merge, deployment,
+signed builds/device acceptance and any P3 continuation remain separate owner
+gates; refresh P3 reconciliation again before merge. Further published source or
+CI attempts require their scope confirmed; local status documentation stays
+unpublished and preserves the existing candidate.
