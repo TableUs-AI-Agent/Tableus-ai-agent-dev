@@ -58,12 +58,19 @@ reservation: **80/420 attempts**, provider reservations **$1.6575715**. B's one
 returning code remains unused. Last hosting upper bound was $3.954492252683148.
 Support messages remain 13/17 with four deferred. Web and production are unchanged.
 
-Next: establish that the original B tab is visibly accessible before proposing any
-further start. During any separately approved resume, obtain owner confirmation
-that the Account screen is loaded before starting an irreversible-click handoff.
-Do not reuse the consumed window, extend its deadline or treat this loading report
-as approval for another start. First verify the unobserved plan outcome through a
-bounded read in any revised proposal. No new proposal or retry is currently approved.
+Stopped preparation at 00:19:20Z confirms B's account and sole plan still exist;
+A/C/D remain completed. Operator reads are now **46/50**. The selected original B
+tab renders its public “Request account deletion” page while the API is stopped.
+The owner confirmed “Yes, I see it”; the selected-tab visibility check passed.
+
+Next: review the prepared
+[visible-tab resume](../p3-b-visible-resume.md). It is **unapproved** and proposes one new 20-minute
+window, one API start (13 to 14), five cumulative minutes (255 to 260) and two
+operator reads (50 to 52), with unchanged financial/other attempt caps. The new
+sequence requires owner confirmation of the live Account screen before starting
+the removal timer and immediately yields each user action. Matching helper/cutoff
+checks and a ledger lock are prepared; 23 helper tests and 13 cutoff tests pass.
+No new start or window occurred during this stopped preparation.
 
 Seventeen B-only helper guard tests and 12 repaired cutoff tests pass. No application
 source changed; the previously passing 242 Python / 334 JavaScript / 13 browser
@@ -83,7 +90,7 @@ support correspondence, hosted replay/contention and server refusal remain open.
 | OTP requests / delivery reservations | 11 / 10 | 12 / 11; only B returning remains |
 | Verification submissions / refresh-revoke | 10 / 10 | 20 / 12 |
 | Support/test messages | 13 reserved | 17; four remaining messages deferred |
-| Operator status reads | 45 | 50 |
+| Operator status reads | 46 | 50 |
 | Auth DELETE attempts | 3 | 12 |
 | Places HTTP attempts | 80 (74 prior + 6 conservative repair reservation) | 420 |
 | Logical AI / underlying reservations | 1 / 3 | 3 / 9 |
@@ -91,7 +98,7 @@ support correspondence, hosted replay/contention and server refusal remain open.
 
 Keep $5 hosting and $20 combined caps. Last workspace usage delta is a conservative
 $3.954492252683148 above the original baseline, not exact campaign billing; recheck
-headroom before a live start. Account-deletion status reads are 14, included in
+headroom before a live start. Account-deletion status reads are 15, included in
 operator accounting; worker status reads are 2. Private ledger is authoritative
 for immutable receipts and identity bindings. The latest email diagnostic used
 one read to verify the exact privacy-route delivery log. Never print tokens, codes, exact
@@ -120,5 +127,5 @@ invitations, new AI evaluation, secret changes or resource creation.
 Preserve B's original immutable Preview tab and its temporary CORS origin. All
 services remain stopped. Both prior resume approvals are exhausted, including the
 [B-only closeout](../p3-b-account-closeout.md). No further start or automatic rearm
-is authorized. Resolve the visible-tab handoff before preparing another bounded
-proposal. Preserve private cutoff/queue evidence and all cumulative counters.
+is authorized. The owner confirmed the static page is visible. Review and approve the prepared
+[visible-tab resume](../p3-b-visible-resume.md). Preserve private cutoff/queue evidence and all cumulative counters.

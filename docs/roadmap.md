@@ -123,10 +123,14 @@ cutoff, and both services stopped at 00:12:05Z October 9. The owner then reporte
 loading trouble; the original and duplicate B tabs both needed the stopped API.
 
 Closed usage is 239m36.449390s/255m, leaving 923.550610 seconds; all 13 starts are
-used. B's returning code remains unused. Fix the visible-tab handoff before any
-new proposal, verify the unobserved plan outcome, and require a separately approved
-start/window. Sole-plan cleanup, returning sign-in, account/Auth removal and final
-temporary-origin cleanup remain incomplete. No new retry is authorized.
+used. B's returning code remains unused. A stopped read at 00:19:20Z confirms B's
+account/sole plan intact and A/C/D still complete. The original selected tab renders
+static help; the owner confirmed that he sees it. The prepared
+[visible-tab resume](p3-b-visible-resume.md) requests one start, a 20-minute window,
++5 cumulative minutes and +2 operator reads, retaining financial/other attempt caps.
+It remains unapproved. The removal timer requires owner confirmation of the live
+Account screen, and the agent immediately yields user-action handoffs. Sole-plan
+cleanup, returning sign-in, account/Auth removal and final CORS cleanup remain.
 
 D's fresh support challenge and owner reply remain separate: ImprovMX confirms
 Gmail SMTP acceptance, while the owner found no visible reply, including Spam.

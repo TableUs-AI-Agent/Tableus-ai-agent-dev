@@ -1075,3 +1075,21 @@ Serialize entire private helper operations that read/write the shared ledger,
 including their background provider wait. Restore the one read reservation
 lost to a stale preflight save from its exact query receipt; no duplicate query
 or budget reset accompanies accounting reconciliation.
+
+
+### Prepare a visible-tab confirmation before another B attempt — 2026-10-08
+
+A fresh stopped read confirms B's sole plan remains and A/C/D removal is complete.
+Use the actual selected original B tab, render public help on its existing origin,
+and require the owner to confirm visibility while stopped. The owner explicitly
+confirmed “Yes, I see it.” A screenshot or queued
+open request alone is insufficient evidence that the owner can use the tab.
+
+Prepare a separate 20-minute resume: proposed API ceiling 14, cumulative ceiling
+260 minutes and operator-read ceiling 52; all monetary/other caps unchanged.
+Require owner confirmation of the live B Account screen before the plan timer,
+then immediately yield each action instead of spending its interval inside the
+agent turn. Enforce visibility headroom with the same immutable overall deadline.
+The helper and cutoff must accept the same window in an integrated offline test,
+and a file lock must reject overlapping ledger writes. Preparation and the loading
+report do not approve another start or modify current limits.
