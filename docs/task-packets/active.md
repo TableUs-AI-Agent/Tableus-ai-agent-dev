@@ -60,7 +60,25 @@ Physical-device behavior and hosted PostgreSQL/CI remain unverified for these
 bytes. Priority 4 signed builds and the bounded device lost-response check are
 intentionally deferred; the canceled campaigns stay closed.
 
-Next: review the local commit, then reconcile the evolving P3 documentation.
-Later integration requires reconciliation with P3 and explicit owner approval
-for publishing/merge/deployment; signed builds and device acceptance remain a
-separate Priority 4 gate.
+## Reconciliation and publication preparation
+
+Brian requested the next step after implementation. Read-only reconciliation
+against P3 HEAD `00dbf4141c92e82c9c5d3cb5f00edfb2cfa931ba` and its latest completed
+chat turn is recorded in the [integration proposal](../mobile-signup-recovery-integration.md).
+P3 is clean and its changes since `bffa284` are documentation/evidence only.
+The newer chat reports B sole-plan removal/sign-out/returning-code request;
+its committed documents have not yet recorded those actions. No returning
+verification, deletion, current runtime or overall P3 acceptance is inferred.
+The P3 checkout, private ledger and external services were not modified.
+
+Application source remains `99a4f8fbebee91e8c127031427f30ac7f37623cd`; all original
+application checks are reused with unchanged inputs. Local preparation adds the
+exact mobile branch to `vercel.json` with Git deployment disabled, updates only
+scoped documentation and drafts the PR body in the proposal. JSON/guard, local
+links, source boundaries and diff consistency checks pass; no new app tests or
+native builds are required by this preparation.
+
+Next: obtain approval for one branch push, one draft PR and the existing
+non-deploying deterministic CI. Publishing is not yet authorized. Merge,
+deployment, signed builds/device acceptance and any P3 continuation remain
+separate owner gates; refresh P3 reconciliation again before merge.

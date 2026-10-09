@@ -31,10 +31,15 @@ The **Prepare Priority 3 staging readiness** chat and its
 `codex/pilot-staging-readiness` checkout own current live state, private evidence,
 budgets and acceptance. Read-only context at operator HEAD
 `00dbf4141c92e82c9c5d3cb5f00edfb2cfa931ba` reports A/C/D Auth/profile removal
-complete, the approved visible-tab B-only rehearsal in progress, support receipt
-unverified and hosted replay/contention/server-refusal cases untested. These are
-operator observations, not mobile candidate evidence. No P3 acceptance or
-Priority 4 authorization is implied. Reconcile evolving operator documents
+complete and the approved visible-tab B-only resume preflight, support receipt
+unverified and hosted replay/contention/server-refusal cases untested. The later
+completed turn in that same chat records owner-confirmed B sole-plan removal,
+normal local sign-out and one returning-code request. Returning verification,
+B account/Auth deletion, final CORS cleanup and current containment are not
+confirmed by that turn. The committed P3 documents still show pre-resume state;
+keep these later chat observations distinct rather than infer a completed
+closeout or reset counters. These are operator observations, not mobile evidence.
+No P3 acceptance or Priority 4 authorization is implied. Reconcile evolving operator documents
 before integrating this local branch; this branch's packet governs local work.
 
 ## Source baseline
@@ -69,12 +74,15 @@ checks also passed. No application repair was needed in hosted CI; the
 [handoff](evidence/f621cf5/implementation.md) preserves local dev-cache timeout
 observations and source binding. Documentation closeout does not change app inputs.
 
-Vercel project Git auto-deployment is enabled, but repository configuration now
+Recorded P3 inventory has Vercel project Git auto-deployment enabled. Local repository configuration now
 excludes `codex/pilot-realignment`, `codex/pilot-experience-measurement`,
-`codex/pilot-staging-readiness` and `main`
+`codex/pilot-staging-readiness`, `codex/mobile-signup-recovery` and `main`
 ([Vercel Git configuration](https://vercel.com/docs/project-configuration/git-configuration)). Other branches still need trigger
-review before pushing. Railway currently has no deployment triggers and PR
-environments are disabled. The approved manual rollout below consumed the API/web allowances without an automatic deployment.
+review before pushing. Railway has no deployment triggers and PR
+environments are disabled in the recorded P3 inventory. No hosted trigger
+inspection occurred in this local pass. The mobile branch guard is prepared
+locally; publication is still pending owner approval of the
+[integration proposal](mobile-signup-recovery-integration.md).
 
 ## Deployed staging
 

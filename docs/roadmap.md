@@ -97,8 +97,10 @@ Natural-expiry invitation rejection passed (404, no OTP).
 Web signup recovery PR #11 is merged/deployed as `bffa284`; its hosted CI passed
 242 Python, 334 JavaScript and 13 browser checks with zero skips. Read-only P3
 context on October 8 at operator HEAD `00dbf414` reports A/C/D deletion complete
-and the approved B-only visible-tab rehearsal in progress. Support receipt,
-hosted replay/contention and server refusal remain unresolved; current runtime,
+and the approved B-only visible-tab resume. A later completed chat turn records
+B sole-plan removal, local sign-out and its returning-code request; returning
+verification/deletion and current containment remain unconfirmed here. Support
+receipt, hosted replay/contention and server refusal remain unresolved; current runtime,
 allowances and closeout belong to that chat's active packet/private ledger.
 
 A separately authorized local mobile recovery objective runs on
@@ -106,9 +108,11 @@ A separately authorized local mobile recovery objective runs on
 and repairs expired-grant/lost-response signup recovery using membership
 reconciliation, server-verified identity and explicit invitation re-entry without
 persisting invite/OTP material. This is preparatory development alongside P3.
-Its [local packet](task-packets/active.md) owns implementation/checks; reconcile
-P3's evolving documents before integration. Publishing, merge, deployment and
-Priority 4 signed-build/physical-device acceptance remain separate owner gates.
+Its [local packet](task-packets/active.md) owns implementation/checks. The
+[integration proposal](mobile-signup-recovery-integration.md) reconciles the latest
+read-only P3 documents/chat while preserving their ownership and pending gates;
+refresh that reconciliation again before any later merge. Publishing, merge,
+deployment and Priority 4 signed-build/physical-device acceptance remain separate owner gates.
 
 Effort is a rough planning range in focused engineering days, excluding approval,
 hosted CI, device/signing and external-access waits; these are not delivery promises.
