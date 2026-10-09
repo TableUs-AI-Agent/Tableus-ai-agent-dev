@@ -107,35 +107,27 @@ signup without replaying the OTP. PR #11 merged as `bffa284`; hosted CI passed
 third Preview is deployed to the two staging aliases. Production is unchanged.
 The owner approved restart ceiling 12 and live ceiling 240m, with unchanged
 financial/message limits. Restart 9/12 passed on the original API image.
-The owner-approved closeout at `f518c1b` used restart 10/12, then the automatic
-cutoff verified both services stopped at 23:52:18Z October 1. Cumulative usage is
-223m10.548827s/240m; 1009.451173 seconds remain including the final 900-second
-reserve. The owner confirmed D deletion was not clicked, and no worker batch ran. The Account
-page needs the stopped API. A prepared [final account resume](p3-final-account-resume.md)
-proposes two 15-minute windows, +15 cumulative minutes and +5 status reads, with
-unchanged monetary/restart caps. The owner approved it October 8 at `e978571`. Restart 11 passed readiness/CORS;
-D recovered without an OTP and its final confirmation is ready. New first window
-ends 00:01:19Z October 9, with owner handoff ending earlier at 23:52:27Z October 8.
-No worker batch has run yet.
+The owner-approved closeout at `f518c1b` used restart 10/12 and stopped before D's
+final click. The October 8 [final account resume](p3-final-account-resume.md), approved
+at `e978571`, used starts 11/12. D's owner-confirmed deletion and the stopped-API
+worker batch completed A/C/D: exact Auth/profile removal and completed tombstones
+were verified at 23:52:13Z. B recovered to its existing account and sole plan, but
+operator preparation left insufficient guarded time for plan cleanup. The attempt
+stopped without a B mutation, sign-out, location lookup or OTP request.
 
-C recovered successfully with its original Auth session, one profile/redemption
-and no new OTP. The owner removed its sole plan and confirmed deletion; trusted
-readback verifies its profile/plan absent and exact Auth-deletion job pending, with
-zero attempts. A also remains pending. C signed out; D completed signup with one
-profile/redemption and no plans. Its trusted account binding is preserved privately,
-with the fresh support challenge sent and owner-reported reply sent; receipt
-through privacy remains unseen even after Spam inspection. The exact ImprovMX log
-confirms Gmail SMTP acceptance at 22:24:27Z; user-visible receipt remains unverified.
-D recovered normally without a new OTP; its final account-deletion handoff expired
-without observed completion. B's original session is preserved. The approved
-[account-flow closeout](p3-post-mail-closeout.md) keeps all ceilings unchanged and
-defers four support messages.
-D deletion/support, worker removal, B
-cleanup and final returning/deletion checks remain incomplete. Hosted redemption
+Both services are stopped/unscheduled, with future admission and inline attempts
+disabled. Closed usage is 233m30.851991s/255m, leaving 1289.148009 seconds; starts
+are exhausted at 12/12. The prepared [B-only closeout](p3-b-account-closeout.md)
+requests one additional same-image start and one 20-minute window inside existing
+time/spend caps. It remains unapproved. B metadata/sole-plan cleanup, returning
+sign-in, account/Auth removal and final temporary-origin cleanup remain incomplete.
+
+D's fresh support challenge and owner reply remain separate: ImprovMX confirms
+Gmail SMTP acceptance, while the owner found no visible reply, including Spam.
+Support receipt remains unverified and four messages deferred. Hosted redemption
 replay/contention and server-side deletion refusal remain untested. The three
-external mail-route probes passed; support-case acceptance remains separate. The active packet owns
-current counters and next actions. No P3 acceptance, Priority 4/native work or
-real-pilot intake is implied.
+external mail-route probes passed. The active packet owns current counters and
+next actions; no P3 acceptance, Priority 4/native work or real-pilot intake is implied.
 
 Effort is a rough planning range in focused engineering days, excluding approval,
 hosted CI, device/signing and external-access waits; these are not delivery promises.

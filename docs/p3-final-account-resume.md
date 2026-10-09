@@ -2,9 +2,11 @@
 
 Prepared October 2, 2026 from `9918d6dbe3942db5d91e97f6ad9c1c6093deca4e`.
 **Owner approved on October 8 at `e9785712a19c9f90a960b45bf7464309ca8bfc38`.**
-Restart 11 is ready under a fresh first window; D existing-session recovery passed
-and its final deletion confirmation is handed to the owner. The active packet
-and private cutoff receipt hold the current bounded runtime state.
+Both approved windows are now closed. A/C/D completed with exact Auth-removal
+proofs. B recovered, but its phase stopped for insufficient guarded time before
+cleanup or OTP. All 12 API starts are consumed. Current state and counters are in
+the active packet; [the B-only follow-up](p3-b-account-closeout.md) is unapproved.
+The scope below records the exhausted approval and must not be re-executed.
 This proposal supersedes the uncompleted steps of the approved
 [post-mail closeout](p3-post-mail-closeout.md), preserving all consumed usage.
 

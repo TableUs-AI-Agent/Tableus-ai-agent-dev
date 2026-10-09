@@ -1036,3 +1036,20 @@ time and 50 operator reads; starts 11/12 for D/B; stop API before each worker.
 All other limits and deferred release checks remain. Preflight and D session
 recovery passed, with no new OTP. The final deletion click remains owner-controlled
 and bounded by the earlier handoff deadline; approval does not extend that deadline.
+
+
+### Complete A/C/D and stop B when guarded time is insufficient — 2026-10-08
+
+The owner completed D's final click. Stop API, disable future admission and verify
+the exact A/C/D queue before the existing worker processes it once. Exact readback
+now proves all three Auth/profile removals and cleared completed tombstones. Repair
+the local Railway log parser for promoted JSON attributes and reuse the captured
+log; do not spend another provider read or repeat successful deletion.
+
+B recovered on start 12, but preparation exceeded the headroom for the plan-owner
+handoff. Enforce the existing stop condition, preserve B and its unused code, and
+close at verified containment time. Do not extend the deadline, weaken the guards
+or infer another restart from unused cumulative time. Prepare one separate B-only
+20-minute window with a proposed restart ceiling of 13, retaining the 255-minute
+and all monetary/other attempt caps. This proposal is not approved. Preserve the
+prior execution, counters and A/C/D proofs; support and broader P3 gaps stay open.
