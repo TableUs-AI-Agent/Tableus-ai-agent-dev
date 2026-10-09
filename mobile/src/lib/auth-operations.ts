@@ -1,4 +1,4 @@
-import { ApiError } from "@tableus/api-client";
+import { ApiError, withAuthTimeout } from "@tableus/api-client";
 
 import { createPendingTransaction, normalizeEmail, type AuthMode, type PendingAuthTransaction } from "./auth-transaction.ts";
 
@@ -30,7 +30,7 @@ export async function startAuthTransaction(
 export type ApprovalResult =
   | { kind: "approved"; profile: Profile }
   | { kind: "unapproved" }
-  | { kind: "invalid_invite" }
+  | { kind: "invite_required" }
   | { kind: "retryable"; error: unknown };
 
 export async function resolveApproval(
@@ -47,7 +47,39 @@ export async function resolveApproval(
     return { kind: "approved", profile };
   } catch (error) {
     if (error instanceof ApiError && error.status === 403) return { kind: "unapproved" };
-    if (error instanceof ApiError && (error.status === 400 || error.status === 409)) return { kind: "invalid_invite" };
+    if (transaction?.mode === "join" && error instanceof ApiError && (error.status === 400 || error.status === 409)) {
+      // The server may have committed signup before a response was lost. Its
+      // grant decoder runs before that idempotent check, so reconcile /me first.
+      try {
+        return { kind: "approved", profile: await dependencies.getProfile() };
+      } catch (profileError) {
+        if (profileError instanceof ApiError && profileError.status === 403) return { kind: "invite_required" };
+        return { kind: "retryable", error: profileError };
+      }
+    }
     return { kind: "retryable", error };
   }
+}
+
+export class AuthIdentityMismatchError extends Error {
+  constructor() {
+    super("This session does not match your verified email. Sign out before continuing with another account.");
+  }
+}
+
+// Validate with Auth, not cached session claims or user-editable metadata.
+export async function confirmJoinIdentity(
+  readUser: () => Promise<{ data: { user: { id: string; email?: string; email_confirmed_at?: string } | null }; error: Error | null }>,
+  subject: string,
+  transaction: PendingAuthTransaction | null,
+) {
+  const { data, error } = await withAuthTimeout(readUser);
+  if (error) throw error;
+  const user = data.user;
+  if (!user?.email_confirmed_at || !user.email || user.id !== subject
+    || (transaction && (normalizeEmail(user.email) !== transaction.email
+      || (transaction.subject && transaction.subject !== subject)))) {
+    throw new AuthIdentityMismatchError();
+  }
+  return { subject: user.id, email: normalizeEmail(user.email) };
 }

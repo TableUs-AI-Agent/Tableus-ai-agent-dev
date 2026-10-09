@@ -1,6 +1,6 @@
 # Roadmap
 
-Updated 2026-09-28. Brian confirmed the reconciled direction and targets below;
+Updated 2026-10-08 for local mobile recovery; P3 runtime remains operator-owned. Brian confirmed the reconciled direction and targets below;
 [decisions](decisions.md#pilot-realignment--adopted-2026-09-26) records the scope.
 
 ## Direction
@@ -94,28 +94,31 @@ to B after the UI organizer-deletion blocker was observed. Reopen reused the
 same candidates; no second recommendation run or server deletion refusal occurred.
 Natural-expiry invitation rejection passed (404, no OTP).
 
-All three ImprovMX routes passed by owner receipt. The `32ab7cd` first phase stopped
-automatically during A's code handoff; the later recovery approved at `fa282f2`
-used restart 8/11 and passed A returning application sign-in. A's deletion is
-verified pending. The cutoff stopped API/worker at 20:53:37Z. C's OTP succeeded
-after that stop, leaving Auth verified but no app profile/redemption. B's shared
-plan/session is preserved. C's short-lived validation has expired.
+Web signup recovery PR #11 is merged/deployed as `bffa284`; its hosted CI passed
+242 Python, 334 JavaScript and 13 browser checks with zero skips. Read-only P3
+context on October 8 at clean operator HEAD `a816c194` and its completed chat
+confirms all four synthetic account/Auth removals, completed deletion jobs,
+stopped services and temporary-origin removal. Account-flow closeout is complete;
+support receipt/correspondence, hosted replay/contention and server refusal remain
+unresolved. Overall P3 acceptance is open. Its exact operating records, counters
+and decisions remain unpublished in that chat's checkout; this branch summarizes
+status without importing that history or authorizing another live action.
 
-A local web recovery fix now reuses only the same server-verified identity and
-retries normal completion without replaying the OTP, including expired-grant and
-already-committed signup cases. Local readiness and fake-provider browser checks
-pass; hosted candidate CI/merge/deployment remain gates. The
-[complete recovery proposal](p3-session-recovery.md) requests one Preview, one
-extra same-image restart and 45 additional live minutes, preserving financial and
-message limits. The owner approved it against handoff `b08cee4`. Charged use stays
-178m7.415236s; the approved ceiling is now 240m, with first phase at most 45m and
-final phase at most 15m. Keep services stopped while CI/deployment prepare.
-
-C/D deletion/support, worker removal, B cleanup and final returning/deletion checks
-remain incomplete. Hosted redemption replay/contention and server-side deletion
-refusal remain untested. Mail receipt is complete; it is not support-case acceptance.
-The active packet owns current counters and next actions. No P3 acceptance,
-Priority 4/native work or real-pilot intake is implied.
+A separately authorized local mobile recovery objective runs on
+`codex/mobile-signup-recovery` from the accepted `bffa284` source. It reproduces
+and repairs expired-grant/lost-response signup recovery using membership
+reconciliation, server-verified identity and explicit invitation re-entry without
+persisting invite/OTP material. This is preparatory development alongside P3.
+Its [local packet](task-packets/active.md) owns implementation/checks. The
+[integration proposal](mobile-signup-recovery-integration.md) reconciles the latest
+read-only P3 documents/chat while preserving their ownership and pending gates;
+refresh that reconciliation again before any later merge. Brian approved
+publication and initial deterministic CI for preparation head `e834548`;
+[draft PR #12](https://github.com/TableUs-AI-Agent/Tableus-ai-agent-dev/pull/12) is
+open with passing CI: 242 Python and 364 JavaScript tests, zero skips, and 13
+browser journeys. Its tested synthetic merge tree matches the published head.
+Merge, deployment and Priority 4 signed-build/physical-device
+acceptance remain separate owner gates.
 
 Effort is a rough planning range in focused engineering days, excluding approval,
 hosted CI, device/signing and external-access waits; these are not delivery promises.
@@ -132,8 +135,9 @@ hosted CI, device/signing and external-access waits; these are not delivery prom
 | 4 | Accept signed iOS/Android pilot builds using the existing `readiness-ios` and `readiness-android` profiles on physical devices. Establish that all three supported clients work. | 1–3 days if device checks pass | Collect every pilot iPhone's device ID before the iOS build and verify inclusion in its ad hoc profile; keep the roster private. Have physical iPhone/Android installation access. Pass physical checks plus one bounded candidate-source `mobile-offline-e2e` run on a separately identified local test artifact. Preserve/dispose of prior findings explicitly. One accepted signed pilot build per platform is the target, not permission for retries or extra test builds. |
 | 5 | Run the pilot and decide the next product priority from observed outcomes. | Three-week observation window | Approved roster/cap, representative web/iOS/Android use, budget, support, measurement and stop rules. Report the targets, unknowns and organizer feedback; no automatic expansion. |
 
-The [active packet](task-packets/active.md) now covers Priority 3. Its
-[prepared execution scope](pilot-staging-preparation.md) records fresh staging
+This checkout's [active packet](task-packets/active.md) covers mobile recovery;
+P3's separate checkout retains its operating packet. The historical
+[prepared execution scope](pilot-staging-preparation.md) records staging
 inventory, measured quota/attempt sizing, worker configuration, synthetic fixtures
 and one combined gated request. Local preparation does not close staging acceptance. The [pilot checklist](release-readiness-checklist.md) owns
 acceptance details; the [runbook](release-runbook.md) supplies relevant procedures.

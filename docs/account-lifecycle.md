@@ -48,6 +48,20 @@ membership. After invitation redemption (or the returning-member approval check)
 reload user context for the verified subject before navigation/private-join
 continuation. Ignore stale responses from pre-redemption or prior-account reads.
 
+Mobile signup recovery retains the verified session after a transient completion
+failure. Redemption 400/409 triggers a subject-bound `/api/v1/me` read to recover
+an already committed signup. With no membership, check deletion status before
+offering explicit invitation re-entry. Confirm the verified email/subject with
+Auth and use `/api/v1/access/validate` then `/api/v1/access/redeem`; the backend
+still owns recipient binding, reservation/capacity, revocation and tombstones.
+No recovery path sends another OTP or persists invitation codes/OTPs. The stored
+transaction still expires after 20 minutes and now includes the verified subject
+when available. With an expired transaction and a restored verified session,
+re-enter invitation/display name after membership/deletion reconciliation.
+Identity mismatch refuses signup work; stale account results cannot approve or
+redeem for a switched subject. Explicit start-over reports failed local sign-out
+without claiming the session ended. Native/device acceptance remains separate.
+
 Web/mobile show organized plans, an explicit recipient confirmation for shared
 plan transfer, and exact DELETE confirmation for sole-plan/account deletion.
 Full deletion is disabled when the server omits or denies availability; export

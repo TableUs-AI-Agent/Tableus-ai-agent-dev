@@ -5,6 +5,7 @@
       "codex/pilot-realignment": false,
       "codex/pilot-experience-measurement": false,
       "codex/pilot-staging-readiness": false,
+      "codex/mobile-signup-recovery": false,
       "main": false
     }
   },

@@ -1,65 +1,59 @@
 # Current state
 
-## Web signup recovery prepared; staging stopped, October 1
+## Local mobile signup recovery, October 8
 
-C's email verification succeeded at 21:00:40Z, after automatic containment had
-stopped API/worker at 20:53:37.369456Z. C has one Auth account, no application
-profile and no invitation redemption. Its validation expired at 21:09:34Z.
-A's profile is removed and its exact Auth-deletion job remains pending, with zero
-processing attempts. B's preserved session owns the shared plan. Keep both C/B
-browser sessions and the private A job binding; do not resend C's consumed code.
+The isolated `codex/mobile-signup-recovery` branch starts at integrated
+`bffa2845f268ea8b1906b8de155aa130f199856e` (web recovery PR #11). Deterministic
+regressions reproduced mobile sign-out after an expired redemption grant,
+including a signup whose response was lost after committing. The local repair
+reconciles `/api/v1/me` after redemption 400/409; absent membership opens explicit
+invitation re-entry with the server-verified email and subject, after deletion
+status is checked. It never sends another OTP as part of recovery.
 
-The local web fix preserves signup progress after successful OTP verification:
-confirm the same email/subject with Supabase `getUser`, retry normal API completion,
-and refresh an expired validation only after checking whether signup already
-committed. The UI offers **Retry and continue**, hides the consumed code field,
-and provides explicit local sign-out/start-over. No token extraction, manual
-profile insertion or invitation bypass is used. The existing backend still owns
-recipient binding, capacity, revocation and tombstone checks.
+The 20-minute stored transaction TTL is unchanged; invitation codes and OTPs
+remain unpersisted. A successfully verified join stores its subject within that
+same expiry. After transaction expiry, a restored verified Auth session can check
+membership/deletion and re-enter an invite/display name using the normal API.
+Identity mismatch blocks signup work; switching accounts fences late results.
+Local readiness is complete: 364 JavaScript tests, 206 Python tests with 36
+PostgreSQL-only skips, lint/types, generated contracts and drift check, web and
+Expo-web exports, deterministic smoke and report-only performance. The one
+`make ready` completed in stages: a sandbox loopback denial required test access;
+four Python configuration assertions initially conflicted with forced split-mode
+environment variables and passed after those overrides were removed. No source
+repair or live provider call was needed for these harness failures. Focused
+coverage includes 33 coordinator tests and 18 operation/storage tests. The application candidate has no native/device acceptance. Brian approved one
+publication and initial CI against preparation head `e834548`; [draft PR #12](https://github.com/TableUs-AI-Agent/Tableus-ai-agent-dev/pull/12)
+is now open with [passing hosted CI](https://github.com/TableUs-AI-Agent/Tableus-ai-agent-dev/actions/runs/37873107070):
+364 JavaScript tests, 242 Python tests with zero skips and 13 browser journeys,
+plus restricted migrations, lint/types, deterministic evaluation, contracts,
+web/Expo-web exports and smoke. The tested synthetic merge `6bfdf2e` has exactly
+the published `e834548` file tree; base remains `bffa284`. Final GitHub readback
+reports no deployment record for the candidate; no merge or release is authorized.
 
-Local readiness passes: 334 JavaScript tests, 206 Python tests with 36 PostgreSQL-only
-skips, lint/types, contract generation, web/Expo-web builds and deterministic smoke.
-The in-app browser, using fake localhost Auth/API only, recovered from failed
-redemption plus expired validation, and again after reopening the page. Counters
-remained one OTP request and one verification throughout. Mismatched email refusal
-and explicit start-over also passed. Two CI browser regressions cover retry/reload. Application candidate
-`8861eece0e77574bcd693550d9b2628f362dccf3` is committed locally; the owner explicitly approved publishing to the named GitHub repository,
-CI, merge after checks, staging deployment and the bounded recovery. The branch
-push succeeded; CI is required before merge. Production/staging are unchanged.
+## Priority 3 context and ownership
 
-Charged live use is 10687.415236 seconds (178m7.415236s) out of 195 minutes.
-Only 1012.584764 seconds remain, including the final 900-second reserve. The other
-112.584764 seconds cannot form a usable recovery phase. No new first phase is
-currently authorized. The [complete recovery proposal](p3-session-recovery.md) requests one new
-web Preview, one extra same-image API restart and 45 additional cumulative live
-minutes, retaining all monetary and message limits. The owner approved this exact scope against handoff `b08cee4`; preserve all prior use.
-
-Next: finish candidate CI/review, merge and deploy the approved web fix, then arm
-the approved recovery. Keep API/worker stopped and unscheduled during preparation.
-
-## Verified rehearsal and mail results
-
-A/B completed one four-option recommendation and two voting/finalization rounds.
-B refreshed both results and took ownership after the organizer-deletion blocker
-was observed. Reopen reused the same candidates. Natural invitation expiry
-rejected signup without an OTP. A returning application sign-in subsequently
-passed, and its owner-confirmed deletion is now pending Auth removal. C/D cases,
-worker removal, support handling and final B cleanup remain incomplete.
-
-ImprovMX Free is Active with three exact aliases, no catch-all and verified
-MX/SPF/DKIM retention. The owner confirmed all three SUPPORT, PRIVACY and A-route
-test messages received. Public `brian@table-us.com` and `privacy@table-us.com`
-remain unchanged; personal destinations and synthetic identity bindings stay
-private. Mail recovery is complete; this does not prove the remaining support-case
-workflow. See [routing and case scope](p3-mail-routing-and-remaining-cases.md).
+The **Prepare Priority 3 staging readiness** chat and its
+`codex/pilot-staging-readiness` checkout own current live state, private evidence,
+budgets and acceptance. Read-only context at operator HEAD
+`a816c19417526e83d0caeb5430e94808c49c22df` and its completed chat turn confirm
+the four synthetic accounts' application/Auth removal, completed deletion jobs,
+stopped rehearsal services and removal of the temporary browser origin. This is
+account-flow closeout only: support receipt/correspondence, hosted redemption
+replay/contention and server-side deletion refusal remain open. These operator
+observations do not establish mobile/device acceptance or authorize Priority 4.
+The clean P3 checkout retains its unpublished operating records, exact counters
+and owner decisions; this branch carries only this scoped status summary.
+Reconcile evolving operator documents before integration; this branch's packet
+governs mobile work and does not replace P3's packet or replenish allowances.
 
 ## Source baseline
 
 | Item | Value |
 | --- | --- |
 | Integrated source baseline | Priority 1 merge `8ae3c94`, Priority 2 merge `462a7dd`, and Priority 3 merge `2eefdc5` (approved app candidate `e5e7d1`) |
-| Refreshed `origin/main` | `9593fba0202e830746523f29cee16532539e80a2`, approved membership-context fix in PR #10 |
-| Integration status | Priorities 1 and 2 complete. Priority 3 merge tree matches passing CI head `d2ccc7e`; the later web fix is deployed as `9593fba`. The new signup-recovery fix above is local only. Initial rollout is complete; synthetic acceptance remains open. The separate native diagnostic branch remains excluded. |
+| PR base `main` | `bffa2845f268ea8b1906b8de155aa130f199856e`, merged web signup recovery PR #11; GitHub readback unchanged during mobile review |
+| Integration status | Priorities 1 and 2 complete. Priority 3 merge tree matches passing CI head `d2ccc7e`; web recovery PR #11 is merged/deployed as `bffa284`. The mobile recovery above is published as draft PR #12 and remains unmerged/undeployed. Initial rollout is complete; synthetic acceptance remains open. The separate native diagnostic branch remains excluded. |
 | Root checkout | Stale at `codex/privacy-safe-observability` (`8e9625e`). Use the baseline, not the root checkout. |
 
 Priority 1 local readiness at its earlier application source passed 214
@@ -85,27 +79,31 @@ checks also passed. No application repair was needed in hosted CI; the
 [handoff](evidence/f621cf5/implementation.md) preserves local dev-cache timeout
 observations and source binding. Documentation closeout does not change app inputs.
 
-Vercel project Git auto-deployment is enabled, but repository configuration now
+Recorded P3 inventory has Vercel project Git auto-deployment enabled. Local repository configuration now
 excludes `codex/pilot-realignment`, `codex/pilot-experience-measurement`,
-`codex/pilot-staging-readiness` and `main`
+`codex/pilot-staging-readiness`, `codex/mobile-signup-recovery` and `main`
 ([Vercel Git configuration](https://vercel.com/docs/project-configuration/git-configuration)). Other branches still need trigger
-review before pushing. Railway currently has no deployment triggers and PR
-environments are disabled. The approved manual rollout below consumed the API/web allowances without an automatic deployment.
+review before pushing. Railway has no deployment triggers and PR
+environments are disabled in the recorded P3 inventory. No hosted trigger
+inspection occurred in this local pass. The mobile branch guard is prepared
+in the approved published head. The [integration proposal](mobile-signup-recovery-integration.md)
+records publication/initial CI approval and the exact draft PR; merge and release
+remain separate gates.
 
 ## Deployed staging
 
 | Component | Source | Notes |
 | --- | --- | --- |
-| API (Railway `tableus-staging`) | `2eefdc5` | Same-image restart 8/11, deployment `5f5dad51-01a6-4690-bd0f-294aebb5f247`, stopped/unscheduled at 20:53:37Z. Future admission and inline attempts off. |
-| Web aliases `tableus-staging.vercel.app`, `links.table-us.com` | `9593fba` | READY Preview `dpl_99cFtsd56wHCam5dN1EwW5XmTred`; new local recovery is not deployed. |
-| Private deletion worker | `2eefdc5` | Deployment `18a8f3f8-886e-4dac-ba7e-9804bb584f75` stopped/unscheduled. One empty processing invocation consumed; A's pending job has no Auth DELETE attempts. |
+| API (Railway `tableus-staging`) | `2eefdc5` | Original approved image; P3 reports stopped with deletion admission/inline attempts off. Exact runtime counters remain owned by that chat. |
+| Web aliases `tableus-staging.vercel.app`, `links.table-us.com` | `bffa284` | Approved web recovery deployed by P3; mobile changes here are published for CI but undeployed. |
+| Private deletion worker | `2eefdc5` | Original approved source; P3 reports stopped/unscheduled with all four synthetic account removals complete. |
 | Accepted native artifacts | `f94a1d9` | Earlier isolated-staging acceptance with owner-accepted simulator AppHang risk; not pilot acceptance of current source. |
 | Production-facing `table-us.com` | `e1184ec` | Not a pilot target; unchanged. |
 
 Hosted Alembic head remains `9a1f2e7c4b80`; all four migrations passed with separate
 migration credentials, restricted grants, private app schema and invoker Auth hook.
-No schema change is part of the recovery fix. Counters and exact remaining bounds
-are in the [active packet](task-packets/active.md). Preserve legacy records,
+No schema change is part of the mobile recovery. Live counters and exact remaining
+bounds are in the P3 checkout’s active packet/private ledger. Preserve legacy records,
 tombstones, invite-use history and all private evidence.
 
 ## Product
@@ -136,7 +134,7 @@ unknown history/deletion coverage. This does not add a quorum or change ranking.
 
 | Capability | Default after deployment | Contract |
 | --- | --- | --- |
-| Full account deletion with recoverable Auth removal | Off today/default (`TABLEUS_ACCOUNT_DELETION_ENABLED=false`); pilot requires approved activation and rehearsal in Priority 3 | [account lifecycle](account-lifecycle.md), [operations](account-lifecycle-operations.md) |
+| Full account deletion with recoverable Auth removal | API stopped; stored admission/inline attempts off after P3 account-flow closeout | [account lifecycle](account-lifecycle.md), [operations](account-lifecycle-operations.md) |
 | Plan transfer, sole-plan removal and legacy application-only deletion | Available subject to authorization/blockers; not disabled by the full-deletion flag | [account lifecycle](account-lifecycle.md) |
 | Shared-content removal and organizer repair on deletion | Applies to legacy and full deletion; not gated by the full-deletion flag | [design](deletion-content-design.md) |
 | Durable per-account quotas and operator-only usage reports | Staging configured to 3 AI/40 Places per day and 20 lifetime plans; code defaults remain 5/20/20. | [cohort controls](cohort-controls.md) |
@@ -159,12 +157,10 @@ unknown history/deletion coverage. This does not add a quorum or change ranking.
   owner-reviewed roster. Whole-plan deletion still removes events, and historical
   finalizations may have no voter count. Report unknown outcomes and these accepted
   coverage gaps; the retained-plan rate is not complete cohort conversion.
-- Full deletion is deployed but admission remains off. The worker passed empty
-  startup; actual Auth removal and the bounded manual drain still need acceptance.
-  Priority 3 has prepared queue-only API admission, a separate five-minute Railway
-  worker and four-account rehearsal; external execution must prove the normal
-  self-service path, organizer-blocker resolution,
-  recovery and truthful retention/copy before invitations. Brian accepts that a
+- Full deletion and worker removal for all four synthetic accounts are reported
+  complete by P3, including returning access and organizer-blocker resolution.
+  Support receipt/correspondence, hosted replay/contention and server refusal
+  remain unverified; overall P3 acceptance is open before invitations. Brian accepts that a
   known pilot participant who loses sign-in email access may be unable to delete
   until secure recovery/assisted verification exists. A support contact/escalation
   route remains required; the [support procedure](deletion-support-procedure.md)

@@ -84,3 +84,11 @@ test("sign-out cleanup removes pending state before session and cache data", asy
   });
   assert.deepEqual(calls, ["pending", "session", "cache"]);
 });
+
+test("subject-bound recovery state keeps its original expiry and strips invitation/OTP extras", async () => {
+  const pending = createPendingTransaction({ mode: "join", email: "person@example.com", displayName: "Person", redemptionToken: "grant", subject: "verified-subject" }, 1_000);
+  const restored = parsePendingTransaction(JSON.stringify({ ...pending, invite: "secret", otp: "12345678" }), 2_000);
+  assert.deepEqual(restored, pending);
+  assert.equal(parsePendingTransaction(JSON.stringify(pending), pending.expiresAt), null);
+  assert.equal(parsePendingTransaction(JSON.stringify({ ...pending, subject: 123 }), 2_000), null);
+});

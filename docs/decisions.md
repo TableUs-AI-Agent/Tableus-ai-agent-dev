@@ -122,8 +122,9 @@ or replenish closed native/live-provider allowances.
   resuming; do not replay an already-consumed OTP. On an expired redemption grant,
   reconcile membership before normal revalidation of the original bound invite.
   Other failures remain explicit; account mismatch requires local sign-out.
-  Server invitation, quota and deletion checks remain authoritative. This is a
-  local implementation decision, not deployment or allowance approval.
+  Server invitation, quota and deletion checks remain authoritative. The owner
+  separately approved PR #11 staging deployment and its bounded recovery
+  allowances; the behavior does not authorize unbounded retries or resends.
 - Trusted invite issuance designates one normalized recipient email and one use.
   Only its hash is retained. Hosted validation, signup hook and first redemption
   reject legacy unbound or multi-use codes; migration retains all existing rows
@@ -132,8 +133,23 @@ or replenish closed native/live-provider allowances.
   Same-account successful redemption retries remain idempotent; revocation stops
   new intake, not existing account access. See [operations](recipient-invites.md).
 - One mobile auth coordinator owns restoration and transitions. Persist only
-  expiring redemption state, never invite/OTP material. Credential lookup,
-  refresh and response-body work are bounded; failed restoration offers retry.
+  expiring redemption state, never invite/OTP material. The verified join subject
+  is bound within the original transaction expiry. On redemption 400/409, check
+  membership before requesting explicit invitation re-entry; deletion recovery
+  takes precedence. A restored verified session with expired transaction state
+  may re-enter an invite and display name through the same recipient-bound API
+  without another OTP. Auth lookup confirms email/subject before signup work;
+  account switching fences late results. Credential lookup, refresh and response
+  work are bounded; uncertainty preserves explicit retry. This local repair is
+  not publishing, release or Priority 4 authorization. Publication preparation
+  excludes the mobile branch from Vercel Git deployment; the
+  [integration proposal](mobile-signup-recovery-integration.md) preserves P3
+  document provenance. Brian approved one publication/initial CI for `e834548`
+  as draft PR #12; this does not approve merge, deployment or native builds.
+  Review against P3 closeout `a816c194` carries only an account-flow status
+  summary. Keep P3's unpublished operator history, private evidence, exact
+  allowances and its active packet in that checkout; the mobile packet does not
+  supersede its owner decisions or close remaining P3 acceptance gaps.
 - Sign-out explicitly uses local scope; clear local state on success and show a
   sanitized retry error on failure. Subject transitions clear private caches.
 - Queries stay in memory. Writes are not queued or automatically replayed;
