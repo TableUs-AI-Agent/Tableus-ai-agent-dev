@@ -1,6 +1,6 @@
 # Roadmap
 
-Updated 2026-09-28. Brian confirmed the reconciled direction and targets below;
+Updated 2026-10-08 for local mobile recovery; P3 runtime remains operator-owned. Brian confirmed the reconciled direction and targets below;
 [decisions](decisions.md#pilot-realignment--adopted-2026-09-26) records the scope.
 
 ## Direction
@@ -94,28 +94,21 @@ to B after the UI organizer-deletion blocker was observed. Reopen reused the
 same candidates; no second recommendation run or server deletion refusal occurred.
 Natural-expiry invitation rejection passed (404, no OTP).
 
-All three ImprovMX routes passed by owner receipt. The `32ab7cd` first phase stopped
-automatically during A's code handoff; the later recovery approved at `fa282f2`
-used restart 8/11 and passed A returning application sign-in. A's deletion is
-verified pending. The cutoff stopped API/worker at 20:53:37Z. C's OTP succeeded
-after that stop, leaving Auth verified but no app profile/redemption. B's shared
-plan/session is preserved. C's short-lived validation has expired.
+Web signup recovery PR #11 is merged/deployed as `bffa284`; its hosted CI passed
+242 Python, 334 JavaScript and 13 browser checks with zero skips. Read-only P3
+context on October 8 at operator HEAD `00dbf414` reports A/C/D deletion complete
+and the approved B-only visible-tab rehearsal in progress. Support receipt,
+hosted replay/contention and server refusal remain unresolved; current runtime,
+allowances and closeout belong to that chat's active packet/private ledger.
 
-A local web recovery fix now reuses only the same server-verified identity and
-retries normal completion without replaying the OTP, including expired-grant and
-already-committed signup cases. Local readiness and fake-provider browser checks
-pass; hosted candidate CI/merge/deployment remain gates. The
-[complete recovery proposal](p3-session-recovery.md) requests one Preview, one
-extra same-image restart and 45 additional live minutes, preserving financial and
-message limits. The owner approved it against handoff `b08cee4`. Charged use stays
-178m7.415236s; the approved ceiling is now 240m, with first phase at most 45m and
-final phase at most 15m. Keep services stopped while CI/deployment prepare.
-
-C/D deletion/support, worker removal, B cleanup and final returning/deletion checks
-remain incomplete. Hosted redemption replay/contention and server-side deletion
-refusal remain untested. Mail receipt is complete; it is not support-case acceptance.
-The active packet owns current counters and next actions. No P3 acceptance,
-Priority 4/native work or real-pilot intake is implied.
+A separately authorized local mobile recovery objective runs on
+`codex/mobile-signup-recovery` from the accepted `bffa284` source. It reproduces
+and repairs expired-grant/lost-response signup recovery using membership
+reconciliation, server-verified identity and explicit invitation re-entry without
+persisting invite/OTP material. This is preparatory development alongside P3.
+Its [local packet](task-packets/active.md) owns implementation/checks; reconcile
+P3's evolving documents before integration. Publishing, merge, deployment and
+Priority 4 signed-build/physical-device acceptance remain separate owner gates.
 
 Effort is a rough planning range in focused engineering days, excluding approval,
 hosted CI, device/signing and external-access waits; these are not delivery promises.

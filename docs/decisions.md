@@ -132,8 +132,15 @@ or replenish closed native/live-provider allowances.
   Same-account successful redemption retries remain idempotent; revocation stops
   new intake, not existing account access. See [operations](recipient-invites.md).
 - One mobile auth coordinator owns restoration and transitions. Persist only
-  expiring redemption state, never invite/OTP material. Credential lookup,
-  refresh and response-body work are bounded; failed restoration offers retry.
+  expiring redemption state, never invite/OTP material. The verified join subject
+  is bound within the original transaction expiry. On redemption 400/409, check
+  membership before requesting explicit invitation re-entry; deletion recovery
+  takes precedence. A restored verified session with expired transaction state
+  may re-enter an invite and display name through the same recipient-bound API
+  without another OTP. Auth lookup confirms email/subject before signup work;
+  account switching fences late results. Credential lookup, refresh and response
+  work are bounded; uncertainty preserves explicit retry. This local repair is
+  not publishing, release or Priority 4 authorization.
 - Sign-out explicitly uses local scope; clear local state on success and show a
   sanitized retry error on failure. Subject transitions clear private caches.
 - Queries stay in memory. Writes are not queued or automatically replayed;

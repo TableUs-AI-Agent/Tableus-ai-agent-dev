@@ -9,6 +9,7 @@ export type PendingAuthTransaction = {
   email: string;
   displayName?: string;
   redemptionToken?: string;
+  subject?: string;
   expiresAt: number;
 };
 
@@ -44,6 +45,7 @@ export function parsePendingTransaction(value: string | null, now = Date.now()):
       || (parsed.mode !== "join" && parsed.mode !== "sign-in")
       || typeof parsed.email !== "string"
       || !parsed.email.includes("@")
+      || (parsed.subject !== undefined && (typeof parsed.subject !== "string" || !parsed.subject))
       || typeof parsed.expiresAt !== "number"
       || parsed.expiresAt <= now
       || (parsed.mode === "join" && (typeof parsed.displayName !== "string" || typeof parsed.redemptionToken !== "string"))
@@ -54,6 +56,7 @@ export function parsePendingTransaction(value: string | null, now = Date.now()):
       email: normalizeEmail(parsed.email),
       displayName: parsed.mode === "join" ? parsed.displayName : undefined,
       redemptionToken: parsed.mode === "join" ? parsed.redemptionToken : undefined,
+      ...(parsed.subject ? { subject: parsed.subject } : {}),
       expiresAt: parsed.expiresAt,
     };
   } catch {

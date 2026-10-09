@@ -19,9 +19,10 @@ export default function AuthScreen() {
   const [code, setCode] = useState("");
 
   const awaitingCode = auth.phase === "pending_verification";
+  const needsInvite = auth.phase === "invite_required";
   const awaitingRedemption = auth.phase === "redeem_pending";
   const effectiveMode = auth.pending?.mode ?? selectedMode ?? parseAuthLinkMode(requestedMode);
-  const joinMode = effectiveMode === "join";
+  const joinMode = needsInvite || effectiveMode === "join";
 
   const begin = async () => {
     if (joinMode) await auth.beginJoin({ invite, email, displayName: name });
@@ -63,12 +64,19 @@ export default function AuthScreen() {
             <ErrorText message={auth.error} />
             <Button label="Retry session restoration" onPress={auth.retryRestore} />
           </>
-        ) : awaitingCode || awaitingRedemption ? (
+        ) : awaitingCode || awaitingRedemption || needsInvite ? (
           <>
             <Text selectable accessibilityLabel="Verification email" style={{ color: colors.ink, fontWeight: "700" }}>
-              Continue as {maskEmail(auth.pending?.email ?? "")}
+              Continue as {maskEmail(auth.recoveryEmail ?? auth.pending?.email ?? "")}
             </Text>
-            {awaitingCode ? (
+            {needsInvite ? (
+              <>
+                <Text selectable style={{ color: colors.muted, lineHeight: 21 }}>Your email is verified. Re-enter a valid invite to finish joining; no new email code is needed.</Text>
+                <Field accessibilityLabel="Invite code" value={invite} onChangeText={setInvite} placeholder="Invite code" autoCapitalize="none" autoCorrect={false} />
+                {!auth.pending?.displayName ? <Field accessibilityLabel="Display name" value={name} onChangeText={setName} placeholder="Display name" autoComplete="name" /> : null}
+                <Button label="Continue with invite" onPress={() => void auth.finishApproval({ invite, displayName: name })} loading={auth.busy} disabled={!invite.trim() || (!auth.pending?.displayName && !name.trim())} />
+              </>
+            ) : awaitingCode ? (
               <>
                 <Text selectable style={{ color: colors.muted, lineHeight: 21 }}>
                   Enter the complete code from the newest email. Code length can vary.
