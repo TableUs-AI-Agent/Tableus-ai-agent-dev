@@ -7,9 +7,6 @@ export default function TabsLayout() {
     <Tabs initialRouteName="plans" screenOptions={{ headerShown: true, tabBarActiveTintColor: colors.accent, tabBarStyle: { backgroundColor: colors.surface } }}>
       <Tabs.Screen name="plans" options={{ title: "Plans" }} />
       <Tabs.Screen name="settings" options={{ title: "Account" }} />
-      <Tabs.Screen name="people" options={{ href: null }} />
-      <Tabs.Screen name="review" options={{ href: null }} />
-      <Tabs.Screen name="profile" options={{ href: null }} />
     </Tabs>
   );
 }

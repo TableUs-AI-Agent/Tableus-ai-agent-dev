@@ -34,16 +34,8 @@ const nextConfig: NextConfig = {
   },
   images: {
     remotePatterns: [
-      { protocol: "https", hostname: "images.unsplash.com" },
-      { protocol: "https", hostname: "randomuser.me" },
       { protocol: "https", hostname: "maps.googleapis.com" },
     ],
-  },
-  async redirects() {
-    // Keep deferred feature code/data while blocking direct and nested entry.
-    return ["discover", "friends", "people", "review", "profile", "taste", "photo", "photos"].map((surface) => ({
-      source: `/${surface}/:path*`, destination: "/plans", permanent: false,
-    }));
   },
   async headers() {
     return [

@@ -3,9 +3,6 @@ import { cleanup, render } from "@testing-library/react-native";
 
 import Index from "../app/index";
 import TabsLayout from "../app/(tabs)/_layout";
-import People from "../app/(tabs)/people";
-import Profile from "../app/(tabs)/profile";
-import Review from "../app/(tabs)/review";
 import AccountTab from "../app/(tabs)/settings";
 import AccountScreen from "../app/account";
 
@@ -32,11 +29,6 @@ test("pilot tabs expose Plans and Account and open on Plans", async () => {
   expect(view.queryByText("Review")).toBeNull();
   expect(view.queryByText("Profile")).toBeNull();
   expect(AccountTab).toBe(AccountScreen);
-});
-
-test.each([People, Profile, Review])("deferred direct entry redirects without mounting its feature", async (Screen) => {
-  const view = await render(<Screen />);
-  expect(view.getByTestId("redirect").props.children).toBe("/(tabs)/plans");
 });
 
 test.each<[typeof mockAuth, string]>([
