@@ -1,82 +1,41 @@
 # TableUs engineering guide
 
-## Mission
+## What we're building
 
-TableUs helps a small group decide where to eat together: create a shared plan,
-invite friends, collect constraints, compare four grounded options, rank them and
-let the organizer finalize. The current milestone is a staging pilot in which real
-groups complete real dinner decisions on web, iOS and Android. Production, store
-distribution and a wider cohort follow the pilot.
+TableUs is the fastest way for a small group to agree on where to eat. Each
+person says what they want in plain language, TableUs finds real nearby
+restaurants and the AI picks a short list that fits everyone with a specific
+reason per pick, the group votes, and the organizer locks it in. The AI quality
+is the product; everything else should be simple.
 
-## Source of truth
+Read `docs/roadmap.md` for the current milestone and `docs/decisions.md` for
+durable choices. Update them in the same change when they stop being true.
 
-- `docs/current-state.md` records what is implemented and deployed now.
-- `docs/roadmap.md` records the milestone, ordered priorities and exit criteria.
-- `docs/decisions.md` records durable product, architecture and operating choices.
-- `docs/task-packets/active.md` directs the current objective in this worktree.
+## How we work
 
-Update these documents in place, in the same change, when their truth changes.
-Handoffs, reviews, history snapshots and evidence retain provenance and scoped
-approvals; they do not start new work or reset budgets. Feature contracts such as `docs/account-lifecycle.md` describe
-implemented behavior and stay current with their code.
+- Build the smallest thing that serves the current milestone. No speculative
+  infrastructure, compliance machinery or release ceremony ahead of real users.
+- Prefer deleting code to adding configuration. If a feature isn't in the
+  roadmap, it doesn't belong in `main`.
+- Branch as `codex/<objective>` from `main`. Commit at meaningful points with
+  plain messages. No evidence files, handoff documents or per-step logs.
+- Local and CI runs use the deterministic providers. Live Google Places or
+  Gemini calls cost money and need Brian's OK.
+- Run `make ready` before asking for review.
 
-## Working agreement
+## Brian decides
 
-- Brian Chei owns product decisions and approvals. Whichever agent leads a task
-  owns its integration, verification and handoff. Tool-specific model and
-  subagent defaults live in `CLAUDE.md` and `.claude/` (primary, Claude Code)
-  and `.codex/` (Codex); they are not project requirements.
-- Start from the active packet and current state. The root checkout may be stale;
-  confirm the branch and base before editing, and preserve uncommitted work.
-- Start each authorized major development pass in a fresh thread, with a compact
-  handoff to the current packet, source state and approval boundaries. A thread
-  created for that pass satisfies this rule; keep its fixes and verification there.
-  A fresh thread does not require a fresh worktree or authorize the next priority.
-- Use a named `codex/<objective>` branch and prefer reusing a suitable checkout
-  for sequential work. Create another worktree when concurrency or isolation
-  requires it; choose the base by ancestry and accepted work, not edit recency.
-- Keep one objective small enough to review, then finish it: implement, check,
-  fix and hand off without stopping at intermediate findings.
-- Prefer deterministic providers locally and in CI. Live provider evaluation is
-  an explicit, budgeted operation and never part of the normal test suite.
-- Follow the impact-based checks in `docs/development-workflow.md`: focused checks
-  and one `make ready` for application or executable changes; links and consistency
-  for documentation. Reuse checks only while their relevant inputs are unchanged.
-- Create formal source-bound evidence at merge, deployment, native pilot build,
-  distribution and activation gates. Summarize routine checks in the handoff and
-  retain useful failure diagnostics; no per-command commit or evidence file.
-- Keep native builds sequential with file-backed logs, and check disk and memory
-  before building. Pilot acceptance uses physical devices and the checklist's
-  bounded lost-response test; the long simulator campaign remains superseded.
-- Do not restart the canceled security scans without new owner authorization.
-- Handoffs identify the base commit and any uncommitted changes, checks run,
-  observable evidence, residual risks and intentionally deferred work.
-- Every response to Brian includes clear development next steps: the next concrete
-  action, its purpose, and any dependency or approval gate. Keep progress updates
-  brief and make final handoffs self-contained. This standing preference also
-  applies in future threads; describing a next step does not authorize it.
+Merges to `main`, deploys, adding or rotating secrets, paid live-AI runs,
+database resets or production migrations, store submissions, and inviting real
+people. Everything else: use judgement, do it, and report the result.
 
-## Approval gates
+## Repository
 
-The owner must explicitly approve merges, pushes that trigger deployments,
-cloud-resource creation, adding or rotating secrets, paid live-AI evaluation,
-staging or production migrations, deployments, signed native builds for pilot
-or store distribution, store submissions, invitations to real users and
-destructive cleanup. Code and local deterministic tests may be prepared without
-those external actions. Product alignment does not itself authorize a release.
-
-Within an approved objective, routine reversible implementation and fixes need no
-repeated approval. Before asking for a gated action, finish the independent work
-and present the complete scope, limits and stop conditions in one request.
-Escalate significant product or architecture decisions.
-
-## Repository conventions
-
-- `backend/` is Python 3.12, FastAPI, async SQLAlchemy, and Alembic.
-- `frontend/` is the Next.js web client.
-- `mobile/` is the Expo Router iOS/Android client; generated `ios/` and
-  `android/` projects are not source-of-truth.
-- `packages/api-client/` and `packages/domain/` are the only shared client
-  packages. Do not share platform UI.
-- Browser app data and mobile app data flow through `/api/v1`; direct Supabase
-  client access is limited to authentication.
+- `backend/`: Python 3.12, FastAPI, async SQLAlchemy, Alembic.
+- `frontend/`: Next.js web app and landing page. UI work uses the
+  frontend-design skill.
+- `mobile/`: Expo Router iOS/Android app. UI work uses the Appllama skills and
+  Mobbin references. Generated `ios/` and `android/` folders are not source.
+- `packages/api-client/` (generated from the OpenAPI contract) and
+  `packages/domain/` are the only shared client code. Don't share platform UI.
+- Clients talk to `/api/v1`; Supabase on the client is for sign-in only.
