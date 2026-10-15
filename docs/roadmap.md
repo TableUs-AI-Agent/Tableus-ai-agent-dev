@@ -20,8 +20,8 @@ Five real groups use TableUs to pick a real dinner, and say they'd use it again.
    runs with Brian's OK.
 3. **Web redesign** (first pass done; needs Brian's review). A landing page and the full plan flow, built with the
    frontend-design skill. It works well on a phone browser.
-4. **Mobile redesign** (next; the current app still calls the removed API and
-   must be rebuilt before any device testing). The same flow in Expo, built with the Appllama skills
+4. **Mobile redesign** (first pass in code and checked in the web preview;
+   still needs the native simulator pass for motion, dark mode and Dynamic Type). The same flow in Expo, built with the Appllama skills
    and Mobbin references, with dark mode.
 5. **Friends test.** Deploy to staging and invite five groups Brian knows. Learn
    what works from conversations and plain database counts.

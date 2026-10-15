@@ -1,30 +1,49 @@
+import { ApiError, createApiClient, createTableUsApi } from "@tableus/api-client";
 import { fetch as expoFetch } from "expo/fetch";
-import { createApiClient } from "@tableus/api-client";
-import { PUBLIC_RUNTIME_POLICY, requireExactHttpsOrigin } from "@tableus/domain";
 
-import { getSupabaseAccessToken, isSupabaseConfigured, refreshSupabaseAccessToken } from "./supabase";
-import { getLocalE2EIdentity, localE2EEnabled } from "./e2e-identity";
-import { getTelemetryPlatform, getTelemetrySessionId } from "./telemetry";
+import { storage } from "./storage";
+import { isSupabaseConfigured, supabase } from "./supabase";
 
-const configuredApiUrl = process.env.EXPO_PUBLIC_API_URL ?? "";
-const baseUrl = localE2EEnabled
-  ? configuredApiUrl
-  : configuredApiUrl
-    ? requireExactHttpsOrigin(
-        configuredApiUrl,
-        PUBLIC_RUNTIME_POLICY.stagingApiOrigin,
-        "Mobile API origin",
-      )
-    : "https://api.invalid";
+/** Without Supabase (local development) people sign in as a seeded demo person. */
+export const DEMO_PEOPLE = [
+  { id: "demo-organizer", name: "Demo Organizer" },
+  { id: "demo-guest", name: "Demo Guest" },
+] as const;
+const DEMO_KEY = "tableus.demo-user";
+let demoId: string | null = null;
 
-export const api = createApiClient({
-  baseUrl,
-  demoUserId: isSupabaseConfigured || localE2EEnabled ? undefined : process.env.EXPO_PUBLIC_DEMO_USER_ID,
-  getDemoUserId: localE2EEnabled ? getLocalE2EIdentity : undefined,
-  getAccessToken: isSupabaseConfigured ? getSupabaseAccessToken : undefined,
-  refreshAccessToken: isSupabaseConfigured ? refreshSupabaseAccessToken : undefined,
-  getTelemetrySessionId,
-  telemetryPlatform: getTelemetryPlatform(),
-  fetchImpl: expoFetch as typeof fetch,
-  requestTimeoutMs: localE2EEnabled ? 10_000 : 45_000,
+export async function loadDemoUser(): Promise<string | null> {
+  if (isSupabaseConfigured) return null;
+  demoId = await storage.getItem(DEMO_KEY);
+  return demoId;
+}
+
+export async function setDemoUser(id: string | null): Promise<void> {
+  demoId = id;
+  if (id) await storage.setItem(DEMO_KEY, id);
+  else await storage.removeItem(DEMO_KEY);
+}
+
+const client = createApiClient({
+  baseUrl: process.env.EXPO_PUBLIC_API_URL ?? "",
+  fetchImpl: expoFetch as unknown as typeof fetch,
+  getDemoUserId: async () => (isSupabaseConfigured ? null : demoId),
+  getAccessToken: isSupabaseConfigured
+    ? async () => (await supabase.auth.getSession()).data.session?.access_token ?? null
+    : undefined,
+  refreshAccessToken: isSupabaseConfigured
+    ? async () => (await supabase.auth.refreshSession()).data.session?.access_token ?? null
+    : undefined,
+  requestTimeoutMs: 30_000,
 });
+
+export const api = createTableUsApi(client);
+
+export function errorMessage(error: unknown): string {
+  if (error instanceof ApiError) return error.message;
+  return "Something went wrong. Check your connection and try again.";
+}
+
+export function isNotFound(error: unknown): boolean {
+  return error instanceof ApiError && error.status === 404;
+}

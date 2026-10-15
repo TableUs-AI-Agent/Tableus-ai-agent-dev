@@ -1,84 +1,71 @@
-import * as Sentry from "@sentry/react-native";
-import { Stack } from "expo-router/stack";
-import { router } from "expo-router";
-import { useEffect } from "react";
+import { DarkerGrotesque_800ExtraBold, useFonts } from "@expo-google-fonts/darker-grotesque";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { SplashScreen, Stack } from "expo-router";
 import { StatusBar } from "expo-status-bar";
-import { View } from "react-native";
-import { SafeAreaProvider } from "react-native-safe-area-context";
+import { useEffect, useState } from "react";
 
-import { ConnectivityBanner } from "@/components/connectivity-banner";
-import { AppProviders } from "@/providers/app-providers";
-import { AuthProvider, useAuth } from "@/providers/auth-provider";
-import { colors } from "@/theme";
-import { pendingJoinStore } from "@/lib/pending-join";
-import { sanitizeSentryEvent } from "@tableus/domain";
+import { SessionProvider, useMe, useSession } from "@/lib/session";
+import { usePalette } from "@/theme";
 
-const telemetryMode = process.env.EXPO_PUBLIC_TELEMETRY_MODE;
-if ((telemetryMode === "staging" || telemetryMode === "production") && process.env.EXPO_PUBLIC_SENTRY_DSN) {
-  Sentry.init({
-    dsn: process.env.EXPO_PUBLIC_SENTRY_DSN,
-    environment: telemetryMode,
-    release: process.env.EXPO_PUBLIC_SOURCE_SHA,
-    sendDefaultPii: false,
-    tracesSampleRate: 0,
-    profilesSampleRate: 0,
-    maxBreadcrumbs: 0,
-    beforeSend: (event) => sanitizeSentryEvent(event),
-  });
+SplashScreen.preventAutoHideAsync();
+
+export default function RootLayout() {
+  const [queryClient] = useState(
+    () => new QueryClient({ defaultOptions: { queries: { staleTime: 15_000, retry: 1 } } }),
+  );
+  return (
+    <QueryClientProvider client={queryClient}>
+      <SessionProvider>
+        <Navigator />
+      </SessionProvider>
+    </QueryClientProvider>
+  );
 }
 
-function RootNavigator() {
-  const auth = useAuth();
+function Navigator() {
+  const palette = usePalette();
+  const [fontsLoaded] = useFonts({ DarkerGrotesque_800ExtraBold });
+  const { session } = useSession();
+  const me = useMe();
+
+  const signedIn = session.status === "signed-in";
+  // A failed profile read keeps the person inside so the screens can offer a retry.
+  const resolved = session.status !== "loading" && (!signedIn || me.isFetched || me.isError);
+  const ready = signedIn && (Boolean(me.data) || me.isError);
+  const needsProfile = signedIn && me.data === null;
+
   useEffect(() => {
-    if (!auth.approved || !auth.subject) return;
-    const pending = pendingJoinStore.getSnapshot();
-    if (pending?.subject !== auth.subject) return;
-    // Approval may remove the auth modal; restore the explicit Join screen,
-    // never submit the capability as a side effect of signing in.
-    router.replace({ pathname: "/join/[id]", params: { id: pending.planId, pending: pending.handle } });
-  }, [auth.approved, auth.subject]);
+    if (fontsLoaded && resolved) SplashScreen.hideAsync();
+  }, [fontsLoaded, resolved]);
+  if (!fontsLoaded || !resolved) return null;
+
   return (
-    <View style={{ flex: 1 }}>
-      <StatusBar style="dark" />
-      <ConnectivityBanner />
-      <Stack screenOptions={{ headerBackButtonDisplayMode: "minimal", contentStyle: { backgroundColor: colors.background } }}>
-        <Stack.Screen name="index" options={{ headerShown: false }} />
-        <Stack.Protected guard={!auth.approved && auth.phase !== "deletion"}>
-          <Stack.Screen name="auth" options={{ title: "Invite access", presentation: "modal" }} />
+    <>
+      <StatusBar style="auto" />
+      <Stack
+        screenOptions={{
+          headerTintColor: palette.text,
+          headerStyle: { backgroundColor: palette.background },
+          headerShadowVisible: false,
+          headerBackButtonDisplayMode: "minimal",
+          contentStyle: { backgroundColor: palette.background },
+        }}
+      >
+        <Stack.Protected guard={!signedIn}>
+          <Stack.Screen name="sign-in" options={{ headerShown: false }} />
         </Stack.Protected>
-        <Stack.Protected guard={auth.phase !== "deletion"}>
-          <Stack.Screen name="join/[id]" options={{ title: "Join plan" }} />
+        <Stack.Protected guard={needsProfile}>
+          <Stack.Screen name="welcome" options={{ headerShown: false }} />
         </Stack.Protected>
-        <Stack.Screen name="e2e/identity" options={{ title: "Local E2E identity" }} />
-        <Stack.Screen name="e2e/connectivity" options={{ title: "Local connectivity" }} />
-        <Stack.Screen name="e2e/auth" options={{ title: "Session check" }} />
-        <Stack.Screen name="e2e/telemetry" options={{ title: "Telemetry check" }} />
-        <Stack.Screen name="privacy" options={{ title: "Privacy" }} />
-        <Stack.Screen name="account-deletion" options={{ title: "Account deletion" }} />
-        <Stack.Screen name="terms" options={{ title: "Terms" }} />
-        <Stack.Protected guard={auth.approved}>
-          <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-          <Stack.Screen name="plans/[id]" options={{ title: "Dinner plan" }} />
-          <Stack.Screen name="e2e/account" options={{ title: "Account check" }} />
+        <Stack.Protected guard={ready}>
+          <Stack.Screen name="index" options={{ title: "Plans", headerLargeTitle: true, headerLargeStyle: { backgroundColor: palette.background } }} />
+          <Stack.Screen name="plan/[id]" options={{ title: "" }} />
+          <Stack.Screen name="new-plan" options={{ presentation: "formSheet", sheetAllowedDetents: [0.75, 1], sheetGrabberVisible: true, title: "Start a plan" }} />
+          <Stack.Screen name="wishes/[id]" options={{ presentation: "modal", title: "Your wishes" }} />
+          <Stack.Screen name="account" options={{ title: "Account" }} />
         </Stack.Protected>
-        <Stack.Protected guard={auth.approved || auth.phase === "deletion"}>
-          <Stack.Screen name="account" options={{ title: "Account and data" }} />
-        </Stack.Protected>
+        <Stack.Screen name="join/[id]" options={{ title: "Join plan" }} />
       </Stack>
-    </View>
+    </>
   );
 }
-
-function RootLayout() {
-  return (
-    <SafeAreaProvider>
-      <AppProviders>
-        <AuthProvider>
-          <RootNavigator />
-        </AuthProvider>
-      </AppProviders>
-    </SafeAreaProvider>
-  );
-}
-
-export default Sentry.wrap(RootLayout);
