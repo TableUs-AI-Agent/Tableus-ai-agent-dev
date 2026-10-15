@@ -101,6 +101,7 @@ type ClientOptions = {
   refreshAccessToken?: () => Promise<string | null>;
   demoUserId?: string;
   getDemoUserId?: () => Promise<string | null>;
+  /** Accepted for older callers; the API no longer reads telemetry headers. */
   getTelemetrySessionId?: () => string | null;
   telemetryPlatform?: TelemetryClientPlatform;
   onAuthorizationError?: (status: 401 | 403) => void;
@@ -131,14 +132,6 @@ export function createApiClient(options: ClientOptions) {
       const headers = new Headers(init.headers);
       if (!(init.body instanceof FormData)) headers.set("Content-Type", "application/json");
       if (demoUserId) headers.set("X-Demo-User-ID", demoUserId);
-      const telemetrySessionId = options.getTelemetrySessionId?.();
-      if (telemetrySessionId && options.telemetryPlatform) {
-        headers.set("X-TableUs-Telemetry-Session", telemetrySessionId);
-        headers.set("X-TableUs-Client", options.telemetryPlatform);
-      }
-      if (init.method && init.method !== "GET") {
-        headers.set("Idempotency-Key", requestOptions.idempotencyKey ?? createIdempotencyKey());
-      }
       const send = async () => {
         // This is a client-side account-switch guard, not JWT verification.
         // The server still authenticates and authorizes every request.
@@ -198,3 +191,49 @@ export function createApiClient(options: ClientOptions) {
       request<T>(path, { method: "DELETE", body: body === undefined ? undefined : JSON.stringify(body) }, requestOptions),
   };
 }
+
+import type { components } from "./schema";
+
+type Schemas = components["schemas"];
+export type Me = Schemas["MeOut"];
+export type Plan = Schemas["PlanOut"];
+export type PlanSummary = Schemas["PlanSummaryOut"];
+export type PlanCreated = Schemas["PlanCreated"];
+export type Candidate = Schemas["CandidateOut"];
+export type Participant = Schemas["ParticipantOut"];
+export type PlaceDetails = Schemas["PlaceOut"];
+export type ResolvedLocation = Schemas["LocationOut"];
+export type Constraints = Schemas["ConstraintsIn"];
+export type NewPlan = Schemas["PlanCreateIn"];
+
+type ApiClient = ReturnType<typeof createApiClient>;
+
+/** Every TableUs endpoint, typed from the generated OpenAPI contract. */
+export function createTableUsApi(client: ApiClient) {
+  const plan = (id: string) => `/api/v1/plans/${encodeURIComponent(id)}`;
+  return {
+    me: () => client.get<Me>("/api/v1/me"),
+    saveMe: (body: Schemas["MeIn"]) => client.put<Me>("/api/v1/me", body),
+    deleteAccount: () => client.delete<{ deleted: boolean }>("/api/v1/me"),
+    resolveLocation: (query: string) =>
+      client.post<ResolvedLocation>("/api/v1/locations/resolve", { query }),
+    listPlans: () => client.get<PlanSummary[]>("/api/v1/plans"),
+    createPlan: (body: NewPlan) => client.post<PlanCreated>("/api/v1/plans", body),
+    getPlan: (id: string) => client.get<Plan>(plan(id)),
+    planRevision: (id: string) => client.get<{ updated_at: string }>(`${plan(id)}/revision`),
+    deletePlan: (id: string) => client.delete<{ deleted: boolean }>(plan(id)),
+    joinPlan: (id: string, shareToken: string) =>
+      client.post<Plan>(`${plan(id)}/join`, { share_token: shareToken }),
+    saveConstraints: (id: string, body: Constraints) =>
+      client.patch<Plan>(`${plan(id)}/constraints`, body),
+    suggest: (id: string, query = "") => client.post<Plan>(`${plan(id)}/recommendations`, { query }),
+    vote: (id: string, ranking: string[]) => client.put<Plan>(`${plan(id)}/vote`, { ranking }),
+    finalize: (id: string, candidateId?: string) =>
+      client.post<Plan>(`${plan(id)}/finalize`, candidateId ? { candidate_id: candidateId } : {}),
+    reopen: (id: string) => client.post<Plan>(`${plan(id)}/reopen`),
+    newShareLink: (id: string) =>
+      client.post<{ share_token: string }>(`${plan(id)}/share-token/rotate`),
+  };
+}
+
+export type TableUsApi = ReturnType<typeof createTableUsApi>;

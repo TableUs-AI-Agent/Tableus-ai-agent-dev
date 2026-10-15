@@ -99,7 +99,7 @@ class DeterministicAiProvider:
             Recommendation(
                 place_id=place.place_id,
                 score=round(0.94 - index * 0.04, 2),
-                reasoning=f"{place.cuisine}, {'$' * place.price_level}: {place.summary}".strip(),
+                reasoning=place.summary or f"Well-reviewed {place.cuisine.lower()} nearby.",
             )
             for index, place in enumerate(ranked)
         ]

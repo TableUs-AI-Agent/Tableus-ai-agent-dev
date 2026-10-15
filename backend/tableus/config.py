@@ -15,7 +15,7 @@ class Settings(BaseSettings):
     )
 
     environment: Literal["development", "test", "staging", "production"] = "development"
-    database_url: str = f"sqlite+aiosqlite:///{BACKEND_ROOT / 'tableus-dev.db'}"
+    database_url: str = f"sqlite+aiosqlite:///{BACKEND_ROOT / 'tableus-local.db'}"
     # Migrations may use a more privileged role than the running API.
     migration_database_url: str = ""
     tableus_runtime_db_role: str = ""

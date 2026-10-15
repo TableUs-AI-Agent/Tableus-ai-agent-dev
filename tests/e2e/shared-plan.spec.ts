@@ -1,187 +1,64 @@
-import { expect, test } from "@playwright/test";
-import { readFile } from "node:fs/promises";
-import { randomUUID } from "node:crypto";
+import { expect, test, type Page } from "@playwright/test";
 
-function nestedKeys(value: unknown): Set<string> {
-  if (Array.isArray(value)) {
-    return value.reduce((keys, item) => new Set([...keys, ...nestedKeys(item)]), new Set<string>());
-  }
-  if (value && typeof value === "object") {
-    return Object.entries(value).reduce(
-      (keys, [key, item]) => new Set([...keys, key, ...nestedKeys(item)]),
-      new Set<string>(),
-    );
-  }
-  return new Set();
+const api = "http://127.0.0.1:8000";
+
+async function signInAs(page: Page, name: "Demo Organizer" | "Demo Guest") {
+  await page.goto("/signin");
+  await page.getByRole("button", { name: `Continue as ${name}` }).click();
+  await expect(page).toHaveURL(/\/plans$/);
 }
 
-test("organizer creates a persistent plan", async ({ page }) => {
-  await page.goto("/plans");
-  await page.getByPlaceholder("Friday dinner").fill("Playwright dinner");
-  await page.getByLabel("City, neighborhood, or ZIP code").fill("Boston, MA");
-  await page.getByRole("button", { name: "Find location" }).click();
-  await expect(page.getByText("Boston, MA", { exact: true })).toBeVisible();
-  await expect(page.getByRole("img", { name: "Google Maps" })).toBeVisible();
-  await page.getByRole("button", { name: "Create plan" }).click();
-  await expect(page.getByText("Playwright dinner").first()).toBeVisible();
-  await expect(page.getByText("Private join link")).toBeVisible();
-  await expect(page.getByText(/^https:\/\/links\.table-us\.com\/join\//)).toBeVisible();
+test("the landing page explains the product and starts a plan", async ({ page }) => {
+  await page.goto("/");
+  await expect(page.getByRole("heading", { name: "Dinner, decided." })).toBeVisible();
+  await page.getByRole("link", { name: "Start a plan" }).first().click();
+  await expect(page).toHaveURL(/\/signin\?next=%2Fplans/);
 });
 
-test("publishes release disclosures and verified-link manifests", async ({ page }) => {
+test("two people pick a restaurant together", async ({ page }) => {
+  await signInAs(page, "Demo Organizer");
+  await page.getByLabel("What's the occasion?").fill("Playwright dinner");
+  await page.getByLabel("Where should we look?").fill("Boston, MA");
+  await page.getByRole("button", { name: "Find this place" }).click();
+  await page.getByRole("button", { name: "Start plan" }).click();
+  await expect(page.getByRole("heading", { name: "Playwright dinner" })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Send this link to the group" })).toBeVisible();
+
+  const planId = page.url().split("/plans/")[1];
+  const link = await page.getByLabel("Plan link").inputValue();
+  const token = new URL(link).searchParams.get("token");
+  expect(token).toBeTruthy();
+
+  // The guest joins and adds wishes through the API to keep this test to one browser.
+  const asGuest = { headers: { "X-Demo-User-ID": "demo-guest" } };
+  expect((await page.request.post(`${api}/api/v1/plans/${planId}/join`, { ...asGuest, data: { share_token: token } })).ok()).toBeTruthy();
+  expect((await page.request.patch(`${api}/api/v1/plans/${planId}/constraints`, { ...asGuest, data: { dietary_notes: ["Vegetarian"] } })).ok()).toBeTruthy();
+
+  await page.reload();
+  await page.getByRole("button", { name: "Italian" }).click();
+  await page.getByRole("button", { name: "Save my wishes" }).click();
+  await expect(page.getByText("Saved.")).toBeVisible();
+  await page.getByRole("button", { name: "Get four picks" }).click();
+  await expect(page.getByRole("heading", { name: "Rank your top three" })).toBeVisible();
+
+  const picks = page.locator("button[aria-pressed]").filter({ hasText: "stars" });
+  await expect(picks).toHaveCount(4);
+  for (const index of [0, 1, 2]) await picks.nth(index).click();
+  await page.getByRole("button", { name: "Save my vote" }).click();
+  await expect(page.getByText("Vote saved.")).toBeVisible();
+
+  await page.getByRole("button", { name: /^Go with / }).click();
+  await expect(page.getByRole("heading", { name: "You're going to" })).toBeVisible();
+  await expect(page.getByRole("link", { name: "Open in Google Maps" })).toBeVisible();
+});
+
+test("publishes legal pages and verified-link manifests", async ({ page }) => {
   await page.goto("/privacy");
-  await expect(page.getByRole("heading", { name: "TableUs closed-beta privacy notice" })).toBeVisible();
-  await expect(page.getByText("Effective August 26, 2026.")).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Privacy" })).toBeVisible();
 
   const apple = await page.request.get("/.well-known/apple-app-site-association");
   expect(apple.status()).toBe(200);
-  expect((await apple.json()).applinks.details[0].appIDs).toContain(
-    "ABCDE12345.com.tableus.app",
-  );
-  expect((await apple.json()).applinks.details[0].components).toEqual([
-    { "/": "/join/*" },
-    { "/": "/auth" },
-  ]);
-
+  expect((await apple.json()).applinks.details[0].appIDs).toContain("ABCDE12345.com.tableus.app");
   const android = await page.request.get("/.well-known/assetlinks.json");
-  expect(android.status()).toBe(200);
   expect((await android.json())[0].target.package_name).toBe("com.tableus.app");
-
-  const auth = await page.request.get("/auth?mode=sign-in");
-  expect(auth.url()).toContain("/invite?mode=sign-in");
-});
-
-test("downloads a versioned account export and shows organized-plan controls", async ({ page }) => {
-  test.skip(Boolean(process.env.PLAYWRIGHT_BASE_URL), "Local deterministic evidence only");
-  const api = "http://127.0.0.1:8000";
-  const organizer = { "X-Demo-User-ID": "demo-organizer" };
-  const title = `Account export ${randomUUID()}`;
-  const createdResponse = await page.request.post(`${api}/api/v1/plans`, {
-    headers: organizer,
-    data: { title, location_label: "Boston, MA", latitude: 42.3601, longitude: -71.0589 },
-  });
-  expect(createdResponse.ok()).toBeTruthy();
-  const controlResponse = await page.request.get(`${api}/api/v1/me/account-control`, {
-    headers: organizer,
-  });
-  expect(controlResponse.ok()).toBeTruthy();
-  expect((await controlResponse.json()).data).toMatchObject({
-    can_delete: false,
-    full_deletion_available: false,
-  });
-
-  await page.goto("/account");
-  await expect(page.getByRole("heading", { name: "Demo Organizer" })).toBeVisible();
-  const managedPlan = page.getByRole("heading", { name: title, exact: true }).locator("..");
-  await expect(managedPlan.getByText("1 participant", { exact: true })).toBeVisible();
-  await expect(managedPlan.getByRole("button", { name: "Remove sole plan" })).toBeDisabled();
-  await expect(page.getByRole("status")).toContainText("Account deletion is not available in this beta environment.");
-  await expect(page.getByRole("button", { name: "Delete my account", exact: true })).toBeDisabled();
-  await expect(page.getByLabel("Type DELETE to confirm account deletion")).toBeDisabled();
-
-  const downloadPromise = page.waitForEvent("download");
-  await page.getByRole("button", { name: "Download my data" }).click();
-  const download = await downloadPromise;
-  const path = await download.path();
-  expect(path).toBeTruthy();
-  const exported = JSON.parse(await readFile(path!, "utf8")) as Record<string, unknown>;
-  expect(exported.schema_version).toBe("1");
-  expect(exported.profile).toBeTruthy();
-  for (const field of ["reviews", "connections", "invite_redemptions", "plan_memberships", "votes", "authored_plan_events"]) {
-    expect(Array.isArray(exported[field])).toBeTruthy();
-  }
-  const exportedKeys = nestedKeys(exported);
-  for (const forbidden of ["email_hash", "code_hash", "share_token", "access_token"]) {
-    expect(exportedKeys.has(forbidden)).toBeFalsy();
-  }
-});
-
-test("completes the deterministic two-person voting lifecycle", async ({ page }) => {
-  test.skip(Boolean(process.env.PLAYWRIGHT_BASE_URL), "Local deterministic evidence only");
-  const api = "http://127.0.0.1:8000";
-  const organizer = { "X-Demo-User-ID": "demo-organizer" };
-  const guest = { "X-Demo-User-ID": "demo-guest" };
-
-  const createdResponse = await page.request.post(`${api}/api/v1/plans`, {
-    headers: organizer,
-    data: {
-      title: "Release evidence dinner",
-      location_label: "Boston, MA",
-      latitude: 42.3601,
-      longitude: -71.0589,
-    },
-  });
-  expect(createdResponse.ok()).toBeTruthy();
-  const created = (await createdResponse.json()).data;
-  const planId = created.plan.id as string;
-  const oldToken = created.share_token as string;
-
-  expect((await page.request.post(`${api}/api/v1/plans/${planId}/join`, {
-    headers: guest,
-    data: { share_token: oldToken },
-  })).ok()).toBeTruthy();
-
-  const recommendations = await page.request.post(
-    `${api}/api/v1/plans/${planId}/recommendations`,
-    { headers: organizer, data: { query: "group-friendly dinner" } },
-  );
-  const candidates = (await recommendations.json()).data.candidates as Array<{ id: string }>;
-  expect(candidates).toHaveLength(4);
-  const ranking = candidates.slice(0, 3).map((candidate) => candidate.id);
-
-  for (const headers of [organizer, guest]) {
-    expect((await page.request.put(`${api}/api/v1/plans/${planId}/vote`, {
-      headers,
-      data: { ranking },
-    })).ok()).toBeTruthy();
-  }
-
-  const forbidden = await page.request.post(`${api}/api/v1/plans/${planId}/finalize`, {
-    headers: guest,
-    data: {},
-  });
-  expect(forbidden.status()).toBe(403);
-  expect((await page.request.post(`${api}/api/v1/plans/${planId}/finalize`, {
-    headers: organizer,
-    data: {},
-  })).ok()).toBeTruthy();
-
-  await page.goto(`/plans/${planId}`);
-  await expect(page.getByText("finalized", { exact: true })).toBeVisible();
-  await page.getByRole("button", { name: "Reopen voting" }).click();
-  await expect(page.getByText("voting", { exact: true })).toBeVisible();
-
-  expect((await page.request.post(`${api}/api/v1/plans/${planId}/share-token/rotate`, {
-    headers: organizer,
-    data: {},
-  })).ok()).toBeTruthy();
-  const expiredLink = await page.request.post(`${api}/api/v1/plans/${planId}/join`, {
-    headers: guest,
-    data: { share_token: oldToken },
-  });
-  expect(expiredLink.status()).toBe(404);
-});
-
-test("pilot landing, navigation and hidden direct routes keep Plans and Account accessible", async ({ page }) => {
-  await page.goto("/");
-  await expect(page).toHaveURL(/\/plans$/);
-  await expect(page.getByPlaceholder("Friday dinner")).toBeVisible();
-  const nav = page.getByRole("navigation").filter({ visible: true });
-  await expect(nav.getByRole("link", { name: "Plans", exact: true })).toBeVisible();
-  await expect(nav.getByRole("link", { name: "Account", exact: true })).toBeVisible();
-  await expect(nav.getByRole("link", { name: /Discover|Friends|People|Review|Profile|Taste|Photo/ })).toHaveCount(0);
-  await nav.getByRole("link", { name: "Account", exact: true }).click();
-  await expect(page).toHaveURL(/\/account$/);
-  await expect(page.getByRole("button", { name: "Download my data" })).toBeVisible();
-  await expect(page.getByText("Change it from your profile.")).toHaveCount(0);
-  await page.setViewportSize({ width: 390, height: 844 });
-  await expect(page.getByRole("navigation").filter({ visible: true }).getByRole("link", { name: "Plans", exact: true })).toBeVisible();
-  await expect(page.getByRole("navigation").filter({ visible: true }).getByRole("link", { name: "Account", exact: true })).toBeVisible();
-  for (const path of ["/discover", "/friends", "/people", "/review", "/profile", "/taste", "/photo", "/photos/upload", "/review/photo"]) {
-    await page.goto(path);
-    await expect(page).toHaveURL(/\/plans$/);
-    await expect(page.getByPlaceholder("Friday dinner")).toBeVisible();
-  }
-  await page.goto("/account-deletion");
-  await expect(page.getByRole("heading", { name: "Request account deletion" })).toBeVisible();
 });

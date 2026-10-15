@@ -26,6 +26,7 @@ mobile/*.jks
 mobile/*.keystore
 mobile/*.bak.jks
 backend/tableus-dev.db
+backend/tableus-local.db
 backend/.pytest_cache/
 backend/.mypy_cache/
 backend/.ruff_cache/

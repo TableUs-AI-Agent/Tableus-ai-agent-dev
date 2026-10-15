@@ -1,135 +1,314 @@
 "use client";
 
-import type { Plan, PlanRevision, ResolvedLocation } from "@tableus/domain";
-import { ApiError } from "@tableus/api-client";
+import type { Constraints, Plan } from "@tableus/api-client";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import Link from "next/link";
-import { useParams } from "next/navigation";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useParams, useRouter } from "next/navigation";
+import { useEffect, useRef, useState } from "react";
 
-import { v1Api } from "../../lib/v1-api";
-import { createCanonicalJoinUrl } from "../../lib/links";
+import { AppShell, Initials, LoadError, Loading } from "../../components/app-shell";
 import { GoogleMapsAttribution } from "../../components/google-maps-attribution";
-import { useUser } from "../../context/user-context";
+import { PickCard } from "../../components/pick-card";
+import { hasWishes, readWishes, WishesForm } from "../../components/wishes-form";
+import { api, errorMessage } from "../../lib/api";
+import { joinUrl } from "../../lib/plan-links";
+import { useMe } from "../../lib/session";
 
 export default function PlanPage() {
-  const { currentUser, userState, userError } = useUser();
-  if (userState === "loading") return <p className="p-8" role="status">Loading plan…</p>;
-  if (userState === "signed_out") return <PlanRecovery message="Sign in to view this TableUs plan." />;
-  if (userState === "error") return <PlanRecovery message={userError || "Unable to connect to TableUs."} retry />;
-  if (!currentUser) return <PlanRecovery message="Unable to load your approved TableUs profile." retry />;
-  return <PlanPageContent key={currentUser.id} subject={currentUser.id} />;
+  return <AppShell><PlanView /></AppShell>;
 }
 
-function PlanRecovery({ message, retry = false }: { message: string; retry?: boolean }) {
-  return (
-    <main className="mx-auto flex min-h-full max-w-xl items-center px-6 py-16">
-      <section className="glass w-full space-y-4 rounded-[2rem] p-8">
-        <h1 className="text-3xl font-bold">Plan unavailable</h1>
-        <p role="alert" className="text-red-700">{message}</p>
-        {retry
-          ? <button type="button" onClick={() => window.location.reload()} className="rounded-2xl bg-[var(--accent)] px-5 py-3 font-semibold text-white">Retry</button>
-          : <Link href="/invite?mode=sign-in" className="inline-flex rounded-2xl bg-[var(--accent)] px-5 py-3 font-semibold text-white">Sign in</Link>}
-      </section>
-    </main>
-  );
-}
-
-function PlanPageContent({ subject }: { subject: string }) {
-  const { id } = useParams<{ id: string }>();
+function usePlan(id: string) {
   const queryClient = useQueryClient();
-  const key = useMemo(() => ["plan", subject, id] as const, [subject, id]);
-  const revisionKey = useMemo(() => ["plan-revision", subject, id] as const, [subject, id]);
-  const [notes, setNotes] = useState("");
-  const [query, setQuery] = useState("group-friendly dinner");
-  const [rankingDraft, setRankingDraft] = useState<{ resultSet: string; values: string[] } | null>(null);
-  const [replacementTitle, setReplacementTitle] = useState("");
-  const [locationInput, setLocationInput] = useState("");
-  const [selectedLocation, setSelectedLocation] = useState<ResolvedLocation | null>(null);
-  const locationQueryRef = useRef("");
-  const plan = useQuery({ queryKey: key, queryFn: () => v1Api.get<Plan>(`/api/v1/plans/${id}`) });
-  const revision = useQuery({
-    queryKey: revisionKey,
-    queryFn: () => v1Api.get<PlanRevision>(`/api/v1/plans/${id}/revision`),
-    refetchInterval: 30_000,
-    enabled: true,
-  });
+  const plan = useQuery({ queryKey: ["plan", id], queryFn: () => api.getPlan(id) });
+  const seen = useRef<string | null>(null);
+
+  // Poll a cheap revision stamp and refetch only when someone else changed the plan.
   useEffect(() => {
-    if (revision.data?.updated_at && plan.data?.updated_at && revision.data.updated_at !== plan.data.updated_at) {
-      void queryClient.refetchQueries({ queryKey: key, exact: true });
-    }
-  }, [key, plan.data?.updated_at, queryClient, revision.data?.updated_at]);
-  const current = plan.data;
-  const candidateIds = `${current?.status ?? ""}|${current?.metadata_needs_replacement ? "repair" : "ready"}|${current?.candidates.map((candidate) => candidate.id).join("|") ?? ""}`;
-  const ranking = rankingDraft?.resultSet === candidateIds ? rankingDraft.values : [];
-  const mutation = (path: string, body: unknown, method: "post" | "put" | "patch" = "post") => ({
-    mutationFn: () => v1Api[method]<Plan>(`/api/v1/plans/${id}/${path}`, body),
-    onSuccess: (data: Plan) => {
-      queryClient.setQueryData(key, data);
-      queryClient.setQueryData<PlanRevision>(revisionKey, { updated_at: data.updated_at });
-    },
-  });
-  const constraints = useMutation(mutation("constraints", { notes, cuisines: [], dietary_notes: [] }, "patch"));
-  const recommend = useMutation(mutation("recommendations", { query }));
-  const vote = useMutation(mutation("vote", { ranking }, "put"));
-  const finalize = useMutation(mutation("finalize", {}));
-  const reopen = useMutation(mutation("reopen", {}));
-  const resolveLocation = useMutation({
-    mutationFn: (search: string) => v1Api.post<ResolvedLocation>("/api/v1/locations/resolve", { query: search }),
-    onSuccess: (location, search) => { if (search === locationQueryRef.current) setSelectedLocation(location); },
-  });
-  const replaceMetadata = useMutation({
-    mutationFn: () => v1Api.patch<Plan>(`/api/v1/plans/${id}/metadata`, {
-      title: replacementTitle.trim(),
-      location_label: locationInput.trim().replace(/\s+/g, " "),
-      location_place_id: selectedLocation?.place_id,
-    }),
-    onSuccess: (data) => {
-      queryClient.setQueryData(key, data);
-      queryClient.setQueryData<PlanRevision>(revisionKey, { updated_at: data.updated_at });
-      setRankingDraft(null);
-      vote.reset(); finalize.reset(); reopen.reset(); recommend.reset();
-      setReplacementTitle(""); setLocationInput(""); setSelectedLocation(null);
-    },
-  });
-  const rotate = useMutation({
-    mutationFn: () => v1Api.post<{ share_token: string }>(`/api/v1/plans/${id}/share-token/rotate`, {}),
-    onSuccess: ({ share_token }) => navigator.clipboard.writeText(createCanonicalJoinUrl(id, share_token)),
-  });
+    if (plan.data) seen.current = plan.data.updated_at;
+  }, [plan.data]);
   useEffect(() => {
-    vote.reset(); finalize.reset(); reopen.reset(); recommend.reset();
-  // A changed result set invalidates local candidate choices and pending retry intent.
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [candidateIds, current?.metadata_needs_replacement]);
-  const error = plan.error || constraints.error || recommend.error || vote.error || finalize.error || reopen.error || resolveLocation.error || replaceMetadata.error;
-  const staleWrite = [constraints, recommend, vote, finalize, reopen, replaceMetadata].some((action) =>
-    action.error instanceof ApiError && action.error.code === "idempotency_content_changed"
+    const timer = window.setInterval(async () => {
+      if (document.hidden) return;
+      try {
+        const { updated_at } = await api.planRevision(id);
+        if (seen.current && updated_at !== seen.current) queryClient.invalidateQueries({ queryKey: ["plan", id] });
+      } catch {
+        // The next tick will try again.
+      }
+    }, 8000);
+    return () => window.clearInterval(timer);
+  }, [id, queryClient]);
+
+  return plan;
+}
+
+function useUpdate(id: string) {
+  const queryClient = useQueryClient();
+  return (next: Plan) => {
+    queryClient.setQueryData(["plan", id], next);
+    queryClient.invalidateQueries({ queryKey: ["plans"] });
+  };
+}
+
+function PlanView() {
+  const { id } = useParams<{ id: string }>();
+  const plan = usePlan(id);
+  if (plan.isPending) return <Loading label="Loading plan" />;
+  if (plan.isError) return <LoadError message={errorMessage(plan.error)} onRetry={() => plan.refetch()} />;
+  const data = plan.data;
+
+  return (
+    <>
+      <header className="mt-4">
+        <h1 className="display text-6xl">{data.title}</h1>
+        <p className="mt-1 text-moss">{data.location_label}</p>
+      </header>
+      <People plan={data} />
+      {data.participants.length < 2 ? <Invite plan={data} first /> : null}
+      {data.status === "collecting" ? <Collecting plan={data} /> : null}
+      {data.status === "voting" ? <Voting key={data.candidates.map((item) => item.id).join()} plan={data} /> : null}
+      {data.status === "finalized" ? <Decided plan={data} /> : null}
+      {data.status !== "finalized" && data.participants.length >= 2 && data.participants.length < 8 ? <Invite plan={data} /> : null}
+      {data.viewer_is_organizer ? <DeletePlan plan={data} /> : null}
+    </>
   );
+}
 
-  async function refreshAfterChange() {
-    const refreshed = await plan.refetch();
-    if (!refreshed.isSuccess) return;
-    setRankingDraft(null);
-    constraints.reset(); recommend.reset(); vote.reset(); finalize.reset(); reopen.reset(); replaceMetadata.reset();
-  }
+function People({ plan }: { plan: Plan }) {
+  return (
+    <section aria-label="Who's in" className="mt-6">
+      <ul className="flex flex-wrap gap-x-4 gap-y-3">
+        {plan.participants.map((person) => {
+          const done = plan.status === "voting" ? person.has_voted : hasWishes(person.constraints);
+          const note = plan.status === "voting"
+            ? (person.has_voted ? "voted" : "still voting")
+            : plan.status === "collecting" ? (done ? "added wishes" : "no wishes yet") : "";
+          return (
+            <li key={person.profile_id} className="flex items-center gap-2">
+              <Initials name={person.display_name} highlight={done} />
+              <span className="text-sm leading-tight">
+                <span className="block font-semibold">{person.display_name}{person.is_organizer ? " (organizer)" : ""}</span>
+                {note ? <span className="block text-moss">{note}</span> : null}
+              </span>
+            </li>
+          );
+        })}
+      </ul>
+    </section>
+  );
+}
 
-  function selectCandidate(candidateId: string) {
-    const next = ranking.includes(candidateId) ? ranking.filter((item) => item !== candidateId) : ranking.length < 3 ? [...ranking, candidateId] : ranking;
-    setRankingDraft({ resultSet: candidateIds, values: next });
+function MyWishes({ plan, submitLabel, onSaved }: { plan: Plan; submitLabel: string; onSaved?: () => void }) {
+  const me = useMe();
+  const update = useUpdate(plan.id);
+  const mine = plan.participants.find((person) => person.profile_id === me.data?.id);
+  const save = useMutation({
+    mutationFn: (wishes: Constraints) => api.saveConstraints(plan.id, wishes),
+    onSuccess: (next) => { update(next); onSaved?.(); },
+  });
+  return (
+    <>
+      <WishesForm initial={readWishes(mine?.constraints)} busy={save.isPending} submitLabel={submitLabel} onSave={(wishes) => save.mutate(wishes)} />
+      {save.isError ? <p role="alert" className="mt-3 text-radicchio">{errorMessage(save.error)}</p> : null}
+      {save.isSuccess ? <p role="status" className="mt-3 text-moss">Saved. Your standing tastes from your account are included too.</p> : null}
+    </>
+  );
+}
+
+function Collecting({ plan }: { plan: Plan }) {
+  const update = useUpdate(plan.id);
+  const [request, setRequest] = useState("");
+  const suggest = useMutation({ mutationFn: () => api.suggest(plan.id, request.trim()), onSuccess: update });
+  const enoughPeople = plan.participants.length >= 2;
+
+  return (
+    <>
+      <section aria-labelledby="wishes" className="mt-10">
+        <h2 id="wishes" className="text-2xl font-bold">What do you want?</h2>
+        <p className="mb-5 mt-1 text-moss">Everyone in the plan can see these.</p>
+        <MyWishes plan={plan} submitLabel="Save my wishes" />
+      </section>
+
+      <section aria-labelledby="suggest" className="mt-10 rounded-[20px] border-2 border-bottle bg-white p-5">
+        <h2 id="suggest" className="text-2xl font-bold">Ready when everyone is</h2>
+        {enoughPeople ? (
+          <>
+            <p className="mt-1">Anyone can ask for suggestions once the group has added their wishes.</p>
+            <label className="mt-4 block">
+              <span className="mb-1 block font-semibold">Anything else? <span className="font-normal text-moss">(optional)</span></span>
+              <input className="field" maxLength={500} placeholder="Close to the theater, good for a birthday" value={request} onChange={(e) => setRequest(e.target.value)} />
+            </label>
+            {suggest.isError ? <p role="alert" className="mt-3 text-radicchio">{errorMessage(suggest.error)}</p> : null}
+            <button type="button" className="btn btn-primary mt-4 w-full" disabled={suggest.isPending} onClick={() => suggest.mutate()}>
+              {suggest.isPending ? "Finding places that work for everyone…" : "Get four picks"}
+            </button>
+          </>
+        ) : (
+          <p className="mt-1">Invite at least one more person with the link below, then get suggestions together.</p>
+        )}
+      </section>
+    </>
+  );
+}
+
+function Voting({ plan }: { plan: Plan }) {
+  const update = useUpdate(plan.id);
+  const [ranking, setRanking] = useState<string[]>(plan.my_vote ?? []);
+  const [editing, setEditing] = useState(false);
+  const vote = useMutation({ mutationFn: () => api.vote(plan.id, ranking), onSuccess: update });
+  const finalize = useMutation({ mutationFn: () => api.finalize(plan.id), onSuccess: update });
+  const saved = JSON.stringify(ranking) === JSON.stringify(plan.my_vote ?? []);
+  const voters = plan.participants.filter((person) => person.has_voted).length;
+  const leader = [...plan.candidates].sort((a, b) => b.vote_score - a.vote_score || a.rank - b.rank)[0];
+
+  function toggle(candidateId: string) {
+    setRanking((current) => current.includes(candidateId)
+      ? current.filter((value) => value !== candidateId)
+      : current.length < 3 ? [...current, candidateId] : current);
   }
 
   return (
-    <div className="mx-auto max-w-5xl space-y-6 px-5 py-10 md:px-10">
-      {error ? <p role="alert" className="text-red-700">{error.message}</p> : null}
-      {staleWrite ? <div role="alert" className="rounded-2xl bg-amber-50 p-4"><p>Plan details changed. Refresh the plan before making another change.</p><button className="mt-3 rounded-2xl border border-[var(--border)] bg-white px-5 py-3 font-semibold" onClick={() => void refreshAfterChange()}>Refresh plan</button></div> : null}
-      {current ? <>
-        <header className="glass rounded-[2rem] p-7"><h1 className="text-4xl font-bold">{current.title}</h1><p className="mt-3 text-[var(--muted-foreground)]">{current.location_label} · {current.participants.length}/8 people · <span className="capitalize">{current.status}</span></p><p className="mt-2 text-sm text-[var(--muted-foreground)]">{current.participants.map((person) => person.display_name).join(", ")}</p>{current.viewer_is_organizer ? <button onClick={() => rotate.mutate()} className="mt-4 rounded-2xl border border-[var(--border)] bg-white px-5 py-3 text-sm font-semibold">Copy a fresh private join link</button> : null}</header>
-        {current.metadata_needs_replacement ? <section className="glass space-y-4 rounded-[2rem] p-6"><h2 className="text-xl font-bold">Plan details changed</h2><p className="text-sm text-[var(--muted-foreground)]">Choose a location and generate new options after the plan details are updated. Existing choices are no longer available.</p>{current.viewer_is_organizer ? <><input aria-label="Replacement plan title" className="w-full rounded-2xl border border-[var(--border)] bg-white p-4" value={replacementTitle} onChange={(event) => setReplacementTitle(event.target.value)} placeholder="Plan title" /><div className="flex gap-3"><input aria-label="Replacement city, neighborhood, or ZIP code" className="min-w-0 flex-1 rounded-2xl border border-[var(--border)] bg-white p-4" value={locationInput} onChange={(event) => { locationQueryRef.current = event.target.value.trim(); setLocationInput(event.target.value); setSelectedLocation(null); resolveLocation.reset(); }} placeholder="City, neighborhood, or ZIP code" /><button className="rounded-2xl border border-[var(--border)] bg-white px-5 py-3 font-semibold disabled:opacity-50" disabled={!locationInput.trim() || resolveLocation.isPending} onClick={() => resolveLocation.mutate(locationInput.trim())}>Find location</button></div>{selectedLocation ? <p role="status">{selectedLocation.label}<GoogleMapsAttribution className="mt-1" /></p> : null}<button className="rounded-2xl bg-[var(--accent)] px-5 py-3 font-semibold text-white disabled:opacity-50" disabled={!replacementTitle.trim() || !selectedLocation || replaceMetadata.isPending || staleWrite} onClick={() => replaceMetadata.mutate()}>Save new plan details</button></> : <p className="text-sm text-[var(--muted-foreground)]">The organizer can update the plan details.</p>}</section> : null}
-        {current.status === "collecting" ? <section className="glass space-y-4 rounded-[2rem] p-6"><h2 className="text-xl font-bold">Set the table</h2><textarea className="min-h-24 w-full rounded-2xl border border-[var(--border)] bg-white p-4" value={notes} onChange={(event) => setNotes(event.target.value)} placeholder="Budget, vibe, dietary notes…"/><button className="rounded-2xl border border-[var(--border)] bg-white px-5 py-3 font-semibold" disabled={staleWrite} onClick={() => constraints.mutate()}>Save my constraints</button>{!current.metadata_needs_replacement ? <><input className="w-full rounded-2xl border border-[var(--border)] bg-white p-4" value={query} onChange={(event) => setQuery(event.target.value)}/><button className="rounded-2xl bg-[var(--accent)] px-5 py-3 font-semibold text-white disabled:opacity-50" disabled={current.participants.length < 2 || recommend.isPending || staleWrite} onClick={() => recommend.mutate()}>Find four options</button>{current.participants.length < 2 ? <p className="text-sm text-[var(--muted-foreground)]">Share the private join link with a second invite-approved diner first.</p> : null}</> : null}</section> : null}
-        <section className="grid gap-4 sm:grid-cols-2">{current.candidates.map((candidate) => { const position = ranking.indexOf(candidate.id); const chosen = current.finalized_candidate_id === candidate.id; return <button key={candidate.id} onClick={() => current.status === "voting" && selectCandidate(candidate.id)} className="glass rounded-[2rem] p-6 text-left"><div className="flex justify-between gap-4"><h2 className="text-xl font-bold">{candidate.place.name}</h2><span className="font-semibold text-[var(--accent)]">{chosen ? "Chosen" : position >= 0 ? `#${position + 1}` : `${candidate.vote_score} pts`}</span></div><p className="mt-2 text-sm text-[var(--muted-foreground)]">{candidate.place.cuisine} · {"$".repeat(candidate.place.price_level)} · {candidate.place.rating.toFixed(1)}</p><p className="mt-3 text-sm text-[var(--muted-foreground)]">{candidate.reasoning}</p>{candidate.place.data_provider === "google_maps" ? <GoogleMapsAttribution className="mt-1" /> : null}</button>; })}</section>
-        {current.status === "voting" ? <section className="glass flex flex-wrap gap-3 rounded-[2rem] p-6"><button disabled={ranking.length !== 3 || staleWrite} onClick={() => vote.mutate()} className="rounded-2xl bg-[var(--accent)] px-5 py-3 font-semibold text-white disabled:opacity-50">Submit top three</button>{current.viewer_is_organizer ? <button disabled={staleWrite} onClick={() => finalize.mutate()} className="rounded-2xl border border-[var(--border)] bg-white px-5 py-3 font-semibold">Finalize current winner</button> : null}</section> : null}
-        {current.status === "finalized" && current.viewer_is_organizer ? <button disabled={staleWrite} onClick={() => reopen.mutate()} className="rounded-2xl border border-[var(--border)] bg-white px-5 py-3 font-semibold">Reopen voting</button> : null}
-      </> : null}
+    <>
+      <section aria-labelledby="picks" className="mt-10">
+        <h2 id="picks" className="text-2xl font-bold">Rank your top three</h2>
+        <p className="mb-5 mt-1 text-moss">Tap in order of preference. Tap again to undo.</p>
+        <div className="space-y-4">
+          {plan.candidates.map((candidate) => {
+            const position = ranking.indexOf(candidate.id);
+            return (
+              <PickCard
+                key={candidate.id}
+                candidate={candidate}
+                rank={position >= 0 ? position : undefined}
+                onToggle={() => toggle(candidate.id)}
+              />
+            );
+          })}
+        </div>
+        {plan.candidates.some((candidate) => candidate.place.data_provider === "google_maps") ? <GoogleMapsAttribution className="mt-2" /> : null}
+        {vote.isError ? <p role="alert" className="mt-3 text-radicchio">{errorMessage(vote.error)}</p> : null}
+        {saved && ranking.length === 3 ? (
+          <p role="status" className="mt-5 rounded-lg border-2 border-bottle bg-white p-3 text-center font-semibold">
+            Vote saved. Tap the picks to change it.
+          </p>
+        ) : (
+          <button
+            type="button"
+            className="btn btn-primary mt-5 w-full"
+            disabled={ranking.length !== 3 || vote.isPending}
+            onClick={() => vote.mutate()}
+          >
+            {vote.isPending ? "Saving…" : ranking.length === 3 ? "Save my vote" : `Pick ${3 - ranking.length} more`}
+          </button>
+        )}
+      </section>
+
+      {plan.viewer_is_organizer && leader ? (
+        <section aria-labelledby="decide" className="mt-8 rounded-[20px] border-2 border-bottle bg-white p-5">
+          <h2 id="decide" className="text-2xl font-bold">Lock it in</h2>
+          <p className="mt-1">
+            {voters} of {plan.participants.length} voted. {voters ? `${leader.place.name} is in the lead.` : "Wait for votes, or decide now."}
+          </p>
+          {finalize.isError ? <p role="alert" className="mt-3 text-radicchio">{errorMessage(finalize.error)}</p> : null}
+          <button type="button" className="btn btn-quiet mt-4 w-full" disabled={finalize.isPending} onClick={() => finalize.mutate()}>
+            {finalize.isPending ? "Locking in…" : `Go with ${leader.place.name}`}
+          </button>
+        </section>
+      ) : null}
+
+      <section className="mt-8">
+        {editing ? (
+          <>
+            <h2 className="text-2xl font-bold">Change your wishes</h2>
+            <p className="mb-5 mt-1 text-radicchio">Saving clears these picks and everyone&apos;s votes so the group can get new ones.</p>
+            <MyWishes plan={plan} submitLabel="Save and start over" onSaved={() => setEditing(false)} />
+          </>
+        ) : (
+          <button type="button" className="btn btn-text" onClick={() => setEditing(true)}>None of these work? Change your wishes</button>
+        )}
+      </section>
+    </>
+  );
+}
+
+function Decided({ plan }: { plan: Plan }) {
+  const update = useUpdate(plan.id);
+  const reopen = useMutation({ mutationFn: () => api.reopen(plan.id), onSuccess: update });
+  const winner = plan.candidates.find((candidate) => candidate.id === plan.finalized_candidate_id);
+  return (
+    <section aria-labelledby="decided" className="mt-10">
+      <h2 id="decided" className="display text-5xl">You&apos;re going to</h2>
+      <div className="mt-4">
+        {winner ? <PickCard candidate={winner} winner /> : <p>The chosen place couldn&apos;t be loaded.</p>}
+        {winner?.place.data_provider === "google_maps" ? <GoogleMapsAttribution className="mt-2" /> : null}
+      </div>
+      {plan.viewer_is_organizer ? (
+        <>
+          {reopen.isError ? <p role="alert" className="mt-3 text-radicchio">{errorMessage(reopen.error)}</p> : null}
+          <button type="button" className="btn btn-quiet mt-6" disabled={reopen.isPending} onClick={() => reopen.mutate()}>
+            Reopen voting
+          </button>
+        </>
+      ) : null}
+    </section>
+  );
+}
+
+function Invite({ plan, first = false }: { plan: Plan; first?: boolean }) {
+  const queryClient = useQueryClient();
+  const [copied, setCopied] = useState(false);
+  // Signed-in screens render only in the browser, where the link origin is known.
+  const url = typeof window === "undefined" ? "" : joinUrl(plan.id, plan.share_token);
+  const rotate = useMutation({
+    mutationFn: () => api.newShareLink(plan.id),
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: ["plan", plan.id] }),
+  });
+
+  async function copy() {
+    await navigator.clipboard.writeText(url);
+    setCopied(true);
+    window.setTimeout(() => setCopied(false), 2000);
+  }
+
+  return (
+    <section aria-labelledby="invite" className={first ? "mt-8 rounded-[20px] bg-bottle p-5 text-leaf" : "mt-12 border-t-2 border-sage pt-8"}>
+      <h2 id="invite" className={first ? "text-2xl font-bold" : "text-xl font-bold"}>{first ? "Send this link to the group" : "Invite people"}</h2>
+      <p className={first ? "mt-1" : "mt-1 text-moss"}>Anyone with this link can join, up to eight people.</p>
+      <div className="mt-3 flex gap-2">
+        <input className="field min-w-0 flex-1 text-sm" readOnly value={url} aria-label="Plan link" onFocus={(e) => e.currentTarget.select()} />
+        <button type="button" className="btn btn-primary shrink-0" onClick={copy} disabled={!url}>{copied ? "Copied" : "Copy link"}</button>
+      </div>
+      {plan.viewer_is_organizer ? (
+        <button type="button" className="btn btn-text mt-2 text-sm" disabled={rotate.isPending} onClick={() => rotate.mutate()}>
+          Make a new link (the old one stops working)
+        </button>
+      ) : null}
+    </section>
+  );
+}
+
+function DeletePlan({ plan }: { plan: Plan }) {
+  const router = useRouter();
+  const queryClient = useQueryClient();
+  const remove = useMutation({
+    mutationFn: () => api.deletePlan(plan.id),
+    onSuccess: () => {
+      queryClient.removeQueries({ queryKey: ["plan", plan.id] });
+      queryClient.invalidateQueries({ queryKey: ["plans"] });
+      router.replace("/plans");
+    },
+  });
+  return (
+    <div className="mt-10">
+      <button
+        type="button"
+        className="btn btn-text text-sm text-radicchio"
+        disabled={remove.isPending}
+        onClick={() => { if (window.confirm(`Delete "${plan.title}" for everyone?`)) remove.mutate(); }}
+      >
+        Delete this plan
+      </button>
+      {remove.isError ? <p role="alert" className="text-radicchio">{errorMessage(remove.error)}</p> : null}
     </div>
   );
 }

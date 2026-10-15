@@ -1,57 +1,26 @@
-import { PUBLIC_RUNTIME_POLICY, requireExactHttpsOrigin } from "@tableus/domain";
-
-function localDevelopmentOrigin(value: string, nodeEnv: string | undefined): string | null {
-  if (nodeEnv === "production") return null;
+/**
+ * Service origins come from build-time env. Accept a bare HTTPS origin, or plain
+ * HTTP on this machine for local development. Hosted builds are additionally
+ * pinned to the expected staging origins in next.config.ts.
+ */
+export function serviceOrigin(value: string | undefined, label: string): string {
+  if (!value) return "";
   let parsed: URL;
   try {
     parsed = new URL(value);
   } catch {
-    return null;
+    throw new Error(`${label} must be an origin like https://api.example.com`);
   }
+  const local = parsed.protocol === "http:" && ["localhost", "127.0.0.1", "[::1]"].includes(parsed.hostname);
   if (
-    parsed.protocol !== "http:"
-    || !["localhost", "127.0.0.1", "[::1]"].includes(parsed.hostname)
-    || parsed.username
-    || parsed.password
-    || parsed.pathname !== "/"
-    || parsed.search
-    || parsed.hash
+    (parsed.protocol !== "https:" && !local)
+    || parsed.username || parsed.password || parsed.pathname !== "/" || parsed.search || parsed.hash
   ) {
-    return null;
+    throw new Error(`${label} must be an origin like https://api.example.com`);
   }
   return parsed.origin;
 }
 
-function optionalApprovedOrigin(
-  value: string | undefined,
-  expected: string,
-  label: string,
-  nodeEnv: string | undefined,
-): string {
-  if (!value) return "";
-  return localDevelopmentOrigin(value, nodeEnv) ?? requireExactHttpsOrigin(value, expected, label);
-}
-
-export function webApiOrigin(
-  value = process.env.NEXT_PUBLIC_API_URL,
-  nodeEnv = process.env.NODE_ENV,
-): string {
-  return optionalApprovedOrigin(
-    value,
-    PUBLIC_RUNTIME_POLICY.stagingApiOrigin,
-    "Web API origin",
-    nodeEnv,
-  );
-}
-
-export function webSupabaseOrigin(
-  value = process.env.NEXT_PUBLIC_SUPABASE_URL,
-  nodeEnv = process.env.NODE_ENV,
-): string {
-  return optionalApprovedOrigin(
-    value,
-    PUBLIC_RUNTIME_POLICY.stagingSupabaseOrigin,
-    "Web Supabase origin",
-    nodeEnv,
-  );
-}
+export const webApiOrigin = (value = process.env.NEXT_PUBLIC_API_URL) => serviceOrigin(value, "API origin");
+export const webSupabaseOrigin = (value = process.env.NEXT_PUBLIC_SUPABASE_URL) =>
+  serviceOrigin(value, "Supabase origin");
