@@ -6,6 +6,7 @@
       "codex/pilot-experience-measurement": false,
       "codex/pilot-staging-readiness": false,
       "codex/mobile-signup-recovery": false,
+      "codex/claude-code-migration": false,
       "main": false
     }
   },
