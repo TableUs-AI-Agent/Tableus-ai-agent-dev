@@ -7,7 +7,7 @@
 import { spawnSync } from "node:child_process";
 import { createHash } from "node:crypto";
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
-import { join, resolve } from "node:path";
+import { join, relative, resolve, sep } from "node:path";
 import { fileURLToPath } from "node:url";
 
 export const REVIEW_MODEL = "gpt-6.1-sol";
@@ -236,10 +236,14 @@ export function resolveCodex(options, env, run) {
   return { command: candidate, version: probe.stdout.trim() };
 }
 
-// Binds a working-tree review to the exact tracked diff and untracked bytes.
-function workingTreeFingerprint(run, repoRoot, baseSha) {
+// Binds a working-tree review to the exact tracked diff and untracked bytes,
+// excluding the review's own output directory when it sits inside the checkout.
+function workingTreeFingerprint(run, repoRoot, baseSha, outDir) {
+  const outPrefix = `${relative(repoRoot, outDir).split(sep).join("/")}/`;
   const hash = createHash("sha256").update(git(run, repoRoot, ["diff", "--binary", baseSha]));
-  const untracked = git(run, repoRoot, ["ls-files", "--others", "--exclude-standard", "-z"]).split("\0").filter(Boolean);
+  const untracked = git(run, repoRoot, ["ls-files", "--others", "--exclude-standard", "-z"])
+    .split("\0")
+    .filter((path) => path && !path.startsWith(outPrefix));
   for (const path of untracked.sort()) hash.update(`\0${path}\0`).update(readFileSync(join(repoRoot, path)));
   return hash.digest("hex");
 }
@@ -264,7 +268,7 @@ export function runReview(options, { env = process.env, run = defaultRun, cwd = 
   writeFileSync(schemaPath, `${JSON.stringify(findingsSchema(), null, 2)}\n`);
   writeFileSync(join(outDir, "prompt.md"), `${prompt}\n`);
 
-  const diffFingerprint = options.uncommitted ? workingTreeFingerprint(run, repoRoot, baseSha) : undefined;
+  const diffFingerprint = options.uncommitted ? workingTreeFingerprint(run, repoRoot, baseSha, outDir) : undefined;
 
   const args = buildCodexArgs({ repoRoot, effort: options.effort, schemaPath, lastMessagePath });
   const execution = run(codex.command, args, { cwd: repoRoot, input: prompt });
@@ -302,7 +306,7 @@ export function runReview(options, { env = process.env, run = defaultRun, cwd = 
       }
     }
   }
-  if (options.uncommitted && workingTreeFingerprint(run, repoRoot, baseSha) !== diffFingerprint) {
+  if (options.uncommitted && workingTreeFingerprint(run, repoRoot, baseSha, outDir) !== diffFingerprint) {
     problems.push("working tree changed during the review; rerun on a stable tree");
     result = undefined;
     exitCode = EXIT.workingTreeChanged;

@@ -25,18 +25,19 @@ const HEADER = (overrides = {}) => {
 };
 const CLEAN = { verdict: "clean", summary: "No actionable issues.", findings: [] };
 
-function fakeRun({ codexStatus = 0, header = HEADER(), message = CLEAN, writeMessage = true, codexMissing = false, status = "", diffs = [] } = {}) {
+function fakeRun({ codexStatus = 0, header = HEADER(), message = CLEAN, writeMessage = true, codexMissing = false, status = "", diffs = [], toplevel = "/repo", untracked = [] } = {}) {
   const calls = [];
   let diffCalls = 0;
+  let lsCalls = 0;
   const run = (command, args, options) => {
     calls.push({ command, args, options });
     if (command === "git") {
       const [sub, ...rest] = args;
-      if (sub === "rev-parse" && rest[0] === "--show-toplevel") return ok("/repo\n");
+      if (sub === "rev-parse" && rest[0] === "--show-toplevel") return ok(`${toplevel}\n`);
       if (sub === "rev-parse") return ok(`${rest[1].startsWith("base") ? BASE : HEAD}\n`);
       if (sub === "status") return ok(status);
       if (sub === "diff") return ok(diffs[diffCalls++] ?? "diff --git a/x b/x\n");
-      if (sub === "ls-files") return ok("");
+      if (sub === "ls-files") return ok((untracked[lsCalls++] ?? []).join("\0"));
       return { status: 1, stdout: "", stderr: "unexpected git call" };
     }
     if (args[0] === "--version") {
@@ -197,4 +198,12 @@ test("runReview fails when the working tree changes during an uncommitted review
     assert.equal(exitCode, EXIT.workingTreeChanged);
     assert.equal(summary.status, "failed");
     assert.equal(result, undefined);
+  }));
+
+test("runReview ignores its own output directory inside the checkout when fingerprinting", () =>
+  withOutDir((root) => {
+    const out = join(root, "review-output");
+    const { run } = fakeRun({ toplevel: root, untracked: [[], ["review-output/findings.json", "review-output/prompt.md"]] });
+    const { exitCode, summary } = runReview({ base: "base", effort: "medium", uncommitted: true, out }, { run, env: {}, cwd: root });
+    assert.equal(exitCode, EXIT.ok, summary.problems.join("; "));
   }));
