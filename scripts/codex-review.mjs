@@ -31,7 +31,7 @@ export const DISABLED_FEATURES = [
   "hooks",
 ];
 
-export const EXIT = { ok: 0, usage: 64, codexFailed: 2, invalidOutput: 3, configMismatch: 4 };
+export const EXIT = { ok: 0, usage: 64, codexFailed: 2, invalidOutput: 3, configMismatch: 4, workingTreeChanged: 5 };
 
 const USAGE = `Usage: node scripts/codex-review.mjs --base <ref> [--head <ref> | --uncommitted]
        [--criteria <file>] [--effort ${EFFORTS.join("|")}] [--out <dir>] [--codex <path>]
@@ -236,6 +236,14 @@ export function resolveCodex(options, env, run) {
   return { command: candidate, version: probe.stdout.trim() };
 }
 
+// Binds a working-tree review to the exact tracked diff and untracked bytes.
+function workingTreeFingerprint(run, repoRoot, baseSha) {
+  const hash = createHash("sha256").update(git(run, repoRoot, ["diff", "--binary", baseSha]));
+  const untracked = git(run, repoRoot, ["ls-files", "--others", "--exclude-standard", "-z"]).split("\0").filter(Boolean);
+  for (const path of untracked.sort()) hash.update(`\0${path}\0`).update(readFileSync(join(repoRoot, path)));
+  return hash.digest("hex");
+}
+
 export function runReview(options, { env = process.env, run = defaultRun, cwd = process.cwd(), now = new Date() } = {}) {
   const repoRoot = git(run, cwd, ["rev-parse", "--show-toplevel"]);
   const baseSha = git(run, repoRoot, ["rev-parse", "--verify", `${options.base}^{commit}`]);
@@ -249,17 +257,14 @@ export function runReview(options, { env = process.env, run = defaultRun, cwd = 
   mkdirSync(outDir, { recursive: true });
   const schemaPath = join(outDir, "schema.json");
   const lastMessagePath = join(outDir, "findings.json");
+  if (["findings.json", "summary.json", "codex.log"].some((name) => existsSync(join(outDir, name)))) {
+    throw new UsageError(`${outDir} already holds a review; choose a new --out directory`);
+  }
   const prompt = buildPrompt({ baseSha, headSha, uncommitted: options.uncommitted, status, criteria });
   writeFileSync(schemaPath, `${JSON.stringify(findingsSchema(), null, 2)}\n`);
   writeFileSync(join(outDir, "prompt.md"), `${prompt}\n`);
 
-  let diffFingerprint;
-  if (options.uncommitted) {
-    const hash = createHash("sha256").update(git(run, repoRoot, ["diff", "--binary", baseSha]));
-    const untracked = git(run, repoRoot, ["ls-files", "--others", "--exclude-standard", "-z"]).split("\0").filter(Boolean);
-    for (const path of untracked.sort()) hash.update(`\0${path}\0`).update(readFileSync(join(repoRoot, path)));
-    diffFingerprint = hash.digest("hex");
-  }
+  const diffFingerprint = options.uncommitted ? workingTreeFingerprint(run, repoRoot, baseSha) : undefined;
 
   const args = buildCodexArgs({ repoRoot, effort: options.effort, schemaPath, lastMessagePath });
   const execution = run(codex.command, args, { cwd: repoRoot, input: prompt });
@@ -296,6 +301,11 @@ export function runReview(options, { env = process.env, run = defaultRun, cwd = 
         exitCode = EXIT.invalidOutput;
       }
     }
+  }
+  if (options.uncommitted && workingTreeFingerprint(run, repoRoot, baseSha) !== diffFingerprint) {
+    problems.push("working tree changed during the review; rerun on a stable tree");
+    result = undefined;
+    exitCode = EXIT.workingTreeChanged;
   }
 
   const summary = {

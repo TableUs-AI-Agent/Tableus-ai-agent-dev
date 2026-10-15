@@ -104,8 +104,10 @@ for large or risky changes), a read-only sandbox, no approvals, no user config,
 plugins, apps, browsers, hooks or sub-agents, and strict configuration. It finds
 Codex through `--codex`, `CODEX_BIN` or `PATH`. Results, the prompt and the
 effective configuration Codex printed go to `.artifacts/reviews/`. A nonzero exit
-means the review did not complete (Codex failure, invalid output or a
-model/sandbox/effort mismatch), never a clean result. The lead adjudicates
+means the review did not complete (Codex failure, invalid output, a
+model/sandbox/effort mismatch, or a working tree that changed during an
+`--uncommitted` review), never a clean result. Each run needs a fresh output
+directory. The lead adjudicates
 findings and requests a focused re-review only when fixes or open concerns
 warrant it. Reviews use ChatGPT subscription access, never API keys, and are not
 part of `make ready` or CI.

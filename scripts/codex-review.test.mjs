@@ -25,8 +25,9 @@ const HEADER = (overrides = {}) => {
 };
 const CLEAN = { verdict: "clean", summary: "No actionable issues.", findings: [] };
 
-function fakeRun({ codexStatus = 0, header = HEADER(), message = CLEAN, writeMessage = true, codexMissing = false, status = "" } = {}) {
+function fakeRun({ codexStatus = 0, header = HEADER(), message = CLEAN, writeMessage = true, codexMissing = false, status = "", diffs = [] } = {}) {
   const calls = [];
+  let diffCalls = 0;
   const run = (command, args, options) => {
     calls.push({ command, args, options });
     if (command === "git") {
@@ -34,7 +35,7 @@ function fakeRun({ codexStatus = 0, header = HEADER(), message = CLEAN, writeMes
       if (sub === "rev-parse" && rest[0] === "--show-toplevel") return ok("/repo\n");
       if (sub === "rev-parse") return ok(`${rest[1].startsWith("base") ? BASE : HEAD}\n`);
       if (sub === "status") return ok(status);
-      if (sub === "diff") return ok("diff --git a/x b/x\n");
+      if (sub === "diff") return ok(diffs[diffCalls++] ?? "diff --git a/x b/x\n");
       if (sub === "ls-files") return ok("");
       return { status: 1, stdout: "", stderr: "unexpected git call" };
     }
@@ -176,4 +177,24 @@ test("runReview explains how to locate Codex when it is unavailable", () =>
       () => runReview({ base: "base", effort: "medium", uncommitted: false, out }, { run, env: {}, cwd: "/repo" }),
       /CODEX_BIN/,
     );
+  }));
+
+test("runReview refuses an output directory that already holds a review", () =>
+  withOutDir((out) => {
+    writeFileSync(join(out, "findings.json"), JSON.stringify(CLEAN));
+    const { run, calls } = fakeRun({ writeMessage: false });
+    assert.throws(
+      () => runReview({ base: "base", effort: "medium", uncommitted: false, out }, { run, env: {}, cwd: "/repo" }),
+      /already holds a review/,
+    );
+    assert.ok(!calls.some((call) => call.args[0] === "exec"));
+  }));
+
+test("runReview fails when the working tree changes during an uncommitted review", () =>
+  withOutDir((out) => {
+    const { run } = fakeRun({ diffs: ["diff one\n", "diff two\n"] });
+    const { summary, result, exitCode } = runReview({ base: "base", effort: "medium", uncommitted: true, out }, { run, env: {}, cwd: "/repo" });
+    assert.equal(exitCode, EXIT.workingTreeChanged);
+    assert.equal(summary.status, "failed");
+    assert.equal(result, undefined);
   }));
