@@ -42,12 +42,24 @@ approval. Canceled security scans and the simulator campaign stay closed.
       `sonnet-investigator.md` (read-only Bash by instruction, plan mode).
 - [x] `scripts/codex-review.mjs` with mocked unit tests.
 - [x] Workflow, decisions and current-state updated in place.
-- [ ] Focused tests, `make ready` and contract drift check.
-- [ ] Sol review of this migration and adjudication.
+- [x] Focused tests, `make ready` and contract drift check.
+- [x] Sol review of this migration and adjudication.
 - [ ] File-defined helper routing in a fresh Claude Code session (needs login).
 
-Status and verification details are in the handoff for this pass; update this
-list rather than adding a separate ledger.
+Verification: `make ready` passed at `ee686e1` (375 JavaScript tests, 206 Python
+tests with 36 PostgreSQL-only skips, lint/types, contracts with no drift,
+web/Expo-web builds, smoke, report-only performance). Later commits changed only
+the review wrapper and its tests; the root script suite (126 tests) passed again.
+GPT-6.1 Sol (medium, read-only) reviewed `3a2357f..ee686e1` and found two valid
+wrapper issues (stale output reuse, unchecked working-tree changes), fixed in
+`f5542b1`; its re-review found one regression, fixed in `9ed3b2d`; the final
+re-review was clean. Haiku 5.5 and Sonnet 5.5 delegations were exercised by
+per-call model selection from the lead session, which started before the agent
+files existed; the files themselves still need a fresh, logged-in session.
+
+Remaining: the standalone `claude` CLI login had expired; after `claude auth
+login`, start a session in this worktree and confirm `/agents` lists both helpers
+and `/tasks` shows their models. Publishing this branch is a separate approval.
 
 ## Mapping from Codex
 
