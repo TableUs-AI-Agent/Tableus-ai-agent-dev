@@ -23,8 +23,9 @@ implemented behavior and stay current with their code.
 ## Working agreement
 
 - Brian Chei owns product decisions and approvals. Whichever agent leads a task
-  owns its integration, verification and handoff. Codex-specific model and
-  subagent defaults live in `.codex/` and are not project requirements.
+  owns its integration, verification and handoff. Tool-specific model and
+  subagent defaults live in `CLAUDE.md` and `.claude/` (primary, Claude Code)
+  and `.codex/` (Codex); they are not project requirements.
 - Start from the active packet and current state. The root checkout may be stale;
   confirm the branch and base before editing, and preserve uncommitted work.
 - Start each authorized major development pass in a fresh thread, with a compact

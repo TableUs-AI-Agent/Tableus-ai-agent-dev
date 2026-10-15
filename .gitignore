@@ -38,3 +38,6 @@ CHAT_CONTEXT_COMPACT.md
 .vercel/
 .env*.local
 supabase/.temp/
+
+# Claude Code personal overrides
+.claude/settings.local.json

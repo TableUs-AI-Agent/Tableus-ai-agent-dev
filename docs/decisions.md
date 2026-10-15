@@ -55,6 +55,7 @@ choices, which take precedence over earlier entries where they conflict:
 - **Agent guidance:** repository instructions are agent-neutral. Brian decides;
   the agent leading a task owns integration and handoff. Codex model and subagent
   defaults stay in `.codex/`. This supersedes the 2026-09-22 GPT-6 roles entry.
+  Claude Code became the primary development tool on 2026-10-15 (entry below).
 
 ### Pilot follow-up — adopted 2026-09-27
 
@@ -340,6 +341,22 @@ and join-button/API boundary in local regressions; the legacy decoder alone does
 not establish native link behavior. [F1 evidence](evidence/native-replacement-validation-2026-09-21/n1-f1-result.md).
 This local decision does not establish OS association delivery, clear historical
 crashes or authorize a native rebuild; freeze changed application bytes separately.
+
+## Claude Code primary development — adopted 2026-10-15
+
+Brian made Claude Code the primary development environment, with Opus 5.5
+(`claude-opus-5-5`) as lead orchestrator and implementer at a medium effort
+baseline, Haiku 5.5 (`claude-haiku-5-5`) for bounded read-only research and
+Sonnet 5.5 (`claude-sonnet-5-5`) for read-only investigation and evidence. GPT-6.1
+Sol (`gpt-6.1-sol`) through the ChatGPT-authenticated Codex CLI is the preferred
+independent reviewer; the lead adjudicates its findings. GPT-6 Astra and Luna stay
+optional. Roles are defaults: the lead may change delegation, effort and
+concurrency and explains durable changes. `AGENTS.md` stays the single shared
+rule source; `CLAUDE.md` imports it. Codex sessions keep `.codex/` and remain
+usable. This is a development-tool change only: application inference (Gemini),
+providers, hosting, approval gates, budgets and roadmap order are unchanged, and
+historical model attribution is preserved. Configuration and the review procedure
+are in the [development workflow](development-workflow.md#independent-review).
 
 ## GPT-6 development roles and completion — adopted 2026-09-22
 

@@ -1,5 +1,19 @@
 # Current state
 
+## Development workflow and main reconciliation, October 15
+
+Claude Code is the primary development environment (Opus 5.5 lead, read-only
+Haiku 5.5 and Sonnet 5.5 helpers, optional GPT-6.1 Sol review through the Codex
+CLI); see the [development workflow](development-workflow.md#instructions-skills-and-tools).
+`.codex/` remains for Codex sessions. Application providers are unchanged.
+
+Git reconciliation: mobile signup recovery [PR #12](https://github.com/TableUs-AI-Agent/Tableus-ai-agent-dev/pull/12)
+was merged to `main` on October 8 as `3a2357f888d075b766d9b1259abe9e0e04856bd5`
+(verified by `git ls-remote` on October 15). Sections below written before that
+merge describe it as an open draft; the merge supersedes that status. Whether
+`3a2357f` was deployed was not checked in this pass. Newer Priority 3 and
+Priority 4 operating records remain unpublished on `codex/pilot-staging-readiness`.
+
 ## Local mobile signup recovery, October 8
 
 The isolated `codex/mobile-signup-recovery` branch starts at integrated
