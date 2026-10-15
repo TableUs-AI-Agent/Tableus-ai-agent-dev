@@ -7,17 +7,16 @@ from sqlalchemy.orm import DeclarativeBase
 from .config import get_settings
 
 settings = get_settings()
-metadata = MetaData(schema=settings.database_schema)
 
 
 class Base(DeclarativeBase):
-    metadata = metadata
+    metadata = MetaData(schema=settings.database_schema)
 
 
 engine = create_async_engine(settings.sqlalchemy_url, pool_pre_ping=True)
 
-
 if engine.url.get_backend_name() == "sqlite":
+
     @event.listens_for(engine.sync_engine, "connect")
     def _enable_sqlite_foreign_keys(dbapi_connection, _connection_record) -> None:
         cursor = dbapi_connection.cursor()
@@ -33,55 +32,28 @@ async def get_session() -> AsyncIterator[AsyncSession]:
         yield session
 
 
+DEMO_PROFILES = {"demo-organizer": "Demo Organizer", "demo-guest": "Demo Guest"}
+
+
 async def init_database() -> None:
-    from . import models  # noqa: F401
+    """Create tables and demo people for local development and tests.
 
-    if settings.environment in {"development", "test"}:
-        async with engine.begin() as connection:
-            schema = settings.database_schema
-            if schema:
-                schema_exists = await connection.run_sync(
-                    lambda sync: inspect(sync).has_schema(schema)
-                )
-                # PostgreSQL checks CREATE privilege even with IF NOT EXISTS.
-                # A pre-migrated test database must work with the runtime role.
-                if not schema_exists:
-                    await connection.execute(
-                        text(f'CREATE SCHEMA IF NOT EXISTS "{schema}"')
-                    )
-            await connection.run_sync(Base.metadata.create_all)
+    Hosted databases are managed by Alembic only.
+    """
+    from .models import Profile
 
-    if settings.tableus_auth_mode == "demo" and settings.environment in {"development", "test"}:
-        await seed_demo_data()
-
-
-async def seed_demo_data() -> None:
-    from sqlalchemy import select
-
-    from .models import Invite, Profile
-    from .security import hash_value
-
-    async with SessionFactory() as session:
-        profile = await session.get(Profile, "demo-organizer")
-        if not profile:
-            session.add(
-                Profile(
-                    id="demo-organizer",
-                    display_name="Demo Organizer",
-                    email_hash=hash_value("organizer@tableus.local"),
-                )
-            )
-        guest = await session.get(Profile, "demo-guest")
-        if not guest:
-            session.add(
-                Profile(
-                    id="demo-guest",
-                    display_name="Demo Guest",
-                    email_hash=hash_value("guest@tableus.local"),
-                )
-            )
-        invite_hash = hash_value(settings.tableus_demo_invite)
-        invite = await session.scalar(select(Invite).where(Invite.code_hash == invite_hash))
-        if not invite:
-            session.add(Invite(code_hash=invite_hash, max_uses=100))
-        await session.commit()
+    if settings.environment not in {"development", "test"}:
+        return
+    async with engine.begin() as connection:
+        schema = settings.database_schema
+        # PostgreSQL checks CREATE privilege even with IF NOT EXISTS, and a
+        # pre-migrated test database is used through the restricted runtime role.
+        if schema and not await connection.run_sync(lambda sync: inspect(sync).has_schema(schema)):
+            await connection.execute(text(f'CREATE SCHEMA "{schema}"'))
+        await connection.run_sync(Base.metadata.create_all)
+    if settings.demo_auth:
+        async with SessionFactory() as session:
+            for profile_id, name in DEMO_PROFILES.items():
+                if not await session.get(Profile, profile_id):
+                    session.add(Profile(id=profile_id, display_name=name))
+            await session.commit()

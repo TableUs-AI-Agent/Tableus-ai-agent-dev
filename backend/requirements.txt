@@ -1,3 +1,0 @@
-# Compatibility install path. `pyproject.toml` and `uv.lock` are authoritative.
--e .
-

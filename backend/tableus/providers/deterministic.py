@@ -1,172 +1,105 @@
-from .base import (
-    AiCallUsage,
-    AiUsageRecorder,
-    Place,
-    PlacesUsageRecorder,
-    Recommendation,
-    ResolvedLocation,
-)
+"""Free, offline providers for local development, tests and CI."""
+
+from .base import Diner, Place, Recommendation, ResolvedLocation
 
 FIXTURE_LOCATION_ID = "fixture-location-boston"
 
 FIXTURE_PLACES = [
     Place(
-        "fixture-sakura",
-        "Sakura Table",
-        "Japanese",
-        "12 Beacon St, Boston, MA",
-        4.7,
-        3,
-        42.357,
-        -71.063,
+        "fixture-sakura", "Sakura Table", "Japanese", "12 Beacon St, Boston, MA",
+        4.7, 3, 42.357, -71.063,
+        summary="Omakase counter and izakaya plates in a calm, wood-lined room.",
+        features=("takes reservations", "serves wine"), rating_count=640,
     ),
     Place(
-        "fixture-oleana",
-        "Garden Mezze",
-        "Mediterranean",
-        "34 Hampshire St, Cambridge, MA",
-        4.6,
-        3,
-        42.369,
-        -71.099,
+        "fixture-oleana", "Garden Mezze", "Mediterranean", "34 Hampshire St, Cambridge, MA",
+        4.6, 3, 42.369, -71.099,
+        summary="Shared mezze, wood-fired breads and a leafy patio.",
+        features=("serves vegetarian food", "good for groups", "outdoor seating"),
+        rating_count=1210,
     ),
     Place(
-        "fixture-noodle",
-        "Noodle Assembly",
-        "Vietnamese",
-        "8 Washington St, Boston, MA",
-        4.5,
-        2,
-        42.351,
-        -71.063,
+        "fixture-noodle", "Noodle Assembly", "Vietnamese", "8 Washington St, Boston, MA",
+        4.5, 2, 42.351, -71.063,
+        summary="Fast, bright pho and rice-noodle bowls.",
+        features=("serves vegetarian food",), rating_count=880,
     ),
     Place(
-        "fixture-trattoria",
-        "Trattoria Together",
-        "Italian",
-        "45 Hanover St, Boston, MA",
-        4.6,
-        3,
-        42.363,
-        -71.055,
+        "fixture-trattoria", "Trattoria Together", "Italian", "45 Hanover St, Boston, MA",
+        4.6, 3, 42.363, -71.055,
+        summary="Handmade pasta and long family-style tables.",
+        features=("good for groups", "takes reservations", "serves wine"), rating_count=2030,
     ),
     Place(
-        "fixture-tacos",
-        "Common Ground Tacos",
-        "Mexican",
-        "20 Somerville Ave, Somerville, MA",
-        4.4,
-        2,
-        42.38,
-        -71.099,
+        "fixture-tacos", "Common Ground Tacos", "Mexican", "20 Somerville Ave, Somerville, MA",
+        4.4, 2, 42.38, -71.099,
+        summary="Street tacos, big salsa bar and a lively back patio.",
+        features=("serves vegetarian food", "outdoor seating", "serves beer"), rating_count=950,
     ),
     Place(
-        "fixture-bistro",
-        "Neighborhood Bistro",
-        "American",
-        "17 Newbury St, Boston, MA",
-        4.3,
-        2,
-        42.35,
-        -71.079,
+        "fixture-bistro", "Neighborhood Bistro", "American", "17 Newbury St, Boston, MA",
+        4.3, 2, 42.35, -71.079,
+        summary="Burgers, salads and a quiet dining room.",
+        features=("good for children",), rating_count=410,
     ),
 ]
+
+_FIXTURE_LOCATION = ResolvedLocation(
+    place_id=FIXTURE_LOCATION_ID, label="Boston, MA", latitude=42.3601, longitude=-71.0589,
+    region_code="US",
+)
 
 
 class DeterministicPlacesProvider:
     name = "deterministic"
 
-    async def resolve_location(
-        self, query: str, usage: PlacesUsageRecorder | None = None
-    ) -> ResolvedLocation:
-        return ResolvedLocation(
-            place_id=FIXTURE_LOCATION_ID,
-            label=query.strip() or "Boston, MA",
-            latitude=42.3601,
-            longitude=-71.0589,
-            region_code="US",
-        )
+    async def resolve_location(self, query: str) -> ResolvedLocation:
+        label = query.strip() or _FIXTURE_LOCATION.label
+        return ResolvedLocation(**{**_FIXTURE_LOCATION.__dict__, "label": label})
 
-    async def get_location(
-        self, place_id: str, usage: PlacesUsageRecorder | None = None
-    ) -> ResolvedLocation:
+    async def get_location(self, place_id: str) -> ResolvedLocation:
         if place_id != FIXTURE_LOCATION_ID:
             raise ValueError("Location could not be resolved")
-        return ResolvedLocation(
-            place_id=place_id,
-            label="Boston, MA",
-            latitude=42.3601,
-            longitude=-71.0589,
-            region_code="US",
-        )
+        return _FIXTURE_LOCATION
 
     async def discover(
-        self,
-        latitude: float,
-        longitude: float,
-        query: str,
-        limit: int = 20,
-        usage: PlacesUsageRecorder | None = None,
+        self, latitude: float, longitude: float, query: str, limit: int = 20
     ) -> list[Place]:
-        normalized = query.lower().strip()
-        matching = [
-            place
-            for place in FIXTURE_PLACES
-            if not normalized or normalized in f"{place.name} {place.cuisine}".lower()
-        ]
-        return (matching or FIXTURE_PLACES)[: min(max(limit, 1), 20)]
+        return FIXTURE_PLACES[: min(max(limit, 1), 20)]
 
-    async def get_places(
-        self, place_ids: list[str], usage: PlacesUsageRecorder | None = None
-    ) -> list[Place]:
+    async def get_places(self, place_ids: list[str]) -> list[Place]:
         by_id = {place.place_id: place for place in FIXTURE_PLACES}
         return [by_id[place_id] for place_id in place_ids if place_id in by_id]
+
+
+def _fit(place: Place, diners: list[Diner]) -> float:
+    """A transparent stand-in for the model: reward cuisine, budget and dietary fit."""
+    score = place.rating / 5
+    for diner in diners:
+        if place.cuisine.lower() in {cuisine.lower() for cuisine in diner.cuisines}:
+            score += 0.5
+        if diner.max_price_level is not None and place.price_level > diner.max_price_level:
+            score -= 0.4
+        wishes = " ".join([*diner.dietary_notes, diner.notes, diner.taste]).lower()
+        if "vegetarian" in wishes or "vegan" in wishes:
+            score += 0.3 if "serves vegetarian food" in place.features else -0.3
+    return score
 
 
 class DeterministicAiProvider:
     name = "deterministic"
 
     async def recommend(
-        self,
-        query: str,
-        constraints: list[dict],
-        places: list[Place],
-        usage: AiUsageRecorder | None = None,
+        self, request: str, diners: list[Diner], places: list[Place]
     ) -> list[Recommendation]:
-        if usage:
-            await usage(AiCallUsage("recommend", 0, 0, 0, 0, False))
-        if "no result" in query.lower():
+        if "no result" in request.lower() or len(places) < 4:
             return []
+        ranked = sorted(places, key=lambda place: (-_fit(place, diners), place.place_id))[:4]
         return [
             Recommendation(
                 place_id=place.place_id,
                 score=round(0.94 - index * 0.04, 2),
-                reasoning="Balances the group's stated preferences with quality and location.",
+                reasoning=f"{place.cuisine}, {'$' * place.price_level}: {place.summary}".strip(),
             )
-            for index, place in enumerate(places[:4])
+            for index, place in enumerate(ranked)
         ]
-
-    async def analyze_food(
-        self, image_bytes: bytes, media_type: str, usage: AiUsageRecorder | None = None
-    ) -> dict:
-        if usage:
-            await usage(AiCallUsage("analyze_food", 0, 0, 0, 0, False))
-        return {
-            "dish": "Sample dish",
-            "cuisine": "Contemporary",
-            "description": "Deterministic analysis is active; live image bytes were not retained.",
-            "flavor_tags": ["savory", "fresh"],
-        }
-
-    async def regenerate_taste(
-        self, reviews: list[dict], usage: AiUsageRecorder | None = None
-    ) -> str:
-        if usage:
-            await usage(AiCallUsage("regenerate_taste", 0, 0, 0, 0, False))
-        cuisines = sorted(
-            {str(review.get("cuisine")) for review in reviews if review.get("cuisine")}
-        )
-        suffix = f" They often enjoy {', '.join(cuisines)} food." if cuisines else ""
-        return (
-            f"This diner values well-reviewed restaurants and clear group-friendly choices.{suffix}"
-        )

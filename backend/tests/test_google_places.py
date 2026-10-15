@@ -3,7 +3,8 @@ import json
 import httpx
 import pytest
 
-from tableus.providers.google_live import LivePlacesProvider, PlacesProviderError
+from tableus.providers.base import ProviderError
+from tableus.providers.google_live import LivePlacesProvider
 
 
 def restaurant(place_id: str, primary_type: str = "japanese_restaurant") -> dict:
@@ -97,7 +98,7 @@ async def test_location_resolution_still_fails_closed_without_a_us_country() -> 
             },
         )
 
-    with pytest.raises(PlacesProviderError, match="United States"):
+    with pytest.raises(ProviderError, match="United States"):
         await LivePlacesProvider("secret", httpx.MockTransport(handler)).resolve_location("Madison")
 
 
@@ -130,22 +131,17 @@ async def test_text_and_nearby_search_use_policy_bounded_payloads() -> None:
 @pytest.mark.asyncio
 async def test_transient_responses_retry_three_times_but_terminal_4xx_does_not() -> None:
     transient_calls = 0
-    usage_events: list[tuple[str, int, int, bool]] = []
-
-    async def usage(operation: str, attempts: int, output_units: int, failed: bool) -> None:
-        usage_events.append((operation, attempts, output_units, failed))
 
     def transient(request: httpx.Request) -> httpx.Response:
         nonlocal transient_calls
         transient_calls += 1
         return httpx.Response(503, json={})
 
-    with pytest.raises(PlacesProviderError, match="temporarily unavailable"):
+    with pytest.raises(ProviderError, match="temporarily unavailable"):
         await LivePlacesProvider("secret", httpx.MockTransport(transient)).discover(
-            42.36, -71.06, "", 20, usage
+            42.36, -71.06, "", 20
         )
     assert transient_calls == 3
-    assert usage_events == [("restaurant.nearby_search", 3, 0, True)]
 
     terminal_calls = 0
 
@@ -154,7 +150,7 @@ async def test_transient_responses_retry_three_times_but_terminal_4xx_does_not()
         terminal_calls += 1
         return httpx.Response(400, json={})
 
-    with pytest.raises(PlacesProviderError, match="rejected"):
+    with pytest.raises(ProviderError, match="rejected"):
         await LivePlacesProvider("secret", httpx.MockTransport(terminal)).discover(
             42.36, -71.06, "", 20
         )

@@ -1,9 +1,14 @@
 from datetime import datetime
 from typing import Generic, Literal, TypeVar
 
-from pydantic import BaseModel, ConfigDict, Field, field_validator, model_validator
+from pydantic import BaseModel, Field, field_validator, model_validator
 
 T = TypeVar("T")
+PlanStatusValue = Literal["collecting", "voting", "finalized"]
+
+
+def _single_spaced(value: str) -> str:
+    return " ".join(str(value).split())
 
 
 class Envelope(BaseModel, Generic[T]):
@@ -11,161 +16,30 @@ class Envelope(BaseModel, Generic[T]):
     meta: dict = Field(default_factory=dict)
 
 
-class InviteValidateIn(BaseModel):
-    code: str = Field(min_length=3, max_length=200)
-    email: str | None = Field(default=None, max_length=320)
-
-    @field_validator("email")
-    @classmethod
-    def normalize_email(cls, value: str | None) -> str | None:
-        if value is None:
-            return None
-        normalized = value.strip().lower()
-        if normalized.count("@") != 1 or "." not in normalized.rsplit("@", 1)[1]:
-            raise ValueError("A valid email is required")
-        return normalized
-
-
-class InviteValidation(BaseModel):
-    redemption_token: str
-    expires_in_seconds: int = 1200
-
-
-class InviteRedeemIn(BaseModel):
-    redemption_token: str
-    display_name: str = Field(min_length=1, max_length=100)
-
-
-class ProfileOut(BaseModel):
-    model_config = ConfigDict(from_attributes=True)
+class MeOut(BaseModel):
     id: str
     display_name: str
     taste_profile: str
-    share_taste: bool
+    can_create_plans: bool
 
 
-class ProfilePatch(BaseModel):
-    display_name: str | None = Field(default=None, min_length=1, max_length=100)
-    share_taste: bool | None = None
+class MeIn(BaseModel):
+    display_name: str = Field(min_length=1, max_length=100)
+    taste_profile: str | None = Field(default=None, max_length=600)
 
-
-class DeleteAccountIn(BaseModel):
-    confirmation: Literal["DELETE"]
-
-
-class AccountControlOut(BaseModel):
-    can_delete: bool
-    blockers: list[Literal["organized_plans"]]
-    organized_plan_count: int
-    deletion_scope: Literal["application_profile"] = "application_profile"
-    supabase_auth_removal: Literal["operator_required"] = "operator_required"
-    full_deletion_available: bool = False
-
-
-class AccountDeletionOut(BaseModel):
-    status: Literal["pending", "completed"]
-    requested_at: datetime
-    completed_at: datetime | None = None
-    next_retry_at: datetime | None = None
-    last_error_code: str | None = None
-    needs_attention: bool = False
-
-
-class TransferOwnershipIn(BaseModel):
-    recipient_profile_id: str = Field(min_length=1, max_length=64)
-
-
-class AccountExportConnection(BaseModel):
-    connected_profile_id: str
-
-
-class AccountExportRedemption(BaseModel):
-    redeemed_at: datetime
-
-
-class AccountExportMembership(BaseModel):
-    plan_id: str
-    title: str
-    status: Literal["collecting", "voting", "finalized"]
-    is_organizer: bool
-    constraints: dict
-
-
-class AccountExportVote(BaseModel):
-    plan_id: str
-    run_id: str
-    ranking: list[str]
-    created_at: datetime
-
-
-class AccountExportEvent(BaseModel):
-    plan_id: str
-    event_type: str
-    payload: dict
-    created_at: datetime
-
-
-class ConnectionIn(BaseModel):
-    profile_id: str = Field(min_length=1, max_length=64)
-
-
-class ConnectionOut(BaseModel):
-    profile_id: str
-    display_name: str
-    taste_profile: str | None
-
-
-class ReviewIn(BaseModel):
-    restaurant_name: str = Field(min_length=1, max_length=160)
-    review_text: str = Field(min_length=1, max_length=3000)
-    rating: float = Field(ge=1, le=5)
-    dish: str | None = Field(default=None, max_length=120)
-    cuisine: str | None = Field(default=None, max_length=80)
-
-
-class ReviewOut(ReviewIn):
-    model_config = ConfigDict(from_attributes=True)
-    id: str
-    created_at: datetime
-
-
-class AccountExportOut(BaseModel):
-    schema_version: Literal["1"] = "1"
-    exported_at: datetime
-    profile: ProfileOut
-    connections: list[AccountExportConnection]
-    reviews: list[ReviewOut]
-    invite_redemptions: list[AccountExportRedemption]
-    plan_memberships: list[AccountExportMembership]
-    votes: list[AccountExportVote]
-    authored_plan_events: list[AccountExportEvent]
-
-
-class TasteProfileOut(BaseModel):
-    preferences_text: str
-    share_taste: bool
+    normalize_name = field_validator("display_name", mode="before")(_single_spaced)
 
 
 class LocationIn(BaseModel):
     query: str = Field(min_length=2, max_length=200)
 
-    @field_validator("query", mode="before")
-    @classmethod
-    def normalize_query(cls, value: str) -> str:
-        return " ".join(str(value).split())
+    normalize_query = field_validator("query", mode="before")(_single_spaced)
 
 
 class LocationOut(BaseModel):
     place_id: str
     label: str
     data_provider: Literal["fixture", "google_maps"]
-
-
-class DiscoverIn(BaseModel):
-    query: str = Field(default="", max_length=500)
-    latitude: float = Field(ge=24.0, le=50.0)
-    longitude: float = Field(ge=-125.0, le=-66.0)
-    limit: int = Field(default=20, ge=1, le=20)
 
 
 class PlaceOut(BaseModel):
@@ -178,26 +52,27 @@ class PlaceOut(BaseModel):
     latitude: float
     longitude: float
     data_provider: Literal["fixture", "google_maps"]
+    summary: str = ""
+    features: list[str] = Field(default_factory=list)
+    rating_count: int = 0
 
 
 class PlanCreateIn(BaseModel):
     title: str = Field(min_length=1, max_length=120)
     location_label: str = Field(min_length=1, max_length=160)
     location_place_id: str | None = Field(default=None, min_length=1, max_length=255)
+    # Coordinates are accepted only with the deterministic Places provider.
     latitude: float | None = Field(default=None, ge=24.0, le=50.0)
     longitude: float | None = Field(default=None, ge=-125.0, le=-66.0)
 
-    @field_validator("location_label", mode="before")
-    @classmethod
-    def normalize_location_label(cls, value: str) -> str:
-        return " ".join(str(value).split())
+    normalize_label = field_validator("location_label", mode="before")(_single_spaced)
 
     @model_validator(mode="after")
     def one_location_source(self):
         has_place = self.location_place_id is not None
         has_coordinates = self.latitude is not None or self.longitude is not None
         if has_place == has_coordinates:
-            raise ValueError("Provide either a location Place ID or legacy coordinates")
+            raise ValueError("Provide either a location Place ID or coordinates")
         if has_coordinates and (self.latitude is None or self.longitude is None):
             raise ValueError("Latitude and longitude must be provided together")
         return self
@@ -215,7 +90,7 @@ class ConstraintsIn(BaseModel):
 
 
 class RecommendationIn(BaseModel):
-    query: str = Field(min_length=1, max_length=500)
+    query: str = Field(default="", max_length=500)
 
 
 class VoteIn(BaseModel):
@@ -225,7 +100,7 @@ class VoteIn(BaseModel):
     @classmethod
     def ranking_is_unique(cls, value: list[str]) -> list[str]:
         if len(set(value)) != 3:
-            raise ValueError("Ranking must contain three unique candidate IDs")
+            raise ValueError("Ranking must contain three different options")
         return value
 
 
@@ -238,6 +113,7 @@ class ParticipantOut(BaseModel):
     display_name: str
     constraints: dict
     is_organizer: bool
+    has_voted: bool = False
 
 
 class CandidateOut(BaseModel):
@@ -249,31 +125,16 @@ class CandidateOut(BaseModel):
     vote_score: int = 0
 
 
-class ManagedPlanParticipantOut(BaseModel):
-    profile_id: str
-    display_name: str
-    is_organizer: bool
-
-
-class ManagedPlanOut(BaseModel):
-    id: str
-    title: str
-    organizer_id: str
-    viewer_is_organizer: bool
-    updated_at: datetime
-    participants: list[ManagedPlanParticipantOut]
-
-
 class PlanOut(BaseModel):
     id: str
     title: str
     organizer_id: str
     viewer_is_organizer: bool
-    status: Literal["collecting", "voting", "finalized"]
+    status: PlanStatusValue
     location_label: str
-    metadata_needs_replacement: bool = False
     latitude: float | None
     longitude: float | None
+    share_token: str
     participants: list[ParticipantOut]
     candidates: list[CandidateOut]
     my_vote: list[str] | None
@@ -290,9 +151,10 @@ class PlanCreated(BaseModel):
 class PlanSummaryOut(BaseModel):
     id: str
     title: str
-    status: Literal["collecting", "voting", "finalized"]
+    status: PlanStatusValue
     location_label: str
     participant_count: int
+    viewer_is_organizer: bool
     created_at: datetime
     updated_at: datetime
 
@@ -301,25 +163,9 @@ class PlanRevisionOut(BaseModel):
     updated_at: datetime
 
 
-class ProviderUsageAggregateOut(BaseModel):
-    provider: str
-    operation: str
-    operation_count: int
-    input_units: int
-    output_units: int
-    estimated_cost_usd: float
-
-
 class ShareTokenOut(BaseModel):
     share_token: str
 
 
-class FoodAnalysisOut(BaseModel):
-    dish: str
-    cuisine: str
-    description: str
-    flavor_tags: list[str]
-
-
-class DeleteAccountOut(BaseModel):
+class DeletedOut(BaseModel):
     deleted: bool

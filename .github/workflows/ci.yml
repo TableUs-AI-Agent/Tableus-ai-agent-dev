@@ -34,8 +34,6 @@ jobs:
       TABLEUS_RUNTIME_DB_ROLE: tableus_runtime
       TABLEUS_AUTH_MODE: demo
       TABLEUS_PROVIDER_MODE: deterministic
-      TABLEUS_DEMO_MODE: true
-      TABLEUS_APP_SECRET: ci-only-secret-that-is-longer-than-thirty-two-bytes
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
         with:
@@ -61,9 +59,6 @@ jobs:
               connection = await asyncpg.connect("postgresql://tableus:tableus@127.0.0.1:5432/tableus_test")
               try:
                   await connection.execute("CREATE ROLE tableus_runtime LOGIN PASSWORD 'ci-local-only' NOSUPERUSER NOCREATEDB NOCREATEROLE NOINHERIT")
-                  await connection.execute("CREATE ROLE anon NOLOGIN NOSUPERUSER")
-                  await connection.execute("CREATE ROLE authenticated NOLOGIN NOSUPERUSER")
-                  await connection.execute("CREATE ROLE supabase_auth_admin NOLOGIN NOSUPERUSER NOCREATEDB NOCREATEROLE NOINHERIT")
               finally:
                   await connection.close()
           asyncio.run(prepare())
@@ -87,6 +82,5 @@ jobs:
       - run: npm run build
       - run: npx playwright install --with-deps chromium
       - run: npm run test:e2e
-      - run: npx playwright test --config frontend/app/lib/account-lifecycle-hosted.playwright.config.ts
       - run: uv run python scripts/smoke.py
         working-directory: backend
