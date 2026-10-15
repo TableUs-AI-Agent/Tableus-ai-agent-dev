@@ -5,7 +5,8 @@ import { mapsUrl, price } from "../lib/plan-links";
 
 const ORDINAL = ["1st", "2nd", "3rd"];
 
-export function PickCard({ candidate, rank, winner = false, onToggle, footer }: {
+export function PickCard({ id, candidate, rank, winner = false, onToggle, footer }: {
+  id?: string;
   candidate: Candidate;
   rank?: number;
   winner?: boolean;
@@ -37,9 +38,9 @@ export function PickCard({ candidate, rank, winner = false, onToggle, footer }: 
     </>
   );
   const frame = `block w-full rounded-[20px] border-2 p-5 text-left ${winner ? "border-bottle bg-butter" : rank !== undefined ? "border-bottle bg-white shadow-[4px_4px_0_var(--color-bottle)]" : "border-sage bg-white"}`;
-  if (!onToggle) return <article className={frame}>{body}</article>;
+  if (!onToggle) return <article id={id} className={`${frame} scroll-mt-24`}>{body}</article>;
   return (
-    <button type="button" className={`${frame} transition-transform hover:border-bottle active:translate-y-px`} aria-pressed={rank !== undefined} onClick={onToggle}>
+    <button id={id} type="button" className={`${frame} scroll-mt-24 transition-transform hover:border-bottle active:translate-y-px`} aria-pressed={rank !== undefined} onClick={onToggle}>
       {body}
     </button>
   );

@@ -22,7 +22,7 @@ export function AppShell({ children, width = "max-w-xl" }: { children: ReactNode
 
   const ready = session.status === "signed-in" && me.data;
   return (
-    <div className="min-h-dvh">
+    <div className="min-h-dvh overflow-x-clip">
       <header className="mx-auto flex max-w-5xl items-center justify-between px-4 py-4 sm:px-6">
         <Wordmark href="/plans" />
         {me.data ? (

@@ -6,6 +6,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { ActivityIndicator, Alert, RefreshControl, ScrollView, Share, Text, View } from "react-native";
 
 import { PickCard } from "@/components/pick-card";
+import { TableScene } from "@/components/table-scene";
 import { Avatar, Body, Button, Card, Centered, ErrorText, Field, Heading, Icon, PressScale, Title } from "@/components/ui";
 import { hasWishes } from "@/components/wishes-form";
 import { api, errorMessage } from "@/lib/api";
@@ -63,6 +64,7 @@ export default function PlanScreen() {
           <Title>{data.title}</Title>
           <Body muted>{data.location_label}</Body>
         </View>
+        <TableScene plan={data} />
         <People plan={data} />
         {data.participants.length < 2 ? <InviteCard plan={data} /> : null}
         {data.status === "collecting" ? <Collecting plan={data} /> : null}
@@ -133,6 +135,7 @@ function Collecting({ plan }: { plan: Plan }) {
   const update = useUpdate(plan.id);
   const [request, setRequest] = useState("");
   const suggest = useMutation({
+    mutationKey: ["suggest", plan.id],
     mutationFn: () => api.suggest(plan.id, request.trim()),
     onSuccess: (next) => {
       Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);

@@ -1,8 +1,16 @@
 # TableUs web design
 
-The one memorable thing is the hero: four people's wishes visibly folding into
-one pick with a specific reason. Everything else stays quiet so that moment and
-the real picks carry the brand.
+Two animated moments carry the brand, and Brian wants both kept and improved:
+
+- **Landing hero** (`components/table-scene.tsx`): four people's wishes around a
+  table, then the place that fits all of them lands in the middle.
+- **The 3D table** (`components/tabletop-scene.tsx`, from the hackathon): each
+  person in a plan is a plush character on a little planet, the planet spins
+  while picks are found, and the four picks orbit as cards. It sits at the top
+  of every plan. Mobile shows the same scene through `/embed/table` in a web
+  view, so improvements land on both.
+
+Everything else stays quiet so these moments and the real picks carry the brand.
 
 ## Tokens
 
@@ -26,6 +34,6 @@ Figtree for everything else. Scale: 14 / 16 / 20 / 28 / 44 / 72 / 112.
   8px for inputs and buttons. No shadow kit; pick cards get a 2px Bottle
   outline instead.
 - Butter marks the winner and your ranks. Nothing else is yellow.
-- One orchestrated motion (the hero fold). Other motion only answers a tap.
+- Motion beyond the two moments above only answers a tap.
   `prefers-reduced-motion` shows the end state.
 - App screens are a single centered column (max 36rem) built for phones first.

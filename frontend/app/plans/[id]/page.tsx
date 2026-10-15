@@ -8,6 +8,7 @@ import { useEffect, useRef, useState } from "react";
 import { AppShell, Initials, LoadError, Loading } from "../../components/app-shell";
 import { GoogleMapsAttribution } from "../../components/google-maps-attribution";
 import { PickCard } from "../../components/pick-card";
+import { TableView } from "../../components/table-view";
 import { hasWishes, readWishes, WishesForm } from "../../components/wishes-form";
 import { api, errorMessage } from "../../lib/api";
 import { joinUrl } from "../../lib/plan-links";
@@ -63,6 +64,10 @@ function PlanView() {
         <h1 className="display text-6xl">{data.title}</h1>
         <p className="mt-1 text-moss">{data.location_label}</p>
       </header>
+      <TableView
+        plan={data}
+        onPick={(candidateId) => document.getElementById(`pick-${candidateId}`)?.scrollIntoView({ behavior: "smooth", block: "center" })}
+      />
       <People plan={data} />
       {data.participants.length < 2 ? <Invite plan={data} first /> : null}
       {data.status === "collecting" ? <Collecting plan={data} /> : null}
@@ -118,7 +123,11 @@ function MyWishes({ plan, submitLabel, onSaved }: { plan: Plan; submitLabel: str
 function Collecting({ plan }: { plan: Plan }) {
   const update = useUpdate(plan.id);
   const [request, setRequest] = useState("");
-  const suggest = useMutation({ mutationFn: () => api.suggest(plan.id, request.trim()), onSuccess: update });
+  const suggest = useMutation({
+    mutationKey: ["suggest", plan.id],
+    mutationFn: () => api.suggest(plan.id, request.trim()),
+    onSuccess: update,
+  });
   const enoughPeople = plan.participants.length >= 2;
 
   return (
@@ -178,6 +187,7 @@ function Voting({ plan }: { plan: Plan }) {
             return (
               <PickCard
                 key={candidate.id}
+                id={`pick-${candidate.id}`}
                 candidate={candidate}
                 rank={position >= 0 ? position : undefined}
                 onToggle={() => toggle(candidate.id)}
@@ -239,7 +249,7 @@ function Decided({ plan }: { plan: Plan }) {
     <section aria-labelledby="decided" className="mt-10">
       <h2 id="decided" className="display text-5xl">You&apos;re going to</h2>
       <div className="mt-4">
-        {winner ? <PickCard candidate={winner} winner /> : <p>The chosen place couldn&apos;t be loaded.</p>}
+        {winner ? <PickCard id={`pick-${winner.id}`} candidate={winner} winner /> : <p>The chosen place couldn&apos;t be loaded.</p>}
         {winner?.place.data_provider === "google_maps" ? <GoogleMapsAttribution className="mt-2" /> : null}
       </div>
       {plan.viewer_is_organizer ? (
