@@ -1,6 +1,6 @@
 # Development workflow
 
-Updated 2026-09-27. This applies to any coding agent or person working in the
+Updated 2026-10-15. This applies to any coding agent or person working in the
 repository. [AGENTS.md](../AGENTS.md) holds the short rules; this page explains them.
 
 ## Start an objective
@@ -76,9 +76,39 @@ or claim of reduced memory use follows from this planning review.
 
 ## Instructions, skills and tools
 
-Keep project guidance agent-neutral; `.codex/` holds Codex-only preferences, not
-standing delegation requirements. Read applicable nested instructions, including
-the generated web guidance and its `CLAUDE.md` consumer.
+Keep project guidance agent-neutral in `AGENTS.md`. Claude Code is the primary
+development environment: root `CLAUDE.md` imports `AGENTS.md` and adds only
+Claude specifics, and `.claude/` holds its model settings and read-only helper
+subagents. `.codex/` holds Codex-only preferences. Neither is a standing
+delegation requirement. Read applicable nested instructions, including the
+generated web guidance and its `CLAUDE.md` consumer.
+
+Claude defaults (October 2026): the lead is Opus 5.5 at medium effort, raised
+when the work warrants it; `haiku-researcher` (Haiku 5.5, low) handles bounded
+discovery and extraction; `sonnet-investigator` (Sonnet 5.5, medium) traces
+behavior and gathers evidence. Both helpers are read-only. Built-in Explore and
+Plan inherit the lead model. Confirm a helper's actual model with `/tasks`.
+
+### Independent review
+
+GPT-6.1 Sol reviews through the authenticated Codex CLI as an external, read-only
+process. From the checkout under review:
+
+```bash
+node scripts/codex-review.mjs --base <base-sha> --head <candidate-sha>
+node scripts/codex-review.mjs --base <base-sha> --uncommitted --criteria <file>
+```
+
+The wrapper pins `gpt-6.1-sol`, explicit effort (default medium; `--effort high`
+for large or risky changes), a read-only sandbox, no approvals, no user config,
+plugins, apps, browsers, hooks or sub-agents, and strict configuration. It finds
+Codex through `--codex`, `CODEX_BIN` or `PATH`. Results, the prompt and the
+effective configuration Codex printed go to `.artifacts/reviews/`. A nonzero exit
+means the review did not complete (Codex failure, invalid output or a
+model/sandbox/effort mismatch), never a clean result. The lead adjudicates
+findings and requests a focused re-review only when fixes or open concerns
+warrant it. Reviews use ChatGPT subscription access, never API keys, and are not
+part of `make ready` or CI.
 
 Prefer the existing npm/uv/Make, CI, generated-contract and artifact-inspection
 entry points. Check references and other consumers before retiring tooling;

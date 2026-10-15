@@ -1,119 +1,68 @@
-# Active packet: local mobile signup recovery
+# Active packet: Claude Code workflow migration
 
 ## Source and authorization
 
-Brian authorized this isolated development pass on October 8, 2026, alongside
-Priority 3. This chat satisfies the fresh-chat rule. Worktree:
-`/Users/brianchei/.codex/worktrees/f637/Tableus-ai-agent-dev`, branch
-`codex/mobile-signup-recovery`, clean integrated base
-`bffa2845f268ea8b1906b8de155aa130f199856e` (merged web recovery PR #11).
+Brian authorized this local development-workflow migration on October 15, 2026,
+in a fresh Claude Code thread that owns the pass. Worktree:
+`/Users/brianchei/repos/Tableus-ai-agent-dev/.worktrees/claude-code-migration`,
+branch `codex/claude-code-migration`, created explicitly from remote `main`
+`3a2357f888d075b766d9b1259abe9e0e04856bd5` (merge of mobile signup recovery
+PR #12, verified with `git ls-remote` the same day).
 
-The **Prepare Priority 3 staging readiness** chat owns the live environment,
-accounts, browser tabs, budgets and private ledger on `codex/pilot-staging-readiness`
-in `/Users/brianchei/repos/Tableus-ai-agent-dev/.worktrees/pilot-realignment`.
-Its latest documents were read for context only; unmerged operator changes are
-excluded here. Reconcile evolving canonical documents before integration.
-Priority 3 acceptance remains a dependency; this pass does not start Priority 4.
+The previous packet here, local mobile signup recovery, finished when PR #12
+merged as `3a2357f`; Git history keeps its text. Priority 3 operations and
+Priority 4 native preparation are owned by `codex/pilot-staging-readiness` in
+`.worktrees/pilot-realignment` (`a400962`, eleven unpublished commits). That
+checkout, its packet, services, private ledgers and allowances were not read
+for operation, changed or imported here. The stale root checkout
+(`codex/privacy-safe-observability`, `8e9625e`) and its untracked
+`.worktrees/` and `docs/evidence/24be75a/` are preserved untouched.
 
 ## Objective and acceptance
 
-Reproduce mobile signup recovery gaps with deterministic tests, then make the
-smallest supported repair using existing `/api/v1` contracts. Cover verified
-email followed by API outage, expired validation on retry, committed signup with
-a lost response, app/session restoration, identity mismatch/account switching,
-refusal/error handling and deletion recovery. Preserve explicit retry, recipient
-binding, subject guards and the prohibition on persisting invitation codes/OTPs.
+Make Claude Code the primary development environment with Opus 5.5 as lead,
+Haiku 5.5 and Sonnet 5.5 as read-only helpers, and GPT-6.1 Sol through the Codex
+CLI as the optional independent reviewer. Done means a fresh Claude Code session
+in this checkout loads the shared rules, starts on Opus, can call the intended
+helpers, can resume from this packet and can run the documented Sol review.
 
-Run focused meaningful checks, one `make ready` and generated contract drift
-checks. Finish with a reviewable local commit and handoff identifying exact base,
-final source, results, residual risks and deferred physical-device acceptance.
+Out of scope: application providers (Gemini), product behavior, architecture,
+hosting, dependencies, roadmap priorities and every approval gate in `AGENTS.md`.
+No push, merge, deployment, native build or publication without Brian's separate
+approval. Canceled security scans and the simulator campaign stay closed.
 
-## Boundaries and next gate
+## Migration checklist
 
-The original implementation scope authorized local work only. Brian separately
-approved one push of `e8345489e7f560f89b408ffabf0464596de63efe`, one draft PR and
-the initial existing deterministic CI. No native builds, live providers, staging
-migrations, resource/secret changes, invitations, cleanup, merge or deployment
-are authorized; CI uses its own disposable PostgreSQL migrations. Do not access the
-rehearsal ledger or operate its tabs/accounts/services. Do not resume canceled
-security or simulator campaigns. Use isolated test ports/resources.
+- [x] Inventory source, worktrees and ancestry; select `3a2357f` as base.
+- [x] Inventory instructions, `.codex/`, Claude settings and CLI tools.
+- [x] Root `CLAUDE.md` importing `AGENTS.md`; `AGENTS.md` names tool config homes.
+- [x] `.claude/settings.json`: `claude-opus-5-5`, medium effort, ask rules for
+      pushes, merges and destructive git commands.
+- [x] `.claude/agents/haiku-researcher.md` (no shell) and
+      `sonnet-investigator.md` (read-only Bash by instruction, plan mode).
+- [x] `scripts/codex-review.mjs` with mocked unit tests.
+- [x] Workflow, decisions and current-state updated in place.
+- [ ] Focused tests, `make ready` and contract drift check.
+- [ ] Sol review of this migration and adjudication.
+- [ ] File-defined helper routing in a fresh Claude Code session (needs login).
 
-## Local completion and verification
+Status and verification details are in the handoff for this pass; update this
+list rather than adding a separate ledger.
 
-Expired-grant and lost-response gaps reproduced before implementation: four new
-operation tests and two new coordinator tests failed. The repaired coordinator
-preserves verified sessions, reconciles membership/deletion and offers explicit
-invite re-entry without another OTP. Server Auth lookup binds email/subject;
-restoration after the unchanged transaction TTL uses re-entry rather than saved
-invite secrets. Mismatch, stale success/error, refusal, outage, local sign-out
-failure and deletion precedence are covered.
+## Mapping from Codex
 
-Readiness passes: 364 JavaScript tests, 206 Python tests with 36 PostgreSQL-only
-skips, lint/types, generated contract drift, web/Expo-web exports, deterministic
-smoke and report-only performance. Focused checks pass 33 coordinator and 18
-operation/storage tests. The one `make ready` finished in stages after sandbox
-loopback denial; forced split-provider environment overrides caused four config
-assertions, which passed after removal. No app source repair was required by
-readiness. Private local logs are `/private/tmp/tableus-mobile-recovery-*.log`.
-Dependencies were copied into this worktree from the matching-lock P3 checkout
-read-only after offline npm cache installation failed; no dependency files changed.
+| Codex item | Disposition |
+| --- | --- |
+| `AGENTS.md`, nested `frontend/AGENTS.md`/`CLAUDE.md` | Retained as the shared source; imported by root `CLAUDE.md` |
+| `.codex/config.toml` (Astra lead, Sol/medium children) | Retained for Codex sessions; not used by Claude |
+| `.codex/agents/sol-implementer.toml` | Retained; Opus implements by default in Claude |
+| `.codex/agents/luna-assistant.toml` | Adapted as `haiku-researcher` (read-only, low effort) |
+| Codex review | Replaced by `scripts/codex-review.mjs` pinned to GPT-6.1 Sol |
+| Codex desktop plugins, connectors, automations, auth | Left unavailable to Claude; not copied |
 
-Physical-device behavior remains unverified for these bytes. The initial hosted
-PostgreSQL/browser CI below now verifies the published candidate. Priority 4 signed builds and the bounded device lost-response check are
-intentionally deferred; the canceled campaigns stay closed.
+## Rollback
 
-## Reconciliation and publication preparation
-
-Brian requested the next step after implementation and again after publication.
-The refreshed read-only reconciliation is against clean P3 HEAD
-`a816c19417526e83d0caeb5430e94808c49c22df` and its latest completed chat turn,
-recorded in the [integration proposal](../mobile-signup-recovery-integration.md).
-P3 changes since `bffa284` are eleven documentation/evidence files only. All four
-synthetic account/Auth removals, completed jobs, stopped services and temporary
-origin removal are now confirmed by those sources. Account-flow closeout is
-complete; support receipt/correspondence, hosted replay/contention and server
-refusal remain open. The summary does not establish full P3 or mobile acceptance.
-P3's unpublished operating history, exact counters and packet remain in its
-checkout; neither it nor its private ledger/services were modified here.
-
-Application source remains `99a4f8fbebee91e8c127031427f30ac7f37623cd`; all original
-application checks are reused with unchanged inputs. Local preparation adds the
-exact mobile branch to `vercel.json` with Git deployment disabled, updates only
-scoped documentation and drafts the PR body in the proposal. JSON/guard, local
-links, source boundaries and diff consistency checks pass; no new app tests or
-native builds are required by this preparation.
-
-## Approved publication status
-
-Brian approved the proposal against `e834548`. Preflight verified remote `main`
-unchanged at `bffa284`, no existing remote mobile branch and non-deploying
-repository/workflow configuration. One push completed; [draft PR #12](https://github.com/TableUs-AI-Agent/Tableus-ai-agent-dev/pull/12)
-is attached, with exact head `e8345489e7f560f89b408ffabf0464596de63efe`.
-[Initial CI](https://github.com/TableUs-AI-Agent/Tableus-ai-agent-dev/actions/runs/37873107070)
-passed: 364 JavaScript tests, 242 Python tests with zero skips and 13 browser
-journeys, plus migrations, lint/types, deterministic evaluation, contracts,
-web/Expo-web exports and smoke. The tested synthetic merge `6bfdf2e647e20c73789f5dea74d24ae71f3cd082`
-has exactly the published candidate tree `406a621777b394054f28fc6584fc6b11ea8fd360`.
-Final readback confirms the same draft PR head/base and no GitHub deployment
-record for this SHA.
-No P3 state or approved runtime allowance was changed. The proposal records the
-connector-to-CLI fallback and the exact publication binding.
-
-## Review completion and next gate
-
-Functional review of the changed mobile implementation, tests, shared-client
-guards and contract found no blocking issue. Latest GitHub readback confirms
-the same open draft head/base and successful CI; no reviews are posted. All
-application/check/configuration inputs remain identical to `e834548`.
-The local publication-result commit `f99fa215449727ec00656632b38aac8f1be1414d`
-and review closeout change only current state, roadmap, decisions, this packet
-and the integration proposal. Links, diff/consistency and source/deployment-guard
-checks cover these edits; matching application evidence is reused.
-
-Next: request the proposal's single non-force documentation update, its initial
-deterministic PR CI, PR description/ready transition and conditional merge into
-unchanged `main`. Bind approval to the final local head; stop for source/base/tree,
-CI, review, trigger or P3-status mismatch. Record formal merge evidence locally
-after the gate, without a post-merge push. Nothing in the prior approval covers
-this second publication or merge. Deployment, signed builds/device acceptance,
-P3 continuation and publication of P3 operating records remain separate gates.
+Revert this branch's commit, or delete `CLAUDE.md`, `.claude/settings.json`,
+`.claude/agents/`, `scripts/codex-review.mjs` and its test, and restore the
+documentation from `3a2357f`. `.codex/` is unchanged, so Codex sessions work
+throughout. User-level Claude settings were not modified.

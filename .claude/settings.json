@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-settings.json",
+  "model": "claude-opus-5-5",
+  "effortLevel": "medium",
+  "permissions": {
+    "ask": [
+      "Bash(git push *)",
+      "Bash(git reset --hard *)",
+      "Bash(git clean *)",
+      "Bash(git stash *)",
+      "Bash(git branch -D *)",
+      "Bash(git worktree remove *)",
+      "Bash(git worktree prune *)",
+      "Bash(gh pr merge *)"
+    ]
+  }
+}
