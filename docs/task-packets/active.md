@@ -44,7 +44,7 @@ approval. Canceled security scans and the simulator campaign stay closed.
 - [x] Workflow, decisions and current-state updated in place.
 - [x] Focused tests, `make ready` and contract drift check.
 - [x] Sol review of this migration and adjudication.
-- [ ] File-defined helper routing in a fresh Claude Code session (needs login).
+- [x] File-defined helper routing in a fresh Claude Code session.
 
 Verification: `make ready` passed at `ee686e1` (375 JavaScript tests, 206 Python
 tests with 36 PostgreSQL-only skips, lint/types, contracts with no drift,
@@ -53,13 +53,16 @@ the review wrapper and its tests; the root script suite (126 tests) passed again
 GPT-6.1 Sol (medium, read-only) reviewed `3a2357f..ee686e1` and found two valid
 wrapper issues (stale output reuse, unchecked working-tree changes), fixed in
 `f5542b1`; its re-review found one regression, fixed in `9ed3b2d`; the final
-re-review was clean. Haiku 5.5 and Sonnet 5.5 delegations were exercised by
-per-call model selection from the lead session, which started before the agent
-files existed; the files themselves still need a fresh, logged-in session.
+re-review was clean. After Brian logged in, a fresh `claude -p` session in this
+worktree (Claude Code 2.1.300) reported `claude-opus-5-5` at startup, listed
+`haiku-researcher` and `sonnet-investigator`, loaded `AGENTS.md` through
+`CLAUDE.md`, and routed those helpers to `claude-haiku-5-5` and
+`claude-sonnet-5-5` per its stream metadata. Version 2.1.300 removed the `/agents`
+wizard; use `/tasks` or stream metadata to confirm routing.
 
-Remaining: the standalone `claude` CLI login had expired; after `claude auth
-login`, start a session in this worktree and confirm `/agents` lists both helpers
-and `/tasks` shows their models. Publishing this branch is a separate approval.
+`claude import codex --dry-run` offers only user-level items (three MCP servers,
+the global Codex `AGENTS.md`, one held-back skill); none were imported. Remaining:
+publishing this branch is a separate approval.
 
 ## Mapping from Codex
 
