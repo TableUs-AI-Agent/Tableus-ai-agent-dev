@@ -29,6 +29,9 @@ class Place:
     latitude: float
     longitude: float
     data_provider: str = "fixture"
+    summary: str = ""
+    features: tuple[str, ...] = ()
+    rating_count: int = 0
 
 
 @dataclass(frozen=True)

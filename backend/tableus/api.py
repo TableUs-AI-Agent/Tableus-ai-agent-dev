@@ -1473,19 +1473,25 @@ async def generate_recommendations(
         for participant in participant_rows
         if (participant.constraints or {}).get("cuisines")
     ]
-    allowed_cuisines = set.intersection(*cuisine_sets) if cuisine_sets else set()
+    wanted_cuisines = set().union(*cuisine_sets) if cuisine_sets else set()
     price_limits = [
         int(participant.constraints["max_price_level"])
         for participant in participant_rows
         if (participant.constraints or {}).get("max_price_level")
     ]
     max_price = min(price_limits) if price_limits else 4
-    eligible = [
-        place
-        for place in places
-        if (not cuisine_sets or place.cuisine.lower() in allowed_cuisines)
-        and place.price_level <= max_price
-    ]
+    # Cuisine and price are preferences: the model weighs them, and the budget only
+    # filters when enough places remain to make a full set.
+    within_budget = [place for place in places if place.price_level <= max_price]
+    eligible = within_budget if len(within_budget) >= 4 else places
+    eligible = sorted(
+        eligible,
+        key=lambda place: (
+            sum(place.cuisine.lower() in wanted for wanted in cuisine_sets),
+            place.cuisine.lower() in wanted_cuisines,
+        ),
+        reverse=True,
+    )
     recommendations = await _call_ai(
         profile.id,
         "recommend",

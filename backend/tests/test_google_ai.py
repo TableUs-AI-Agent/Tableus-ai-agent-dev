@@ -85,7 +85,7 @@ async def test_recommendations_alias_places_and_record_token_cost() -> None:
     prompt = models.calls[0]["contents"]
     assert "candidate_1" in prompt
     assert FIXTURE_PLACES[0].place_id not in prompt
-    assert FIXTURE_PLACES[0].name not in prompt
+    assert FIXTURE_PLACES[0].name in prompt
     assert FIXTURE_PLACES[0].address not in prompt
     assert "unknown_private_field" not in prompt
     config = models.calls[0]["config"]

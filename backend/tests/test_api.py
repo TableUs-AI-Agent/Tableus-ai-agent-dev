@@ -1383,3 +1383,43 @@ async def test_account_export_and_deletion_readiness(client: AsyncClient) -> Non
     assert blocked.status_code == 409
     async with SessionFactory() as session:
         assert await session.scalar(select(Profile.id).where(Profile.id == owner_id)) == owner_id
+
+
+@pytest.mark.asyncio
+async def test_conflicting_cuisine_wishes_still_produce_recommendations(
+    client: AsyncClient,
+) -> None:
+    created = (
+        await client.post(
+            "/api/v1/plans",
+            headers=headers("demo-organizer"),
+            json={
+                "title": "Mixed tastes",
+                "location_label": "Boston, MA",
+                "latitude": 42.3601,
+                "longitude": -71.0589,
+            },
+        )
+    ).json()["data"]
+    plan_id = created["plan"]["id"]
+    await client.post(
+        f"/api/v1/plans/{plan_id}/join",
+        headers=headers("demo-guest"),
+        json={"share_token": created["share_token"]},
+    )
+    for user_id, cuisine in [("demo-organizer", "Italian"), ("demo-guest", "Japanese")]:
+        saved = await client.patch(
+            f"/api/v1/plans/{plan_id}/constraints",
+            headers=headers(user_id),
+            json={"cuisines": [cuisine]},
+        )
+        assert saved.status_code == 200, saved.text
+
+    generated = await client.post(
+        f"/api/v1/plans/{plan_id}/recommendations",
+        headers=headers("demo-organizer"),
+        json={"query": "dinner"},
+    )
+
+    assert generated.status_code == 200, generated.text
+    assert len(generated.json()["data"]["candidates"]) == 4

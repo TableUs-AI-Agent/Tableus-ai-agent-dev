@@ -176,3 +176,32 @@ async def test_details_deduplicate_preserve_order_and_encode_ids() -> None:
     assert [item.place_id for item in places] == ["second/id", "first"]
     assert len(paths) == 2
     assert any("second%2Fid" in path for path in paths)
+
+
+@pytest.mark.asyncio
+async def test_discover_reads_cuisine_summary_and_features_for_the_recommender() -> None:
+    item = restaurant("rich", primary_type="restaurant") | {
+        "types": ["thai_restaurant", "restaurant", "food", "point_of_interest"],
+        "editorialSummary": {"text": "Cozy spot for curries and noodles."},
+        "userRatingCount": 812,
+        "servesVegetarianFood": True,
+        "goodForGroups": True,
+        "outdoorSeating": False,
+    }
+    requests: list[httpx.Request] = []
+
+    def handler(request: httpx.Request) -> httpx.Response:
+        requests.append(request)
+        return httpx.Response(200, json={"places": [item]})
+
+    [place] = await LivePlacesProvider("secret", httpx.MockTransport(handler)).discover(
+        42.36, -71.06, "curry", 20
+    )
+
+    mask = requests[0].headers["X-Goog-FieldMask"]
+    assert "places.editorialSummary" in mask
+    assert "places.servesVegetarianFood" in mask
+    assert place.cuisine == "Thai"
+    assert place.summary == "Cozy spot for curries and noodles."
+    assert place.features == ("serves vegetarian food", "good for groups")
+    assert place.rating_count == 812
