@@ -46,7 +46,8 @@
     },
     "testflight": {
       "ios": {
-        "appleTeamId": "6MHJN5V9UJ"
+        "appleTeamId": "6MHJN5V9UJ",
+        "ascAppId": "6823761628"
       }
     }
   }
