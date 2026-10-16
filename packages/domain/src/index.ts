@@ -1,77 +1,6 @@
 import { validateJoinToken } from "./private-links.ts";
 
-export type PlanStatus = "collecting" | "voting" | "finalized";
 export type AuthLinkMode = "join" | "sign-in";
-
-export type Place = {
-  place_id: string;
-  name: string;
-  cuisine: string;
-  address: string;
-  rating: number;
-  price_level: number;
-  latitude: number;
-  longitude: number;
-  data_provider: "fixture" | "google_maps";
-};
-
-export type Candidate = {
-  id: string;
-  place: Place;
-  match_score: number;
-  reasoning: string;
-  rank: number;
-  vote_score: number;
-};
-
-export type Participant = {
-  profile_id: string;
-  display_name: string;
-  constraints: Record<string, unknown>;
-  is_organizer: boolean;
-};
-
-export type Plan = {
-  id: string;
-  title: string;
-  organizer_id: string;
-  viewer_is_organizer: boolean;
-  status: PlanStatus;
-  /** Older API responses omit this field and mean false. */
-  metadata_needs_replacement?: boolean;
-  location_label: string;
-  latitude: number | null;
-  longitude: number | null;
-  participants: Participant[];
-  candidates: Candidate[];
-  my_vote: string[] | null;
-  finalized_candidate_id: string | null;
-  created_at: string;
-  updated_at: string;
-};
-
-export type PlanSummary = Pick<Plan, "id" | "title" | "status" | "location_label" | "created_at" | "updated_at"> & {
-  participant_count: number;
-};
-
-export type PlanRevision = { updated_at: string };
-
-export type ResolvedLocation = {
-  place_id: string;
-  label: string;
-  data_provider: "fixture" | "google_maps";
-};
-
-export function bordaScores(rankings: string[][]): Record<string, number> {
-  const scores: Record<string, number> = {};
-  const points = [3, 2, 1];
-  for (const ranking of rankings) {
-    ranking.slice(0, 3).forEach((id, index) => {
-      scores[id] = (scores[id] ?? 0) + points[index];
-    });
-  }
-  return scores;
-}
 
 export function normalizeHttpsOrigin(value: string): string {
   let parsed: URL;
@@ -119,6 +48,5 @@ export function buildAuthUrl(origin: string, mode: AuthLinkMode): string {
 
 export * from "./telemetry.ts";
 export * from "./public-info.ts";
-export * from "./account-lifecycle.ts";
 
 export * from "./private-links.ts";

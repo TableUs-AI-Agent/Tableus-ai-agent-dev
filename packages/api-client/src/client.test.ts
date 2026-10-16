@@ -1,494 +1,103 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 
-import { ApiError, createApiClient, createIdempotencyKey, withAuthTimeout } from "./index.ts";
+import { ApiError, createApiClient, createTableUsApi } from "./index.ts";
 
-const isNetworkError = (error: unknown) => error instanceof ApiError && error.status === 0 && error.code === "network_error";
-function deferred<T>() {
-  let resolve!: (value: T) => void;
-  const promise = new Promise<T>((done) => { resolve = done; });
-  return { promise, resolve };
+type Call = { url: string; init: RequestInit };
+
+function fakeFetch(responses: Array<{ status: number; body: unknown }>) {
+  const calls: Call[] = [];
+  const fetchImpl = (async (url: string, init: RequestInit) => {
+    calls.push({ url, init });
+    const next = responses.shift() ?? { status: 200, body: { data: null, meta: {} } };
+    return new Response(JSON.stringify(next.body), { status: next.status });
+  }) as unknown as typeof fetch;
+  return { calls, fetchImpl };
 }
 
-const subjectToken = (subject: string) => `header.${Buffer.from(JSON.stringify({ sub: subject })).toString("base64url")}.signature`;
-const isSubjectChanged = (error: unknown) => error instanceof ApiError && error.code === "subject_changed";
-
-test("subject binding works without browser base64 globals and with UTF-8 claims", async (context) => {
-  context.mock.method(globalThis, "atob", () => { throw new Error("Browser global unavailable"); });
-  const token = `header.${Buffer.from(JSON.stringify({ sub: "actor-a", name: "한글 🍽" })).toString("base64url")}.signature`;
-  const client = createApiClient({
-    baseUrl: "https://example.test", getAccessToken: async () => token,
-    fetchImpl: async () => Response.json({ data: "safe" }),
-  });
-  assert.equal(await client.get("/api/v1/me/deletion", { expectedSubject: "actor-a" }), "safe");
+test("demo identity travels in a header and data is unwrapped", async () => {
+  const { calls, fetchImpl } = fakeFetch([{ status: 200, body: { data: { id: "p1" }, meta: {} } }]);
+  const client = createApiClient({ baseUrl: "http://api", demoUserId: "demo-guest", fetchImpl });
+  assert.deepEqual(await client.get("/api/v1/me"), { id: "p1" });
+  assert.equal(new Headers(calls[0].init.headers).get("X-Demo-User-ID"), "demo-guest");
 });
 
-test("sensitive requests bind initial credentials to the confirming subject", async () => {
-  const credential = deferred<string | null>();
-  let calls = 0;
-  const client = createApiClient({
-    baseUrl: "https://example.test", getAccessToken: () => credential.promise,
-    fetchImpl: async () => { calls += 1; return Response.json({ data: {} }); },
-  });
-  const request = client.post("/api/v1/me/deletion", { confirmation: "DELETE" }, { expectedSubject: "actor-a" });
-  credential.resolve(subjectToken("actor-b"));
-  await assert.rejects(request, isSubjectChanged);
-  assert.equal(calls, 0);
-});
-
-test("401 refresh cannot replay deletion under a different account", async () => {
-  let calls = 0;
-  const client = createApiClient({
-    baseUrl: "https://example.test",
-    getAccessToken: async () => subjectToken("actor-a"),
-    refreshAccessToken: async () => subjectToken("actor-b"),
-    fetchImpl: async () => { calls += 1; return Response.json({}, { status: 401 }); },
-  });
-  await assert.rejects(client.post("/api/v1/me/deletion", { confirmation: "DELETE" }, { expectedSubject: "actor-a" }), isSubjectChanged);
-  assert.equal(calls, 1);
-});
-
-test("same-subject refresh preserves the confirmed payload and retry key", async () => {
-  const requests: RequestInit[] = [];
-  const client = createApiClient({
-    baseUrl: "https://example.test",
-    getAccessToken: async () => subjectToken("actor-a"),
-    refreshAccessToken: async () => subjectToken("actor-a"),
-    fetchImpl: async (_url, init) => {
-      requests.push(init!);
-      return requests.length === 1 ? Response.json({}, { status: 401 }) : Response.json({ data: { status: "pending" } });
-    },
-  });
-  assert.deepEqual(await client.post("/api/v1/me/deletion", { confirmation: "DELETE" }, { expectedSubject: "actor-a", idempotencyKey: "confirmed-attempt" }), { status: "pending" });
-  assert.equal(requests.length, 2);
-  for (const request of requests) {
-    assert.equal(new Headers(request.headers).get("Idempotency-Key"), "confirmed-attempt");
-    assert.equal(request.body, '{"confirmation":"DELETE"}');
-  }
-});
-
-test("subject-bound reads reject missing or malformed credentials and changed demo actors", async () => {
-  for (const token of [null, "malformed", "x.e30.x"]) {
-    const client = createApiClient({
-      baseUrl: "https://example.test", getAccessToken: async () => token,
-      fetchImpl: async () => { assert.fail("must not dispatch"); },
-    });
-    await assert.rejects(client.get("/api/v1/me/export", { expectedSubject: "actor-a" }), isSubjectChanged);
-  }
-  const client = createApiClient({
-    baseUrl: "https://example.test", getDemoUserId: async () => "demo-b",
-    fetchImpl: async () => Response.json({ data: "safe" }),
-  });
-  await assert.rejects(client.get("/api/v1/me/export", { expectedSubject: "demo-a" }), isSubjectChanged);
-  assert.equal(await client.get("/api/v1/me/export", { expectedSubject: "demo-b" }), "safe");
-  const conflicting = createApiClient({
-    baseUrl: "https://example.test", demoUserId: "demo-b",
-    getAccessToken: async () => subjectToken("actor-a"),
-    fetchImpl: async () => { assert.fail("ambiguous credential sources must not dispatch"); },
-  });
-  await assert.rejects(conflicting.get("/api/v1/me/export", { expectedSubject: "actor-a" }), isSubjectChanged);
-});
-
-for (const resolver of ["getAccessToken", "getDemoUserId"] as const) {
-  test(`client bounds ${resolver} and never dispatches after a late credential`, async () => {
-    const credential = deferred<string | null>();
-    let calls = 0;
-    const boundaries: number[] = [];
-    const client = createApiClient({
-      baseUrl: "https://example.test", requestTimeoutMs: 10,
-      [resolver]: () => credential.promise,
-      onAuthorizationError: (status) => boundaries.push(status),
-      fetchImpl: async () => { calls += 1; return new Response("{}"); },
-    });
-    await assert.rejects(client.post("/write", {}), isNetworkError);
-    credential.resolve("late-credential");
-    await new Promise((resolve) => setImmediate(resolve));
-    assert.equal(calls, 0);
-    assert.deepEqual(boundaries, []);
-  });
-}
-
-test("client sanitizes rejected credential lookup without sending or signing out", async () => {
-  let calls = 0;
-  const boundaries: number[] = [];
-  const client = createApiClient({
-    baseUrl: "https://example.test", requestTimeoutMs: 10,
-    getAccessToken: async () => { throw new Error("private SDK detail"); },
-    onAuthorizationError: (status) => boundaries.push(status),
-    fetchImpl: async () => { calls += 1; return new Response("{}"); },
-  });
-  await assert.rejects(client.get("/private"), (error: unknown) => isNetworkError(error) && !String(error).includes("private SDK detail"));
-  assert.equal(calls, 0);
-  assert.deepEqual(boundaries, []);
-});
-
-test("a hung refresh is bounded and its late result never retries a write", async () => {
-  const refresh = deferred<string | null>();
-  let calls = 0;
-  const boundaries: number[] = [];
-  const client = createApiClient({
-    baseUrl: "https://example.test", requestTimeoutMs: 10,
-    getAccessToken: async () => "expired",
-    refreshAccessToken: () => refresh.promise,
-    onAuthorizationError: (status) => boundaries.push(status),
-    fetchImpl: async () => { calls += 1; return new Response("{}", { status: 401 }); },
-  });
-  await assert.rejects(client.post("/write", {}), isNetworkError);
-  refresh.resolve("late-token");
-  await new Promise((resolve) => setImmediate(resolve));
-  assert.equal(calls, 1);
-  assert.deepEqual(boundaries, []);
-});
-
-test("credential lookup and refresh share the original request deadline", async (context) => {
-  context.mock.timers.enable({ apis: ["setTimeout"] });
-  const credential = deferred<string | null>();
-  let refreshes = 0;
-  const client = createApiClient({
-    baseUrl: "https://example.test", requestTimeoutMs: 100,
-    getAccessToken: () => credential.promise,
-    refreshAccessToken: () => { refreshes += 1; return new Promise(() => {}); },
-    fetchImpl: async () => new Response("{}", { status: 401 }),
-  });
-  const pending = assert.rejects(client.get("/private"), isNetworkError);
-  context.mock.timers.tick(90);
-  credential.resolve("expired");
-  await new Promise((resolve) => setImmediate(resolve));
-  assert.equal(refreshes, 1);
-  context.mock.timers.tick(10);
-  await pending;
-});
-
-test("auth reads return data, sanitize rejection and reject a hung read", async () => {
-  assert.equal(await withAuthTimeout(async () => "session", 10), "session");
-  await assert.rejects(withAuthTimeout(async () => { throw new Error("private SDK detail"); }, 10),
-    (error: unknown) => isNetworkError(error) && !String(error).includes("private SDK detail"));
-  await assert.rejects(withAuthTimeout(() => new Promise(() => {}), 10), isNetworkError);
-});
-
-test("client unwraps a successful envelope", async () => {
-  const client = createApiClient({
-    baseUrl: "https://example.test",
-    fetchImpl: async () => new Response(JSON.stringify({ data: { ok: true }, meta: {} })),
-  });
-  assert.deepEqual(await client.get("/health"), { ok: true });
-});
-
-test("client treats an incomplete successful response as an ambiguous network failure", async () => {
-  const client = createApiClient({
-    baseUrl: "https://example.test",
-    fetchImpl: async () => new Response("{", { status: 200, headers: { "Content-Type": "application/json" } }),
-  });
-
-  await assert.rejects(
-    client.post("/write", { value: 1 }),
-    (error: unknown) => error instanceof ApiError && error.status === 0 && error.code === "network_error",
-  );
-});
-
-test("client aborts a stalled request and reports an ambiguous network failure", async () => {
-  let observedSignal: AbortSignal | null | undefined;
-  const client = createApiClient({
-    baseUrl: "https://example.test",
-    requestTimeoutMs: 10,
-    fetchImpl: async (_input, init) => {
-      observedSignal = init?.signal;
-      return new Promise<Response>((_resolve, reject) => {
-        observedSignal?.addEventListener("abort", () => reject(new Error("aborted")), { once: true });
-      });
-    },
-  });
-
-  await assert.rejects(
-    client.post("/write", { value: 1 }),
-    (error: unknown) => error instanceof ApiError && error.status === 0 && error.code === "network_error",
-  );
-  assert.equal(observedSignal?.aborted, true);
-});
-
-test("client timeout remains active while a successful response body is incomplete", async () => {
-  let observedSignal: AbortSignal | null | undefined;
-  const client = createApiClient({
-    baseUrl: "https://example.test",
-    requestTimeoutMs: 10,
-    fetchImpl: async (_input, init) => {
-      observedSignal = init?.signal;
-      return {
-        ok: true,
-        status: 200,
-        json: () => new Promise((_resolve, reject) => {
-          observedSignal?.addEventListener("abort", () => reject(new Error("aborted")), { once: true });
-        }),
-      } as Response;
-    },
-  });
-
-  await assert.rejects(
-    client.post("/write", { value: 1 }),
-    (error: unknown) => error instanceof ApiError && error.status === 0 && error.code === "network_error",
-  );
-  assert.equal(observedSignal?.aborted, true);
-});
-
-test("client deadline rejects when response-body parsing ignores abort", async () => {
-  let observedSignal: AbortSignal | null | undefined;
-  const client = createApiClient({
-    baseUrl: "https://example.test",
-    requestTimeoutMs: 10,
-    fetchImpl: async (_input, init) => {
-      observedSignal = init?.signal;
-      return {
-        ok: true,
-        status: 200,
-        json: () => new Promise(() => {}),
-      } as Response;
-    },
-  });
-
-  await assert.rejects(
-    client.post("/write", { value: 1 }),
-    (error: unknown) => error instanceof ApiError && error.status === 0 && error.code === "network_error",
-  );
-  assert.equal(observedSignal?.aborted, true);
-});
-
-test("client preserves API error metadata", async () => {
-  const client = createApiClient({
-    baseUrl: "https://example.test",
-    fetchImpl: async () =>
-      new Response(JSON.stringify({ error: { code: "denied", message: "No" }, request_id: "req-1" }), { status: 403 }),
-  });
-  await assert.rejects(client.get("/private"), (error: unknown) => error instanceof ApiError && error.requestId === "req-1");
-});
-
-test("client reports terminal authorization boundaries without changing the response", async () => {
-  const observed: number[] = [];
-  const client = createApiClient({
-    baseUrl: "https://example.test",
-    onAuthorizationError: (status) => observed.push(status),
-    fetchImpl: async (input) => {
-      const status = String(input).endsWith("/unauthorized") ? 401 : 403;
-      return new Response(
-        JSON.stringify({ error: { code: "denied", message: "No" }, request_id: "req-1" }),
-        { status },
-      );
-    },
-  });
-
-  await assert.rejects(client.get("/unauthorized"), (error: unknown) => error instanceof ApiError && error.status === 401);
-  await assert.rejects(client.get("/forbidden"), (error: unknown) => error instanceof ApiError && error.status === 403);
-  assert.deepEqual(observed, [401, 403]);
-});
-
-test("client resolves a dynamic demo identity for every request", async () => {
-  const observed: Array<string | null> = [];
-  let activeIdentity = "demo-organizer";
-  const client = createApiClient({
-    baseUrl: "https://example.test",
-    demoUserId: "static-fallback",
-    getDemoUserId: async () => activeIdentity,
-    fetchImpl: async (_input, init) => {
-      observed.push(new Headers(init?.headers).get("X-Demo-User-ID"));
-      return new Response(JSON.stringify({ data: { ok: true }, meta: {} }));
-    },
-  });
-
-  await client.get("/first");
-  activeIdentity = "demo-guest";
-  await client.get("/second");
-  assert.deepEqual(observed, ["demo-organizer", "demo-guest"]);
-});
-
-test("client uses the static demo identity when the dynamic resolver returns null", async () => {
-  let observed: string | null = null;
-  const client = createApiClient({
-    baseUrl: "https://example.test",
-    demoUserId: "demo-organizer",
-    getDemoUserId: async () => null,
-    fetchImpl: async (_input, init) => {
-      observed = new Headers(init?.headers).get("X-Demo-User-ID");
-      return new Response(JSON.stringify({ data: { ok: true }, meta: {} }));
-    },
-  });
-
-  await client.get("/fallback");
-  assert.equal(observed, "demo-organizer");
-});
-
-test("client omits the demo header when no identity is available", async () => {
-  let observed: string | null = "unexpected";
-  const client = createApiClient({
-    baseUrl: "https://example.test",
-    getDemoUserId: async () => null,
-    fetchImpl: async (_input, init) => {
-      observed = new Headers(init?.headers).get("X-Demo-User-ID");
-      return new Response(JSON.stringify({ data: { ok: true }, meta: {} }));
-    },
-  });
-
-  await client.get("/anonymous");
-  assert.equal(observed, null);
-});
-
-test("client refreshes once after 401 and reuses the idempotency key", async () => {
-  const tokens: Array<string | null> = [];
-  const idempotencyKeys: Array<string | null> = [];
-  let calls = 0;
-  const client = createApiClient({
-    baseUrl: "https://example.test",
-    getAccessToken: async () => "expired-token",
-    refreshAccessToken: async () => "fresh-token",
-    fetchImpl: async (_input, init) => {
-      calls += 1;
-      const headers = new Headers(init?.headers);
-      tokens.push(headers.get("Authorization"));
-      idempotencyKeys.push(headers.get("Idempotency-Key"));
-      if (calls === 1) {
-        return new Response(JSON.stringify({ error: { code: "unauthorized", message: "Expired" }, request_id: "req-1" }), { status: 401 });
-      }
-      return new Response(JSON.stringify({ data: { ok: true }, meta: {} }));
-    },
-  });
-
-  assert.deepEqual(await client.post("/private", { value: 1 }), { ok: true });
-  assert.deepEqual(tokens, ["Bearer expired-token", "Bearer fresh-token"]);
-  assert.equal(idempotencyKeys[0], idempotencyKeys[1]);
-  assert.ok(idempotencyKeys[0]);
-});
-
-test("client does not retry when refresh fails", async () => {
-  let calls = 0;
-  const client = createApiClient({
-    baseUrl: "https://example.test",
-    getAccessToken: async () => "expired-token",
-    refreshAccessToken: async () => null,
-    fetchImpl: async () => {
-      calls += 1;
-      return new Response(JSON.stringify({ error: { code: "unauthorized", message: "Expired" }, request_id: "req-1" }), { status: 401 });
-    },
-  });
-
-  await assert.rejects(client.get("/private"), (error: unknown) => error instanceof ApiError && error.status === 401);
-  assert.equal(calls, 1);
-});
-
-test("client treats a thrown refresh as recoverable without an authorization boundary", async () => {
-  let calls = 0;
-  const boundaries: number[] = [];
-  const client = createApiClient({
-    baseUrl: "https://api.example",
-    getAccessToken: async () => "expired",
-    refreshAccessToken: async () => { throw new Error("refresh failed"); },
-    onAuthorizationError: (status) => boundaries.push(status),
-    fetchImpl: async () => {
-      calls += 1;
-      return new Response(JSON.stringify({ error: { code: "unauthorized", message: "expired" }, request_id: "req" }), { status: 401 });
-    },
-  });
-  await assert.rejects(() => client.get("/api/v1/me"), isNetworkError);
-  assert.equal(calls, 1);
-  assert.deepEqual(boundaries, []);
-});
-
-test("client never refreshes or retries a 403", async () => {
-  let calls = 0;
-  let refreshes = 0;
-  const client = createApiClient({
-    baseUrl: "https://example.test",
-    getAccessToken: async () => "valid-token",
-    refreshAccessToken: async () => {
-      refreshes += 1;
-      return "unused-token";
-    },
-    fetchImpl: async () => {
-      calls += 1;
-      return new Response(JSON.stringify({ error: { code: "denied", message: "No" }, request_id: "req-1" }), { status: 403 });
-    },
-  });
-
-  await assert.rejects(client.get("/private"), (error: unknown) => error instanceof ApiError && error.status === 403);
-  assert.equal(calls, 1);
-  assert.equal(refreshes, 0);
-});
-
-test("client sends an explicit JSON body with DELETE requests", async () => {
-  let request: RequestInit | undefined;
-  const client = createApiClient({
-    baseUrl: "https://api.example.test",
-    fetchImpl: async (_input, init) => {
-      request = init;
-      return new Response(JSON.stringify({ data: { deleted: true }, meta: {} }));
-    },
-  });
-
-  await client.delete("/api/v1/me", { confirmation: "DELETE" });
-
-  assert.equal(request?.method, "DELETE");
-  assert.equal(request?.body, JSON.stringify({ confirmation: "DELETE" }));
-});
-
-test("client sends explicit idempotency keys for every write method", async () => {
-  const observed: Array<[string | undefined, string | null]> = [];
-  const client = createApiClient({
-    baseUrl: "https://api.example.test",
-    fetchImpl: async (_input, init) => {
-      observed.push([init?.method, new Headers(init?.headers).get("Idempotency-Key")]);
-      return new Response(JSON.stringify({ data: { ok: true }, meta: {} }));
-    },
-  });
-
-  await client.post("/post", {}, { idempotencyKey: "post-key" });
-  await client.put("/put", {}, { idempotencyKey: "put-key" });
-  await client.patch("/patch", {}, { idempotencyKey: "patch-key" });
-  await client.delete("/delete", {}, { idempotencyKey: "delete-key" });
-
-  assert.deepEqual(observed, [
-    ["POST", "post-key"],
-    ["PUT", "put-key"],
-    ["PATCH", "patch-key"],
-    ["DELETE", "delete-key"],
+test("an expired token is refreshed once and the request retried", async () => {
+  const { calls, fetchImpl } = fakeFetch([
+    { status: 401, body: { error: { code: "http_401", message: "expired" }, request_id: "r" } },
+    { status: 200, body: { data: "ok", meta: {} } },
   ]);
-});
-
-test("client generates distinct non-empty idempotency keys", () => {
-  const first = createIdempotencyKey();
-  const second = createIdempotencyKey();
-  assert.ok(first);
-  assert.ok(second);
-  assert.notEqual(first, second);
-});
-
-test("client adds anonymous telemetry context without account identity", async () => {
-  const observed: Array<[string | null, string | null]> = [];
   const client = createApiClient({
-    baseUrl: "https://api.example.test",
-    getTelemetrySessionId: () => "5f6ad44d-42d8-4d11-b5c3-90d137e34b87",
-    telemetryPlatform: "web",
-    fetchImpl: async (_input, init) => {
-      const headers = new Headers(init?.headers);
-      observed.push([
-        headers.get("X-TableUs-Telemetry-Session"),
-        headers.get("X-TableUs-Client"),
-      ]);
-      return new Response(JSON.stringify({ data: { ok: true }, meta: {} }));
-    },
+    baseUrl: "http://api",
+    fetchImpl,
+    getAccessToken: async () => "old",
+    refreshAccessToken: async () => "new",
   });
-  await client.get("/api/v1/me");
-  assert.deepEqual(observed, [["5f6ad44d-42d8-4d11-b5c3-90d137e34b87", "web"]]);
+  assert.equal(await client.post("/api/v1/plans", {}), "ok");
+  const tokens = calls.map((call) => new Headers(call.init.headers).get("Authorization"));
+  assert.deepEqual(tokens, ["Bearer old", "Bearer new"]);
 });
 
-test("client omits incomplete telemetry context", async () => {
-  let observed: Headers | undefined;
-  const client = createApiClient({
-    baseUrl: "https://api.example.test",
-    getTelemetrySessionId: () => null,
-    telemetryPlatform: "ios",
-    fetchImpl: async (_input, init) => {
-      observed = new Headers(init?.headers);
-      return new Response(JSON.stringify({ data: { ok: true }, meta: {} }));
-    },
+test("server errors surface their message, status and request id", async () => {
+  const { fetchImpl } = fakeFetch([
+    { status: 409, body: { error: { code: "http_409", message: "This plan is full" }, request_id: "abc" } },
+  ]);
+  const client = createApiClient({ baseUrl: "http://api", fetchImpl });
+  await assert.rejects(client.post("/x"), (error: unknown) => {
+    assert.ok(error instanceof ApiError);
+    assert.equal(error.message, "This plan is full");
+    assert.equal(error.status, 409);
+    assert.equal(error.requestId, "abc");
+    return true;
   });
-  await client.get("/api/v1/me");
-  assert.equal(observed?.get("X-TableUs-Telemetry-Session"), null);
-  assert.equal(observed?.get("X-TableUs-Client"), null);
+});
+
+test("a slow request becomes a network error at the deadline", async () => {
+  const fetchImpl = ((_url: string, init: RequestInit) => new Promise((_resolve, reject) => {
+    init.signal?.addEventListener("abort", () => reject(new Error("aborted")));
+  })) as unknown as typeof fetch;
+  const client = createApiClient({ baseUrl: "http://api", fetchImpl, requestTimeoutMs: 20 });
+  await assert.rejects(client.get("/slow"), (error: unknown) =>
+    error instanceof ApiError && error.code === "network_error");
+});
+
+test("only standard headers are sent so CORS preflight stays simple", async () => {
+  const { calls, fetchImpl } = fakeFetch([{ status: 200, body: { data: {}, meta: {} } }]);
+  const client = createApiClient({
+    baseUrl: "http://api", fetchImpl, getAccessToken: async () => "t",
+    getTelemetrySessionId: () => "session", telemetryPlatform: "web",
+  });
+  await client.post("/x", {});
+  const names = [...new Headers(calls[0].init.headers).keys()].sort();
+  assert.deepEqual(names, ["authorization", "content-type"]);
+});
+
+test("typed endpoints call the expected paths and methods", async () => {
+  const { calls, fetchImpl } = fakeFetch([]);
+  const api = createTableUsApi(createApiClient({ baseUrl: "http://api", fetchImpl }));
+  await api.joinPlan("plan/1", "token-value");
+  await api.vote("p", ["a", "b", "c"]);
+  await api.finalize("p");
+  assert.deepEqual(calls.map((call) => [call.init.method ?? "GET", call.url]), [
+    ["POST", "http://api/api/v1/plans/plan%2F1/join"],
+    ["PUT", "http://api/api/v1/plans/p/vote"],
+    ["POST", "http://api/api/v1/plans/p/finalize"],
+  ]);
+  assert.equal(calls[0].init.body, JSON.stringify({ share_token: "token-value" }));
+});
+
+test("account deletion refuses to run if a refresh switched accounts", async () => {
+  const { calls, fetchImpl } = fakeFetch([
+    { status: 401, body: { error: { code: "http_401", message: "expired" }, request_id: "r" } },
+  ]);
+  const token = (sub: string) => `x.${Buffer.from(JSON.stringify({ sub })).toString("base64url")}.y`;
+  const api = createTableUsApi(createApiClient({
+    baseUrl: "http://api",
+    fetchImpl,
+    getAccessToken: async () => token("person-a"),
+    refreshAccessToken: async () => token("person-b"),
+  }));
+  await assert.rejects(api.deleteAccount("person-a"), (error: unknown) =>
+    error instanceof ApiError && error.code === "subject_changed");
+  assert.equal(calls.length, 1);
 });

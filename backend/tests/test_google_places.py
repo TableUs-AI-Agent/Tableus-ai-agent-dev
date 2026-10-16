@@ -3,7 +3,8 @@ import json
 import httpx
 import pytest
 
-from tableus.providers.google_live import LivePlacesProvider, PlacesProviderError
+from tableus.providers.base import ProviderError
+from tableus.providers.google_live import LivePlacesProvider
 
 
 def restaurant(place_id: str, primary_type: str = "japanese_restaurant") -> dict:
@@ -97,7 +98,7 @@ async def test_location_resolution_still_fails_closed_without_a_us_country() -> 
             },
         )
 
-    with pytest.raises(PlacesProviderError, match="United States"):
+    with pytest.raises(ProviderError, match="United States"):
         await LivePlacesProvider("secret", httpx.MockTransport(handler)).resolve_location("Madison")
 
 
@@ -130,22 +131,17 @@ async def test_text_and_nearby_search_use_policy_bounded_payloads() -> None:
 @pytest.mark.asyncio
 async def test_transient_responses_retry_three_times_but_terminal_4xx_does_not() -> None:
     transient_calls = 0
-    usage_events: list[tuple[str, int, int, bool]] = []
-
-    async def usage(operation: str, attempts: int, output_units: int, failed: bool) -> None:
-        usage_events.append((operation, attempts, output_units, failed))
 
     def transient(request: httpx.Request) -> httpx.Response:
         nonlocal transient_calls
         transient_calls += 1
         return httpx.Response(503, json={})
 
-    with pytest.raises(PlacesProviderError, match="temporarily unavailable"):
+    with pytest.raises(ProviderError, match="temporarily unavailable"):
         await LivePlacesProvider("secret", httpx.MockTransport(transient)).discover(
-            42.36, -71.06, "", 20, usage
+            42.36, -71.06, "", 20
         )
     assert transient_calls == 3
-    assert usage_events == [("restaurant.nearby_search", 3, 0, True)]
 
     terminal_calls = 0
 
@@ -154,7 +150,7 @@ async def test_transient_responses_retry_three_times_but_terminal_4xx_does_not()
         terminal_calls += 1
         return httpx.Response(400, json={})
 
-    with pytest.raises(PlacesProviderError, match="rejected"):
+    with pytest.raises(ProviderError, match="rejected"):
         await LivePlacesProvider("secret", httpx.MockTransport(terminal)).discover(
             42.36, -71.06, "", 20
         )
@@ -176,3 +172,32 @@ async def test_details_deduplicate_preserve_order_and_encode_ids() -> None:
     assert [item.place_id for item in places] == ["second/id", "first"]
     assert len(paths) == 2
     assert any("second%2Fid" in path for path in paths)
+
+
+@pytest.mark.asyncio
+async def test_discover_reads_cuisine_summary_and_features_for_the_recommender() -> None:
+    item = restaurant("rich", primary_type="restaurant") | {
+        "types": ["thai_restaurant", "restaurant", "food", "point_of_interest"],
+        "editorialSummary": {"text": "Cozy spot for curries and noodles."},
+        "userRatingCount": 812,
+        "servesVegetarianFood": True,
+        "goodForGroups": True,
+        "outdoorSeating": False,
+    }
+    requests: list[httpx.Request] = []
+
+    def handler(request: httpx.Request) -> httpx.Response:
+        requests.append(request)
+        return httpx.Response(200, json={"places": [item]})
+
+    [place] = await LivePlacesProvider("secret", httpx.MockTransport(handler)).discover(
+        42.36, -71.06, "curry", 20
+    )
+
+    mask = requests[0].headers["X-Goog-FieldMask"]
+    assert "places.editorialSummary" in mask
+    assert "places.servesVegetarianFood" in mask
+    assert place.cuisine == "Thai"
+    assert place.summary == "Cozy spot for curries and noodles."
+    assert place.features == ("serves vegetarian food", "good for groups")
+    assert place.rating_count == 812

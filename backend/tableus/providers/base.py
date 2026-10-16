@@ -1,21 +1,5 @@
-from collections.abc import Awaitable, Callable
 from dataclasses import dataclass
 from typing import Protocol
-
-PlacesUsageRecorder = Callable[[str, int, int, bool], Awaitable[None]]
-
-
-@dataclass(frozen=True)
-class AiCallUsage:
-    operation: str
-    attempts: int
-    input_tokens: int
-    output_tokens: int
-    estimated_cost_usd: float
-    failed: bool
-
-
-AiUsageRecorder = Callable[[AiCallUsage], Awaitable[None]]
 
 
 @dataclass(frozen=True)
@@ -29,6 +13,9 @@ class Place:
     latitude: float
     longitude: float
     data_provider: str = "fixture"
+    summary: str = ""
+    features: tuple[str, ...] = ()
+    rating_count: int = 0
 
 
 @dataclass(frozen=True)
@@ -48,46 +35,43 @@ class Recommendation:
     reasoning: str
 
 
+@dataclass(frozen=True)
+class Diner:
+    """One person's wishes for a plan, as the recommender sees them."""
+
+    cuisines: list[str]
+    dietary_notes: list[str]
+    max_price_level: int | None
+    notes: str
+    taste: str = ""
+
+
+class ProviderError(RuntimeError):
+    """A provider failed in a way the user can retry later (kind=transient) or not."""
+
+    def __init__(self, message: str, *, kind: str = "transient", status_code: int | None = None):
+        super().__init__(message)
+        self.kind = kind
+        self.status_code = status_code
+
+
 class PlacesProvider(Protocol):
     name: str
 
-    async def resolve_location(
-        self, query: str, usage: PlacesUsageRecorder | None = None
-    ) -> ResolvedLocation: ...
+    async def resolve_location(self, query: str) -> ResolvedLocation: ...
 
-    async def get_location(
-        self, place_id: str, usage: PlacesUsageRecorder | None = None
-    ) -> ResolvedLocation: ...
+    async def get_location(self, place_id: str) -> ResolvedLocation: ...
 
     async def discover(
-        self,
-        latitude: float,
-        longitude: float,
-        query: str,
-        limit: int = 20,
-        usage: PlacesUsageRecorder | None = None,
+        self, latitude: float, longitude: float, query: str, limit: int = 20
     ) -> list[Place]: ...
 
-    async def get_places(
-        self, place_ids: list[str], usage: PlacesUsageRecorder | None = None
-    ) -> list[Place]: ...
+    async def get_places(self, place_ids: list[str]) -> list[Place]: ...
 
 
 class AiProvider(Protocol):
     name: str
 
     async def recommend(
-        self,
-        query: str,
-        constraints: list[dict],
-        places: list[Place],
-        usage: AiUsageRecorder | None = None,
+        self, request: str, diners: list[Diner], places: list[Place]
     ) -> list[Recommendation]: ...
-
-    async def analyze_food(
-        self, image_bytes: bytes, media_type: str, usage: AiUsageRecorder | None = None
-    ) -> dict: ...
-
-    async def regenerate_taste(
-        self, reviews: list[dict], usage: AiUsageRecorder | None = None
-    ) -> str: ...

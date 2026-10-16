@@ -1,130 +1,31 @@
 {
-  "cli": { "version": "23.2.0", "appVersionSource": "remote" },
+  "cli": {
+    "version": "23.2.0",
+    "appVersionSource": "remote"
+  },
   "build": {
-    "development": { "developmentClient": true, "distribution": "internal", "channel": "development", "environment": "development" },
-    "preview": { "distribution": "internal", "channel": "preview", "environment": "preview" },
-    "test-ios": {
+    "development": {
+      "developmentClient": true,
+      "distribution": "internal",
+      "channel": "development",
+      "environment": "development"
+    },
+    "preview": {
       "distribution": "internal",
       "channel": "preview",
-      "environment": "preview",
-      "env": {
-        "EXPO_PUBLIC_API_URL": "http://127.0.0.1:8000",
-        "EXPO_PUBLIC_DEMO_MODE": "true",
-        "EXPO_PUBLIC_DEMO_USER_ID": "demo-organizer",
-        "EXPO_PUBLIC_DEMO_IDENTITIES": "demo-organizer,demo-guest",
-        "TABLEUS_LOCAL_E2E": "true"
-      },
-      "ios": { "simulator": true }
+      "environment": "preview"
     },
-    "test-android": {
-      "distribution": "internal",
-      "channel": "preview",
-      "environment": "preview",
-      "env": {
-        "EXPO_PUBLIC_API_URL": "http://127.0.0.1:8000",
-        "EXPO_PUBLIC_DEMO_MODE": "true",
-        "EXPO_PUBLIC_DEMO_USER_ID": "demo-organizer",
-        "EXPO_PUBLIC_DEMO_IDENTITIES": "demo-organizer,demo-guest",
-        "TABLEUS_LOCAL_E2E": "true"
-      },
-      "android": { "buildType": "apk" }
-    },
-    "auth-test-ios": {
-      "distribution": "internal",
-      "channel": "preview",
-      "environment": "preview",
-      "env": {
-        "EXPO_PUBLIC_DEMO_MODE": "false",
-        "TABLEUS_LOCAL_E2E": "false",
-        "TABLEUS_AUTH_E2E": "true"
-      },
-      "ios": { "simulator": true }
-    },
-    "auth-test-android": {
-      "distribution": "internal",
-      "channel": "preview",
-      "environment": "preview",
-      "env": {
-        "EXPO_PUBLIC_DEMO_MODE": "false",
-        "TABLEUS_LOCAL_E2E": "false",
-        "TABLEUS_AUTH_E2E": "true"
-      },
-      "android": { "buildType": "apk" }
-    },
-    "links-test-ios": {
-      "extends": "preview",
-      "env": {
-        "EXPO_PUBLIC_LINK_HOST": "links.table-us.com",
-        "EXPO_PUBLIC_DEMO_MODE": "false",
-        "TABLEUS_LOCAL_E2E": "false",
-        "TABLEUS_AUTH_E2E": "false"
-      }
-    },
-    "links-test-android": {
-      "extends": "preview",
-      "env": {
-        "EXPO_PUBLIC_LINK_HOST": "links.table-us.com",
-        "EXPO_PUBLIC_DEMO_MODE": "false",
-        "TABLEUS_LOCAL_E2E": "false",
-        "TABLEUS_AUTH_E2E": "false",
-        "ORG_GRADLE_PROJECT_reactNativeArchitectures": "arm64-v8a"
-      },
-      "android": { "buildType": "apk" }
-    },
-    "telemetry-test-ios": {
-      "extends": "preview",
-      "env": {
-        "EXPO_PUBLIC_DEMO_MODE": "false",
-        "EXPO_PUBLIC_TELEMETRY_MODE": "staging",
-        "TABLEUS_LOCAL_E2E": "false",
-        "TABLEUS_AUTH_E2E": "false",
-        "TABLEUS_TELEMETRY_E2E": "true"
-      },
-      "ios": { "simulator": true }
-    },
-    "telemetry-test-android": {
-      "extends": "preview",
-      "env": {
-        "EXPO_PUBLIC_DEMO_MODE": "false",
-        "EXPO_PUBLIC_TELEMETRY_MODE": "staging",
-        "TABLEUS_LOCAL_E2E": "false",
-        "TABLEUS_AUTH_E2E": "false",
-        "TABLEUS_TELEMETRY_E2E": "true",
-        "ORG_GRADLE_PROJECT_reactNativeArchitectures": "arm64-v8a"
-      },
-      "android": { "buildType": "apk" }
-    },
-    "readiness-ios": {
-      "extends": "preview",
-      "env": {
-        "EXPO_PUBLIC_LINK_HOST": "links.table-us.com",
-        "EXPO_PUBLIC_DEMO_MODE": "false",
-        "EXPO_PUBLIC_TELEMETRY_MODE": "staging",
-        "TABLEUS_LOCAL_E2E": "false",
-        "TABLEUS_AUTH_E2E": "false",
-        "TABLEUS_TELEMETRY_E2E": "false",
-        "TABLEUS_READINESS": "true"
-      }
-    },
-    "readiness-android": {
-      "extends": "preview",
-      "env": {
-        "EXPO_PUBLIC_LINK_HOST": "links.table-us.com",
-        "EXPO_PUBLIC_DEMO_MODE": "false",
-        "EXPO_PUBLIC_TELEMETRY_MODE": "staging",
-        "TABLEUS_LOCAL_E2E": "false",
-        "TABLEUS_AUTH_E2E": "false",
-        "TABLEUS_TELEMETRY_E2E": "false",
-        "TABLEUS_READINESS": "true",
-        "ORG_GRADLE_PROJECT_reactNativeArchitectures": "arm64-v8a"
-      },
-      "android": { "buildType": "apk" }
-    },
-    "production": { "autoIncrement": true, "channel": "production", "environment": "production" }
+    "production": {
+      "channel": "production",
+      "environment": "production",
+      "autoIncrement": true
+    }
   },
   "submit": {
     "production": {
-      "android": { "track": "internal" }
+      "android": {
+        "track": "internal"
+      }
     }
   }
 }

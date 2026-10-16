@@ -12,16 +12,14 @@
     "test": "node --test --experimental-strip-types app/lib/*.test.ts"
   },
   "dependencies": {
+    "@sentry/nextjs": "^10.38.0",
     "@supabase/ssr": "^0.12.4",
     "@supabase/supabase-js": "^2.112.3",
-    "@sentry/nextjs": "^10.38.0",
     "@tableus/api-client": "*",
     "@tableus/domain": "*",
     "@tanstack/react-query": "^5.101.4",
-    "framer-motion": "^12.38.0",
     "lucide-react": "^1.8.0",
     "next": "16.3.5",
-    "posthog-js": "^1.298.1",
     "react": "19.2.4",
     "react-dom": "19.2.4",
     "three": "^0.184.0"

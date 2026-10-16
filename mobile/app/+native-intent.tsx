@@ -1,5 +1,5 @@
-import { rewriteCanonicalSystemPath } from "@/lib/links";
+import { rewriteIncomingLink } from "@/lib/links";
 
 export function redirectSystemPath({ path }: { path: string; initial: boolean }): string {
-  return rewriteCanonicalSystemPath(path);
+  return rewriteIncomingLink(path);
 }

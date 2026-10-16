@@ -1,72 +1,17 @@
 "use client";
 
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { useEffect, useRef, useState, type PropsWithChildren } from "react";
+import { useState, type ReactNode } from "react";
 
-import { subscribeAuthorizationBoundary } from "./lib/authorization-boundary";
-import { pendingJoin } from "./lib/pending-join";
-import { clearPrivateQueryState, shouldClearForAuthTransition } from "./lib/session-query-isolation";
-import { isSupabaseConfigured, supabase } from "./lib/supabase-browser";
-import { captureTelemetry, registerTelemetryClient, sanitizeWebPostHogPayload } from "./lib/telemetry";
+import { SessionProvider } from "./lib/session";
 
-function SessionQueryIsolation({ queryClient }: { queryClient: QueryClient }) {
-  const previousSubject = useRef<string | null | undefined>(undefined);
-
-  useEffect(() => {
-    if (!isSupabaseConfigured) {
-      pendingJoin.setSubject(process.env.NEXT_PUBLIC_DEMO_USER_ID ?? "demo-organizer");
-      return;
-    }
-    const clear = () => clearPrivateQueryState(queryClient);
-    const unsubscribeAuthorization = subscribeAuthorizationBoundary(clear);
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
-      const nextSubject = session?.user.id ?? null;
-      if (shouldClearForAuthTransition(previousSubject.current, nextSubject, event)) clear();
-      if (event === "SIGNED_OUT") pendingJoin.clear();
-      pendingJoin.setSubject(nextSubject);
-      previousSubject.current = nextSubject;
-    });
-    return () => {
-      unsubscribeAuthorization();
-      subscription.unsubscribe();
-    };
-  }, [queryClient]);
-
-  return null;
-}
-
-export function AppProviders({ children }: PropsWithChildren) {
+export function Providers({ children }: { children: ReactNode }) {
   const [queryClient] = useState(
-    () => new QueryClient({ defaultOptions: { queries: { staleTime: 30_000, retry: 2 } } }),
+    () => new QueryClient({ defaultOptions: { queries: { staleTime: 15_000, retry: 1 } } }),
   );
-
-  useEffect(() => {
-    const key = process.env.NEXT_PUBLIC_POSTHOG_KEY;
-    const mode = process.env.NEXT_PUBLIC_TELEMETRY_MODE;
-    if (!key || (mode !== "staging" && mode !== "production")) return;
-    void import("posthog-js").then(({ default: posthog }) => {
-      posthog.init(key, {
-        api_host: process.env.NEXT_PUBLIC_POSTHOG_HOST ?? "https://us.i.posthog.com",
-        persistence: "memory",
-        person_profiles: "never",
-        autocapture: false,
-        capture_pageview: false,
-        capture_pageleave: false,
-        disable_session_recording: true,
-        disable_surveys: true,
-        advanced_disable_feature_flags: true,
-        advanced_disable_feature_flags_on_first_load: true,
-        before_send: (payload) => payload ? sanitizeWebPostHogPayload(payload) : null,
-      });
-      registerTelemetryClient(posthog);
-      captureTelemetry("app_opened");
-    });
-  }, []);
-
   return (
     <QueryClientProvider client={queryClient}>
-      <SessionQueryIsolation queryClient={queryClient} />
-      {children}
+      <SessionProvider>{children}</SessionProvider>
     </QueryClientProvider>
   );
 }

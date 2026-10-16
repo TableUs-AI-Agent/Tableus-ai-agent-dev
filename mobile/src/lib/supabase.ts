@@ -1,49 +1,18 @@
 import "react-native-url-polyfill/auto";
 
-import * as SecureStore from "expo-secure-store";
 import { createClient } from "@supabase/supabase-js";
-import { PUBLIC_RUNTIME_POLICY, requireExactHttpsOrigin } from "@tableus/domain";
+import { storage } from "./storage";
 
-const configuredSupabaseUrl = process.env.EXPO_PUBLIC_SUPABASE_URL;
-const supabaseAnonKey = process.env.EXPO_PUBLIC_SUPABASE_ANON_KEY;
-const demoMode = process.env.EXPO_PUBLIC_DEMO_MODE === "true";
-const supabaseUrl = configuredSupabaseUrl && !demoMode
-  ? requireExactHttpsOrigin(
-      configuredSupabaseUrl,
-      PUBLIC_RUNTIME_POLICY.stagingSupabaseOrigin,
-      "Mobile Supabase origin",
-    )
-  : configuredSupabaseUrl;
+const url = process.env.EXPO_PUBLIC_SUPABASE_URL;
+const anonKey = process.env.EXPO_PUBLIC_SUPABASE_ANON_KEY;
 
-export const secureAuthStorage = {
-  getItem: (key: string) => SecureStore.getItemAsync(key),
-  setItem: (key: string, value: string) => SecureStore.setItemAsync(key, value),
-  removeItem: (key: string) => SecureStore.deleteItemAsync(key),
-};
+export const isSupabaseConfigured = Boolean(url && anonKey);
 
-export const isSupabaseConfigured = !demoMode && Boolean(supabaseUrl && supabaseAnonKey);
-export const supabase = createClient(
-  supabaseUrl || "https://not-configured.supabase.co",
-  supabaseAnonKey || "not-configured",
-  {
-    auth: {
-      storage: secureAuthStorage,
-      autoRefreshToken: true,
-      persistSession: true,
-      detectSessionInUrl: false,
-    },
+export const supabase = createClient(url || "https://not-configured.supabase.co", anonKey || "not-configured", {
+  auth: {
+    storage,
+    autoRefreshToken: true,
+    persistSession: true,
+    detectSessionInUrl: false,
   },
-);
-
-export async function getSupabaseAccessToken() {
-  const { data, error } = await supabase.auth.getSession();
-  if (error) throw error;
-  return data.session?.access_token ?? null;
-}
-
-export async function refreshSupabaseAccessToken() {
-  const { data, error } = await supabase.auth.refreshSession();
-  // A transport/storage failure does not establish that the session is invalid.
-  if (error) throw error;
-  return data.session?.access_token ?? null;
-}
+});

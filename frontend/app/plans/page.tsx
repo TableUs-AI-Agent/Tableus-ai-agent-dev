@@ -1,94 +1,117 @@
 "use client";
 
-import type { Plan, PlanSummary, ResolvedLocation } from "@tableus/domain";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import type { PlanSummary, ResolvedLocation } from "@tableus/api-client";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import Link from "next/link";
-import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { useState, type FormEvent } from "react";
 
-import { v1Api } from "../lib/v1-api";
-import { createCanonicalJoinUrl } from "../lib/links";
+import { AppShell, LoadError, Loading } from "../components/app-shell";
 import { GoogleMapsAttribution } from "../components/google-maps-attribution";
-import { useUser } from "../context/user-context";
+import { api, errorMessage } from "../lib/api";
+import { useKeys, useMe } from "../lib/session";
+
+const STATUS: Record<PlanSummary["status"], string> = {
+  collecting: "Collecting wishes",
+  voting: "Voting",
+  finalized: "Decided",
+};
 
 export default function PlansPage() {
-  const { currentUser, userState, userError } = useUser();
-  if (userState === "loading") return <p className="p-8" role="status">Loading plans…</p>;
-  if (userState === "signed_out") return <AuthRecovery message="Sign in to view your TableUs plans." />;
-  if (userState === "error") return <AuthRecovery message={userError || "Unable to connect to TableUs."} retry />;
-  if (!currentUser) return <AuthRecovery message="Unable to load your approved TableUs profile." retry />;
-  return <PlansPageContent key={currentUser.id} subject={currentUser.id} />;
+  return <AppShell><Plans /></AppShell>;
 }
 
-function AuthRecovery({ message, retry = false }: { message: string; retry?: boolean }) {
+function Plans() {
+  const keys = useKeys();
+  const me = useMe();
+  const plans = useQuery({ queryKey: keys.plans, queryFn: api.listPlans });
+  const canCreate = me.data?.can_create_plans ?? false;
+
   return (
-    <main className="mx-auto flex min-h-full max-w-xl items-center px-6 py-16">
-      <section className="glass w-full space-y-4 rounded-[2rem] p-8">
-        <h1 className="text-3xl font-bold">Plans unavailable</h1>
-        <p role="alert" className="text-red-700">{message}</p>
-        {retry
-          ? <button type="button" onClick={() => window.location.reload()} className="rounded-2xl bg-[var(--accent)] px-5 py-3 font-semibold text-white">Retry</button>
-          : <Link href="/invite?mode=sign-in" className="inline-flex rounded-2xl bg-[var(--accent)] px-5 py-3 font-semibold text-white">Sign in</Link>}
+    <>
+      <h1 className="display mt-4 text-6xl">Your plans</h1>
+      {canCreate ? <NewPlan /> : (
+        <p className="mt-4 rounded-[20px] border-2 border-sage bg-white p-5">
+          Starting plans is invite-only for now. When a friend sends you a plan link, open it to join.
+        </p>
+      )}
+      <section aria-labelledby="list" className="mt-12">
+        <h2 id="list" className="text-xl font-bold">All plans</h2>
+        {plans.isPending ? <Loading /> : plans.isError ? <LoadError onRetry={() => plans.refetch()} /> : plans.data.length === 0 ? (
+          <p className="mt-3 text-moss">Nothing here yet. Plans you start or join show up here.</p>
+        ) : (
+          <ul className="mt-3 divide-y-2 divide-sage border-y-2 border-sage">
+            {plans.data.map((plan) => (
+              <li key={plan.id}>
+                <Link href={`/plans/${plan.id}`} className="flex items-center justify-between gap-4 py-4 hover:bg-white/60">
+                  <span>
+                    <span className="block text-lg font-bold">{plan.title}</span>
+                    <span className="block text-sm text-moss">{plan.location_label}</span>
+                  </span>
+                  <span className="shrink-0 text-right text-sm">
+                    <span className={`block font-semibold ${plan.status === "finalized" ? "" : "text-radicchio"}`}>{STATUS[plan.status]}</span>
+                    <span className="block text-moss">{plan.participant_count} {plan.participant_count === 1 ? "person" : "people"}</span>
+                  </span>
+                </Link>
+              </li>
+            ))}
+          </ul>
+        )}
       </section>
-    </main>
+    </>
   );
 }
 
-function PlansPageContent({ subject }: { subject: string }) {
-  const queryClient = useQueryClient();
+function NewPlan() {
+  const router = useRouter();
   const [title, setTitle] = useState("");
-  const [locationInput, setLocationInput] = useState("");
-  const [selectedLocation, setSelectedLocation] = useState<ResolvedLocation | null>(null);
-  const [shareUrl, setShareUrl] = useState("");
-  const plansKey = ["plans", subject] as const;
-  const plans = useQuery({
-    queryKey: plansKey,
-    queryFn: () => v1Api.get<PlanSummary[]>("/api/v1/plans"),
-    enabled: true,
-  });
-  const resolve = useMutation({
-    mutationFn: () => v1Api.post<ResolvedLocation>("/api/v1/locations/resolve", { query: locationInput.trim() }),
-    onSuccess: setSelectedLocation,
-  });
+  const [query, setQuery] = useState("");
+  const [location, setLocation] = useState<ResolvedLocation | null>(null);
+
+  const find = useMutation({ mutationFn: (text: string) => api.resolveLocation(text), onSuccess: setLocation });
   const create = useMutation({
-    mutationFn: () => v1Api.post<{ plan: Plan; share_token: string }>("/api/v1/plans", {
-      title: title.trim(),
-      location_label: locationInput.trim().replace(/\s+/g, " "),
-      location_place_id: selectedLocation?.place_id,
+    mutationFn: (place: ResolvedLocation) => api.createPlan({
+      title: title.trim() || "Dinner",
+      location_label: place.label,
+      location_place_id: place.place_id,
     }),
-    onSuccess: ({ plan, share_token }) => {
-      setTitle("");
-      setLocationInput("");
-      setSelectedLocation(null);
-      setShareUrl(createCanonicalJoinUrl(plan.id, share_token));
-      void queryClient.invalidateQueries({ queryKey: plansKey });
-    },
+    onSuccess: (created) => router.push(`/plans/${created.plan.id}`),
   });
 
+  function submit(event: FormEvent) {
+    event.preventDefault();
+    if (location) create.mutate(location);
+    else if (query.trim().length >= 2) find.mutate(query.trim());
+  }
+
+  const error = find.error ?? create.error;
   return (
-    <div className="mx-auto max-w-5xl space-y-8 px-5 py-10 md:px-10">
-      <header>
-        <p className="text-sm font-semibold uppercase tracking-[0.18em] text-[var(--accent)]">Shared decisions</p>
-        <h1 className="mt-2 text-4xl font-bold">Dinner plans</h1>
-      </header>
-      <section className="glass flex flex-col gap-3 rounded-[2rem] p-6">
-        <input className="min-w-0 flex-1 rounded-2xl border border-[var(--border)] bg-white p-4" value={title} onChange={(event) => setTitle(event.target.value)} placeholder="Friday dinner" />
-        <div className="flex flex-col gap-3 sm:flex-row">
-          <input aria-label="City, neighborhood, or ZIP code" className="min-w-0 flex-1 rounded-2xl border border-[var(--border)] bg-white p-4" value={locationInput} onChange={(event) => { setLocationInput(event.target.value); setSelectedLocation(null); resolve.reset(); }} placeholder="City, neighborhood, or ZIP code" />
-          <button className="rounded-2xl border border-[var(--border)] bg-white px-6 py-4 font-semibold disabled:opacity-50" disabled={!locationInput.trim() || resolve.isPending} onClick={() => resolve.mutate()}>{resolve.isPending ? "Finding…" : "Find location"}</button>
+    <form onSubmit={submit} className="mt-6 space-y-4 rounded-[20px] border-2 border-bottle bg-white p-5">
+      <h2 className="text-xl font-bold">Start a plan</h2>
+      <label className="block">
+        <span className="mb-1 block font-semibold">What&apos;s the occasion?</span>
+        <input className="field" placeholder="Friday dinner" maxLength={120} value={title} onChange={(e) => setTitle(e.target.value)} />
+      </label>
+      <label className="block">
+        <span className="mb-1 block font-semibold">Where should we look?</span>
+        <input
+          className="field"
+          placeholder="Neighborhood, city or ZIP code"
+          value={location ? location.label : query}
+          readOnly={Boolean(location)}
+          onChange={(e) => setQuery(e.target.value)}
+        />
+      </label>
+      {location ? (
+        <div className="flex flex-wrap items-center justify-between gap-2 text-sm">
+          <button type="button" className="btn btn-text" onClick={() => setLocation(null)}>Change location</button>
+          {location.data_provider === "google_maps" ? <GoogleMapsAttribution /> : null}
         </div>
-        {selectedLocation ? <div aria-live="polite" className="rounded-2xl border border-[var(--border)] bg-white p-4"><p className="font-semibold">{selectedLocation.label}</p><GoogleMapsAttribution className="mt-1" /></div> : null}
-        <button className="rounded-2xl bg-[var(--accent)] px-6 py-4 font-semibold text-white disabled:opacity-50" disabled={!title.trim() || !selectedLocation || create.isPending} onClick={() => create.mutate()}>{create.isPending ? "Creating…" : "Create plan"}</button>
-      </section>
-      {shareUrl ? <section className="glass rounded-[2rem] p-6"><p className="font-semibold">Private join link</p><p className="mt-2 break-all text-sm text-[var(--muted-foreground)]">{shareUrl}</p><button onClick={() => navigator.clipboard.writeText(shareUrl)} className="mt-4 rounded-2xl border border-[var(--border)] bg-white px-5 py-3 font-semibold">Copy link</button></section> : null}
-      {plans.error || resolve.error || create.error ? <p role="alert" className="text-red-700">{(plans.error || resolve.error || create.error)?.message}</p> : null}
-      <div className="grid gap-4 sm:grid-cols-2">
-        {(plans.data ?? []).map((plan) => (
-          <Link key={plan.id} href={`/plans/${plan.id}`} className="glass rounded-[2rem] p-6 transition-transform hover:-translate-y-0.5">
-            <div className="flex items-start justify-between gap-4"><h2 className="text-xl font-bold">{plan.title}</h2><span className="capitalize text-emerald-700">{plan.status}</span></div>
-            <p className="mt-3 text-sm text-[var(--muted-foreground)]">{plan.location_label} · {plan.participant_count}/8 people</p>
-          </Link>
-        ))}
-      </div>
-    </div>
+      ) : null}
+      {error ? <p role="alert" className="text-radicchio">{errorMessage(error)}</p> : null}
+      <button className="btn btn-primary w-full" disabled={find.isPending || create.isPending || (!location && query.trim().length < 2)}>
+        {location ? (create.isPending ? "Starting…" : "Start plan") : find.isPending ? "Looking…" : "Find this place"}
+      </button>
+    </form>
   );
 }

@@ -1,205 +1,78 @@
-import { ApiError, createIdempotencyKey } from "@tableus/api-client";
-import { requireCanonicalUuid, type Plan } from "@tableus/domain";
-import { router, useRoute } from "expo-router";
-import { useEffect, useRef, useState, useSyncExternalStore } from "react";
-import { ScrollView, Text } from "react-native";
+import { useQueryClient } from "@tanstack/react-query";
+import { useLocalSearchParams, useRouter } from "expo-router";
+import { useEffect, useState } from "react";
+import { ActivityIndicator } from "react-native";
 
-import { Button, Card } from "@/components/ui";
-import { api } from "@/lib/api";
-import { pendingJoinStore } from "@/lib/pending-join";
-import { pendingJoinAttempt } from "@/lib/pending-join-attempt";
-import { isSupabaseConfigured } from "@/lib/supabase";
-import { useAuth } from "@/providers/auth-provider";
-import { colors } from "@/theme";
+import { Body, Button, Centered, ErrorText, Title } from "@/components/ui";
+import { ApiError } from "@tableus/api-client";
 
-type Attempt = { handle: string; planId: string; subject: string; idempotencyKey: string };
-type JoinState = "ready" | "joining" | "unknown" | "checking" | "retry_ready" | "invalid" | "blocked";
+import { api, errorMessage } from "@/lib/api";
+import { pendingJoin } from "@/lib/links";
+import { useKeys, useMe, useSession } from "@/lib/session";
+import { usePalette } from "@/theme";
 
-export default function JoinPlanScreen() {
-  const { id, pending } = useRoute<{
-    key: string;
-    name: string;
-    params?: { id?: unknown; pending?: unknown };
-  }>().params ?? {};
-  let planId: string | null = null;
-  try { planId = requireCanonicalUuid(typeof id === "string" ? id : "", "Plan ID"); } catch { /* The link is invalid. */ }
-  const handle = typeof pending === "string" ? pending : null;
-  return <JoinFlow key={`${planId ?? "invalid"}:${handle ?? "missing"}`} planId={planId} handle={handle} />;
-}
+/** Opened from an invite link. Joins once the person is signed in and set up. */
+export default function Join() {
+  const keys = useKeys();
+  const { id } = useLocalSearchParams<{ id: string }>();
+  const router = useRouter();
+  const palette = usePalette();
+  const queryClient = useQueryClient();
+  const { session } = useSession();
+  const me = useMe();
+  const [error, setError] = useState<{ message: string; retryable: boolean } | null>(null);
+  const [attempt, setAttempt] = useState(0);
+  const waiting = pendingJoin.peek();
+  const token = waiting?.planId === id ? waiting.token : null;
 
-function JoinFlow({ planId, handle }: { planId: string | null; handle: string | null }) {
-  const snapshot = useSyncExternalStore(
-    (listener) => pendingJoinStore.subscribe(listener),
-    () => pendingJoinStore.getSnapshot(),
-    () => null,
-  );
-  const durableAttempt = useSyncExternalStore(pendingJoinAttempt.subscribe, pendingJoinAttempt.getSnapshot, () => null);
-  const auth = useAuth();
-  const subject = auth.subject ?? (!isSupabaseConfigured ? process.env.EXPO_PUBLIC_DEMO_USER_ID ?? "demo-organizer" : null);
-  const subjectRef = useRef(subject);
-  useEffect(() => { subjectRef.current = subject; }, [subject]);
-  const [state, setState] = useState<JoinState>("ready");
-  const [message, setMessage] = useState("");
-  const attemptRef = useRef<Attempt | null>(null);
-  const busyRef = useRef(false);
-  const epochRef = useRef(0);
-  useEffect(() => () => { epochRef.current += 1; }, []);
-
-  const valid = Boolean(planId && handle && snapshot?.planId === planId && snapshot.handle === handle);
-  const sameIntent = (attempt: Attempt) =>
-    subjectRef.current === attempt.subject
-    && pendingJoinStore.getSnapshot()?.handle === attempt.handle
-    && pendingJoinStore.read(attempt.handle, attempt.subject) !== null;
-  const current = (attempt: Attempt, epoch: number) => epochRef.current === epoch && sameIntent(attempt);
-  const destination = (id: string) => router.replace({ pathname: "/plans/[id]", params: { id } });
-
-  const join = async (attempt: Attempt) => {
-    if (busyRef.current) return;
-    const token = pendingJoinStore.read(attempt.handle, attempt.subject);
-    if (!token || !current(attempt, epochRef.current)) {
-      setState("invalid");
-      setMessage("Reopen your private link to continue.");
-      return;
-    }
-    const epoch = epochRef.current;
-    busyRef.current = true;
-    pendingJoinAttempt.start(attempt);
-    setState("joining");
-    setMessage("");
-    try {
-      await api.post<Plan>(`/api/v1/plans/${attempt.planId}/join`, { share_token: token }, {
-        idempotencyKey: attempt.idempotencyKey,
-        expectedSubject: attempt.subject,
+  useEffect(() => {
+    if (!token || !me.data) return;
+    let cancelled = false;
+    api.joinPlan(id, token)
+      .then((plan) => {
+        if (cancelled) return;
+        pendingJoin.take();
+        queryClient.setQueryData(keys.plan(id), plan);
+        router.replace(`/plan/${id}`);
+      })
+      .catch((failure) => {
+        if (cancelled) return;
+        // Keep the invite for problems that a retry can fix (offline, busy server).
+        const status = failure instanceof ApiError ? failure.status : 0;
+        const retryable = status === 0 || status === 429 || status >= 500;
+        if (!retryable) pendingJoin.take();
+        setError({ message: errorMessage(failure), retryable });
       });
-      if (!sameIntent(attempt)) return;
-      const visible = current(attempt, epoch);
-      pendingJoinStore.clear(attempt.handle);
-      if (visible) destination(attempt.planId);
-    } catch (error) {
-      if (!sameIntent(attempt)) return;
-      if (error instanceof ApiError && error.status === 404) {
-        const visible = current(attempt, epoch);
-        pendingJoinStore.clear(attempt.handle);
-        if (!visible) return;
-        setState("invalid");
-        setMessage("This private link is invalid or has been rotated.");
-      } else if (error instanceof ApiError && error.status === 409) {
-        pendingJoinAttempt.update(attempt.handle, "blocked", "This plan is full or cannot accept new members right now.");
-        if (!current(attempt, epoch)) return;
-        setState("blocked");
-        setMessage("This plan is full or cannot accept new members right now.");
-      } else if (error instanceof ApiError && (error.status === 401 || error.status === 403)) {
-        pendingJoinAttempt.update(attempt.handle, "unknown", "Your account approval could not be confirmed. Check your membership and account before trying again.");
-        if (!current(attempt, epoch)) return;
-        setState("unknown");
-        setMessage("Your account approval could not be confirmed. Check your membership and account before trying again.");
-      } else {
-        pendingJoinAttempt.update(attempt.handle, "unknown", "We could not confirm whether you joined. Check your membership before trying again.");
-        if (!current(attempt, epoch)) return;
-        setState("unknown");
-        setMessage("We could not confirm whether you joined. Check your membership before trying again.");
-      }
-    } finally {
-      if (epochRef.current === epoch) busyRef.current = false;
-    }
-  };
+    return () => { cancelled = true; };
+  }, [token, me.data, id, router, queryClient, keys, attempt]);
 
-  const startJoin = () => {
-    if (!auth.approved || !valid || !subject || !handle || !planId || busyRef.current || durableAttempt?.handle === handle) return;
-    const attempt = { handle, planId, subject, idempotencyKey: createIdempotencyKey() };
-    attemptRef.current = attempt;
-    void join(attempt);
-  };
-
-  const checkMembership = async () => {
-    const attempt = attemptRef.current ?? (durableAttempt?.handle === handle ? durableAttempt : null);
-    if (!attempt || busyRef.current || !current(attempt, epochRef.current)) return;
-    const epoch = epochRef.current;
-    busyRef.current = true;
-    pendingJoinAttempt.update(attempt.handle, "checking", "");
-    setState("checking");
-    setMessage("");
-    try {
-      await api.get(`/api/v1/plans/${attempt.planId}/revision`, { expectedSubject: attempt.subject });
-      if (!sameIntent(attempt)) return;
-      const visible = current(attempt, epoch);
-      pendingJoinStore.clear(attempt.handle);
-      if (visible) destination(attempt.planId);
-      return;
-    } catch (error) {
-      if (!sameIntent(attempt)) return;
-      if (error instanceof ApiError && error.status === 404) {
-        pendingJoinAttempt.update(attempt.handle, "blocked", "This plan is no longer available.");
-        if (!current(attempt, epoch)) return;
-        setState("blocked");
-        setMessage("This plan is no longer available.");
-        return;
-      }
-      if (!(error instanceof ApiError) || ![401, 403].includes(error.status)) {
-        pendingJoinAttempt.update(attempt.handle, "unknown", "We could not check your membership. Reconnect and check again.");
-        if (!current(attempt, epoch)) return;
-        setState("unknown");
-        setMessage("We could not check your membership. Reconnect and check again.");
-        return;
-      }
-      try {
-        await api.get("/api/v1/me", { expectedSubject: attempt.subject });
-        if (!sameIntent(attempt)) return;
-        pendingJoinAttempt.update(attempt.handle, "retry_ready", "You are not a member of this plan yet. You can try joining with this private link again.");
-        if (!current(attempt, epoch)) return;
-        setState("retry_ready");
-        setMessage("You are not a member of this plan yet. You can try joining with this private link again.");
-      } catch {
-        if (!sameIntent(attempt)) return;
-        pendingJoinAttempt.update(attempt.handle, "unknown", "Your account approval could not be confirmed. Sign in to your approved account, then check again.");
-        if (!current(attempt, epoch)) return;
-        setState("unknown");
-        setMessage("Your account approval could not be confirmed. Sign in to your approved account, then check again.");
-      }
-    } finally {
-      if (epochRef.current === epoch) busyRef.current = false;
-    }
-  };
-
-  const cancel = () => {
-    epochRef.current += 1;
-    if (handle) pendingJoinStore.clear(handle);
-    attemptRef.current = null;
-    busyRef.current = false;
-    router.replace("/(tabs)");
-  };
-
-  const retryJoin = () => {
-    const attempt = attemptRef.current ?? (durableAttempt?.handle === handle ? durableAttempt : null);
-    if (attempt) void join(attempt);
-  };
-
-  const visibleState = durableAttempt?.handle === handle ? durableAttempt.status : state;
-  const visibleMessage = durableAttempt?.handle === handle ? durableAttempt.message : message;
-  const missing = !valid || visibleState === "invalid";
-  return (
-    <ScrollView contentInsetAdjustmentBehavior="automatic" contentContainerStyle={{ padding: 20, gap: 16 }}>
-      <Card>
-        <Text selectable style={{ color: colors.ink, fontSize: 24, fontWeight: "800" }}>Join this TableUs plan?</Text>
-        <Text selectable style={{ color: colors.muted }}>Only invite-approved members with the current private link can join. Opening a link never joins automatically.</Text>
-        {missing ? (
-          <Text selectable accessibilityRole="alert" style={{ color: colors.danger }}>{visibleMessage || "This private link is unavailable on this device. Reopen your private link."}</Text>
-        ) : !auth.approved ? (
-          <>
-            <Text selectable accessibilityRole="alert" style={{ color: colors.ink, fontWeight: "700" }}>Authentication required</Text>
-            <Button label="Sign in to join" onPress={() => router.push({ pathname: "/auth", params: { mode: "sign-in" } })} />
-          </>
-        ) : (
-          <>
-            {visibleMessage ? <Text selectable accessibilityRole="alert" style={{ color: colors.danger }}>{visibleMessage}</Text> : null}
-            {visibleState === "unknown" ? <Button label="Check membership" onPress={() => void checkMembership()} /> : null}
-            {visibleState === "retry_ready" ? <Button label="Retry joining plan" onPress={retryJoin} /> : null}
-            {visibleState === "ready" ? <Button label="Join this plan" onPress={startJoin} /> : null}
-            {visibleState === "joining" || visibleState === "checking" ? <Text accessibilityRole="alert" style={{ color: colors.muted }}>{visibleState === "joining" ? "Joining…" : "Checking membership…"}</Text> : null}
-          </>
-        )}
-        {valid ? <Button label="Cancel private link" onPress={cancel} disabled={visibleState === "joining" || visibleState === "checking"} /> : null}
-      </Card>
-    </ScrollView>
-  );
+  if (error?.retryable) {
+    return (
+      <Centered>
+        <Title size={36}>Couldn’t join yet</Title>
+        <ErrorText>{error.message}</ErrorText>
+        <Button label="Try again" onPress={() => { setError(null); setAttempt((value) => value + 1); }} />
+      </Centered>
+    );
+  }
+  if (!token || error) {
+    return (
+      <Centered>
+        <Title size={36}>This link didn’t work</Title>
+        <ErrorText>{error?.message ?? "The invite link is incomplete. Ask whoever sent it for the full link."}</ErrorText>
+        <Button kind="quiet" label="Go to your plans" onPress={() => router.replace("/")} />
+      </Centered>
+    );
+  }
+  if (session.status !== "signed-in" || !me.data) {
+    // Signing in (or finishing setup) returns to the plans list, which resumes this join.
+    return (
+      <Centered>
+        <Title size={36}>You’re invited</Title>
+        <Body muted>Sign in to join the plan.</Body>
+        <Button label="Continue" onPress={() => router.replace(session.status === "signed-in" ? "/welcome" : "/sign-in")} />
+      </Centered>
+    );
+  }
+  return <Centered><ActivityIndicator color={palette.text} /><Body muted>Joining the plan…</Body></Centered>;
 }
