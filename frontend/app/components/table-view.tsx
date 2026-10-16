@@ -10,7 +10,15 @@ import { useMe } from "../lib/session";
 
 const TabletopScene = dynamic(
   () => import("./tabletop-scene").then((module) => module.DiscoverTabletopScene),
-  { ssr: false, loading: () => <div className="h-full w-full" aria-hidden="true" /> },
+  {
+    ssr: false,
+    // A quiet stand-in for the planet while the 3D code loads.
+    loading: () => (
+      <div aria-hidden="true" className="flex h-full w-full items-end justify-center">
+        <div className="h-[55%] w-[60%] rounded-t-full bg-sage/50" />
+      </div>
+    ),
+  },
 );
 
 /** Everything the 3D table needs. The mobile app sends the same shape to /embed/table. */
@@ -24,16 +32,22 @@ export type TableState = {
 };
 
 export function TableScene({ state, onPick, fade = true }: { state: TableState; onPick?: (pickId: string) => void; fade?: boolean }) {
-  const people = state.people.map((person) => ({ ...person, avatar: "" }));
-  const currentUser = people.find((person) => person.id === state.meId) ?? null;
-  const friends = people.filter((person) => person.id !== currentUser?.id);
+  // Stable identities keep the scene from re-seating everyone on each poll.
+  const peopleKey = JSON.stringify([state.people, state.meId]);
+  const { currentUser, friends } = useMemo(() => {
+    const [people, meId] = JSON.parse(peopleKey) as [TableState["people"], string | null];
+    const seated = people.map((person) => ({ ...person, avatar: "" }));
+    const me = seated.find((person) => person.id === meId) ?? null;
+    return { currentUser: me, friends: seated.filter((person) => person.id !== me?.id) };
+  }, [peopleKey]);
+  const picksKey = JSON.stringify([state.picks, state.chosenId]);
   const restaurants = useMemo(
-    () => (typeof document === "undefined" ? [] : state.picks.map((pick) => ({
+    () => (typeof document === "undefined" ? [] : (JSON.parse(picksKey)[0] as CardPick[]).map((pick) => ({
       id: pick.id,
       name: pick.name,
       photo_url: pickCardImage(pick, pick.id === state.chosenId),
     }))),
-    [state.picks, state.chosenId],
+    [picksKey, state.chosenId],
   );
   return (
     <TabletopScene

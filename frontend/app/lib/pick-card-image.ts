@@ -42,19 +42,19 @@ export function pickCardImage(pick: CardPick, chosen: boolean): string {
   ctx.fillStyle = chosen ? "#F4CF4A" : "#FFFFFF";
   ctx.fillRect(0, 0, width, height);
   ctx.fillStyle = "#17301F";
-  ctx.font = `800 52px ${display}`;
+  ctx.font = `800 64px ${display}`;
   const nameLines = wrap(ctx, pick.name, width - 48).slice(0, 3);
-  nameLines.forEach((line, index) => ctx.fillText(line, 24, 72 + index * 48));
+  nameLines.forEach((line, index) => ctx.fillText(line, 24, 78 + index * 56));
 
-  let y = 72 + nameLines.length * 48 + 4;
-  ctx.font = `600 22px ${body}`;
+  let y = 78 + nameLines.length * 56;
+  ctx.font = `700 24px ${body}`;
   ctx.fillStyle = chosen ? "#17301F" : "#4C6652";
   ctx.fillText(`${pick.cuisine}, ${price(pick.price_level)}`, 24, y);
 
   y += 40;
   ctx.fillStyle = "#17301F";
-  ctx.font = `400 22px ${body}`;
-  wrap(ctx, pick.reasoning, width - 48).slice(0, 6).forEach((line, index) => ctx.fillText(line, 24, y + index * 30));
+  ctx.font = `400 25px ${body}`;
+  wrap(ctx, pick.reasoning, width - 48).slice(0, 5).forEach((line, index) => ctx.fillText(line, 24, y + index * 34));
 
   const url = canvas.toDataURL("image/png");
   cache.set(key, url);

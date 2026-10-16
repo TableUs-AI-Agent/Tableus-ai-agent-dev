@@ -132,8 +132,8 @@ const STAGE_BASE_POSITION_Y = 0.08;
 const PLANET_BACKWARD_TILT_X = 0.12;
 const RESULT_CARD_ROW_Y = 1.04;
 const RESULT_CARD_ROW_Z = -1.32;
-const RESULT_CARD_ROW_SPACING = 0.9;
-const RESULT_CARD_SCALE = 1.04;
+const RESULT_CARD_ROW_SPACING = 1.12;
+const RESULT_CARD_SCALE = 1.3;
 const PLANET_RADIUS = 3.34;
 const PLANET_VERTICAL_SCALE = 0.64;
 const PLANET_VERTICAL_RADIUS = PLANET_RADIUS * PLANET_VERTICAL_SCALE;
@@ -734,13 +734,13 @@ function makePlushBodyTexture(person: ScenePerson, look: PlushLook) {
 function createPlatform() {
   const group = new THREE.Group();
 
-  const planetTexture = makeCanvasTextureWithSize(2048, 1024, (ctx, width, height) => {
+  const planetTexture = makeCanvasTextureWithSize(1024, 512, (ctx, width, height) => {
     ctx.lineJoin = "round";
     ctx.lineCap = "round";
     const oceanGradient = ctx.createLinearGradient(0, 0, 0, height);
-    oceanGradient.addColorStop(0, "#31c9ff");
-    oceanGradient.addColorStop(0.55, "#139fec");
-    oceanGradient.addColorStop(1, "#1699e5");
+    oceanGradient.addColorStop(0, "#3d7d5e");
+    oceanGradient.addColorStop(0.55, "#2c6a4e");
+    oceanGradient.addColorStop(1, "#245c43");
     ctx.fillStyle = oceanGradient;
     ctx.fillRect(0, 0, width, height);
 
@@ -784,9 +784,9 @@ function createPlatform() {
     };
 
     const landGradient = ctx.createLinearGradient(width * 0.1, 0, width * 0.9, height);
-    landGradient.addColorStop(0, "#ffe033");
-    landGradient.addColorStop(0.35, "#d8e63b");
-    landGradient.addColorStop(1, "#7fbe35");
+    landGradient.addColorStop(0, "#f4cf4a");
+    landGradient.addColorStop(0.35, "#e3d66e");
+    landGradient.addColorStop(1, "#b4cba8");
 
     drawPolygon(
       [
@@ -909,7 +909,7 @@ function createPlatform() {
     drawIsland(80, 7, 0.011, 0.018, -0.28);
     drawIsland(48, -19, 0.012, 0.04, 0.25);
 
-    ctx.fillStyle = "#138ed8";
+    ctx.fillStyle = "#22573f";
     drawPolygon(
       [
         [-6, 36],
@@ -922,7 +922,7 @@ function createPlatform() {
         [7, 32],
         [-5, 33],
       ],
-      "#138ed8"
+      "#22573f"
     );
     drawPolygon(
       [
@@ -932,7 +932,7 @@ function createPlatform() {
         [39, 13],
         [34, 20],
       ],
-      "#138ed8"
+      "#22573f"
     );
 
     const gloss = ctx.createRadialGradient(width * 0.42, height * 0.12, 12, width * 0.42, height * 0.12, width * 0.58);
@@ -956,7 +956,7 @@ function createPlatform() {
           map: { value: planetTexture },
           lightDirection: { value: new THREE.Vector3(-0.45, 0.74, 0.5).normalize() },
           radius: { value: PLANET_RADIUS },
-          rimColor: { value: new THREE.Color("#20baff") },
+          rimColor: { value: new THREE.Color("#a9c9b2") },
           crownColor: { value: new THREE.Color("#ffffff") },
         },
         vertexShader: `
@@ -993,7 +993,7 @@ function createPlatform() {
             float rim = smoothstep(0.36, 0.9, viewEdge);
             float bottomShade = smoothstep(-radius * 0.05, -radius * 0.9, vLocalPosition.y);
             vec3 color = texel.rgb * day;
-            color = mix(color, color * vec3(0.78, 0.88, 0.98), bottomShade * 0.18);
+            color = mix(color, color * vec3(0.82, 0.9, 0.84), bottomShade * 0.18);
             color = mix(color, crownColor, crown * 0.07);
             color = mix(color, rimColor, rim * 0.56);
             float bottomFade = smoothstep(-radius * 1.02, -radius * 0.74, vLocalPosition.y);
@@ -1004,26 +1004,26 @@ function createPlatform() {
         depthWrite: false,
       })
     : new THREE.MeshStandardMaterial({
-        color: "#bfe7e9",
+        color: "#c9d9c6",
         roughness: 0.86,
         metalness: 0,
         transparent: true,
         opacity: 0.9,
       });
-  const planet = new THREE.Mesh(new THREE.SphereGeometry(PLANET_RADIUS, 192, 96), planetMaterial);
+  const planet = new THREE.Mesh(new THREE.SphereGeometry(PLANET_RADIUS, 96, 48), planetMaterial);
   planet.position.y = PLANET_CENTER_Y;
   planet.scale.y = PLANET_VERTICAL_SCALE;
   planet.receiveShadow = false;
   group.add(planet);
 
   const atmosphereMaterial = new THREE.MeshBasicMaterial({
-    color: "#dffcff",
+    color: "#e8f1e4",
     transparent: true,
     opacity: 0.08,
     side: THREE.BackSide,
     depthWrite: false,
   });
-  const atmosphere = new THREE.Mesh(new THREE.SphereGeometry(PLANET_RADIUS * 1.015, 128, 64), atmosphereMaterial);
+  const atmosphere = new THREE.Mesh(new THREE.SphereGeometry(PLANET_RADIUS * 1.015, 64, 32), atmosphereMaterial);
   atmosphere.position.y = PLANET_CENTER_Y;
   atmosphere.scale.y = PLANET_VERTICAL_SCALE;
   atmosphere.renderOrder = -1;
@@ -1527,7 +1527,7 @@ function createRestaurantCard(
   const glossTexture = makeRestaurantGlossTexture();
   const glowTexture = makeRestaurantGlowTexture();
   const frameMaterial = new THREE.MeshStandardMaterial({
-    color: "#fffaf2",
+    color: "#ffffff",
     roughness: 0.34,
     metalness: 0.04,
     transparent: true,
@@ -1547,7 +1547,7 @@ function createRestaurantCard(
     depthWrite: false,
   });
   const glowMaterial = new THREE.MeshBasicMaterial({
-    color: "#d8fbff",
+    color: "#eef4ea",
     map: glowTexture || undefined,
     side: THREE.DoubleSide,
     transparent: true,
@@ -1788,179 +1788,6 @@ function disposeObject(root: THREE.Object3D) {
   });
 }
 
-export function ProfilePlushPreview3D({
-  look,
-  userId,
-  className = "",
-}: {
-  look: PlushLook;
-  userId: string;
-  className?: string;
-}) {
-  const containerRef = useRef<HTMLDivElement | null>(null);
-  const lookKey = lookKeyOf(look);
-
-  useEffect(() => {
-    const container = containerRef.current;
-    if (!container) return;
-
-    let renderer: THREE.WebGLRenderer;
-    try {
-      renderer = new THREE.WebGLRenderer({
-        alpha: true,
-        antialias: true,
-        powerPreference: "high-performance",
-      });
-    } catch {
-      return;
-    }
-
-    renderer.outputColorSpace = THREE.SRGBColorSpace;
-    renderer.toneMapping = THREE.ACESFilmicToneMapping;
-    renderer.toneMappingExposure = 1.08;
-    renderer.shadowMap.enabled = true;
-    renderer.shadowMap.type = THREE.PCFShadowMap;
-    renderer.setClearColor(0x000000, 0);
-    renderer.domElement.className = "absolute inset-0 h-full w-full";
-    renderer.domElement.setAttribute("aria-hidden", "true");
-    container.appendChild(renderer.domElement);
-
-    const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(28, 1, 0.1, 30);
-    camera.position.set(0, 1.36, 4.6);
-    camera.lookAt(0, 0.68, 0);
-
-    const ambient = new THREE.HemisphereLight(0xffffff, 0xcfe6ff, 2.25);
-    scene.add(ambient);
-
-    const keyLight = new THREE.DirectionalLight(0xffffff, 2.8);
-    keyLight.position.set(2.6, 4.2, 3.2);
-    keyLight.castShadow = true;
-    keyLight.shadow.mapSize.width = 1024;
-    keyLight.shadow.mapSize.height = 1024;
-    keyLight.shadow.camera.left = -2.5;
-    keyLight.shadow.camera.right = 2.5;
-    keyLight.shadow.camera.top = 2.5;
-    keyLight.shadow.camera.bottom = -2.5;
-    keyLight.shadow.camera.near = 0.5;
-    keyLight.shadow.camera.far = 10;
-    scene.add(keyLight);
-
-    const fillLight = new THREE.PointLight(0xffd0a6, 1.25, 6);
-    fillLight.position.set(-2.4, 1.2, 2.8);
-    scene.add(fillLight);
-
-    const previewRoot = new THREE.Group();
-    scene.add(previewRoot);
-
-    const stage = new THREE.Group();
-    stage.rotation.x = -0.05;
-    previewRoot.add(stage);
-
-    const previewPerson: ScenePerson = {
-      id: `profile-preview:${userId}:${lookKey}`,
-      name: "Profile preview",
-      avatar: "",
-      look,
-    };
-    const handle = createCharacter(previewPerson, look, 0, 1, true);
-    handle.group.position.set(0, 0, 0);
-    handle.group.rotation.y = 0;
-    handle.popProgress = 1;
-    handle.mode = "wave";
-    handle.modeStartedAt = 0;
-    handle.modeUntil = 2.2;
-    handle.lastActionMode = "wave";
-    setCharacterOpacity(handle, 1);
-    handle.spawnRing.visible = false;
-    handle.shadowMaterial.opacity = 0.22;
-    handle.shadow.position.set(0, 0.035, 0.02);
-    handle.shadow.rotation.x = -Math.PI / 2;
-    handle.shadow.scale.set(0.44, 0.26, 1);
-    stage.add(handle.shadow);
-    stage.add(handle.group);
-
-    const baseEyeData = handle.pupilMeshes.map((mesh) => ({
-      mesh,
-      x: mesh.userData.baseX as number,
-      y: mesh.userData.baseY as number,
-    }));
-
-    let frameId = 0;
-    let disposed = false;
-    const startedAt = performance.now();
-    const resize = () => {
-      const width = Math.max(1, container.clientWidth);
-      const height = Math.max(1, container.clientHeight);
-      renderer.setSize(width, height, false);
-      renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
-      camera.aspect = width / height;
-      camera.updateProjectionMatrix();
-    };
-    const resizeObserver = new ResizeObserver(resize);
-    resizeObserver.observe(container);
-    resize();
-
-    const animate = () => {
-      if (disposed) return;
-      const elapsed = (performance.now() - startedAt) / 1000;
-      const waveProgress = clamp01(elapsed / 2.1);
-      const waveIn = waveProgress < 0.22 ? easeInOutSine(waveProgress / 0.22) : 1;
-      const waveOut = waveProgress > 0.86 ? easeInOutSine((1 - waveProgress) / 0.14) : 1;
-      const waveAmount = Math.min(waveIn, waveOut);
-      const waveSwing = Math.sin(elapsed * 9.5) * waveAmount;
-      const breathe = Math.sin(elapsed * 2) * 0.012;
-
-      handle.group.scale.setScalar(handle.baseScale * (1.08 + breathe));
-      handle.body.position.y = 0.03 + Math.sin(elapsed * 2.7) * 0.008;
-      handle.body.rotation.z = Math.sin(elapsed * 1.9) * 0.018;
-      handle.head.rotation.x = -0.08 * waveAmount + Math.sin(elapsed * 1.4) * 0.018;
-      handle.head.rotation.y = 0.28 * waveAmount + Math.sin(elapsed * 1.2) * 0.025;
-      handle.head.rotation.z = 0.1 * waveAmount + Math.sin(elapsed * 1.8) * 0.018;
-
-      handle.leftArm.position.set(-0.39, 0.5, 0.12);
-      handle.leftArm.rotation.x = -0.02;
-      handle.leftArm.rotation.y = 0.04;
-      handle.leftArm.rotation.z = -0.48;
-
-      handle.rightArm.position.set(0.38, 0.58 + waveAmount * 0.08, 0.14 + waveAmount * 0.06);
-      handle.rightArm.rotation.x = -0.18 + waveSwing * 0.08;
-      handle.rightArm.rotation.y = -0.16 - waveAmount * 0.12;
-      handle.rightArm.rotation.z = 0.96 + waveAmount * (0.72 + waveSwing * 0.34);
-
-      baseEyeData.forEach(({ mesh, x, y }) => {
-        mesh.position.x = x + 0.018 * waveAmount;
-        mesh.position.y = y + 0.008 * waveAmount;
-      });
-      handle.eyeMeshes.forEach((eye) => {
-        const baseScaleY = eye.userData.baseScaleY as number;
-        eye.scale.y = baseScaleY;
-      });
-
-      renderer.render(scene, camera);
-      frameId = window.requestAnimationFrame(animate);
-    };
-    animate();
-
-    return () => {
-      disposed = true;
-      window.cancelAnimationFrame(frameId);
-      resizeObserver.disconnect();
-      disposeObject(scene);
-      renderer.dispose();
-      renderer.domElement.remove();
-    };
-  }, [look, lookKey, userId]);
-
-  return (
-    <div
-      ref={containerRef}
-      className={`relative h-56 w-52 overflow-visible ${className}`}
-      aria-label="Animated preview of your tabletop avatar"
-    />
-  );
-}
-
 export function DiscoverTabletopScene({
   currentUser,
   friends,
@@ -1988,6 +1815,8 @@ export function DiscoverTabletopScene({
   const selectedRestaurantIdRef = useRef<string | null>(selectedRestaurantId);
   const onRestaurantSelectRef = useRef<typeof onRestaurantSelect>(onRestaurantSelect);
   const reconcileNeededRef = useRef(true);
+  /** Restarts drawing after a change when the loop has paused itself. */
+  const wakeRef = useRef<() => void>(() => {});
   const restaurantReconcileNeededRef = useRef(true);
   const [webglFailed, setWebglFailed] = useState(false);
   const [userLook, setUserLook] = useState<PlushLook | null>(null);
@@ -2026,6 +1855,7 @@ export function DiscoverTabletopScene({
   useEffect(() => {
     selectedRestaurantIdRef.current = selectedRestaurantId;
     restaurantReconcileNeededRef.current = true;
+    wakeRef.current();
   }, [selectedRestaurantId]);
 
   useEffect(() => {
@@ -2044,11 +1874,13 @@ export function DiscoverTabletopScene({
         ]
       : friends;
     reconcileNeededRef.current = true;
+    wakeRef.current();
   }, [currentUser, friends, userLook]);
 
   useEffect(() => {
     desiredRestaurantsRef.current = restaurants;
     restaurantReconcileNeededRef.current = true;
+    wakeRef.current();
   }, [restaurants]);
 
   useEffect(() => {
@@ -2060,7 +1892,7 @@ export function DiscoverTabletopScene({
       renderer = new THREE.WebGLRenderer({
         alpha: true,
         antialias: true,
-        powerPreference: "high-performance",
+        powerPreference: "default",
       });
     } catch {
       window.requestAnimationFrame(() => setWebglFailed(true));
@@ -2105,14 +1937,14 @@ export function DiscoverTabletopScene({
     platform.position.y = -PLANET_TOP_Y;
     platformPivot.add(platform);
 
-    const ambient = new THREE.HemisphereLight(0xfff4e6, 0xb6d7ff, 2.1);
+    const ambient = new THREE.HemisphereLight(0xfffaf0, 0xc9d9c6, 2.1);
     scene.add(ambient);
 
     const keyLight = new THREE.DirectionalLight(0xffffff, 2.8);
     keyLight.position.set(3.2, 5.2, 4.6);
     keyLight.castShadow = true;
-    keyLight.shadow.mapSize.width = 2048;
-    keyLight.shadow.mapSize.height = 2048;
+    keyLight.shadow.mapSize.width = 1024;
+    keyLight.shadow.mapSize.height = 1024;
     keyLight.shadow.camera.left = -4.4;
     keyLight.shadow.camera.right = 4.4;
     keyLight.shadow.camera.top = 4.4;
@@ -2123,11 +1955,11 @@ export function DiscoverTabletopScene({
     keyLight.shadow.normalBias = 0.025;
     scene.add(keyLight);
 
-    const rimLight = new THREE.DirectionalLight(0xbfe3ff, 1.05);
+    const rimLight = new THREE.DirectionalLight(0xe1eedc, 1.05);
     rimLight.position.set(-2.6, 3.4, -4.2);
     scene.add(rimLight);
 
-    const fillLight = new THREE.PointLight(0xffb985, 1.45, 8);
+    const fillLight = new THREE.PointLight(0xffdca0, 1.3, 8);
     fillLight.position.set(-2.4, 1.5, 2.8);
     scene.add(fillLight);
 
@@ -2162,7 +1994,7 @@ export function DiscoverTabletopScene({
       const height = Math.max(1, rect.height);
       camera.aspect = width / height;
       camera.updateProjectionMatrix();
-      renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.75));
       renderer.setSize(width, height, false);
     };
 
@@ -2372,10 +2204,19 @@ export function DiscoverTabletopScene({
 
     renderer.domElement.addEventListener("pointermove", handlePointerMove);
     renderer.domElement.addEventListener("pointerdown", handlePointerDown);
+    renderer.domElement.addEventListener("pointerdown", () => wakeRef.current());
     renderer.domElement.addEventListener("pointerup", handlePointerUp);
     renderer.domElement.addEventListener("pointercancel", handlePointerUp);
 
-    renderer.setAnimationLoop(() => {
+    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    let onScreen = true;
+    let settleUntil = 0;
+    const loop = () => {
+      if (reducedMotion && performance.now() > settleUntil && !reconcileNeededRef.current && !restaurantReconcileNeededRef.current) {
+        renderer.setAnimationLoop(null);
+        return;
+      }
+      if (reconcileNeededRef.current || restaurantReconcileNeededRef.current) settleUntil = performance.now() + 2500;
       if (reconcileNeededRef.current) {
         reconcile();
         reconcileNeededRef.current = false;
@@ -2531,11 +2372,11 @@ export function DiscoverTabletopScene({
 
         const brightness = handle.selected ? 1.12 : hovered ? 1.06 : 1;
         handle.photoMaterial.color.setRGB(brightness, brightness, brightness);
-        handle.frameMaterial.emissive.set(handle.selected ? "#ffe7a8" : hovered ? "#dff7ff" : "#000000");
+        handle.frameMaterial.emissive.set(handle.selected ? "#f4cf4a" : hovered ? "#e6f0e3" : "#000000");
         handle.frameMaterial.emissiveIntensity =
           exitFlash > 0 ? 0.48 * exitFlash : handle.selected ? 0.22 : hovered ? 0.12 : 0;
-        handle.glossMaterial.opacity = opacity * (handle.selected ? 0.92 : hovered ? 0.82 : 0.62);
-        handle.glowMaterial.color.set(exitFlash > 0 ? "#ffffff" : handle.selected ? "#ffe5a8" : "#bdf6ff");
+        handle.glossMaterial.opacity = opacity * (handle.selected ? 0.4 : hovered ? 0.34 : 0.22);
+        handle.glowMaterial.color.set(exitFlash > 0 ? "#ffffff" : handle.selected ? "#f4cf4a" : "#dfeadb");
         handle.glowMaterial.opacity =
           exitFlash > 0
             ? Math.max(opacity * 0.18, exitFlash * 0.72)
@@ -2908,9 +2749,28 @@ export function DiscoverTabletopScene({
       });
 
       renderer.render(scene, camera);
+    };
+    const updateLoop = () => {
+      const run = onScreen && !document.hidden;
+      if (run) settleUntil = performance.now() + 2500;
+      renderer.setAnimationLoop(run ? loop : null);
+    };
+    wakeRef.current = () => {
+      settleUntil = performance.now() + 2500;
+      updateLoop();
+    };
+    const visibility = new IntersectionObserver(([entry]) => {
+      onScreen = entry.isIntersecting;
+      updateLoop();
     });
+    visibility.observe(container);
+    document.addEventListener("visibilitychange", updateLoop);
+    updateLoop();
 
     return () => {
+      wakeRef.current = () => {};
+      visibility.disconnect();
+      document.removeEventListener("visibilitychange", updateLoop);
       renderer.setAnimationLoop(null);
       resizeObserver.disconnect();
       timer.dispose();
@@ -2935,7 +2795,7 @@ export function DiscoverTabletopScene({
       className={`relative h-full w-full touch-none ${className}`}
       aria-label="Animated tabletop scene with the current user and selected friends"
     >
-      <div className="pointer-events-none absolute -inset-x-[8vw] bottom-[6%] h-[42%] rounded-full bg-[radial-gradient(circle,rgba(42,160,210,0.24),rgba(42,160,210,0.08)_44%,rgba(42,160,210,0)_78%)] blur-2xl" />
+      <div className="pointer-events-none absolute -inset-x-[8vw] bottom-[6%] h-[42%] rounded-full bg-[radial-gradient(circle,rgba(169,194,169,0.32),rgba(169,194,169,0.1)_44%,rgba(169,194,169,0)_78%)] blur-2xl" />
       {fade ? <div
         className="pointer-events-none absolute -inset-x-[8vw] bottom-0 z-10 h-[34%]"
         style={{
