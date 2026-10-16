@@ -12,15 +12,16 @@ import { TableView } from "../../components/table-view";
 import { hasWishes, readWishes, WishesForm } from "../../components/wishes-form";
 import { api, errorMessage } from "../../lib/api";
 import { joinUrl } from "../../lib/plan-links";
-import { useMe } from "../../lib/session";
+import { useKeys, useMe } from "../../lib/session";
 
 export default function PlanPage() {
   return <AppShell><PlanView /></AppShell>;
 }
 
 function usePlan(id: string) {
+  const keys = useKeys();
   const queryClient = useQueryClient();
-  const plan = useQuery({ queryKey: ["plan", id], queryFn: () => api.getPlan(id) });
+  const plan = useQuery({ queryKey: keys.plan(id), queryFn: () => api.getPlan(id) });
   const seen = useRef<string | null>(null);
 
   // Poll a cheap revision stamp and refetch only when someone else changed the plan.
@@ -32,22 +33,23 @@ function usePlan(id: string) {
       if (document.hidden) return;
       try {
         const { updated_at } = await api.planRevision(id);
-        if (seen.current && updated_at !== seen.current) queryClient.invalidateQueries({ queryKey: ["plan", id] });
+        if (seen.current && updated_at !== seen.current) queryClient.invalidateQueries({ queryKey: keys.plan(id) });
       } catch {
         // The next tick will try again.
       }
     }, 8000);
     return () => window.clearInterval(timer);
-  }, [id, queryClient]);
+  }, [id, queryClient, keys]);
 
   return plan;
 }
 
 function useUpdate(id: string) {
+  const keys = useKeys();
   const queryClient = useQueryClient();
   return (next: Plan) => {
-    queryClient.setQueryData(["plan", id], next);
-    queryClient.invalidateQueries({ queryKey: ["plans"] });
+    queryClient.setQueryData(keys.plan(id), next);
+    queryClient.invalidateQueries({ queryKey: keys.plans });
   };
 }
 
@@ -272,13 +274,14 @@ function Decided({ plan }: { plan: Plan }) {
 }
 
 function Invite({ plan, first = false }: { plan: Plan; first?: boolean }) {
+  const keys = useKeys();
   const queryClient = useQueryClient();
   const [copied, setCopied] = useState(false);
   // Signed-in screens render only in the browser, where the link origin is known.
   const url = typeof window === "undefined" ? "" : joinUrl(plan.id, plan.share_token);
   const rotate = useMutation({
     mutationFn: () => api.newShareLink(plan.id),
-    onSuccess: () => queryClient.invalidateQueries({ queryKey: ["plan", plan.id] }),
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: keys.plan(plan.id) }),
   });
 
   async function copy() {
@@ -305,13 +308,14 @@ function Invite({ plan, first = false }: { plan: Plan; first?: boolean }) {
 }
 
 function DeletePlan({ plan }: { plan: Plan }) {
+  const keys = useKeys();
   const router = useRouter();
   const queryClient = useQueryClient();
   const remove = useMutation({
     mutationFn: () => api.deletePlan(plan.id),
     onSuccess: () => {
-      queryClient.removeQueries({ queryKey: ["plan", plan.id] });
-      queryClient.invalidateQueries({ queryKey: ["plans"] });
+      queryClient.removeQueries({ queryKey: keys.plan(plan.id) });
+      queryClient.invalidateQueries({ queryKey: keys.plans });
       router.replace("/plans");
     },
   });

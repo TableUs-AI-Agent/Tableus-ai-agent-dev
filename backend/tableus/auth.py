@@ -19,6 +19,8 @@ from .models import Profile
 class Identity:
     subject: str
     email: str | None = None
+    # The caller's access token, used to confirm the Auth user still exists.
+    token: str | None = None
 
 
 @lru_cache(maxsize=4)
@@ -51,7 +53,9 @@ async def resolve_identity(authorization: str | None, demo_user_id: str | None) 
     except (jwt.PyJWTError, PyJWKClientError, TimeoutError) as exc:
         raise HTTPException(status_code=401, detail="Invalid or expired session") from exc
     email = claims.get("email")
-    return Identity(subject=str(claims["sub"]), email=str(email).lower() if email else None)
+    return Identity(
+        subject=str(claims["sub"]), email=str(email).lower() if email else None, token=token
+    )
 
 
 async def get_identity(

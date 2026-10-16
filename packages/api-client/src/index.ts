@@ -214,7 +214,9 @@ export function createTableUsApi(client: ApiClient) {
   return {
     me: () => client.get<Me>("/api/v1/me"),
     saveMe: (body: Schemas["MeIn"]) => client.put<Me>("/api/v1/me", body),
-    deleteAccount: () => client.delete<{ deleted: boolean }>("/api/v1/me"),
+    /** Bound to the person who confirmed it, so a token refresh can't delete someone else. */
+    deleteAccount: (expectedSubject: string) =>
+      client.delete<{ deleted: boolean }>("/api/v1/me", undefined, { expectedSubject }),
     resolveLocation: (query: string) =>
       client.post<ResolvedLocation>("/api/v1/locations/resolve", { query }),
     listPlans: () => client.get<PlanSummary[]>("/api/v1/plans"),

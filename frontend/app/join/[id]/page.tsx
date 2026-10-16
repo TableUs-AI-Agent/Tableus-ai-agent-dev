@@ -7,9 +7,10 @@ import { useEffect, useState } from "react";
 import { SimplePage } from "../../components/simple-page";
 import { api, errorMessage } from "../../lib/api";
 import { captureJoinToken, forgetJoinToken } from "../../lib/join-token";
-import { useMe, useSession } from "../../lib/session";
+import { useKeys, useMe, useSession } from "../../lib/session";
 
 export default function JoinPage() {
+  const keys = useKeys();
   const { id } = useParams<{ id: string }>();
   const router = useRouter();
   const queryClient = useQueryClient();
@@ -33,13 +34,13 @@ export default function JoinPage() {
         .then((plan) => {
           if (cancelled) return;
           forgetJoinToken(id);
-          queryClient.setQueryData(["plan", id], plan);
+          queryClient.setQueryData(keys.plan(id), plan);
           router.replace(`/plans/${id}`);
         })
         .catch((failure) => { if (!cancelled) setError(errorMessage(failure)); });
       return () => { cancelled = true; };
     }
-  }, [token, session.status, me.data, id, router, queryClient]);
+  }, [token, session.status, me.data, id, router, queryClient, keys]);
 
   if (token === null || error) {
     return (

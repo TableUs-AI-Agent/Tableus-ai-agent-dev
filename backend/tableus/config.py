@@ -38,6 +38,8 @@ class Settings(BaseSettings):
     # Per-person ceilings on paid provider work, per rolling hour.
     recommendations_per_hour: int = Field(default=10, gt=0)
     location_lookups_per_hour: int = Field(default=30, gt=0)
+    # Plan views and votes that refresh Google place details.
+    plan_reads_per_hour: int = Field(default=150, gt=0)
 
     sentry_dsn: str = ""
     tableus_build_sha: str = ""

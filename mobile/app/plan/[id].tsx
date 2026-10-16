@@ -9,13 +9,15 @@ import { PickCard } from "@/components/pick-card";
 import { TableScene } from "@/components/table-scene";
 import { Avatar, Body, Button, Card, Centered, ErrorText, Field, Heading, Icon, PressScale, Title } from "@/components/ui";
 import { hasWishes } from "@/components/wishes-form";
+import { useKeys } from "@/lib/session";
 import { api, errorMessage } from "@/lib/api";
 import { joinUrl } from "@/lib/links";
 import { space, usePalette } from "@/theme";
 
 function usePlan(id: string) {
+  const keys = useKeys();
   const queryClient = useQueryClient();
-  const plan = useQuery({ queryKey: ["plan", id], queryFn: () => api.getPlan(id) });
+  const plan = useQuery({ queryKey: keys.plan(id), queryFn: () => api.getPlan(id) });
   const seen = useRef<string | null>(null);
   useEffect(() => {
     if (plan.data) seen.current = plan.data.updated_at;
@@ -26,13 +28,13 @@ function usePlan(id: string) {
     const timer = setInterval(async () => {
       try {
         const { updated_at } = await api.planRevision(id);
-        if (seen.current && updated_at !== seen.current) queryClient.invalidateQueries({ queryKey: ["plan", id] });
+        if (seen.current && updated_at !== seen.current) queryClient.invalidateQueries({ queryKey: keys.plan(id) });
       } catch {
         // Try again on the next tick.
       }
     }, 8000);
     return () => clearInterval(timer);
-  }, [id, queryClient]));
+  }, [id, queryClient, keys]));
   return plan;
 }
 
@@ -77,10 +79,11 @@ export default function PlanScreen() {
 }
 
 function useUpdate(id: string) {
+  const keys = useKeys();
   const queryClient = useQueryClient();
   return (next: Plan) => {
-    queryClient.setQueryData(["plan", id], next);
-    queryClient.invalidateQueries({ queryKey: ["plans"] });
+    queryClient.setQueryData(keys.plan(id), next);
+    queryClient.invalidateQueries({ queryKey: keys.plans });
   };
 }
 
@@ -242,17 +245,18 @@ function Decided({ plan }: { plan: Plan }) {
 }
 
 function OrganizerTools({ plan }: { plan: Plan }) {
+  const keys = useKeys();
   const router = useRouter();
   const queryClient = useQueryClient();
   const rotate = useMutation({
     mutationFn: () => api.newShareLink(plan.id),
-    onSuccess: () => queryClient.invalidateQueries({ queryKey: ["plan", plan.id] }),
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: keys.plan(plan.id) }),
   });
   const remove = useMutation({
     mutationFn: () => api.deletePlan(plan.id),
     onSuccess: () => {
-      queryClient.removeQueries({ queryKey: ["plan", plan.id] });
-      queryClient.invalidateQueries({ queryKey: ["plans"] });
+      queryClient.removeQueries({ queryKey: keys.plan(plan.id) });
+      queryClient.invalidateQueries({ queryKey: keys.plans });
       router.back();
     },
   });

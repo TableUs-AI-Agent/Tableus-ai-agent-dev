@@ -1,5 +1,5 @@
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { createContext, useCallback, useContext, useEffect, useState, type ReactNode } from "react";
+import { createContext, useCallback, useContext, useEffect, useMemo, useState, type ReactNode } from "react";
 
 import { api, isNotFound, loadDemoUser, setDemoUser } from "./api";
 import { isSupabaseConfigured, supabase } from "./supabase";
@@ -74,4 +74,17 @@ export function useMe() {
       }
     },
   });
+}
+
+/**
+ * Query keys scoped to the signed-in person. A request that finishes after an
+ * account switch writes under the old person's keys, never into the new one's view.
+ */
+export function useKeys() {
+  const { session } = useSession();
+  const subject = session.status === "signed-in" ? session.subject : "signed-out";
+  return useMemo(() => ({
+    plans: ["plans", subject] as const,
+    plan: (id: string) => ["plan", subject, id] as const,
+  }), [subject]);
 }

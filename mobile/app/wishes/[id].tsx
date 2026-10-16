@@ -5,21 +5,22 @@ import { ActivityIndicator, KeyboardAvoidingView } from "react-native";
 import { Body, Centered, ErrorText, Screen } from "@/components/ui";
 import { readWishes, WishesForm } from "@/components/wishes-form";
 import { api, errorMessage } from "@/lib/api";
-import { useMe } from "@/lib/session";
+import { useKeys, useMe } from "@/lib/session";
 import { usePalette } from "@/theme";
 
 export default function Wishes() {
+  const keys = useKeys();
   const { id } = useLocalSearchParams<{ id: string }>();
   const router = useRouter();
   const palette = usePalette();
   const queryClient = useQueryClient();
   const me = useMe();
-  const plan = useQuery({ queryKey: ["plan", id], queryFn: () => api.getPlan(id) });
+  const plan = useQuery({ queryKey: keys.plan(id), queryFn: () => api.getPlan(id) });
   const save = useMutation({
     mutationFn: (wishes: Parameters<typeof api.saveConstraints>[1]) => api.saveConstraints(id, wishes),
     onSuccess: (next) => {
-      queryClient.setQueryData(["plan", id], next);
-      queryClient.invalidateQueries({ queryKey: ["plans"] });
+      queryClient.setQueryData(keys.plan(id), next);
+      queryClient.invalidateQueries({ queryKey: keys.plans });
       router.back();
     },
   });

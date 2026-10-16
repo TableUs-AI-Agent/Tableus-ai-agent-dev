@@ -9,7 +9,7 @@ import { useState, type FormEvent } from "react";
 import { AppShell, LoadError, Loading } from "../components/app-shell";
 import { GoogleMapsAttribution } from "../components/google-maps-attribution";
 import { api, errorMessage } from "../lib/api";
-import { useMe } from "../lib/session";
+import { useKeys, useMe } from "../lib/session";
 
 const STATUS: Record<PlanSummary["status"], string> = {
   collecting: "Collecting wishes",
@@ -22,8 +22,9 @@ export default function PlansPage() {
 }
 
 function Plans() {
+  const keys = useKeys();
   const me = useMe();
-  const plans = useQuery({ queryKey: ["plans"], queryFn: api.listPlans });
+  const plans = useQuery({ queryKey: keys.plans, queryFn: api.listPlans });
   const canCreate = me.data?.can_create_plans ?? false;
 
   return (

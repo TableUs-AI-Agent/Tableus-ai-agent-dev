@@ -6,7 +6,12 @@ from fastapi import APIRouter, HTTPException
 from sqlalchemy import delete, func, select
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from .accounts import hand_off_organized_plans, remove_sign_in
+from .accounts import (
+    confirm_sign_in_exists,
+    hand_off_organized_plans,
+    mark_member_plans_changed,
+    remove_sign_in,
+)
 from .auth import CurrentIdentity, CurrentProfile, DbSession, can_create_plans
 from .config import get_settings
 from .limits import check_rate
@@ -82,6 +87,7 @@ async def put_me(body: MeIn, identity: CurrentIdentity, session: DbSession):
     """Create the caller's profile on first sign-in, or update it."""
     profile = await session.get(Profile, identity.subject)
     if not profile:
+        await confirm_sign_in_exists(identity.token)
         profile = Profile(id=identity.subject, display_name=body.display_name)
         session.add(profile)
     profile.display_name = body.display_name
@@ -93,6 +99,7 @@ async def put_me(body: MeIn, identity: CurrentIdentity, session: DbSession):
 
 @router.delete("/me", response_model=Envelope[DeletedOut])
 async def delete_me(profile: CurrentProfile, session: DbSession):
+    await mark_member_plans_changed(session, profile)
     await hand_off_organized_plans(session, profile)
     await session.delete(profile)
     await session.flush()
@@ -185,9 +192,7 @@ async def _plan_out(
     candidates, votes = await _run_rows(session, plan)
     voters = {vote.profile_id for vote in votes}
     if places is None:
-        places = (
-            await _places("get_places", [item.place_id for item in candidates]) if candidates else []
-        )
+        places = await _place_details(viewer_id, [item.place_id for item in candidates])
     places_by_id = {place.place_id: place for place in places}
     scores = borda_scores(votes)
     return PlanOut(
@@ -232,10 +237,19 @@ async def _plan_out(
     )
 
 
-async def _current_places(session: AsyncSession, plan: Plan) -> list[Place]:
+async def _place_details(viewer_id: str, place_ids: list[str]) -> list[Place]:
+    """Place details are fetched fresh (Google's terms keep them out of our database),
+    so each person gets a ceiling on how often their reads trigger that paid call."""
+    if not place_ids:
+        return []
+    check_rate("place_details", viewer_id, get_settings().plan_reads_per_hour)
+    return await _places("get_places", place_ids)
+
+
+async def _current_places(session: AsyncSession, plan: Plan, viewer_id: str) -> list[Place]:
     """Fetch place details before changing a plan, so a provider failure changes nothing."""
     candidates, _ = await _run_rows(session, plan)
-    return await _places("get_places", [item.place_id for item in candidates]) if candidates else []
+    return await _place_details(viewer_id, [item.place_id for item in candidates])
 
 
 @router.get("/plans", response_model=Envelope[list[PlanSummaryOut]])
@@ -448,7 +462,7 @@ async def vote(plan_id: str, body: VoteIn, profile: CurrentProfile, session: DbS
     candidates, votes = await _run_rows(session, plan)
     if not set(body.ranking) <= {candidate.id for candidate in candidates}:
         raise HTTPException(status_code=422, detail="Vote for the current options")
-    places = await _current_places(session, plan)
+    places = await _current_places(session, plan, profile.id)
     existing = next((item for item in votes if item.profile_id == profile.id), None)
     if existing:
         existing.ranking = body.ranking
@@ -472,7 +486,7 @@ async def finalize(plan_id: str, body: FinalizeIn, profile: CurrentProfile, sess
     selected_id = body.candidate_id or ordered_candidates(candidates, votes)[0].id
     if selected_id not in {candidate.id for candidate in candidates}:
         raise HTTPException(status_code=422, detail="Pick one of the current options")
-    places = await _current_places(session, plan)
+    places = await _current_places(session, plan, profile.id)
     plan.finalized_candidate_id = selected_id
     plan.status = "finalized"
     _touch(plan)
@@ -484,7 +498,7 @@ async def finalize(plan_id: str, body: FinalizeIn, profile: CurrentProfile, sess
 async def reopen(plan_id: str, profile: CurrentProfile, session: DbSession):
     plan = await _plan(session, plan_id, for_update=True)
     _require_organizer(plan, profile)
-    places = await _current_places(session, plan)
+    places = await _current_places(session, plan, profile.id)
     plan.status = "voting" if plan.active_run_id else "collecting"
     plan.finalized_candidate_id = None
     _touch(plan)

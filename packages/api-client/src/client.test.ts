@@ -85,3 +85,19 @@ test("typed endpoints call the expected paths and methods", async () => {
   ]);
   assert.equal(calls[0].init.body, JSON.stringify({ share_token: "token-value" }));
 });
+
+test("account deletion refuses to run if a refresh switched accounts", async () => {
+  const { calls, fetchImpl } = fakeFetch([
+    { status: 401, body: { error: { code: "http_401", message: "expired" }, request_id: "r" } },
+  ]);
+  const token = (sub: string) => `x.${Buffer.from(JSON.stringify({ sub })).toString("base64url")}.y`;
+  const api = createTableUsApi(createApiClient({
+    baseUrl: "http://api",
+    fetchImpl,
+    getAccessToken: async () => token("person-a"),
+    refreshAccessToken: async () => token("person-b"),
+  }));
+  await assert.rejects(api.deleteAccount("person-a"), (error: unknown) =>
+    error instanceof ApiError && error.code === "subject_changed");
+  assert.equal(calls.length, 1);
+});

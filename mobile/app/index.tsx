@@ -7,7 +7,7 @@ import { RefreshControl, ScrollView, Text, View } from "react-native";
 import { Avatar, Body, Button, Card, ErrorText, Icon, PressScale } from "@/components/ui";
 import { api, errorMessage } from "@/lib/api";
 import { pendingJoin } from "@/lib/links";
-import { useMe } from "@/lib/session";
+import { useKeys, useMe } from "@/lib/session";
 import { space, usePalette } from "@/theme";
 
 const STATUS: Record<PlanSummary["status"], string> = {
@@ -17,10 +17,11 @@ const STATUS: Record<PlanSummary["status"], string> = {
 };
 
 export default function Plans() {
+  const keys = useKeys();
   const palette = usePalette();
   const router = useRouter();
   const me = useMe();
-  const plans = useQuery({ queryKey: ["plans"], queryFn: api.listPlans });
+  const plans = useQuery({ queryKey: keys.plans, queryFn: api.listPlans });
   const canCreate = me.data?.can_create_plans ?? false;
 
   // A join link opened before sign-in resumes here once the person is set up.

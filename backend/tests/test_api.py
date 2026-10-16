@@ -302,3 +302,63 @@ async def test_deleting_an_account_hands_shared_plans_to_the_next_person(
 async def test_health_endpoints(client: AsyncClient) -> None:
     assert (await client.get("/health")).json()["status"] == "ok"
     assert (await client.get("/health/ready")).json()["status"] == "ready"
+
+
+async def test_a_leaving_guest_bumps_the_plan_so_others_refresh(client: AsyncClient) -> None:
+    await new_profile(client, "brief-guest")
+    created = await new_plan(client)
+    plan_id = created["plan"]["id"]
+    await join(client, created, "brief-guest")
+    before = (await client.get(f"/api/v1/plans/{plan_id}/revision", headers=as_user("demo-organizer"))).json()
+    assert (await client.delete("/api/v1/me", headers=as_user("brief-guest"))).status_code == 200
+    after = (await client.get(f"/api/v1/plans/{plan_id}/revision", headers=as_user("demo-organizer"))).json()
+    assert after["data"]["updated_at"] != before["data"]["updated_at"]
+
+
+async def test_plan_reads_that_refresh_places_are_rate_limited(
+    client: AsyncClient, monkeypatch
+) -> None:
+    created = await new_plan(client)
+    plan_id = created["plan"]["id"]
+    await join(client, created, "demo-guest")
+    await client.post(f"/api/v1/plans/{plan_id}/recommendations", headers=as_user("demo-organizer"), json={})
+    monkeypatch.setattr(get_settings(), "plan_reads_per_hour", 2)
+    limits.reset()
+    url = f"/api/v1/plans/{plan_id}"
+    assert (await client.get(url, headers=as_user("demo-guest"))).status_code == 200
+    assert (await client.get(url, headers=as_user("demo-guest"))).status_code == 200
+    assert (await client.get(url, headers=as_user("demo-guest"))).status_code == 429
+    # Revision polling never touches Places and stays available.
+    assert (await client.get(f"{url}/revision", headers=as_user("demo-guest"))).status_code == 200
+
+
+@pytest.mark.parametrize(("status", "allowed"), [(200, True), (403, False), (404, False)])
+async def test_new_profiles_require_a_live_sign_in(monkeypatch, status, allowed) -> None:
+    import httpx
+    from fastapi import HTTPException
+
+    from tableus import accounts
+
+    settings = get_settings()
+    monkeypatch.setattr(settings, "tableus_auth_mode", "supabase")
+    monkeypatch.setattr(settings, "supabase_url", "https://example.supabase.co")
+    monkeypatch.setattr(settings, "supabase_service_role_key", type(settings.supabase_service_role_key)("service"))
+    seen: list[httpx.Request] = []
+
+    def handler(request: httpx.Request) -> httpx.Response:
+        seen.append(request)
+        return httpx.Response(status, json={})
+
+    real_client = httpx.AsyncClient
+    monkeypatch.setattr(
+        accounts.httpx, "AsyncClient",
+        lambda **kwargs: real_client(transport=httpx.MockTransport(handler), **kwargs),
+    )
+    if allowed:
+        await accounts.confirm_sign_in_exists("user-token")
+    else:
+        with pytest.raises(HTTPException) as captured:
+            await accounts.confirm_sign_in_exists("user-token")
+        assert captured.value.status_code == 401
+    assert seen[0].url.path == "/auth/v1/user"
+    assert seen[0].headers["Authorization"] == "Bearer user-token"

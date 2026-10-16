@@ -4,20 +4,24 @@ import { useEffect, useState } from "react";
 import { ActivityIndicator } from "react-native";
 
 import { Body, Button, Centered, ErrorText, Title } from "@/components/ui";
+import { ApiError } from "@tableus/api-client";
+
 import { api, errorMessage } from "@/lib/api";
 import { pendingJoin } from "@/lib/links";
-import { useMe, useSession } from "@/lib/session";
+import { useKeys, useMe, useSession } from "@/lib/session";
 import { usePalette } from "@/theme";
 
 /** Opened from an invite link. Joins once the person is signed in and set up. */
 export default function Join() {
+  const keys = useKeys();
   const { id } = useLocalSearchParams<{ id: string }>();
   const router = useRouter();
   const palette = usePalette();
   const queryClient = useQueryClient();
   const { session } = useSession();
   const me = useMe();
-  const [error, setError] = useState<string | null>(null);
+  const [error, setError] = useState<{ message: string; retryable: boolean } | null>(null);
+  const [attempt, setAttempt] = useState(0);
   const waiting = pendingJoin.peek();
   const token = waiting?.planId === id ? waiting.token : null;
 
@@ -28,22 +32,34 @@ export default function Join() {
       .then((plan) => {
         if (cancelled) return;
         pendingJoin.take();
-        queryClient.setQueryData(["plan", id], plan);
+        queryClient.setQueryData(keys.plan(id), plan);
         router.replace(`/plan/${id}`);
       })
       .catch((failure) => {
         if (cancelled) return;
-        pendingJoin.take();
-        setError(errorMessage(failure));
+        // Keep the invite for problems that a retry can fix (offline, busy server).
+        const status = failure instanceof ApiError ? failure.status : 0;
+        const retryable = status === 0 || status === 429 || status >= 500;
+        if (!retryable) pendingJoin.take();
+        setError({ message: errorMessage(failure), retryable });
       });
     return () => { cancelled = true; };
-  }, [token, me.data, id, router, queryClient]);
+  }, [token, me.data, id, router, queryClient, keys, attempt]);
 
+  if (error?.retryable) {
+    return (
+      <Centered>
+        <Title size={36}>Couldn’t join yet</Title>
+        <ErrorText>{error.message}</ErrorText>
+        <Button label="Try again" onPress={() => { setError(null); setAttempt((value) => value + 1); }} />
+      </Centered>
+    );
+  }
   if (!token || error) {
     return (
       <Centered>
         <Title size={36}>This link didn’t work</Title>
-        <ErrorText>{error ?? "The invite link is incomplete. Ask whoever sent it for the full link."}</ErrorText>
+        <ErrorText>{error?.message ?? "The invite link is incomplete. Ask whoever sent it for the full link."}</ErrorText>
         <Button kind="quiet" label="Go to your plans" onPress={() => router.replace("/")} />
       </Centered>
     );

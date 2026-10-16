@@ -28,7 +28,7 @@ function Account() {
     onSuccess: (saved) => queryClient.setQueryData(["me", saved.id], saved),
   });
   const remove = useMutation({
-    mutationFn: api.deleteAccount,
+    mutationFn: () => api.deleteAccount(me.data?.id ?? ""),
     onSuccess: async () => { await signOut(); router.replace("/"); },
   });
 

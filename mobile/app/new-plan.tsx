@@ -4,9 +4,11 @@ import { useRouter } from "expo-router";
 import { useState } from "react";
 
 import { Body, Button, ErrorText, Field, Screen } from "@/components/ui";
+import { useKeys } from "@/lib/session";
 import { api, errorMessage } from "@/lib/api";
 
 export default function NewPlan() {
+  const keys = useKeys();
   const router = useRouter();
   const queryClient = useQueryClient();
   const [title, setTitle] = useState("");
@@ -21,8 +23,8 @@ export default function NewPlan() {
       location_place_id: place.place_id,
     }),
     onSuccess: (created) => {
-      queryClient.invalidateQueries({ queryKey: ["plans"] });
-      queryClient.setQueryData(["plan", created.plan.id], created.plan);
+      queryClient.invalidateQueries({ queryKey: keys.plans });
+      queryClient.setQueryData(keys.plan(created.plan.id), created.plan);
       // The sheet closes and the new plan opens on top of the list.
       router.dismiss();
       router.push(`/plan/${created.plan.id}`);

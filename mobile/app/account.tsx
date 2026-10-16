@@ -21,7 +21,7 @@ export default function Account() {
     mutationFn: () => api.saveMe({ display_name: name.trim(), taste_profile: taste }),
     onSuccess: (saved) => queryClient.setQueryData(["me", saved.id], saved),
   });
-  const remove = useMutation({ mutationFn: api.deleteAccount, onSuccess: signOut });
+  const remove = useMutation({ mutationFn: () => api.deleteAccount(me.data?.id ?? ""), onSuccess: signOut });
 
   function confirmDelete() {
     Alert.alert(
