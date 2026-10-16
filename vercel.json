@@ -12,7 +12,8 @@
       "codex/friends-test-readiness": false,
       "codex/ci-usage-trim": false,
       "codex/table-tap-vote": false,
-      "codex/place-photos": false
+      "codex/place-photos": false,
+      "codex/mascot-and-art": false
     }
   },
   "framework": "nextjs",
