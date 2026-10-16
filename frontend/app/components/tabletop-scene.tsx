@@ -266,10 +266,10 @@ function easeInOutSine(t: number) {
 function makeToonGradientMap() {
   return makeCanvasTextureWithSize(64, 1, (ctx, width) => {
     const gradient = ctx.createLinearGradient(0, 0, width, 0);
-    gradient.addColorStop(0, "#9aa89c");
-    gradient.addColorStop(0.3, "#a9b6ab");
-    gradient.addColorStop(0.42, "#dfe7dd");
-    gradient.addColorStop(0.62, "#f4f7f2");
+    gradient.addColorStop(0, "#96a0b4");
+    gradient.addColorStop(0.3, "#a3adc0");
+    gradient.addColorStop(0.42, "#dde3ec");
+    gradient.addColorStop(0.62, "#f4f6f9");
     gradient.addColorStop(0.8, "#ffffff");
     gradient.addColorStop(1, "#ffffff");
     ctx.fillStyle = gradient;
@@ -777,7 +777,7 @@ function updateClouds(group: THREE.Group, delta: number, elapsed: number, speedB
 }
 
 const CONFETTI_COUNT = 56;
-const CONFETTI_COLORS = ["#f4cf4a", "#b3245c", "#a9c2a9", "#ffffff", "#2c6a4e"];
+const CONFETTI_COLORS = ["#ffe033", "#31c9ff", "#f293a8", "#ffffff", "#7fbe35", "#b3245c"];
 
 type ConfettiBurst = {
   mesh: THREE.InstancedMesh;
@@ -860,9 +860,9 @@ function createPlatform() {
     ctx.lineJoin = "round";
     ctx.lineCap = "round";
     const oceanGradient = ctx.createLinearGradient(0, 0, 0, height);
-    oceanGradient.addColorStop(0, "#3d7d5e");
-    oceanGradient.addColorStop(0.55, "#2c6a4e");
-    oceanGradient.addColorStop(1, "#245c43");
+    oceanGradient.addColorStop(0, "#31c9ff");
+    oceanGradient.addColorStop(0.55, "#139fec");
+    oceanGradient.addColorStop(1, "#1699e5");
     ctx.fillStyle = oceanGradient;
     ctx.fillRect(0, 0, width, height);
 
@@ -906,9 +906,9 @@ function createPlatform() {
     };
 
     const landGradient = ctx.createLinearGradient(width * 0.1, 0, width * 0.9, height);
-    landGradient.addColorStop(0, "#f4cf4a");
-    landGradient.addColorStop(0.35, "#e3d66e");
-    landGradient.addColorStop(1, "#b4cba8");
+    landGradient.addColorStop(0, "#ffe033");
+    landGradient.addColorStop(0.35, "#d8e63b");
+    landGradient.addColorStop(1, "#7fbe35");
 
     drawPolygon(
       [
@@ -1031,7 +1031,7 @@ function createPlatform() {
     drawIsland(80, 7, 0.011, 0.018, -0.28);
     drawIsland(48, -19, 0.012, 0.04, 0.25);
 
-    ctx.fillStyle = "#22573f";
+    ctx.fillStyle = "#138ed8";
     drawPolygon(
       [
         [-6, 36],
@@ -1044,7 +1044,7 @@ function createPlatform() {
         [7, 32],
         [-5, 33],
       ],
-      "#22573f"
+      "#138ed8"
     );
     drawPolygon(
       [
@@ -1054,7 +1054,7 @@ function createPlatform() {
         [39, 13],
         [34, 20],
       ],
-      "#22573f"
+      "#138ed8"
     );
 
     const gloss = ctx.createRadialGradient(width * 0.42, height * 0.12, 12, width * 0.42, height * 0.12, width * 0.58);
@@ -1078,7 +1078,7 @@ function createPlatform() {
           map: { value: planetTexture },
           lightDirection: { value: new THREE.Vector3(-0.45, 0.74, 0.5).normalize() },
           radius: { value: PLANET_RADIUS },
-          rimColor: { value: new THREE.Color("#a9c9b2") },
+          rimColor: { value: new THREE.Color("#20baff") },
           crownColor: { value: new THREE.Color("#ffffff") },
         },
         vertexShader: `
@@ -1115,7 +1115,7 @@ function createPlatform() {
             float rim = smoothstep(0.36, 0.9, viewEdge);
             float bottomShade = smoothstep(-radius * 0.05, -radius * 0.9, vLocalPosition.y);
             vec3 color = texel.rgb * day;
-            color = mix(color, color * vec3(0.82, 0.9, 0.84), bottomShade * 0.18);
+            color = mix(color, color * vec3(0.78, 0.88, 0.98), bottomShade * 0.18);
             color = mix(color, crownColor, crown * 0.07);
             color = mix(color, rimColor, rim * 0.56);
             float bottomFade = smoothstep(-radius * 1.02, -radius * 0.74, vLocalPosition.y);
@@ -1126,7 +1126,7 @@ function createPlatform() {
         depthWrite: false,
       })
     : new THREE.MeshStandardMaterial({
-        color: "#c9d9c6",
+        color: "#bfe7e9",
         roughness: 0.86,
         metalness: 0,
         transparent: true,
@@ -1139,7 +1139,7 @@ function createPlatform() {
   group.add(planet);
 
   const atmosphereMaterial = new THREE.MeshBasicMaterial({
-    color: "#e8f1e4",
+    color: "#dffcff",
     transparent: true,
     opacity: 0.08,
     side: THREE.BackSide,
@@ -1649,7 +1649,7 @@ function createRestaurantCard(
   const glossTexture = makeRestaurantGlossTexture();
   const glowTexture = makeRestaurantGlowTexture();
   const frameMaterial = new THREE.MeshStandardMaterial({
-    color: "#ffffff",
+    color: "#fffaf2",
     roughness: 0.34,
     metalness: 0.04,
     transparent: true,
@@ -1669,7 +1669,7 @@ function createRestaurantCard(
     depthWrite: false,
   });
   const glowMaterial = new THREE.MeshBasicMaterial({
-    color: "#eef4ea",
+    color: "#d8fbff",
     map: glowTexture || undefined,
     side: THREE.DoubleSide,
     transparent: true,
@@ -2074,7 +2074,7 @@ export function DiscoverTabletopScene({
     stage.add(confetti.mesh);
     let lastCelebrateId = celebrateIdRef.current;
 
-    const ambient = new THREE.HemisphereLight(0xfffaf0, 0xc9d9c6, 2.1);
+    const ambient = new THREE.HemisphereLight(0xfff4e6, 0xb6d7ff, 2.1);
     scene.add(ambient);
 
     const keyLight = new THREE.DirectionalLight(0xffffff, 2.8);
@@ -2092,11 +2092,11 @@ export function DiscoverTabletopScene({
     keyLight.shadow.normalBias = 0.025;
     scene.add(keyLight);
 
-    const rimLight = new THREE.DirectionalLight(0xe1eedc, 1.05);
+    const rimLight = new THREE.DirectionalLight(0xbfe3ff, 1.05);
     rimLight.position.set(-2.6, 3.4, -4.2);
     scene.add(rimLight);
 
-    const fillLight = new THREE.PointLight(0xffdca0, 1.3, 8);
+    const fillLight = new THREE.PointLight(0xffb985, 1.45, 8);
     fillLight.position.set(-2.4, 1.5, 2.8);
     scene.add(fillLight);
 
@@ -2526,11 +2526,11 @@ export function DiscoverTabletopScene({
 
         const brightness = handle.selected ? 1.12 : hovered ? 1.06 : 1;
         handle.photoMaterial.color.setRGB(brightness, brightness, brightness);
-        handle.frameMaterial.emissive.set(handle.selected ? "#f4cf4a" : hovered ? "#e6f0e3" : "#000000");
+        handle.frameMaterial.emissive.set(handle.selected ? "#ffe7a8" : hovered ? "#dff7ff" : "#000000");
         handle.frameMaterial.emissiveIntensity =
           exitFlash > 0 ? 0.48 * exitFlash : handle.selected ? 0.22 : hovered ? 0.12 : 0;
         handle.glossMaterial.opacity = opacity * (handle.selected ? 0.4 : hovered ? 0.34 : 0.22);
-        handle.glowMaterial.color.set(exitFlash > 0 ? "#ffffff" : handle.selected ? "#f4cf4a" : "#dfeadb");
+        handle.glowMaterial.color.set(exitFlash > 0 ? "#ffffff" : handle.selected ? "#ffe5a8" : "#bdf6ff");
         handle.glowMaterial.opacity =
           exitFlash > 0
             ? Math.max(opacity * 0.18, exitFlash * 0.72)
@@ -2949,7 +2949,7 @@ export function DiscoverTabletopScene({
       className={`relative h-full w-full touch-none ${className}`}
       aria-label="Animated tabletop scene with the current user and selected friends"
     >
-      <div className="pointer-events-none absolute -inset-x-[8vw] bottom-[6%] h-[42%] rounded-full bg-[radial-gradient(circle,rgba(169,194,169,0.32),rgba(169,194,169,0.1)_44%,rgba(169,194,169,0)_78%)] blur-2xl" />
+      <div className="pointer-events-none absolute -inset-x-[8vw] bottom-[6%] h-[42%] rounded-full bg-[radial-gradient(circle,rgba(42,160,210,0.24),rgba(42,160,210,0.08)_44%,rgba(42,160,210,0)_78%)] blur-2xl" />
       {fade ? <div
         className="pointer-events-none absolute -inset-x-[8vw] bottom-0 z-10 h-[34%]"
         style={{

@@ -11,6 +11,9 @@ Two animated moments carry the brand, and Brian wants both kept and improved:
   view, so improvements land on both.
 
 Everything else stays quiet so these moments and the real picks carry the brand.
+The 3D table keeps its original bright sky-blue and sunny-yellow colors; Brian
+prefers them to a muted version. If the palettes need to meet, change the app
+palette toward the scene, never the other way.
 
 ## Tokens
 
