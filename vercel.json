@@ -11,7 +11,8 @@
       "codex/project-reset": false,
       "codex/friends-test-readiness": false,
       "codex/ci-usage-trim": false,
-      "codex/table-tap-vote": false
+      "codex/table-tap-vote": false,
+      "codex/place-photos": false
     }
   },
   "framework": "nextjs",

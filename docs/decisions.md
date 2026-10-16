@@ -29,6 +29,11 @@ prior log is in git history at `4a944e1`.
 - **CI on ready PRs only** (Oct 16, 2026). One job runs the full check when a
   PR is marked ready and on later pushes; drafts and docs-only changes skip it.
   Several agents push draft PRs at once, so per-push CI was mostly noise.
+- **Place photos through a signed redirect** (Oct 16, 2026). Picks show the
+  place's first Google photo with its author credit. Plan responses carry a
+  signed `/api/v1/place-photos` link; the API redirects to Google's key-free
+  image URL and caches it per place for an hour, so the key stays server-side
+  and repeat views don't each pay for a Place Photos call.
 - **Simple safeguards.** A per-user rate limit and a Google Cloud budget alert
   replace the quota, budget and replay layers.
 - **Direct account deletion.** Deleting an account removes the profile, the

@@ -11,3 +11,7 @@ export function mapsUrl(place: PlaceDetails): string {
 export function initials(name: string): string {
   return name.split(/\s+/).filter(Boolean).slice(0, 2).map((part) => part[0]?.toUpperCase()).join("") || "?";
 }
+
+/** Place photos are API paths, so they load from the same API the app talks to. */
+export const photoUrl = (place: PlaceDetails) =>
+  place.photo_url ? `${process.env.EXPO_PUBLIC_API_URL ?? ""}${place.photo_url}` : null;

@@ -386,6 +386,16 @@ export interface components {
             /** Profile Id */
             profile_id: string;
         };
+        /** PhotoCreditOut */
+        PhotoCreditOut: {
+            /** Name */
+            name: string;
+            /**
+             * Uri
+             * @default
+             */
+            uri: string;
+        };
         /** PlaceOut */
         PlaceOut: {
             /** Address */
@@ -405,6 +415,10 @@ export interface components {
             longitude: number;
             /** Name */
             name: string;
+            /** Photo Credits */
+            photo_credits?: components["schemas"]["PhotoCreditOut"][];
+            /** Photo Url */
+            photo_url?: string | null;
             /** Place Id */
             place_id: string;
             /** Price Level */

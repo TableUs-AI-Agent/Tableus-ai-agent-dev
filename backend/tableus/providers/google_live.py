@@ -16,6 +16,8 @@ from .base import Diner, Place, ProviderError, Recommendation, ResolvedLocation
 
 PLACES_URL = "https://places.googleapis.com/v1"
 SEARCH_RADIUS_M = 5000
+# Wide enough for a full-width card on a 3x phone screen.
+PHOTO_MAX_WIDTH_PX = 1080
 
 # Google Places boolean attributes passed to the recommender as plain phrases.
 _FEATURE_FIELDS = {
@@ -55,7 +57,8 @@ _LOCATION_FIELDS = ("id", "displayName", "formattedAddress", "location", "postal
 class LivePlacesProvider:
     name = "google-places-new"
     search_field_mask = _mask(*_PLACE_FIELDS, prefix="places.")
-    detail_field_mask = _mask(*_PLACE_FIELDS)
+    # Photos only matter for the picks people see, so only details ask for them.
+    detail_field_mask = _mask(*_PLACE_FIELDS, "photos")
     location_search_field_mask = _mask(*_LOCATION_FIELDS, prefix="places.")
     location_detail_field_mask = _mask(*_LOCATION_FIELDS)
 
@@ -64,7 +67,9 @@ class LivePlacesProvider:
         self.transport = transport
 
     async def _request(self, method: str, url: str, field_mask: str, **kwargs) -> dict:
-        headers = {"X-Goog-Api-Key": self.api_key, "X-Goog-FieldMask": field_mask}
+        headers = {"X-Goog-Api-Key": self.api_key}
+        if field_mask:
+            headers["X-Goog-FieldMask"] = field_mask
         async with httpx.AsyncClient(timeout=10, transport=self.transport) as client:
             for attempt in range(3):
                 try:
@@ -164,6 +169,17 @@ class LivePlacesProvider:
             raise ProviderError("Some places could not be refreshed", kind="not_found")
         return [by_id[item] for item in unique_ids]
 
+    async def photo_uri(self, photo_name: str) -> str:
+        """A short-lived, key-free image URL for a photo resource name."""
+        data = await self._request(
+            "GET", f"{PLACES_URL}/{photo_name}/media", "",
+            params={"maxWidthPx": PHOTO_MAX_WIDTH_PX, "skipHttpRedirect": "true"},
+        )
+        uri = str(data.get("photoUri") or "")
+        if not uri.startswith("https://"):
+            raise ProviderError("Google Places returned no photo", kind="not_found")
+        return uri
+
     def _us_location(self, item: dict) -> ResolvedLocation:
         location = item.get("location") or {}
         if not item.get("id") or "latitude" not in location or "longitude" not in location:
@@ -210,7 +226,28 @@ class LivePlacesProvider:
                 phrase for field, phrase in _FEATURE_FIELDS.items() if item.get(field) is True
             ),
             rating_count=int(item.get("userRatingCount") or 0),
+            **_photo(item),
         )
+
+
+def _photo(item: dict) -> dict:
+    photos = item.get("photos") or []
+    if not photos or not photos[0].get("name"):
+        return {}
+    return {
+        "photo_name": str(photos[0]["name"]),
+        "photo_attributions": tuple(
+            (str(author["displayName"]), _https(str(author.get("uri") or "")))
+            for author in photos[0].get("authorAttributions") or []
+            if author.get("displayName")
+        ),
+    }
+
+
+def _https(uri: str) -> str:
+    # Author links sometimes come protocol-relative.
+    uri = f"https:{uri}" if uri.startswith("//") else uri
+    return uri if uri.startswith("https://") else ""
 
 
 def _cuisine(item: dict) -> str:

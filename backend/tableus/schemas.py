@@ -42,6 +42,11 @@ class LocationOut(BaseModel):
     data_provider: Literal["fixture", "google_maps"]
 
 
+class PhotoCreditOut(BaseModel):
+    name: str
+    uri: str = ""
+
+
 class PlaceOut(BaseModel):
     place_id: str
     name: str
@@ -55,6 +60,9 @@ class PlaceOut(BaseModel):
     summary: str = ""
     features: list[str] = Field(default_factory=list)
     rating_count: int = 0
+    # An API path (join it to the API origin), shown with its photo credits.
+    photo_url: str | None = None
+    photo_credits: list[PhotoCreditOut] = Field(default_factory=list)
 
 
 class PlanCreateIn(BaseModel):

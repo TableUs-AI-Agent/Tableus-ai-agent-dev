@@ -362,3 +362,50 @@ async def test_new_profiles_require_a_live_sign_in(monkeypatch, status, allowed)
         assert captured.value.status_code == 401
     assert seen[0].url.path == "/auth/v1/user"
     assert seen[0].headers["Authorization"] == "Bearer user-token"
+
+
+async def test_place_photos_are_signed_redirects_cached_per_place(
+    client: AsyncClient, monkeypatch
+) -> None:
+    from tableus import photos
+    from tableus.providers.deterministic import DeterministicPlacesProvider
+
+    photos.reset()
+    monkeypatch.setattr(get_settings(), "google_maps_api_key", "places-key")
+    calls: list[str] = []
+
+    async def photo_uri(self, name: str) -> str:
+        calls.append(name)
+        return "https://lh3.googleusercontent.com/photo"
+
+    monkeypatch.setattr(DeterministicPlacesProvider, "photo_uri", photo_uri)
+    path = photos.photo_path("places/place1/photos/a")
+    assert path and path.startswith("/api/v1/place-photos?")
+    assert "places-key" not in path
+
+    first = await client.get(path)
+    second = await client.get(path)
+    assert first.status_code == second.status_code == 302
+    assert first.headers["location"] == "https://lh3.googleusercontent.com/photo"
+    assert calls == ["places/place1/photos/a"]
+
+    forged = await client.get(path.replace("place1", "place2"))
+    unsigned = await client.get("/api/v1/place-photos", params={"name": "places/p/photos/a", "sig": "0"})
+    assert forged.status_code == unsigned.status_code == 404
+    assert photos.photo_path("not-a-photo-name") is None
+    assert len(calls) == 1
+    photos.reset()
+
+
+async def test_fixture_places_have_no_photo_link(client: AsyncClient) -> None:
+    created = await new_plan(client)
+    await new_profile(client, "demo-guest")
+    await join(client, created, "demo-guest")
+    response = await client.post(
+        f"/api/v1/plans/{created['plan']['id']}/recommendations",
+        headers=as_user("demo-organizer"), json={"query": ""},
+    )
+    assert response.status_code == 200, response.text
+    place = response.json()["data"]["candidates"][0]["place"]
+    assert place["photo_url"] is None
+    assert place["photo_credits"] == []
