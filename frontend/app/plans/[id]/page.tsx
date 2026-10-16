@@ -165,7 +165,14 @@ function Voting({ plan }: { plan: Plan }) {
   const [ranking, setRanking] = useState<string[]>(plan.my_vote ?? []);
   const [editing, setEditing] = useState(false);
   const vote = useMutation({ mutationFn: () => api.vote(plan.id, ranking), onSuccess: update });
-  const finalize = useMutation({ mutationFn: () => api.finalize(plan.id), onSuccess: update });
+  const finalize = useMutation({
+    mutationFn: () => api.finalize(plan.id),
+    onSuccess: (next) => {
+      update(next);
+      // Bring the table into view so everyone sees it celebrate the pick.
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    },
+  });
   const saved = JSON.stringify(ranking) === JSON.stringify(plan.my_vote ?? []);
   const voters = plan.participants.filter((person) => person.has_voted).length;
   const leader = [...plan.candidates].sort((a, b) => b.vote_score - a.vote_score || a.rank - b.rank)[0];

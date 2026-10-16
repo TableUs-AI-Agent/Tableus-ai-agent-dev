@@ -57,6 +57,7 @@ export function TableScene({ state, onPick, fade = true }: { state: TableState; 
       phase={state.searching ? "searching" : restaurants.length ? "results" : "idle"}
       restaurants={state.searching ? [] : restaurants}
       selectedRestaurantId={state.selectedId}
+      celebrateId={state.chosenId}
       onRestaurantSelect={(restaurant) => onPick?.(restaurant.id ?? "")}
     />
   );

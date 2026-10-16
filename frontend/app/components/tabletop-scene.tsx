@@ -266,10 +266,10 @@ function easeInOutSine(t: number) {
 function makeToonGradientMap() {
   return makeCanvasTextureWithSize(64, 1, (ctx, width) => {
     const gradient = ctx.createLinearGradient(0, 0, width, 0);
-    gradient.addColorStop(0, "#96a0b4");
-    gradient.addColorStop(0.3, "#a3adc0");
-    gradient.addColorStop(0.42, "#dde3ec");
-    gradient.addColorStop(0.62, "#f4f6f9");
+    gradient.addColorStop(0, "#9aa89c");
+    gradient.addColorStop(0.3, "#a9b6ab");
+    gradient.addColorStop(0.42, "#dfe7dd");
+    gradient.addColorStop(0.62, "#f4f7f2");
     gradient.addColorStop(0.8, "#ffffff");
     gradient.addColorStop(1, "#ffffff");
     ctx.fillStyle = gradient;
@@ -729,6 +729,128 @@ function makePlushBodyTexture(person: ScenePerson, look: PlushLook) {
     drawSpeciesPattern(ctx, width, height, look.species, speciesSpec, person.id);
     drawOutfit(ctx, width, height, look.outfit, outfitSpec, jerseyNumberFor(person.id));
   });
+}
+
+const CLOUDS = [
+  { angle: 0.4, radius: 2.55, lift: 0.42, scale: 0.62, speed: 0.07 },
+  { angle: 2.1, radius: 2.85, lift: 0.62, scale: 0.5, speed: 0.05 },
+  { angle: 3.5, radius: 2.4, lift: 0.36, scale: 0.7, speed: 0.06 },
+  { angle: 4.9, radius: 2.95, lift: 0.7, scale: 0.46, speed: 0.08 },
+];
+const CLOUD_PUFFS: Array<[number, number, number, number]> = [
+  [0, 0, 0, 0.34],
+  [0.3, -0.05, 0.02, 0.25],
+  [-0.29, -0.06, 0, 0.23],
+  [0.08, 0.12, -0.05, 0.22],
+];
+
+/** A few toon clouds that drift low over the planet. */
+function createClouds() {
+  const group = new THREE.Group();
+  const material = createToonMaterial({ color: "#ffffff", opacity: 0.94 });
+  const geometry = new THREE.SphereGeometry(1, 14, 10);
+  CLOUDS.forEach((spec) => {
+    const cloud = new THREE.Group();
+    CLOUD_PUFFS.forEach(([x, y, z, r]) => {
+      const puff = new THREE.Mesh(geometry, material);
+      puff.position.set(x, y, z);
+      puff.scale.set(r * 1.2, r, r);
+      cloud.add(puff);
+    });
+    cloud.scale.setScalar(spec.scale);
+    cloud.userData = { ...spec };
+    group.add(cloud);
+  });
+  return group;
+}
+
+function updateClouds(group: THREE.Group, delta: number, elapsed: number, speedBoost: number) {
+  group.children.forEach((cloud, index) => {
+    const spec = cloud.userData as (typeof CLOUDS)[number];
+    spec.angle += delta * spec.speed * speedBoost;
+    const x = Math.sin(spec.angle) * spec.radius;
+    const z = Math.cos(spec.angle) * spec.radius;
+    const bob = Math.sin(elapsed * 0.8 + index * 1.7) * 0.05;
+    cloud.position.set(x, planetSurfaceY(x, z) + spec.lift + bob, z);
+    cloud.rotation.y = spec.angle + Math.PI / 2;
+  });
+}
+
+const CONFETTI_COUNT = 56;
+const CONFETTI_COLORS = ["#f4cf4a", "#b3245c", "#a9c2a9", "#ffffff", "#2c6a4e"];
+
+type ConfettiBurst = {
+  mesh: THREE.InstancedMesh;
+  positions: THREE.Vector3[];
+  velocities: THREE.Vector3[];
+  spins: THREE.Vector3[];
+  rotations: THREE.Euler[];
+  startedAt: number;
+  active: boolean;
+};
+
+/** Paper confetti for the one big moment: the group locking in a place. */
+function createConfetti(): ConfettiBurst {
+  const material = new THREE.MeshBasicMaterial({ side: THREE.DoubleSide, transparent: true, opacity: 1 });
+  const mesh = new THREE.InstancedMesh(new THREE.PlaneGeometry(0.07, 0.12), material, CONFETTI_COUNT);
+  const color = new THREE.Color();
+  for (let i = 0; i < CONFETTI_COUNT; i += 1) {
+    mesh.setColorAt(i, color.set(CONFETTI_COLORS[i % CONFETTI_COLORS.length]));
+  }
+  mesh.visible = false;
+  mesh.frustumCulled = false;
+  return {
+    mesh,
+    positions: Array.from({ length: CONFETTI_COUNT }, () => new THREE.Vector3()),
+    velocities: Array.from({ length: CONFETTI_COUNT }, () => new THREE.Vector3()),
+    spins: Array.from({ length: CONFETTI_COUNT }, () => new THREE.Vector3()),
+    rotations: Array.from({ length: CONFETTI_COUNT }, () => new THREE.Euler()),
+    startedAt: 0,
+    active: false,
+  };
+}
+
+function launchConfetti(burst: ConfettiBurst, elapsed: number) {
+  burst.positions.forEach((position, i) => {
+    const angle = (i / CONFETTI_COUNT) * Math.PI * 2 + Math.random() * 0.4;
+    const spread = 0.8 + Math.random() * 1.3;
+    position.set(Math.cos(angle) * 0.15, 1.15, Math.sin(angle) * 0.15);
+    burst.velocities[i].set(Math.cos(angle) * spread, 2.4 + Math.random() * 1.6, Math.sin(angle) * spread);
+    burst.spins[i].set(Math.random() * 9 - 4.5, Math.random() * 9 - 4.5, Math.random() * 9 - 4.5);
+    burst.rotations[i].set(Math.random() * 6, Math.random() * 6, Math.random() * 6);
+  });
+  burst.startedAt = elapsed;
+  burst.active = true;
+  burst.mesh.visible = true;
+}
+
+const CONFETTI_LIFETIME = 2.4;
+const confettiMatrix = new THREE.Object3D();
+
+function updateConfetti(burst: ConfettiBurst, delta: number, elapsed: number) {
+  if (!burst.active) return;
+  const age = elapsed - burst.startedAt;
+  if (age > CONFETTI_LIFETIME) {
+    burst.active = false;
+    burst.mesh.visible = false;
+    return;
+  }
+  (burst.mesh.material as THREE.MeshBasicMaterial).opacity = 1 - clamp01((age - 1.6) / 0.8);
+  for (let i = 0; i < CONFETTI_COUNT; i += 1) {
+    const velocity = burst.velocities[i];
+    velocity.y -= 5.2 * delta;
+    velocity.multiplyScalar(1 - 0.9 * delta);
+    burst.positions[i].addScaledVector(velocity, delta);
+    const rotation = burst.rotations[i];
+    rotation.x += burst.spins[i].x * delta;
+    rotation.y += burst.spins[i].y * delta;
+    rotation.z += burst.spins[i].z * delta;
+    confettiMatrix.position.copy(burst.positions[i]);
+    confettiMatrix.rotation.copy(rotation);
+    confettiMatrix.updateMatrix();
+    burst.mesh.setMatrixAt(i, confettiMatrix.matrix);
+  }
+  burst.mesh.instanceMatrix.needsUpdate = true;
 }
 
 function createPlatform() {
@@ -1794,6 +1916,7 @@ export function DiscoverTabletopScene({
   phase,
   restaurants = [],
   selectedRestaurantId = null,
+  celebrateId = null,
   onRestaurantSelect,
   className = "",
   fade = true,
@@ -1804,6 +1927,8 @@ export function DiscoverTabletopScene({
   phase: OrbitPhase;
   restaurants?: Restaurant[];
   selectedRestaurantId?: string | null;
+  /** When this changes to a place, the table celebrates it. */
+  celebrateId?: string | null;
   onRestaurantSelect?: (restaurant: Restaurant) => void;
   className?: string;
 }) {
@@ -1815,6 +1940,7 @@ export function DiscoverTabletopScene({
   const selectedRestaurantIdRef = useRef<string | null>(selectedRestaurantId);
   const onRestaurantSelectRef = useRef<typeof onRestaurantSelect>(onRestaurantSelect);
   const reconcileNeededRef = useRef(true);
+  const celebrateIdRef = useRef<string | null>(celebrateId);
   /** Restarts drawing after a change when the loop has paused itself. */
   const wakeRef = useRef<() => void>(() => {});
   const restaurantReconcileNeededRef = useRef(true);
@@ -1857,6 +1983,11 @@ export function DiscoverTabletopScene({
     restaurantReconcileNeededRef.current = true;
     wakeRef.current();
   }, [selectedRestaurantId]);
+
+  useEffect(() => {
+    celebrateIdRef.current = celebrateId;
+    wakeRef.current();
+  }, [celebrateId]);
 
   useEffect(() => {
     onRestaurantSelectRef.current = onRestaurantSelect;
@@ -1936,6 +2067,12 @@ export function DiscoverTabletopScene({
     const platform = createPlatform();
     platform.position.y = -PLANET_TOP_Y;
     platformPivot.add(platform);
+
+    const clouds = createClouds();
+    stage.add(clouds);
+    const confetti = createConfetti();
+    stage.add(confetti.mesh);
+    let lastCelebrateId = celebrateIdRef.current;
 
     const ambient = new THREE.HemisphereLight(0xfffaf0, 0xc9d9c6, 2.1);
     scene.add(ambient);
@@ -2246,6 +2383,21 @@ export function DiscoverTabletopScene({
       }
       lastPhase = currentPhase;
       const phaseAge = elapsed - phaseStartedAt;
+      const celebrate = celebrateIdRef.current;
+      if (celebrate && celebrate !== lastCelebrateId) {
+        characters.forEach((handle) => {
+          if (handle.exiting) return;
+          handle.mode = "cheer";
+          handle.lastActionMode = "cheer";
+          handle.modeStartedAt = elapsed;
+          handle.modeUntil = elapsed + 2.2 + handle.seed * 0.5;
+        });
+        if (!reducedMotion) launchConfetti(confetti, elapsed);
+        settleUntil = performance.now() + 3200;
+      }
+      lastCelebrateId = celebrate;
+      updateClouds(clouds, delta, elapsed, currentPhase === "searching" ? 4 : 1);
+      updateConfetti(confetti, delta, elapsed);
       if (!pointer.down) {
         const returnSmooth = 1 - Math.pow(0.035, delta);
         const tiltReturnSmooth = 1 - Math.pow(0.02, delta);
@@ -2368,7 +2520,9 @@ export function DiscoverTabletopScene({
             : handle.exiting
               ? Math.max(0, 1 - easeOutCubic(handle.exitProgress))
               : Math.min(1, handle.popProgress * 1.8);
-        setRestaurantCardOpacity(handle, opacity);
+        // Once a place is locked in, the other picks step back.
+        const decidedDim = celebrateIdRef.current && handle.id !== celebrateIdRef.current ? 0.45 : 1;
+        setRestaurantCardOpacity(handle, opacity * decidedDim);
 
         const brightness = handle.selected ? 1.12 : hovered ? 1.06 : 1;
         handle.photoMaterial.color.setRGB(brightness, brightness, brightness);
