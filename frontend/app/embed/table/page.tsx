@@ -32,7 +32,8 @@ export default function EmbeddedTable() {
   }, []);
 
   return (
-    <div className="fixed inset-0 bg-transparent">
+    // Fade the bottom edge here so it blends into the app's background in either theme.
+    <div className="fixed inset-0 bg-transparent [-webkit-mask-image:linear-gradient(to_bottom,black_72%,transparent)] [mask-image:linear-gradient(to_bottom,black_72%,transparent)]">
       {/* Loads the display face so the cards drawn on canvas use it. */}
       <span aria-hidden="true" className="display pointer-events-none absolute opacity-0">TableUs</span>
       {state ? (

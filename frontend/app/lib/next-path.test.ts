@@ -9,7 +9,7 @@ test("keeps same-site paths", () => {
 });
 
 test("refuses anything that leaves the site", () => {
-  for (const value of ["//evil.example", "/\\evil.example", "/\\/evil.example", "https://evil.example", "evil", "/%5Cevil.example"]) {
+  for (const value of ["//evil.example", "/\\evil.example", "/\\/evil.example", "https://evil.example", "evil", "/%5Cevil.example", "/a/..//evil.example", "/.//evil.example", "/%2e//evil.example"]) {
     const next = safeNext(value);
     assert.ok(next.startsWith("/") && !next.startsWith("//") && !next.includes("\\"), `${value} -> ${next}`);
     assert.equal(new URL(next, "https://tableus.app").origin, "https://tableus.app", value);

@@ -4,8 +4,10 @@ export function safeNext(value: string | null, fallback = "/plans"): string {
   try {
     const base = "https://tableus.invalid";
     const resolved = new URL(value, base);
-    if (resolved.origin !== base) return fallback;
-    return `${resolved.pathname}${resolved.search}${resolved.hash}`;
+    const path = `${resolved.pathname}${resolved.search}${resolved.hash}`;
+    // Normalization can turn "/a/..//evil.example" into a protocol-relative URL.
+    if (resolved.origin !== base || path.startsWith("//")) return fallback;
+    return path;
   } catch {
     return fallback;
   }

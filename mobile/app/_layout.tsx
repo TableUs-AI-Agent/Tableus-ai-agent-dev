@@ -58,9 +58,9 @@ function Navigator() {
           <Stack.Screen name="welcome" options={{ headerShown: false }} />
         </Stack.Protected>
         <Stack.Protected guard={ready}>
-          <Stack.Screen name="index" options={{ title: "Plans", headerLargeTitle: true, headerLargeStyle: { backgroundColor: palette.background } }} />
+          <Stack.Screen name="index" options={{ title: "Plans" }} />
           <Stack.Screen name="plan/[id]" options={{ title: "" }} />
-          <Stack.Screen name="new-plan" options={{ presentation: "formSheet", sheetAllowedDetents: [0.75, 1], sheetGrabberVisible: true, title: "Start a plan" }} />
+          <Stack.Screen name="new-plan" options={{ presentation: "modal", title: "Start a plan" }} />
           <Stack.Screen name="wishes/[id]" options={{ presentation: "modal", title: "Your wishes" }} />
           <Stack.Screen name="account" options={{ title: "Account" }} />
         </Stack.Protected>

@@ -5,7 +5,6 @@ import { View } from "react-native";
 import { WebView, type WebViewMessageEvent } from "react-native-webview";
 
 import { useMe } from "@/lib/session";
-import { usePalette } from "@/theme";
 
 const WEB_URL = process.env.EXPO_PUBLIC_WEB_URL ?? "http://localhost:3000";
 
@@ -15,7 +14,6 @@ const WEB_URL = process.env.EXPO_PUBLIC_WEB_URL ?? "http://localhost:3000";
  * If it can't load, the screen simply goes without it.
  */
 export function TableScene({ plan, onPick }: { plan: Plan; onPick?: (candidateId: string) => void }) {
-  const palette = usePalette();
   const me = useMe();
   const searching = useIsMutating({ mutationKey: ["suggest", plan.id] }) > 0;
   const view = useRef<WebView>(null);
@@ -71,13 +69,6 @@ export function TableScene({ plan, onPick }: { plan: Plan; onPick?: (candidateId
         originWhitelist={[WEB_URL]}
         setSupportMultipleWindows={false}
         webviewDebuggingEnabled={__DEV__}
-      />
-      <View
-        pointerEvents="none"
-        style={{
-          position: "absolute", left: 0, right: 0, bottom: 0, height: 72,
-          experimental_backgroundImage: `linear-gradient(to bottom, transparent, ${palette.background})`,
-        }}
       />
     </View>
   );

@@ -25,6 +25,7 @@ export function Screen({ children, footer }: { children: ReactNode; footer?: Rea
       <ScrollView
         contentInsetAdjustmentBehavior="automatic"
         keyboardDismissMode="interactive"
+        keyboardShouldPersistTaps="handled"
         contentContainerStyle={{ padding: space.md, paddingBottom: space.xxl * 2, gap: space.lg }}
       >
         {children}
