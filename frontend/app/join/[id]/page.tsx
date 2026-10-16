@@ -44,13 +44,13 @@ export default function JoinPage() {
 
   if (token === null || error) {
     return (
-      <SimplePage title="This link didn't work" intro={error ?? "The invite link is incomplete. Ask whoever sent it for the full link."}>
+      <SimplePage title="This link didn't work" pip="sleepy" intro={error ?? "The invite link is incomplete. Ask whoever sent it for the full link."}>
         <button type="button" className="btn btn-quiet" onClick={() => router.push("/plans")}>Go to your plans</button>
       </SimplePage>
     );
   }
   return (
-    <SimplePage title="Joining the plan">
+    <SimplePage title="Joining the plan" pip="invite">
       <p role="status" className="text-moss">One moment…</p>
     </SimplePage>
   );

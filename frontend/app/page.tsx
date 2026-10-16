@@ -1,13 +1,14 @@
 import Link from "next/link";
 
+import { Pip, SpotIcon } from "./components/pip";
 import { TableScene } from "./components/table-scene";
 import { Wordmark } from "./components/wordmark";
 
 const STEPS = [
-  { title: "Start a plan", body: "Pick the neighborhood and drop the link in your group chat." },
-  { title: "Say what you want", body: "Everyone adds wishes in their own words, like “vegetarian” or “under $30”." },
-  { title: "Get four picks", body: "TableUs looks at real places nearby and says why each one works for the whole group." },
-  { title: "Vote and go", body: "Rank your top three. The organizer locks it in and everyone gets the address." },
+  { art: <SpotIcon name="distance" />, title: "Start a plan", body: "Pick the neighborhood and drop the link in your group chat." },
+  { art: <SpotIcon name="wishes" />, title: "Say what you want", body: "Everyone adds wishes in their own words, like “vegetarian” or “under $30”." },
+  { art: <Pip pose="think" size={56} />, title: "Get four picks", body: "TableUs looks at real places nearby and says why each one works for the whole group." },
+  { art: <SpotIcon name="vote" />, title: "Vote and go", body: "Rank your top three. The organizer locks it in and everyone gets the address." },
 ];
 
 const PICKS = [
@@ -58,7 +59,10 @@ export default function Home() {
             <ol className="mt-10 grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
               {STEPS.map((step, index) => (
                 <li key={step.title}>
-                  <span aria-hidden="true" className="display block text-7xl text-radicchio">{index + 1}</span>
+                  <div className="flex items-end justify-between gap-3 sm:justify-start">
+                    <span aria-hidden="true" className="display block text-7xl text-radicchio">{index + 1}</span>
+                    <span className="mb-3">{step.art}</span>
+                  </div>
                   <h3 className="mt-2 text-xl font-bold">{step.title}</h3>
                   <p className="mt-2 max-w-[30ch] text-moss">{step.body}</p>
                 </li>
@@ -94,7 +98,10 @@ export default function Home() {
         <section className="bg-bottle text-leaf">
           <div className="mx-auto flex max-w-6xl flex-col items-start gap-8 px-4 py-20 sm:px-8 md:flex-row md:items-end md:justify-between">
             <h2 className="display max-w-[14ch] text-6xl sm:text-7xl">Next time someone asks where to eat, send a link.</h2>
-            <Link href="/plans" className="btn bg-butter px-6 text-lg text-bottle hover:bg-[#f7da6c]">Start a plan</Link>
+            <div className="flex items-end gap-4">
+              <Pip pose="invite" size={120} />
+              <Link href="/plans" className="btn bg-butter px-6 text-lg text-bottle hover:bg-[#f7da6c]">Start a plan</Link>
+            </div>
           </div>
         </section>
       </main>

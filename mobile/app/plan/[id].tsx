@@ -9,6 +9,7 @@ import { PickCard } from "@/components/pick-card";
 import { TableScene } from "@/components/table-scene";
 import { Avatar, Body, Button, Card, Centered, ErrorText, Field, Heading, Icon, PressScale, Title } from "@/components/ui";
 import { hasWishes } from "@/components/wishes-form";
+import { Pip } from "@/components/pip";
 import { useKeys } from "@/lib/session";
 import { api, errorMessage } from "@/lib/api";
 import { joinUrl } from "@/lib/links";
@@ -71,6 +72,7 @@ export default function PlanScreen() {
   if (plan.isError) {
     return (
       <Centered>
+        <Pip pose="sleepy" size={104} />
         <ErrorText>{errorMessage(plan.error)}</ErrorText>
         <Button kind="quiet" label="Try again" onPress={() => plan.refetch()} />
       </Centered>
@@ -157,7 +159,10 @@ function InviteCard({ plan }: { plan: Plan }) {
   const palette = usePalette();
   return (
     <Card emphasis="dark">
-      <Text style={{ fontSize: 20, fontWeight: "700", color: palette.background }}>Send this link to the group</Text>
+      <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between", gap: space.sm }}>
+        <Text style={{ flex: 1, fontSize: 20, fontWeight: "700", color: palette.background }}>Send this link to the group</Text>
+        <Pip pose="invite" size={64} />
+      </View>
       <Text style={{ fontSize: 16, color: palette.background }}>Anyone with the link can join, up to eight people.</Text>
       <Button label="Share invite link" onPress={() => shareInvite(plan)} />
     </Card>
@@ -185,7 +190,10 @@ function Collecting({ plan }: { plan: Plan }) {
         <Button kind="quiet" label="Add or edit my wishes" onPress={() => router.push(`/wishes/${plan.id}`)} />
       </View>
       <Card emphasis="outlined">
-        <Heading>Ready when everyone is</Heading>
+        <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between", gap: space.sm }}>
+          <View style={{ flex: 1 }}><Heading>Ready when everyone is</Heading></View>
+          <Pip pose="think" size={64} float={suggest.isPending} />
+        </View>
         {enough ? (
           <>
             <Body>Anyone can ask for picks once the group has added their wishes.</Body>
@@ -258,7 +266,10 @@ function Decided({ plan }: { plan: Plan }) {
   const winner = plan.candidates.find((candidate) => candidate.id === plan.finalized_candidate_id);
   return (
     <View style={{ gap: space.md }}>
-      <Title size={40}>You’re going to</Title>
+      <View style={{ flexDirection: "row", alignItems: "flex-end", justifyContent: "space-between", gap: space.sm }}>
+        <View style={{ flex: 1 }}><Title size={40}>You’re going to</Title></View>
+        <Pip pose="cheer" size={96} />
+      </View>
       {winner ? <PickCard candidate={winner} winner /> : <Body>The chosen place couldn’t be loaded.</Body>}
       {plan.viewer_is_organizer ? (
         <>

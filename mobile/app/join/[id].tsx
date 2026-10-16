@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { ActivityIndicator } from "react-native";
 
 import { Body, Button, Centered, ErrorText, Title } from "@/components/ui";
+import { Pip } from "@/components/pip";
 import { ApiError } from "@tableus/api-client";
 
 import { api, errorMessage } from "@/lib/api";
@@ -49,6 +50,7 @@ export default function Join() {
   if (error?.retryable) {
     return (
       <Centered>
+        <Pip pose="sleepy" size={104} />
         <Title size={36}>Couldn’t join yet</Title>
         <ErrorText>{error.message}</ErrorText>
         <Button label="Try again" onPress={() => { setError(null); setAttempt((value) => value + 1); }} />
@@ -58,6 +60,7 @@ export default function Join() {
   if (!token || error) {
     return (
       <Centered>
+        <Pip pose="sleepy" size={104} />
         <Title size={36}>This link didn’t work</Title>
         <ErrorText>{error?.message ?? "The invite link is incomplete. Ask whoever sent it for the full link."}</ErrorText>
         <Button kind="quiet" label="Go to your plans" onPress={() => router.replace("/")} />
@@ -68,6 +71,7 @@ export default function Join() {
     // Signing in (or finishing setup) returns to the plans list, which resumes this join.
     return (
       <Centered>
+        <Pip pose="invite" size={112} />
         <Title size={36}>You’re invited</Title>
         <Body muted>Sign in to join the plan.</Body>
         <Button label="Continue" onPress={() => router.replace(session.status === "signed-in" ? "/welcome" : "/sign-in")} />

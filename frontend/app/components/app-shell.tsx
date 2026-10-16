@@ -5,6 +5,7 @@ import { usePathname, useRouter } from "next/navigation";
 import { useEffect, type ReactNode } from "react";
 
 import { useMe, useSession } from "../lib/session";
+import { Pip } from "./pip";
 import { Wordmark } from "./wordmark";
 
 /** Signed-in screens: header plus a guard that routes people to sign-in or setup. */
@@ -57,7 +58,8 @@ export function Loading({ label = "Loading" }: { label?: string }) {
 
 export function LoadError({ message, onRetry }: { message?: string; onRetry: () => void }) {
   return (
-    <div className="py-16 text-center" role="alert">
+    <div className="flex flex-col items-center py-16 text-center" role="alert">
+      <Pip pose="sleepy" size={104} className="mb-3" />
       <p className="mb-4">{message ?? "Couldn't load this. Check your connection."}</p>
       <button type="button" className="btn btn-quiet" onClick={onRetry}>Try again</button>
     </div>

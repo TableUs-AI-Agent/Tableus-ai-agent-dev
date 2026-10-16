@@ -12,6 +12,8 @@ const display = Darker_Grotesque({
 const body = Figtree({ subsets: ["latin"], variable: "--font-figtree" });
 
 export const metadata: Metadata = {
+  // Shared plan links open on the link host, so previews resolve images against it.
+  metadataBase: new URL(process.env.NEXT_PUBLIC_LINK_ORIGIN ?? "https://links.table-us.com"),
   title: "TableUs: dinner, decided together",
   description:
     "Start a plan, share the link, and everyone says what they want. TableUs picks four nearby places that work for the whole group, then you vote.",

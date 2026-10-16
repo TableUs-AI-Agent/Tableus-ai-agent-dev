@@ -12,6 +12,7 @@ export default ({ config }: ConfigContext): ExpoConfig => {
     scheme: "tableus",
     version: "0.3.0",
     orientation: "portrait",
+    icon: "./assets/icon.png",
     userInterfaceStyle: "automatic",
     runtimeVersion: { policy: "appVersion" },
     updates: { enabled: false, checkAutomatically: "NEVER" },
@@ -25,6 +26,7 @@ export default ({ config }: ConfigContext): ExpoConfig => {
     },
     android: {
       package: "com.tableus.app",
+      adaptiveIcon: { foregroundImage: "./assets/adaptive-icon.png", backgroundColor: "#31C9FF" },
       intentFilters: [
         {
           action: "VIEW",

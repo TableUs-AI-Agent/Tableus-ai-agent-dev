@@ -8,6 +8,7 @@ import { useState, type FormEvent } from "react";
 
 import { AppShell, LoadError, Loading } from "../components/app-shell";
 import { GoogleMapsAttribution } from "../components/google-maps-attribution";
+import { Pip } from "../components/pip";
 import { api, errorMessage } from "../lib/api";
 import { useKeys, useMe } from "../lib/session";
 
@@ -38,7 +39,10 @@ function Plans() {
       <section aria-labelledby="list" className="mt-12">
         <h2 id="list" className="text-xl font-bold">All plans</h2>
         {plans.isPending ? <Loading /> : plans.isError ? <LoadError onRetry={() => plans.refetch()} /> : plans.data.length === 0 ? (
-          <p className="mt-3 text-moss">Nothing here yet. Plans you start or join show up here.</p>
+          <div className="mt-3 flex items-center gap-4">
+            <Pip pose="empty" size={88} />
+            <p className="text-moss">Nothing here yet. Plans you start or join show up here.</p>
+          </div>
         ) : (
           <ul className="mt-3 divide-y-2 divide-sage border-y-2 border-sage">
             {plans.data.map((plan) => (
