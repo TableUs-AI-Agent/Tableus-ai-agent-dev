@@ -39,3 +39,13 @@ prior log is in git history at `4a944e1`.
 - **Direct account deletion.** Deleting an account removes the profile, the
   Auth user and the user's own content in one request. App stores require
   this.
+
+## Art
+
+- **Pip is the mascot.** A plush moon that orbits the group's planet and
+  carries the picks, chosen by Brian on October 16, 2026. Pip marks moments
+  (sign-in, empty lists, finding picks, lock-in, invites, errors); controls
+  stay on system icons.
+- **Images come from GPT Image through the Codex CLI** signed in with Brian's
+  ChatGPT account, so there is no API key or per-image bill. Prompts and
+  masters live in `design/art/`.

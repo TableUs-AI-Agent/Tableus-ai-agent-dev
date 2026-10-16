@@ -8,6 +8,7 @@ import { useEffect, useRef, useState } from "react";
 import { AppShell, Initials, LoadError, Loading } from "../../components/app-shell";
 import { GoogleMapsAttribution } from "../../components/google-maps-attribution";
 import { PickCard } from "../../components/pick-card";
+import { Pip } from "../../components/pip";
 import { TableView } from "../../components/table-view";
 import { hasWishes, readWishes, WishesForm } from "../../components/wishes-form";
 import { api, errorMessage } from "../../lib/api";
@@ -168,7 +169,10 @@ function Collecting({ plan }: { plan: Plan }) {
       </section>
 
       <section aria-labelledby="suggest" className="mt-10 rounded-[20px] border-2 border-bottle bg-white p-5">
-        <h2 id="suggest" className="text-2xl font-bold">Ready when everyone is</h2>
+        <div className="flex items-start justify-between gap-3">
+          <h2 id="suggest" className="text-2xl font-bold">Ready when everyone is</h2>
+          <Pip pose="think" size={72} float={suggest.isPending} className="-my-2" />
+        </div>
         {enoughPeople ? (
           <>
             <p className="mt-1">Anyone can ask for suggestions once the group has added their wishes.</p>
@@ -276,7 +280,10 @@ function Decided({ plan }: { plan: Plan }) {
   const winner = plan.candidates.find((candidate) => candidate.id === plan.finalized_candidate_id);
   return (
     <section aria-labelledby="decided" className="mt-10">
-      <h2 id="decided" className="display text-5xl">You&apos;re going to</h2>
+      <div className="flex items-end justify-between gap-3">
+        <h2 id="decided" className="display text-5xl">You&apos;re going to</h2>
+        <Pip pose="cheer" size={104} className="-mb-3" />
+      </div>
       <div className="mt-4">
         {winner ? <PickCard id={`pick-${winner.id}`} candidate={winner} winner /> : <p>The chosen place couldn&apos;t be loaded.</p>}
         {winner?.place.data_provider === "google_maps" ? <GoogleMapsAttribution className="mt-2" /> : null}
@@ -312,7 +319,10 @@ function Invite({ plan, first = false }: { plan: Plan; first?: boolean }) {
 
   return (
     <section aria-labelledby="invite" className={first ? "mt-8 rounded-[20px] bg-bottle p-5 text-leaf" : "mt-12 border-t-2 border-sage pt-8"}>
-      <h2 id="invite" className={first ? "text-2xl font-bold" : "text-xl font-bold"}>{first ? "Send this link to the group" : "Invite people"}</h2>
+      <div className="flex items-start justify-between gap-3">
+        <h2 id="invite" className={first ? "text-2xl font-bold" : "text-xl font-bold"}>{first ? "Send this link to the group" : "Invite people"}</h2>
+        {first ? <Pip pose="invite" size={72} className="-my-2" /> : null}
+      </div>
       <p className={first ? "mt-1" : "mt-1 text-moss"}>Anyone with this link can join, up to eight people.</p>
       <div className="mt-3 flex gap-2">
         <input className="field min-w-0 flex-1 text-sm" readOnly value={url} aria-label="Plan link" onFocus={(e) => e.currentTarget.select()} />

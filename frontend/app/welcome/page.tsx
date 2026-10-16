@@ -45,7 +45,7 @@ function Welcome() {
   }
 
   return (
-    <SimplePage title="Hi there" intro="Two quick things so your friends know it's you.">
+    <SimplePage title="Hi there" pip="wave" intro="Two quick things so your friends know it's you.">
       <form onSubmit={save} className="space-y-6">
         <label className="block">
           <span className="mb-1 block font-semibold">Your name</span>

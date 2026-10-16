@@ -5,6 +5,7 @@ import { useEffect } from "react";
 import { RefreshControl, ScrollView, Text, View } from "react-native";
 
 import { Avatar, Body, Button, Card, ErrorText, Icon, PressScale } from "@/components/ui";
+import { Pip } from "@/components/pip";
 import { api, errorMessage } from "@/lib/api";
 import { pendingJoin } from "@/lib/links";
 import { useKeys, useMe } from "@/lib/session";
@@ -59,7 +60,10 @@ export default function Plans() {
             <Button kind="quiet" label="Try again" onPress={() => plans.refetch()} />
           </View>
         ) : plans.data?.length === 0 ? (
-          <Body muted>Nothing here yet. Plans you start or join show up here.</Body>
+          <View style={{ flexDirection: "row", alignItems: "center", gap: space.md }}>
+            <Pip pose="empty" size={88} />
+            <Body muted style={{ flex: 1 }}>Nothing here yet. Plans you start or join show up here.</Body>
+          </View>
         ) : (
           <View style={{ borderTopWidth: 2, borderColor: palette.border }}>
             {(plans.data ?? []).map((plan) => (

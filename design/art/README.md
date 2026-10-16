@@ -10,15 +10,15 @@ GPT Image through Brian's ChatGPT subscription, by way of the Codex CLI signed
 in with that account. No API key and no per-image bill.
 
 ```bash
-scripts/art.sh mascot-wave
+scripts/art.sh pip-wave
 ```
 
-`scripts/art.sh <name>` reads `design/art/prompts/<name>.txt`, prepends the
+`scripts/art.sh <name>` reads `design/art/prompts/<name>.txt`, adds the
 shared style in `design/art/prompts/_style.txt`, and saves the result to
-`design/art/source/<name>.png`. Run it with no name to list the prompts.
+`design/art/source/<name>.webp`. Run it with no name to list the prompts.
 
 If Codex can't run, paste the same two files into ChatGPT, download the image,
-and drop it in `design/art/inbox/` named after the prompt (`mascot-wave.png`).
+and drop it in `design/art/inbox/` named after the prompt (`pip-wave.png`).
 `scripts/art.sh --inbox` moves inbox files into `source/`.
 
 Curated images from elsewhere must allow commercial app use without per-use
@@ -27,28 +27,33 @@ and license in `design/art/CREDITS.md` when one is added.
 
 ## Mascot
 
-Four concepts are in `concepts/` (`mascot-concepts.jpg` shows them together).
-The recommendation is **Pip**, a small plush moon that orbits the group's
-planet and carries the pick cards. Pip is part of the 3D table's world rather
-than another guest at it: everyone else is an animal or fruit plush, and the
-picks already orbit the planet. Pip is Butter yellow, the color that already
-means "the chosen place". Bao, Olive and Toast are the alternatives. Brian
-picks.
+**Pip**, a small plush moon that orbits the group's planet and carries the
+pick cards. Pip belongs to the 3D table's world rather than being another
+guest at it: everyone else is an animal or fruit plush, and the picks already
+orbit the planet. Pip is Butter yellow, the color that already means "the
+chosen place". The other concepts (Bao, Olive, Toast) are in `concepts/`.
+
+Prompts that mention Pip are sent with `prompts/_pip-reference.jpg` so new
+poses stay on model. After generating, `python3 scripts/art_export.py` sizes
+everything into the apps.
 
 ## Where art goes
 
-| Asset | Web | Mobile |
+| Art | Web | Mobile |
 | --- | --- | --- |
-| Mascot waving | `/welcome`, `/signin` | `welcome`, `sign-in` |
-| Mascot thinking | Plan page while picks are found | `plan/[id]` while picks are found |
-| Mascot cheering | Lock-in celebration, over the 3D confetti | Same, through the embedded table |
-| Mascot holding a blank card | Empty plans list | Empty plans list on `index` |
-| Mascot sleepy | No places found, expired invite, errors | Same |
-| Mascot with an invite | `/join/[id]` | `join/[id]` |
-| App icon | Favicon and Apple touch icon | iOS icon, Android adaptive icon, splash |
-| Link preview image | Open Graph image for shared join links | n/a |
-| Spot icons (wishes, dietary, budget, distance, vote, lock in) | Landing "how it works", wish chips | Same moments |
-| Pip in 3D | Orbiting the planet, carrying the cards | Same, through the embedded table |
+| Pip waving | `/signin`, `/welcome` | `sign-in`, `welcome` |
+| Pip holding a blank card | Empty plans list | Empty plans list |
+| Pip thinking (bobs while picks are found) | "Ready when everyone is" card | Same card |
+| Pip with an invite | "Send this link" card, `/join` while joining, landing CTA | "Send this link" card, `join` before sign-in |
+| Pip cheering | "You're going to" after lock-in | Same |
+| Pip sleepy | Load errors, broken invite links | Load errors, broken or failed joins |
+| Spot icons (distance, wishes, vote) | Landing "How it works" | Not used |
+| App icon | Favicon and Apple touch icon | iOS icon, Android adaptive icon |
+| Link preview | Open Graph image for shared links | n/a |
+
+Also generated and ready, not yet used: spot icons for dietary, budget and
+lock-in. Ideas for later: Pip orbiting the planet in the 3D table, a splash
+screen.
 
 Restaurant photos on pick cards come from Google Places and are handled in
 their own change, not here.

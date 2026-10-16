@@ -80,6 +80,13 @@ body {
 }
 .chip[aria-pressed="true"] { border-color: var(--color-bottle); background: var(--color-bottle); color: var(--color-leaf); }
 
+/* Pip bobs in orbit while picks are found. */
+@keyframes pip-float {
+  0%, 100% { transform: translateY(0) rotate(-3deg); }
+  50% { transform: translateY(-8px) rotate(3deg); }
+}
+.pip-float { animation: pip-float 2.4s ease-in-out infinite; }
+
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: 0.01ms !important;

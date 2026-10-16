@@ -2,6 +2,7 @@ import { useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 import { KeyboardAvoidingView, View } from "react-native";
 
+import { Pip } from "@/components/pip";
 import { TasteField } from "@/components/taste-field";
 import { Body, Button, ErrorText, Field, Screen, Title } from "@/components/ui";
 import { api, errorMessage } from "@/lib/api";
@@ -31,7 +32,8 @@ export default function Welcome() {
   return (
     <KeyboardAvoidingView behavior={process.env.EXPO_OS === "ios" ? "padding" : undefined} style={{ flex: 1 }}>
       <Screen>
-        <View style={{ gap: space.sm, marginTop: space.xxl }}>
+        <View style={{ gap: space.sm, marginTop: space.xl }}>
+          <Pip pose="wave" size={112} />
           <Title size={56}>Hi there</Title>
           <Body muted>Two quick things so your friends know it’s you.</Body>
         </View>

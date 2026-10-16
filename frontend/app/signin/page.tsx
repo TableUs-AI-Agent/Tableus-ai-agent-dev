@@ -26,6 +26,7 @@ function SignIn() {
   return (
     <SimplePage
       title="Sign in"
+      pip="wave"
       intro={isSupabaseConfigured ? "We'll email you a sign-in code. No password needed." : undefined}
     >
       {isSupabaseConfigured ? (

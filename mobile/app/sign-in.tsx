@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { KeyboardAvoidingView, View } from "react-native";
 
+import { Pip } from "@/components/pip";
 import { Body, Button, ErrorText, Field, Screen, Title } from "@/components/ui";
 import { DEMO_PEOPLE } from "@/lib/api";
 import { useSession } from "@/lib/session";
@@ -11,7 +12,8 @@ export default function SignIn() {
   return (
     <KeyboardAvoidingView behavior={process.env.EXPO_OS === "ios" ? "padding" : undefined} style={{ flex: 1 }}>
       <Screen>
-        <View style={{ gap: space.sm, marginTop: space.xxl }}>
+        <View style={{ gap: space.sm, marginTop: space.xl }}>
+          <Pip pose="wave" size={112} />
           <Title size={64}>Dinner, decided.</Title>
           <Body muted>Share one link. Everyone says what they want. Get four places that work for the whole group.</Body>
         </View>

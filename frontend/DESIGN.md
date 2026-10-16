@@ -15,6 +15,14 @@ The 3D table keeps its original bright sky-blue and sunny-yellow colors; Brian
 prefers them to a muted version. If the palettes need to meet, change the app
 palette toward the scene, never the other way.
 
+## Pip
+
+Pip, the plush moon mascot, appears at moments, not on controls: sign-in and
+welcome (waving), empty plans (holding a blank card), finding picks (thinking,
+and it bobs while the request runs), lock-in (cheering), invites (holding an
+envelope) and errors (sleepy). One Pip per screen, beside the heading it
+belongs to. Art and how to make more is in `design/art/`.
+
 ## Tokens
 
 | Name | Hex | Use |
@@ -36,7 +44,8 @@ Figtree for everything else. Scale: 14 / 16 / 20 / 28 / 44 / 72 / 112.
 - Radius follows hierarchy: pills for wishes and chips, 20px for pick cards,
   8px for inputs and buttons. No shadow kit; pick cards get a 2px Bottle
   outline instead.
-- Butter marks the winner and your ranks. Nothing else is yellow.
+- Butter marks the winner and your ranks. Nothing else is yellow except Pip,
+  who carries the picks.
 - Motion beyond the two moments above only answers a tap.
   `prefers-reduced-motion` shows the end state.
 - App screens are a single centered column (max 36rem) built for phones first.
