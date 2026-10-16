@@ -8,6 +8,8 @@ export type Restaurant = {
   place_id?: string;
   name: string;
   photo_url?: string;
+  /** The viewer's ranking of this pick (0 = first choice), shown as a badge. */
+  rank?: number;
 };
 import {
   defaultLookFor,
@@ -92,6 +94,10 @@ type RestaurantCardHandle = {
   photoMaterial: THREE.MeshBasicMaterial;
   glossMaterial: THREE.MeshBasicMaterial;
   glowMaterial: THREE.MeshBasicMaterial;
+  badge: THREE.Mesh<THREE.CircleGeometry, THREE.MeshBasicMaterial>;
+  badgeCanvas: HTMLCanvasElement;
+  badgeRank: number | undefined;
+  badgePop: number;
   materials: THREE.Material[];
   slotIndex: number;
   slotCount: number;
@@ -1743,6 +1749,24 @@ function createRestaurantCard(
   hitArea.userData.restaurantId = id;
   cardBody.add(hitArea);
 
+  // The viewer's rank for this pick, pinned to the top corner like a sticker.
+  const badgeCanvas = document.createElement("canvas");
+  badgeCanvas.width = 128;
+  badgeCanvas.height = 128;
+  const badgeTexture = new THREE.CanvasTexture(badgeCanvas);
+  badgeTexture.colorSpace = THREE.SRGBColorSpace;
+  const badgeMaterial = new THREE.MeshBasicMaterial({
+    map: badgeTexture,
+    transparent: true,
+    opacity: 0,
+    depthWrite: false,
+  });
+  const badge = new THREE.Mesh(new THREE.CircleGeometry(0.15, 32), badgeMaterial);
+  badge.position.set(RESTAURANT_CARD_WIDTH / 2 - 0.04, RESTAURANT_CARD_HEIGHT / 2 - 0.04, 0.11);
+  badge.renderOrder = 5;
+  badge.visible = false;
+  cardBody.add(badge);
+
   const handle: RestaurantCardHandle = {
     id,
     restaurant,
@@ -1754,12 +1778,17 @@ function createRestaurantCard(
     photoMaterial,
     glossMaterial,
     glowMaterial,
+    badge,
+    badgeCanvas,
+    badgeRank: undefined,
+    badgePop: 0,
     materials: [
       frameMaterial,
       photoMaterial,
       glossMaterial,
       glowMaterial,
       hitMaterial,
+      badgeMaterial,
     ],
     slotIndex: index,
     slotCount: count,
@@ -1865,11 +1894,33 @@ function setCharacterOpacity(handle: CharacterHandle, opacity: number) {
   });
 }
 
+function drawRestaurantCardBadge(handle: RestaurantCardHandle, rank: number) {
+  const ctx = handle.badgeCanvas.getContext("2d");
+  if (!ctx) return;
+  const size = handle.badgeCanvas.width;
+  ctx.clearRect(0, 0, size, size);
+  ctx.beginPath();
+  ctx.arc(size / 2, size / 2, size / 2 - 4, 0, Math.PI * 2);
+  ctx.fillStyle = "#17301F";
+  ctx.fill();
+  ctx.beginPath();
+  ctx.arc(size / 2, size / 2, size / 2 - 14, 0, Math.PI * 2);
+  ctx.fillStyle = "#F4CF4A";
+  ctx.fill();
+  ctx.fillStyle = "#17301F";
+  ctx.font = `800 72px ${getComputedStyle(document.body).fontFamily || "sans-serif"}`;
+  ctx.textAlign = "center";
+  ctx.textBaseline = "middle";
+  ctx.fillText(String(rank + 1), size / 2, size / 2 + 4);
+  if (handle.badge.material.map) handle.badge.material.map.needsUpdate = true;
+}
+
 function setRestaurantCardOpacity(handle: RestaurantCardHandle, opacity: number) {
   handle.frameMaterial.opacity = opacity;
   handle.photoMaterial.opacity = opacity;
   handle.glossMaterial.opacity = opacity * 0.72;
   handle.glowMaterial.opacity = 0;
+  handle.badge.material.opacity = opacity;
   handle.hitArea.visible = opacity > 0.18 && !handle.exiting;
   handle.materials.forEach((material) => {
     material.transparent = true;
@@ -2336,7 +2387,9 @@ export function DiscoverTabletopScene({
       if (shouldPick) {
         pickRestaurant(event);
       }
-      updateHover();
+      // A finger leaves no hover behind, so only mice keep the hover lift.
+      if (event.pointerType === "mouse") updateHover();
+      else hoveredRestaurantId = null;
     };
 
     renderer.domElement.addEventListener("pointermove", handlePointerMove);
@@ -2459,8 +2512,19 @@ export function DiscoverTabletopScene({
         });
 
       restaurantCards.forEach((handle, id) => {
+        const rank = handle.restaurant.rank;
         if (!handle.exiting) {
-          handle.selected = id === selectedRestaurantIdRef.current;
+          handle.selected = id === selectedRestaurantIdRef.current || rank !== undefined;
+        }
+        if (rank !== handle.badgeRank) {
+          handle.badgeRank = rank;
+          handle.badgePop = reducedMotion ? 1 : 0;
+          if (rank !== undefined) drawRestaurantCardBadge(handle, rank);
+        }
+        handle.badge.visible = rank !== undefined && !handle.exiting;
+        if (handle.badge.visible) {
+          handle.badgePop = Math.min(1, handle.badgePop + delta * 4.5);
+          handle.badge.scale.setScalar(Math.max(0.01, easeOutBack(handle.badgePop)));
         }
 
         const revealIndex = restaurantRevealOrder.get(id) ?? handle.slotIndex;

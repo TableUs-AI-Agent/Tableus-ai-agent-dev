@@ -13,7 +13,7 @@ const WEB_URL = process.env.EXPO_PUBLIC_WEB_URL ?? "http://localhost:3000";
  * renders the scene and this view feeds it the plan (names and picks only).
  * If it can't load, the screen simply goes without it.
  */
-export function TableScene({ plan, onPick }: { plan: Plan; onPick?: (candidateId: string) => void }) {
+export function TableScene({ plan, ranking = [], onPick }: { plan: Plan; ranking?: string[]; onPick?: (candidateId: string) => void }) {
   const me = useMe();
   const searching = useIsMutating({ mutationKey: ["suggest", plan.id] }) > 0;
   const view = useRef<WebView>(null);
@@ -31,12 +31,13 @@ export function TableScene({ plan, onPick }: { plan: Plan; onPick?: (candidateId
         cuisine: candidate.place.cuisine,
         price_level: candidate.place.price_level,
         reasoning: candidate.reasoning,
+        rank: plan.status === "voting" && ranking.includes(candidate.id) ? ranking.indexOf(candidate.id) : undefined,
       })),
       chosenId: plan.finalized_candidate_id,
-      selectedId: plan.finalized_candidate_id ?? plan.my_vote?.[0] ?? null,
+      selectedId: plan.finalized_candidate_id,
       searching,
     },
-  }), [plan, me.data?.id, searching]);
+  }), [plan, ranking, me.data?.id, searching]);
 
   useEffect(() => {
     if (ready) view.current?.postMessage(message);

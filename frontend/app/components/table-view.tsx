@@ -25,7 +25,8 @@ const TabletopScene = dynamic(
 export type TableState = {
   people: { id: string; name: string }[];
   meId: string | null;
-  picks: CardPick[];
+  /** `rank` is the viewer's ranking of a pick while voting (0 = first choice). */
+  picks: (CardPick & { rank?: number })[];
   chosenId: string | null;
   selectedId: string | null;
   searching: boolean;
@@ -42,10 +43,11 @@ export function TableScene({ state, onPick, fade = true }: { state: TableState; 
   }, [peopleKey]);
   const picksKey = JSON.stringify([state.picks, state.chosenId]);
   const restaurants = useMemo(
-    () => (typeof document === "undefined" ? [] : (JSON.parse(picksKey)[0] as CardPick[]).map((pick) => ({
+    () => (typeof document === "undefined" ? [] : (JSON.parse(picksKey)[0] as TableState["picks"]).map((pick) => ({
       id: pick.id,
       name: pick.name,
       photo_url: pickCardImage(pick, pick.id === state.chosenId),
+      rank: pick.rank,
     }))),
     [picksKey, state.chosenId],
   );
@@ -65,9 +67,10 @@ export function TableScene({ state, onPick, fade = true }: { state: TableState; 
 
 /**
  * The plan's 3D table: everyone in the plan sits at it as a character, the
- * planet spins while picks are found, and the four picks orbit as cards.
+ * planet spins while picks are found, and the four picks orbit as cards. While
+ * voting, `ranking` badges the viewer's top three on the cards.
  */
-export function TableView({ plan, onPick }: { plan: Plan; onPick?: (candidateId: string) => void }) {
+export function TableView({ plan, ranking = [], onPick }: { plan: Plan; ranking?: string[]; onPick?: (candidateId: string) => void }) {
   const me = useMe();
   const searching = useIsMutating({ mutationKey: ["suggest", plan.id] }) > 0;
   const state = useMemo<TableState>(() => ({
@@ -79,11 +82,12 @@ export function TableView({ plan, onPick }: { plan: Plan; onPick?: (candidateId:
       cuisine: candidate.place.cuisine,
       price_level: candidate.place.price_level,
       reasoning: candidate.reasoning,
+      rank: plan.status === "voting" && ranking.includes(candidate.id) ? ranking.indexOf(candidate.id) : undefined,
     })),
     chosenId: plan.finalized_candidate_id,
-    selectedId: plan.finalized_candidate_id ?? plan.my_vote?.[0] ?? null,
+    selectedId: plan.finalized_candidate_id,
     searching,
-  }), [plan, me.data?.id, searching]);
+  }), [plan, ranking, me.data?.id, searching]);
 
   return (
     <div className="relative left-1/2 h-[360px] w-screen max-w-4xl -translate-x-1/2 [mask-image:linear-gradient(to_bottom,black_78%,transparent)] sm:h-[480px]">
