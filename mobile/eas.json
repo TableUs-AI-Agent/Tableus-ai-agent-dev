@@ -15,6 +15,23 @@
       "channel": "preview",
       "environment": "preview"
     },
+    "staging": {
+      "distribution": "internal",
+      "channel": "staging",
+      "environment": "preview",
+      "autoIncrement": true,
+      "env": {
+        "EXPO_PUBLIC_WEB_URL": "https://www.table-us.com",
+        "SENTRY_DISABLE_AUTO_UPLOAD": "true"
+      },
+      "android": {
+        "buildType": "apk"
+      }
+    },
+    "testflight": {
+      "extends": "staging",
+      "distribution": "store"
+    },
     "production": {
       "channel": "production",
       "environment": "production",
@@ -25,6 +42,11 @@
     "production": {
       "android": {
         "track": "internal"
+      }
+    },
+    "testflight": {
+      "ios": {
+        "appleTeamId": "6MHJN5V9UJ"
       }
     }
   }
