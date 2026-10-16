@@ -1,6 +1,6 @@
 """Free, offline providers for local development, tests and CI."""
 
-from .base import Diner, Place, Recommendation, ResolvedLocation
+from .base import Diner, Place, ProviderError, Recommendation, ResolvedLocation
 
 FIXTURE_LOCATION_ID = "fixture-location-boston"
 
@@ -70,6 +70,9 @@ class DeterministicPlacesProvider:
     async def get_places(self, place_ids: list[str]) -> list[Place]:
         by_id = {place.place_id: place for place in FIXTURE_PLACES}
         return [by_id[place_id] for place_id in place_ids if place_id in by_id]
+
+    async def photo_uri(self, photo_name: str) -> str:
+        raise ProviderError("Fixture places have no photos", kind="not_found")
 
 
 def _fit(place: Place, diners: list[Diner]) -> float:

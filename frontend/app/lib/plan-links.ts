@@ -21,3 +21,7 @@ export function mapsUrl(place: PlaceDetails): string {
 }
 
 export const price = (level: number) => "$".repeat(Math.max(1, Math.min(level, 4)));
+
+/** Place photos are API paths, so they load from the same API the app talks to. */
+export const photoUrl = (place: PlaceDetails, apiOrigin: string) =>
+  place.photo_url ? `${apiOrigin}${place.photo_url}` : null;

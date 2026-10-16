@@ -3,9 +3,11 @@ from datetime import UTC, datetime
 from typing import Literal, cast
 
 from fastapi import APIRouter, HTTPException
+from fastapi.responses import RedirectResponse
 from sqlalchemy import delete, func, select
 from sqlalchemy.ext.asyncio import AsyncSession
 
+from . import photos
 from .accounts import (
     confirm_sign_in_exists,
     hand_off_organized_plans,
@@ -30,6 +32,7 @@ from .schemas import (
     MeIn,
     MeOut,
     ParticipantOut,
+    PhotoCreditOut,
     PlaceOut,
     PlanCreated,
     PlanCreateIn,
@@ -120,6 +123,25 @@ async def resolve_location(body: LocationIn, profile: CurrentProfile):
         place_id=resolved.place_id, label=resolved.label,
         data_provider=cast(Literal["fixture", "google_maps"], resolved.data_provider),
     ))
+
+
+# ---- Place photos -----------------------------------------------------------
+
+
+@router.get("/place-photos", include_in_schema=False)
+async def place_photo(name: str, sig: str):
+    """Unauthenticated so image tags can load it; the signature limits it to
+    photos of places we already showed someone."""
+    if not photos.is_valid(name, sig):
+        raise HTTPException(status_code=404, detail="Photo not found")
+    try:
+        uri = await photos.photo_uri(name)
+    except ProviderError as exc:
+        raise HTTPException(status_code=404, detail="Photo not found") from exc
+    return RedirectResponse(
+        uri, status_code=302,
+        headers={"Cache-Control": f"public, max-age={photos.CACHE_SECONDS}"},
+    )
 
 
 # ---- Plans ------------------------------------------------------------------
@@ -218,10 +240,7 @@ async def _plan_out(
         candidates=[
             CandidateOut(
                 id=candidate.id,
-                place=PlaceOut(
-                    **{**places_by_id[candidate.place_id].__dict__,
-                       "features": list(places_by_id[candidate.place_id].features)}
-                ),
+                place=_place_out(places_by_id[candidate.place_id]),
                 match_score=candidate.match_score,
                 reasoning=candidate.reasoning,
                 rank=candidate.rank,
@@ -234,6 +253,18 @@ async def _plan_out(
         finalized_candidate_id=plan.finalized_candidate_id,
         created_at=plan.created_at,
         updated_at=plan.updated_at,
+    )
+
+
+def _place_out(place: Place) -> PlaceOut:
+    fields = {
+        key: value for key, value in place.__dict__.items()
+        if key not in {"photo_name", "photo_attributions"}
+    }
+    return PlaceOut(
+        **{**fields, "features": list(place.features)},
+        photo_url=photos.photo_path(place.photo_name),
+        photo_credits=[PhotoCreditOut(name=name, uri=uri) for name, uri in place.photo_attributions],
     )
 
 

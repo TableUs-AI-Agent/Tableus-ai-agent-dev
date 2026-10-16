@@ -16,6 +16,9 @@ class Place:
     summary: str = ""
     features: tuple[str, ...] = ()
     rating_count: int = 0
+    # Google's photo resource name and the (name, uri) pairs it must be shown with.
+    photo_name: str = ""
+    photo_attributions: tuple[tuple[str, str], ...] = ()
 
 
 @dataclass(frozen=True)
@@ -67,6 +70,8 @@ class PlacesProvider(Protocol):
     ) -> list[Place]: ...
 
     async def get_places(self, place_ids: list[str]) -> list[Place]: ...
+
+    async def photo_uri(self, photo_name: str) -> str: ...
 
 
 class AiProvider(Protocol):

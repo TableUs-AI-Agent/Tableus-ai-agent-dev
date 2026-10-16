@@ -393,6 +393,24 @@
         "title": "ParticipantOut",
         "type": "object"
       },
+      "PhotoCreditOut": {
+        "properties": {
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "uri": {
+            "default": "",
+            "title": "Uri",
+            "type": "string"
+          }
+        },
+        "required": [
+          "name"
+        ],
+        "title": "PhotoCreditOut",
+        "type": "object"
+      },
       "PlaceOut": {
         "properties": {
           "address": {
@@ -429,6 +447,24 @@
           "name": {
             "title": "Name",
             "type": "string"
+          },
+          "photo_credits": {
+            "items": {
+              "$ref": "#/components/schemas/PhotoCreditOut"
+            },
+            "title": "Photo Credits",
+            "type": "array"
+          },
+          "photo_url": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Photo Url"
           },
           "place_id": {
             "title": "Place Id",

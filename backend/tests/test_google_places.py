@@ -201,3 +201,49 @@ async def test_discover_reads_cuisine_summary_and_features_for_the_recommender()
     assert place.summary == "Cozy spot for curries and noodles."
     assert place.features == ("serves vegetarian food", "good for groups")
     assert place.rating_count == 812
+
+
+@pytest.mark.asyncio
+async def test_details_read_the_first_photo_and_its_credits() -> None:
+    item = restaurant("pic") | {
+        "photos": [
+            {
+                "name": "places/pic/photos/abc",
+                "authorAttributions": [
+                    {"displayName": "Ana", "uri": "//maps.google.com/maps/contrib/1"},
+                    {"displayName": "Bo", "uri": "javascript:alert(1)"},
+                ],
+            },
+            {"name": "places/pic/photos/second"},
+        ]
+    }
+    requests: list[httpx.Request] = []
+
+    def handler(request: httpx.Request) -> httpx.Response:
+        requests.append(request)
+        return httpx.Response(200, json=item)
+
+    [place] = await LivePlacesProvider("secret", httpx.MockTransport(handler)).get_places(["pic"])
+
+    assert "photos" in requests[0].headers["X-Goog-FieldMask"].split(",")
+    assert place.photo_name == "places/pic/photos/abc"
+    assert place.photo_attributions == (
+        ("Ana", "https://maps.google.com/maps/contrib/1"), ("Bo", ""),
+    )
+
+
+@pytest.mark.asyncio
+async def test_photo_uri_asks_for_a_key_free_url_without_following_the_redirect() -> None:
+    requests: list[httpx.Request] = []
+
+    def handler(request: httpx.Request) -> httpx.Response:
+        requests.append(request)
+        return httpx.Response(200, json={"photoUri": "https://lh3.googleusercontent.com/x"})
+
+    provider = LivePlacesProvider("secret", httpx.MockTransport(handler))
+    uri = await provider.photo_uri("places/pic/photos/abc")
+
+    assert uri == "https://lh3.googleusercontent.com/x"
+    assert requests[0].url.path == "/v1/places/pic/photos/abc/media"
+    assert requests[0].url.params["skipHttpRedirect"] == "true"
+    assert "X-Goog-FieldMask" not in requests[0].headers
