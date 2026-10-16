@@ -9,7 +9,8 @@
       "codex/claude-code-migration": false,
       "main": false,
       "codex/project-reset": false,
-      "codex/friends-test-readiness": false
+      "codex/friends-test-readiness": false,
+      "codex/ci-usage-trim": false
     }
   },
   "framework": "nextjs",

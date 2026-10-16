@@ -26,6 +26,9 @@ prior log is in git history at `4a944e1`.
   output. This prevents invented restaurants.
 - **Deterministic providers locally and in CI.** Live Places and Gemini cost
   money and run only with Brian's OK.
+- **CI on ready PRs only** (Oct 16, 2026). One job runs the full check when a
+  PR is marked ready and on later pushes; drafts and docs-only changes skip it.
+  Several agents push draft PRs at once, so per-push CI was mostly noise.
 - **Simple safeguards.** A per-user rate limit and a Google Cloud budget alert
   replace the quota, budget and replay layers.
 - **Direct account deletion.** Deleting an account removes the profile, the
