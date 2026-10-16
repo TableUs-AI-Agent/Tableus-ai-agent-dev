@@ -8,7 +8,8 @@
       "codex/mobile-signup-recovery": false,
       "codex/claude-code-migration": false,
       "main": false,
-      "codex/project-reset": false
+      "codex/project-reset": false,
+      "codex/friends-test-readiness": false
     }
   },
   "framework": "nextjs",

@@ -15,7 +15,11 @@ export default defineConfig({
     trace: "retain-on-failure",
     storageState: process.env.PLAYWRIGHT_AUTH_STORAGE || undefined,
   },
-  projects: [{ name: "chromium", use: { ...devices["Desktop Chrome"] } }],
+  projects: [
+    { name: "chromium", use: { ...devices["Desktop Chrome"] }, testIgnore: /phone-/ },
+    { name: "android-chrome", use: { ...devices["Pixel 7"] }, testMatch: /phone-/ },
+    { name: "iphone-safari", use: { ...devices["iPhone 15"] }, testMatch: /phone-/ },
+  ],
   webServer: externalBaseUrl ? undefined : [
     {
       command: "backend/.venv/bin/uvicorn main:app --app-dir backend --host 127.0.0.1 --port 8000",

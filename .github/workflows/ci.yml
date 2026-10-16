@@ -80,7 +80,7 @@ jobs:
         working-directory: backend
       - run: npm run contract:check
       - run: npm run build
-      - run: npx playwright install --with-deps chromium
+      - run: npx playwright install --with-deps chromium webkit
       - run: npm run test:e2e
       - run: uv run python scripts/smoke.py
         working-directory: backend
