@@ -44,6 +44,29 @@ function usePlan(id: string) {
   return plan;
 }
 
+/** Adds a pick to the end of the ranking, or takes it out if it's already there. */
+function toggleRanking(ranking: string[], candidateId: string): string[] {
+  if (ranking.includes(candidateId)) return ranking.filter((value) => value !== candidateId);
+  return ranking.length < 3 ? [...ranking, candidateId] : ranking;
+}
+
+/**
+ * The viewer's unsaved top three, shared by the table and the list. It starts
+ * from their saved vote and starts over whenever the picks or plan status change.
+ */
+function useRanking(plan: Plan | undefined) {
+  const key = plan ? `${plan.status}:${plan.candidates.map((item) => item.id).join()}` : "";
+  const saved = plan?.my_vote ?? [];
+  const [draft, setDraft] = useState<{ key: string; ranking: string[] } | null>(null);
+  const ranking = draft?.key === key ? draft.ranking : saved;
+  // Taps on the table can arrive faster than renders, so toggle from the latest draft.
+  const toggle = (candidateId: string) => setDraft((current) => ({
+    key,
+    ranking: toggleRanking(current?.key === key ? current.ranking : saved, candidateId),
+  }));
+  return [ranking, toggle] as const;
+}
+
 function useUpdate(id: string) {
   const keys = useKeys();
   const queryClient = useQueryClient();
@@ -56,6 +79,7 @@ function useUpdate(id: string) {
 function PlanView() {
   const { id } = useParams<{ id: string }>();
   const plan = usePlan(id);
+  const [ranking, toggle] = useRanking(plan.data);
   if (plan.isPending) return <Loading label="Loading plan" />;
   if (plan.isError) return <LoadError message={errorMessage(plan.error)} onRetry={() => plan.refetch()} />;
   const data = plan.data;
@@ -68,12 +92,15 @@ function PlanView() {
       </header>
       <TableView
         plan={data}
-        onPick={(candidateId) => document.getElementById(`pick-${candidateId}`)?.scrollIntoView({ behavior: "smooth", block: "center" })}
+        ranking={ranking}
+        onPick={(candidateId) => data.status === "voting"
+          ? toggle(candidateId)
+          : document.getElementById(`pick-${candidateId}`)?.scrollIntoView({ behavior: "smooth", block: "center" })}
       />
       <People plan={data} />
       {data.participants.length < 2 ? <Invite plan={data} first /> : null}
       {data.status === "collecting" ? <Collecting plan={data} /> : null}
-      {data.status === "voting" ? <Voting key={data.candidates.map((item) => item.id).join()} plan={data} /> : null}
+      {data.status === "voting" ? <Voting plan={data} ranking={ranking} onToggle={toggle} /> : null}
       {data.status === "finalized" ? <Decided plan={data} /> : null}
       {data.status !== "finalized" && data.participants.length >= 2 && data.participants.length < 8 ? <Invite plan={data} /> : null}
       {data.viewer_is_organizer ? <DeletePlan plan={data} /> : null}
@@ -162,9 +189,8 @@ function Collecting({ plan }: { plan: Plan }) {
   );
 }
 
-function Voting({ plan }: { plan: Plan }) {
+function Voting({ plan, ranking, onToggle }: { plan: Plan; ranking: string[]; onToggle: (candidateId: string) => void }) {
   const update = useUpdate(plan.id);
-  const [ranking, setRanking] = useState<string[]>(plan.my_vote ?? []);
   const [editing, setEditing] = useState(false);
   const vote = useMutation({ mutationFn: () => api.vote(plan.id, ranking), onSuccess: update });
   const finalize = useMutation({
@@ -179,17 +205,11 @@ function Voting({ plan }: { plan: Plan }) {
   const voters = plan.participants.filter((person) => person.has_voted).length;
   const leader = [...plan.candidates].sort((a, b) => b.vote_score - a.vote_score || a.rank - b.rank)[0];
 
-  function toggle(candidateId: string) {
-    setRanking((current) => current.includes(candidateId)
-      ? current.filter((value) => value !== candidateId)
-      : current.length < 3 ? [...current, candidateId] : current);
-  }
-
   return (
     <>
       <section aria-labelledby="picks" className="mt-10">
         <h2 id="picks" className="text-2xl font-bold">Rank your top three</h2>
-        <p className="mb-5 mt-1 text-moss">Tap in order of preference. Tap again to undo.</p>
+        <p className="mb-5 mt-1 text-moss">Tap in order of preference, here or on the table. Tap again to undo.</p>
         <div className="space-y-4">
           {plan.candidates.map((candidate) => {
             const position = ranking.indexOf(candidate.id);
@@ -199,7 +219,7 @@ function Voting({ plan }: { plan: Plan }) {
                 id={`pick-${candidate.id}`}
                 candidate={candidate}
                 rank={position >= 0 ? position : undefined}
-                onToggle={() => toggle(candidate.id)}
+                onToggle={() => onToggle(candidate.id)}
               />
             );
           })}

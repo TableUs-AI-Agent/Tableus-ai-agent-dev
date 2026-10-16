@@ -38,10 +38,34 @@ function usePlan(id: string) {
   return plan;
 }
 
+/** Adds a pick to the end of the ranking, or takes it out if it's already there. */
+function toggleRanking(ranking: string[], candidateId: string): string[] {
+  if (ranking.includes(candidateId)) return ranking.filter((value) => value !== candidateId);
+  return ranking.length < 3 ? [...ranking, candidateId] : ranking;
+}
+
+/**
+ * The viewer's unsaved top three, shared by the table and the list. It starts
+ * from their saved vote and starts over whenever the picks or plan status change.
+ */
+function useRanking(plan: Plan | undefined) {
+  const key = plan ? `${plan.status}:${plan.candidates.map((item) => item.id).join()}` : "";
+  const saved = plan?.my_vote ?? [];
+  const [draft, setDraft] = useState<{ key: string; ranking: string[] } | null>(null);
+  const ranking = draft?.key === key ? draft.ranking : saved;
+  // Taps on the table can arrive faster than renders, so toggle from the latest draft.
+  const toggle = (candidateId: string) => setDraft((current) => ({
+    key,
+    ranking: toggleRanking(current?.key === key ? current.ranking : saved, candidateId),
+  }));
+  return [ranking, toggle] as const;
+}
+
 export default function PlanScreen() {
   const { id } = useLocalSearchParams<{ id: string }>();
   const palette = usePalette();
   const plan = usePlan(id);
+  const [ranking, toggle] = useRanking(plan.data);
 
   if (plan.isPending) return <Centered><ActivityIndicator color={palette.text} /></Centered>;
   if (plan.isError) {
@@ -66,11 +90,18 @@ export default function PlanScreen() {
           <Title>{data.title}</Title>
           <Body muted>{data.location_label}</Body>
         </View>
-        <TableScene plan={data} />
+        <TableScene
+          plan={data}
+          ranking={ranking}
+          onPick={data.status === "voting" ? (candidateId) => {
+            Haptics.selectionAsync();
+            toggle(candidateId);
+          } : undefined}
+        />
         <People plan={data} />
         {data.participants.length < 2 ? <InviteCard plan={data} /> : null}
         {data.status === "collecting" ? <Collecting plan={data} /> : null}
-        {data.status === "voting" ? <Voting key={data.candidates.map((item) => item.id).join()} plan={data} /> : null}
+        {data.status === "voting" ? <Voting plan={data} ranking={ranking} onToggle={toggle} /> : null}
         {data.status === "finalized" ? <Decided plan={data} /> : null}
         {data.viewer_is_organizer ? <OrganizerTools plan={data} /> : null}
       </ScrollView>
@@ -170,10 +201,9 @@ function Collecting({ plan }: { plan: Plan }) {
   );
 }
 
-function Voting({ plan }: { plan: Plan }) {
+function Voting({ plan, ranking, onToggle }: { plan: Plan; ranking: string[]; onToggle: (candidateId: string) => void }) {
   const router = useRouter();
   const update = useUpdate(plan.id);
-  const [ranking, setRanking] = useState<string[]>(plan.my_vote ?? []);
   const vote = useMutation({
     mutationFn: () => api.vote(plan.id, ranking),
     onSuccess: (next) => {
@@ -186,20 +216,16 @@ function Voting({ plan }: { plan: Plan }) {
   const voters = plan.participants.filter((person) => person.has_voted).length;
   const leader = [...plan.candidates].sort((a, b) => b.vote_score - a.vote_score || a.rank - b.rank)[0];
 
-  const toggle = (candidateId: string) => setRanking((current) =>
-    current.includes(candidateId) ? current.filter((value) => value !== candidateId)
-      : current.length < 3 ? [...current, candidateId] : current);
-
   return (
     <>
       <View style={{ gap: space.sm }}>
         <Heading>Rank your top three</Heading>
-        <Body muted>Tap in order of preference. Tap again to undo.</Body>
+        <Body muted>Tap in order of preference, here or on the table. Tap again to undo.</Body>
       </View>
       <View style={{ gap: space.md }}>
         {plan.candidates.map((candidate) => {
           const position = ranking.indexOf(candidate.id);
-          return <PickCard key={candidate.id} candidate={candidate} rank={position >= 0 ? position : undefined} onToggle={() => toggle(candidate.id)} />;
+          return <PickCard key={candidate.id} candidate={candidate} rank={position >= 0 ? position : undefined} onToggle={() => onToggle(candidate.id)} />;
         })}
       </View>
       {vote.isError ? <ErrorText>{errorMessage(vote.error)}</ErrorText> : null}
