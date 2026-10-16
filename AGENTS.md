@@ -22,6 +22,10 @@ durable choices. Update them in the same change when they stop being true.
 - Local and CI runs use the deterministic providers. Live Google Places or
   Gemini calls cost money and need Brian's OK.
 - Run `make ready` before asking for review.
+- CI skips draft PRs and docs-only changes, and runs when a PR is marked ready.
+  Verify locally while drafting, batch commits and push at checkpoints, and
+  don't push or re-run CI just to see it pass. When a draft needs hosted proof,
+  run `gh workflow run CI --ref <branch>` once.
 
 ## Brian decides
 

@@ -1,7 +1,15 @@
 name: CI
 
+# Draft PRs and docs-only changes skip CI. Marking a PR ready runs it; run it
+# on a draft with `gh workflow run CI --ref <branch>` when you need hosted proof.
 on:
   pull_request:
+    types: [opened, synchronize, reopened, ready_for_review]
+    paths:
+      - "**"
+      - "!**/*.md"
+      - "!docs/**"
+      - "docs/openapi.json"
   merge_group:
   workflow_dispatch:
 
@@ -12,8 +20,9 @@ concurrency:
 jobs:
   readiness:
     name: ci
+    if: github.event_name != 'pull_request' || !github.event.pull_request.draft
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 15
     services:
       postgres:
         image: postgres:17@sha256:67f41722b7a8cbdb868a44a4995c846eddfdc2973bccb291ce937dce88ad5675
