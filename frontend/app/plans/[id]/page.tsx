@@ -196,7 +196,7 @@ function Collecting({ plan }: { plan: Plan }) {
 function Voting({ plan, ranking, onToggle }: { plan: Plan; ranking: string[]; onToggle: (candidateId: string) => void }) {
   const update = useUpdate(plan.id);
   const [editing, setEditing] = useState(false);
-  const vote = useMutation({ mutationFn: () => api.vote(plan.id, ranking), onSuccess: update });
+  const vote = useMutation({ mutationFn: (next: string[]) => api.vote(plan.id, next), onSuccess: update });
   const finalize = useMutation({
     mutationFn: () => api.finalize(plan.id),
     onSuccess: (next) => {
@@ -205,7 +205,16 @@ function Voting({ plan, ranking, onToggle }: { plan: Plan; ranking: string[]; on
       window.scrollTo({ top: 0, behavior: "smooth" });
     },
   });
-  const saved = JSON.stringify(ranking) === JSON.stringify(plan.my_vote ?? []);
+  const rankingKey = JSON.stringify(ranking);
+  const saved = rankingKey === JSON.stringify(plan.my_vote ?? []);
+  // A full top three saves itself, so taps on the table count without a second step.
+  // A failed save waits for a retry or a new tap instead of looping.
+  const failedThis = vote.isError && JSON.stringify(vote.variables) === rankingKey;
+  const saveNow = ranking.length === 3 && !saved && !vote.isPending && !failedThis;
+  const { mutate } = vote;
+  useEffect(() => {
+    if (saveNow) mutate(JSON.parse(rankingKey) as string[]);
+  }, [saveNow, rankingKey, mutate]);
   const voters = plan.participants.filter((person) => person.has_voted).length;
   const leader = [...plan.candidates].sort((a, b) => b.vote_score - a.vote_score || a.rank - b.rank)[0];
 
@@ -213,7 +222,7 @@ function Voting({ plan, ranking, onToggle }: { plan: Plan; ranking: string[]; on
     <>
       <section aria-labelledby="picks" className="mt-10">
         <h2 id="picks" className="text-2xl font-bold">Rank your top three</h2>
-        <p className="mb-5 mt-1 text-moss">Tap in order of preference, here or on the table. Tap again to undo.</p>
+        <p className="mb-5 mt-1 text-moss">Tap in order of preference, here or on the table. Your vote saves once you pick three. Tap again to undo.</p>
         <div className="space-y-4">
           {plan.candidates.map((candidate) => {
             const position = ranking.indexOf(candidate.id);
@@ -230,19 +239,12 @@ function Voting({ plan, ranking, onToggle }: { plan: Plan; ranking: string[]; on
         </div>
         {plan.candidates.some((candidate) => candidate.place.data_provider === "google_maps") ? <GoogleMapsAttribution className="mt-2" /> : null}
         {vote.isError ? <p role="alert" className="mt-3 text-radicchio">{errorMessage(vote.error)}</p> : null}
-        {saved && ranking.length === 3 ? (
-          <p role="status" className="mt-5 rounded-lg border-2 border-bottle bg-white p-3 text-center font-semibold">
-            Vote saved. Tap the picks to change it.
-          </p>
+        {failedThis ? (
+          <button type="button" className="btn btn-primary mt-5 w-full" onClick={() => vote.mutate(ranking)}>Try saving again</button>
         ) : (
-          <button
-            type="button"
-            className="btn btn-primary mt-5 w-full"
-            disabled={ranking.length !== 3 || vote.isPending}
-            onClick={() => vote.mutate()}
-          >
-            {vote.isPending ? "Saving…" : ranking.length === 3 ? "Save my vote" : `Pick ${3 - ranking.length} more`}
-          </button>
+          <p role="status" className="mt-5 rounded-lg border-2 border-bottle bg-white p-3 text-center font-semibold">
+            {ranking.length < 3 ? `Pick ${3 - ranking.length} more` : saved ? "Vote saved. Tap the picks to change it." : "Saving your vote…"}
+          </p>
         )}
       </section>
 
