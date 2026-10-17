@@ -213,14 +213,23 @@ function Voting({ plan, ranking, onToggle }: { plan: Plan; ranking: string[]; on
   const router = useRouter();
   const update = useUpdate(plan.id);
   const vote = useMutation({
-    mutationFn: () => api.vote(plan.id, ranking),
+    mutationFn: (next: string[]) => api.vote(plan.id, next),
     onSuccess: (next) => {
       Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
       update(next);
     },
   });
   const finalize = useMutation({ mutationFn: () => api.finalize(plan.id), onSuccess: update });
-  const saved = ranking.length === 3 && JSON.stringify(ranking) === JSON.stringify(plan.my_vote ?? []);
+  const rankingKey = JSON.stringify(ranking);
+  const saved = ranking.length === 3 && rankingKey === JSON.stringify(plan.my_vote ?? []);
+  // A full top three saves itself, so taps on the table count without a second step.
+  // A failed save waits for a retry or a new tap instead of looping.
+  const failedThis = vote.isError && JSON.stringify(vote.variables) === rankingKey;
+  const saveNow = ranking.length === 3 && !saved && !vote.isPending && !failedThis;
+  const { mutate } = vote;
+  useEffect(() => {
+    if (saveNow) mutate(JSON.parse(rankingKey) as string[]);
+  }, [saveNow, rankingKey, mutate]);
   const voters = plan.participants.filter((person) => person.has_voted).length;
   const leader = [...plan.candidates].sort((a, b) => b.vote_score - a.vote_score || a.rank - b.rank)[0];
 
@@ -228,7 +237,7 @@ function Voting({ plan, ranking, onToggle }: { plan: Plan; ranking: string[]; on
     <>
       <View style={{ gap: space.sm }}>
         <Heading>Rank your top three</Heading>
-        <Body muted>Tap in order of preference, here or on the table. Tap again to undo.</Body>
+        <Body muted>Tap in order of preference, here or on the table. Your vote saves once you pick three. Tap again to undo.</Body>
       </View>
       <View style={{ gap: space.md }}>
         {plan.candidates.map((candidate) => {
@@ -237,15 +246,12 @@ function Voting({ plan, ranking, onToggle }: { plan: Plan; ranking: string[]; on
         })}
       </View>
       {vote.isError ? <ErrorText>{errorMessage(vote.error)}</ErrorText> : null}
-      {saved ? (
-        <Body style={{ textAlign: "center", fontWeight: "600" }}>Vote saved. Tap the picks to change it.</Body>
+      {failedThis ? (
+        <Button label="Try saving again" onPress={() => vote.mutate(ranking)} />
       ) : (
-        <Button
-          label={ranking.length === 3 ? "Save my vote" : `Pick ${3 - ranking.length} more`}
-          disabled={ranking.length !== 3}
-          busy={vote.isPending}
-          onPress={() => vote.mutate()}
-        />
+        <Body style={{ textAlign: "center", fontWeight: "600" }}>
+          {ranking.length < 3 ? `Pick ${3 - ranking.length} more` : saved ? "Vote saved. Tap the picks to change it." : "Saving your vote…"}
+        </Body>
       )}
       {plan.viewer_is_organizer && leader ? (
         <Card emphasis="outlined">

@@ -14,7 +14,8 @@
       "codex/table-tap-vote": false,
       "codex/place-photos": false,
       "codex/mascot-and-art": false,
-      "codex/staging-phone-builds": false
+      "codex/staging-phone-builds": false,
+      "codex/autosave-vote": false
     }
   },
   "framework": "nextjs",

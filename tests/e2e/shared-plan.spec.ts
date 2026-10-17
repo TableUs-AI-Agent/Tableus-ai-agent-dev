@@ -44,7 +44,6 @@ test("two people pick a restaurant together", async ({ page }) => {
   const picks = page.locator("button[aria-pressed]").filter({ hasText: "stars" });
   await expect(picks).toHaveCount(4);
   for (const index of [0, 1, 2]) await picks.nth(index).click();
-  await page.getByRole("button", { name: "Save my vote" }).click();
   await expect(page.getByText("Vote saved.")).toBeVisible();
 
   await page.getByRole("button", { name: /^Go with / }).click();
