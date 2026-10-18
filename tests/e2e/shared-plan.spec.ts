@@ -11,39 +11,30 @@ async function signInAs(page: Page, name: "Demo Organizer" | "Demo Guest") {
 /**
  * Finds the pick cards on the 3D table by hovering over the canvas and watching
  * for the pointer cursor, which the scene shows over a card. Once picks are in,
- * the cards hold still side by side, so a sweep across their middle finds each
- * one. Returns a point in the middle of each card, left to right.
+ * the four cards hold still side by side, evenly spaced, so the row they make is
+ * split into four. Returns a point in the middle of each card, left to right.
  */
 async function tableCardPoints(page: Page) {
   const canvas = page.locator('[aria-label^="Animated tabletop scene"] canvas');
-  await expect(canvas).toBeVisible();
+  // The table only animates while it's on screen.
+  await canvas.scrollIntoViewIfNeeded();
   const points = await canvas.evaluate((element: HTMLCanvasElement) => {
     const rect = element.getBoundingClientRect();
-    const onCard = (x: number, y: number) => {
-      element.dispatchEvent(new PointerEvent("pointermove", { clientX: rect.left + x, clientY: rect.top + y, pointerType: "mouse", bubbles: true }));
-      return element.style.cursor === "pointer";
-    };
-    // A coarse pass finds the height the cards sit at.
-    const heights: number[] = [];
+    const hits: { x: number; y: number }[] = [];
     for (let y = 4; y < rect.height; y += 8) {
-      for (let x = 4; x < rect.width; x += 8) if (onCard(x, y)) heights.push(y);
-    }
-    const cards: { x: number; y: number }[] = [];
-    if (heights.length) {
-      // A fine pass along that height splits the row into cards at the gaps between them.
-      const y = heights.reduce((sum, value) => sum + value, 0) / heights.length;
-      let start: number | null = null;
-      for (let x = 0; x <= rect.width; x += 2) {
-        const hit = x < rect.width && onCard(x, y);
-        if (hit && start === null) start = x;
-        if (!hit && start !== null) {
-          if (x - start >= 12) cards.push({ x: (start + x) / 2, y });
-          start = null;
-        }
+      for (let x = 4; x < rect.width; x += 8) {
+        element.dispatchEvent(new PointerEvent("pointermove", { clientX: rect.left + x, clientY: rect.top + y, pointerType: "mouse", bubbles: true }));
+        if (element.style.cursor === "pointer") hits.push({ x, y });
       }
     }
     element.dispatchEvent(new PointerEvent("pointerleave", { bubbles: true }));
-    return cards;
+    if (!hits.length) return [];
+    const y = hits.reduce((sum, hit) => sum + hit.y, 0) / hits.length;
+    const left = Math.min(...hits.map((hit) => hit.x));
+    const width = Math.max(...hits.map((hit) => hit.x)) - left;
+    // Until all four cards are dealt the row is short, so report nothing and let the caller retry.
+    if (width < rect.width * 0.3) return [];
+    return [0, 1, 2, 3].map((index) => ({ x: left + ((index + 0.5) * width) / 4, y }));
   });
   return { canvas, points };
 }
