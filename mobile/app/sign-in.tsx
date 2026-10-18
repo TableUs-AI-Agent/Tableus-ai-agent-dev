@@ -1,9 +1,9 @@
 import { Image } from "expo-image";
-import type { SFSymbol } from "expo-symbols";
 import { useState } from "react";
 import { KeyboardAvoidingView, ScrollView, Text, useWindowDimensions, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
+import { SpotTile, type Spot } from "@/components/art";
 import { Body, Button, ErrorText, Field, Footnote, IconTile, Title } from "@/components/ui";
 import { DEMO_PEOPLE } from "@/lib/api";
 import { useSession } from "@/lib/session";
@@ -13,10 +13,12 @@ import { space, tiles, usePalette } from "@/theme";
 const HERO = require("../assets/art/hero-table.webp");
 const HERO_SKY = "#B4E9FD";
 
-const STEPS: { icon: SFSymbol; tint: string; title: string; detail: string }[] = [
-  { icon: "link", tint: tiles.sky, title: "Share one link", detail: "Friends join from a text. No app needed on the web." },
-  { icon: "text.bubble.fill", tint: tiles.radicchio, title: "Everyone says what they want", detail: "Cravings, budget, allergies, in plain words." },
-  { icon: "fork.knife", tint: tiles.bottle, title: "Get four places that fit", detail: "Real spots nearby, each with the reason it works." },
+// The explainer uses the plush spot art, so the first screen shows the world the app lives in.
+const STEPS: { spot: Spot; title: string; detail: string }[] = [
+  { spot: "invite", title: "Share one link", detail: "Friends join from a text. No app needed on the web." },
+  { spot: "wishes", title: "Everyone says what they want", detail: "Cravings, budget, allergies, in plain words." },
+  { spot: "distance", title: "Get four places that fit", detail: "Real spots nearby, each with the reason it works." },
+  { spot: "vote", title: "Vote and lock it in", detail: "Tap your top three. The organizer makes it official." },
 ];
 
 export default function SignIn() {
@@ -49,7 +51,7 @@ export default function SignIn() {
               <View style={{ gap: space.md }}>
                 {STEPS.map((item) => (
                   <View key={item.title} style={{ flexDirection: "row", gap: space.md, alignItems: "center" }}>
-                    <IconTile name={item.icon} color={item.tint} size={40} />
+                    <SpotTile spot={item.spot} size={48} />
                     <View style={{ flex: 1, gap: 2 }}>
                       <Text style={{ fontSize: 16, fontWeight: "600", color: palette.text }}>{item.title}</Text>
                       <Text style={{ fontSize: 14, lineHeight: 19, color: palette.secondary }}>{item.detail}</Text>
