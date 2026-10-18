@@ -26,7 +26,8 @@ Five real groups use TableUs to pick a real dinner, and say they'd use it again.
    real-app references were pulled yet; check the screens against them once
    either is connected. Still to check: Dynamic Type XL and Android.
 5. **Friends test.** Deploy to staging and invite five groups Brian knows. Learn
-   what works from conversations and plain database counts.
+   what works from conversations, plain database counts, Sentry errors and a
+   PostHog funnel of plan steps.
 
 ## Later, only if the friends test earns it
 

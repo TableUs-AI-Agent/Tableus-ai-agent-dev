@@ -1,9 +1,11 @@
+import json
+
 import pytest
 from httpx import ASGITransport, AsyncClient
 from sqlalchemy import func, select
 
 from main import app
-from tableus import limits
+from tableus import limits, telemetry
 from tableus.config import get_settings
 from tableus.db import SessionFactory, init_database
 from tableus.models import Plan, PlanParticipant, Profile
@@ -409,3 +411,38 @@ async def test_fixture_places_have_no_photo_link(client: AsyncClient) -> None:
     place = response.json()["data"]["candidates"][0]["place"]
     assert place["photo_url"] is None
     assert place["photo_credits"] == []
+
+
+async def test_plan_flow_sends_anonymous_counts_only_when_configured(
+    client: AsyncClient, monkeypatch
+) -> None:
+    sent: list[dict] = []
+    monkeypatch.setattr(telemetry, "_dispatch", lambda host, payload: sent.append(payload))
+
+    await new_plan(client)
+    assert sent == []
+
+    monkeypatch.setattr(get_settings(), "posthog_project_key", "phc_test")
+    created = await new_plan(client, title="Ana's birthday")
+    plan_id = created["plan"]["id"]
+    await join(client, created, "demo-guest")
+    url = f"/api/v1/plans/{plan_id}"
+    await client.patch(
+        f"{url}/constraints", headers=as_user("demo-guest"), json={"notes": "near Ana's place"}
+    )
+    picks = await client.post(
+        f"{url}/recommendations", headers=as_user("demo-organizer"), json={"query": "ramen"}
+    )
+    ids = [item["id"] for item in picks.json()["data"]["candidates"][:3]]
+    await client.put(f"{url}/vote", headers=as_user("demo-guest"), json={"ranking": ids})
+    await client.post(f"{url}/finalize", headers=as_user("demo-organizer"), json={})
+
+    assert [item["event"] for item in sent] == [
+        "plan_started", "friend_joined", "picks_shown", "vote_cast", "plan_locked",
+    ]
+    assert {item["distinct_id"] for item in sent} == {sent[0]["distinct_id"]}
+    assert sent[1]["properties"]["people"] == 2
+    assert sent[4]["properties"]["votes"] == 1
+    raw = json.dumps(sent)
+    for private in (plan_id, "Ana", "ramen", "demo-guest", "demo-organizer", "@"):
+        assert private not in raw

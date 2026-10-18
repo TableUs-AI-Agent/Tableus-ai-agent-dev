@@ -3,7 +3,6 @@
 import uuid
 from contextlib import asynccontextmanager
 
-import sentry_sdk
 from fastapi import FastAPI, HTTPException, Request
 from fastapi.exceptions import RequestValidationError
 from fastapi.middleware.cors import CORSMiddleware
@@ -13,16 +12,10 @@ from sqlalchemy import text
 from tableus.api import router
 from tableus.config import get_settings
 from tableus.db import SessionFactory, init_database
+from tableus.telemetry import init_sentry
 
 settings = get_settings()
-if settings.sentry_dsn:
-    sentry_sdk.init(
-        dsn=settings.sentry_dsn,
-        environment=settings.environment,
-        release=settings.build_sha or None,
-        send_default_pii=False,
-        traces_sample_rate=0,
-    )
+init_sentry(settings)
 
 
 @asynccontextmanager

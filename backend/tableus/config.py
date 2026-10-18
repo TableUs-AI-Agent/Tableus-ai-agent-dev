@@ -42,6 +42,9 @@ class Settings(BaseSettings):
     plan_reads_per_hour: int = Field(default=150, gt=0)
 
     sentry_dsn: str = ""
+    # PostHog project API key (phc_...). Empty sends no plan-flow events.
+    posthog_project_key: str = Field(default="", repr=False)
+    posthog_host: str = "https://us.i.posthog.com"
     tableus_build_sha: str = ""
     railway_git_commit_sha: str = ""
 

@@ -46,6 +46,7 @@ from .schemas import (
     VoteIn,
 )
 from .security import new_share_token
+from .telemetry import track
 
 router = APIRouter(prefix="/api/v1", tags=["v1"])
 
@@ -338,6 +339,7 @@ async def create_plan(
     await session.flush()
     session.add(PlanParticipant(plan_id=plan.id, profile_id=profile.id, constraints={}))
     await session.commit()
+    track("plan_started", plan.id)
     return ok(PlanCreated(plan=await _plan_out(session, plan, profile.id), share_token=token))
 
 
@@ -387,6 +389,7 @@ async def join_plan(plan_id: str, body: PlanJoinIn, profile: CurrentProfile, ses
         session.add(PlanParticipant(plan_id=plan.id, profile_id=profile.id, constraints={}))
         _reset_choice(plan)
         await session.commit()
+        track("friend_joined", plan.id, people=(count or 0) + 1)
     return ok(await _plan_out(session, plan, profile.id))
 
 
@@ -481,6 +484,7 @@ async def generate_recommendations(
     plan.finalized_candidate_id = None
     _touch(plan)
     await session.commit()
+    track("picks_shown", plan.id, people=len(rows))
     return ok(await _plan_out(session, plan, profile.id, selected))
 
 
@@ -504,6 +508,7 @@ async def vote(plan_id: str, body: VoteIn, profile: CurrentProfile, session: DbS
         ))
     _touch(plan)
     await session.commit()
+    track("vote_cast", plan.id, votes=len(votes) + (0 if existing else 1))
     return ok(await _plan_out(session, plan, profile.id, places))
 
 
@@ -522,6 +527,7 @@ async def finalize(plan_id: str, body: FinalizeIn, profile: CurrentProfile, sess
     plan.status = "finalized"
     _touch(plan)
     await session.commit()
+    track("plan_locked", plan.id, votes=len(votes))
     return ok(await _plan_out(session, plan, profile.id, places))
 
 

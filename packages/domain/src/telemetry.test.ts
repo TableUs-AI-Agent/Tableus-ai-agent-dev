@@ -1,64 +1,7 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 
-import {
-  createTelemetrySessionId,
-  isTelemetrySessionId,
-  sanitizeSentryEvent,
-  sanitizePostHogPayload,
-  sanitizeTelemetryEvent,
-  sanitizeTelemetryUrl,
-} from "./telemetry.ts";
-
-test("telemetry allowlist rejects unknown events, properties, and invalid values", () => {
-  assert.equal(sanitizeTelemetryEvent("unknown", { platform: "web" }), null);
-  assert.equal(sanitizeTelemetryEvent("plan_created", { platform: "web", email: "person@example.com" }), null);
-  assert.equal(sanitizeTelemetryEvent("vote_submitted", { platform: "ios", ranking_count: 4 }), null);
-  assert.deepEqual(
-    sanitizeTelemetryEvent("vote_submitted", { platform: "android", ranking_count: 3 }),
-    { event: "vote_submitted", properties: { platform: "android", ranking_count: 3 } },
-  );
-});
-
-test("PostHog payloads discard automatic and sensitive properties", () => {
-  const distinctId = "123e4567-e89b-42d3-a456-426614174000";
-  const result = sanitizePostHogPayload({
-    event: "plan_created",
-    properties: {
-      platform: "web",
-      token: "phc_publicTransport123",
-      email: "person@example.test",
-      $current_url: "https://secret",
-    },
-  }, "abc123", distinctId);
-  assert.deepEqual(result, {
-    event: "plan_created",
-    properties: {
-      platform: "web",
-      token: "phc_publicTransport123",
-      distinct_id: distinctId,
-      $process_person_profile: false,
-      $geoip_disable: true,
-      release: "abc123",
-    },
-  });
-  assert.equal(sanitizePostHogPayload({
-    event: "plan_created",
-    properties: { platform: "web" },
-  }, "abc123", "persistent-user-id"), null);
-  assert.equal(sanitizePostHogPayload({
-    event: "plan_created",
-    properties: { platform: "web", token: "private-or-malformed" },
-  }, "abc123", distinctId), null);
-});
-
-test("telemetry session identifiers are random UUIDs", () => {
-  const first = createTelemetrySessionId();
-  const second = createTelemetrySessionId();
-  assert.equal(isTelemetrySessionId(first), true);
-  assert.equal(isTelemetrySessionId(second), true);
-  assert.notEqual(first, second);
-});
+import { sanitizeSentryEvent, sanitizeTelemetryUrl } from "./telemetry.ts";
 
 test("telemetry URLs remove query, fragments, plan IDs, and token-like segments", () => {
   assert.equal(
@@ -78,6 +21,7 @@ test("Sentry events retain stacks but drop messages, user data, headers, extras,
     breadcrumbs: [{ message: "private" }],
     extra: { prompt: "private" },
     tags: { request_id: "123e4567-e89b-42d3-a456-426614174000", unsafe: "private" },
+    contexts: { os: { name: "iOS", version: "27.0", kernel_version: "x" }, device: { name: "Ana's iPhone" } },
   });
   assert.equal(result.message, undefined);
   assert.equal(result.user, undefined);
@@ -89,4 +33,5 @@ test("Sentry events retain stacks but drop messages, user data, headers, extras,
   assert.equal(result.request.url, "https://table-us.com/join/:id");
   assert.equal(result.request.headers, undefined);
   assert.deepEqual(result.tags, { request_id: "123e4567-e89b-42d3-a456-426614174000" });
+  assert.deepEqual(result.contexts, { os: { name: "iOS", version: "27.0" } });
 });

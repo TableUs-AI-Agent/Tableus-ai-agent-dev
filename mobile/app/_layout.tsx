@@ -1,7 +1,10 @@
 import { DarkerGrotesque_800ExtraBold, useFonts } from "@expo-google-fonts/darker-grotesque";
+import * as Sentry from "@sentry/react-native";
+import { sanitizeSentryEvent } from "@tableus/domain";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { SplashScreen, Stack } from "expo-router";
 import { StatusBar } from "expo-status-bar";
+import * as Updates from "expo-updates";
 import { useEffect, useState } from "react";
 
 import { SessionProvider, useMe, useSession } from "@/lib/session";
@@ -9,7 +12,22 @@ import { usePalette } from "@/theme";
 
 SplashScreen.preventAutoHideAsync();
 
-export default function RootLayout() {
+// Crash reports from phone builds only, with messages, breadcrumbs and people stripped.
+const sentryDsn = process.env.EXPO_PUBLIC_SENTRY_DSN;
+if (sentryDsn && !__DEV__) {
+  Sentry.init({
+    dsn: sentryDsn,
+    environment: Updates.channel || "staging",
+    sendDefaultPii: false,
+    tracesSampleRate: 0,
+    maxBreadcrumbs: 0,
+    beforeSend: (event) => sanitizeSentryEvent(event),
+  });
+}
+
+export default Sentry.wrap(RootLayout);
+
+function RootLayout() {
   const [queryClient] = useState(
     () => new QueryClient({ defaultOptions: { queries: { staleTime: 15_000, retry: 1 } } }),
   );
