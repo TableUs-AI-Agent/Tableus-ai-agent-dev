@@ -40,6 +40,11 @@ people. Everything else: use judgement, do it, and report the result.
   frontend-design skill.
 - `mobile/`: Expo Router iOS/Android app. UI work uses the Appllama skills and
   Mobbin references. Generated `ios/` and `android/` folders are not source.
+- `.claude/skills/` holds Emil Kowalski's motion and polish skills (MIT, see
+  its README). They sit under frontend-design and Appllama, which still set the
+  visual direction: reach for `animate` (web) or `animate-expo` (mobile) when
+  adding motion, `review-animations` before merging motion changes, and
+  `break-ui` on new screens. Don't commit their `plans/` or prototype output.
 - `packages/api-client/` (generated from the OpenAPI contract) and
   `packages/domain/` are the only shared client code. Don't share platform UI.
 - Clients talk to `/api/v1`; Supabase on the client is for sign-in only.
