@@ -9,61 +9,40 @@ async function signInAs(page: Page, name: "Demo Organizer" | "Demo Guest") {
 }
 
 /**
- * Finds the pick cards on the 3D table by hovering a grid over the canvas and
- * watching for the pointer cursor, which the scene shows over a card. Returns
- * one point near the middle of each card. Once picks are in, the cards hold
- * still in a row, so the points stay good for tapping.
+ * Finds the pick cards on the 3D table by hovering over the canvas and watching
+ * for the pointer cursor, which the scene shows over a card. Once picks are in,
+ * the cards hold still side by side, so a sweep across their middle finds each
+ * one. Returns a point in the middle of each card, left to right.
  */
 async function tableCardPoints(page: Page) {
   const canvas = page.locator('[aria-label^="Animated tabletop scene"] canvas');
   await expect(canvas).toBeVisible();
   const points = await canvas.evaluate((element: HTMLCanvasElement) => {
     const rect = element.getBoundingClientRect();
-    const step = 8;
-    const columns = Math.floor(rect.width / step);
-    const rows = Math.floor(rect.height / step);
-    const hits = new Set<number>();
-    for (let row = 0; row < rows; row += 1) {
-      for (let column = 0; column < columns; column += 1) {
-        const clientX = rect.left + column * step + step / 2;
-        const clientY = rect.top + row * step + step / 2;
-        element.dispatchEvent(new PointerEvent("pointermove", { clientX, clientY, pointerType: "mouse", bubbles: true }));
-        if (element.style.cursor === "pointer") hits.add(row * columns + column);
+    const onCard = (x: number, y: number) => {
+      element.dispatchEvent(new PointerEvent("pointermove", { clientX: rect.left + x, clientY: rect.top + y, pointerType: "mouse", bubbles: true }));
+      return element.style.cursor === "pointer";
+    };
+    // A coarse pass finds the height the cards sit at.
+    const heights: number[] = [];
+    for (let y = 4; y < rect.height; y += 8) {
+      for (let x = 4; x < rect.width; x += 8) if (onCard(x, y)) heights.push(y);
+    }
+    const cards: { x: number; y: number }[] = [];
+    if (heights.length) {
+      // A fine pass along that height splits the row into cards at the gaps between them.
+      const y = heights.reduce((sum, value) => sum + value, 0) / heights.length;
+      let start: number | null = null;
+      for (let x = 0; x <= rect.width; x += 2) {
+        const hit = x < rect.width && onCard(x, y);
+        if (hit && start === null) start = x;
+        if (!hit && start !== null) {
+          if (x - start >= 12) cards.push({ x: (start + x) / 2, y });
+          start = null;
+        }
       }
     }
     element.dispatchEvent(new PointerEvent("pointerleave", { bubbles: true }));
-    // Group touching grid cells into cards and take each card's middle cell.
-    const cards: { x: number; y: number }[] = [];
-    const seen = new Set<number>();
-    for (const start of hits) {
-      if (seen.has(start)) continue;
-      const cells: number[] = [];
-      const queue = [start];
-      seen.add(start);
-      while (queue.length) {
-        const cell = queue.pop()!;
-        cells.push(cell);
-        const row = Math.floor(cell / columns);
-        const column = cell % columns;
-        for (const [dr, dc] of [[1, 0], [-1, 0], [0, 1], [0, -1]]) {
-          const next = (row + dr) * columns + column + dc;
-          if (row + dr >= 0 && row + dr < rows && column + dc >= 0 && column + dc < columns && hits.has(next) && !seen.has(next)) {
-            seen.add(next);
-            queue.push(next);
-          }
-        }
-      }
-      if (cells.length < 4) continue;
-      const middle = cells.reduce((sum, cell) => ({ row: sum.row + Math.floor(cell / columns), column: sum.column + (cell % columns) }), { row: 0, column: 0 });
-      const row = Math.round(middle.row / cells.length);
-      const column = Math.round(middle.column / cells.length);
-      // A card seen at an angle can bend around its middle, so use the closest cell that's on it.
-      const best = cells.reduce((a, b) => {
-        const distance = (cell: number) => (Math.floor(cell / columns) - row) ** 2 + ((cell % columns) - column) ** 2;
-        return distance(a) <= distance(b) ? a : b;
-      });
-      cards.push({ x: (best % columns) * step + step / 2, y: Math.floor(best / columns) * step + step / 2 });
-    }
     return cards;
   });
   return { canvas, points };
@@ -77,6 +56,7 @@ test("the landing page explains the product and starts a plan", async ({ page })
 });
 
 test("a group goes from invite link to a locked-in pick, voting on the 3D table", async ({ browser }) => {
+  test.setTimeout(120_000);
   const organizerContext = await browser.newContext();
   const friendContext = await browser.newContext();
   const organizer = await organizerContext.newPage();
@@ -104,8 +84,10 @@ test("a group goes from invite link to a locked-in pick, voting on the 3D table"
   });
 
   await test.step("the organizer adds wishes and gets picks", async () => {
-    // The organizer's page notices the friend on its own.
-    await expect(organizer.getByText("Demo Guest")).toBeVisible({ timeout: 15_000 });
+    // The organizer's page notices the friend and their wishes on its own.
+    const whosIn = organizer.getByRole("region", { name: "Who's in" });
+    await expect(whosIn.getByRole("listitem")).toHaveCount(2, { timeout: 20_000 });
+    await expect(whosIn).toContainText("added wishes", { timeout: 20_000 });
     await organizer.getByRole("button", { name: "Italian" }).click();
     await organizer.getByRole("button", { name: "Save my wishes" }).click();
     await expect(organizer.getByText("Saved. Your standing tastes")).toBeVisible();
@@ -115,7 +97,7 @@ test("a group goes from invite link to a locked-in pick, voting on the 3D table"
   });
 
   await test.step("the friend votes in the list", async () => {
-    await expect(friend.getByRole("heading", { name: "Rank your top three" })).toBeVisible({ timeout: 15_000 });
+    await expect(friend.getByRole("heading", { name: "Rank your top three" })).toBeVisible({ timeout: 20_000 });
     const picks = friend.locator('[id^="pick-"]');
     await expect(picks).toHaveCount(4);
     for (const index of [3, 2, 1]) await picks.nth(index).click();
@@ -154,7 +136,7 @@ test("a group goes from invite link to a locked-in pick, voting on the 3D table"
     await lockIn.click();
     await expect(organizer.getByRole("heading", { name: "You're going to" })).toBeVisible();
     await expect(organizer.getByRole("link", { name: "Open in Google Maps" })).toBeVisible();
-    await expect(friend.getByRole("heading", { name: "You're going to" })).toBeVisible({ timeout: 15_000 });
+    await expect(friend.getByRole("heading", { name: "You're going to" })).toBeVisible({ timeout: 20_000 });
     await expect(friend.locator('[id^="pick-"]')).toContainText(winner);
   });
 

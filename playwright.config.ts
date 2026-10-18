@@ -16,6 +16,8 @@ export default defineConfig({
   testDir: "./tests/e2e",
   timeout: 60_000,
   retries: process.env.CI ? 1 : 0,
+  // One at a time on CI: parallel first visits make the dev server recompile under a test mid-navigation.
+  workers: process.env.CI ? 1 : undefined,
   reporter: process.env.CI ? "github" : "list",
   use: {
     baseURL: externalBaseUrl ?? `http://localhost:${webPort}`,
