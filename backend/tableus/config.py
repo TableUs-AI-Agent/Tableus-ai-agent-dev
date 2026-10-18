@@ -28,6 +28,9 @@ class Settings(BaseSettings):
     supabase_service_role_key: SecretStr = Field(default=SecretStr(""), repr=False)
     # Comma-separated emails allowed to start plans. Empty means anyone signed in.
     tableus_plan_creator_emails: str = Field(default="", repr=False)
+    # Ceilings on new plans per rolling day, so open sign-up keeps paid calls bounded.
+    plans_per_person_per_day: int = Field(default=5, gt=0)
+    plans_per_day: int = Field(default=40, gt=0)
 
     tableus_provider_mode: Literal["deterministic", "live"] = "deterministic"
     tableus_places_provider_mode: Literal["deterministic", "live"] | None = None
