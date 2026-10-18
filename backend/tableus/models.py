@@ -113,3 +113,15 @@ class Vote(Base):
     profile_id: Mapped[str] = mapped_column(ForeignKey("profiles.id", ondelete="CASCADE"))
     ranking: Mapped[list[str]] = mapped_column(JSON)
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=now_utc)
+
+
+class PushToken(Base):
+    """An Expo push token for one phone. A phone belongs to whoever signed in on it last."""
+
+    __tablename__ = "push_tokens"
+    __table_args__ = (Index("ix_push_tokens_profile", "profile_id"),)
+    token: Mapped[str] = mapped_column(String(255), primary_key=True)
+    profile_id: Mapped[str] = mapped_column(ForeignKey("profiles.id", ondelete="CASCADE"))
+    updated_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), default=now_utc, onupdate=now_utc
+    )

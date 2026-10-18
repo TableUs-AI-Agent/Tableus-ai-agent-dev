@@ -4,7 +4,7 @@ import * as Haptics from "expo-haptics";
 import type { SFSymbol } from "expo-symbols";
 import { Stack, useFocusEffect, useLocalSearchParams, useRouter } from "expo-router";
 import { useCallback, useEffect, useRef, useState } from "react";
-import { ActionSheetIOS, ActivityIndicator, Alert, RefreshControl, ScrollView, Share, Text, View } from "react-native";
+import { ActionSheetIOS, ActivityIndicator, Alert, Platform, RefreshControl, ScrollView, Share, Text, View } from "react-native";
 
 import { openInMaps, PickCard } from "@/components/pick-card";
 import { Pip } from "@/components/pip";
@@ -13,7 +13,8 @@ import { Avatar, Body, Button, Card, Centered, ErrorText, Field, Footnote, Headi
 import { hasWishes, readWishes } from "@/components/wishes-form";
 import { api, errorMessage } from "@/lib/api";
 import { joinUrl } from "@/lib/links";
-import { useKeys, useMe } from "@/lib/session";
+import { enableNotifications } from "@/lib/notifications";
+import { useKeys, useMe, useSession } from "@/lib/session";
 import { radius, space, usePalette } from "@/theme";
 
 function usePlan(id: string) {
@@ -68,6 +69,12 @@ export default function PlanScreen() {
   const palette = usePalette();
   const plan = usePlan(id);
   const [ranking, toggle] = useRanking(plan.data);
+  const { session } = useSession();
+  const open = plan.data ? plan.data.status !== "finalized" : false;
+  // Ask for notifications in a plan that's still going, where "picks are ready" means something.
+  useEffect(() => {
+    if (open && session.status === "signed-in") enableNotifications(session.subject, true);
+  }, [open, session]);
 
   if (plan.isPending) return <Centered><ActivityIndicator color={palette.text} /></Centered>;
   if (plan.isError) {
@@ -174,7 +181,9 @@ function useUpdate(id: string) {
 
 function shareInvite(plan: Plan) {
   const url = joinUrl(plan.id, plan.share_token);
-  Share.share({ message: `Help pick where we eat for ${plan.title}: ${url}`, url });
+  const message = `Help pick where we eat for ${plan.title}`;
+  // iOS sends the url alongside the message, so putting it in both shows it twice.
+  Share.share(Platform.OS === "ios" ? { message, url } : { message: `${message}: ${url}` });
 }
 
 /** Rare organizer actions live behind one menu, out of the group's way. */

@@ -46,6 +46,9 @@ export default defineConfig({
         TABLEUS_PROVIDER_MODE: "deterministic",
         TABLEUS_PLACES_PROVIDER_MODE: "deterministic",
         TABLEUS_AI_PROVIDER_MODE: "deterministic",
+        // Every test starts plans as the same demo people, so lift the daily new-plan caps.
+        PLANS_PER_PERSON_PER_DAY: "1000",
+        PLANS_PER_DAY: "1000",
       },
     },
     {

@@ -40,6 +40,7 @@ export default ({ config }: ConfigContext): ExpoConfig => {
       "expo-router",
       "expo-secure-store",
       "expo-font",
+      ["expo-notifications", { color: "#31C9FF" }],
       ["expo-build-properties", { android: { usesCleartextTraffic: development } }],
       "@sentry/react-native/expo",
       "./plugins/with-ios-scene-lifecycle.cjs",

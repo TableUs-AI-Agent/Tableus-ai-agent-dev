@@ -3,10 +3,10 @@ from httpx import ASGITransport, AsyncClient
 from sqlalchemy import func, select
 
 from main import app
-from tableus import limits
+from tableus import limits, push
 from tableus.config import get_settings
 from tableus.db import SessionFactory, init_database
-from tableus.models import Plan, PlanParticipant, Profile
+from tableus.models import Plan, PlanParticipant, Profile, PushToken
 from tableus.providers.base import ProviderError
 from tableus.providers.deterministic import DeterministicAiProvider
 
@@ -232,6 +232,30 @@ async def test_plan_creation_respects_the_creator_allowlist(
     assert allowed.status_code == 200
 
 
+async def test_new_plans_have_per_person_and_overall_daily_caps(
+    client: AsyncClient, monkeypatch
+) -> None:
+    await new_profile(client, "busy-host")
+    monkeypatch.setattr(get_settings(), "plans_per_person_per_day", 2)
+    for _ in range(2):
+        await new_plan(client, "busy-host")
+    capped = await client.post(
+        "/api/v1/plans", headers=as_user("busy-host"), json={"title": "Hi", **BOSTON}
+    )
+    assert capped.status_code == 429
+    assert "2 plans today" in capped.json()["error"]["message"]
+
+    async with SessionFactory() as session:
+        total = await session.scalar(select(func.count()).select_from(Plan))
+    monkeypatch.setattr(get_settings(), "plans_per_person_per_day", 1000)
+    monkeypatch.setattr(get_settings(), "plans_per_day", total)
+    full = await client.post(
+        "/api/v1/plans", headers=as_user("demo-organizer"), json={"title": "Hi", **BOSTON}
+    )
+    assert full.status_code == 429
+    assert "limit for new plans today" in full.json()["error"]["message"]
+
+
 async def test_ai_failure_leaves_the_plan_unchanged(client: AsyncClient, monkeypatch) -> None:
     created = await new_plan(client)
     plan_id = created["plan"]["id"]
@@ -297,6 +321,73 @@ async def test_deleting_an_account_hands_shared_plans_to_the_next_person(
             )
         )
         assert remaining == 1
+
+
+async def test_phones_hear_when_picks_are_ready_and_when_the_plan_locks(
+    client: AsyncClient, monkeypatch
+) -> None:
+    sent: list[list[dict]] = []
+
+    async def deliver(messages: list[dict]) -> list[str]:
+        sent.append(messages)
+        return ["ExponentPushToken[gone]"]
+
+    monkeypatch.setattr(push, "deliver", deliver)
+    await new_profile(client, "phone-guest", "Guest")
+    created = await new_plan(client)
+    plan_id = created["plan"]["id"]
+    await join(client, created, "phone-guest")
+    await join(client, created, "demo-guest")
+    await new_profile(client, "outsider", "Outsider")
+    for user_id, token in [
+        ("outsider", "ExponentPushToken[outsider]"),
+        ("demo-organizer", "ExponentPushToken[organizer]"),
+        ("demo-guest", "ExponentPushToken[gone]"),
+        ("phone-guest", "ExponentPushToken[guest]"),
+    ]:
+        saved = await client.put(
+            "/api/v1/me/push-token", headers=as_user(user_id), json={"token": token}
+        )
+        assert saved.status_code == 200, saved.text
+    bad = await client.put(
+        "/api/v1/me/push-token", headers=as_user("phone-guest"), json={"token": "not-a-token"}
+    )
+    assert bad.status_code == 422
+
+    await client.post(
+        f"/api/v1/plans/{plan_id}/recommendations", headers=as_user("demo-organizer"), json={}
+    )
+    # Only people in the plan hear about it, and not the person who asked for picks.
+    assert sorted(message["to"] for message in sent[-1]) == [
+        "ExponentPushToken[gone]", "ExponentPushToken[guest]"
+    ]
+    assert sent[-1][0]["data"] == {"planId": plan_id}
+    assert "Vote" in sent[-1][0]["body"]
+
+    finalized = await client.post(
+        f"/api/v1/plans/{plan_id}/finalize", headers=as_user("demo-organizer"), json={}
+    )
+    winner = next(
+        item["place"]["name"] for item in finalized.json()["data"]["candidates"]
+        if item["id"] == finalized.json()["data"]["finalized_candidate_id"]
+    )
+    # Expo said the first phone was gone, so it isn't tried again.
+    assert [message["to"] for message in sent[-1]] == ["ExponentPushToken[guest]"]
+    assert winner in sent[-1][0]["body"]
+
+    # A phone that signs in as someone else follows them, and signing out stops it.
+    await client.put(
+        "/api/v1/me/push-token", headers=as_user("demo-organizer"),
+        json={"token": "ExponentPushToken[guest]"},
+    )
+    removed = await client.request(
+        "DELETE", "/api/v1/me/push-token", headers=as_user("demo-organizer"),
+        json={"token": "ExponentPushToken[guest]"},
+    )
+    assert removed.status_code == 200
+    async with SessionFactory() as session:
+        assert await session.get(PushToken, "ExponentPushToken[guest]") is None
+        assert await session.get(PushToken, "ExponentPushToken[organizer]") is not None
 
 
 async def test_health_endpoints(client: AsyncClient) -> None:

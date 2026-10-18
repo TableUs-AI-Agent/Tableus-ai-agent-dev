@@ -2,6 +2,7 @@ import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { createContext, useCallback, useContext, useEffect, useMemo, useState, type ReactNode } from "react";
 
 import { api, isNotFound, loadDemoUser, setDemoUser } from "./api";
+import { disableNotifications } from "./notifications";
 import { isSupabaseConfigured, supabase } from "./supabase";
 
 type Session = { status: "loading" } | { status: "signed-out" } | { status: "signed-in"; subject: string };
@@ -48,6 +49,7 @@ export function SessionProvider({ children }: { children: ReactNode }) {
   }, [queryClient]);
 
   const signOut = useCallback(async () => {
+    await disableNotifications();
     if (isSupabaseConfigured) await supabase.auth.signOut({ scope: "local" });
     else await setDemoUser(null);
     queryClient.clear();
