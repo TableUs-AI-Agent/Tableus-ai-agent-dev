@@ -3,9 +3,11 @@
 import type { Plan } from "@tableus/api-client";
 import { useIsMutating } from "@tanstack/react-query";
 import dynamic from "next/dynamic";
-import { useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 import { pickCardImage, type CardPick } from "../lib/pick-card-image";
+import { photoUrl } from "../lib/plan-links";
+import { webApiOrigin } from "../lib/runtime-config";
 import { useMe } from "../lib/session";
 
 const TabletopScene = dynamic(
@@ -32,6 +34,8 @@ export type TableState = {
   searching: boolean;
 };
 
+const faceKey = (pick: CardPick, chosen: boolean) => `${pick.id}:${chosen}:${pick.photo ?? ""}`;
+
 export function TableScene({ state, onPick, fade = true }: { state: TableState; onPick?: (pickId: string) => void; fade?: boolean }) {
   // Stable identities keep the scene from re-seating everyone on each poll.
   const peopleKey = JSON.stringify([state.people, state.meId]);
@@ -42,15 +46,28 @@ export function TableScene({ state, onPick, fade = true }: { state: TableState; 
     return { currentUser: me, friends: seated.filter((person) => person.id !== me?.id) };
   }, [peopleKey]);
   const picksKey = JSON.stringify([state.picks, state.chosenId]);
-  const restaurants = useMemo(
-    () => (typeof document === "undefined" ? [] : (JSON.parse(picksKey)[0] as TableState["picks"]).map((pick) => ({
+  // Card faces are drawn on a canvas once their photos load. They're kept by pick,
+  // so changing a vote re-badges the cards without redrawing or re-dealing them.
+  const [faces, setFaces] = useState<Record<string, string>>({});
+  useEffect(() => {
+    let cancelled = false;
+    const [picks, chosenId] = JSON.parse(picksKey) as [TableState["picks"], string | null];
+    Promise.all(picks.map(async (pick) => [faceKey(pick, pick.id === chosenId), await pickCardImage(pick, pick.id === chosenId)] as const))
+      .then((drawn) => {
+        if (!cancelled) setFaces((current) => ({ ...current, ...Object.fromEntries(drawn) }));
+      });
+    return () => { cancelled = true; };
+  }, [picksKey]);
+  const restaurants = useMemo(() => {
+    const [picks, chosenId] = JSON.parse(picksKey) as [TableState["picks"], string | null];
+    if (!picks.every((pick) => faces[faceKey(pick, pick.id === chosenId)])) return [];
+    return picks.map((pick) => ({
       id: pick.id,
       name: pick.name,
-      photo_url: pickCardImage(pick, pick.id === state.chosenId),
+      photo_url: faces[faceKey(pick, pick.id === chosenId)],
       rank: pick.rank,
-    }))),
-    [picksKey, state.chosenId],
-  );
+    }));
+  }, [picksKey, faces]);
   return (
     <TabletopScene
       fade={fade}
@@ -82,6 +99,8 @@ export function TableView({ plan, ranking = [], onPick }: { plan: Plan; ranking?
       cuisine: candidate.place.cuisine,
       price_level: candidate.place.price_level,
       reasoning: candidate.reasoning,
+      photo: photoUrl(candidate.place, webApiOrigin()),
+      photo_credits: (candidate.place.photo_credits ?? []).map((credit) => credit.name),
       rank: plan.status === "voting" && ranking.includes(candidate.id) ? ranking.indexOf(candidate.id) : undefined,
     })),
     chosenId: plan.finalized_candidate_id,

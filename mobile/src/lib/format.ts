@@ -15,3 +15,13 @@ export function initials(name: string): string {
 /** Place photos are API paths, so they load from the same API the app talks to. */
 export const photoUrl = (place: PlaceDetails) =>
   place.photo_url ? `${process.env.EXPO_PUBLIC_API_URL ?? ""}${place.photo_url}` : null;
+
+/** "Just now", "5m", "3h", "2d", then a short date, like a messages list. */
+export function since(iso: string, now = Date.now()): string {
+  const minutes = Math.round((now - new Date(iso).getTime()) / 60_000);
+  if (minutes < 1) return "Just now";
+  if (minutes < 60) return `${minutes}m ago`;
+  if (minutes < 60 * 24) return `${Math.round(minutes / 60)}h ago`;
+  if (minutes < 60 * 24 * 7) return `${Math.round(minutes / 1440)}d ago`;
+  return new Date(iso).toLocaleDateString(undefined, { month: "short", day: "numeric" });
+}

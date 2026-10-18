@@ -25,7 +25,11 @@ CUTOUTS = {
     "spot-distance": 240,
     "spot-wishes": 240,
     "spot-vote": 240,
+    "spot-lock": 240,
 }
+
+# Full-bleed scenes for mobile, exported at this width (3x a 430pt-wide phone).
+SCENES = {"hero-table": 1290}
 
 
 def square_cutout(name: str, edge: int) -> Image.Image:
@@ -45,6 +49,10 @@ def main() -> None:
         image = square_cutout(name, edge)
         image.save(WEB / f"{name}.webp", quality=86, method=6)
         image.save(MOBILE / f"{name}.webp", quality=86, method=6)
+
+    for name, width in SCENES.items():
+        scene = Image.open(SOURCE / f"{name}.webp").convert("RGB")
+        scene.resize((width, round(scene.height * width / scene.width)), Image.LANCZOS).save(MOBILE / f"{name}.webp", quality=84, method=6)
 
     icon = Image.open(SOURCE / "app-icon.webp").convert("RGB")
     icon.resize((1024, 1024), Image.LANCZOS).save(MOBILE_ROOT / "icon.png", optimize=True)

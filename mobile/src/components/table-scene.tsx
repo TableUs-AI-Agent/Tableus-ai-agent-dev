@@ -4,13 +4,14 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { View } from "react-native";
 import { WebView, type WebViewMessageEvent } from "react-native-webview";
 
+import { photoUrl } from "@/lib/format";
 import { useMe } from "@/lib/session";
 
 const WEB_URL = process.env.EXPO_PUBLIC_WEB_URL ?? "http://localhost:3000";
 
 /**
  * The plan's 3D table, shared with the web app: the web page at /embed/table
- * renders the scene and this view feeds it the plan (names and picks only).
+ * renders the scene and this view feeds it the plan (names, picks and their photo links).
  * If it can't load, the screen simply goes without it.
  */
 export function TableScene({ plan, ranking = [], onPick }: { plan: Plan; ranking?: string[]; onPick?: (candidateId: string) => void }) {
@@ -31,6 +32,8 @@ export function TableScene({ plan, ranking = [], onPick }: { plan: Plan; ranking
         cuisine: candidate.place.cuisine,
         price_level: candidate.place.price_level,
         reasoning: candidate.reasoning,
+        photo: photoUrl(candidate.place),
+        photo_credits: (candidate.place.photo_credits ?? []).map((credit) => credit.name),
         rank: plan.status === "voting" && ranking.includes(candidate.id) ? ranking.indexOf(candidate.id) : undefined,
       })),
       chosenId: plan.finalized_candidate_id,

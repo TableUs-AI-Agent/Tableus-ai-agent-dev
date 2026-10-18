@@ -58,10 +58,11 @@ function Navigator() {
           <Stack.Screen name="welcome" options={{ headerShown: false }} />
         </Stack.Protected>
         <Stack.Protected guard={ready}>
-          <Stack.Screen name="index" options={{ title: "Plans" }} />
+          {/* The plans list draws its own display-face title, like the plan screen. */}
+          <Stack.Screen name="index" options={{ title: "Plans", headerTitle: "" }} />
           <Stack.Screen name="plan/[id]" options={{ title: "" }} />
           <Stack.Screen name="new-plan" options={{ presentation: "modal", title: "Start a plan" }} />
-          <Stack.Screen name="wishes/[id]" options={{ presentation: "modal", title: "Your wishes" }} />
+          <Stack.Screen name="wishes/[id]" options={{ presentation: "modal", title: "" }} />
           <Stack.Screen name="account" options={{ title: "Account" }} />
         </Stack.Protected>
         <Stack.Screen name="join/[id]" options={{ title: "Join plan" }} />

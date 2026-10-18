@@ -8,7 +8,7 @@ type NativeBridge = { postMessage: (message: string) => void };
 
 /**
  * The 3D table on its own, for the mobile app's web view. It shows only what the
- * app posts to it (names and picks) and makes no requests of its own.
+ * app posts to it: names, picks and the picks' photo links.
  */
 export default function EmbeddedTable() {
   const [state, setState] = useState<TableState | null>(null);
