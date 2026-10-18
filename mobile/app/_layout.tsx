@@ -6,6 +6,7 @@ import { StatusBar } from "expo-status-bar";
 import { useEffect, useState } from "react";
 import { Platform } from "react-native";
 
+import { iconFonts } from "@/components/icon";
 import { enableNotifications, notificationPlanId } from "@/lib/notifications";
 import { SessionProvider, useMe, useSession } from "@/lib/session";
 import { usePalette } from "@/theme";
@@ -27,7 +28,7 @@ export default function RootLayout() {
 
 function Navigator() {
   const palette = usePalette();
-  const [fontsLoaded] = useFonts({ DarkerGrotesque_800ExtraBold });
+  const [fontsLoaded] = useFonts({ DarkerGrotesque_800ExtraBold, ...iconFonts });
   const { session } = useSession();
   const me = useMe();
 

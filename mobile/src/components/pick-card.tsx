@@ -4,7 +4,7 @@ import { useState } from "react";
 import { Linking, Text, View } from "react-native";
 
 import { mapsUrl, photoUrl, price } from "@/lib/format";
-import { elevation, fonts, radius, space, usePalette } from "@/theme";
+import { elevation, fonts, radius, space, textScale, usePalette } from "@/theme";
 
 import { Icon, PressScale } from "./ui";
 
@@ -52,9 +52,9 @@ export function PickCard({ candidate, rank, winner = false, onToggle }: {
           boxShadow: "0 2px 8px rgba(23, 48, 31, 0.25)",
         }}>
           <View style={{ width: 24, height: 24, borderRadius: 12, backgroundColor: palette.onButter, alignItems: "center", justifyContent: "center" }}>
-            <Text style={{ fontSize: 14, fontWeight: "800", color: palette.butter, fontVariant: ["tabular-nums"] }}>{rank + 1}</Text>
+            <Text maxFontSizeMultiplier={textScale.badge} style={{ fontSize: 14, fontWeight: "800", color: palette.butter, fontVariant: ["tabular-nums"] }}>{rank + 1}</Text>
           </View>
-          <Text style={{ fontSize: 14, fontWeight: "700", color: palette.onButter }}>Your {ORDINAL[rank]}</Text>
+          <Text maxFontSizeMultiplier={textScale.label} style={{ fontSize: 14, fontWeight: "700", color: palette.onButter }}>Your {ORDINAL[rank]}</Text>
         </View>
       ) : null}
       {onToggle && !ranked ? (
@@ -70,7 +70,7 @@ export function PickCard({ candidate, rank, winner = false, onToggle }: {
   const content = (
     <View style={{ gap: space.sm + space.xs, padding: space.md }}>
       <View style={{ gap: 6 }}>
-        <Text style={{ fontFamily: fonts.display, fontSize: winner ? 38 : 30, lineHeight: winner ? 36 : 30, color: palette.text }}>{place.name}</Text>
+        <Text maxFontSizeMultiplier={textScale.display} style={{ fontFamily: fonts.display, fontSize: winner ? 38 : 30, lineHeight: winner ? 36 : 30, color: palette.text }}>{place.name}</Text>
         <Facts place={place} />
       </View>
       <View style={{ flexDirection: "row", gap: space.sm + 2, backgroundColor: winner ? palette.butterTint : palette.background, borderRadius: 14, borderCurve: "continuous", padding: space.sm + space.xs }}>
@@ -149,7 +149,7 @@ function Attribution({ place }: { place: PlaceDetails }) {
     }}>
       <Image source={GOOGLE_MAPS} style={{ width: 82, height: 15 }} contentFit="contain" accessibilityLabel="Google Maps" />
       {credits.length ? (
-        <Text numberOfLines={1} style={{ flexShrink: 1, fontSize: 11, color: "#5F6368" }}>
+        <Text numberOfLines={1} maxFontSizeMultiplier={textScale.label} style={{ flexShrink: 1, fontSize: 11, color: "#5F6368" }}>
           Photo:{" "}
           {credits.map((credit, index) => (
             <Text key={`${credit.name}-${index}`}>

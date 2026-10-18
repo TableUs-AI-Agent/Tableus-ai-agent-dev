@@ -119,7 +119,7 @@ function PlanRow({ plan }: { plan: PlanSummary }) {
               <Icon name="mappin.and.ellipse" fallback="" size={12} color={palette.secondary} />
               <Text numberOfLines={1} style={{ flex: 1, fontSize: 14, color: palette.secondary }}>{plan.location_label}</Text>
             </View>
-            <View style={{ flexDirection: "row", alignItems: "center", gap: space.sm }}>
+            <View style={{ flexDirection: "row", flexWrap: "wrap", alignItems: "center", gap: space.sm }}>
               <Pill icon={status.icon} label={status.label} tone={status.tone} />
               <View style={{ flexDirection: "row", alignItems: "center", gap: 3 }}>
                 <Icon name="person.2.fill" fallback="" size={12} color={palette.tertiary} />

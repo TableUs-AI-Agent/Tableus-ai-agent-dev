@@ -104,3 +104,10 @@ export const radius = { input: 14, card: 20, pill: 999 } as const;
 export const fonts = {
   display: "DarkerGrotesque_800ExtraBold",
 } as const;
+
+/**
+ * Caps on how far the system text size can grow a piece of text. Body text
+ * scales all the way; the display face is already huge, and text inside a
+ * fixed-size badge or circle has to stay inside it.
+ */
+export const textScale = { display: 1.3, label: 1.5, badge: 1 } as const;

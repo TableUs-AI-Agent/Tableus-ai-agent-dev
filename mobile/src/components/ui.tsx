@@ -1,5 +1,5 @@
 import * as Haptics from "expo-haptics";
-import { SymbolView, type SFSymbol } from "expo-symbols";
+import type { SFSymbol } from "expo-symbols";
 import { Children, type ReactNode } from "react";
 import {
   ActivityIndicator,
@@ -14,7 +14,11 @@ import {
 import Animated, { Easing, useAnimatedStyle, useSharedValue, withTiming } from "react-native-reanimated";
 
 import { initials } from "@/lib/format";
-import { avatarTint, elevation, fonts, radius, space, usePalette, type Palette } from "@/theme";
+import { avatarTint, elevation, fonts, radius, space, textScale, usePalette, type Palette } from "@/theme";
+
+import { Icon } from "./icon";
+
+export { Icon };
 
 const PRESS = { duration: 120, easing: Easing.bezier(0.23, 1, 0.32, 1) };
 
@@ -52,7 +56,7 @@ export function Footer({ children }: { children: ReactNode }) {
 export function Title({ children, size = 44 }: { children: ReactNode; size?: number }) {
   const palette = usePalette();
   return (
-    <Text accessibilityRole="header" style={{ fontFamily: fonts.display, fontSize: size, lineHeight: size * 0.95, color: palette.text }}>
+    <Text accessibilityRole="header" maxFontSizeMultiplier={textScale.display} style={{ fontFamily: fonts.display, fontSize: size, lineHeight: size * 0.95, color: palette.text }}>
       {children}
     </Text>
   );
@@ -158,7 +162,7 @@ export function Button({ label, onPress, busy, disabled, kind = "primary", icon,
       }}
     >
       {busy ? <ActivityIndicator color={ink} /> : icon ? <Icon name={icon} fallback="" size={large ? 18 : 15} color={ink} weight="semibold" /> : null}
-      <Text style={{ fontSize: large ? 17 : 15, fontWeight: "600", color: ink }}>{label}</Text>
+      <Text style={{ flexShrink: 1, textAlign: "center", fontSize: large ? 17 : 15, fontWeight: "600", color: ink }}>{label}</Text>
     </PressScale>
   );
 }
@@ -221,7 +225,7 @@ export function Chip({ label, selected, onPress, icon }: { label: string; select
       }}
     >
       {selected ? <Icon name="checkmark" fallback="✓" size={13} color={ink} weight="bold" /> : icon ? <Icon name={icon} fallback="" size={14} color={palette.secondary} /> : null}
-      <Text style={{ fontSize: 15, fontWeight: "500", color: ink }}>{label}</Text>
+      <Text style={{ flexShrink: 1, fontSize: 15, fontWeight: "500", color: ink }}>{label}</Text>
     </PressScale>
   );
 }
@@ -235,7 +239,7 @@ export function Avatar({ name, size = 36, badge }: { name: string; size?: number
         width: size, height: size, borderRadius: size / 2, backgroundColor: tint.fill,
         alignItems: "center", justifyContent: "center", borderWidth: 2, borderColor: palette.surface,
       }}>
-        <Text style={{ fontSize: size * 0.38, fontWeight: "700", color: tint.ink }}>{initials(name)}</Text>
+        <Text maxFontSizeMultiplier={textScale.badge} style={{ fontSize: size * 0.38, fontWeight: "700", color: tint.ink }}>{initials(name)}</Text>
       </View>
       {badge ? (
         <View style={{
@@ -267,29 +271,10 @@ export function AvatarStack({ names, size = 28, max = 4 }: { names: string[]; si
           marginLeft: -size / 3, width: size, height: size, borderRadius: size / 2, backgroundColor: palette.fill,
           borderWidth: 2, borderColor: palette.surface, alignItems: "center", justifyContent: "center",
         }}>
-          <Text style={{ fontSize: size * 0.36, fontWeight: "700", color: palette.secondary }}>+{extra}</Text>
+          <Text maxFontSizeMultiplier={textScale.badge} style={{ fontSize: size * 0.36, fontWeight: "700", color: palette.secondary }}>+{extra}</Text>
         </View>
       ) : null}
     </View>
-  );
-}
-
-export function Icon({ name, fallback, size = 22, color, weight }: {
-  name: SFSymbol;
-  fallback: string;
-  size?: number;
-  color?: string;
-  weight?: "regular" | "medium" | "semibold" | "bold" | "heavy" | "black";
-}) {
-  const palette = usePalette();
-  return (
-    <SymbolView
-      name={name}
-      size={size}
-      weight={weight}
-      tintColor={color ?? palette.text}
-      fallback={fallback ? <Text style={{ fontSize: size * 0.8, color: color ?? palette.text }}>{fallback}</Text> : null}
-    />
   );
 }
 
@@ -387,7 +372,7 @@ export function Pill({ icon, label, tone = "neutral" }: { icon?: SFSymbol; label
   return (
     <View style={{ flexDirection: "row", alignItems: "center", gap: 5, alignSelf: "flex-start", backgroundColor: colors.fill, borderRadius: radius.pill, paddingHorizontal: 10, paddingVertical: 4 }}>
       {icon ? <Icon name={icon} fallback="" size={12} color={colors.ink} weight="semibold" /> : null}
-      <Text style={{ fontSize: 13, fontWeight: "600", color: colors.ink }}>{label}</Text>
+      <Text style={{ flexShrink: 1, fontSize: 13, fontWeight: "600", color: colors.ink }}>{label}</Text>
     </View>
   );
 }

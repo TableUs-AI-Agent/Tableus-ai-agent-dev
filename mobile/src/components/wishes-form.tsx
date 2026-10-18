@@ -1,7 +1,7 @@
 import type { Constraints } from "@tableus/api-client";
 import type { SFSymbol } from "expo-symbols";
 import { useState, type ReactNode } from "react";
-import { Text, View } from "react-native";
+import { Text, useWindowDimensions, View } from "react-native";
 
 import { radius, space, tiles, usePalette } from "@/theme";
 
@@ -35,7 +35,7 @@ function Group({ title, icon, tint, children }: { title: string; icon: SFSymbol;
     <View style={{ gap: space.sm + space.xs }}>
       <View style={{ flexDirection: "row", alignItems: "center", gap: space.sm + 2 }}>
         <IconTile name={icon} color={tint} size={26} />
-        <Text accessibilityRole="header" style={{ fontSize: 17, fontWeight: "700", color: palette.text }}>{title}</Text>
+        <Text accessibilityRole="header" style={{ flex: 1, fontSize: 17, fontWeight: "700", color: palette.text }}>{title}</Text>
       </View>
       <View style={{ flexDirection: "row", flexWrap: "wrap", gap: space.sm }}>{children}</View>
     </View>
@@ -45,6 +45,8 @@ function Group({ title, icon, tint, children }: { title: string; icon: SFSymbol;
 /** The wishes a person brings to one plan. The parent renders the save action. */
 export function WishesForm({ initial, onChange }: { initial: Constraints; onChange: (wishes: Constraints) => void }) {
   const palette = usePalette();
+  // Four budget tiles in a row only fit their labels at standard text sizes; larger text gets two rows.
+  const twoRows = useWindowDimensions().fontScale > 1.3;
   const [wishes, setWishes] = useState<Constraints>({
     cuisines: initial.cuisines ?? [],
     dietary_notes: initial.dietary_notes ?? [],
@@ -82,11 +84,11 @@ export function WishesForm({ initial, onChange }: { initial: Constraints; onChan
         ))}
       </Group>
       <Group title="Spend up to" icon="dollarsign" tint={tiles.butter}>
-        <View style={{ flexDirection: "row", gap: space.sm, width: "100%" }}>
+        <View style={{ flexDirection: "row", flexWrap: "wrap", gap: space.sm, width: "100%" }}>
           {[1, 2, 3, 4].map((level) => {
             const selected = wishes.max_price_level === level;
             return (
-              <View key={level} style={{ flex: 1 }}>
+              <View key={level} style={twoRows ? { width: "48%", flexGrow: 1 } : { flex: 1 }}>
                 <PressScale
                   onPress={() => set({ max_price_level: selected ? null : level })}
                   accessibilityLabel={`Up to ${BUDGET[level - 1].toLowerCase()}, ${"$".repeat(level)}`}
