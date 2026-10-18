@@ -232,6 +232,30 @@ async def test_plan_creation_respects_the_creator_allowlist(
     assert allowed.status_code == 200
 
 
+async def test_new_plans_have_per_person_and_overall_daily_caps(
+    client: AsyncClient, monkeypatch
+) -> None:
+    await new_profile(client, "busy-host")
+    monkeypatch.setattr(get_settings(), "plans_per_person_per_day", 2)
+    for _ in range(2):
+        await new_plan(client, "busy-host")
+    capped = await client.post(
+        "/api/v1/plans", headers=as_user("busy-host"), json={"title": "Hi", **BOSTON}
+    )
+    assert capped.status_code == 429
+    assert "2 plans today" in capped.json()["error"]["message"]
+
+    async with SessionFactory() as session:
+        total = await session.scalar(select(func.count()).select_from(Plan))
+    monkeypatch.setattr(get_settings(), "plans_per_person_per_day", 1000)
+    monkeypatch.setattr(get_settings(), "plans_per_day", total)
+    full = await client.post(
+        "/api/v1/plans", headers=as_user("demo-organizer"), json={"title": "Hi", **BOSTON}
+    )
+    assert full.status_code == 429
+    assert "limit for new plans today" in full.json()["error"]["message"]
+
+
 async def test_ai_failure_leaves_the_plan_unchanged(client: AsyncClient, monkeypatch) -> None:
     created = await new_plan(client)
     plan_id = created["plan"]["id"]

@@ -1,5 +1,5 @@
 import secrets
-from datetime import UTC, datetime
+from datetime import UTC, datetime, timedelta
 from typing import Literal, cast
 
 from fastapi import APIRouter, HTTPException
@@ -320,6 +320,7 @@ async def create_plan(
 ):
     if not can_create_plans(identity):
         raise HTTPException(status_code=403, detail="Starting plans is invite-only for now")
+    await _check_daily_plan_caps(session, profile)
     if body.location_place_id:
         await _places("get_location", body.location_place_id)
     elif get_settings().places_provider_mode == "live":
@@ -339,6 +340,30 @@ async def create_plan(
     session.add(PlanParticipant(plan_id=plan.id, profile_id=profile.id, constraints={}))
     await session.commit()
     return ok(PlanCreated(plan=await _plan_out(session, plan, profile.id), share_token=token))
+
+
+async def _check_daily_plan_caps(session: AsyncSession, profile: Profile) -> None:
+    settings = get_settings()
+    since = datetime.now(UTC) - timedelta(days=1)
+    mine = await session.scalar(
+        select(func.count()).select_from(Plan)
+        .where(Plan.organizer_id == profile.id, Plan.created_at > since)
+    )
+    if (mine or 0) >= settings.plans_per_person_per_day:
+        raise HTTPException(
+            status_code=429,
+            detail=f"You've started {settings.plans_per_person_per_day} plans today, which is "
+            "the daily limit. You can start another tomorrow, and join friends' plans anytime.",
+        )
+    everyone = await session.scalar(
+        select(func.count()).select_from(Plan).where(Plan.created_at > since)
+    )
+    if (everyone or 0) >= settings.plans_per_day:
+        raise HTTPException(
+            status_code=429,
+            detail="TableUs has reached its limit for new plans today. Try again tomorrow, "
+            "or join a friend's plan.",
+        )
 
 
 @router.get("/plans/{plan_id}", response_model=Envelope[PlanOut])
