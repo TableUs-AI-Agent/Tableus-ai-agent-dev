@@ -11,7 +11,8 @@ async function signInAs(page: Page, name: "Demo Organizer" | "Demo Guest") {
 /**
  * Finds the pick cards on the 3D table by hovering a grid over the canvas and
  * watching for the pointer cursor, which the scene shows over a card. Returns
- * one point near the middle of each card.
+ * one point near the middle of each card. Once picks are in, the cards hold
+ * still in a row, so the points stay good for tapping.
  */
 async function tableCardPoints(page: Page) {
   const canvas = page.locator('[aria-label^="Animated tabletop scene"] canvas');
@@ -76,8 +77,7 @@ test("the landing page explains the product and starts a plan", async ({ page })
 });
 
 test("a group goes from invite link to a locked-in pick, voting on the 3D table", async ({ browser }) => {
-  // Reduced motion lets the table settle and hold still, so its cards stay where they were found.
-  const organizerContext = await browser.newContext({ reducedMotion: "reduce" });
+  const organizerContext = await browser.newContext();
   const friendContext = await browser.newContext();
   const organizer = await organizerContext.newPage();
   const friend = await friendContext.newPage();
@@ -164,7 +164,7 @@ test("a group goes from invite link to a locked-in pick, voting on the 3D table"
 
 test("the mobile app's table reports taps on its cards", async ({ browser }) => {
   // The mobile app shows /embed/table in a web view and votes with the picks it posts back.
-  const context = await browser.newContext({ reducedMotion: "reduce" });
+  const context = await browser.newContext();
   await context.addInitScript(() => {
     const sent: unknown[] = [];
     Object.assign(window, { sent, ReactNativeWebView: { postMessage: (message: string) => sent.push(JSON.parse(message)) } });
