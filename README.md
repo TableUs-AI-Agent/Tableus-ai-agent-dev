@@ -53,6 +53,6 @@ the other person.
 Before asking for review, run `make ready` (lint, types, tests, contract check,
 builds and smoke). `npm run test:e2e` walks a whole plan in two browsers,
 including votes tapped on the 3D table; it starts its own API and web server on
-ports 8100 and 3100 with fixture restaurants and picks, so it costs nothing and
+ports 8190 and 3190 with fixture restaurants and picks, so it costs nothing and
 doesn't touch a running `make dev`. `make ai-eval` checks how well picks fit groups; `--live`
 calls Gemini and costs money.

@@ -116,7 +116,7 @@ test("a group goes from invite link to a locked-in pick, voting on the 3D table"
     const planId = new URL(organizer.url()).pathname.split("/").pop();
     const response = await organizer.request.get(`${apiOrigin}/api/v1/plans/${planId}`, { headers: { "X-Demo-User-ID": "demo-organizer" } });
     expect(response.ok()).toBeTruthy();
-    const plan = await response.json();
+    const { data: plan } = await response.json();
     expect(plan.my_vote).toHaveLength(3);
     expect(plan.participants.every((person: { has_voted: boolean }) => person.has_voted)).toBe(true);
   });

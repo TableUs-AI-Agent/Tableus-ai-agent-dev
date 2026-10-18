@@ -15,6 +15,8 @@ const localDb = join(tmpdir(), `tableus-e2e-${apiPort}.db`);
 export default defineConfig({
   testDir: "./tests/e2e",
   timeout: 60_000,
+  // The dev server compiles each page on its first visit, which can take several seconds.
+  expect: { timeout: 15_000 },
   retries: process.env.CI ? 1 : 0,
   // One at a time on CI: parallel first visits make the dev server recompile under a test mid-navigation.
   workers: process.env.CI ? 1 : undefined,
