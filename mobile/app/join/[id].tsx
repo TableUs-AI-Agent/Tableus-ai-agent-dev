@@ -50,20 +50,20 @@ export default function Join() {
   if (error?.retryable) {
     return (
       <Centered>
-        <Pip pose="sleepy" size={104} />
+        <Pip pose="sleepy" size={128} />
         <Title size={36}>Couldn’t join yet</Title>
         <ErrorText>{error.message}</ErrorText>
-        <Button label="Try again" onPress={() => { setError(null); setAttempt((value) => value + 1); }} />
+        <Button label="Try again" icon="arrow.clockwise" onPress={() => { setError(null); setAttempt((value) => value + 1); }} />
       </Centered>
     );
   }
   if (!token || error) {
     return (
       <Centered>
-        <Pip pose="sleepy" size={104} />
+        <Pip pose="sleepy" size={128} />
         <Title size={36}>This link didn’t work</Title>
         <ErrorText>{error?.message ?? "The invite link is incomplete. Ask whoever sent it for the full link."}</ErrorText>
-        <Button kind="quiet" label="Go to your plans" onPress={() => router.replace("/")} />
+        <Button kind="secondary" icon="list.bullet" label="Go to your plans" onPress={() => router.replace("/")} />
       </Centered>
     );
   }
@@ -71,10 +71,10 @@ export default function Join() {
     // Signing in (or finishing setup) returns to the plans list, which resumes this join.
     return (
       <Centered>
-        <Pip pose="invite" size={112} />
+        <Pip pose="invite" size={140} />
         <Title size={36}>You’re invited</Title>
         <Body muted>Sign in to join the plan.</Body>
-        <Button label="Continue" onPress={() => router.replace(session.status === "signed-in" ? "/welcome" : "/sign-in")} />
+        <Button label="Continue" icon="arrow.right" onPress={() => router.replace(session.status === "signed-in" ? "/welcome" : "/sign-in")} />
       </Centered>
     );
   }
