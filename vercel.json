@@ -20,7 +20,8 @@
       "codex/open-plan-creation": false,
       "codex/mobile-share-notify": false,
       "codex/design-motion-skills": false,
-      "codex/e2e-plan-flow": false
+      "codex/e2e-plan-flow": false,
+      "codex/mobile-android-large-text": false
     }
   },
   "framework": "nextjs",

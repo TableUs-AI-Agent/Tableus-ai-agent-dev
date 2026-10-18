@@ -9,13 +9,13 @@ import { ActionSheetIOS, ActivityIndicator, Alert, Platform, RefreshControl, Scr
 import { openInMaps, PickCard } from "@/components/pick-card";
 import { Pip } from "@/components/pip";
 import { TableScene } from "@/components/table-scene";
-import { Avatar, Body, Button, Card, Centered, ErrorText, Field, Footnote, Heading, Icon, Pill, PressScale, Title } from "@/components/ui";
+import { Avatar, Body, Button, Card, Centered, ErrorText, Field, Footnote, Heading, Icon, Pill, PressScale, Title, useLargeText } from "@/components/ui";
 import { hasWishes, readWishes } from "@/components/wishes-form";
 import { api, errorMessage } from "@/lib/api";
 import { joinUrl } from "@/lib/links";
 import { enableNotifications } from "@/lib/notifications";
 import { useKeys, useMe, useSession } from "@/lib/session";
-import { radius, space, usePalette } from "@/theme";
+import { radius, space, textScale, usePalette } from "@/theme";
 
 function usePlan(id: string) {
   const keys = useKeys();
@@ -114,7 +114,7 @@ export default function PlanScreen() {
           <Title size={40}>{data.title}</Title>
           <View style={{ flexDirection: "row", alignItems: "center", gap: 5 }}>
             <Icon name="mappin.and.ellipse" fallback="" size={14} color={palette.secondary} />
-            <Text style={{ fontSize: 16, color: palette.secondary }}>{data.location_label}</Text>
+            <Text style={{ flex: 1, fontSize: 16, color: palette.secondary }}>{data.location_label}</Text>
           </View>
         </View>
         <Progress status={data.status} />
@@ -161,7 +161,7 @@ function Progress({ status }: { status: Plan["status"] }) {
             {index ? <View style={{ flex: 1, height: 2, marginHorizontal: 6, borderRadius: 1, backgroundColor: index <= current ? palette.success : palette.fill }} /> : null}
             <View style={{ flexDirection: "row", alignItems: "center", gap: 6, backgroundColor: fill, borderRadius: radius.pill, paddingLeft: 6, paddingRight: 10, paddingVertical: 5 }}>
               <Icon name={done && !active ? "checkmark" : step.icon} fallback="" size={12} color={ink} weight="bold" />
-              <Text style={{ fontSize: 13, fontWeight: "700", color: ink }}>{step.label}</Text>
+              <Text maxFontSizeMultiplier={textScale.label} style={{ fontSize: 13, fontWeight: "700", color: ink }}>{step.label}</Text>
             </View>
           </View>
         );
@@ -242,6 +242,7 @@ function OrganizerMenu({ plan }: { plan: Plan }) {
 
 function People({ plan }: { plan: Plan }) {
   const palette = usePalette();
+  const large = useLargeText();
   const voting = plan.status === "voting";
   const done = (person: Plan["participants"][number]) => (voting ? person.has_voted : hasWishes(person.constraints));
   const count = plan.participants.filter(done).length;
@@ -250,7 +251,7 @@ function People({ plan }: { plan: Plan }) {
     : `${count} of ${plan.participants.length} ${voting ? "voted" : "added wishes"}`;
   return (
     <Card>
-      <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
+      <View style={{ flexDirection: "row", flexWrap: "wrap", alignItems: "center", justifyContent: "space-between", columnGap: space.sm }}>
         <Heading>Who’s coming</Heading>
         <Text style={{ fontSize: 14, fontWeight: "600", color: palette.secondary, fontVariant: ["tabular-nums"] }}>{summary}</Text>
       </View>
@@ -258,15 +259,15 @@ function People({ plan }: { plan: Plan }) {
         {plan.participants.map((person) => {
           const finished = plan.status !== "finalized" && done(person);
           return (
-            <View key={person.profile_id} style={{ alignItems: "center", gap: 6, width: 64 }}>
+            <View key={person.profile_id} style={{ alignItems: "center", gap: 6, width: large ? 96 : 64 }}>
               <Avatar name={person.display_name} size={48} badge={finished ? "done" : person.is_organizer ? "organizer" : undefined} />
-              <Text numberOfLines={1} style={{ fontSize: 13, fontWeight: "600", color: palette.text }}>{person.display_name}</Text>
+              <Text numberOfLines={1} maxFontSizeMultiplier={textScale.label} style={{ fontSize: 13, fontWeight: "600", color: palette.text }}>{person.display_name}</Text>
             </View>
           );
         })}
       </View>
       {plan.participants.some((person) => person.is_organizer) ? (
-        <View style={{ flexDirection: "row", gap: space.md }}>
+        <View style={{ flexDirection: "row", flexWrap: "wrap", columnGap: space.md, rowGap: space.xs }}>
           <Legend icon="star.fill" color={palette.butter} label="Organizer" />
           {plan.status !== "finalized" ? <Legend icon="checkmark" color={palette.success} label={voting ? "Voted" : "Added wishes"} /> : null}
         </View>
@@ -289,6 +290,7 @@ function Legend({ icon, color, label }: { icon: SFSymbol; color: string; label: 
 
 function InviteCard({ plan }: { plan: Plan }) {
   const palette = usePalette();
+  const large = useLargeText();
   return (
     <Card tone="dark">
       <View style={{ flexDirection: "row", alignItems: "center", gap: space.md }}>
@@ -296,7 +298,8 @@ function InviteCard({ plan }: { plan: Plan }) {
           <Text style={{ fontSize: 20, fontWeight: "700", color: palette.onInk }}>Bring the group in</Text>
           <Text style={{ fontSize: 15, lineHeight: 21, color: palette.onInk, opacity: 0.85 }}>Anyone with the link can join, up to eight people. They can use the web, no app needed.</Text>
         </View>
-        <Pip pose="invite" size={76} />
+        {/* Pip is decoration; at large text sizes the words need the whole width. */}
+        {large ? null : <Pip pose="invite" size={76} />}
       </View>
       <Button label="Share invite link" icon="square.and.arrow.up" onPress={() => shareInvite(plan)} />
     </Card>
@@ -315,15 +318,23 @@ function MyWishes({ plan }: { plan: Plan }) {
     ...(wishes.max_price_level ? [`Up to ${"$".repeat(wishes.max_price_level)}`] : []),
   ];
   const empty = !hasWishes(mine?.constraints);
+  // At large text sizes the heading needs the whole row, so the action drops below it.
+  const large = useLargeText();
+  const action = (
+    <View style={{ flexDirection: "row", alignItems: "center", gap: space.sm }}>
+      <Text maxFontSizeMultiplier={textScale.control} style={{ fontSize: 15, fontWeight: "600", color: palette.accent }}>{empty ? "Add" : "Edit"}</Text>
+      <Icon name="chevron.right" fallback="›" size={13} color={palette.accent} weight="semibold" />
+    </View>
+  );
   return (
     <PressScale onPress={() => router.push(`/wishes/${plan.id}`)} accessibilityLabel={empty ? "Add your wishes" : "Edit your wishes"} haptic={false}>
       <Card style={empty ? { borderWidth: 2, borderColor: palette.accent, borderStyle: "dashed" } : undefined}>
         <View style={{ flexDirection: "row", alignItems: "center", gap: space.sm }}>
           <Icon name="text.bubble.fill" fallback="" size={18} color={palette.accent} />
           <View style={{ flex: 1 }}><Heading>Your wishes</Heading></View>
-          <Text style={{ fontSize: 15, fontWeight: "600", color: palette.accent }}>{empty ? "Add" : "Edit"}</Text>
-          <Icon name="chevron.right" fallback="›" size={13} color={palette.accent} weight="semibold" />
+          {large ? null : action}
         </View>
+        {large ? action : null}
         {empty ? (
           <Body muted>Say what you’re in the mood for, what you can’t eat and what you want to spend. Everyone in the plan sees it.</Body>
         ) : (
@@ -343,6 +354,7 @@ function MyWishes({ plan }: { plan: Plan }) {
 
 function Collecting({ plan }: { plan: Plan }) {
   const palette = usePalette();
+  const large = useLargeText();
   const update = useUpdate(plan.id);
   const [request, setRequest] = useState("");
   const suggest = useMutation({
@@ -369,7 +381,7 @@ function Collecting({ plan }: { plan: Plan }) {
                   : "Invite at least one more person, then get picks together."}
             </Text>
           </View>
-          <Pip pose="think" size={72} float={suggest.isPending} />
+          {large ? null : <Pip pose="think" size={72} float={suggest.isPending} />}
         </View>
         {enough ? (
           <>
@@ -420,7 +432,7 @@ function Voting({ plan, ranking, onToggle }: { plan: Plan; ranking: string[]; on
   return (
     <>
       <View style={{ gap: space.sm }}>
-        <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between", gap: space.sm }}>
+        <View style={{ flexDirection: "row", flexWrap: "wrap", alignItems: "center", justifyContent: "space-between", gap: space.sm }}>
           <Heading>Rank your top three</Heading>
           <View style={{ flexDirection: "row", gap: 5 }} accessibilityLabel={`${ranking.length} of 3 picked`}>
             {[0, 1, 2].map((slot) => (
@@ -429,7 +441,7 @@ function Voting({ plan, ranking, onToggle }: { plan: Plan; ranking: string[]; on
                 backgroundColor: slot < ranking.length ? palette.butter : "transparent",
                 borderWidth: slot < ranking.length ? 0 : 1.5, borderColor: palette.border, borderStyle: "dashed",
               }}>
-                <Text style={{ fontSize: 13, fontWeight: "800", color: slot < ranking.length ? palette.onButter : palette.tertiary }}>{slot + 1}</Text>
+                <Text maxFontSizeMultiplier={textScale.fixed} style={{ fontSize: 13, fontWeight: "800", color: slot < ranking.length ? palette.onButter : palette.tertiary }}>{slot + 1}</Text>
               </View>
             ))}
           </View>
@@ -448,14 +460,14 @@ function Voting({ plan, ranking, onToggle }: { plan: Plan; ranking: string[]; on
       ) : status ? (
         <View style={{ flexDirection: "row", alignSelf: "center", alignItems: "center", gap: 6 }}>
           {saved ? <Icon name="checkmark.circle.fill" fallback="✓" size={18} color={palette.success} /> : null}
-          <Text style={{ fontSize: 16, fontWeight: "600", color: saved ? palette.success : palette.secondary }}>{status}</Text>
+          <Text style={{ flexShrink: 1, fontSize: 16, fontWeight: "600", color: saved ? palette.success : palette.secondary }}>{status}</Text>
         </View>
       ) : null}
       {plan.viewer_is_organizer && leader ? (
         <Card>
           <View style={{ flexDirection: "row", alignItems: "center", gap: space.sm }}>
             <Icon name="lock.fill" fallback="" size={16} color={palette.accent} />
-            <Heading>Lock it in</Heading>
+            <View style={{ flex: 1 }}><Heading>Lock it in</Heading></View>
           </View>
           <View style={{ gap: 6 }}>
             <View style={{ height: 8, borderRadius: 4, backgroundColor: palette.fill, overflow: "hidden" }}>
@@ -473,6 +485,8 @@ function Voting({ plan, ranking, onToggle }: { plan: Plan; ranking: string[]; on
 }
 
 function Decided({ plan }: { plan: Plan }) {
+  // Two pills side by side only fit their labels at standard text sizes.
+  const stacked = useLargeText();
   const update = useUpdate(plan.id);
   const reopen = useMutation({ mutationFn: () => api.reopen(plan.id), onSuccess: update });
   const winner = plan.candidates.find((candidate) => candidate.id === plan.finalized_candidate_id);
@@ -488,9 +502,9 @@ function Decided({ plan }: { plan: Plan }) {
       {winner ? (
         <>
           <PickCard candidate={winner} winner />
-          <View style={{ flexDirection: "row", gap: space.sm }}>
-            <View style={{ flex: 1 }}><Button label="Directions" icon="map.fill" onPress={() => openInMaps(winner.place)} /></View>
-            <View style={{ flex: 1 }}>
+          <View style={{ flexDirection: stacked ? "column" : "row", gap: space.sm }}>
+            <View style={{ flex: stacked ? undefined : 1 }}><Button label="Directions" icon="map.fill" onPress={() => openInMaps(winner.place)} /></View>
+            <View style={{ flex: stacked ? undefined : 1 }}>
               <Button
                 kind="secondary"
                 icon="square.and.arrow.up"

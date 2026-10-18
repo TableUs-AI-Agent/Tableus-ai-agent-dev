@@ -3,9 +3,9 @@ import type { SFSymbol } from "expo-symbols";
 import { useState, type ReactNode } from "react";
 import { Text, View } from "react-native";
 
-import { radius, space, tiles, usePalette } from "@/theme";
+import { radius, space, textScale, tiles, usePalette } from "@/theme";
 
-import { Chip, Field, IconTile, PressScale } from "./ui";
+import { Chip, Field, IconTile, PressScale, useLargeText } from "./ui";
 
 const CUISINES = ["Italian", "Japanese", "Mexican", "Chinese", "Thai", "Indian", "Korean", "Vietnamese", "Mediterranean", "American", "French", "Middle Eastern"];
 const DIETARY = ["Vegetarian", "Vegan", "Gluten-free", "Halal", "Kosher", "Dairy-free", "Nut allergy"];
@@ -35,7 +35,7 @@ function Group({ title, icon, tint, children }: { title: string; icon: SFSymbol;
     <View style={{ gap: space.sm + space.xs }}>
       <View style={{ flexDirection: "row", alignItems: "center", gap: space.sm + 2 }}>
         <IconTile name={icon} color={tint} size={26} />
-        <Text accessibilityRole="header" style={{ fontSize: 17, fontWeight: "700", color: palette.text }}>{title}</Text>
+        <Text accessibilityRole="header" style={{ flex: 1, fontSize: 17, fontWeight: "700", color: palette.text }}>{title}</Text>
       </View>
       <View style={{ flexDirection: "row", flexWrap: "wrap", gap: space.sm }}>{children}</View>
     </View>
@@ -45,6 +45,8 @@ function Group({ title, icon, tint, children }: { title: string; icon: SFSymbol;
 /** The wishes a person brings to one plan. The parent renders the save action. */
 export function WishesForm({ initial, onChange }: { initial: Constraints; onChange: (wishes: Constraints) => void }) {
   const palette = usePalette();
+  // Four budget tiles in a row only fit their labels at standard text sizes; larger text gets two rows.
+  const twoRows = useLargeText();
   const [wishes, setWishes] = useState<Constraints>({
     cuisines: initial.cuisines ?? [],
     dietary_notes: initial.dietary_notes ?? [],
@@ -82,11 +84,11 @@ export function WishesForm({ initial, onChange }: { initial: Constraints; onChan
         ))}
       </Group>
       <Group title="Spend up to" icon="dollarsign" tint={tiles.butter}>
-        <View style={{ flexDirection: "row", gap: space.sm, width: "100%" }}>
+        <View style={{ flexDirection: "row", flexWrap: "wrap", gap: space.sm, width: "100%" }}>
           {[1, 2, 3, 4].map((level) => {
             const selected = wishes.max_price_level === level;
             return (
-              <View key={level} style={{ flex: 1 }}>
+              <View key={level} style={twoRows ? { width: "48%", flexGrow: 1 } : { flex: 1 }}>
                 <PressScale
                   onPress={() => set({ max_price_level: selected ? null : level })}
                   accessibilityLabel={`Up to ${BUDGET[level - 1].toLowerCase()}, ${"$".repeat(level)}`}
@@ -97,8 +99,8 @@ export function WishesForm({ initial, onChange }: { initial: Constraints; onChan
                     backgroundColor: selected ? palette.accent : palette.surface,
                   }}
                 >
-                  <Text style={{ fontSize: 17, fontWeight: "700", color: selected ? palette.onAccent : palette.text }}>{"$".repeat(level)}</Text>
-                  <Text style={{ fontSize: 12, color: selected ? palette.onAccent : palette.secondary }}>{BUDGET[level - 1]}</Text>
+                  <Text maxFontSizeMultiplier={textScale.control} style={{ fontSize: 17, fontWeight: "700", color: selected ? palette.onAccent : palette.text }}>{"$".repeat(level)}</Text>
+                  <Text maxFontSizeMultiplier={textScale.control} style={{ fontSize: 12, color: selected ? palette.onAccent : palette.secondary }}>{BUDGET[level - 1]}</Text>
                 </PressScale>
               </View>
             );

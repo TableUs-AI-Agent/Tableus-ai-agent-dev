@@ -24,7 +24,8 @@ Five real groups use TableUs to pick a real dinner, and say they'd use it again.
    light and dark; see `mobile/DESIGN.md`). The same flow in Expo, built with
    the Appllama skill. Mobbin and the Appllama MCP need paid plans, so no
    real-app references were pulled yet; check the screens against them once
-   either is connected. Still to check: Dynamic Type XL and Android.
+   either is connected. Checked at the largest Dynamic Type size and on
+   Android at 200% font size.
 5. **Friends test.** Deploy to staging and invite five groups Brian knows. Learn
    what works from conversations and plain database counts.
 

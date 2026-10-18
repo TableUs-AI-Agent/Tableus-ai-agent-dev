@@ -104,3 +104,13 @@ export const radius = { input: 14, card: 20, pill: 999 } as const;
 export const fonts = {
   display: "DarkerGrotesque_800ExtraBold",
 } as const;
+
+/**
+ * Caps on how far the system text size can grow a piece of text. Body text
+ * scales all the way; the display face is already huge, and text inside a
+ * fixed-size badge, circle or navigation bar has to stay inside it.
+ */
+export const textScale = { display: 1.6, control: 2, label: 1.5, fixed: 1 } as const;
+
+/** Past this system text size, side-by-side layouts stack and pinned footers scroll with the page. */
+export const LARGE_TEXT = 1.3;

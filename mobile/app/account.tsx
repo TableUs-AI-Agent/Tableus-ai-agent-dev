@@ -6,7 +6,7 @@ import { TasteField } from "@/components/taste-field";
 import { Avatar, Button, Card, ErrorText, Field, ListRow, ListSection, Screen } from "@/components/ui";
 import { api, errorMessage } from "@/lib/api";
 import { useMe, useSession } from "@/lib/session";
-import { space, tiles, usePalette } from "@/theme";
+import { space, textScale, tiles, usePalette } from "@/theme";
 
 const WEB = process.env.EXPO_PUBLIC_WEB_URL ?? "https://table-us.com";
 
@@ -37,7 +37,7 @@ export default function Account() {
     <Screen>
       <View style={{ alignItems: "center", gap: space.sm, paddingTop: space.sm }}>
         <Avatar name={name || "?"} size={84} />
-        <Text style={{ fontSize: 24, fontWeight: "700", color: palette.text }}>{name || "Your profile"}</Text>
+        <Text maxFontSizeMultiplier={textScale.display} style={{ fontSize: 24, fontWeight: "700", color: palette.text, textAlign: "center" }}>{name || "Your profile"}</Text>
       </View>
 
       <Card>
