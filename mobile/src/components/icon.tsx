@@ -48,10 +48,14 @@ const MATERIAL: Partial<Record<SFSymbol, number>> = {
   "plus.circle.fill": 0xe147, // add_circle
   "rectangle.portrait.and.arrow.right": 0xe9ba, // logout
   "square.and.arrow.up": 0xe80d, // share
-  "star.fill": 0xe838, // star
   "text.bubble.fill": 0xe0ca, // chat_bubble
   "text.quote": 0xe244, // format_quote
   "trash.fill": 0xe872, // delete
+};
+
+/** The icon font only has outlines; these read wrong unless filled, so they use a text glyph. */
+const FILLED: Partial<Record<SFSymbol, string>> = {
+  "star.fill": "★",
 };
 
 /** Loaded with the app's other fonts before the first screen draws. */
@@ -69,7 +73,15 @@ export type IconProps = {
 export function Icon({ name, fallback, size = 22, color, weight }: IconProps) {
   const palette = usePalette();
   const code = MATERIAL[name];
+  const glyph = FILLED[name];
   const heavy = weight === "semibold" || weight === "bold" || weight === "heavy" || weight === "black";
+  if (glyph) {
+    return (
+      <Text allowFontScaling={false} accessible={false} style={{ width: size, height: size, fontSize: size, lineHeight: size, textAlign: "center", color: color ?? palette.text }}>
+        {glyph}
+      </Text>
+    );
+  }
   if (code === undefined) {
     return fallback ? <Text allowFontScaling={false} style={{ fontSize: size * 0.8, color: color ?? palette.text }}>{fallback}</Text> : null;
   }
