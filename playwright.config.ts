@@ -25,6 +25,8 @@ export default defineConfig({
       command: "backend/.venv/bin/uvicorn main:app --app-dir backend --host 127.0.0.1 --port 8000",
       url: "http://127.0.0.1:8000/health/ready",
       reuseExistingServer: !process.env.CI,
+      // The database is shared with earlier runs, so lift the daily new-plan caps.
+      env: { ...process.env, PLANS_PER_PERSON_PER_DAY: "1000", PLANS_PER_DAY: "1000" },
     },
     {
       command: "npm run dev:web",

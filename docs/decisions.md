@@ -12,7 +12,9 @@ prior log is in git history at `4a944e1`.
 - **Groups of 2 to 8, Borda top-three voting.** The organizer can finalize at
   any time and reopen. These are simple and already work.
 - **Join by private link.** Anyone with the link signs in by email code and
-  joins. Plan creation is limited to an allowlist during the friends test.
+  joins. Any signed-in person can start a plan (Oct 18, 2026), capped at 5 new
+  plans per person and 40 overall per rolling day so paid calls stay bounded.
+  Setting `TABLEUS_PLAN_CREATOR_EMAILS` on the API closes it to an allowlist again.
 
 ## Architecture
 
