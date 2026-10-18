@@ -38,7 +38,7 @@ cd "$root/backend"
 offline() {
   ENVIRONMENT=development DATABASE_URL="postgresql+asyncpg://offline@localhost/offline" \
     TABLEUS_RUNTIME_DB_ROLE="${TABLEUS_RUNTIME_DB_ROLE:-tableus_runtime}" \
-    .venv/bin/alembic "$@"
+    .venv/bin/python -m alembic "$@"
 }
 head="$(offline heads | awk '{print $1}')"
 echo "$env is at $current; this checkout's head is $head."
