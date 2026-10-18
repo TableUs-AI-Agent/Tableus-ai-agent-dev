@@ -16,7 +16,8 @@
       "codex/mascot-and-art": false,
       "codex/staging-phone-builds": false,
       "codex/autosave-vote": false,
-      "codex/mobile-design-pass": false
+      "codex/mobile-design-pass": false,
+      "codex/mobile-design-references": false
     }
   },
   "framework": "nextjs",
