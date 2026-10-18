@@ -2,12 +2,12 @@ import secrets
 from datetime import UTC, datetime
 from typing import Literal, cast
 
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, BackgroundTasks, HTTPException
 from fastapi.responses import RedirectResponse
 from sqlalchemy import delete, func, select
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from . import photos
+from . import photos, push
 from .accounts import (
     confirm_sign_in_exists,
     hand_off_organized_plans,
@@ -17,7 +17,15 @@ from .accounts import (
 from .auth import CurrentIdentity, CurrentProfile, DbSession, can_create_plans
 from .config import get_settings
 from .limits import check_rate
-from .models import Candidate, Plan, PlanParticipant, Profile, RecommendationRun, Vote
+from .models import (
+    Candidate,
+    Plan,
+    PlanParticipant,
+    Profile,
+    PushToken,
+    RecommendationRun,
+    Vote,
+)
 from .providers import get_ai_provider, get_places_provider
 from .providers.base import Diner, Place, ProviderError
 from .ranking import borda_scores, ordered_candidates
@@ -41,6 +49,7 @@ from .schemas import (
     PlanRevisionOut,
     PlanStatusValue,
     PlanSummaryOut,
+    PushTokenIn,
     RecommendationIn,
     ShareTokenOut,
     VoteIn,
@@ -108,6 +117,29 @@ async def delete_me(profile: CurrentProfile, session: DbSession):
     await session.flush()
     # Remove the sign-in before committing so a failure leaves the account intact.
     await remove_sign_in(profile.id)
+    await session.commit()
+    return ok(DeletedOut(deleted=True))
+
+
+@router.put("/me/push-token", response_model=Envelope[PushTokenIn])
+async def save_push_token(body: PushTokenIn, profile: CurrentProfile, session: DbSession):
+    """Send this phone the caller's plan notifications, taking it over from anyone
+    who signed in on it before."""
+    existing = await session.get(PushToken, body.token)
+    if existing:
+        existing.profile_id = profile.id
+    else:
+        session.add(PushToken(token=body.token, profile_id=profile.id))
+    await session.commit()
+    return ok(body)
+
+
+@router.delete("/me/push-token", response_model=Envelope[DeletedOut])
+async def remove_push_token(body: PushTokenIn, profile: CurrentProfile, session: DbSession):
+    """Stop notifications to this phone, called before signing out."""
+    await session.execute(
+        delete(PushToken).where(PushToken.token == body.token, PushToken.profile_id == profile.id)
+    )
     await session.commit()
     return ok(DeletedOut(deleted=True))
 
@@ -420,7 +452,11 @@ def _shortlist(places: list[Place], diners: list[Diner]) -> list[Place]:
 
 @router.post("/plans/{plan_id}/recommendations", response_model=Envelope[PlanOut])
 async def generate_recommendations(
-    plan_id: str, body: RecommendationIn, profile: CurrentProfile, session: DbSession
+    plan_id: str,
+    body: RecommendationIn,
+    profile: CurrentProfile,
+    session: DbSession,
+    background: BackgroundTasks,
 ):
     plan = await _plan(session, plan_id, for_update=True)
     await _participant(session, plan.id, profile.id)
@@ -481,6 +517,10 @@ async def generate_recommendations(
     plan.finalized_candidate_id = None
     _touch(plan)
     await session.commit()
+    background.add_task(
+        push.notify_plan, plan.id, profile.id, plan.title,
+        f"Pip found {len(picks)} places that fit everyone. Vote for your top three.",
+    )
     return ok(await _plan_out(session, plan, profile.id, selected))
 
 
@@ -508,7 +548,13 @@ async def vote(plan_id: str, body: VoteIn, profile: CurrentProfile, session: DbS
 
 
 @router.post("/plans/{plan_id}/finalize", response_model=Envelope[PlanOut])
-async def finalize(plan_id: str, body: FinalizeIn, profile: CurrentProfile, session: DbSession):
+async def finalize(
+    plan_id: str,
+    body: FinalizeIn,
+    profile: CurrentProfile,
+    session: DbSession,
+    background: BackgroundTasks,
+):
     plan = await _plan(session, plan_id, for_update=True)
     _require_organizer(plan, profile)
     if plan.status != "voting" or not plan.active_run_id:
@@ -522,6 +568,12 @@ async def finalize(plan_id: str, body: FinalizeIn, profile: CurrentProfile, sess
     plan.status = "finalized"
     _touch(plan)
     await session.commit()
+    winner = next(item for item in candidates if item.id == selected_id)
+    place = next((item for item in places if item.place_id == winner.place_id), None)
+    background.add_task(
+        push.notify_plan, plan.id, profile.id, plan.title,
+        f"It’s {place.name}. See you there." if place else "The plan is locked in.",
+    )
     return ok(await _plan_out(session, plan, profile.id, places))
 
 
