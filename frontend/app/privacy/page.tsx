@@ -13,7 +13,7 @@ export default function PrivacyPage() {
       <p>People in a plan see each other&apos;s names, wishes and whether they&apos;ve voted. Your standing tastes are private to you; we use them only to make suggestions.</p>
       <h2>Services we use</h2>
       <p>To find restaurants, we send the location you type and the group&apos;s request to Google Maps. To pick places that fit the group, we send everyone&apos;s wishes and standing tastes, without names or email addresses, to Google Gemini along with details of nearby places. Google handles that data under its <a href={PUBLIC_POLICY_LINKS.googlePrivacyPolicy} target="_blank" rel="noreferrer">privacy policy</a>. We store Google Place IDs, not Google&apos;s restaurant details. If something breaks, an error report without your personal details goes to Sentry.</p>
-      <p>We don&apos;t sell data, show ads or use analytics trackers.</p>
+      <p>To see where plans get stuck, we count a few steps of each plan with PostHog: a plan starting, a friend joining, picks appearing, a vote and the final choice. Those counts carry no names, email addresses or anything you wrote, and nothing tracks you in your browser or across other apps. We don&apos;t sell data or show ads.</p>
       <h2>Deleting your data</h2>
       <p>You can delete your account at any time from <Link href="/account">your account page</Link>. It happens right away. Plans you started with other people stay with them. If you can&apos;t sign in, see <Link href="/account-deletion">how to ask us to delete it</Link>.</p>
       <h2>Contact</h2>

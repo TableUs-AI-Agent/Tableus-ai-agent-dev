@@ -34,6 +34,12 @@ prior log is in git history at `4a944e1`.
   signed `/api/v1/place-photos` link; the API redirects to Google's key-free
   image URL and caches it per place for an hour, so the key stays server-side
   and repeat views don't each pay for a Place Photos call.
+- **Sentry for errors, PostHog for plan-flow counts** (Oct 18, 2026). The API,
+  web app and phone app report errors to Sentry with messages, request bodies,
+  breadcrumbs and people stripped. The API alone sends five PostHog events
+  (`plan_started`, `friend_joined`, `picks_shown`, `vote_cast`, `plan_locked`)
+  keyed by a hash of the plan, so a funnel shows where plans stall without a
+  client SDK, cookies or personal data. Each is off while its key is unset.
 - **Simple safeguards.** A per-user rate limit and a Google Cloud budget alert
   replace the quota, budget and replay layers.
 - **Direct account deletion.** Deleting an account removes the profile, the
