@@ -5,7 +5,7 @@ import { Stack, useLocalSearchParams, useRouter } from "expo-router";
 import { useState } from "react";
 import { ActivityIndicator, KeyboardAvoidingView, View } from "react-native";
 
-import { Body, Button, CancelButton, Card, Centered, ErrorText, Footer, Icon, Screen, Title } from "@/components/ui";
+import { Body, Button, CancelButton, Card, Centered, ErrorText, Footer, Icon, Screen, Title, useLargeText } from "@/components/ui";
 import { readWishes, WishesForm } from "@/components/wishes-form";
 import { api, errorMessage } from "@/lib/api";
 import { useKeys, useMe } from "@/lib/session";
@@ -20,6 +20,7 @@ export default function Wishes() {
   const palette = usePalette();
   const queryClient = useQueryClient();
   const me = useMe();
+  const large = useLargeText();
   const plan = useQuery({ queryKey: keys.plan(id), queryFn: () => api.getPlan(id) });
   const [draft, setDraft] = useState<Constraints | null>(null);
   const save = useMutation({
@@ -51,9 +52,12 @@ export default function Wishes() {
             <Title size={34}>What do you want?</Title>
             <Body muted>Everyone in {plan.data.title} sees this. Your standing tastes from your account count too.</Body>
           </View>
-          <View style={{ width: 84, height: 84, borderRadius: 42, backgroundColor: palette.sky, alignItems: "center", justifyContent: "center" }}>
-            <Image source={ART} style={{ width: 60, height: 60 }} contentFit="contain" accessible={false} />
-          </View>
+          {/* Decoration; at large text sizes the words need the whole width. */}
+          {large ? null : (
+            <View style={{ width: 84, height: 84, borderRadius: 42, backgroundColor: palette.sky, alignItems: "center", justifyContent: "center" }}>
+              <Image source={ART} style={{ width: 60, height: 60 }} contentFit="contain" accessible={false} />
+            </View>
+          )}
         </View>
         {plan.data.status === "voting" ? (
           <Card tone="tinted">

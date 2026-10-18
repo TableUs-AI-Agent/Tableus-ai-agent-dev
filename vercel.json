@@ -19,7 +19,8 @@
       "codex/mobile-design-pass": false,
       "codex/open-plan-creation": false,
       "codex/mobile-share-notify": false,
-      "codex/design-motion-skills": false
+      "codex/design-motion-skills": false,
+      "codex/mobile-android-large-text": false
     }
   },
   "framework": "nextjs",

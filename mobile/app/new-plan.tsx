@@ -5,7 +5,7 @@ import { Stack, useRouter } from "expo-router";
 import { useState } from "react";
 import { KeyboardAvoidingView, Text, View } from "react-native";
 
-import { Body, Button, CancelButton, Card, ErrorText, Field, Footer, Footnote, Icon, Screen } from "@/components/ui";
+import { Body, Button, CancelButton, Card, ErrorText, Field, Footer, Footnote, Icon, Screen, useLargeText } from "@/components/ui";
 import { api, errorMessage } from "@/lib/api";
 import { useKeys } from "@/lib/session";
 import { space, usePalette } from "@/theme";
@@ -21,6 +21,7 @@ export default function NewPlan() {
   const [title, setTitle] = useState("");
   const [query, setQuery] = useState("");
   const [location, setLocation] = useState<ResolvedLocation | null>(null);
+  const large = useLargeText();
 
   const find = useMutation({ mutationFn: () => api.resolveLocation(query.trim()), onSuccess: setLocation });
   const create = useMutation({
@@ -55,9 +56,12 @@ export default function NewPlan() {
         }
       >
         <View style={{ flexDirection: "row", alignItems: "center", gap: space.md }}>
-          <View style={{ width: 64, height: 64, borderRadius: 32, backgroundColor: palette.sky, alignItems: "center", justifyContent: "center" }}>
-            <Image source={ART} style={{ width: 46, height: 46 }} contentFit="contain" accessible={false} />
-          </View>
+          {/* Decoration; at large text sizes the words need the whole width. */}
+          {large ? null : (
+            <View style={{ width: 64, height: 64, borderRadius: 32, backgroundColor: palette.sky, alignItems: "center", justifyContent: "center" }}>
+              <Image source={ART} style={{ width: 46, height: 46 }} contentFit="contain" accessible={false} />
+            </View>
+          )}
           <Body muted style={{ flex: 1 }}>Name the occasion and the area. You’ll share the link next.</Body>
         </View>
         <Field label="What’s the occasion?" icon="fork.knife" placeholder="Friday dinner" maxLength={120} onChangeText={setTitle} />

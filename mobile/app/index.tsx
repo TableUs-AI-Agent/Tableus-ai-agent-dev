@@ -7,7 +7,7 @@ import { useEffect } from "react";
 import { Pressable, RefreshControl, ScrollView, Text, View } from "react-native";
 
 import { Pip } from "@/components/pip";
-import { Avatar, Body, Button, Card, ErrorText, Icon, Pill, PressScale, Title } from "@/components/ui";
+import { Avatar, Body, Button, Card, ErrorText, Icon, Pill, PressScale, Title, useLargeText } from "@/components/ui";
 import { api, errorMessage } from "@/lib/api";
 import { since } from "@/lib/format";
 import { pendingJoin } from "@/lib/links";
@@ -97,6 +97,8 @@ function PlanRow({ plan }: { plan: PlanSummary }) {
   const palette = usePalette();
   const router = useRouter();
   const status = STATUS[plan.status];
+  // At large text sizes the art sits above the details so the title gets the full width.
+  const large = useLargeText();
   const people = `${plan.participant_count} ${plan.participant_count === 1 ? "person" : "people"}`;
   return (
     <Pressable
@@ -106,20 +108,20 @@ function PlanRow({ plan }: { plan: PlanSummary }) {
     >
       {({ pressed }) => (
         <View style={{
-          flexDirection: "row", gap: space.md, alignItems: "center", padding: space.sm + space.xs,
+          flexDirection: large ? "column" : "row", gap: space.md, alignItems: large ? "flex-start" : "center", padding: space.sm + space.xs,
           borderRadius: radius.card, borderCurve: "continuous", boxShadow: elevation.card,
           backgroundColor: pressed ? palette.fill : palette.surface,
         }}>
           <View style={{ width: 72, height: 72, borderRadius: 16, borderCurve: "continuous", backgroundColor: palette.sky, alignItems: "center", justifyContent: "center" }}>
             <Image source={status.art} style={{ width: 54, height: 54 }} contentFit="contain" accessible={false} />
           </View>
-          <View style={{ flex: 1, gap: 5 }}>
-            <Text numberOfLines={1} style={{ fontSize: 17, fontWeight: "700", color: palette.text }}>{plan.title}</Text>
+          <View style={{ flex: large ? undefined : 1, alignSelf: "stretch", gap: 5 }}>
+            <Text numberOfLines={large ? 3 : 1} style={{ fontSize: 17, fontWeight: "700", color: palette.text }}>{plan.title}</Text>
             <View style={{ flexDirection: "row", alignItems: "center", gap: 4 }}>
               <Icon name="mappin.and.ellipse" fallback="" size={12} color={palette.secondary} />
-              <Text numberOfLines={1} style={{ flex: 1, fontSize: 14, color: palette.secondary }}>{plan.location_label}</Text>
+              <Text numberOfLines={large ? 3 : 1} style={{ flex: 1, fontSize: 14, color: palette.secondary }}>{plan.location_label}</Text>
             </View>
-            <View style={{ flexDirection: "row", alignItems: "center", gap: space.sm }}>
+            <View style={{ flexDirection: "row", flexWrap: "wrap", alignItems: "center", gap: space.sm }}>
               <Pill icon={status.icon} label={status.label} tone={status.tone} />
               <View style={{ flexDirection: "row", alignItems: "center", gap: 3 }}>
                 <Icon name="person.2.fill" fallback="" size={12} color={palette.tertiary} />
@@ -128,7 +130,7 @@ function PlanRow({ plan }: { plan: PlanSummary }) {
               <Text style={{ fontSize: 13, color: palette.tertiary }}>{since(plan.updated_at)}</Text>
             </View>
           </View>
-          <Icon name="chevron.right" fallback="›" size={13} color={palette.tertiary} weight="semibold" />
+          {large ? null : <Icon name="chevron.right" fallback="›" size={13} color={palette.tertiary} weight="semibold" />}
         </View>
       )}
     </Pressable>
