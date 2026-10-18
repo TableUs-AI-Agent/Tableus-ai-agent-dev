@@ -53,7 +53,10 @@ The API reads only what `backend/tableus/config.py` defines. Production sets:
 - `SUPABASE_URL`, `SUPABASE_SERVICE_ROLE_KEY`
 - `GOOGLE_MAPS_API_KEY`, `GEMINI_API_KEY`
 - `ALLOWED_ORIGINS=https://www.table-us.com,https://table-us.com,https://links.table-us.com`
-- `TABLEUS_PLAN_CREATOR_EMAILS` (empty lets anyone signed in start a plan)
+- `TABLEUS_PLAN_CREATOR_EMAILS` left unset, so anyone signed in can start a
+  plan, as on staging
+- `PLANS_PER_PERSON_PER_DAY` and `PLANS_PER_DAY` matching staging (the
+  defaults are 5 and 40)
 - `SENTRY_DSN`
 
 The Vercel project sets `TABLEUS_DEPLOY_ENV=production`, `NEXT_PUBLIC_API_URL`
