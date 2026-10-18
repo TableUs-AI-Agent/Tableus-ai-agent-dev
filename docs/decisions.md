@@ -19,6 +19,10 @@ prior log is in git history at `4a944e1`.
 - **Keep the stack.** FastAPI and Postgres on Supabase, Next.js on Vercel, Expo
   Router, Railway for the API. A rewrite costs weeks and fixes nothing users
   would notice.
+- **Separate staging and production** (Oct 17, 2026). Each has its own Vercel,
+  Railway and Supabase project, and production only deploys a commit staging is
+  already running (`docs/deploy.md`). Separate projects, not environments in one
+  project, so a mistyped command can't reach the other one.
 - **`/api/v1` with a generated client.** Web and mobile share only the API
   client and domain helpers, never UI.
 - **The AI can only pick real places.** Gemini returns candidate keys from an

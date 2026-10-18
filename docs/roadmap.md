@@ -27,8 +27,12 @@ Five real groups use TableUs to pick a real dinner, and say they'd use it again.
    either is connected. Still to check: Dynamic Type XL and Android.
 5. **Friends test.** Deploy to staging and invite five groups Brian knows. Learn
    what works from conversations and plain database counts.
+6. **Production environment** (repo prep on `codex/production-environment`;
+   accounts and cutover wait for Brian). A separate production stack before
+   anyone beyond friends uses TableUs, with www.table-us.com moving to it and
+   staging moving to staging.table-us.com. See [deploy.md](deploy.md).
 
 ## Later, only if the friends test earns it
 
 Remembering tastes across plans, recurring groups, reservation links, App Store
-and Play distribution, and production hosting.
+and Play distribution.

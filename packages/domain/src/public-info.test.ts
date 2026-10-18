@@ -6,7 +6,8 @@ import {
   mailto,
   PUBLIC_CONTACTS,
   PUBLIC_POLICY_LINKS,
-  PUBLIC_RUNTIME_POLICY,
+  HOSTED_ENVIRONMENTS,
+  hostedEnvironment,
   requireExactHttpsOrigin,
 } from "./public-info.ts";
 import { requireCanonicalUuid } from "./index.ts";
@@ -44,24 +45,26 @@ test("incorporated Google policies use public HTTPS origins", () => {
 });
 
 test("hosted public runtime origins are exact source-controlled trust anchors", () => {
-  assert.equal(
-    requireExactHttpsOrigin(
-      PUBLIC_RUNTIME_POLICY.stagingApiOrigin,
-      PUBLIC_RUNTIME_POLICY.stagingApiOrigin,
-      "API origin",
-    ),
-    PUBLIC_RUNTIME_POLICY.stagingApiOrigin,
-  );
+  const api = HOSTED_ENVIRONMENTS.staging.apiOrigin;
+  assert.equal(requireExactHttpsOrigin(api, api, "API origin"), api);
   for (const value of [
     "http://api-staging-3795.up.railway.app",
     "https://attacker.example",
-    `${PUBLIC_RUNTIME_POLICY.stagingApiOrigin}/private`,
-    `${PUBLIC_RUNTIME_POLICY.stagingApiOrigin}?redirect=https://attacker.example`,
-    `https://user:password@${new URL(PUBLIC_RUNTIME_POLICY.stagingApiOrigin).host}`,
+    `${api}/private`,
+    `${api}?redirect=https://attacker.example`,
+    `https://user:password@${new URL(api).host}`,
   ]) {
-    assert.throws(
-      () => requireExactHttpsOrigin(value, PUBLIC_RUNTIME_POLICY.stagingApiOrigin, "API origin"),
-      /approved HTTPS origin/,
-    );
+    assert.throws(() => requireExactHttpsOrigin(value, api, "API origin"), /approved HTTPS origin/);
+  }
+});
+
+test("staging and production never share a hosted origin", () => {
+  const { staging, production } = HOSTED_ENVIRONMENTS;
+  for (const key of ["webOrigin", "linkHost", "apiOrigin", "supabaseOrigin"] as const) {
+    assert.notEqual(staging[key], production[key], key);
+  }
+  assert.equal(hostedEnvironment("production"), "production");
+  for (const value of [undefined, "", "prod", "Production"]) {
+    assert.throws(() => hostedEnvironment(value), /TABLEUS_DEPLOY_ENV/);
   }
 });
