@@ -21,7 +21,9 @@
       "codex/mobile-share-notify": false,
       "codex/design-motion-skills": false,
       "codex/e2e-plan-flow": false,
-      "codex/mobile-android-large-text": false
+      "codex/mobile-android-large-text": false,
+      "codex/mobile-android-large-text": false,
+      "codex/mobile-design-references": false
     }
   },
   "framework": "nextjs",

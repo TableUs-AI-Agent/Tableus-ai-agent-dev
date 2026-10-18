@@ -6,18 +6,19 @@ import { Stack, useRouter } from "expo-router";
 import { useEffect } from "react";
 import { Pressable, RefreshControl, ScrollView, Text, View } from "react-native";
 
+import { SpotArt } from "@/components/art";
 import { Pip } from "@/components/pip";
-import { Avatar, Body, Button, Card, ErrorText, Icon, Pill, PressScale, Title, useLargeText } from "@/components/ui";
+import { Avatar, Body, Button, Card, ErrorText, Icon, Meta, Pill, PressScale, Title, useLargeText } from "@/components/ui";
 import { api, errorMessage } from "@/lib/api";
 import { since } from "@/lib/format";
 import { pendingJoin } from "@/lib/links";
 import { useKeys, useMe } from "@/lib/session";
-import { elevation, radius, space, usePalette } from "@/theme";
+import { elevation, fonts, radius, space, textScale, tiles, usePalette } from "@/theme";
 
-const STATUS: Record<PlanSummary["status"], { label: string; icon: SFSymbol; tone: "accent" | "butter" | "success"; art: number }> = {
-  collecting: { label: "Collecting wishes", icon: "text.bubble.fill", tone: "accent", art: require("../assets/art/spot-wishes.webp") },
-  voting: { label: "Voting", icon: "hand.raised.fill", tone: "butter", art: require("../assets/art/spot-vote.webp") },
-  finalized: { label: "Decided", icon: "checkmark.seal.fill", tone: "success", art: require("../assets/art/spot-lock.webp") },
+const STATUS: Record<PlanSummary["status"], { label: string; icon: SFSymbol; tone: "accent" | "butter" | "success"; art: number; next: string }> = {
+  collecting: { label: "Collecting wishes", icon: "text.bubble.fill", tone: "accent", art: require("../assets/art/spot-wishes.webp"), next: "Add wishes, then get picks" },
+  voting: { label: "Voting", icon: "hand.raised.fill", tone: "butter", art: require("../assets/art/spot-vote.webp"), next: "Rank your top three" },
+  finalized: { label: "Decided", icon: "checkmark.seal.fill", tone: "success", art: require("../assets/art/spot-lock.webp"), next: "See where you're going" },
 };
 
 export default function Plans() {
@@ -64,7 +65,7 @@ export default function Plans() {
       >
         <Title size={48}>Plans</Title>
         {plans.isPending ? (
-          <View style={{ gap: space.sm + space.xs }}>{[0, 1, 2].map((index) => <SkeletonRow key={index} />)}</View>
+          <View style={{ gap: space.sm + space.xs }}>{[0, 1].map((index) => <SkeletonCard key={index} />)}</View>
         ) : plans.isError ? (
           <Card>
             <ErrorText>{errorMessage(plans.error)}</ErrorText>
@@ -74,7 +75,7 @@ export default function Plans() {
           <Empty canCreate={canCreate} onStart={() => router.push("/new-plan")} />
         ) : (
           <>
-            {open.length ? <Section title="In progress" plans={open} /> : null}
+            {open.length ? <Section title="In progress" plans={open} card /> : null}
             {decided.length ? <Section title="Decided" plans={decided} /> : null}
           </>
         )}
@@ -83,13 +84,59 @@ export default function Plans() {
   );
 }
 
-function Section({ title, plans }: { title: string; plans: PlanSummary[] }) {
+function Section({ title, plans, card = false }: { title: string; plans: PlanSummary[]; card?: boolean }) {
   const palette = usePalette();
   return (
     <View style={{ gap: space.sm + space.xs }}>
       <Text accessibilityRole="header" style={{ fontSize: 20, fontWeight: "700", color: palette.text }}>{title}</Text>
-      {plans.map((plan) => <PlanRow key={plan.id} plan={plan} />)}
+      {plans.map((plan) => (card ? <PlanCard key={plan.id} plan={plan} /> : <PlanRow key={plan.id} plan={plan} />))}
     </View>
+  );
+}
+
+// The chip on the art is white in both themes, so its icon takes the fixed tile colors.
+const STATUS_INK = { accent: tiles.radicchio, butter: tiles.butter, success: tiles.bottle } as const;
+
+/**
+ * A plan still in play gets a poster card, the way invite apps lead with the picture:
+ * the plush art for its stage on the table's sky, the stage as a chip on the art,
+ * then the title in the display face and the facts on one icon row.
+ */
+function PlanCard({ plan }: { plan: PlanSummary }) {
+  const palette = usePalette();
+  const large = useLargeText();
+  const router = useRouter();
+  const status = STATUS[plan.status];
+  const people = `${plan.participant_count} ${plan.participant_count === 1 ? "person" : "people"}`;
+  return (
+    <PressScale
+      haptic={false}
+      accessibilityLabel={`${plan.title}, ${status.label}, ${people}, ${plan.location_label}`}
+      onPress={() => router.push(`/plan/${plan.id}`)}
+      style={{ borderRadius: radius.card, borderCurve: "continuous", backgroundColor: palette.surface, boxShadow: elevation.card, overflow: "hidden" }}
+    >
+      <View style={{ height: 128, backgroundColor: palette.sky, flexDirection: "row", justifyContent: "space-between", padding: space.sm + space.xs }}>
+        <View style={{ gap: space.sm }}>
+          <Pill tone="onArt" icon={status.icon} iconColor={STATUS_INK[status.tone]} label={status.label} />
+          {plan.viewer_is_organizer ? <Pill tone="onArt" icon="crown.fill" iconColor={STATUS_INK.butter} label="You're organizing" /> : null}
+        </View>
+        <View style={{ alignSelf: "flex-end", marginBottom: -space.lg, marginRight: space.xs }}>
+          <SpotArt spot={plan.status === "voting" ? "vote" : plan.status === "finalized" ? "lock" : "wishes"} size={124} />
+        </View>
+      </View>
+      <View style={{ padding: space.md, gap: space.sm }}>
+        <Text numberOfLines={large ? 4 : 2} maxFontSizeMultiplier={textScale.display} style={{ fontFamily: fonts.display, fontSize: 30, lineHeight: 29, color: palette.text }}>{plan.title}</Text>
+        <View style={{ flexDirection: "row", flexWrap: "wrap", alignItems: "center", columnGap: space.md, rowGap: space.xs }}>
+          <Meta icon="mappin.and.ellipse" label={plan.location_label} />
+          <Meta icon="person.2.fill" label={String(plan.participant_count)} />
+          <Meta icon="clock" label={since(plan.updated_at)} />
+        </View>
+        <View style={{ flexDirection: "row", alignItems: "center", gap: 6, paddingTop: space.xs }}>
+          <Text style={{ fontSize: 15, fontWeight: "600", color: palette.accent }}>{status.next}</Text>
+          <Icon name="chevron.right" fallback="›" size={12} color={palette.accent} weight="semibold" />
+        </View>
+      </View>
+    </PressScale>
   );
 }
 
@@ -137,15 +184,15 @@ function PlanRow({ plan }: { plan: PlanSummary }) {
   );
 }
 
-function SkeletonRow() {
+function SkeletonCard() {
   const palette = usePalette();
   return (
-    <View style={{ flexDirection: "row", gap: space.md, alignItems: "center", padding: space.sm + space.xs, borderRadius: radius.card, backgroundColor: palette.surface }}>
-      <View style={{ width: 72, height: 72, borderRadius: 16, backgroundColor: palette.fill }} />
-      <View style={{ flex: 1, gap: space.sm }}>
-        <View style={{ width: "60%", height: 16, borderRadius: 8, backgroundColor: palette.fill }} />
+    <View style={{ borderRadius: radius.card, borderCurve: "continuous", backgroundColor: palette.surface, overflow: "hidden" }}>
+      <View style={{ height: 128, backgroundColor: palette.fill }} />
+      <View style={{ padding: space.md, gap: space.sm }}>
+        <View style={{ width: "60%", height: 22, borderRadius: 8, backgroundColor: palette.fill }} />
         <View style={{ width: "80%", height: 12, borderRadius: 6, backgroundColor: palette.fill }} />
-        <View style={{ width: "40%", height: 20, borderRadius: 10, backgroundColor: palette.fill }} />
+        <View style={{ width: "40%", height: 14, borderRadius: 7, backgroundColor: palette.fill }} />
       </View>
     </View>
   );

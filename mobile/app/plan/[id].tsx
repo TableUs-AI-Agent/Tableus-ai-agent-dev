@@ -1,6 +1,7 @@
 import type { Plan } from "@tableus/api-client";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import * as Haptics from "expo-haptics";
+import { Image } from "expo-image";
 import type { SFSymbol } from "expo-symbols";
 import { Stack, useFocusEffect, useLocalSearchParams, useRouter } from "expo-router";
 import { useCallback, useEffect, useRef, useState } from "react";
@@ -9,9 +10,10 @@ import { ActionSheetIOS, ActivityIndicator, Alert, Platform, RefreshControl, Scr
 import { openInMaps, PickCard } from "@/components/pick-card";
 import { Pip } from "@/components/pip";
 import { TableScene } from "@/components/table-scene";
-import { Avatar, Body, Button, Card, Centered, ErrorText, Field, Footnote, Heading, Icon, Pill, PressScale, Title, useLargeText } from "@/components/ui";
+import { Avatar, AvatarStack, Body, Button, Card, Centered, ErrorText, Field, Footer, Footnote, Heading, Icon, Meta, Pill, PressScale, Title, useLargeText } from "@/components/ui";
 import { hasWishes, readWishes } from "@/components/wishes-form";
 import { api, errorMessage } from "@/lib/api";
+import { photoUrl } from "@/lib/format";
 import { joinUrl } from "@/lib/links";
 import { enableNotifications } from "@/lib/notifications";
 import { useKeys, useMe, useSession } from "@/lib/session";
@@ -104,35 +106,102 @@ export default function PlanScreen() {
           ),
         }}
       />
+      <PlanBody plan={data} ranking={ranking} onToggle={toggle} refreshing={plan.isRefetching} onRefresh={() => plan.refetch()} />
+    </>
+  );
+}
+
+/** The one thing this viewer should do next; it lives in the docked bar at the bottom. */
+type NextStep = "wishes" | "invite" | "picks" | "vote" | "decided";
+
+function nextStep(plan: Plan, myWishes: boolean): NextStep {
+  if (plan.status === "voting") return "vote";
+  if (plan.status === "finalized") return "decided";
+  if (!myWishes) return "wishes";
+  return plan.participants.length < 2 ? "invite" : "picks";
+}
+
+function PlanBody({ plan, ranking, onToggle, refreshing, onRefresh }: {
+  plan: Plan;
+  ranking: string[];
+  onToggle: (candidateId: string) => void;
+  refreshing: boolean;
+  onRefresh: () => void;
+}) {
+  const palette = usePalette();
+  const me = useMe();
+  const update = useUpdate(plan.id);
+  const [request, setRequest] = useState("");
+  const suggest = useMutation({
+    mutationKey: ["suggest", plan.id],
+    mutationFn: () => api.suggest(plan.id, request.trim()),
+    onSuccess: (next) => {
+      Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
+      update(next);
+    },
+  });
+  const vote = useVoteSaver(plan, ranking);
+  const mine = plan.participants.find((person) => person.profile_id === me.data?.id);
+  const next = nextStep(plan, hasWishes(mine?.constraints));
+  const organizer = plan.participants.find((person) => person.is_organizer);
+  // At large text sizes the bar scrolls with the content instead of covering it, like Screen's footer.
+  const large = useLargeText();
+  const bar = (
+    <NextStepBar
+      plan={plan}
+      step={next}
+      ranking={ranking}
+      vote={vote}
+      suggest={() => suggest.mutate()}
+      suggesting={suggest.isPending}
+      suggestError={suggest.isError ? errorMessage(suggest.error) : null}
+    />
+  );
+
+  return (
+    <View style={{ flex: 1, backgroundColor: palette.background }}>
       <ScrollView
         contentInsetAdjustmentBehavior="automatic"
         style={{ backgroundColor: palette.background }}
-        contentContainerStyle={{ padding: space.md, gap: space.lg, paddingBottom: space.xxl * 2 }}
-        refreshControl={<RefreshControl refreshing={plan.isRefetching} onRefresh={() => plan.refetch()} />}
+        contentContainerStyle={{ padding: space.md, gap: space.lg, paddingBottom: space.xxl }}
+        refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
       >
         <View style={{ gap: space.sm }}>
-          <Title size={40}>{data.title}</Title>
-          <View style={{ flexDirection: "row", alignItems: "center", gap: 5 }}>
-            <Icon name="mappin.and.ellipse" fallback="" size={14} color={palette.secondary} />
-            <Text style={{ flex: 1, fontSize: 16, color: palette.secondary }}>{data.location_label}</Text>
+          <Title size={40}>{plan.title}</Title>
+          <View style={{ flexDirection: "row", flexWrap: "wrap", alignItems: "center", columnGap: space.md, rowGap: space.xs }}>
+            <Meta icon="mappin.and.ellipse" label={plan.location_label} />
+            {organizer ? (
+              <Meta icon="crown.fill" color={palette.butterInk} strong label={plan.viewer_is_organizer ? "You're organizing" : `Hosted by ${organizer.display_name}`} />
+            ) : null}
           </View>
         </View>
-        <Progress status={data.status} />
+        <Progress status={plan.status} />
         <TableScene
-          plan={data}
+          plan={plan}
           ranking={ranking}
-          onPick={data.status === "voting" ? (candidateId) => {
+          onPick={plan.status === "voting" ? (candidateId) => {
             Haptics.selectionAsync();
-            toggle(candidateId);
+            onToggle(candidateId);
           } : undefined}
         />
-        <People plan={data} />
-        {data.participants.length < 2 && data.status !== "finalized" ? <InviteCard plan={data} /> : null}
-        {data.status === "collecting" ? <Collecting plan={data} /> : null}
-        {data.status === "voting" ? <Voting plan={data} ranking={ranking} onToggle={toggle} /> : null}
-        {data.status === "finalized" ? <Decided plan={data} /> : null}
+        <People plan={plan} />
+        {plan.participants.length < 2 && plan.status !== "finalized" ? <InviteCard plan={plan} withButton={next !== "invite"} /> : null}
+        {plan.status === "collecting" ? (
+          <Collecting
+            plan={plan}
+            busy={suggest.isPending}
+            // The bar shows its own error when it holds the button.
+            error={suggest.isError && next !== "picks" ? errorMessage(suggest.error) : null}
+            onRequest={setRequest}
+            onSuggest={next === "wishes" ? () => suggest.mutate() : undefined}
+          />
+        ) : null}
+        {plan.status === "voting" ? <Voting plan={plan} ranking={ranking} onToggle={onToggle} /> : null}
+        {plan.status === "finalized" ? <Decided plan={plan} /> : null}
+        {large ? bar : null}
       </ScrollView>
-    </>
+      {large ? null : bar}
+    </View>
   );
 }
 
@@ -288,7 +357,7 @@ function Legend({ icon, color, label }: { icon: SFSymbol; color: string; label: 
   );
 }
 
-function InviteCard({ plan }: { plan: Plan }) {
+function InviteCard({ plan, withButton }: { plan: Plan; withButton: boolean }) {
   const palette = usePalette();
   const large = useLargeText();
   return (
@@ -301,7 +370,7 @@ function InviteCard({ plan }: { plan: Plan }) {
         {/* Pip is decoration; at large text sizes the words need the whole width. */}
         {large ? null : <Pip pose="invite" size={76} />}
       </View>
-      <Button label="Share invite link" icon="square.and.arrow.up" onPress={() => shareInvite(plan)} />
+      {withButton ? <Button label="Share invite link" icon="square.and.arrow.up" onPress={() => shareInvite(plan)} /> : null}
     </Card>
   );
 }
@@ -352,19 +421,16 @@ function MyWishes({ plan }: { plan: Plan }) {
   );
 }
 
-function Collecting({ plan }: { plan: Plan }) {
+function Collecting({ plan, busy, error, onRequest, onSuggest }: {
+  plan: Plan;
+  busy: boolean;
+  error: string | null;
+  onRequest: (text: string) => void;
+  /** Set when the bar is asking for this viewer's wishes, so picks are still one tap away here. */
+  onSuggest?: () => void;
+}) {
   const palette = usePalette();
   const large = useLargeText();
-  const update = useUpdate(plan.id);
-  const [request, setRequest] = useState("");
-  const suggest = useMutation({
-    mutationKey: ["suggest", plan.id],
-    mutationFn: () => api.suggest(plan.id, request.trim()),
-    onSuccess: (next) => {
-      Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
-      update(next);
-    },
-  });
   const enough = plan.participants.length >= 2;
   return (
     <>
@@ -372,32 +438,34 @@ function Collecting({ plan }: { plan: Plan }) {
       <Card tone="tinted">
         <View style={{ flexDirection: "row", alignItems: "center", gap: space.md }}>
           <View style={{ flex: 1, gap: space.xs }}>
-            <Heading>{suggest.isPending ? "Pip is on it" : "Ready when everyone is"}</Heading>
+            <Heading>{busy ? "Pip is on it" : "Ready when everyone is"}</Heading>
             <Text style={{ fontSize: 15, lineHeight: 21, color: palette.secondary }}>
-              {suggest.isPending
+              {busy
                 ? "Reading everyone’s wishes and checking real places nearby."
                 : enough
                   ? "Anyone can ask for picks once the group has added their wishes."
                   : "Invite at least one more person, then get picks together."}
             </Text>
           </View>
-          {large ? null : <Pip pose="think" size={72} float={suggest.isPending} />}
+          {large ? null : <Pip pose="think" size={72} float={busy} />}
         </View>
         {enough ? (
-          <>
-            <Field label="Anything else? (optional)" icon="plus.bubble" placeholder="Close to the theater, good for a birthday" maxLength={500} onChangeText={setRequest} />
-            {suggest.isError ? <ErrorText>{errorMessage(suggest.error)}</ErrorText> : null}
-            <Button label={suggest.isPending ? "Finding places for everyone" : "Get four picks"} icon="fork.knife" busy={suggest.isPending} onPress={() => suggest.mutate()} />
-          </>
+          <Field label="Anything else? (optional)" icon="plus.bubble" placeholder="Close to the theater, good for a birthday" maxLength={500} onChangeText={onRequest} />
+        ) : null}
+        {error ? <ErrorText>{error}</ErrorText> : null}
+        {enough && onSuggest ? (
+          <Button kind="secondary" icon="fork.knife" label={busy ? "Finding places for everyone" : "Get picks without my wishes"} busy={busy} onPress={onSuggest} />
         ) : null}
       </Card>
     </>
   );
 }
 
-function Voting({ plan, ranking, onToggle }: { plan: Plan; ranking: string[]; onToggle: (candidateId: string) => void }) {
-  const palette = usePalette();
-  const router = useRouter();
+/**
+ * The viewer's unsaved top three saves itself once it's full, so taps on the
+ * table count without a second step. A failed save waits for a retry or a new tap instead of looping.
+ */
+function useVoteSaver(plan: Plan, ranking: string[]) {
   const update = useUpdate(plan.id);
   const vote = useMutation({
     mutationFn: (next: string[]) => api.vote(plan.id, next),
@@ -406,6 +474,23 @@ function Voting({ plan, ranking, onToggle }: { plan: Plan; ranking: string[]; on
       update(next);
     },
   });
+  const rankingKey = JSON.stringify(ranking);
+  const saved = ranking.length === 3 && rankingKey === JSON.stringify(plan.my_vote ?? []);
+  const failed = vote.isError && JSON.stringify(vote.variables) === rankingKey;
+  const saveNow = plan.status === "voting" && ranking.length === 3 && !saved && !vote.isPending && !failed;
+  const { mutate } = vote;
+  useEffect(() => {
+    if (saveNow) mutate(JSON.parse(rankingKey) as string[]);
+  }, [saveNow, rankingKey, mutate]);
+  return { saved, failed, saving: vote.isPending, error: vote.isError ? errorMessage(vote.error) : null, retry: () => vote.mutate(ranking) };
+}
+
+type VoteState = ReturnType<typeof useVoteSaver>;
+
+function Voting({ plan, ranking, onToggle }: { plan: Plan; ranking: string[]; onToggle: (candidateId: string) => void }) {
+  const palette = usePalette();
+  const router = useRouter();
+  const update = useUpdate(plan.id);
   const finalize = useMutation({
     mutationFn: () => api.finalize(plan.id),
     onSuccess: (next) => {
@@ -413,56 +498,21 @@ function Voting({ plan, ranking, onToggle }: { plan: Plan; ranking: string[]; on
       update(next);
     },
   });
-  const rankingKey = JSON.stringify(ranking);
-  const saved = ranking.length === 3 && rankingKey === JSON.stringify(plan.my_vote ?? []);
-  // A full top three saves itself, so taps on the table count without a second step.
-  // A failed save waits for a retry or a new tap instead of looping.
-  const failedThis = vote.isError && JSON.stringify(vote.variables) === rankingKey;
-  const saveNow = ranking.length === 3 && !saved && !vote.isPending && !failedThis;
-  const { mutate } = vote;
-  useEffect(() => {
-    if (saveNow) mutate(JSON.parse(rankingKey) as string[]);
-  }, [saveNow, rankingKey, mutate]);
   const voters = plan.participants.filter((person) => person.has_voted).length;
   const leader = [...plan.candidates].sort((a, b) => b.vote_score - a.vote_score || a.rank - b.rank)[0];
-  const status = ranking.length < 3
-    ? `Tap ${3 - ranking.length} more`
-    : saved ? "Vote saved" : vote.isPending ? "Saving…" : "";
 
   return (
     <>
-      <View style={{ gap: space.sm }}>
-        <View style={{ flexDirection: "row", flexWrap: "wrap", alignItems: "center", justifyContent: "space-between", gap: space.sm }}>
-          <Heading>Rank your top three</Heading>
-          <View style={{ flexDirection: "row", gap: 5 }} accessibilityLabel={`${ranking.length} of 3 picked`}>
-            {[0, 1, 2].map((slot) => (
-              <View key={slot} style={{
-                width: 26, height: 26, borderRadius: 13, alignItems: "center", justifyContent: "center",
-                backgroundColor: slot < ranking.length ? palette.butter : "transparent",
-                borderWidth: slot < ranking.length ? 0 : 1.5, borderColor: palette.border, borderStyle: "dashed",
-              }}>
-                <Text maxFontSizeMultiplier={textScale.fixed} style={{ fontSize: 13, fontWeight: "800", color: slot < ranking.length ? palette.onButter : palette.tertiary }}>{slot + 1}</Text>
-              </View>
-            ))}
-          </View>
-        </View>
+      <View style={{ gap: space.xs }}>
+        <Heading>Rank your top three</Heading>
         <Body muted>Tap in order of preference, here or on the table. Tap again to undo.</Body>
       </View>
       <View style={{ gap: space.md }}>
         {plan.candidates.map((candidate) => {
           const position = ranking.indexOf(candidate.id);
-          return <PickCard key={candidate.id} candidate={candidate} rank={position >= 0 ? position : undefined} onToggle={() => onToggle(candidate.id)} />;
+          return <PickCard key={candidate.id} candidate={candidate} from={plan} rank={position >= 0 ? position : undefined} onToggle={() => onToggle(candidate.id)} />;
         })}
       </View>
-      {vote.isError ? <ErrorText>{errorMessage(vote.error)}</ErrorText> : null}
-      {failedThis ? (
-        <Button label="Try saving again" icon="arrow.clockwise" onPress={() => vote.mutate(ranking)} />
-      ) : status ? (
-        <View style={{ flexDirection: "row", alignSelf: "center", alignItems: "center", gap: 6 }}>
-          {saved ? <Icon name="checkmark.circle.fill" fallback="✓" size={18} color={palette.success} /> : null}
-          <Text style={{ flexShrink: 1, fontSize: 16, fontWeight: "600", color: saved ? palette.success : palette.secondary }}>{status}</Text>
-        </View>
-      ) : null}
       {plan.viewer_is_organizer && leader ? (
         <Card>
           <View style={{ flexDirection: "row", alignItems: "center", gap: space.sm }}>
@@ -485,8 +535,6 @@ function Voting({ plan, ranking, onToggle }: { plan: Plan; ranking: string[]; on
 }
 
 function Decided({ plan }: { plan: Plan }) {
-  // Two pills side by side only fit their labels at standard text sizes.
-  const stacked = useLargeText();
   const update = useUpdate(plan.id);
   const reopen = useMutation({ mutationFn: () => api.reopen(plan.id), onSuccess: update });
   const winner = plan.candidates.find((candidate) => candidate.id === plan.finalized_candidate_id);
@@ -500,20 +548,7 @@ function Decided({ plan }: { plan: Plan }) {
         <Pip pose="cheer" size={92} />
       </View>
       {winner ? (
-        <>
-          <PickCard candidate={winner} winner />
-          <View style={{ flexDirection: stacked ? "column" : "row", gap: space.sm }}>
-            <View style={{ flex: stacked ? undefined : 1 }}><Button label="Directions" icon="map.fill" onPress={() => openInMaps(winner.place)} /></View>
-            <View style={{ flex: stacked ? undefined : 1 }}>
-              <Button
-                kind="secondary"
-                icon="square.and.arrow.up"
-                label="Share"
-                onPress={() => Share.share({ message: `${plan.title}: we’re going to ${winner.place.name}, ${winner.place.address}` })}
-              />
-            </View>
-          </View>
-        </>
+        <PickCard candidate={winner} from={plan} winner group={plan.participants.map((person) => person.display_name)} />
       ) : <Body>The chosen place couldn’t be loaded.</Body>}
       {plan.viewer_is_organizer ? (
         <>
@@ -522,5 +557,117 @@ function Decided({ plan }: { plan: Plan }) {
         </>
       ) : null}
     </View>
+  );
+}
+
+/**
+ * The docked bar: whatever this viewer should do next stays in thumb reach while
+ * the plan scrolls, like a booking app's Reserve bar.
+ */
+function NextStepBar({ plan, step, ranking, vote, suggest, suggesting, suggestError }: {
+  plan: Plan;
+  step: NextStep;
+  ranking: string[];
+  vote: VoteState;
+  suggest: () => void;
+  suggesting: boolean;
+  suggestError: string | null;
+}) {
+  const router = useRouter();
+  // Two buttons side by side only fit their labels at standard text sizes.
+  const stacked = useLargeText();
+  if (step === "vote") return <VoteTray plan={plan} ranking={ranking} vote={vote} />;
+  if (step === "decided") {
+    const winner = plan.candidates.find((candidate) => candidate.id === plan.finalized_candidate_id);
+    if (!winner) return null;
+    return (
+      <Footer>
+        <View style={{ flexDirection: stacked ? "column" : "row", gap: space.sm }}>
+          <View style={{ flex: stacked ? undefined : 1 }}><Button label="Directions" icon="map.fill" onPress={() => openInMaps(winner.place)} /></View>
+          <View style={{ flex: stacked ? undefined : 1 }}>
+            <Button
+              kind="secondary"
+              icon="square.and.arrow.up"
+              label="Share"
+              onPress={() => Share.share({ message: `${plan.title}: we’re going to ${winner.place.name}, ${winner.place.address}` })}
+            />
+          </View>
+        </View>
+      </Footer>
+    );
+  }
+  return (
+    <Footer>
+      {step === "wishes" ? <Button label="Add your wishes" icon="text.bubble.fill" onPress={() => router.push(`/wishes/${plan.id}`)} /> : null}
+      {step === "invite" ? <Button label="Share invite link" icon="square.and.arrow.up" onPress={() => shareInvite(plan)} /> : null}
+      {step === "picks" && suggestError ? <ErrorText>{suggestError}</ErrorText> : null}
+      {step === "picks" ? (
+        <Button label={suggesting ? "Finding places for everyone" : "Get four picks"} icon="fork.knife" busy={suggesting} onPress={suggest} />
+      ) : null}
+    </Footer>
+  );
+}
+
+/**
+ * While voting, the bar is a tray: your three slots fill with each pick's photo as you tap,
+ * and the faces of everyone who has voted sit beside it.
+ */
+function VoteTray({ plan, ranking, vote }: { plan: Plan; ranking: string[]; vote: VoteState }) {
+  const palette = usePalette();
+  const voted = plan.participants.filter((person) => person.has_voted);
+  const status = vote.failed
+    ? "Couldn’t save"
+    : ranking.length < 3 ? `Tap ${3 - ranking.length} more` : vote.saved ? "Vote saved" : vote.saving ? "Saving…" : "";
+  return (
+    <Footer>
+      <View style={{ flexDirection: "row", flexWrap: "wrap", alignItems: "center", gap: space.md }}>
+        <View style={{ flexDirection: "row", gap: space.sm }} accessibilityLabel={`${ranking.length} of 3 picked`}>
+          {[0, 1, 2].map((slot) => {
+            const candidate = plan.candidates.find((item) => item.id === ranking[slot]);
+            const photo = candidate ? photoUrl(candidate.place) : null;
+            return (
+              <View key={slot} style={{ width: 48, height: 48 }}>
+                <View style={{
+                  width: 48, height: 48, borderRadius: 14, borderCurve: "continuous", overflow: "hidden",
+                  alignItems: "center", justifyContent: "center",
+                  backgroundColor: candidate ? palette.butter : "transparent",
+                  borderWidth: candidate ? 0 : 1.5, borderColor: palette.border, borderStyle: "dashed",
+                }}>
+                  {photo ? (
+                    <Image source={photo} style={{ width: 48, height: 48 }} contentFit="cover" accessible={false} />
+                  ) : candidate ? (
+                    <Icon name="fork.knife" fallback="" size={18} color={palette.onButter} />
+                  ) : (
+                    <Text maxFontSizeMultiplier={textScale.fixed} style={{ fontSize: 17, fontWeight: "800", color: palette.tertiary }}>{slot + 1}</Text>
+                  )}
+                </View>
+                {candidate ? (
+                  <View style={{
+                    position: "absolute", left: -5, top: -5, width: 22, height: 22, borderRadius: 11,
+                    backgroundColor: palette.butter, borderWidth: 2, borderColor: palette.background, alignItems: "center", justifyContent: "center",
+                  }}>
+                    <Text maxFontSizeMultiplier={textScale.fixed} style={{ fontSize: 11, fontWeight: "800", color: palette.onButter, fontVariant: ["tabular-nums"] }}>{slot + 1}</Text>
+                  </View>
+                ) : null}
+              </View>
+            );
+          })}
+        </View>
+        <View style={{ flexGrow: 1, flexShrink: 1, minWidth: 160, gap: 4 }}>
+          <View style={{ flexDirection: "row", alignItems: "center", gap: 5 }}>
+            {vote.saved ? <Icon name="checkmark.circle.fill" fallback="✓" size={16} color={palette.success} /> : null}
+            {vote.failed ? <Icon name="exclamationmark.circle.fill" fallback="!" size={16} color={palette.danger} /> : null}
+            <Text style={{ fontSize: 16, fontWeight: "700", color: vote.saved ? palette.success : vote.failed ? palette.danger : palette.text }}>{status}</Text>
+          </View>
+          <View style={{ flexDirection: "row", alignItems: "center", gap: 6 }}>
+            {voted.length ? <AvatarStack names={voted.map((person) => person.display_name)} size={22} max={4} /> : null}
+            <Text style={{ fontSize: 13, color: palette.secondary, fontVariant: ["tabular-nums"] }}>
+              {voted.length} of {plan.participants.length} voted
+            </Text>
+          </View>
+        </View>
+      </View>
+      {vote.failed ? <Button size="small" kind="secondary" icon="arrow.clockwise" label="Try saving again" onPress={vote.retry} /> : null}
+    </Footer>
   );
 }

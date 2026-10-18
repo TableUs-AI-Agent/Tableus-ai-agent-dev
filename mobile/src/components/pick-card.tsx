@@ -1,25 +1,32 @@
 import type { Candidate, PlaceDetails } from "@tableus/api-client";
 import { Image } from "expo-image";
+import type { SFSymbol } from "expo-symbols";
 import { useState } from "react";
 import { Linking, Text, View } from "react-native";
 
-import { mapsUrl, photoUrl, price } from "@/lib/format";
-import { elevation, fonts, radius, space, textScale, usePalette } from "@/theme";
+import { distance, mapsUrl, photoUrl, price } from "@/lib/format";
+import { elevation, fonts, radius, space, textScale, tiles, usePalette } from "@/theme";
 
-import { Icon, PressScale } from "./ui";
+import { AvatarStack, Icon, Pill, PressScale } from "./ui";
 
 const ORDINAL = ["1st", "2nd", "3rd"];
 const PLACEHOLDER = require("../../assets/art/spot-distance.webp");
 const GOOGLE_MAPS = require("../../assets/google-maps-attribution.svg");
 
+/** Where the plan is centered, so cards can say how far each pick is. */
+export type Spot = { latitude: number | null; longitude: number | null };
+
 /**
  * One restaurant pick: photo, name, the facts people scan for, and the reason
  * it fits the group. While voting, a tap ranks it and a butter badge shows where.
  */
-export function PickCard({ candidate, rank, winner = false, onToggle }: {
+export function PickCard({ candidate, from, rank, winner = false, group, onToggle }: {
   candidate: Candidate;
+  from?: Spot;
   rank?: number;
   winner?: boolean;
+  /** The chosen place reads as a ticket stub for the whole table, so it shows who's going. */
+  group?: string[];
   onToggle?: () => void;
 }) {
   const palette = usePalette();
@@ -57,12 +64,12 @@ export function PickCard({ candidate, rank, winner = false, onToggle }: {
           <Text maxFontSizeMultiplier={textScale.label} style={{ fontSize: 14, fontWeight: "700", color: palette.onButter }}>Your {ORDINAL[rank]}</Text>
         </View>
       ) : null}
-      {onToggle && !ranked ? (
-        <View style={{
-          position: "absolute", top: space.sm + space.xs, right: space.sm + space.xs, width: 30, height: 30, borderRadius: 15,
-          borderWidth: 2, borderColor: "#FFFFFF", backgroundColor: "rgba(23, 48, 31, 0.35)",
-        }} />
+      {candidate.rank === 1 && !ranked && !winner ? (
+        <View style={{ position: "absolute", top: space.sm + space.xs, left: space.sm + space.xs }}>
+          <Pill tone="onArt" icon="rosette" iconColor={tiles.radicchio} label="Top match" />
+        </View>
       ) : null}
+      {onToggle ? <SelectMark rank={rank} /> : null}
       {photo ? <Attribution place={place} /> : null}
     </View>
   );
@@ -71,8 +78,9 @@ export function PickCard({ candidate, rank, winner = false, onToggle }: {
     <View style={{ gap: space.sm + space.xs, padding: space.md }}>
       <View style={{ gap: 6 }}>
         <Text maxFontSizeMultiplier={textScale.display} style={{ fontFamily: fonts.display, fontSize: winner ? 38 : 30, lineHeight: winner ? 36 : 30, color: palette.text }}>{place.name}</Text>
-        <Facts place={place} />
+        <Facts place={place} from={from} />
       </View>
+      {!winner ? <Features place={place} /> : null}
       <View style={{ flexDirection: "row", gap: space.sm + 2, backgroundColor: winner ? palette.butterTint : palette.background, borderRadius: 14, borderCurve: "continuous", padding: space.sm + space.xs }}>
         <Icon name="person.3.fill" fallback="" size={14} color={palette.accent} />
         <View style={{ flex: 1, gap: 2 }}>
@@ -86,6 +94,14 @@ export function PickCard({ candidate, rank, winner = false, onToggle }: {
           <Text selectable style={{ flex: 1, fontSize: 15, lineHeight: 20, color: palette.secondary }}>{place.address}</Text>
         </View>
       ) : null}
+      {winner && group?.length ? (
+        <View style={{ flexDirection: "row", alignItems: "center", gap: space.sm, paddingTop: space.xs }}>
+          <AvatarStack names={group} size={30} max={6} />
+          <Text style={{ flex: 1, fontSize: 14, fontWeight: "600", color: palette.secondary }}>
+            {group.length === 1 ? "Table for one" : `Table for ${group.length}`}
+          </Text>
+        </View>
+      ) : null}
     </View>
   );
 
@@ -94,11 +110,12 @@ export function PickCard({ candidate, rank, winner = false, onToggle }: {
     borderCurve: "continuous" as const,
     overflow: "hidden" as const,
     backgroundColor: palette.surface,
-    borderWidth: 2,
-    borderColor: winner ? palette.butter : ranked ? palette.text : "transparent",
+    // The winner is a ticket: no outline, so its notches read as cut out of the card.
+    borderWidth: winner ? 0 : 2,
+    borderColor: ranked ? palette.text : "transparent",
     boxShadow: ranked ? `4px 4px 0 ${palette.text}` : elevation.card,
   };
-  if (!onToggle) return <View style={frame}>{header}{content}</View>;
+  if (!onToggle) return <View style={frame}>{header}{winner ? <Perforation /> : null}{content}</View>;
   return (
     <PressScale
       onPress={onToggle}
@@ -113,10 +130,11 @@ export function PickCard({ candidate, rank, winner = false, onToggle }: {
   );
 }
 
-/** Rating, price and cuisine with icons, the facts people scan for first. */
-export function Facts({ place }: { place: PlaceDetails }) {
+/** Rating, cuisine, price and distance with icons, the facts people scan for first. */
+export function Facts({ place, from }: { place: PlaceDetails; from?: Spot }) {
   const palette = usePalette();
   const item = { flexDirection: "row" as const, alignItems: "center" as const, gap: 4 };
+  const away = from ? distance(from, place) : null;
   const text = { fontSize: 14, fontWeight: "600" as const, color: palette.secondary, fontVariant: ["tabular-nums" as const] };
   return (
     <View style={{ flexDirection: "row", flexWrap: "wrap", alignItems: "center", columnGap: space.md, rowGap: 4 }}>
@@ -131,6 +149,65 @@ export function Facts({ place }: { place: PlaceDetails }) {
         <Text maxFontSizeMultiplier={textScale.control} style={text}>{place.cuisine}</Text>
       </View>
       <Text maxFontSizeMultiplier={textScale.control} style={text}>{price(place.price_level)}</Text>
+      {away ? (
+        <View style={item}>
+          <Icon name="location.fill" fallback="" size={12} color={palette.secondary} />
+          <Text maxFontSizeMultiplier={textScale.control} style={text}>{away}</Text>
+        </View>
+      ) : null}
+    </View>
+  );
+}
+
+/** The torn-ticket edge between the photo and the details: two notches and a dashed rule. */
+function Perforation() {
+  const palette = usePalette();
+  const notch = { position: "absolute" as const, top: -11, width: 22, height: 22, borderRadius: 11, backgroundColor: palette.background };
+  return (
+    <View style={{ height: 0 }} accessible={false}>
+      <View style={{ ...notch, left: -13 }} />
+      <View style={{ ...notch, right: -13 }} />
+      <View style={{ position: "absolute", left: space.md, right: space.md, top: 0, borderTopWidth: 2, borderStyle: "dashed", borderColor: palette.butter }} />
+    </View>
+  );
+}
+
+/** Google's place features people pick on, as small symbol chips. The first few that matter to a group. */
+const FEATURES: Record<string, { icon: SFSymbol; label: string }> = {
+  "serves vegetarian food": { icon: "leaf.fill", label: "Vegetarian" },
+  "good for groups": { icon: "person.3.fill", label: "Good for groups" },
+  "takes reservations": { icon: "calendar", label: "Reservations" },
+  "outdoor seating": { icon: "sun.max.fill", label: "Outdoor seating" },
+  "good for children": { icon: "figure.and.child.holdinghands", label: "Kid friendly" },
+  "serves cocktails": { icon: "wineglass", label: "Cocktails" },
+  "serves wine": { icon: "wineglass.fill", label: "Wine" },
+  "serves beer": { icon: "mug.fill", label: "Beer" },
+  "serves dessert": { icon: "birthday.cake.fill", label: "Dessert" },
+  "live music": { icon: "music.note", label: "Live music" },
+  "allows dogs": { icon: "pawprint.fill", label: "Dogs welcome" },
+};
+
+function Features({ place }: { place: PlaceDetails }) {
+  const shown = Object.keys(FEATURES).filter((key) => place.features?.includes(key)).slice(0, 3);
+  if (!shown.length) return null;
+  return (
+    <View style={{ flexDirection: "row", flexWrap: "wrap", gap: 6 }}>
+      {shown.map((key) => <Pill key={key} icon={FEATURES[key].icon} label={FEATURES[key].label} />)}
+    </View>
+  );
+}
+
+/** The select control on the photo: an empty ring with a plus, then a butter check once ranked. */
+function SelectMark({ rank }: { rank?: number }) {
+  const palette = usePalette();
+  const ranked = rank !== undefined;
+  return (
+    <View style={{
+      position: "absolute", top: space.sm + space.xs, right: space.sm + space.xs, width: 32, height: 32, borderRadius: 16,
+      alignItems: "center", justifyContent: "center", borderWidth: ranked ? 0 : 2, borderColor: "#FFFFFF",
+      backgroundColor: ranked ? palette.butter : "rgba(23, 48, 31, 0.4)", boxShadow: "0 1px 6px rgba(23, 48, 31, 0.25)",
+    }}>
+      <Icon name={ranked ? "checkmark" : "plus"} fallback={ranked ? "✓" : "+"} size={14} color={ranked ? palette.onButter : "#FFFFFF"} weight="bold" />
     </View>
   );
 }

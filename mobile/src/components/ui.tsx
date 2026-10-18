@@ -372,19 +372,45 @@ export function ListRow({ icon, tint, title, detail, value, onPress, destructive
   );
 }
 
-/** A small rounded label with an icon, for plan status and similar states. */
-export function Pill({ icon, label, tone = "neutral" }: { icon?: SFSymbol; label: string; tone?: "neutral" | "accent" | "butter" | "success" }) {
+/**
+ * A small rounded label with an icon, for plan status and similar states.
+ * "onArt" is the white chip that sits on a photo or illustration, like a status badge on a poster.
+ */
+export function Pill({ icon, label, tone = "neutral", iconColor }: {
+  icon?: SFSymbol;
+  label: string;
+  tone?: "neutral" | "accent" | "butter" | "success" | "onArt";
+  iconColor?: string;
+}) {
   const palette = usePalette();
   const colors = {
     neutral: { fill: palette.fill, ink: palette.secondary },
     accent: { fill: palette.accentTint, ink: palette.accent },
     butter: { fill: palette.butter, ink: palette.onButter },
     success: { fill: palette.successTint, ink: palette.success },
+    // Art stays daylight in both themes, so its chip does too.
+    onArt: { fill: "rgba(255, 255, 255, 0.94)", ink: "#17301F" },
   }[tone];
   return (
-    <View style={{ flexDirection: "row", alignItems: "center", gap: 5, alignSelf: "flex-start", backgroundColor: colors.fill, borderRadius: radius.pill, paddingHorizontal: 10, paddingVertical: 4 }}>
-      {icon ? <Icon name={icon} fallback="" size={12} color={colors.ink} weight="semibold" /> : null}
+    <View style={{
+      flexDirection: "row", alignItems: "center", gap: 5, alignSelf: "flex-start", backgroundColor: colors.fill,
+      borderRadius: radius.pill, paddingHorizontal: 10, paddingVertical: 4,
+      boxShadow: tone === "onArt" ? "0 1px 6px rgba(23, 48, 31, 0.18)" : undefined,
+    }}>
+      {icon ? <Icon name={icon} fallback="" size={12} color={iconColor ?? colors.ink} weight="semibold" /> : null}
       <Text maxFontSizeMultiplier={textScale.control} style={{ flexShrink: 1, fontSize: 13, fontWeight: "600", color: colors.ink }}>{label}</Text>
+    </View>
+  );
+}
+
+/** One fact with its symbol, for the scannable rows under a title (place, people, time). */
+export function Meta({ icon, label, color, strong = false }: { icon: SFSymbol; label: string; color?: string; strong?: boolean }) {
+  const palette = usePalette();
+  const ink = color ?? palette.secondary;
+  return (
+    <View style={{ flexDirection: "row", alignItems: "center", gap: 4, flexShrink: 1 }}>
+      <Icon name={icon} fallback="" size={13} color={ink} />
+      <Text numberOfLines={1} style={{ flexShrink: 1, fontSize: 14, fontWeight: strong ? "600" : "400", color: ink, fontVariant: ["tabular-nums"] }}>{label}</Text>
     </View>
   );
 }
