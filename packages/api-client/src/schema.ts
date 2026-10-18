@@ -43,6 +43,31 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/me/push-token": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        /**
+         * Save Push Token
+         * @description Send this phone the caller's plan notifications, taking it over from anyone
+         *     who signed in on it before.
+         */
+        put: operations["save_push_token_api_v1_me_push_token_put"];
+        post?: never;
+        /**
+         * Remove Push Token
+         * @description Stop notifications to this phone, called before signing out.
+         */
+        delete: operations["remove_push_token_api_v1_me_push_token_delete"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v1/plans": {
         parameters: {
             query?: never;
@@ -306,6 +331,14 @@ export interface components {
                 [key: string]: unknown;
             };
         };
+        /** Envelope[PushTokenIn] */
+        Envelope_PushTokenIn_: {
+            data: components["schemas"]["PushTokenIn"];
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+        };
         /** Envelope[ShareTokenOut] */
         Envelope_ShareTokenOut_: {
             data: components["schemas"]["ShareTokenOut"];
@@ -538,6 +571,11 @@ export interface components {
             /** Viewer Is Organizer */
             viewer_is_organizer: boolean;
         };
+        /** PushTokenIn */
+        PushTokenIn: {
+            /** Token */
+            token: string;
+        };
         /** RecommendationIn */
         RecommendationIn: {
             /**
@@ -693,6 +731,78 @@ export interface operations {
             cookie?: never;
         };
         requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_DeletedOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    save_push_token_api_v1_me_push_token_put: {
+        parameters: {
+            query?: never;
+            header?: {
+                authorization?: string | null;
+                "x-demo-user-id"?: string | null;
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["PushTokenIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_PushTokenIn_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    remove_push_token_api_v1_me_push_token_delete: {
+        parameters: {
+            query?: never;
+            header?: {
+                authorization?: string | null;
+                "x-demo-user-id"?: string | null;
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["PushTokenIn"];
+            };
+        };
         responses: {
             /** @description Successful Response */
             200: {

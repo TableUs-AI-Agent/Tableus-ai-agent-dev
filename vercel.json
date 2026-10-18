@@ -17,7 +17,8 @@
       "codex/staging-phone-builds": false,
       "codex/autosave-vote": false,
       "codex/mobile-design-pass": false,
-      "codex/open-plan-creation": false
+      "codex/open-plan-creation": false,
+      "codex/mobile-share-notify": false
     }
   },
   "framework": "nextjs",

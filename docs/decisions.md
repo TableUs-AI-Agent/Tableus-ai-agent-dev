@@ -36,6 +36,10 @@ prior log is in git history at `4a944e1`.
   signed `/api/v1/place-photos` link; the API redirects to Google's key-free
   image URL and caches it per place for an hour, so the key stays server-side
   and repeat views don't each pay for a Place Photos call.
+- **Push through Expo** (Oct 17, 2026). Phones hear when picks are ready to vote
+  on and when the plan is locked in, nothing else. Expo's push service needs no
+  server key; tokens live in `push_tokens`, one row per phone, owned by whoever
+  signed in on it last. Only staging and production send.
 - **Simple safeguards.** A per-user rate limit and a Google Cloud budget alert
   replace the quota, budget and replay layers.
 - **Direct account deletion.** Deleting an account removes the profile, the

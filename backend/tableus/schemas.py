@@ -177,3 +177,7 @@ class ShareTokenOut(BaseModel):
 
 class DeletedOut(BaseModel):
     deleted: bool
+
+
+class PushTokenIn(BaseModel):
+    token: str = Field(max_length=255, pattern=r"^Expo(nent)?PushToken\[[^\]]+\]$")

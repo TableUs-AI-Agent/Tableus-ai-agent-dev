@@ -1,9 +1,12 @@
 import { DarkerGrotesque_800ExtraBold, useFonts } from "@expo-google-fonts/darker-grotesque";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { SplashScreen, Stack } from "expo-router";
+import { QueryClient, QueryClientProvider, useQueryClient } from "@tanstack/react-query";
+import * as Notifications from "expo-notifications";
+import { SplashScreen, Stack, useRouter } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import { useEffect, useState } from "react";
+import { Platform } from "react-native";
 
+import { enableNotifications, notificationPlanId } from "@/lib/notifications";
 import { SessionProvider, useMe, useSession } from "@/lib/session";
 import { usePalette } from "@/theme";
 
@@ -37,6 +40,7 @@ function Navigator() {
   useEffect(() => {
     if (fontsLoaded && resolved) SplashScreen.hideAsync();
   }, [fontsLoaded, resolved]);
+  usePlanNotifications(ready && session.status === "signed-in" ? session.subject : null);
   if (!fontsLoaded || !resolved) return null;
 
   return (
@@ -69,4 +73,34 @@ function Navigator() {
       </Stack>
     </>
   );
+}
+
+/**
+ * Keeps this phone's notifications pointed at the signed-in person, opens the
+ * plan a tapped notification is about, and refreshes plans when one arrives.
+ */
+function usePlanNotifications(subject: string | null) {
+  const router = useRouter();
+  const queryClient = useQueryClient();
+  useEffect(() => {
+    if (!subject || Platform.OS === "web") return;
+    enableNotifications(subject, false);
+    const open = (response: Notifications.NotificationResponse | null) => {
+      const planId = notificationPlanId(response);
+      if (!planId) return;
+      Notifications.clearLastNotificationResponse();
+      router.push(`/plan/${planId}`);
+    };
+    // A tap that launched the app arrives before anyone is signed in.
+    open(Notifications.getLastNotificationResponse());
+    const tapped = Notifications.addNotificationResponseReceivedListener(open);
+    const received = Notifications.addNotificationReceivedListener(() => {
+      queryClient.invalidateQueries({ queryKey: ["plans"] });
+      queryClient.invalidateQueries({ queryKey: ["plan"] });
+    });
+    return () => {
+      tapped.remove();
+      received.remove();
+    };
+  }, [subject, router, queryClient]);
 }
