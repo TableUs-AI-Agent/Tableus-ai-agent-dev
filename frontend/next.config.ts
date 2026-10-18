@@ -1,28 +1,28 @@
 import type { NextConfig } from "next";
 import path from "node:path";
 import { withSentryConfig } from "@sentry/nextjs";
-import { PUBLIC_RUNTIME_POLICY, requireExactHttpsOrigin } from "@tableus/domain";
+import { HOSTED_ENVIRONMENTS, hostedEnvironment, requireExactHttpsOrigin } from "@tableus/domain";
 import { webApiOrigin } from "./app/lib/runtime-config";
 import { FRAME_PROTECTION_HEADERS, FRAME_PROTECTION_SOURCE, PRIVATE_JOIN_HEADERS, PRIVATE_JOIN_SOURCE } from "./app/lib/security-headers";
 
+// Hosted builds name their environment and must use exactly its origins, so a
+// staging build can never point at production data or the reverse.
 if (process.env.VERCEL === "1") {
-  requireExactHttpsOrigin(
-    process.env.NEXT_PUBLIC_API_URL ?? "",
-    PUBLIC_RUNTIME_POLICY.stagingApiOrigin,
-    "Vercel web API origin",
-  );
-  requireExactHttpsOrigin(
-    process.env.TABLEUS_API_ORIGIN ?? "",
-    PUBLIC_RUNTIME_POLICY.stagingApiOrigin,
-    "Vercel server API origin",
-  );
+  const deployEnv = hostedEnvironment(process.env.TABLEUS_DEPLOY_ENV);
+  const expected = HOSTED_ENVIRONMENTS[deployEnv];
+  requireExactHttpsOrigin(process.env.NEXT_PUBLIC_API_URL ?? "", expected.apiOrigin, "Vercel web API origin");
+  requireExactHttpsOrigin(process.env.TABLEUS_API_ORIGIN ?? "", expected.apiOrigin, "Vercel server API origin");
   requireExactHttpsOrigin(
     process.env.NEXT_PUBLIC_SUPABASE_URL ?? "",
-    PUBLIC_RUNTIME_POLICY.stagingSupabaseOrigin,
+    expected.supabaseOrigin,
     "Vercel Supabase origin",
   );
-  if ((process.env.NEXT_PUBLIC_LINK_ORIGIN ?? "") !== `https://${PUBLIC_RUNTIME_POLICY.linkHost}`) {
-    throw new Error("Vercel link origin does not match the source-controlled TableUs host");
+  if ((process.env.NEXT_PUBLIC_LINK_ORIGIN ?? "") !== `https://${expected.linkHost}`) {
+    throw new Error(`Vercel link origin does not match the ${deployEnv} TableUs host`);
+  }
+  for (const name of ["TABLEUS_TELEMETRY_MODE", "NEXT_PUBLIC_TELEMETRY_MODE"]) {
+    const mode = process.env[name];
+    if (mode && mode !== deployEnv) throw new Error(`${name} must be ${deployEnv} on this deploy`);
   }
 }
 

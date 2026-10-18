@@ -21,7 +21,8 @@
       "environment": "preview",
       "autoIncrement": true,
       "env": {
-        "EXPO_PUBLIC_WEB_URL": "https://www.table-us.com",
+        "EXPO_PUBLIC_WEB_URL": "https://staging.table-us.com",
+        "EXPO_PUBLIC_LINK_HOST": "staging.table-us.com",
         "SENTRY_DISABLE_AUTO_UPLOAD": "true"
       },
       "android": {
@@ -35,7 +36,11 @@
     "production": {
       "channel": "production",
       "environment": "production",
-      "autoIncrement": true
+      "autoIncrement": true,
+      "env": {
+        "EXPO_PUBLIC_WEB_URL": "https://www.table-us.com",
+        "EXPO_PUBLIC_LINK_HOST": "links.table-us.com"
+      }
     }
   },
   "submit": {

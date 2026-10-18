@@ -1,7 +1,7 @@
 /**
  * Service origins come from build-time env. Accept a bare HTTPS origin, or plain
  * HTTP on this machine for local development. Hosted builds are additionally
- * pinned to the expected staging origins in next.config.ts.
+ * pinned to their environment's origins in next.config.ts.
  */
 export function serviceOrigin(value: string | undefined, label: string): string {
   if (!value) return "";
