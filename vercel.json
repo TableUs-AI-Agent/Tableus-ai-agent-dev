@@ -18,7 +18,8 @@
       "codex/autosave-vote": false,
       "codex/mobile-design-pass": false,
       "codex/open-plan-creation": false,
-      "codex/mobile-share-notify": false
+      "codex/mobile-share-notify": false,
+      "codex/design-motion-skills": false
     }
   },
   "framework": "nextjs",
