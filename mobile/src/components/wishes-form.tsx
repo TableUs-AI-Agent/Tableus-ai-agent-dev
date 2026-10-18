@@ -1,11 +1,11 @@
 import type { Constraints } from "@tableus/api-client";
 import type { SFSymbol } from "expo-symbols";
 import { useState, type ReactNode } from "react";
-import { Text, useWindowDimensions, View } from "react-native";
+import { Text, View } from "react-native";
 
-import { radius, space, tiles, usePalette } from "@/theme";
+import { radius, space, textScale, tiles, usePalette } from "@/theme";
 
-import { Chip, Field, IconTile, PressScale } from "./ui";
+import { Chip, Field, IconTile, PressScale, useLargeText } from "./ui";
 
 const CUISINES = ["Italian", "Japanese", "Mexican", "Chinese", "Thai", "Indian", "Korean", "Vietnamese", "Mediterranean", "American", "French", "Middle Eastern"];
 const DIETARY = ["Vegetarian", "Vegan", "Gluten-free", "Halal", "Kosher", "Dairy-free", "Nut allergy"];
@@ -46,7 +46,7 @@ function Group({ title, icon, tint, children }: { title: string; icon: SFSymbol;
 export function WishesForm({ initial, onChange }: { initial: Constraints; onChange: (wishes: Constraints) => void }) {
   const palette = usePalette();
   // Four budget tiles in a row only fit their labels at standard text sizes; larger text gets two rows.
-  const twoRows = useWindowDimensions().fontScale > 1.3;
+  const twoRows = useLargeText();
   const [wishes, setWishes] = useState<Constraints>({
     cuisines: initial.cuisines ?? [],
     dietary_notes: initial.dietary_notes ?? [],
@@ -99,8 +99,8 @@ export function WishesForm({ initial, onChange }: { initial: Constraints; onChan
                     backgroundColor: selected ? palette.accent : palette.surface,
                   }}
                 >
-                  <Text style={{ fontSize: 17, fontWeight: "700", color: selected ? palette.onAccent : palette.text }}>{"$".repeat(level)}</Text>
-                  <Text style={{ fontSize: 12, color: selected ? palette.onAccent : palette.secondary }}>{BUDGET[level - 1]}</Text>
+                  <Text maxFontSizeMultiplier={textScale.control} style={{ fontSize: 17, fontWeight: "700", color: selected ? palette.onAccent : palette.text }}>{"$".repeat(level)}</Text>
+                  <Text maxFontSizeMultiplier={textScale.control} style={{ fontSize: 12, color: selected ? palette.onAccent : palette.secondary }}>{BUDGET[level - 1]}</Text>
                 </PressScale>
               </View>
             );

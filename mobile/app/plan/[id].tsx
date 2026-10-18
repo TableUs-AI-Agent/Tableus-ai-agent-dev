@@ -4,12 +4,12 @@ import * as Haptics from "expo-haptics";
 import type { SFSymbol } from "expo-symbols";
 import { Stack, useFocusEffect, useLocalSearchParams, useRouter } from "expo-router";
 import { useCallback, useEffect, useRef, useState } from "react";
-import { ActionSheetIOS, ActivityIndicator, Alert, Platform, RefreshControl, ScrollView, Share, Text, useWindowDimensions, View } from "react-native";
+import { ActionSheetIOS, ActivityIndicator, Alert, Platform, RefreshControl, ScrollView, Share, Text, View } from "react-native";
 
 import { openInMaps, PickCard } from "@/components/pick-card";
 import { Pip } from "@/components/pip";
 import { TableScene } from "@/components/table-scene";
-import { Avatar, Body, Button, Card, Centered, ErrorText, Field, Footnote, Heading, Icon, Pill, PressScale, Title } from "@/components/ui";
+import { Avatar, Body, Button, Card, Centered, ErrorText, Field, Footnote, Heading, Icon, Pill, PressScale, Title, useLargeText } from "@/components/ui";
 import { hasWishes, readWishes } from "@/components/wishes-form";
 import { api, errorMessage } from "@/lib/api";
 import { joinUrl } from "@/lib/links";
@@ -242,6 +242,7 @@ function OrganizerMenu({ plan }: { plan: Plan }) {
 
 function People({ plan }: { plan: Plan }) {
   const palette = usePalette();
+  const large = useLargeText();
   const voting = plan.status === "voting";
   const done = (person: Plan["participants"][number]) => (voting ? person.has_voted : hasWishes(person.constraints));
   const count = plan.participants.filter(done).length;
@@ -258,7 +259,7 @@ function People({ plan }: { plan: Plan }) {
         {plan.participants.map((person) => {
           const finished = plan.status !== "finalized" && done(person);
           return (
-            <View key={person.profile_id} style={{ alignItems: "center", gap: 6, width: 64 }}>
+            <View key={person.profile_id} style={{ alignItems: "center", gap: 6, width: large ? 96 : 64 }}>
               <Avatar name={person.display_name} size={48} badge={finished ? "done" : person.is_organizer ? "organizer" : undefined} />
               <Text numberOfLines={1} maxFontSizeMultiplier={textScale.label} style={{ fontSize: 13, fontWeight: "600", color: palette.text }}>{person.display_name}</Text>
             </View>
@@ -289,6 +290,7 @@ function Legend({ icon, color, label }: { icon: SFSymbol; color: string; label: 
 
 function InviteCard({ plan }: { plan: Plan }) {
   const palette = usePalette();
+  const large = useLargeText();
   return (
     <Card tone="dark">
       <View style={{ flexDirection: "row", alignItems: "center", gap: space.md }}>
@@ -296,7 +298,8 @@ function InviteCard({ plan }: { plan: Plan }) {
           <Text style={{ fontSize: 20, fontWeight: "700", color: palette.onInk }}>Bring the group in</Text>
           <Text style={{ fontSize: 15, lineHeight: 21, color: palette.onInk, opacity: 0.85 }}>Anyone with the link can join, up to eight people. They can use the web, no app needed.</Text>
         </View>
-        <Pip pose="invite" size={76} />
+        {/* Pip is decoration; at large text sizes the words need the whole width. */}
+        {large ? null : <Pip pose="invite" size={76} />}
       </View>
       <Button label="Share invite link" icon="square.and.arrow.up" onPress={() => shareInvite(plan)} />
     </Card>
@@ -315,15 +318,23 @@ function MyWishes({ plan }: { plan: Plan }) {
     ...(wishes.max_price_level ? [`Up to ${"$".repeat(wishes.max_price_level)}`] : []),
   ];
   const empty = !hasWishes(mine?.constraints);
+  // At large text sizes the heading needs the whole row, so the action drops below it.
+  const large = useLargeText();
+  const action = (
+    <View style={{ flexDirection: "row", alignItems: "center", gap: space.sm }}>
+      <Text maxFontSizeMultiplier={textScale.control} style={{ fontSize: 15, fontWeight: "600", color: palette.accent }}>{empty ? "Add" : "Edit"}</Text>
+      <Icon name="chevron.right" fallback="›" size={13} color={palette.accent} weight="semibold" />
+    </View>
+  );
   return (
     <PressScale onPress={() => router.push(`/wishes/${plan.id}`)} accessibilityLabel={empty ? "Add your wishes" : "Edit your wishes"} haptic={false}>
       <Card style={empty ? { borderWidth: 2, borderColor: palette.accent, borderStyle: "dashed" } : undefined}>
         <View style={{ flexDirection: "row", alignItems: "center", gap: space.sm }}>
           <Icon name="text.bubble.fill" fallback="" size={18} color={palette.accent} />
           <View style={{ flex: 1 }}><Heading>Your wishes</Heading></View>
-          <Text style={{ fontSize: 15, fontWeight: "600", color: palette.accent }}>{empty ? "Add" : "Edit"}</Text>
-          <Icon name="chevron.right" fallback="›" size={13} color={palette.accent} weight="semibold" />
+          {large ? null : action}
         </View>
+        {large ? action : null}
         {empty ? (
           <Body muted>Say what you’re in the mood for, what you can’t eat and what you want to spend. Everyone in the plan sees it.</Body>
         ) : (
@@ -343,6 +354,7 @@ function MyWishes({ plan }: { plan: Plan }) {
 
 function Collecting({ plan }: { plan: Plan }) {
   const palette = usePalette();
+  const large = useLargeText();
   const update = useUpdate(plan.id);
   const [request, setRequest] = useState("");
   const suggest = useMutation({
@@ -369,7 +381,7 @@ function Collecting({ plan }: { plan: Plan }) {
                   : "Invite at least one more person, then get picks together."}
             </Text>
           </View>
-          <Pip pose="think" size={72} float={suggest.isPending} />
+          {large ? null : <Pip pose="think" size={72} float={suggest.isPending} />}
         </View>
         {enough ? (
           <>
@@ -429,7 +441,7 @@ function Voting({ plan, ranking, onToggle }: { plan: Plan; ranking: string[]; on
                 backgroundColor: slot < ranking.length ? palette.butter : "transparent",
                 borderWidth: slot < ranking.length ? 0 : 1.5, borderColor: palette.border, borderStyle: "dashed",
               }}>
-                <Text maxFontSizeMultiplier={textScale.badge} style={{ fontSize: 13, fontWeight: "800", color: slot < ranking.length ? palette.onButter : palette.tertiary }}>{slot + 1}</Text>
+                <Text maxFontSizeMultiplier={textScale.fixed} style={{ fontSize: 13, fontWeight: "800", color: slot < ranking.length ? palette.onButter : palette.tertiary }}>{slot + 1}</Text>
               </View>
             ))}
           </View>
@@ -474,7 +486,7 @@ function Voting({ plan, ranking, onToggle }: { plan: Plan; ranking: string[]; on
 
 function Decided({ plan }: { plan: Plan }) {
   // Two pills side by side only fit their labels at standard text sizes.
-  const stacked = useWindowDimensions().fontScale > 1.3;
+  const stacked = useLargeText();
   const update = useUpdate(plan.id);
   const reopen = useMutation({ mutationFn: () => api.reopen(plan.id), onSuccess: update });
   const winner = plan.candidates.find((candidate) => candidate.id === plan.finalized_candidate_id);

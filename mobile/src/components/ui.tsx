@@ -7,6 +7,7 @@ import {
   ScrollView,
   Text,
   TextInput,
+  useWindowDimensions,
   View,
   type TextInputProps,
   type ViewStyle,
@@ -14,7 +15,7 @@ import {
 import Animated, { Easing, useAnimatedStyle, useSharedValue, withTiming } from "react-native-reanimated";
 
 import { initials } from "@/lib/format";
-import { avatarTint, elevation, fonts, radius, space, textScale, usePalette, type Palette } from "@/theme";
+import { avatarTint, elevation, fonts, LARGE_TEXT, radius, space, textScale, usePalette, type Palette } from "@/theme";
 
 import { Icon } from "./icon";
 
@@ -22,9 +23,18 @@ export { Icon };
 
 const PRESS = { duration: 120, easing: Easing.bezier(0.23, 1, 0.32, 1) };
 
-/** Root scroller for every screen: content can scroll under the large title. */
+/** True when the system text size is big enough that side-by-side layouts no longer fit. */
+export function useLargeText() {
+  return useWindowDimensions().fontScale > LARGE_TEXT;
+}
+
+/**
+ * Root scroller for every screen: content can scroll under the large title.
+ * At large text sizes the footer scrolls with the content instead of covering it.
+ */
 export function Screen({ children, footer, padded = true }: { children: ReactNode; footer?: ReactNode; padded?: boolean }) {
   const palette = usePalette();
+  const large = useLargeText();
   return (
     <View style={{ flex: 1, backgroundColor: palette.background }}>
       <ScrollView
@@ -34,8 +44,9 @@ export function Screen({ children, footer, padded = true }: { children: ReactNod
         contentContainerStyle={{ padding: padded ? space.md : 0, paddingBottom: space.xxl * 2, gap: space.lg }}
       >
         {children}
+        {large ? <View style={{ paddingHorizontal: padded ? 0 : space.lg }}>{footer}</View> : null}
       </ScrollView>
-      {footer}
+      {large ? null : footer}
     </View>
   );
 }
@@ -43,6 +54,7 @@ export function Screen({ children, footer, padded = true }: { children: ReactNod
 /** A bottom bar for the one primary action, so it stays in thumb reach above the home indicator. */
 export function Footer({ children }: { children: ReactNode }) {
   const palette = usePalette();
+  if (useLargeText()) return <View style={{ gap: space.sm }}>{children}</View>;
   return (
     <View style={{
       paddingHorizontal: space.md, paddingTop: space.sm + space.xs, paddingBottom: space.xl,
@@ -162,7 +174,7 @@ export function Button({ label, onPress, busy, disabled, kind = "primary", icon,
       }}
     >
       {busy ? <ActivityIndicator color={ink} /> : icon ? <Icon name={icon} fallback="" size={large ? 18 : 15} color={ink} weight="semibold" /> : null}
-      <Text style={{ flexShrink: 1, textAlign: "center", fontSize: large ? 17 : 15, fontWeight: "600", color: ink }}>{label}</Text>
+      <Text maxFontSizeMultiplier={textScale.control} style={{ flexShrink: 1, textAlign: "center", fontSize: large ? 17 : 15, fontWeight: "600", color: ink }}>{label}</Text>
     </PressScale>
   );
 }
@@ -225,7 +237,7 @@ export function Chip({ label, selected, onPress, icon }: { label: string; select
       }}
     >
       {selected ? <Icon name="checkmark" fallback="✓" size={13} color={ink} weight="bold" /> : icon ? <Icon name={icon} fallback="" size={14} color={palette.secondary} /> : null}
-      <Text style={{ flexShrink: 1, fontSize: 15, fontWeight: "500", color: ink }}>{label}</Text>
+      <Text maxFontSizeMultiplier={textScale.control} style={{ flexShrink: 1, fontSize: 15, fontWeight: "500", color: ink }}>{label}</Text>
     </PressScale>
   );
 }
@@ -239,7 +251,7 @@ export function Avatar({ name, size = 36, badge }: { name: string; size?: number
         width: size, height: size, borderRadius: size / 2, backgroundColor: tint.fill,
         alignItems: "center", justifyContent: "center", borderWidth: 2, borderColor: palette.surface,
       }}>
-        <Text maxFontSizeMultiplier={textScale.badge} style={{ fontSize: size * 0.38, fontWeight: "700", color: tint.ink }}>{initials(name)}</Text>
+        <Text maxFontSizeMultiplier={textScale.fixed} style={{ fontSize: size * 0.38, fontWeight: "700", color: tint.ink }}>{initials(name)}</Text>
       </View>
       {badge ? (
         <View style={{
@@ -271,7 +283,7 @@ export function AvatarStack({ names, size = 28, max = 4 }: { names: string[]; si
           marginLeft: -size / 3, width: size, height: size, borderRadius: size / 2, backgroundColor: palette.fill,
           borderWidth: 2, borderColor: palette.surface, alignItems: "center", justifyContent: "center",
         }}>
-          <Text maxFontSizeMultiplier={textScale.badge} style={{ fontSize: size * 0.36, fontWeight: "700", color: palette.secondary }}>+{extra}</Text>
+          <Text maxFontSizeMultiplier={textScale.fixed} style={{ fontSize: size * 0.36, fontWeight: "700", color: palette.secondary }}>+{extra}</Text>
         </View>
       ) : null}
     </View>
@@ -372,7 +384,7 @@ export function Pill({ icon, label, tone = "neutral" }: { icon?: SFSymbol; label
   return (
     <View style={{ flexDirection: "row", alignItems: "center", gap: 5, alignSelf: "flex-start", backgroundColor: colors.fill, borderRadius: radius.pill, paddingHorizontal: 10, paddingVertical: 4 }}>
       {icon ? <Icon name={icon} fallback="" size={12} color={colors.ink} weight="semibold" /> : null}
-      <Text style={{ flexShrink: 1, fontSize: 13, fontWeight: "600", color: colors.ink }}>{label}</Text>
+      <Text maxFontSizeMultiplier={textScale.control} style={{ flexShrink: 1, fontSize: 13, fontWeight: "600", color: colors.ink }}>{label}</Text>
     </View>
   );
 }
@@ -387,7 +399,7 @@ export function CancelButton({ onPress }: { onPress: () => void }) {
   const palette = usePalette();
   return (
     <Pressable accessibilityRole="button" onPress={onPress} hitSlop={12}>
-      {({ pressed }) => <Text style={{ fontSize: 17, color: palette.accent, opacity: pressed ? 0.5 : 1 }}>Cancel</Text>}
+      {({ pressed }) => <Text maxFontSizeMultiplier={textScale.fixed} style={{ fontSize: 17, color: palette.accent, opacity: pressed ? 0.5 : 1 }}>Cancel</Text>}
     </Pressable>
   );
 }

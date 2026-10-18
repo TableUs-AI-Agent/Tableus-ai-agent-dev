@@ -52,7 +52,7 @@ export function PickCard({ candidate, rank, winner = false, onToggle }: {
           boxShadow: "0 2px 8px rgba(23, 48, 31, 0.25)",
         }}>
           <View style={{ width: 24, height: 24, borderRadius: 12, backgroundColor: palette.onButter, alignItems: "center", justifyContent: "center" }}>
-            <Text maxFontSizeMultiplier={textScale.badge} style={{ fontSize: 14, fontWeight: "800", color: palette.butter, fontVariant: ["tabular-nums"] }}>{rank + 1}</Text>
+            <Text maxFontSizeMultiplier={textScale.fixed} style={{ fontSize: 14, fontWeight: "800", color: palette.butter, fontVariant: ["tabular-nums"] }}>{rank + 1}</Text>
           </View>
           <Text maxFontSizeMultiplier={textScale.label} style={{ fontSize: 14, fontWeight: "700", color: palette.onButter }}>Your {ORDINAL[rank]}</Text>
         </View>
@@ -123,14 +123,14 @@ export function Facts({ place }: { place: PlaceDetails }) {
       {place.rating ? (
         <View style={item}>
           <Icon name="star.fill" fallback="★" size={13} color={palette.butterInk} />
-          <Text style={text}>{place.rating.toFixed(1)}{place.rating_count ? <Text style={{ fontWeight: "400" }}> ({compact(place.rating_count)})</Text> : null}</Text>
+          <Text maxFontSizeMultiplier={textScale.control} style={text}>{place.rating.toFixed(1)}{place.rating_count ? <Text style={{ fontWeight: "400" }}> ({compact(place.rating_count)})</Text> : null}</Text>
         </View>
       ) : null}
       <View style={item}>
         <Icon name="fork.knife" fallback="" size={13} color={palette.secondary} />
-        <Text style={text}>{place.cuisine}</Text>
+        <Text maxFontSizeMultiplier={textScale.control} style={text}>{place.cuisine}</Text>
       </View>
-      <Text style={text}>{price(place.price_level)}</Text>
+      <Text maxFontSizeMultiplier={textScale.control} style={text}>{price(place.price_level)}</Text>
     </View>
   );
 }

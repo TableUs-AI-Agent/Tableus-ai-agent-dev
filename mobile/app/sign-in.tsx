@@ -4,7 +4,7 @@ import { useState } from "react";
 import { KeyboardAvoidingView, ScrollView, Text, useWindowDimensions, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
-import { Body, Button, ErrorText, Field, Footnote, IconTile, Title } from "@/components/ui";
+import { Body, Button, ErrorText, Field, Footnote, IconTile, Title, useLargeText } from "@/components/ui";
 import { DEMO_PEOPLE } from "@/lib/api";
 import { useSession } from "@/lib/session";
 import { isSupabaseConfigured, supabase } from "@/lib/supabase";
@@ -25,10 +25,18 @@ export default function SignIn() {
   const { width, height } = useWindowDimensions();
   const [step, setStep] = useState<"intro" | "email">("intro");
   const heroHeight = Math.min(width / 1.5, height * 0.3);
+  // At large text sizes the action scrolls with the page instead of covering it.
+  const large = useLargeText();
+  const start = (
+    <View style={{ gap: space.sm }}>
+      <Button label="Continue with email" icon="envelope.fill" onPress={() => setStep("email")} />
+      <Footnote style={{ textAlign: "center" }}>New here? The same code signs you up.</Footnote>
+    </View>
+  );
 
   return (
     <KeyboardAvoidingView behavior={process.env.EXPO_OS === "ios" ? "padding" : undefined} style={{ flex: 1, backgroundColor: palette.background }}>
-      <ScrollView keyboardShouldPersistTaps="handled" keyboardDismissMode="interactive" contentContainerStyle={{ flexGrow: 1, paddingBottom: space.md }}>
+      <ScrollView keyboardShouldPersistTaps="handled" keyboardDismissMode="interactive" contentContainerStyle={{ flexGrow: 1, paddingBottom: space.md + (large ? insets.bottom : 0) }}>
         {/* The art is a daytime scene, so its sky stays light in dark mode too. */}
         <View style={{ backgroundColor: HERO_SKY, paddingTop: insets.top }}>
           <Image
@@ -48,7 +56,7 @@ export default function SignIn() {
             <>
               <View style={{ gap: space.md }}>
                 {STEPS.map((item) => (
-                  <View key={item.title} style={{ flexDirection: "row", gap: space.md, alignItems: "center" }}>
+                  <View key={item.title} style={{ flexDirection: "row", gap: space.md, alignItems: large ? "flex-start" : "center" }}>
                     <IconTile name={item.icon} color={item.tint} size={40} />
                     <View style={{ flex: 1, gap: 2 }}>
                       <Text style={{ fontSize: 16, fontWeight: "600", color: palette.text }}>{item.title}</Text>
@@ -57,6 +65,7 @@ export default function SignIn() {
                   </View>
                 ))}
               </View>
+              {large ? start : null}
             </>
           ) : isSupabaseConfigured ? (
             <EmailCode onBack={() => setStep("intro")} />
@@ -65,11 +74,10 @@ export default function SignIn() {
           )}
         </View>
       </ScrollView>
-      {step === "intro" ? (
-        <View style={{ paddingHorizontal: space.lg, paddingTop: space.sm, paddingBottom: insets.bottom + space.sm, gap: space.sm }}>
-          <Button label="Continue with email" icon="envelope.fill" onPress={() => setStep("email")} />
-          <Footnote style={{ textAlign: "center" }}>New here? The same code signs you up.</Footnote>
-        </View>
+      {/* Keeps scrolled text out from under the status bar; matches the hero's sky at rest. */}
+      <View style={{ position: "absolute", top: 0, left: 0, right: 0, height: insets.top, backgroundColor: HERO_SKY }} />
+      {step === "intro" && !large ? (
+        <View style={{ paddingHorizontal: space.lg, paddingTop: space.sm, paddingBottom: insets.bottom + space.sm }}>{start}</View>
       ) : null}
     </KeyboardAvoidingView>
   );
