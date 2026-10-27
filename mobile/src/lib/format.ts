@@ -26,10 +26,14 @@ export function since(iso: string, now = Date.now()): string {
   return new Date(iso).toLocaleDateString(undefined, { month: "short", day: "numeric" });
 }
 
-/** Straight-line distance from the plan's spot, the way restaurant apps show it: "0.4 mi", "12 mi". */
+/**
+ * Straight-line distance from the plan's spot, the way restaurant apps show it: "0.4 mi", "12 mi".
+ * Past `max` miles the number says more about bad data than the walk, so it's left out.
+ */
 export function distance(
   from: { latitude: number | null; longitude: number | null },
   to: { latitude: number; longitude: number },
+  max = 30,
 ): string | null {
   if (from.latitude === null || from.longitude === null) return null;
   const rad = (value: number) => (value * Math.PI) / 180;
@@ -37,5 +41,6 @@ export function distance(
   const dLng = rad(to.longitude - from.longitude);
   const a = Math.sin(dLat / 2) ** 2 + Math.cos(rad(from.latitude)) * Math.cos(rad(to.latitude)) * Math.sin(dLng / 2) ** 2;
   const miles = 3958.8 * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+  if (miles > max) return null;
   return miles < 10 ? `${miles.toFixed(1)} mi` : `${Math.round(miles)} mi`;
 }

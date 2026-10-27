@@ -8,4 +8,5 @@ test("distance reads like a restaurant app and skips plans without a spot", () =
   assert.equal(distance(plan, { latitude: 40.7411, longitude: -73.9897 }), "0.4 mi");
   assert.equal(distance(plan, { latitude: 40.9, longitude: -73.9911 }), "11 mi");
   assert.equal(distance({ latitude: null, longitude: null }, plan), null);
+  assert.equal(distance(plan, { latitude: 42.38, longitude: -71.1 }), null);
 });

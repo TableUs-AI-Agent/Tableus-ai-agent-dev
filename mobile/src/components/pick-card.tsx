@@ -75,7 +75,7 @@ export function PickCard({ candidate, from, rank, winner = false, group, onToggl
   );
 
   const content = (
-    <View style={{ gap: space.sm + space.xs, padding: space.md }}>
+    <View style={{ gap: space.sm + space.xs, padding: space.md, paddingTop: winner ? space.xs : space.md }}>
       <View style={{ gap: 6 }}>
         <Text maxFontSizeMultiplier={textScale.display} style={{ fontFamily: fonts.display, fontSize: winner ? 38 : 30, lineHeight: winner ? 36 : 30, color: palette.text }}>{place.name}</Text>
         <Facts place={place} from={from} />
@@ -162,12 +162,17 @@ export function Facts({ place, from }: { place: PlaceDetails; from?: Spot }) {
 /** The torn-ticket edge between the photo and the details: two notches and a dashed rule. */
 function Perforation() {
   const palette = usePalette();
-  const notch = { position: "absolute" as const, top: -11, width: 22, height: 22, borderRadius: 11, backgroundColor: palette.background };
+  const notch = { position: "absolute" as const, top: 1, width: 22, height: 22, borderRadius: 11, backgroundColor: palette.background };
   return (
-    <View style={{ height: 0 }} accessible={false}>
-      <View style={{ ...notch, left: -13 }} />
-      <View style={{ ...notch, right: -13 }} />
-      <View style={{ position: "absolute", left: space.md, right: space.md, top: 0, borderTopWidth: 2, borderStyle: "dashed", borderColor: palette.butter }} />
+    <View style={{ height: 24, justifyContent: "center" }} accessible={false}>
+      <View style={{ ...notch, left: -11 }} />
+      <View style={{ ...notch, right: -11 }} />
+      {/* iOS draws a one-sided dashed border solid, so the dashes are drawn one by one. */}
+      <View style={{ flexDirection: "row", gap: 6, marginHorizontal: space.lg, overflow: "hidden" }}>
+        {Array.from({ length: 40 }, (_, index) => (
+          <View key={index} style={{ width: 8, height: 2, borderRadius: 1, backgroundColor: palette.butter }} />
+        ))}
+      </View>
     </View>
   );
 }

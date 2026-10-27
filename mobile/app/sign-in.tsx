@@ -18,7 +18,6 @@ const STEPS: { spot: Spot; title: string; detail: string }[] = [
   { spot: "invite", title: "Share one link", detail: "Friends join from a text. No app needed on the web." },
   { spot: "wishes", title: "Everyone says what they want", detail: "Cravings, budget, allergies, in plain words." },
   { spot: "distance", title: "Get four places that fit", detail: "Real spots nearby, each with the reason it works." },
-  { spot: "vote", title: "Vote and lock it in", detail: "Tap your top three. The organizer makes it official." },
 ];
 
 export default function SignIn() {
