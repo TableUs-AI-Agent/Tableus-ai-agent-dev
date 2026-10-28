@@ -16,10 +16,14 @@ const MATERIAL: Partial<Record<SFSymbol, number>> = {
   "arrow.right": 0xe5c8, // arrow_forward
   "arrow.up.right": 0xf8ce, // arrow_outward
   "arrow.uturn.backward": 0xe166, // undo
+  "birthday.cake.fill": 0xe7e9, // cake
+  calendar: 0xe878, // event
   checkmark: 0xe5ca, // check
   "checkmark.circle.fill": 0xe86c, // check_circle
   "checkmark.seal.fill": 0xef76, // verified
   "chevron.right": 0xe5cc, // chevron_right
+  clock: 0xefd6, // schedule
+  "crown.fill": 0xecb3, // crown
   "doc.text.fill": 0xe873, // description
   dollarsign: 0xe227, // attach_money
   "ellipsis.circle": 0xe5d3, // more_horiz
@@ -28,17 +32,22 @@ const MATERIAL: Partial<Record<SFSymbol, number>> = {
   "envelope.fill": 0xe158, // mail
   "exclamationmark.circle.fill": 0xe000, // error
   "exclamationmark.triangle.fill": 0xe002, // warning
+  "figure.and.child.holdinghands": 0xf1a2, // family_restroom
   "fork.knife": 0xe56c, // restaurant
   "hand.raised.fill": 0xe769, // front_hand
   "heart.text.square": 0xe87d, // favorite
   "leaf.fill": 0xea35, // eco
   link: 0xe157, // link
   "list.bullet": 0xe241, // format_list_bulleted
+  "location.fill": 0xe569, // near_me
   "lock.fill": 0xe897, // lock
   magnifyingglass: 0xe8b6, // search
   "map.fill": 0xe55b, // map
   "mappin.and.ellipse": 0xe0c8, // location_on
+  "mug.fill": 0xf1f3, // sports_bar
+  "music.note": 0xe405, // music_note
   number: 0xe9ef, // tag
+  "pawprint.fill": 0xe91d, // pets
   person: 0xe7fd, // person
   "person.2.fill": 0xe7ef, // group
   "person.3.fill": 0xf233, // groups
@@ -47,10 +56,14 @@ const MATERIAL: Partial<Record<SFSymbol, number>> = {
   "plus.bubble": 0xe266, // add_comment
   "plus.circle.fill": 0xe147, // add_circle
   "rectangle.portrait.and.arrow.right": 0xe9ba, // logout
+  rosette: 0xea3f, // military_tech
   "square.and.arrow.up": 0xe80d, // share
+  "sun.max.fill": 0xe430, // wb_sunny
   "text.bubble.fill": 0xe0ca, // chat_bubble
   "text.quote": 0xe244, // format_quote
   "trash.fill": 0xe872, // delete
+  wineglass: 0xe540, // local_bar
+  "wineglass.fill": 0xf1e8, // wine_bar
 };
 
 /** The icon font only has outlines; these read wrong unless filled, so they use a text glyph. */
