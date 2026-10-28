@@ -406,11 +406,12 @@ export function Pill({ icon, label, tone = "neutral", iconColor }: {
 /** One fact with its symbol, for the scannable rows under a title (place, people, time). */
 export function Meta({ icon, label, color, strong = false }: { icon: SFSymbol; label: string; color?: string; strong?: boolean }) {
   const palette = usePalette();
+  const large = useLargeText();
   const ink = color ?? palette.secondary;
   return (
     <View style={{ flexDirection: "row", alignItems: "center", gap: 4, flexShrink: 1 }}>
       <Icon name={icon} fallback="" size={13} color={ink} />
-      <Text numberOfLines={1} style={{ flexShrink: 1, fontSize: 14, fontWeight: strong ? "600" : "400", color: ink, fontVariant: ["tabular-nums"] }}>{label}</Text>
+      <Text numberOfLines={large ? 3 : 1} maxFontSizeMultiplier={textScale.label} style={{ flexShrink: 1, fontSize: 14, fontWeight: strong ? "600" : "400", color: ink, fontVariant: ["tabular-nums"] }}>{label}</Text>
     </View>
   );
 }

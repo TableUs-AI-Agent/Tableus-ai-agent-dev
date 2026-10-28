@@ -115,14 +115,17 @@ function PlanCard({ plan }: { plan: PlanSummary }) {
       onPress={() => router.push(`/plan/${plan.id}`)}
       style={{ borderRadius: radius.card, borderCurve: "continuous", backgroundColor: palette.surface, boxShadow: elevation.card, overflow: "hidden" }}
     >
-      <View style={{ height: 128, backgroundColor: palette.sky, flexDirection: "row", justifyContent: "space-between", padding: space.sm + space.xs }}>
+      <View style={{ minHeight: 128, backgroundColor: palette.sky, flexDirection: "row", justifyContent: "space-between", padding: space.sm + space.xs }}>
         <View style={{ gap: space.sm }}>
           <Pill tone="onArt" icon={status.icon} iconColor={STATUS_INK[status.tone]} label={status.label} />
           {plan.viewer_is_organizer ? <Pill tone="onArt" icon="crown.fill" iconColor={STATUS_INK.butter} label="You're organizing" /> : null}
         </View>
-        <View style={{ alignSelf: "flex-end", marginBottom: -space.lg, marginRight: space.xs }}>
-          <SpotArt spot={plan.status === "voting" ? "vote" : plan.status === "finalized" ? "lock" : "wishes"} size={124} />
-        </View>
+        {/* At large text sizes the chips need the band's full width. */}
+        {large ? null : (
+          <View style={{ alignSelf: "flex-end", marginBottom: -space.lg, marginRight: space.xs }}>
+            <SpotArt spot={plan.status === "voting" ? "vote" : plan.status === "finalized" ? "lock" : "wishes"} size={124} />
+          </View>
+        )}
       </View>
       <View style={{ padding: space.md, gap: space.sm }}>
         <Text numberOfLines={large ? 4 : 2} maxFontSizeMultiplier={textScale.display} style={{ fontFamily: fonts.display, fontSize: 30, lineHeight: 29, color: palette.text }}>{plan.title}</Text>
@@ -132,7 +135,7 @@ function PlanCard({ plan }: { plan: PlanSummary }) {
           <Meta icon="clock" label={since(plan.updated_at)} />
         </View>
         <View style={{ flexDirection: "row", alignItems: "center", gap: 6, paddingTop: space.xs }}>
-          <Text style={{ fontSize: 15, fontWeight: "600", color: palette.accent }}>{status.next}</Text>
+          <Text maxFontSizeMultiplier={textScale.label} style={{ flexShrink: 1, fontSize: 15, fontWeight: "600", color: palette.accent }}>{status.next}</Text>
           <Icon name="chevron.right" fallback="›" size={12} color={palette.accent} weight="semibold" />
         </View>
       </View>

@@ -97,7 +97,7 @@ export function PickCard({ candidate, from, rank, winner = false, group, onToggl
       {winner && group?.length ? (
         <View style={{ flexDirection: "row", alignItems: "center", gap: space.sm, paddingTop: space.xs }}>
           <AvatarStack names={group} size={30} max={6} />
-          <Text style={{ flex: 1, fontSize: 14, fontWeight: "600", color: palette.secondary }}>
+          <Text maxFontSizeMultiplier={textScale.label} style={{ flex: 1, fontSize: 14, fontWeight: "600", color: palette.secondary }}>
             {group.length === 1 ? "Table for one" : `Table for ${group.length}`}
           </Text>
         </View>

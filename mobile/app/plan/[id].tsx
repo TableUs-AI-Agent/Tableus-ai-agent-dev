@@ -657,11 +657,11 @@ function VoteTray({ plan, ranking, vote }: { plan: Plan; ranking: string[]; vote
           <View style={{ flexDirection: "row", alignItems: "center", gap: 5 }}>
             {vote.saved ? <Icon name="checkmark.circle.fill" fallback="✓" size={16} color={palette.success} /> : null}
             {vote.failed ? <Icon name="exclamationmark.circle.fill" fallback="!" size={16} color={palette.danger} /> : null}
-            <Text style={{ fontSize: 16, fontWeight: "700", color: vote.saved ? palette.success : vote.failed ? palette.danger : palette.text }}>{status}</Text>
+            <Text maxFontSizeMultiplier={textScale.label} style={{ flexShrink: 1, fontSize: 16, fontWeight: "700", color: vote.saved ? palette.success : vote.failed ? palette.danger : palette.text }}>{status}</Text>
           </View>
           <View style={{ flexDirection: "row", alignItems: "center", gap: 6 }}>
             {voted.length ? <AvatarStack names={voted.map((person) => person.display_name)} size={22} max={4} /> : null}
-            <Text style={{ fontSize: 13, color: palette.secondary, fontVariant: ["tabular-nums"] }}>
+            <Text maxFontSizeMultiplier={textScale.label} style={{ flexShrink: 1, fontSize: 13, color: palette.secondary, fontVariant: ["tabular-nums"] }}>
               {voted.length} of {plan.participants.length} voted
             </Text>
           </View>
